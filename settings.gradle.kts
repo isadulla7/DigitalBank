@@ -15,3 +15,4 @@
 
 rootProject.name = "Universal Mobile Digital"
 include(":app")
+include(":utils")

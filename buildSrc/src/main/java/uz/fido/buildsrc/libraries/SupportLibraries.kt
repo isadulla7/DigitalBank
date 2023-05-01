@@ -17,6 +17,8 @@ object RootLibraries {
         "com.google.firebase:firebase-crashlytics-gradle:${Versions.classpathCrashlytics}"
     const val classPathKotlinSerialization =
         "org.jetbrains.kotlin:kotlin-serialization:${Versions.classpathKotlinSerialization}"
+    const val utils = ":utils"
+    const val shared = ":shared"
 }
 
 object FirebaseLibraries {

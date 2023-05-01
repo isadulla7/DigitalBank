@@ -1,34 +1,22 @@
 import uz.fido.buildsrc.Configs
 
 plugins {
-    kotlin("kapt")
-    kotlin("android")
-    id("com.android.application")
-    id("androidx.navigation.safeargs.kotlin")
-    id("dagger.hilt.android.plugin")
+    id("com.android.library")
+    id("kotlin-android")
+    id("kotlin-kapt")
     id("kotlinx-serialization")
-    id("kotlin-parcelize")
-//    id("com.google.gms.google-services")
-//    id("com.google.firebase.firebase-perf")
 }
 
 android {
-    namespace = Configs.namseSpace
-    compileSdk = Configs.compileSdkVersion
+    compileSdk =  Configs.compileSdkVersion
 
     defaultConfig {
-        applicationId = Configs.applicationId
         minSdk = Configs.minSdkVersion
-        targetSdk = Configs.targetSdkVersion
-        versionCode = Configs.versionCode
-        versionName = Configs.versionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
-    buildFeatures {
-        viewBinding = true
-        dataBinding = true
-    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -48,9 +36,6 @@ android {
 }
 
 dependencies {
-    implementation(project(RootLibraries.utils))
     initSupportLibraries()
     initRequiredLibraries()
-    initTestLibraries()
-//    initFirebaseLibraries()
 }
