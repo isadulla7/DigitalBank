@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("uz.fido.utils.test", appContext.packageName)
+        assertEquals("uz.fido.util.test", appContext.packageName)
     }
 }

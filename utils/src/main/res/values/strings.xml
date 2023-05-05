@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="please_try_again_later">Noma\'lum xatolik, birozdan so\'ng harakat qilib ko\'ring</string>
+    <string name="error_security_connection">Не удалось установить безопасное соединение с сервером</string>
+    <string name="slow_internet_connection">Пожалуйста, проверьте интернет соединение</string>
+    <string name="tech_works">Ведутся технические работы\\nПожалуйста, попробуйте позже</string>
+    <string name="update">Обновить</string>
+    <string name="error_no_internet_connection">Проблема с подключением к интернету, проверьте соединение</string>
+    <string name="update_downloaded">Обновление скачано</string>
+    <string name="cancel">Отменить</string>
+    <string name="reopen">Перезагрузить</string>
+</resources>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="brandRedColor">#FF0000</color>
+
+    <color name="status_waiting">#F98D2A</color>
+    <color name="status_identified">#19B28D</color>
+    <color name="status_not_identified">#FF4646</color>
+    <color name="primaryPurple">#0C5292</color>
+
+</resources>

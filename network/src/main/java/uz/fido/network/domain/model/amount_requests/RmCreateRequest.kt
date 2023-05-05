@@ -1,0 +1,7 @@
+package uz.fido.network.domain.model.amount_requests
+
+class RmCreateRequest(
+    var name: String,
+    var object_id: String,
+    var receiver_phone_number:String
+)

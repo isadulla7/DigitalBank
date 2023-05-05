@@ -1,0 +1,70 @@
+package uz.fido.network.domain.model.loans.loan_products
+
+import com.google.gson.annotations.SerializedName
+import java.io.Serializable
+
+data class CreditProduct(
+    val productName: String,
+    val loan3: String,
+    val filialName: String,
+    var amount: String,
+    @SerializedName(value = "percent ", alternate = ["percent"])
+    val percent: String? = "0",
+    val loanId: String,
+    val loan1: String,
+    val loanContractId: String,
+    val contractCode: String,
+    val mainAccBalance: String,
+    val closeDate: String,
+    val loan7: String,
+    val codeFilial: String,
+    val guarType: ArrayList<GuarType>,
+    @SerializedName(value = "accruedOverDueInterest ", alternate = ["accruedOverDueInterest"])
+    val accruedOverDueInterest: String? = "0",
+    val loan5: String,
+    val loan2: String,
+    val loan22: String,
+    val productId: Int,
+    @SerializedName(value = "overdueDebt ", alternate = ["overdueDebt"])
+    val overdueDebt: String? = "0",
+    @SerializedName(value = "arrearsOnPrincipal ", alternate = ["arrearsOnPrincipal"])
+    val arrearsOnPrincipal: String? = "0",
+    val contractDate: String,
+    val startDate: String,
+    val loan46: String,
+    val perc: String,
+    val creditType: String,
+    val recommendedAmount: String,
+    val currency: String,
+    val onOf: String,
+    var recommendedAmountForPayment: String? = null,
+    var paymentAmount: String? = null,
+    var earlyClosure: String? = null,
+    var keep_future_percents: String? = "false",
+    var saldo1: String? = "0",
+    var saldo2: String? = "0",
+    var saldo3: String? = "0",
+    var saldo5: String? = "0",
+    var saldo7: String? = "0",
+    var saldo46: String? = "0",
+    var saldo118: String? = "0",
+    var saldo22: String? = "0",
+    var saldo26: String = "0",
+    var percDLO: String,
+    var overdraftLimit: String,
+    var percDLP: String,
+    var repaymentType: String,
+    val cardNumber: String,
+    var arrearDate: String,
+    var loanNumber: String,
+    var totalDebt: String,
+    var percOverLoanAmount: String,
+    var tRedempPerc: String,
+    var deadlineConfirmation: String,
+    var redemptionDay: String,
+    var lnMonth: Int,
+    var tRedempTotal: String,
+    var followPaySum: String,
+    var is_reacted: Int
+
+) : Serializable

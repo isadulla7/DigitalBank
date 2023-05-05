@@ -1,18 +1,5 @@
-//pluginManagement {
-//    repositories {
-//        google()
-//        mavenCentral()
-//        gradlePluginPortal()
-//    }
-//}
-//dependencyResolutionManagement {
-//    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-//    repositories {
-//        google()
-//        mavenCentral()
-//    }
-//}
-
 rootProject.name = "Universal Mobile Digital"
 include(":app")
+include(":cardScanner")
+include(":network")
 include(":utils")

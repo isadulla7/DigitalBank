@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_login">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.sign_in.SignInFragment"
+        android:label="SignInFragment" />
+    <fragment
+        android:id="@+id/pinCodeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment"
+        android:label="PinCodeFragment" />
+    <fragment
+        android:id="@+id/chooseLanguageFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.change_language.ChangeLanguageFragment"
+        android:label="ChooseLanguageFragment" />
+
+</navigation>
