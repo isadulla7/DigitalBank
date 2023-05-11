@@ -31,7 +31,6 @@ class MonitoringRepositoryImpl @Inject constructor(private val monitoringApiServ
         monitoringApiService.getUzcardMonitoringOld(token, svMonitoringRequest)
     }
 
-
     override suspend fun getHumoMonitoring(
         token: String,
         humoMonitoringRequest: HumoMonitoringRequest
@@ -53,12 +52,10 @@ class MonitoringRepositoryImpl @Inject constructor(private val monitoringApiServ
         monitoringApiService.getLocaleHistories(token, getLocaleHistoryRequest)
     }
 
-
     override suspend fun getMonitoringCategories(token: String): Resource<BaseResponse> =
         getResult {
             monitoringApiService.getMonitoringCategories(token)
         }
-
 
     override suspend fun setMonitoringCategory(
         token: String,
@@ -73,7 +70,6 @@ class MonitoringRepositoryImpl @Inject constructor(private val monitoringApiServ
     ): Resource<CurrencyCardMonitoringResponse> = getResult {
         monitoringApiService.getCurrencyCardMonitoring(token, monitoringRequest)
     }
-
 
     override suspend fun getAccountHistories(
         token: String,

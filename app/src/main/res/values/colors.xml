@@ -1,5 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- RED -->
+    <color name="brandRedColor">#BF272B</color>
+    <color name="brandRedColor_90">#BF272B</color>
+    <color name="brandRedColor_80">#BF272B</color>
+    <color name="brandRedColor_70">#BF272B</color>
+    <color name="brandRedColor_60">#BF272B</color>
+    <color name="brandRedColor_50">#BF272B</color>
+    <color name="brandRedColor_40">#BF272B</color>
+    <color name="brandRedColor_30">#BF272B</color>
+    <color name="brandRedColor_20">#BF272B</color>
+    <color name="brandRedColor_10">#BF272B</color>
+
+    <color name="brandRedActiveColor">#A31D21</color>
+
+    <!-- BLUE -->
+    <color name="brandBlueColor">#091C3A</color>
+    <color name="brandBlueColor_90">#22334E</color>
+    <color name="brandBlueColor_80">#3A4961</color>
+    <color name="brandBlueColor_70">#536176</color>
+    <color name="brandBlueColor_60">#6B7789</color>
+    <color name="brandBlueColor_50">#848E9D</color>
+    <color name="brandBlueColor_40">#9DA4B0</color>
+    <color name="brandBlueColor_30">#B6BBC4</color>
+    <color name="brandBlueColor_20">#CED2D8</color>
+    <color name="brandBlueColor_10">#E7E9EC</color>
+
     <color name="blackColor">#000000</color>
     <color name="whiteColor">#FFFFFF</color>
 </resources>

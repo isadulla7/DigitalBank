@@ -1,7 +1,9 @@
 package uz.fido.universaldigital.ui.activities
 
 import android.os.Bundle
+import androidx.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
+import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityMainBinding
 import uz.fido.utils.internet_checker.InternetConnectionChecker
@@ -24,6 +26,7 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         checkUpdate()
+        initBottomNavigationMenu()
     }
 
     override fun onResume() {
@@ -57,5 +60,9 @@ class MainActivity : BaseActivity() {
                 noConnectionDialog?.show(supportFragmentManager, "")
             }
         }
+    }
+
+    private fun initBottomNavigationMenu() {
+        val navController = Navigation.findNavController(this, R.id.nav_host_fragment)
     }
 }

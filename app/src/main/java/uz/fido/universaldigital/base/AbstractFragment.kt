@@ -34,7 +34,7 @@ abstract class AbstractFragment<VB : ViewBinding, VM : AbstractViewModel>(
     }
 
     private fun initObserver() {
-        //noop:
+        //noop
     }
 
     open fun onInit(savedInstanceState: Bundle?) {

@@ -14,7 +14,7 @@ class TextViewBold @JvmOverloads constructor(
 
     private fun init() {
         typeface = Typeface.createFromAsset(
-            context.resources.assets, "fonts/Roboto-Bold.ttf"
+            context.resources.assets, "fonts/Inter-Bold.ttf"
         )
     }
 }

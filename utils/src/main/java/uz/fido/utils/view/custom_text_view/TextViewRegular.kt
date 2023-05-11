@@ -15,7 +15,7 @@ class TextViewRegular @JvmOverloads constructor(
 
     private fun init() {
         typeface = Typeface.createFromAsset(
-            context.resources.assets, "fonts/Roboto-Regular.ttf"
+            context.resources.assets, "fonts/Inter-Regular.ttf"
         )
     }
 }

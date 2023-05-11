@@ -11,4 +11,8 @@
         <item name="postSplashScreenTheme">@style/Theme.MaterialComponents.Light.NoActionBar</item>
     </style>
 
+    <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/inter_regular</item>
+    </style>
+
 </resources>

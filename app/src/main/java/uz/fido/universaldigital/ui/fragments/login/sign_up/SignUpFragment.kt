@@ -9,5 +9,4 @@ class SignUpFragment : BaseFragment<FragmentSignInBinding, SignUpViewModel>(
     FragmentSignInBinding::inflate, SignUpViewModel::class.java
 ) {
 
-
 }

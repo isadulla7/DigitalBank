@@ -45,19 +45,16 @@ class CardRepositoryImpl @Inject constructor(private val cardApiService: CardApi
     override suspend fun checkCard(
         token: String,
         checkCardRequest: CheckCardRequest
-    ): Resource<BaseResponse> =
-        getResult {
-            cardApiService.checkCard(token, checkCardRequest)
-        }
-
+    ): Resource<BaseResponse> = getResult {
+        cardApiService.checkCard(token, checkCardRequest)
+    }
 
     override suspend fun addCard(
         token: String,
         addCardRequest: AddCardRequest
-    ): Resource<BaseResponse> =
-        getResult {
-            cardApiService.addCard(token, addCardRequest)
-        }
+    ): Resource<BaseResponse> = getResult {
+        cardApiService.addCard(token, addCardRequest)
+    }
 
     override suspend fun getCardList(token: String): Resource<CardListResponse> = getResult {
         cardApiService.getCardList(token)
@@ -66,91 +63,107 @@ class CardRepositoryImpl @Inject constructor(private val cardApiService: CardApi
     override suspend fun getCardInfo(
         token: String,
         cardInfoRequest: CardInfoRequest
-    ): Resource<CardInfoResponse> = getResult { cardApiService.getCardInfo(token, cardInfoRequest) }
+    ): Resource<CardInfoResponse> = getResult {
+        cardApiService.getCardInfo(token, cardInfoRequest)
+    }
 
     override suspend fun deleteCard(
         token: String,
         deleteCardRequest: DeleteCardRequest
-    ): Resource<DeleteCardResponse> =
-        getResult { cardApiService.deleteCard(token, deleteCardRequest) }
+    ): Resource<DeleteCardResponse> = getResult {
+        cardApiService.deleteCard(token, deleteCardRequest)
+    }
 
     override suspend fun editCard(
         token: String,
         editCardRequest: EditCardRequest
-    ): Resource<EditCardResponse> = getResult { cardApiService.editCard(token, editCardRequest) }
+    ): Resource<EditCardResponse> = getResult {
+        cardApiService.editCard(token, editCardRequest)
+    }
 
     override suspend fun blockCard(
         token: String,
         blockCardRequest: BlockCardRequest
-    ): Resource<BlockCardResponse> = getResult { cardApiService.blockCard(token, blockCardRequest) }
+    ): Resource<BlockCardResponse> = getResult {
+        cardApiService.blockCard(token, blockCardRequest)
+    }
 
     override suspend fun unblockCard(
         token: String,
         blockCardRequest: BlockCardRequest
-    ): Resource<BlockCardResponse> =
-        getResult { cardApiService.unblockCard(token, blockCardRequest) }
+    ): Resource<BlockCardResponse> = getResult {
+        cardApiService.unblockCard(token, blockCardRequest)
+    }
 
     override suspend fun getCardByPhone(
         token: String,
         getCardByPhoneRequest: GetCardByPhoneRequest
-    ): Resource<CardByPhoneResponse> =
-        getResult { cardApiService.getCardByPhone(token, getCardByPhoneRequest) }
+    ): Resource<CardByPhoneResponse> = getResult {
+        cardApiService.getCardByPhone(token, getCardByPhoneRequest)
+    }
 
     override suspend fun checkCardInfo(
         token: String,
         checkCardRequestP2p: CheckCardRequestP2p
-    ): Resource<CheckCardResponse> =
-        getResult { cardApiService.checkCardInfo(token, checkCardRequestP2p) }
+    ): Resource<CheckCardResponse> = getResult {
+        cardApiService.checkCardInfo(token, checkCardRequestP2p)
+    }
 
     override suspend fun checkWalletInfo(
         token: String,
         checkCardRequestP2p: CheckCardRequestP2p
-    ): Resource<CheckWalletResponse> =
-        getResult { cardApiService.checkWalletInfo(token, checkCardRequestP2p) }
+    ): Resource<CheckWalletResponse> = getResult {
+        cardApiService.checkWalletInfo(token, checkCardRequestP2p)
+    }
 
     override suspend fun getP2pHistory(
         token: String,
         p2PHistoryRequest: P2PHistoryRequest
-    ): Resource<P2PHistoryResponse> =
-        getResult { cardApiService.getP2pHistory(token, p2PHistoryRequest) }
+    ): Resource<P2PHistoryResponse> = getResult {
+        cardApiService.getP2pHistory(token, p2PHistoryRequest)
+    }
 
     override suspend fun getHumoCardInfo(
         token: String,
         humoCardInfoRequest: HumoCardInfoRequest
-    ): Resource<NfcHUMOInfoResponse> =
-        getResult { cardApiService.getHumoCardInfo(token, humoCardInfoRequest) }
+    ): Resource<NfcHUMOInfoResponse> = getResult {
+        cardApiService.getHumoCardInfo(token, humoCardInfoRequest)
+    }
 
     override suspend fun checkResetPinCount(
         token: String,
         resetPinCountCheck: ResetPinCountCheck
-    ): Resource<BaseResponse> =
-        getResult { cardApiService.checkResetPinCount(token, resetPinCountCheck) }
+    ): Resource<BaseResponse> = getResult {
+        cardApiService.checkResetPinCount(token, resetPinCountCheck)
+    }
 
     override suspend fun resetPinCount(
         token: String,
         resetPinCount: ResetPinCount
-    ): Resource<BaseResponse> =
-        getResult {
-            cardApiService.resetPinCount(token, resetPinCount)
-        }
+    ): Resource<BaseResponse> = getResult {
+        cardApiService.resetPinCount(token, resetPinCount)
+    }
 
     override suspend fun getSvCardLimitList(
         token: String,
         cardLimitRequest: CardLimitRequest
-    ): Resource<SvLimitResponse> =
-        getResult { cardApiService.getSvCardLimitList(token, cardLimitRequest) }
+    ): Resource<SvLimitResponse> = getResult {
+        cardApiService.getSvCardLimitList(token, cardLimitRequest)
+    }
 
     override suspend fun deleteSvCardLimit(
         token: String,
         limitDeleteRequest: LimitDeleteRequest
-    ): Resource<BaseResponse> =
-        getResult { cardApiService.deleteSvCardLimit(token, limitDeleteRequest) }
+    ): Resource<BaseResponse> = getResult {
+        cardApiService.deleteSvCardLimit(token, limitDeleteRequest)
+    }
 
     override suspend fun svSetMainCard(
         token: String,
         svSetMainCardRequest: SvSetMainCardRequest
-    ): Resource<BaseResponse> =
-        getResult { cardApiService.svSetMainCard(token, svSetMainCardRequest) }
+    ): Resource<BaseResponse> = getResult {
+        cardApiService.svSetMainCard(token, svSetMainCardRequest)
+    }
 
     override suspend fun getSvLimitParams(token: String): Resource<LimitParamsResponse> =
         getResult {
@@ -160,25 +173,30 @@ class CardRepositoryImpl @Inject constructor(private val cardApiService: CardApi
     override suspend fun setSvCardLimit(
         token: String,
         svSetCardLimit: SvSetCardLimitRequest
-    ): Resource<BaseResponse> = getResult { cardApiService.setSvCardLimit(token, svSetCardLimit) }
+    ): Resource<BaseResponse> = getResult {
+        cardApiService.setSvCardLimit(token, svSetCardLimit)
+    }
 
     override suspend fun setGlCardLimit(
         token: String,
         glSetCardLimitRequest: GlSetCardLimitRequest
-    ): Resource<BaseResponse> =
-        getResult { cardApiService.setGlCardLimit(token, glSetCardLimitRequest) }
+    ): Resource<BaseResponse> = getResult {
+        cardApiService.setGlCardLimit(token, glSetCardLimitRequest)
+    }
 
     override suspend fun getGlLimitList(
         token: String,
         glLimitListRequest: GlLimitListRequest
-    ): Resource<BaseResponse> =
-        getResult { cardApiService.getGlLimitList(token, glLimitListRequest) }
+    ): Resource<BaseResponse> = getResult {
+        cardApiService.getGlLimitList(token, glLimitListRequest)
+    }
 
     override suspend fun getGlLimitBalance(
         token: String,
         glLimitBaseRequest: GlLimitBaseRequest
-    ): Resource<BaseResponse> =
-        getResult { cardApiService.getGlLimitBalance(token, glLimitBaseRequest) }
+    ): Resource<BaseResponse> = getResult {
+        cardApiService.getGlLimitBalance(token, glLimitBaseRequest)
+    }
 
     override suspend fun getGlLimitParams(token: String): Resource<GlLimitParamsResponse> =
         getResult {

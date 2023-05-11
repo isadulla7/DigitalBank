@@ -10,5 +10,4 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:title="App Bar Test" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,9 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.UniversalMobileDigital" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/brandRedColor</item>
+        <item name="colorOnSurfaceVariant">@color/brandRedColor_10</item>
+        <item name="colorSurface">@color/brandRedColor_10</item>
     </style>
 
     <style name="Theme.UniversalMobileDigital" parent="Base.Theme.UniversalMobileDigital" />
@@ -11,6 +13,10 @@
     <style name="Theme.App.SplashScreen" parent="Theme.SplashScreen">
         <item name="windowSplashScreenBackground">@android:color/white</item>
         <item name="postSplashScreenTheme">@style/Theme.MaterialComponents.Light.NoActionBar</item>
+    </style>
+
+    <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
+        <item name="fontFamily">@font/inter_regular</item>
     </style>
 
 </resources>

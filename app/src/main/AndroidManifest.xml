@@ -31,7 +31,8 @@
         </activity>
         <activity
             android:name=".ui.activities.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/Base.Theme.UniversalMobileDigital" />
         <activity
             android:name=".ui.activities.VpnErrorActivity"
             android:exported="false" />

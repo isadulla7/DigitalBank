@@ -3,4 +3,9 @@
     <string name="network_security_function">Система безопасности сети</string>
     <string name="check_for_vpn">Проверить на VPN</string>
     <string name="please_turn_off_vpn">Пожалуйста, выключите VPN для дальнейшего использования приложения</string>
+    <string name="products">Продукты</string>
+    <string name="profile">Профиль</string>
+    <string name="payments">Платежи</string>
+    <string name="services">Услуги</string>
+    <string name="chat">Чат</string>
 </resources>
