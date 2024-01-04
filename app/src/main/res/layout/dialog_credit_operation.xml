@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/handle"
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_dialog_handle"
+        tools:ignore="ContentDescription" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:textSize="16sp"
+        android:layout_marginTop="6dp"
+        android:gravity="center"
+        android:text="@string/loan_time"
+        android:textColor="@color/mainTextColor"
+        android:layout_height="wrap_content"/>
+
+    <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/loan_information"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:layout_marginTop="16dp"
+        android:drawablePadding="16dp"
+        android:drawableStart="@drawable/ic_loan_information"
+        android:paddingStart="16dp"
+        android:paddingVertical="16dp"
+        android:text="@string/loan_information"
+        android:textColor="@color/mainTextColor"/>
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/requisites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:drawablePadding="16dp"
+        android:drawableStart="@drawable/details"
+        android:paddingStart="16dp"
+        android:paddingVertical="16dp"
+        android:text="@string/requisites"
+        android:textColor="@color/mainTextColor"/>
+
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/repayment_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+         android:layout_marginBottom="16dp"
+        android:drawablePadding="16dp"
+        android:drawableStart="@drawable/ic_calendar_loan"
+        android:paddingStart="16dp"
+        android:paddingVertical="16dp"
+        android:text="@string/repayment_schedule"
+        android:textColor="@color/mainTextColor"/>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

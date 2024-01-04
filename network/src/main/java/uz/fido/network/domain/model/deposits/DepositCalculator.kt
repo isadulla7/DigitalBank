@@ -7,5 +7,6 @@ data class DepositCalculator(
     val receiveSum: String,
     val date: String,
     val saldo: String,
-    val proc: String
+    val proc: String,
+    var count:Int=1
 ): Serializable

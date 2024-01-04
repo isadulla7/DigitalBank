@@ -1,7 +1,7 @@
 package uz.fido.network.domain.model.sign_up
 
 import uz.fido.network.domain.model.abc_base.UserInfo
-import uz.fido.utils.const.Const.USER_CLIENT_ID
+import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 import java.io.Serializable
 
 data class SignUpRequest(

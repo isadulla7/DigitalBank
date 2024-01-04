@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- RED -->
+    <color name="brandRedColor">#BF272B</color>
+    <color name="brandRedColor_90">#BF272B</color>
+    <color name="brandRedColor_80">#BF272B</color>
+    <color name="brandRedColor_70">#BF272B</color>
+    <color name="brandRedColor_60">#BF272B</color>
+    <color name="brandRedColor_50">#BF272B</color>
+    <color name="brandRedColor_40">#BF272B</color>
+    <color name="brandRedColor_30">#BF272B</color>
+    <color name="brandRedColor_20">#BF272B</color>
+    <color name="brandRedColor_10">#BF272B</color>
+    <color name="secondary_red">#FF4646</color>
+    <color name="bank_red_color">#BD282B</color>
+
+    <color name="brandRedActiveColor">#A31D21</color>
+    <color name="lightRedColor">#F4DBDB</color>
+
+    <!-- BLUE -->
+    <color name="brandBlueColor">#ffffff</color>
+    <color name="brandBlueColor_90">#ffffff</color>
+    <color name="brandBlueColor_80">#3A4961</color>
+    <color name="brandBlueColor_70">#536176</color>
+    <color name="brandBlueColor_60">#6B7789</color>
+    <color name="brandBlueColor_50">#848E9D</color>
+    <color name="brandBlueColor_40">#9E9E9E</color>
+    <color name="brandBlueColor_30">#B6BBC4</color>
+    <color name="brandBlueColor_20">#CED2D8</color>
+    <color name="brandBlueColor_10">#444444</color>
+    <color name="view_pager_mib_color">#444444</color>
+
+    <color name="view_pager_tab_color">#878787</color>
+    <color name="view_pager_stroke_color">#717171</color>
+    <color name="blackColor">#FFFFFF</color>
+    <color name="whiteColor">#171717</color>
+    <color name="frozenWhite">#FFFFFF</color>
+    <color name="cardBgColor">#2D2D2D</color>
+    <color name="cardBorderColor">#444444</color>
+
+    <color name="etBackgroundColor">#2D2D2D</color>
+    <color name="viewPagerTextColor">#FFFFFF</color>
+
+    <color name="hintColor">@color/brandBlueColor_60</color>
+    <color name="mainTextColor">@color/white</color>
+    <color name="shimmer_color">#2D2D2D</color>
+    <color name="shimmer_color_2">#3B3B3B</color>
+    <color name="stroke_color">#212121</color>
+    <color name="monitoring_filter">#2D2D2D</color>
+
+    <color name="dialogButtonColor">#007AFF</color>
+    <color name="monitoring_amount">#3BBC7E</color>
+
+    <color name="buttonEnabled">#DB8688</color>
+
+    <color name="seek_bar_background">#E7E9EC</color>
+    <color name="seek_bar_progress">#BF272B</color>
+    <color name="seek_bar_secondary_progress">#3399CC</color>
+
+    <color name="searchBackgroundColor">#2D2D2D</color>
+    <color name="backgroundColor">#171717</color>
+    <color name="status_waiting">#FCB924</color>
+    <color name="status_done">#3BBC7E</color>
+    <color name="goal_out">#1E000000</color>
+    <color name="color_auto_activ">#3BBC7E</color>
+    <color name="color_auto_no_activ">#FCB924</color>
+
+    <color name="color_for_disable_card">#C5C5C5</color>
+    <color name="alert_dialog_background">#2D2D2D</color>
+
+</resources>

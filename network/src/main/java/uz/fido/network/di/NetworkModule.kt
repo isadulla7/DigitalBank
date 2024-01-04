@@ -1,7 +1,7 @@
 package uz.fido.network.di
 
-
 import android.content.Context
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -9,7 +9,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import io.paperdb.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -17,9 +16,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uz.fido.network.R
+import uz.fido.network.data.interceptor.AuthInterceptor
 import uz.fido.network.data.interceptor.DecryptionInterceptor
 import uz.fido.network.data.interceptor.EncryptionInterceptor
 import uz.fido.network.data.interceptor.HeaderInterceptor
+import uz.fido.network.domain.datasource.services.SwapKeyApiInterface
+import uz.fido.network.domain.datasource.services.UserApiInterface
 import uz.fido.utils.const.APIServiceConst
 import uz.fido.utils.const.MyIdServiceConst
 import java.io.InputStream
@@ -27,12 +29,14 @@ import java.security.GeneralSecurityException
 import java.security.KeyStore
 import java.security.SecureRandom
 import java.security.cert.CertificateFactory
+import java.security.cert.X509Certificate
 import java.util.Arrays
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.TrustManager
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
@@ -40,9 +44,10 @@ import javax.net.ssl.X509TrustManager
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+
     @Provides
     @Singleton
-    fun provideBaseUrl(): String = APIServiceConst.UNIVERSAL_URL
+    fun provideBaseUrl(): String = APIServiceConst.BASE_URL
 
     @Provides
     @Singleton
@@ -105,30 +110,43 @@ object NetworkModule {
         }
     }
 
-
     @Provides
     @Singleton
     fun loggingInterceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level =
-            if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         return httpLoggingInterceptor
     }
-
 
     @BaseOkhttpClient
     @Provides
     fun provideOkhttpClient(
+        @ApplicationContext appContext: Context,
         sslSocketFactory: SSLSocketFactory,
-        loggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient =
-        OkHttpClient.Builder()
-            .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
-            .addInterceptor(HeaderInterceptor())
-            .addInterceptor(loggingInterceptor)
-            .addInterceptor(EncryptionInterceptor()).addInterceptor(DecryptionInterceptor())
-            .readTimeout(30, TimeUnit.SECONDS).connectTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS).build()
+        loggingInterceptor: HttpLoggingInterceptor,
+        swapKeyService: SwapKeyApiInterface,
+        apiInterface: dagger.Lazy<UserApiInterface>
+    ): OkHttpClient = unSafeOkHttpClient()
+//        .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
+        .addInterceptor(HeaderInterceptor()).addInterceptor(loggingInterceptor).addInterceptor(
+            AuthInterceptor(
+                swapKeyService = swapKeyService, context = appContext, apiInterface
+            )
+        ).addInterceptor(ChuckerInterceptor.Builder(appContext).build())
+        .addInterceptor(EncryptionInterceptor())
+        .addInterceptor(DecryptionInterceptor())
+        .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
+        .writeTimeout(180, TimeUnit.SECONDS).build()
+
+    @SimpleClientRetrofit
+    @Provides
+    fun provideSimpleOkhttpClient(
+        @ApplicationContext appContext: Context,
+    ): OkHttpClient = unSafeOkHttpClient()
+//        .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
+        .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
+        .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
+        .writeTimeout(180, TimeUnit.SECONDS).build()
 
     @BaseRetrofit
     @Provides
@@ -138,7 +156,6 @@ object NetworkModule {
     ): Retrofit = Retrofit.Builder().client(okHttpClient)
         .addConverterFactory(GsonConverterFactory.create(gsonBuilder)).baseUrl(baseUrl).build()
 
-
     /*
     *   MY ID RETROFIT CLIENT
     */
@@ -147,8 +164,11 @@ object NetworkModule {
     @Provides
     fun provideMyIdRetrofitClient(
         @ApplicationContext appContext: Context, loggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient = OkHttpClient.Builder().addInterceptor(loggingInterceptor)
-        .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS).build()
+    ): OkHttpClient =
+        OkHttpClient.Builder().addInterceptor(loggingInterceptor)
+            .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
+            .readTimeout(180, TimeUnit.SECONDS)
+            .connectTimeout(180, TimeUnit.SECONDS).build()
 
     @MyIdRetrofit
     @Provides
@@ -157,19 +177,22 @@ object NetworkModule {
         Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create())
             .baseUrl(MyIdServiceConst.MY_ID_URL).build()
 
-
     /*
     *   SOCKET RETROFIT CLIENT
     */
-
 
     @SocketRetrofit
     @Provides
     @Singleton
     fun provideSocketRetrofit(@BaseOkhttpClient okHttpClient: OkHttpClient): Retrofit =
         Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(APIServiceConst.UNIVERSAL_SOCKET_URL).build()
+            .baseUrl(APIServiceConst.SOCKET_URL).build()
 
+    @SimpleClientRetrofit
+    @Provides
+    fun provideSimpleRetrofit(@SimpleClientRetrofit okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(APIServiceConst.BASE_URL).build()
 
     /*
     *   SWAP KEY RETROFIT CLIENT
@@ -178,30 +201,55 @@ object NetworkModule {
     @SwapKeyRetrofit
     @Provides
     fun swapKeyRetrofitClient(
-        @ApplicationContext appContext: Context,
-        sslSocketFactory: SSLSocketFactory,
+        @ApplicationContext appContext: Context, sslSocketFactory: SSLSocketFactory,
         loggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient =
-        OkHttpClient.Builder()
-            .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
-            .addInterceptor(
-                Interceptor {
-                    val request: Request = it.request().newBuilder().build()
-                    return@Interceptor it.proceed(request)
-                }).addInterceptor(loggingInterceptor)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .connectTimeout(180, TimeUnit.SECONDS).writeTimeout(180, TimeUnit.SECONDS).build()
+    ): OkHttpClient = unSafeOkHttpClient()
+//        .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
+        .addInterceptor(Interceptor {
+            val request: Request = it.request().newBuilder().build()
+            return@Interceptor it.proceed(request)
+        }).addInterceptor(loggingInterceptor)
+        .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
+        .readTimeout(180, TimeUnit.SECONDS)
+        .connectTimeout(180, TimeUnit.SECONDS).writeTimeout(180, TimeUnit.SECONDS).build()
 
     @SwapKeyRetrofit
     @Provides
     @Singleton
     fun swapKeyRetrofit(
-        baseUrl: String,
-        @SwapKeyRetrofit okHttpClient: OkHttpClient,
-        gsonBuilder: Gson
-    ): Retrofit =
-        Retrofit.Builder().client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create(gsonBuilder)).baseUrl(baseUrl).build()
+        baseUrl: String, @SwapKeyRetrofit okHttpClient: OkHttpClient, gsonBuilder: Gson
+    ): Retrofit = Retrofit.Builder().client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create(gsonBuilder)).baseUrl(baseUrl).build()
 
+    private fun unSafeOkHttpClient(): OkHttpClient.Builder {
+        val okHttpClient = OkHttpClient.Builder()
+        try {
+            val trustAllCerts: Array<TrustManager> = arrayOf(object : X509TrustManager {
+                override fun checkClientTrusted(
+                    chain: Array<out X509Certificate>?, authType: String?
+                ) {
+                }
+
+                override fun checkServerTrusted(
+                    chain: Array<out X509Certificate>?, authType: String?
+                ) {
+                }
+
+                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+            })
+            val sslContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, trustAllCerts, SecureRandom())
+            val sslSocketFactory = sslContext.socketFactory
+            if (trustAllCerts.isNotEmpty() && trustAllCerts.first() is X509TrustManager) {
+                okHttpClient.sslSocketFactory(
+                    sslSocketFactory, trustAllCerts.first() as X509TrustManager
+                )
+                okHttpClient.hostnameVerifier { _, _ -> true }
+            }
+            return okHttpClient
+        } catch (e: Exception) {
+            return okHttpClient
+        }
+    }
 
 }

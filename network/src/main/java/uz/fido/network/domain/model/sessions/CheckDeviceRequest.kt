@@ -4,7 +4,7 @@ import java.io.Serializable
 
 class CheckDeviceRequest(
     var device_type: String,
-    var device_code: String,
+    var selected_device_code: String,
     var user_id: String,
     var app_key_hash: String,
     var current_device_code: String,

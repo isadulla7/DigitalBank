@@ -1,11 +1,668 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation_main"
     app:startDestination="@id/productsFragment">
 
     <fragment
         android:id="@+id/productsFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.products.ProductsFragment"
-        android:label="ProductsFragment" />
+        android:name="uz.fido.universaldigital.ui.fragments.products.MenuHomeFragment"
+        android:label="ProductsFragment">
+        <action
+            android:id="@+id/action_productsFragment_to_searchEveryWhereFragment"
+            app:destination="@id/searchEveryWhereFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmSmsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment"
+        android:label="ConfirmSmsFragment" />
+    <fragment
+        android:id="@+id/menuMonitoringFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringFragment"
+        tools:layout="@layout/fragment_menu_monitoring" />
+    <fragment
+        android:id="@+id/menuServicesFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.MenuServicesFragment"
+        android:label="MenuServicesFragment"
+        tools:layout="@layout/fragment_menu_services" />
+    <fragment
+        android:id="@+id/menuChatFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.chat.MenuChatFragment"
+        android:label="MenuChatFragment" />
+    <fragment
+        android:id="@+id/menuTransfersFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.MenuTransfersFragment"
+        android:label="MenuTransfersFragment" />
+    <fragment
+        android:id="@+id/menuProfileFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.MenuProfileFragment"
+        android:label="MenuProfileFragment" />
+    <fragment
+        android:id="@+id/transferToAccountFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.TransferToAccountFragment"
+        android:label="TransferToAccountFragment" />
+    <fragment
+        android:id="@+id/paymentHistoryFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.abc_history.PaymentHistoryFragment"
+        android:label="RequisitesHistoryFragment" />
+    <fragment
+        android:id="@+id/transferToUzsAccountFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.sum.TransferToUzsAccountFragment"
+        android:label="TransferToUzsAccountFragment" />
+    <fragment
+        android:id="@+id/transferToUsdAccountFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.currency.TransferToUsdAccountFragment"
+        android:label="TransferToUsdAccountFragment" />
+    <fragment
+        android:id="@+id/transferToBudgetFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.budget.TransferToBudgetFragment"
+        android:label="TransferToBudgetFragment" />
+    <fragment
+        android:id="@+id/connectSmsNotificationFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.sms_notification.ConnectSmsNotificationFragment"
+        android:label="ConnectSmsNotificationFragment" />
+    <fragment
+        android:id="@+id/changePasswordFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.restore_profile.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
+    <fragment
+        android:id="@+id/verificationInfoUserFragment2"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.identification.VerificationInfoUserFragment"
+        android:label="fragment_verification_info_user"
+        tools:layout="@layout/fragment_verification_info_user" />
+    <fragment
+        android:id="@+id/mainIdentificationFragment2"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.identification.MainIdentificationFragment"
+        android:label="fragment_main_identification"
+        tools:layout="@layout/fragment_main_identification">
+        <action
+            android:id="@+id/action_mainIdentificationFragment2_to_verificationInfoUserFragment2"
+            app:destination="@id/verificationInfoUserFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/successVerificationFragment2"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.identification.SuccessVerificationFragment"
+        android:label="fragment_success_verification"
+        tools:layout="@layout/fragment_success_verification">
+        <action
+            android:id="@+id/action_successVerificationFragment2_to_menuProfileFragment"
+            app:destination="@id/menuProfileFragment"
+            app:popUpTo="@id/productsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/moneyTransfersListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.money_transfers.MoneyTransfersListFragment"
+        android:label="fragment_money_transfers_list"
+        tools:layout="@layout/fragment_money_transfers_list" />
+    <fragment
+        android:id="@+id/moneyTransferHistoryFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.money_transfers.MoneyTransferHistoryFragment"
+        android:label="MoneyTransferHistoryFragment" />
+    <fragment
+        android:id="@+id/confirmRequisitesPayment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.confirm_payment.ConfirmRequisitesPayment"
+        android:label="ConfirmRequisitesPayment" />
+    <fragment
+        android:id="@+id/basePaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.MenuPaymentFragment"
+        android:label="BasePaymentFragment" />
+    <fragment
+        android:id="@+id/successPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.abc_success.SuccessPaymentFragment"
+        android:label="SuccessFragment" />
+    <fragment
+        android:id="@+id/mibFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.mib.MibFragment"
+        android:label="MibFragment" />
+    <fragment
+        android:id="@+id/mibAddFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.mib.addmib.MibAddFragment"
+        android:label="MibAddFragment" />
+    <fragment
+        android:id="@+id/mibDetailsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.mib.mib_info.MibDetailsFragment"
+        android:label="MibDetailsFragment" />
+    <fragment
+        android:id="@+id/mibInfoFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.mib.mib_info.MibInfoFragment"
+        android:label="MibInfoFragment" />
+    <fragment
+        android:id="@+id/qrPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.qr_payment.QrPaymentFragment"
+        android:label="QrPaymentFragment" />
+    <fragment
+        android:id="@+id/paymentBranchFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.map_payment.PaymentBranchFragment"
+        android:label="PaymentBranchFragment" />
+    <fragment
+        android:id="@+id/localPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.map_payment.local_payment.LocalPaymentFragment"
+        android:label="LocalPaymentFragment" />
+    <fragment
+        android:id="@+id/mainDepositFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.MainDepositFragment"
+        android:label="MainDepositFragment" />
+    <fragment
+        android:id="@+id/openDepositStepFirst"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.OpenDepositStepFirst"
+        android:label="OpenDepositStepFirst" />
+    <fragment
+        android:id="@+id/openDepositStepTwoFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.OpenDepositStepTwoFragment"
+        android:label="OpenDepositStepTwoFragment" />
+    <fragment
+        android:id="@+id/basicSuccessFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment"
+        android:label="BasicSuccessFragment">
+        <action
+            android:id="@+id/action_basicSuccessFragment_to_transferToCardFragment"
+            app:destination="@id/transferToCardFragment"
+            app:popUpTo="@id/menuTransfersFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_basicSuccessFragment_to_transferByPhoneFragment"
+            app:destination="@id/transferByPhoneFragment"
+            app:popUpTo="@id/menuTransfersFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_basicSuccessFragment_to_transferByWalletFragment"
+            app:destination="@id/transferByWalletFragment"
+            app:popUpTo="@id/menuTransfersFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_basicSuccessFragment_to_overMyCardsFragment"
+            app:destination="@id/overMyCardsFragment"
+            app:popUpTo="@id/menuTransfersFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_basicSuccessFragment_to_clientDepositListFragment"
+            app:destination="@id/clientDepositListFragment"
+            app:popUpTo="@id/productsFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/conversionFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.conversion.ConversionFragment"
+        android:label="ConversionFragment" />
+    <fragment
+        android:id="@+id/confirmConversionFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.conversion.ConfirmConversionFragment"
+        android:label="ConfirmConversionFragment" />
+    <fragment
+        android:id="@+id/depositConstructFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.constructor.DepositConstructFragment"
+        android:label="DepositConstructFragment" />
+    <fragment
+        android:id="@+id/moneyTransferGetFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.money_transfers.MoneyTransferGetFragment"
+        android:label="MoneyTransferGetFragment" />
+    <fragment
+        android:id="@+id/confirmMoneyTransferFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.money_transfers.ConfirmMoneyTransferFragment"
+        android:label="fragment_confirm_money_transfer"
+        tools:layout="@layout/fragment_confirm_money_transfer" />
+    <fragment
+        android:id="@+id/orderCardListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.order_card.OrderCardListFragment"
+        android:label="OrderCardListFragment" />
+    <fragment
+        android:id="@+id/orderCardStep2Fragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.order_card.OrderCardStep2Fragment"
+        android:label="OrderCardStep2Fragment" />
+    <fragment
+        android:id="@+id/confirmOrderCardFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.order_card.ConfirmOrderCardFragment"
+        android:label="ConfirmOrderCardFragment" />
+    <fragment
+        android:id="@+id/overMyCardsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.over_my_cards.OverMyCardsFragment"
+        android:label="OverMyCardsFragment" />
+    <fragment
+        android:id="@+id/depositConstructorConfirmFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.constructor.DepositConstructorConfirmFragment"
+        android:label="DepositConstructorConfirmFragment" />
+    <fragment
+        android:id="@+id/loanGroupListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.LoanGroupListFragment"
+        android:label="LoanGroupListFragment" />
+    <fragment
+        android:id="@+id/confirmSmsForTransfer"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.confirm_transfer.ConfirmSmsForTransfer"
+        android:label="ConfirmSmsForTransfer">
+        <action
+            android:id="@+id/action_confirmSmsForTransfer_to_successPaymentFragment"
+            app:destination="@id/successPaymentFragment"
+            app:popUpTo="@id/overMyCardsFragment"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_confirmSmsForTransfer_to_successTransferFragment"
+            app:destination="@id/successTransferFragment"
+            app:popUpTo="@id/menuTransfersFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/confirmTransferFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.confirm_transfer.ConfirmTransferFragment"
+        android:label="ConfirmTransferFragment" />
+    <fragment
+        android:id="@+id/swiftTransferFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.SwiftTransferFragment"
+        android:label="SwiftTransferFragment" />
+    <fragment
+        android:id="@+id/initTransferDetailsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment"
+        android:label="InitTransferDetailsFragment" />
+    <fragment
+        android:id="@+id/createLoanFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.create_loan.CreateLoanFragment"
+        android:label="CreateLoanFragment" />
+    <fragment
+        android:id="@+id/loanUserInfo1Fragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.loan_info.LoanUserInfo1Fragment"
+        android:label="LoanUserInfo1Fragment" />
+    <fragment
+        android:id="@+id/fragmentPopularTransfers"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.transfer_history.PopularTransfersFragment"
+        android:label="FragmentPopularTransfers" />
+    <fragment
+        android:id="@+id/fragmentTransferHistories"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.transfer_history.TransferHistoriesFragment"
+        android:label="FragmentTransferHistories" />
+    <fragment
+        android:id="@+id/myCardsListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.cards.MyCardsListFragment"
+        android:label="fragment_my_cards_list"
+        tools:layout="@layout/fragment_my_cards_list" />
+    <fragment
+        android:id="@+id/depositCalculatorResultFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.calculator.DepositCalculatorResultFragment"
+        android:label="DepositCalculatorResultFragment" />
+    <fragment
+        android:id="@+id/createLoanConfirmFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.create_loan.CreateLoanConfirmFragment"
+        android:label="CreateLoanConfirmFragment" />
+    <fragment
+        android:id="@+id/orderVirtualCard"
+        android:name="uz.fido.universaldigital.ui.fragments.services.order_card.OrderVirtualCard"
+        android:label="OrderVirtualCard" />
+    <fragment
+        android:id="@+id/editCardFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.edit_card.EditCardFragment"
+        android:label="EditCardFragment" />
+    <fragment
+        android:id="@+id/safeModeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.safe_mode.SafeModeFragment"
+        android:label="SafeModeFragment" />
+    <fragment
+        android:id="@+id/addCardFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.add_card.AddCardFragment"
+        android:label="AddCardFragment" />
+    <fragment
+        android:id="@+id/paymentListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.payment_list.PaymentListFragment"
+        android:label="PaymentListFragment" />
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment"
+        android:label="PaymentFragment" />
+    <fragment
+        android:id="@+id/monitoringFilterFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringFilterFragment"
+        android:label="MonitoringFilterFragment" />
+    <fragment
+        android:id="@+id/requestMoneyFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.request_money.RequestMoneyFragment"
+        android:label="RequestMoneyFragment" />
+    <fragment
+        android:id="@+id/requestMoneySuccessFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.request_money.RequestMoneySuccessFragment"
+        android:label="RequestMoneySuccessFragment" />
+    <fragment
+        android:id="@+id/confirmPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.abc_confirm.ConfirmPaymentFragment"
+        android:label="ConfirmPaymentFragment" />
+    <fragment
+        android:id="@+id/monitoringUzCardFilterFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringUzCardFilterFragment"
+        android:label="MonitoringUzCardFilterFragment" />
+    <fragment
+        android:id="@+id/monitoringHumoFilterFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringHumoFilterFragment"
+        android:label="MonitoringHumoFilterFragment" />
+    <fragment
+        android:id="@+id/monitoringVisaFilterFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringVisaFilterFragment"
+        android:label="MonitoringVisaFilterFragment" />
+    <fragment
+        android:id="@+id/monitoringWalletFilterFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringWalletFilterFragment"
+        android:label="MonitoringWalletFilterFragment" />
+    <fragment
+        android:id="@+id/paymentSecondStepFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.init_payment.second_step.PaymentSecondStepFragment"
+        android:label="PaymentSecondStepFragment" />
+    <fragment
+        android:id="@+id/aboutCardFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.card_details.AboutCardFragment"
+        android:label="AboutCardFragment" />
+    <fragment
+        android:id="@+id/confirmLocalPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.create_loan.ConfirmLocalPaymentFragment"
+        android:label="ConfirmLocalPaymentFragment" />
+    <fragment
+        android:id="@+id/checkInfoPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.all_card.CheckInfoPaymentFragment"
+        android:label="CheckInfoPaymentFragment" />
+    <fragment
+        android:id="@+id/securityFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.security.SecurityFragment"
+        android:label="SecurityFragment" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.settings.SettingsFragment"
+        android:label="SettingsFragment" />
+    <fragment
+        android:id="@+id/aboutBankFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.about_bank.AboutBankFragment"
+        android:label="AboutBankFragment" />
+    <fragment
+        android:id="@+id/changeLanguageFragmentSettings"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.settings.ChangeLanguageFragment"
+        android:label="ChangeLanguageFragment" />
+    <fragment
+        android:id="@+id/publicOfferFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.about_bank.PublicOfferFragment"
+        android:label="PublicOfferFragment" />
+    <fragment
+        android:id="@+id/connectWithBankFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.about_bank.ConnectWithBankFragment"
+        android:label="ConnectWithBankFragment" />
+    <fragment
+        android:id="@+id/appThemeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.settings.AppThemeFragment"
+        android:label="AppThemeFragment" />
+    <fragment
+        android:id="@+id/passCodeFragment2"
+        android:name="uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment"
+        android:label="PassCodeFragment" />
+    <fragment
+        android:id="@+id/myDetailsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.user_details.MyDetailsFragment"
+        android:label="MyDetailsFragment" />
+    <fragment
+        android:id="@+id/mainBranchesFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.about_bank.branches.MainBranchesFragment"
+        android:label="MainBranchesFragment" />
+    <fragment
+        android:id="@+id/fragmentBranchDetails"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.about_bank.branches.FragmentBranchDetails"
+        android:label="FragmentBranchDetails" />
+    <fragment
+        android:id="@+id/myDevicesFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.security.MyDevicesFragment"
+        android:label="MyDevicesFragment" />
+    <fragment
+        android:id="@+id/pinCodeFragment2"
+        android:name="uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment"
+        android:label="PinCodeFragment" />
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.NotificationsFragment"
+        android:label="NotificationsFragment" />
+    <fragment
+        android:id="@+id/searchEveryWhereFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchFragment"
+        android:label="SearchFragment" />
+    <fragment
+        android:id="@+id/myHomeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.my_home.MyHomeFragment"
+        android:label="MyHomeFragment" />
+    <fragment
+        android:id="@+id/serviceFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.my_home.add_service.ServiceFragment"
+        android:label="ServiceFragment" />
+    <fragment
+        android:id="@+id/newPaymentGroupListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.my_home.add_service.NewPaymentListGroupFragment"
+        android:label="PaymentGroupListFragment" />
+    <fragment
+        android:id="@+id/myHouseSinglePaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.my_home.add_service.MyHouseSinglePaymentFragment"
+        android:label="MyHouseSinglePaymentFragment" />
+    <fragment
+        android:id="@+id/myHomeHistory"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.my_home.my_house_history.MyHomeHistory"
+        android:label="MyHomeHistory" />
+    <fragment
+        android:id="@+id/ratesFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.rates.RatesFragment"
+        android:label="RatesFragment" />
+    <fragment
+        android:id="@+id/myHouseServicesDetailsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.my_home.add_service.MyHouseServicesDetailsFragment"
+        android:label="MyHouseServicesDetailsFragment" />
+    <fragment
+        android:id="@+id/mainLimitsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.card_limits.MainLimitsFragment"
+        android:label="MainLimitsFragment" />
+    <fragment
+        android:id="@+id/setCardLimitsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.card_limits.set_limits.SetCardLimitsFragment"
+        android:label="SetCardLimitsFragment" />
+    <fragment
+        android:id="@+id/mainApplicationListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.applications.MainApplicationListFragment"
+        android:label="MainApplicationListFragment" />
+    <fragment
+        android:id="@+id/autoPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.AutoPaymentFragment"
+        android:label="AutoPaymentFragment" />
+    <fragment
+        android:id="@+id/createAutoPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment.CreateAutoPaymentFragment"
+        android:label="CreateAutoPaymentFragment" />
+    <fragment
+        android:id="@+id/saveAutoPaymentFinalFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment.SaveAutoPaymentFinalFragment"
+        android:label="SaveAutoPaymentFinalFragment" />
+    <fragment
+        android:id="@+id/autoPaymentDetailsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment.AutoPaymentDetailsFragment"
+        android:label="AutoPaymentDetailsFragment" />
+    <fragment
+        android:id="@+id/confirmSWIFTTransfer"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.ConfirmSWIFTTransferFragment"
+        android:label="ConfirmSWIFTTransfer" />
+    <fragment
+        android:id="@+id/openWalletFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.open_wallet.OpenWalletFragment"
+        android:label="OpenWalletFragment" />
+    <fragment
+        android:id="@+id/readNotificationFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.ReadNotificationFragment"
+        android:label="ReadNotificationFragment" />
+    <fragment
+        android:id="@+id/fastAccessControlFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.fast_access.FastAccessControlFragment"
+        android:label="FastAccessControlFragment" />
+    <fragment
+        android:id="@+id/clientCreditListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.list.ClientCreditListFragment"
+        android:label="ClientCreditListFragment" />
+    <fragment
+        android:id="@+id/clientDepositListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.list.ClientDepositListFragment"
+        android:label="ClientDepositListFragment" />
+    <fragment
+        android:id="@+id/saveAutoPaymentDayFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.edit_payment.SaveAutoPaymentDayFragment"
+        android:label="SaveAutoPaymentDayFragment" />
+    <fragment
+        android:id="@+id/saveAutoPaymentMonthFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.edit_payment.SaveAutoPaymentMonthFragment"
+        android:label="SaveAutoPaymentMonthFragment" />
+    <fragment
+        android:id="@+id/firstCardLocalMonitoringFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.first_card.FirstCardLocalMonitoringFragment"
+        android:label="FirstCardLocalMonitoringFragment" />
+    <fragment
+        android:id="@+id/clientCreditFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCreditFragment"
+        android:label="ClientCreditFragment" />
+    <fragment
+        android:id="@+id/creditDetailsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.loan_info.CreditDetailsFragment"
+        android:label="CreditDetailsFragment" />
+    <fragment
+        android:id="@+id/creditRequisitesFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.requisites.CreditRequisitesFragment"
+        android:label="CreditRequisitesFragment" />
+    <fragment
+        android:id="@+id/creditGraphInitialFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.loan_info.CreditGraphInitialFragment"
+        android:label="CreditGraphInitialFragment" />
+    <fragment
+        android:id="@+id/loanPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.pay_loan.LoanPaymentFragment"
+        android:label="LoanPaymentFragment" />
+    <fragment
+        android:id="@+id/confirmCreditPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.pay_loan.ConfirmCreditPaymentFragment"
+        android:label="ConfirmCreditPaymentFragment" />
+    <fragment
+        android:id="@+id/templateListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.templates.TemplateListFragment"
+        android:label="TemplateListFragment" />
+    <fragment
+        android:id="@+id/clientDepositFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.ClientDepositFragment"
+        android:label="ClientDepositFragment">
+        <action
+            android:id="@+id/action_clientDepositFragment_to_depositEditNameFragment"
+            app:destination="@id/depositEditNameFragment"
+            app:popUpTo="@id/clientDepositFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/depositEditNameFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.DepositEditNameFragment"
+        android:label="DepositEditNameFragment" />
+    <fragment
+        android:id="@+id/depositFillingFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.DepositFillingFragment"
+        android:label="DepositFillingFragment" />
+    <fragment
+        android:id="@+id/SWIFTHistoryFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.SWIFTHistoryFragment"
+        android:label="SWIFTHistoryFragment" />
+    <fragment
+        android:id="@+id/HUMOLimitsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.card_limits.HUMOLimitsFragment"
+        android:label="HUMOLimitsFragment" />
+    <fragment
+        android:id="@+id/cardSafetyFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.card_safety.CardSafetyFragment"
+        android:label="CardSafetyFragment" />
+    <fragment
+        android:id="@+id/visaSecurityFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.safe_mode.VisaSecurityFragment"
+        android:label="VisaSecurityFragment" />
+    <fragment
+        android:id="@+id/checkInfoPaymentFragment2"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.abc_success.CheckInfoPaymentFragment"
+        android:label="CheckInfoPaymentFragment" />
+    <fragment
+        android:id="@+id/goalListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.goal.GoalListFragment"
+        android:label="GoalListFragment" />
+    <fragment
+        android:id="@+id/createGoalFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.goal.new_goal.CreateGoalFragment"
+        android:label="CreateGoalFragment" />
+    <fragment
+        android:id="@+id/confirmGoalFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.goal.new_goal.ConfirmGoalFragment"
+        android:label="ConfirmGoalFragment" />
+    <navigation
+        android:id="@+id/navigation"
+        app:startDestination="@id/visaSecurityFragment">
+        <fragment
+            android:id="@+id/visaSecurityFragment"
+            android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.safe_mode.VisaSecurityFragment"
+            android:label="VisaSecurityFragment" />
+    </navigation>
+    <fragment
+        android:id="@+id/goalOperationFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.goal.operation.GoalOperationFragment"
+        android:label="GoalOperationFragment" />
+    <fragment
+        android:id="@+id/goalIncomeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.goal.income.GoalIncomeFragment"
+        android:label="GoalIncomeFragment" />
+    <fragment
+        android:id="@+id/goalOutComeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.goal.outcome.GoalOutComeFragment"
+        android:label="GoalOutComeFragment" />
+    <fragment
+        android:id="@+id/confirmGoalOutComeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.goal.outcome.ConfirmGoalOutComeFragment"
+        android:label="ConfirmGoalOutComeFragment" />
+    <fragment
+        android:id="@+id/deleteGoalFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.goal.operation.DeleteGoalFragment"
+        android:label="DeleteGoalFragment" />
+    <fragment
+        android:id="@+id/depositPercentsDialog"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.dialog.DepositPercentsDialog"
+        android:label="DepositPercentsDialog" />
+    <fragment
+        android:id="@+id/saveAutoPaymentSpecialFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.edit_payment.SaveAutoPaymentSpecialFragment"
+        android:label="SaveAutoPaymentSpecialFragment" />
+    <fragment
+        android:id="@+id/myHouseMultipleAmountFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.my_home.payment_list.MyHouseMultipleAmountFragment"
+        android:label="MyHouseMultipleAmountFragment" />
+    <fragment
+        android:id="@+id/myHouseMultipleSelectionFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.my_home.payment_list.MyHouseMultipleSelectionFragment"
+        android:label="MyHouseMultipleSelectionFragment" />
+    <fragment
+        android:id="@+id/myHouseMultiplePayFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.my_home.payment_list.MyHouseMultiplePayFragment"
+        android:label="MyHouseMultiplePayFragment" />
+    <fragment
+        android:id="@+id/transferToCardFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferFragment"
+        android:label="TransferFragment" />
+    <fragment
+        android:id="@+id/successTransferFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment"
+        android:label="SuccessTransferFragment" />
+    <fragment
+        android:id="@+id/transferChequeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.cheque.TransferChequeFragment"
+        android:label="TransferChequeFragment" />
+    <fragment
+        android:id="@+id/transferByPhoneFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.by_phone.TransferByPhoneFragment"
+        android:label="ByPhoneFragment" />
+    <fragment
+        android:id="@+id/transferByWalletFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.by_wallet.TransferByWalletFragment"
+        android:label="TransferByWalletFragment" />
+    <fragment
+        android:id="@+id/creditSuccessFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.create_loan.CreditSuccessFragment"
+        android:label="CreditSuccessFragment" />
+    <fragment
+        android:id="@+id/takeCreditFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.loan.loan_client.TakeCreditFragment"
+        android:label="TakeCreditFragment" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.user_details.EditProfileFragment"
+        android:label="EditProfileFragment" />
 </navigation>

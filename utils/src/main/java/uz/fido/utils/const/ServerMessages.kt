@@ -37,6 +37,10 @@ object ServerMessages {
                 meaningFulMessage = getString(R.string.tech_works)
             }
 
+            message.isEmpty() -> {
+                meaningFulMessage = getString(R.string.unkknown_error)
+            }
+
             message == ERROR_MESSAGE_TOKEN_EXPIRED || message == ERROR_MESSAGE_SESSION_EXPIRED -> {
                 meaningFulMessage = ""
             }

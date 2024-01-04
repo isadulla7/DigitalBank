@@ -2,7 +2,7 @@ package uz.fido.network.data.repository
 
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.ITemplateRepository
+import uz.fido.network.domain.datasource.interfaces.ITemplateRepository
 import uz.fido.network.domain.datasource.services.TemplateApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.template.CreateTemplateGroupRequest
@@ -20,6 +20,7 @@ import javax.inject.Inject
 
 class TemplateRepositoryImpl @Inject constructor(private val templateService: TemplateApiInterface) :
     ITemplateRepository {
+
     override suspend fun createTemplate(
         token: String,
         createTemplateRequest: CreateTemplateRequest

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_bank_product"
+    android:layout_width="match_parent"
+    android:layout_height="210dp"
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/transfer_type_ripple_bg"
+    android:orientation="vertical">
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_product_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:includeFontPadding="false"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:text="@string/order_card"
+        android:textColor="@color/mainTextColor"
+        android:textSize="16sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/tv_product_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:paddingHorizontal="16dp"
+        android:text="@string/order_card_description"
+        android:textColor="@color/brandBlueColor_40"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
+
+    <ImageView
+        android:id="@+id/ic_product_icon"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="1dp"
+        android:layout_weight="1"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_product_description"
+        tools:ignore="ContentDescription" />
+
+    <View
+        android:id="@+id/disable_bg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/disable_service_background"
+        android:visibility="gone" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_soon"
+        android:layout_width="160dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="-36dp"
+        android:background="@color/status_waiting"
+        android:gravity="center"
+        android:rotation="45"
+        android:text="@string/soon"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

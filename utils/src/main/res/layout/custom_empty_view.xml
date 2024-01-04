@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="208dp"
+        android:layout_height="180dp"
+        android:src="@drawable/ic_empty_view"
+        tools:ignore="ContentDescription" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/empty_list"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="16sp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textColor="@color/brandBlueColor_40"
+        android:textSize="14sp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

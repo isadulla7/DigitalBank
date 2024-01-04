@@ -1,11 +1,193 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/whiteColor"
+    android:clipChildren="false">
 
-    <uz.fido.utils.view.custom_text_view.TextViewRegular
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Pin Code Fragment"/>
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:s_title="@string/create_pin_code" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/dot_view"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:clipToPadding="false"
+        android:gravity="center"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintBottom_toTopOf="@id/num2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar">
+
+        <ImageView
+            android:id="@+id/dot1"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/pin_dot_disable"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/dot2"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/pin_dot_disable"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/dot3"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/pin_dot_disable"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/dot4"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/pin_dot_disable"
+            tools:ignore="ContentDescription" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/error_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16sp"
+        android:gravity="center"
+        android:textColor="@color/brandRedColor"
+        android:textSize="16sp"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/dot_view" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/num1"
+        style="@style/pin_number_style"
+        android:layout_marginEnd="44dp"
+        android:text="1"
+        app:layout_constraintBottom_toBottomOf="@id/num2"
+        app:layout_constraintEnd_toStartOf="@id/num2"
+        app:layout_constraintTop_toTopOf="@id/num2" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/num2"
+        style="@style/pin_number_style"
+        android:layout_marginBottom="24dp"
+        android:text="2"
+        app:layout_constraintBottom_toTopOf="@id/num5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/num3"
+        style="@style/pin_number_style"
+        android:layout_marginStart="44dp"
+        android:text="3"
+        app:layout_constraintBottom_toBottomOf="@id/num2"
+        app:layout_constraintStart_toEndOf="@id/num2"
+        app:layout_constraintTop_toTopOf="@id/num2" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/num4"
+        style="@style/pin_number_style"
+        android:layout_marginEnd="44dp"
+        android:text="4"
+        app:layout_constraintBottom_toBottomOf="@id/num5"
+        app:layout_constraintEnd_toStartOf="@id/num2"
+        app:layout_constraintTop_toTopOf="@id/num5" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/num5"
+        style="@style/pin_number_style"
+        android:layout_marginBottom="24dp"
+        android:text="5"
+        app:layout_constraintBottom_toTopOf="@id/num8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/num6"
+        style="@style/pin_number_style"
+        android:layout_marginStart="44dp"
+        android:text="6"
+        app:layout_constraintBottom_toBottomOf="@id/num5"
+        app:layout_constraintStart_toEndOf="@id/num2"
+        app:layout_constraintTop_toTopOf="@id/num5" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/num7"
+        style="@style/pin_number_style"
+        android:layout_marginEnd="44dp"
+        android:text="7"
+        app:layout_constraintBottom_toBottomOf="@id/num8"
+        app:layout_constraintEnd_toStartOf="@id/num2"
+        app:layout_constraintTop_toTopOf="@id/num8" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/num8"
+        style="@style/pin_number_style"
+        android:layout_marginBottom="24dp"
+        android:text="8"
+        app:layout_constraintBottom_toTopOf="@id/num0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/num9"
+        style="@style/pin_number_style"
+        android:layout_marginStart="44dp"
+        android:text="9"
+        app:layout_constraintBottom_toBottomOf="@id/num8"
+        app:layout_constraintStart_toEndOf="@id/num2"
+        app:layout_constraintTop_toTopOf="@id/num8" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/num0"
+        style="@style/pin_number_style"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="28dp"
+        android:text="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/fingerprint"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:src="@drawable/ic_finger_scan"
+        app:layout_constraintBottom_toBottomOf="@id/num0"
+        app:layout_constraintEnd_toEndOf="@id/num7"
+        app:layout_constraintStart_toStartOf="@id/num7"
+        app:layout_constraintTop_toTopOf="@id/num0"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/clear"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:alpha="0.15"
+        android:src="@drawable/ic_backspace"
+        app:layout_constraintBottom_toBottomOf="@id/num0"
+        app:layout_constraintEnd_toEndOf="@id/num9"
+        app:layout_constraintStart_toStartOf="@id/num9"
+        app:layout_constraintTop_toTopOf="@id/num0"
+        tools:ignore="ContentDescription" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

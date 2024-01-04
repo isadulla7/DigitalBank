@@ -1,6 +1,5 @@
 package uz.fido.utils.security;
 
-import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -20,7 +19,7 @@ public class AeSimpleSHA1 {
         return buf.toString();
     }
 
-    public static String SHA2(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
+    public static String SHA2(String text) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
         byte[] textBytes = text.getBytes(StandardCharsets.UTF_8);
         md.update(textBytes, 0, textBytes.length);

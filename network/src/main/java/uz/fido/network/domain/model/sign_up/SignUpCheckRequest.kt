@@ -1,7 +1,8 @@
 package uz.fido.network.domain.model.sign_up
 
 import uz.fido.network.domain.model.abc_base.UserInfo
-import uz.fido.utils.const.Const.USER_CLIENT_ID
+import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
+import java.io.Serializable
 
 data class SignUpCheckRequest(
     val app_key_hash: String,
@@ -10,4 +11,4 @@ data class SignUpCheckRequest(
     val device_code: String,
     val userInfo: UserInfo,
     val device_id: String? = null
-)
+) : Serializable

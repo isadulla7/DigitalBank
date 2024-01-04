@@ -1,6 +1,6 @@
 package uz.fido.network.domain.model.p2p
 
-import uz.fido.utils.const.Const.USER_CLIENT_ID
+import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 
 data class P2PHistoryRequest(
     val user_id: String,

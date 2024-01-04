@@ -1,8 +1,9 @@
 package uz.fido.network.data.repository
 
+import androidx.lifecycle.MutableLiveData
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.IP2PRepository
+import uz.fido.network.domain.datasource.interfaces.IP2PRepository
 import uz.fido.network.domain.datasource.services.P2PApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.amount_requests.RmCreateRequest
@@ -14,6 +15,8 @@ import uz.fido.network.domain.model.amount_requests.RmGetTransfersResponse
 import uz.fido.network.domain.model.amount_requests.RmSetStateRequest
 import uz.fido.network.domain.model.amount_requests.RmTransferRequest
 import uz.fido.network.domain.model.amount_requests.RmTransferResponse
+import uz.fido.network.domain.model.cards.CheckCardRequestP2p
+import uz.fido.network.domain.model.cards.CheckCardResponse
 import uz.fido.network.domain.model.collect_split_money.CMChangeCardNumberRequest
 import uz.fido.network.domain.model.collect_split_money.CMSetStateRequest
 import uz.fido.network.domain.model.collect_split_money.CMUserTransferResponse
@@ -35,9 +38,12 @@ import uz.fido.network.domain.model.collect_split_money.CollectMoneyMenuResponse
 import uz.fido.network.domain.model.collect_split_money.CollectMoneyTransferRequest
 import uz.fido.network.domain.model.collect_split_money.CollectMoneyUserTransferRequest
 import uz.fido.network.domain.model.conversion.ConversionRequest
+import uz.fido.network.domain.model.get_card_by_phone.CardByPhone
 import uz.fido.network.domain.model.money_transfer.create.CreateTransferRequest
 import uz.fido.network.domain.model.money_transfer.list.MoneyTransferHistoryResponse
 import uz.fido.network.domain.model.money_transfer.receive.MoneyTransferParamsResponse
+import uz.fido.network.domain.model.p2p.P2PHistoryRequest
+import uz.fido.network.domain.model.p2p.P2PHistoryResponse
 import uz.fido.network.domain.model.p2p.P2PInfoRequest
 import uz.fido.network.domain.model.p2p.P2PInfoResponse
 import uz.fido.network.domain.model.p2p.P2PRequest
@@ -49,6 +55,27 @@ import javax.inject.Inject
 
 class P2PRepositoryImpl @Inject constructor(private val p2pService: P2PApiInterface) :
     IP2PRepository {
+
+    var histories: MutableLiveData<List<CardByPhone>> = MutableLiveData()
+
+    fun updateHistory(histories: List<CardByPhone>) {
+        this.histories.postValue(histories)
+    }
+
+    override suspend fun checkCardInfo(
+        token: String,
+        checkCardRequestP2p: CheckCardRequestP2p
+    ): Resource<CheckCardResponse> = getResult {
+        p2pService.checkCardInfo(token, checkCardRequestP2p)
+    }
+
+    override suspend fun getP2pHistory(
+        token: String,
+        p2PHistoryRequest: P2PHistoryRequest
+    ): Resource<P2PHistoryResponse> = getResult {
+        p2pService.getP2pHistory(token, p2PHistoryRequest)
+    }
+
     override suspend fun getPopularTransferList(token: String): Resource<PopularTransferResponse> =
         getResult {
             p2pService.getPopularTransferList(token)
@@ -306,4 +333,13 @@ class P2PRepositoryImpl @Inject constructor(private val p2pService: P2PApiInterf
     ): Resource<BaseResponse> = getResult {
         p2pService.collectMoneyBindProducts(token, collectMoneyBindProducts)
     }
+
+    override suspend fun p2pInfoRequest(
+        token: String,
+        p2PInfoRequest: P2PInfoRequest
+    ): Resource<P2PInfoResponse> {
+        return getResult { p2pService.p2pInfo(token, p2PInfoRequest) }
+    }
+
+
 }

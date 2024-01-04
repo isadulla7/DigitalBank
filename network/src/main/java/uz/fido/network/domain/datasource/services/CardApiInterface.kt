@@ -8,15 +8,21 @@ import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.cards.*
 import uz.fido.network.domain.model.get_card_by_phone.CardByPhoneResponse
 import uz.fido.network.domain.model.get_card_by_phone.GetCardByPhoneRequest
+import uz.fido.network.domain.model.home.CheckSMSActivateRequest
+import uz.fido.network.domain.model.home.GlSMSActivateRequest
 import uz.fido.network.domain.model.humo_pay.HumoCardInfoRequest
 import uz.fido.network.domain.model.humo_pay.NfcHUMOInfoResponse
 import uz.fido.network.domain.model.limits.*
 import uz.fido.network.domain.model.limits.gl.GlLimitBaseRequest
+import uz.fido.network.domain.model.limits.gl.GlLimitDeleteRequest
 import uz.fido.network.domain.model.limits.gl.GlLimitListRequest
 import uz.fido.network.domain.model.limits.gl.GlLimitParamsResponse
+import uz.fido.network.domain.model.limits.gl.GlLimitResponse
 import uz.fido.network.domain.model.limits.gl.GlSetCardLimitRequest
 import uz.fido.network.domain.model.p2p.P2PHistoryRequest
 import uz.fido.network.domain.model.p2p.P2PHistoryResponse
+import uz.fido.network.domain.model.sms.CheckSmsForPayment
+import uz.fido.network.domain.model.sms.CheckSmsForPaymentResponse
 
 interface CardApiInterface {
 
@@ -37,7 +43,7 @@ interface CardApiInterface {
         @Header("Authorization") token: String
     ): CardListResponse
 
-    @POST("USER_OBJ_INFO")
+    @POST("USER_OBJ_INFO_NEW")
     suspend fun getCardInfo(
         @Header("Authorization") token: String,
         @Body cardInfoRequest: CardInfoRequest
@@ -121,6 +127,13 @@ interface CardApiInterface {
         @Body limitDeleteRequest: LimitDeleteRequest
     ): BaseResponse
 
+    @POST("GL_DELETE_CARD_LIMIT")
+    suspend fun glLimitDelete(
+        @Header("Authorization") token: String,
+        @Body glLimitBaseRequest: GlLimitDeleteRequest
+    ): BaseResponse
+
+
     @POST("SV_SET_MAIN_CARD")
     suspend fun svSetMainCard(
         @Header("Authorization") token: String,
@@ -156,9 +169,37 @@ interface CardApiInterface {
         @Body glLimitBaseRequest: GlLimitBaseRequest
     ): BaseResponse
 
-    @GET("GET_SV_GATE_LIMIT_PARAMS")
+    @POST("GL_GET_LIMIT")
+    suspend fun getGlLimitList2(
+        @Header("Authorization") token: String,
+        @Body glLimitListRequest: GlLimitListRequest
+    ): GlLimitResponse
+
+    @POST("CHECK_GL_SMS_ACTIVATE")
+    suspend fun checkSMSActivate(
+        @Header("Authorization") token: String, @Body request: CheckSMSActivateRequest
+    ): BaseResponse
+
+    @POST("GL_SMS_ACTIVATE")
+    suspend fun glSMSActivate(
+        @Header("Authorization") token: String, @Body request: GlSMSActivateRequest
+    ): BaseResponse
+
+    @POST("3D_SECURE_ACTION")
+    suspend fun secure3DAction(
+        @Header("Authorization") token: String, @Body request: Secure3DRequest
+    ): secure3DResponse
+
+    @POST("TET_GET_SECURITY_CODE")
+    suspend fun getCVV(
+        @Header("Authorization") token: String,
+        @Body cardNumber: GetCVVRequest
+    ): GetCVVResponse
+
+    @GET("GET_HUMO_LIMIT_PARAMS")
     suspend fun getGlLimitParams(
         @Header("Authorization") token: String
     ): GlLimitParamsResponse
+
 
 }

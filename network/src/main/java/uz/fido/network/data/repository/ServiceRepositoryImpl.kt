@@ -2,7 +2,7 @@ package uz.fido.network.data.repository
 
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.IServiceRepository
+import uz.fido.network.domain.datasource.interfaces.IServiceRepository
 import uz.fido.network.domain.datasource.services.ServiceApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.applications.ApplicationsResponse

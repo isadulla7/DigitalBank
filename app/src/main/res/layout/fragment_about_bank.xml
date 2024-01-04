@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteColor"
+        android:outlineSpotShadowColor="@color/appBarShadowColor"
+        android:translationZ="@dimen/elevation_8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:s_title="@string/about_bank" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/atm_and_filials"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/cornered_bg_12dp"
+        android:gravity="center"
+        android:paddingHorizontal="16dp">
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="@string/atm_and_filials"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_right_icon"
+            app:tint="@color/brandBlueColor_30"
+            tools:ignore="ContentDescription" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/connect_with_bank"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/cornered_bg_12dp"
+        android:gravity="center"
+        android:paddingHorizontal="16dp">
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="@string/connect_with_bank"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_right_icon"
+            app:tint="@color/brandBlueColor_30"
+            tools:ignore="ContentDescription" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/public_offer"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/cornered_bg_12dp"
+        android:gravity="center"
+        android:paddingHorizontal="16dp">
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="@string/public_offer"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_right_icon"
+            app:tint="@color/brandBlueColor_30"
+            tools:ignore="ContentDescription" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

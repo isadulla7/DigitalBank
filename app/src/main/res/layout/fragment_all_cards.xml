@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/card_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="8dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:paddingBottom="64dp"
+        android:visibility="visible" />
+
+    <!--    <androidx.core.widget.NestedScrollView-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
+
+    <!--        <androidx.appcompat.widget.LinearLayoutCompat-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:paddingBottom="64dp">-->
+
+    <!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+    <!--                android:id="@+id/card_layout"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:orientation="vertical">-->
+
+    <!--                <uz.fido.utils.view.custom_text_view.TextViewSemiBold-->
+    <!--                    android:id="@+id/card_list_title"-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginHorizontal="16dp"-->
+    <!--                    android:layout_marginTop="16dp"-->
+    <!--                    android:text="@string/cards"-->
+    <!--                    android:textSize="20sp" />-->
+
+    <!--                <androidx.recyclerview.widget.RecyclerView-->
+    <!--                    android:id="@+id/card_list"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginStart="16dp"-->
+    <!--                    android:layout_marginEnd="8dp"-->
+    <!--                    android:clipChildren="false"-->
+    <!--                    android:clipToPadding="false"-->
+    <!--                    android:overScrollMode="never"-->
+    <!--                    android:paddingBottom="16dp"-->
+    <!--                    android:visibility="visible" />-->
+
+    <!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+    <!--            <androidx.appcompat.widget.LinearLayoutCompat-->
+    <!--                android:id="@+id/wallet_layout"-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:orientation="vertical">-->
+
+    <!--                <uz.fido.utils.view.custom_text_view.TextViewSemiBold-->
+    <!--                    android:layout_width="wrap_content"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginHorizontal="16dp"-->
+    <!--                    android:layout_marginTop="8dp"-->
+    <!--                    android:text="@string/wallets"-->
+    <!--                    android:textSize="20sp" />-->
+
+    <!--                <androidx.recyclerview.widget.RecyclerView-->
+    <!--                    android:id="@+id/wallet_list"-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_marginStart="16dp"-->
+    <!--                    android:layout_marginEnd="8dp"-->
+    <!--                    android:clipChildren="false"-->
+    <!--                    android:clipToPadding="false"-->
+    <!--                    android:overScrollMode="never"-->
+    <!--                    android:paddingBottom="16dp"-->
+    <!--                    android:visibility="visible"-->
+    <!--                    tools:itemCount="5"-->
+    <!--                    tools:listitem="@layout/item_my_cards" />-->
+
+    <!--            </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+    <!--        </androidx.appcompat.widget.LinearLayoutCompat>-->
+
+    <!--    </androidx.core.widget.NestedScrollView>-->
+
+    <uz.fido.utils.view.custom_empty_view.EmptyView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/whiteColor"
+        android:visibility="gone"
+        app:ev_desc="@string/no_card_description"
+        app:ev_title="@string/you_dont_have_card" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

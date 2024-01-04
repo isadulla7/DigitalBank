@@ -1,7 +1,16 @@
 package uz.fido.network.domain.datasource.services
 
+import okhttp3.MultipartBody
+import okhttp3.ResponseBody
+import retrofit2.Call
+import retrofit2.http.*
+import uz.fido.network.domain.model.abc_base.BaseResponse
+import uz.fido.network.domain.model.abc_base.ChangeNotifStateRequest
+import uz.fido.network.domain.model.abc_base.SwapKeysRequest
+import uz.fido.network.domain.model.abc_base.SwapKeysResponse
 import uz.fido.network.domain.model.edit_user.EditUserInfo
 import uz.fido.network.domain.model.liveness.CheckLivenessResponse
+import uz.fido.network.domain.model.my_id.*
 import uz.fido.network.domain.model.password.ChangePasswordRequest
 import uz.fido.network.domain.model.password.CheckForgetPasswordModel
 import uz.fido.network.domain.model.payment.Payment
@@ -12,21 +21,13 @@ import uz.fido.network.domain.model.sessions.GetUserDevicesRequest
 import uz.fido.network.domain.model.sessions.GetUserDevicesResponse
 import uz.fido.network.domain.model.sign_in.CheckUserSignInRequest
 import uz.fido.network.domain.model.sign_in.SignInRequest
+import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.network.domain.model.sign_up.CheckUserSms
+import uz.fido.network.domain.model.sign_up.FinishRegRequest
 import uz.fido.network.domain.model.sign_up.SignUpCheckRequest
 import uz.fido.network.domain.model.sign_up.SignUpRequest
-import okhttp3.MultipartBody
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.http.*
-import uz.fido.network.domain.model.abc_base.BaseResponse
-import uz.fido.network.domain.model.my_id.CheckIdentification
-import uz.fido.network.domain.model.my_id.GetPhysicalPhoto
-import uz.fido.network.domain.model.my_id.GetPhysicalPhotoResponse
-import uz.fido.network.domain.model.my_id.MyIdGetAccessTokenRequest
-import uz.fido.network.domain.model.my_id.MyIdGetAccessTokenResponse
-import uz.fido.network.domain.model.my_id.MyIdMeResponse
+import uz.fido.network.domain.model.sms.SendEmailCode
 
 interface UserApiInterface {
 
@@ -46,36 +47,34 @@ interface UserApiInterface {
     @POST("GET_ACCESS_TOKEN")
     suspend fun getAccessTokenMyId(
         @Body myIdGetAccessTokenRequest: MyIdGetAccessTokenRequest
-    ): MyIdGetAccessTokenResponse
+    ): MyIdMeResponse
 
     @GET("api/v1/users/me")
     suspend fun getMyIdMe(@Header("Authorization") token: String): MyIdMeResponse
 
-    @GET
-    fun downloadPayments(@Url fileUrl: String?): Call<ResponseBody>
+    @POST("USER_SIGN_IN_NEW")
+    suspend fun signIn(
+        @Body signInRequest: SignInRequestNew
+    ): SignInResponse
 
-    @GET("GET_PAYMENT_FILE")
-    suspend fun getPaymentFile(
-        @Header("Authorization") token: String
-    ): Payment
+    @POST("USER_SIGN_IN_NEW")
+    fun signInNew(
+        @Body signInRequest: SignInRequestNew
+    ): Call<SignInResponse>
 
-    @POST("USER_SIGN_IN_CHECK")
-    suspend fun checkUserSignIn(
-        @Body requestBody: CheckUserSignInRequest
-    ): BaseResponse
-
-    @POST("CHECK_USER_SMS")
+    @POST("CHECK_SMS_CODE")
     suspend fun checkUserSms(
         @Body checkUserSms: CheckUserSms
-    ): BaseResponse
+    ): SignInResponse
 
     @POST("USER_SIGN_IN")
     suspend fun signIn(
         @Body signInRequest: SignInRequest
     ): SignInResponse
 
-    @POST("USER_REG_CHECK")
+    @POST("USER_START_REG")
     suspend fun signUpCheck(
+        @Header("device_type") deviceType: String,
         @Body signUpCheckRequest: SignUpCheckRequest
     ): BaseResponse
 
@@ -84,13 +83,25 @@ interface UserApiInterface {
         @Body signUpRequest: SignUpRequest
     ): SignInResponse
 
+    @POST("USER_FINISH_REG")
+    suspend fun finishReg(
+        @Body signUpRequest: FinishRegRequest
+    ): SignInResponse
+
+
     @POST("CHECK_FORGOT_PASSWORD")
     suspend fun checkForgetPassword(@Body checkForgetPasswordModel: CheckForgetPasswordModel): BaseResponse
 
     @POST("CHANGE_FORGOT_PASSWORD")
     suspend fun changePassword(@Body changePasswordRequest: ChangePasswordRequest): BaseResponse
 
-    @POST("LOG_OUT")
+    @POST("CHANGE_PASSWORD")
+    suspend fun changePassWithoutSMS(
+        @Header("Authorization") token: String,
+        @Body changePasswordRequest: ChangePasswordRequest
+    ): BaseResponse
+
+    @POST("LOG_OUT_NEW")
     suspend fun logOut(
         @Header("Authorization") token: String,
         @Body logOutRequest: LogOutRequest
@@ -130,4 +141,20 @@ interface UserApiInterface {
         @Header("Authorization") token: String,
         @Body deleteUserDeviceRequest: DeleteUserDeviceRequest
     ): BaseResponse
+
+    @POST("swapKey")
+    suspend fun swapKeys(
+        @Body request: SwapKeysRequest
+    ): SwapKeysResponse
+
+    @POST("SEND_EMAIL_CODE")
+    suspend fun sendEmailCode(
+        @Body sendSmsEmailCode: SendEmailCode
+    ): SignInResponse
+
+    @POST("CHANGE_USER_NOTIF_STATE")
+    suspend fun changeNotificationState(
+        @Header("Authorization") token: String, @Body request: ChangeNotifStateRequest
+    ): BaseResponse
+
 }

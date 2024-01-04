@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <androidx.appcompat.widget.LinearLayoutCompat
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:id="@+id/father"
+    android:background="@drawable/monitoring_filter_item_color"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="16dp"
+        android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:id="@+id/image"
+        android:visibility="gone"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_wife_filter"/>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal"
+            android:padding="12dp"
+            android:orientation="vertical">
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/tip_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14sp"
+                android:text="@string/type_of_transaction_text"/>
+
+<!--            <uz.fido.utils.view.custom_text_view.TextViewRegular-->
+<!--                android:id="@+id/status"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:text="Выбрано 0"-->
+<!--                android:textColor="@color/brandBlueColor_50"/>-->
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+<!--        <ImageView-->
+<!--            android:id="@+id/option"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:src="@drawable/arrow_right_icon"-->
+<!--            android:layout_gravity="center_vertical"-->
+<!--            />-->
+    </androidx.appcompat.widget.LinearLayoutCompat>
+

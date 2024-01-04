@@ -21,8 +21,8 @@ object SecurityCheck {
                     return true
                 }
             }
-        } catch (e1: SocketException) {
-            e1.printStackTrace()
+        } catch (exception: SocketException) {
+            exception.printStackTrace()
         }
         return false
     }
@@ -30,7 +30,9 @@ object SecurityCheck {
     fun isFromEmulator(): Boolean {
         return (Build.FINGERPRINT.startsWith("google/sdk_gphone_")
                 && Build.FINGERPRINT.endsWith(":user/release-keys")
-                && Build.MANUFACTURER == "Google" && Build.PRODUCT.startsWith("sdk_gphone_") && Build.BRAND == "google"
+                && Build.MANUFACTURER == "Google"
+                && Build.PRODUCT.startsWith("sdk_gphone_")
+                && Build.BRAND == "google"
                 && Build.MODEL.startsWith("sdk_gphone_"))
                 || Build.FINGERPRINT.startsWith("generic")
                 || Build.FINGERPRINT.startsWith("unknown")
@@ -67,6 +69,7 @@ object SystemProperties {
             val reader = BufferedReader(InputStreamReader(process.inputStream))
             return reader.readLine()
         } catch (e: IOException) {
+            e.printStackTrace()
         } finally {
             process?.destroy()
         }

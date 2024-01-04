@@ -1,5 +1,6 @@
 package uz.fido.network.domain.datasource.services
 
+import uz.fido.network.domain.model.monitoring.filter.PaymentServiceResponse
 import uz.fido.network.domain.model.monitoring.AccountHistoriesRequest
 import uz.fido.network.domain.model.monitoring.AccountHistoriesResponse
 import uz.fido.network.domain.model.monitoring.categories.SetCategoryRequest
@@ -20,6 +21,9 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import uz.fido.network.domain.model.abc_base.BaseResponse
+import uz.fido.network.domain.model.monitoring.filter.MonitoringFilterCardResponse
+import uz.fido.network.domain.model.monitoring.filter.NewFilterMonitoringFilterRequest
+import uz.fido.network.domain.model.monitoring.local.NewMonitoringFilterRequest
 
 interface MonitoringApiInterface {
 
@@ -75,4 +79,25 @@ interface MonitoringApiInterface {
         @Body request: HomeHistoryRequest
     ): HomeHistoryResponse
 
+    @POST("GET_LOCAL_TRAN_HIS_BY_FILTR")
+    suspend fun newMonitoringFilter(
+        @Header("Authorization") token: String,
+        @Body request: NewMonitoringFilterRequest
+    ): LocalMonitoringResponse
+
+    @GET("GET_USER_OBJECTS_FULLY")
+    suspend fun getLocalMonitoringCardList(
+        @Header("Authorization") token: String
+    ): MonitoringFilterCardResponse
+
+
+    @GET("GET_USER_PAYED_SERVICES")
+    suspend fun getLocalMonitoringServiceList(
+        @Header("Authorization") token: String
+    ): PaymentServiceResponse
+
+    @POST("GET_LOCAL_TRANS_BY_DATA")
+    suspend fun newFilterMonitoringFilter(
+        @Header("Authorization") token: String, @Body request: NewFilterMonitoringFilterRequest
+    ): LocalMonitoringResponse
 }

@@ -2,12 +2,53 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="view_pager_tab_color">#FFFFFF</color>
+    <color name="view_pager_stroke_color">#E7E9EC</color>
+    <color name="white_50">#08FFFFFF</color>
     <color name="transparent">#00FFFFFF</color>
-    <color name="brandRedColor">#FF0000</color>
-
     <color name="status_waiting">#F98D2A</color>
     <color name="status_identified">#19B28D</color>
     <color name="status_not_identified">#FF4646</color>
     <color name="primaryPurple">#0C5292</color>
+
+    <!-- RED -->
+    <color name="brandRedColor">#BF272B</color>
+    <color name="brandRedColor_90">#BF272B</color>
+    <color name="brandRedColor_80">#BF272B</color>
+    <color name="brandRedColor_70">#BF272B</color>
+    <color name="brandRedColor_60">#BF272B</color>
+    <color name="brandRedColor_50">#BF272B</color>
+    <color name="brandRedColor_40">#BF272B</color>
+    <color name="brandRedColor_30">#BF272B</color>
+    <color name="brandRedColor_20">#BF272B</color>
+    <color name="brandRedColor_10">#BF272B</color>
+
+    <color name="brandRedActiveColor">#A31D21</color>
+
+    <!-- BLUE -->
+    <color name="brandBlueColor">#091C3A</color>
+    <color name="brandBlueColor_90">#22334E</color>
+    <color name="brandBlueColor_80">#3A4961</color>
+    <color name="brandBlueColor_70">#536176</color>
+    <color name="brandBlueColor_60">#6B7789</color>
+    <color name="brandBlueColor_50">#848E9D</color>
+    <color name="brandBlueColor_40">#9DA4B0</color>
+    <color name="brandBlueColor_30">#B6BBC4</color>
+    <color name="brandBlueColor_20">#CED2D8</color>
+    <color name="brandBlueColor_10">#E7E9EC</color>
+    <color name="view_pager_mib_color">#F0F0F0</color>
+
+    <color name="blackColor">#000000</color>
+    <color name="whiteColor">#FFFFFF</color>
+    <color name="etBackgroundColor">#F6F6F6</color>
+    <color name="appBarShadowColor">#B6BBC4</color>
+
+    <color name="hintColor">@color/brandBlueColor_60</color>
+    <color name="mainTextColor">@color/brandBlueColor</color>
+    <color name="shimmerColor">#f4f4f4</color>
+    <color name="shadowColor">#0AFFFFFF</color>
+
+    <color name="cardBgColor">#FFFFFF</color>
+    <color name="cardBorderColor">#F6F6F6</color>
 
 </resources>

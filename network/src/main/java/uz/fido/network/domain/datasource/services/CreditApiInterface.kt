@@ -1,6 +1,8 @@
 package uz.fido.network.domain.datasource.services
 
 import retrofit2.http.Body
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -8,6 +10,8 @@ import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.client_info.ClientDetailedInfoResponse
 import uz.fido.network.domain.model.loans.CheckHasLoanRequest
 import uz.fido.network.domain.model.loans.CreateCreditAppRequest
+import uz.fido.network.domain.model.loans.CreateCreditRequestNew
+import uz.fido.network.domain.model.loans.GetLoanRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualResponse
 import uz.fido.network.domain.model.loans.create.CreateCreditClaimByCrm
@@ -24,6 +28,8 @@ import uz.fido.network.domain.model.loans.loan_products.CreditProductsResponse
 import uz.fido.network.domain.model.loans.my_loans.CreditListRequest
 import uz.fido.network.domain.model.loans.my_loans.CreditListResponse
 import uz.fido.network.domain.model.loans.overdraft.OverdraftGraphResponse
+import uz.fido.network.domain.model.my_id.MyIdGetAccessTokenResponse
+import uz.fido.network.domain.model.my_id.MyIdMeResponse
 
 interface CreditApiInterface {
 
@@ -39,7 +45,7 @@ interface CreditApiInterface {
         @Body createCreditQuestionRequest: CreateCreditQuestionRequest
     ): BaseResponse
 
-    @GET("LN_GET_PRODUCTS_FROM_IABS")
+    @GET("GET_LOAN_PRODUCTS")
     suspend fun getCreditGroups(@Header("Authorization") token: String): CreditGroupsResponse
 
     @POST("IBS_CALC_CREDIT_MANUAL")
@@ -92,6 +98,16 @@ interface CreditApiInterface {
     suspend fun checkLoanByCrm(
         @Header("Authorization") token: String,
         @Body request: CheckHasLoanRequest
+    ): BaseResponse
+
+    @POST("LN_GETTING_LOAN")
+    suspend fun createCreditRequest(
+        @Header("Authorization") token: String, @Body createCreditApplication: CreateCreditRequestNew
+    ): BaseResponse
+
+    @POST("LN_LOAN_ISSUANCE")
+    suspend fun confirmGetLoan(
+        @Header("Authorization") token: String, @Body request: GetLoanRequest
     ): BaseResponse
 
 }

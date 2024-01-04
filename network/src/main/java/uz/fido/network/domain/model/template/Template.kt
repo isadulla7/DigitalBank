@@ -26,5 +26,7 @@ data class Template(
     var ord: Int? = 0,
     var service_state: String? = null,
     var min_amount: String? = null,
-    var max_amount: String? = null
+    var max_amount: String? = null,
+    var isCurrent: Boolean = false,
+    var check_amount:Boolean=false
 ) : Serializable

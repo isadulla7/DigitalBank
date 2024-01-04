@@ -18,7 +18,7 @@ class VpnErrorActivity : BaseActivity() {
     private var onBackPress = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.Theme_UniversalMobileDigital)
+        setTheme(R.style.Base_Theme_UniversalMobileDigital)
         super.onCreate(savedInstanceState)
         binding = ActivityVpnErrorBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -26,7 +26,7 @@ class VpnErrorActivity : BaseActivity() {
     }
 
     private fun setOnClickListener() {
-        binding.buttonCheck.setOnClickListener {
+        binding.update.setOnClickListener {
             if (!SecurityCheck.isFromVpn()) {
                 finish()
             }

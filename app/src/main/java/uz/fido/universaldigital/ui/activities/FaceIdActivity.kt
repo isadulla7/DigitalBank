@@ -3,24 +3,29 @@ package uz.fido.universaldigital.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import uz.fido.universaldigital.base.BaseActivity
-import uz.fido.utils.const.Const.APP_LANGUAGE
-import uz.fido.utils.const.MyIdServiceConst.MY_ID_CLIENT_ID
-import uz.myid.android.sdk.capture.*
-import java.util.*
-
-/**
- * Created by Husniddin Muhammad Amin on 05.05.2023
- * Tashkent, Uzbekistan.
- */
+import uz.fido.utils.const.Const
+import uz.fido.utils.const.Const.MY_ID_CLIENT_HASH
+import uz.fido.utils.const.Const.MY_ID_CLIENT_HASH_ID
+import uz.myid.android.sdk.capture.MyIdClient
+import uz.myid.android.sdk.capture.MyIdConfig
+import uz.myid.android.sdk.capture.MyIdException
+import uz.myid.android.sdk.capture.MyIdResult
+import uz.myid.android.sdk.capture.MyIdResultListener
+import uz.myid.android.sdk.capture.model.MyIdBuildMode
+import uz.myid.android.sdk.capture.model.MyIdCameraShape
+import uz.myid.android.sdk.capture.model.MyIdEntryType
+import uz.myid.android.sdk.capture.model.MyIdImageFormat
+import uz.myid.android.sdk.capture.model.MyIdResidentType
+import uz.myid.android.sdk.capture.model.MyIdResolution
+import uz.myid.android.sdk.capture.takeUserResult
+import java.util.Locale
 
 /**
  * This is activity of MY ID
  * All views of activity is SDK(you can't change it)
  */
-@AndroidEntryPoint
 class FaceIdActivity : BaseActivity(), MyIdResultListener {
 
     private val client: MyIdClient = MyIdClient()
@@ -40,12 +45,16 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
      * there are 2 types of BuildMode: PRODUCTION and DEBUG
      * organization details is optional*
      */
+
     private fun startMyId() {
-        val myIdConfig =
-            MyIdConfig.builder(MY_ID_CLIENT_ID).withPassportData(clientPassport)
-                .withBirthDate(clientBirthday).withEntryType(MyIdEntryType.AUTH)
-                .withBuildMode(MyIdBuildMode.PRODUCTION).withLocale(Locale(initLanguage()))
-                .withPhoto(false).build()
+        val myIdConfig = MyIdConfig.builder(clientId = Const.MY_ID_CLIENT_ID)
+            .withClientHash(MY_ID_CLIENT_HASH, MY_ID_CLIENT_HASH_ID)
+            .withPassportData(clientPassport).withBirthDate(clientBirthday)
+            .withBuildMode(MyIdBuildMode.PRODUCTION).withEntryType(MyIdEntryType.AUTH)
+            .withResidency(MyIdResidentType.USER_DEFINED).withLocale(Locale(initLanguage()))
+            .withCameraShape(MyIdCameraShape.CIRCLE)
+            .withResolution(MyIdResolution.RESOLUTION_720).withImageFormat(MyIdImageFormat.PNG)
+            .withPhoto(false).build()
         val intent = client.createIntent(this, myIdConfig)
         result.launch(intent)
     }
@@ -73,7 +82,8 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
     }
 
     private fun initLanguage(): String {
-        return when (Paper.book().read(APP_LANGUAGE, "ru").lowercase(Locale.getDefault())) {
+        return when (Paper.book().read(Const.APP_LANGUAGE, "ru")
+            .lowercase(Locale.getDefault())) {
             LANG_UZ, LANG_UZL -> LANG_UZ
             LANG_RU -> LANG_RU
             else -> LANG_EN

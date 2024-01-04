@@ -13,6 +13,7 @@ import uz.fido.network.domain.datasource.services.MonitoringApiInterface
 import uz.fido.network.domain.datasource.services.MyIdApiInterface
 import uz.fido.network.domain.datasource.services.P2PApiInterface
 import uz.fido.network.domain.datasource.services.PaymentApiInterface
+import uz.fido.network.domain.datasource.services.RatesApi
 import uz.fido.network.domain.datasource.services.ServiceApiInterface
 import uz.fido.network.domain.datasource.services.SocketInterface
 import uz.fido.network.domain.datasource.services.SwapKeyApiInterface
@@ -90,6 +91,10 @@ object ApiServiceModule {
         retrofit.create(SocketInterface::class.java)
 
     @Provides
+    fun provideRatesApiService(@SimpleClientRetrofit retrofit: Retrofit): RatesApi =
+        retrofit.create(RatesApi::class.java)
+
+    @Provides
     @Singleton
     fun swapKeyService(@SwapKeyRetrofit retrofit: Retrofit): SwapKeyApiInterface =
         retrofit.create(SwapKeyApiInterface::class.java)
@@ -117,5 +122,6 @@ object ApiServiceModule {
         retrofit.create(
             WalletApiInterface::class.java
         )
+
 
 }

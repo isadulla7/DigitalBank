@@ -8,5 +8,4 @@ data class InvestMoneyToDepositRequest(
     var amount: String,
     var from_object_id: String,
     var service_id: String,
-    val sms_code: String
 ) : Serializable

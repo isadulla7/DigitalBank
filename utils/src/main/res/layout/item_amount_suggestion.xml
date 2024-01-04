@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uz.fido.utils.view.custom_text_view.TextViewRegular xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="32dp"
+    android:layout_marginEnd="6dp"
+    android:background="@drawable/cornered_bg_8dp"
+    android:gravity="center"
+    android:id="@+id/tv_sugg_amount"
+    android:paddingHorizontal="10dp"
+    android:textColor="@color/mainTextColor"
+    android:textSize="12sp" />

@@ -1,0 +1,190 @@
+package uz.fido.universaldigital.ui.fragments.products
+
+import android.app.Application
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.liveData
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import uz.fido.network.data.repository.CardRepositoryImpl
+import uz.fido.network.domain.datasource.interfaces.ICreditRepository
+import uz.fido.network.domain.datasource.interfaces.IDepositRepository
+import uz.fido.network.domain.datasource.interfaces.IP2PRepository
+import uz.fido.network.domain.datasource.interfaces.IWalletRepository
+import uz.fido.network.domain.model.amount_requests.RmSetStateRequest
+import uz.fido.network.domain.model.cards.BlockCardRequest
+import uz.fido.network.domain.model.cards.CardInfoRequest
+import uz.fido.network.domain.model.cards.CardResponse
+import uz.fido.network.domain.model.cards.CheckCardRequest
+import uz.fido.network.domain.model.cards.DeleteCardRequest
+import uz.fido.network.domain.model.cards.EditCardRequest
+import uz.fido.network.domain.model.cards.GetCVVRequest
+import uz.fido.network.domain.model.cards.Secure3DRequest
+import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
+import uz.fido.network.domain.model.humo_pay.HumoCardInfoRequest
+import uz.fido.network.domain.model.limits.CardLimitRequest
+import uz.fido.network.domain.model.limits.LimitDeleteRequest
+import uz.fido.network.domain.model.limits.SvSetCardLimitRequest
+import uz.fido.network.domain.model.limits.SvSetMainCardRequest
+import uz.fido.network.domain.model.limits.gl.GlLimitDeleteRequest
+import uz.fido.network.domain.model.limits.gl.GlLimitListRequest
+import uz.fido.network.domain.model.limits.gl.GlSetCardLimitRequest
+import uz.fido.network.domain.model.loans.loan_products.CreditProduct
+import uz.fido.network.domain.model.wallet.DeleteWalletRequest
+import uz.fido.universaldigital.base.AbstractViewModel
+import javax.inject.Inject
+
+@HiltViewModel
+class MenuProductsViewModel @Inject constructor(
+    application: Application,
+    private val cardRepository: CardRepositoryImpl,
+    private val p2PRepository: IP2PRepository,
+    private val walletRepository: IWalletRepository,
+    private val depositRepository: IDepositRepository,
+    private val creditRepository: ICreditRepository,
+    private val cardsUseCase: CardsUseCase
+) : AbstractViewModel(application) {
+
+    var cards: LiveData<List<CardResponse>> = cardRepository.cardList
+    var updateCardState: MutableLiveData<Boolean> = MutableLiveData()
+    var creditProduct: MutableLiveData<List<CreditProduct>> = MutableLiveData()
+    var clientDeposit: MutableLiveData<ArrayList<ClientDeposit>> = MutableLiveData()
+    var shouldUpdate = false
+
+    init {
+        updateCardState.postValue(false)
+    }
+
+    fun updateCards() {
+        vmScope.launch {
+            cards.value?.forEach {
+                val response = cardsUseCase.getCardInfo(arrayListOf(it.object_id))
+                it.apply {
+                    balance = response[0].balance
+                    processing_server_status =
+                        response[0].state.toString()
+                    stateName =
+                        response[0].state_name.toString()
+                    owerdraft_limit = response[0].overdraft_limit
+                    pin_counter = response[0].pin_counter
+                    overdraft_limit = response[0].overdraft_limit
+                    object_status = response[0].object_status
+                }
+            }
+            updateCards(cards.value!!)
+        }
+    }
+
+    fun updateClientDepositList(list: ArrayList<ClientDeposit>) {
+        this.clientDeposit.postValue(list)
+    }
+
+    fun updateCards(cards: List<CardResponse>) {
+        cardRepository.updateCards(cards)
+    }
+
+    fun updateCreditGroups(creditProduct: List<CreditProduct>) {
+        this.creditProduct.postValue(creditProduct)
+    }
+
+    fun getCardListRequest(token: String) = liveData(Dispatchers.IO) {
+        emit(cardRepository.getCardList(token))
+    }
+
+    fun getCardInfoRequest(token: String, cardInfoRequest: CardInfoRequest) =
+        liveData(Dispatchers.IO) {
+            emit(cardRepository.getCardInfo(token, cardInfoRequest))
+        }
+
+    fun checkCardRequest(token: String, checkCardRequest: CheckCardRequest) =
+        liveData(Dispatchers.IO) {
+            emit(cardRepository.checkCard(token, checkCardRequest))
+        }
+
+    fun editCardRequest(token: String, editCardRequest: EditCardRequest) =
+        liveData(Dispatchers.IO) {
+            emit(cardRepository.editCard(token, editCardRequest))
+        }
+
+    fun secure3DAction(token: String, secure3DRequest: Secure3DRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.secure3DAction(token, secure3DRequest))
+    }
+
+    fun setState(token: String, rmSetStateRequest: RmSetStateRequest) = liveData(Dispatchers.IO) {
+        emit(p2PRepository.setState(token, rmSetStateRequest))
+    }
+
+    fun getCVV(token: String, request: GetCVVRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.getCVV(token, request))
+    }
+
+    fun svSetMainCard(token: String, request: SvSetMainCardRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.svSetMainCard(token, request))
+    }
+
+    fun getSvCardLimitList(token: String, request: CardLimitRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.getSvCardLimitList(token, request))
+    }
+
+    fun getGlCardLimitList(token: String, request: GlLimitListRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.getGlLimitList(token, request))
+    }
+
+    fun getGlLimitParams(clientToken: String) = liveData(Dispatchers.IO) {
+        emit(cardRepository.getGlLimitParams(clientToken))
+    }
+
+    fun getSvLimitParams(clientToken: String) = liveData(Dispatchers.IO) {
+        emit(cardRepository.getSvLimitParams(clientToken))
+    }
+
+    fun setGlCardLimit(clientToken: String, request: GlSetCardLimitRequest) =
+        liveData(Dispatchers.IO) {
+            emit(cardRepository.setGlCardLimit(clientToken, request))
+        }
+
+    fun setSvCardLimit(clientToken: String, request: SvSetCardLimitRequest) =
+        liveData(Dispatchers.IO) {
+            emit(cardRepository.setSvCardLimit(clientToken, request))
+        }
+
+    fun deleteSvCardLimit(clientToken: String, request: LimitDeleteRequest) =
+        liveData(Dispatchers.IO) {
+            emit(cardRepository.deleteSvCardLimit(clientToken, request))
+        }
+
+    fun deleteGlCardLimit(clientToken: String, request: GlLimitDeleteRequest) =
+        liveData(Dispatchers.IO) {
+            emit(cardRepository.deleteGlCardLimit(clientToken, request))
+        }
+
+    fun deleteCardRequest(token: String, deleteCardRequest: DeleteCardRequest) =
+        liveData(Dispatchers.IO) {
+            emit(cardRepository.deleteCard(token, deleteCardRequest))
+        }
+
+    fun deleteWallet(token: String, deleteWalletRequest: DeleteWalletRequest) =
+        liveData(Dispatchers.IO) {
+            emit(walletRepository.deleteWallet(token, deleteWalletRequest))
+        }
+
+    fun blockCardRequest(token: String, blockCardRequest: BlockCardRequest) =
+        liveData(Dispatchers.IO) {
+            emit(cardRepository.blockCard(token, blockCardRequest))
+        }
+
+    fun getClientDepositList(token: String) = liveData(Dispatchers.IO) {
+        emit(depositRepository.getClientDepositList(token))
+    }
+
+    fun getClientProducts(token: String) = liveData(Dispatchers.IO) {
+        emit(creditRepository.getCreditProducts(token))
+    }
+
+    fun getHumoCardInfo(token: String, humoCardInfoRequest: HumoCardInfoRequest) =
+        liveData(Dispatchers.IO) {
+            emit(cardRepository.getHumoCardInfo(token, humoCardInfoRequest))
+        }
+
+}

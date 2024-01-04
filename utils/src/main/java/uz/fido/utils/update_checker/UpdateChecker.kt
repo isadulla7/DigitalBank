@@ -1,6 +1,5 @@
 package uz.fido.utils.update_checker
 
-import android.app.Activity
 import android.content.IntentSender
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.appupdate.AppUpdateManager

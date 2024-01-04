@@ -1,0 +1,199 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:orientation="vertical">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:s_title="@string/payment_details" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/receiver"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/tv_receiver"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/commission"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/tv_commission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/received_amount"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/tv_received_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/to_payment"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+                android:id="@+id/tv_total_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="24sp"
+                android:layout_marginEnd="16sp"
+                android:text="@string/write_off_card"
+                android:textColor="@color/mainTextColor"
+                android:textSize="20sp" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:layout_margin="16dp">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/card_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/bg_1"
+                    app:shapeAppearance="@style/cardBackground"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/card_type"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="12dp"
+                    android:src="@drawable/ic_visa"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:id="@+id/bank_logo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_bank_logo_anorbank"
+                    app:layout_constraintBottom_toBottomOf="@id/card_type"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/card_type"
+                    tools:ignore="ContentDescription" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewBold
+                    android:id="@+id/card_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:includeFontPadding="false"
+                    android:textColor="@color/frozenWhite"
+                    android:textSize="20sp"
+                    app:layout_constraintBottom_toTopOf="@id/tv_main_card"
+                    app:layout_constraintTop_toBottomOf="@id/bank_logo"
+                    tools:text="5 557 000 UZS" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:id="@+id/tv_main_card"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:includeFontPadding="false"
+                    android:text="@string/main_card"
+                    android:textColor="@color/frozenWhite"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:id="@+id/card_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:textColor="@color/frozenWhite"
+                    android:textSize="16sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="**0924" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <uz.fido.utils.view.custom_circle_button.CustomFAButton
+        android:id="@+id/btn_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

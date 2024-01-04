@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/father"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical"
+    android:paddingHorizontal="12dp">
+
+    <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+        android:id="@+id/product_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_weight="1"
+        android:text="@string/uzs_account"
+        android:textColor="@color/blackColor"
+        android:textSize="16sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="2"
+        tools:itemCount="4"
+        tools:listitem="@layout/item_order_card_info" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_product_price"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:gravity="start|center"
+            android:orientation="vertical">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:id="@+id/tv_issue_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/issue_cost"
+                android:textColor="@color/hintColor"
+                android:textSize="14sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/issue_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/blackColor"
+                android:textSize="14sp"
+                tools:text="40500 UZS" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_delivery_price"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:id="@+id/tv_delivery_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/delivery_cost"
+                android:textColor="@color/hintColor"
+                android:textSize="14sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/delivery_cost"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/blackColor"
+                android:textSize="14sp"
+                tools:text="40500 UZS" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_insurance_deposit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:layout_weight="1"
+            android:gravity="start|center"
+            android:orientation="vertical">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:id="@+id/tv_insurance_deposit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/insurance_deposit"
+                android:textColor="@color/hintColor"
+                android:textSize="14sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/insurance_deposit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/blackColor"
+                android:textSize="14sp"
+                tools:text="40500 UZS" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_expire"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:gravity="start|center"
+            android:orientation="vertical">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:id="@+id/tv_expire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="8dp"
+                android:text="@string/card_expire"
+                android:textColor="@color/hintColor"
+                android:textSize="14sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/expire"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:textColor="@color/blackColor"
+                android:textSize="14sp"
+                tools:text="40500 UZS" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/continue_button"
+        style="@style/MainButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:backgroundTint="@color/lightRedColor"
+        android:text="@string/select"
+        android:textColor="@color/brandRedColor"
+        android:textSize="16sp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -30,3 +30,7 @@ annotation class MyIdOkhttpClient
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class BaseOkhttpClient
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class SimpleClientRetrofit

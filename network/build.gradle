@@ -7,11 +7,11 @@ plugins {
 
 android {
     namespace 'uz.fido.network'
-    compileSdkVersion 33
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 33
+        minSdkVersion ConfigData.minSdkVersion
+        compileSdk ConfigData.compileSdkVersion
+        targetSdkVersion ConfigData.targetSdkVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
     }
@@ -33,31 +33,28 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'com.google.android.material:material:1.6.1'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
     //hilt
-    implementation "com.google.dagger:hilt-android:2.42"
-    kapt "com.google.dagger:hilt-android-compiler:2.42"
+    implementation ProjectDependencies.hiltAndroid
+    kapt ProjectDependencies.hiltCompiler
 
     //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation ProjectDependencies.retrofit
+    implementation ProjectDependencies.retrofitConverter
+    implementation ProjectDependencies.gson
 
-    //okhttp3
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation ProjectDependencies.roomRuntime
+    kapt ProjectDependencies.roomCompiler
+    implementation ProjectDependencies.roomKtx
 
-    //gson
-    implementation 'com.google.code.gson:gson:2.9.0'
+    //logging
+    debugImplementation ProjectDependencies.chuckerLib
+    releaseImplementation ProjectDependencies.chuckerLibNoOp
 
-    //paper book
-    implementation 'io.paperdb:paperdb:2.7.1'
+    implementation ProjectDependencies.paper
+    implementation ProjectDependencies.okhttp
+    implementation ProjectDependencies.okhttpLogging
 
     //utils module
     implementation project(path: ':utils')
+
 }

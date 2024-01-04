@@ -2,7 +2,7 @@ package uz.fido.network.data.repository
 
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.IDepositRepository
+import uz.fido.network.domain.datasource.interfaces.IDepositRepository
 import uz.fido.network.domain.datasource.services.DepositApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.deposits.CalculateDepositAuto
@@ -33,7 +33,6 @@ class DepositRepositoryImpl @Inject constructor(private val depositService: Depo
     ): Resource<DepositListResponse> = getResult {
         depositService.getDeposits(token, getDepositListRequest)
     }
-
 
     override suspend fun depositCalculator(
         token: String,
@@ -100,4 +99,17 @@ class DepositRepositoryImpl @Inject constructor(private val depositService: Depo
             depositService.renameDeposit(token, request)
         }
 
+
+    override suspend fun calculateDepositAuto(
+        token: String,
+        calculateDepositAuto: CalculateDepositAuto
+    ): Resource<DepositCalculatorResponse> {
+        return getResult { depositService.depositCalculator(token, calculateDepositAuto) }
+    }
+
+    override suspend fun closeDeposit(
+        token: String,
+        earlyClosureRequest: EarlyClosureRequest
+    ): Resource<EarlyClosureResponse> =
+        getResult { depositService.closeDeposit(token, earlyClosureRequest) }
 }

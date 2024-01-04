@@ -7,20 +7,21 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import uz.fido.utils.utility.activity.adjustFontScale
+import uz.fido.utils.utility.language.LocaleHelper
+import uz.fido.utils.utility.language.LocaleHelper.getLanguage
 import uz.fido.utils.utility.theme.PreferencesImpl
 import uz.fido.utils.utility.theme.ThemeDarkEnum
 import uz.fido.utils.view.progress_bar.ProgressBarDialog
-import javax.inject.Singleton
 
 abstract class BaseActivity : AppCompatActivity() {
 
     private val job = Job()
-    private var progressBarDialog: ProgressBarDialog? = null
     private val coroutineScope = CoroutineScope(job + Dispatchers.Main)
     private val preference by lazy { PreferencesImpl.instance(this) }
+    private var progressBarDialog: ProgressBarDialog? = null
 
-    override fun attachBaseContext(context: Context) {
-        super.attachBaseContext(context)
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(LocaleHelper.setLocale(newBase!!, getLanguage(newBase)))
     }
 
     override fun onStart() {

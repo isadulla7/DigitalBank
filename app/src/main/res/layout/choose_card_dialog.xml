@@ -1,0 +1,37 @@
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/father_bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/handle"
+        android:layout_width="36dp"
+        android:layout_height="5dp"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_dialog_handle"
+        tools:ignore="ContentDescription" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewBold
+        android:id="@+id/operation_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16sp"
+        android:layout_marginTop="16sp"
+        android:layout_marginEnd="16sp"
+        android:text="@string/choose_card"
+        android:textColor="@color/mainTextColor"
+        android:textSize="20sp" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/card_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16sp"
+        android:clipToPadding="false"
+        android:paddingBottom="16dp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

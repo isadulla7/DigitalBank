@@ -1,8 +1,9 @@
 package uz.fido.network.data.repository
 
+import uz.fido.network.domain.model.monitoring.filter.PaymentServiceResponse
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.IMonitoringRepository
+import uz.fido.network.domain.datasource.interfaces.IMonitoringRepository
 import uz.fido.network.domain.datasource.services.MonitoringApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.monitoring.AccountHistoriesRequest
@@ -10,12 +11,15 @@ import uz.fido.network.domain.model.monitoring.AccountHistoriesResponse
 import uz.fido.network.domain.model.monitoring.categories.SetCategoryRequest
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringRequest
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringResponse
+import uz.fido.network.domain.model.monitoring.filter.MonitoringFilterCardResponse
+import uz.fido.network.domain.model.monitoring.filter.NewFilterMonitoringFilterRequest
 import uz.fido.network.domain.model.monitoring.home.HomeHistoryRequest
 import uz.fido.network.domain.model.monitoring.home.HomeHistoryResponse
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringRequest
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringResponse
 import uz.fido.network.domain.model.monitoring.local.GetLocalHistoryRequest
 import uz.fido.network.domain.model.monitoring.local.LocalHistoryResponse
+import uz.fido.network.domain.model.monitoring.local.NewMonitoringFilterRequest
 import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringRequest
 import uz.fido.network.domain.model.monitoring.uzcard.SvMonitoringOldResponse
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoringRequest
@@ -24,6 +28,7 @@ import javax.inject.Inject
 
 class MonitoringRepositoryImpl @Inject constructor(private val monitoringApiService: MonitoringApiInterface) :
     IMonitoringRepository {
+
     override suspend fun getUzcardMonitoringOld(
         token: String,
         svMonitoringRequest: SVMonitoringRequest
@@ -84,4 +89,31 @@ class MonitoringRepositoryImpl @Inject constructor(private val monitoringApiServ
     ): Resource<HomeHistoryResponse> = getResult {
         monitoringApiService.getHistoryByAcc(token, request)
     }
+
+    override suspend fun filterLocalMonitoring(
+        token: String,
+        filterMonitoringModel: NewMonitoringFilterRequest
+    ): Resource<LocalMonitoringResponse> =
+        getResult {
+            monitoringApiService.newMonitoringFilter(token, filterMonitoringModel)
+        }
+
+    override suspend fun getLocalMonitoringCardList(token: String): Resource<MonitoringFilterCardResponse> =
+        getResult {
+            monitoringApiService.getLocalMonitoringCardList(token)
+        }
+
+    override suspend fun getLocalMonitoringServiceList(token: String): Resource<PaymentServiceResponse> =
+        getResult {
+            monitoringApiService.getLocalMonitoringServiceList(token)
+        }
+
+    override suspend fun newFilterLocalMonitoring(
+        token: String,
+        filterMonitoringModel: NewFilterMonitoringFilterRequest
+    ): Resource<LocalMonitoringResponse> =
+        getResult {
+            monitoringApiService.newFilterMonitoringFilter(token, filterMonitoringModel)
+        }
+
 }

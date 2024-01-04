@@ -14,7 +14,7 @@ object ErrorUtils {
                 val code = jsonObject.getInt("code")
                 var message: String? = jsonObject.getString("msg")
                 if (message == null || (message.contains("502 Bad"))) {
-                    message = "bad"
+                    message = "Неизвестная ошибка"
                 }
                 APIError(
                     code,
@@ -30,7 +30,7 @@ object ErrorUtils {
                 } else {
                     APIError(
                         ServerCode.BAD_REQUEST.code,
-                        "bad"
+                        "Неизвестная ошибка"
                     )
                 }
             }
@@ -43,7 +43,7 @@ object ErrorUtils {
         } else {
             APIError(
                 ServerCode.BAD_REQUEST.code,
-                "bad"
+                "Неизвестная ошибка"
             )
         }
     }

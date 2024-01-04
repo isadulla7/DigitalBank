@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/father"
+    android:layout_width="match_parent"
+    android:layout_height="72dp">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/payment_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12sp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/mainTextColor"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toStartOf="@id/payment_amount"
+        app:layout_constraintStart_toEndOf="@id/icon"
+        app:layout_constraintTop_toTopOf="@id/icon"
+        tools:text="@string/payment_in_places" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/account_code"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12sp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="@color/brandBlueColor_40"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toStartOf="@id/payment_amount"
+        app:layout_constraintStart_toEndOf="@id/icon"
+        app:layout_constraintTop_toBottomOf="@id/payment_name"
+        tools:text="@string/payment_in_places" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/payment_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12sp"
+        android:gravity="end"
+        android:maxLines="1"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/payment_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/payment_name"
+        app:layout_constraintTop_toTopOf="@id/payment_name"
+        app:layout_goneMarginStart="8dp"
+        tools:text="12 500 UZS" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/service_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12sp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/brandBlueColor_40"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@id/payment_amount"
+        app:layout_constraintTop_toBottomOf="@id/payment_amount"
+        tools:text="85:32" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

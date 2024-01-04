@@ -1,9 +1,92 @@
 package uz.fido.utils.const
 
 object Const {
-    const val USER_CLIENT_ID = "-2"
 
+    val TOTAL_BALANCE = "total_balance"
+    val TOTAL_BALANCE_UPDATED_AT = "total_balance_updated_on"
+
+    /*PAYMENT */
+    const val DB_HELPER_VERSION = 1
+
+    const val APP_THEME = "app_theme"
+    const val USER_QWERTY_KEY = "user_qwerty_key"
+    const val FAST_ACCESS = "fast_access"
+    const val UPDATE_FAST_ACCESS = "UPDATE_FAST_ACCESS"
+    const val MAIN_WIDGETS_VERSION_SAVED = "main_widget_version_saved"
+    const val UPDATE_MAIN_WIDGETS = "false"
+    const val MAIN_WIDGETS = "main_widgets"
+    const val MAIN_WIDGETS_VERSION = 2
+    const val TOTAL_BALANCE_TYPE = "balance_type"
+    const val PAPER_CLIENT_TOKEN = "client_token"
+    const val PAPER_PAYMENT_VERSION = "payment_version"
+    const val PAPER_PAYMENT_VERSION_DB = "payment_version_db"
+    const val PAPER_CLIENT_INFO = "client_info"
+    const val PAPER_CLIENT_PHONE = "client_phone"
+    const val PAPER_CLIENT_ID = "client_id"
+    const val PAPER_CLIENT_NAME = "client_name"
+    const val PAPER_CLIENT_SURNAME = "client_surname"
+    const val PAPER_CLIENT_FULL_NAME = "client_full_name"
+    const val PAPER_FCM_TOKEN = "fcm_token"
+    const val PAPER_CLIENT_POINTS = "client_points"
+    const val PAPER_CLIENT_STATUS_NAME = "client_status_name"
+    const val PAPER_CLIENT_STATUS_ID = "client_status_id"
+    const val PAPER_CLIENT_APPLICATION_COUNT = "application_count"
+    const val PAPER_USER_PHOTO_PATH = "user_photo_path"
+    const val APPLICATION_COUNT = "APPLICATION_COUNT"
+    const val FINGER_STATE = "fingerprint_state"
+    const val PAPER_CLIENT_PIN = "client_pin"
+    const val PAPER_CARDS_WITH_BALANCE_VIS = "client_cards_with_balance_visibility"
+    const val PAPER_CLIENT_CARDS = "client_cards"
+    const val BALANCE_VISIBILITY = "hide_balance"
+    const val PAPER_PAYMENT_PIN_CONFIRMATION = "payment_pin_confirmation"
     const val USER_LOGGED = "logged"
     const val DEVICE_CODE = "device_code"
     const val APP_LANGUAGE = "language"
+    const val PHONE_NUMBER = "phone_number"
+    const val CARD_NUMBER = "card_number"
+    const val EMAIL = "email"
+    const val OPERATION = "operation_main"
+    const val ADD_CARD_OPERATION = "add_card_operation"
+    const val OPERATION_AMOUNT = "operation_amount"
+    const val OPERATION_CURRENCY = "SUCCESS_CURRENCY"
+    const val SENDER_CARD = "SENDER_CARD"
+    const val RECEIVER_CARD = "RECEIVER_CARD"
+    const val PAYMENT_SERVICE = "EXTRA_PAYMENT_SERVICE"
+    const val PAYMENT_KEY_VALUES = "key_values"
+    const val EXTRA_PARAMS = "EXTRA_PAYMENT_PARAMS"
+    const val TRANSACTION_ID = "transactId"
+    const val RANDOM_TEXT = "random_text"
+    const val QR_PAYMENT = "QR_PAYMENT"
+    const val ORDER_CARD = "order_card"
+    const val LAYOUT_MANAGER_GRID = "LAYOUT_MANAGER_GRID"
+    const val CARD = "card"
+    const val USER_NAME = "USER_NAME"
+    const val USER_FULL_NAME = "USER_FULL_NAME"
+    const val USER_BIRTHDAY = "USER_BIRTHDAY"
+    const val USER_CITIZENSHIP = "USER_CITIZENSHIP"
+    const val USER_PASSWORD_DATA = "USER_PASSWORD_DATA"
+    const val USER_PASS_EXPIRE_DATE = "USER_PASS_EXPIRE_DATE"
+    const val USER_PASS_GIVEN_DATE = "USER_PASS_GIVEN_DATE"
+    const val USER_PINFL = "USER_PINFL"
+    const val USER_IDENTIFIED = "USER_IDENTIFIED"
+    const val TEMPLATE_TYPE_1 = "TEMPLATE"
+    const val TEMPLATE_TYPE_2 = "AUTO_PAYMENT"
+    const val TYPE_LOAN = "TYPE_LOAN"
+    const val TYPE_DEPOSIT = "TYPE_DEPOSIT"
+    const val SEARCH_LIST = "SEARCH_LIST"
+
+    var request_id = ""
+
+    //offer
+    const val DEPOSIT_BAXTLI_BOLALIK =
+        "http://87.237.237.230:8181/tel/mobile/depozit_baxtliBolalik.pdf"
+
+    //my id
+    const val MY_ID_CLIENT_ID =
+        "universal_mobile-m2D6uFzCBlj3vw9KnXSiyvBj1ofNO6Q3fdZZ96HL"
+
+    const val MY_ID_CLIENT_HASH =
+        "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmvWRa3C/jFqQHfs1kbVSysOBFRKiEAfw1iPD16Rh2h3fq3dkLcgOrYs9DcQOrJSknftkMSSkO2gGLlf8fnqnAjxAYml1vnGC5rYJTUUQTBKvpgchcPlLfUu/MDKUK3PSZFrYNIcYSWFfkGHgUNRk8pYPUH7OIF6uboERqSeG4M74zogAEP4Zkk76NTuH+F6exB+jih88cIicXIvSiodb99OE2LmBwPAUvw8MXVutzrJg+oeqCGUfbBnxCXbksmdxpoSVsRDz8TBPI0IMLrOx3F6dW1L+Pde9m+jhblybHazaY7WEufwWQJ4EajvMZfF3IBgQgrP4MwaY+HFtFYbVMwIDAQAB"
+
+    const val MY_ID_CLIENT_HASH_ID = "4cc848bb-49ee-4db4-bf3b-119f141f52e4"
 }

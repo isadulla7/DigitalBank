@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="12dp"
+    android:background="@drawable/cornered_bg_12dp"
+    android:orientation="vertical"
+    android:padding="12dp">
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_credit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="16sp"
+        tools:text="My Deposit" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+        android:id="@+id/tv_credit_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="20sp"
+        tools:text="215 000 000 UZS" />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:indeterminateTint="@color/brandRedColor"
+        android:progress="30"
+        app:trackColor="@color/brandBlueColor_10"
+        app:trackCornerRadius="4dp"
+        app:trackThickness="6dp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_credit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:visibility="gone"
+        tools:text="@string/application_approved"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="14sp" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_credit_left_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_weight="0.6"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="14sp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/content_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_weight="1"
+        android:gravity="end"
+        android:text="@string/formats"
+        android:textColor="@color/brandRedColor"
+        android:textSize="14sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

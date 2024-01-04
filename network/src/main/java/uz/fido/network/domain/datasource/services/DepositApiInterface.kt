@@ -12,6 +12,8 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import uz.fido.network.domain.model.abc_base.BaseResponse
+import uz.fido.network.domain.model.sms.CheckSmsForPayment
+import uz.fido.network.domain.model.sms.CheckSmsForPaymentResponse
 
 interface DepositApiInterface {
 
@@ -74,4 +76,13 @@ interface DepositApiInterface {
         @Body request: RenameDepositRequest
     ): BaseResponse
 
+    @POST("CHECK_SMS_FOR_PAYMENT")
+    suspend fun checkSmsForPayment(
+        @Header("Authorization") token: String, @Body checkSmsForPayment: CheckSmsForPayment
+    ): CheckSmsForPaymentResponse
+
+    @POST("CLOSURE_DEPOSIT")
+    suspend fun closeDeposit(
+        @Header("Authorization") token: String, @Body earlyClosureRequest: EarlyClosureRequest
+    ): EarlyClosureResponse
 }

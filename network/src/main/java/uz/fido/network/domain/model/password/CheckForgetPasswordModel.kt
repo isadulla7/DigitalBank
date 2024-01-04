@@ -1,6 +1,6 @@
 package uz.fido.network.domain.model.password
 
-import uz.fido.utils.const.Const.USER_CLIENT_ID
+import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 
 data class CheckForgetPasswordModel(
     val phone_number: String,

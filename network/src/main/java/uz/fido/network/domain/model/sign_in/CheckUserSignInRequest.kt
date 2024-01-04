@@ -1,6 +1,6 @@
 package uz.fido.network.domain.model.sign_in
 
-import uz.fido.utils.const.Const.USER_CLIENT_ID
+import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 import java.io.Serializable
 
 data class CheckUserSignInRequest(

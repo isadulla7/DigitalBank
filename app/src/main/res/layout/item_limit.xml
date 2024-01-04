@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/father"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp"
+    android:background="?selectableItemBackground"
+    android:elevation="1dp"
+    app:cardCornerRadius="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="16dp">
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/limit_type"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/for_all_operations"
+            android:textColor="@color/mainTextColor"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toStartOf="@id/arrow_right"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/arrow_right"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/arrow_right_icon"
+            app:layout_constraintBottom_toBottomOf="@id/limit_type"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/limit_type"
+            app:tint="@color/mainTextColor"
+            tools:ignore="ContentDescription" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+            android:id="@+id/limit_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/hintColor"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="@id/limit_type"
+            app:layout_constraintTop_toBottomOf="@id/limit_type" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewRegular
+            android:id="@+id/limit_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/hintColor"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="@id/limit_amount"
+            app:layout_constraintTop_toBottomOf="@id/limit_amount" />
+
+        <com.mckrpk.animatedprogressbar.AnimatedProgressBar
+            android:id="@+id/animatedProgressBar"
+            android:layout_width="match_parent"
+            android:layout_height="8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="16dp"
+            android:visibility="gone"
+            app:animationDurationInMs="1000"
+            app:animationStyle="line"
+            app:layout_constraintTop_toBottomOf="@id/limit_amount"
+            app:lineWidth="8dp"
+            app:max="1000"
+            app:progress="750"
+            app:progressColor="@color/brandRedColor"
+            app:progressTipColor="#4DA542"
+            app:progressTipEnabled="true"
+            app:trackColor="@color/hintColor" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/current_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingBottom="16dp"
+            android:text="Осталось 456 000 сум из 2 000 000 сум"
+            android:textColor="@color/mainTextColor"
+            android:textSize="12sp"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/limit_type"
+            app:layout_constraintTop_toBottomOf="@id/animatedProgressBar" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

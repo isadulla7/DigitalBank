@@ -24,6 +24,7 @@ class NoConnectionDialog : DialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DialogNoConnectionBinding.inflate(inflater, container, false)
+        binding.update.isEnabled = true
         return binding.root
     }
 

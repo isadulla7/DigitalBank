@@ -2,12 +2,14 @@ package uz.fido.network.data.repository
 
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.ICreditRepository
+import uz.fido.network.domain.datasource.interfaces.ICreditRepository
 import uz.fido.network.domain.datasource.services.CreditApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.client_info.ClientDetailedInfoResponse
 import uz.fido.network.domain.model.loans.CheckHasLoanRequest
 import uz.fido.network.domain.model.loans.CreateCreditAppRequest
+import uz.fido.network.domain.model.loans.CreateCreditRequestNew
+import uz.fido.network.domain.model.loans.GetLoanRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualResponse
 import uz.fido.network.domain.model.loans.create.CreateCreditClaimByCrm
@@ -67,6 +69,9 @@ class CreditRepositoryImpl @Inject constructor(private val creditService: Credit
             creditService.getCreditList(creditListRequest)
         }
 
+    override suspend fun getUserInfo(token: String): Resource<ClientDetailedInfoResponse> {
+        return getResult { creditService.getCustomerInfo(token) }
+    }
 
     override suspend fun createCreditApplication(
         token: String,
@@ -87,6 +92,13 @@ class CreditRepositoryImpl @Inject constructor(private val creditService: Credit
         creditGraphRequest: CreditGraphRequest
     ): Resource<OverdraftGraphResponse> = getResult {
         creditService.getOnlineOverdraftLimit(token, creditGraphRequest)
+    }
+
+    override suspend fun checkHasLoan(
+        token: String,
+        request: CheckHasLoanRequest
+    ): Resource<BaseResponse> {
+        return getResult { creditService.checkLoanByCrm(token, request) }
     }
 
     override suspend fun getCreditGraphSecond(
@@ -121,5 +133,18 @@ class CreditRepositoryImpl @Inject constructor(private val creditService: Credit
         creditService.checkLoanByCrm(token, request)
     }
 
+    override suspend fun getClientCreditList(token: String): Resource<CreditProductsResponse> =
+        getResult { creditService.getCreditProducts(token) }
 
+    override suspend fun createCreditRequest(
+        token: String,
+        createCreditAppRequest: CreateCreditRequestNew
+    ): Resource<BaseResponse> =
+        getResult { creditService.createCreditRequest(token, createCreditAppRequest) }
+
+    override suspend fun confirmGetLoan(
+        token: String,
+        getLoanRequest: GetLoanRequest
+    ): Resource<BaseResponse> =
+        getResult { creditService.confirmGetLoan(token, getLoanRequest) }
 }

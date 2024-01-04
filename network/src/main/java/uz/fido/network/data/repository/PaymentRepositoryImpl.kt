@@ -3,7 +3,7 @@ package uz.fido.network.data.repository
 import retrofit2.Call
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.IPaymentRepository
+import uz.fido.network.domain.datasource.interfaces.IPaymentRepository
 import uz.fido.network.domain.datasource.services.PaymentApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.abc_base.InParamsResponse
@@ -17,6 +17,7 @@ import uz.fido.network.domain.model.payment.CreatePaymentRequest
 import uz.fido.network.domain.model.payment.CreatePaymentResponse
 import uz.fido.network.domain.model.payment.GetPaymentVersionRequest
 import uz.fido.network.domain.model.payment.GetPaymentVersionResponse
+import uz.fido.network.domain.model.payment.Payment
 import uz.fido.network.domain.model.payment.PreparePaymentRequest
 import uz.fido.network.domain.model.payment.PreparePaymentResponse
 import uz.fido.network.domain.model.payment.PrintChequeRequest
@@ -27,15 +28,30 @@ import uz.fido.network.domain.model.payment.location.PaymentByLocationRequest
 import uz.fido.network.domain.model.payment.location.PaymentByLocationResponse
 import uz.fido.network.domain.model.search.GetOperationInfoRequest
 import uz.fido.network.domain.model.sms.CheckSmsForPayment
+import uz.fido.network.domain.model.sms.CheckSmsForPaymentResponse
 import uz.fido.network.domain.model.subscriptions.AutoPaymentRequest
 import uz.fido.network.domain.model.subscriptions.AutoPaymentResponse
 import uz.fido.network.domain.model.subscriptions.ChangeAutoPaymentStateRequest
 import uz.fido.network.domain.model.subscriptions.DeleteAutoPaymentRequest
 import uz.fido.network.domain.model.subscriptions.SaveAutoPaymentModel
+import uz.fido.network.domain.model.swift.CreateSwiftAppRequest
+import uz.fido.network.domain.model.swift.GetSwiftCommissionRequest
+import uz.fido.network.domain.model.swift.SwiftCommissionResponse
+import uz.fido.network.domain.model.swift.SwiftRequest
+import uz.fido.network.domain.model.swift.SwiftTransferListRequest
+import uz.fido.network.domain.model.swift.SwiftTransferListResponse
+import uz.fido.network.domain.model.swift.SwiftTransferResponse
 import javax.inject.Inject
 
 class PaymentRepositoryImpl @Inject constructor(private val paymentService: PaymentApiInterface) :
     IPaymentRepository {
+
+    override suspend fun getPaymentFile(
+        token: String
+    ): Resource<Payment> = getResult {
+        paymentService.getPaymentFile(token)
+    }
+
     override suspend fun preparePayment(
         token: String,
         preparePaymentRequest: PreparePaymentRequest
@@ -43,13 +59,21 @@ class PaymentRepositoryImpl @Inject constructor(private val paymentService: Paym
         paymentService.preparePayment(token, preparePaymentRequest)
     }
 
-
     override suspend fun createPayment(
         token: String,
         createPaymentRequest: CreatePaymentRequest
     ): Resource<CreatePaymentResponse> = getResult {
         paymentService.createPayment(token, createPaymentRequest)
     }
+
+    override suspend fun createPayment(
+        token: String,
+        createPaymentRequest: CreatePaymentRequest,
+        path: String
+    ): Resource<CreatePaymentResponse> = getResult {
+        paymentService.createPayment(token, createPaymentRequest, path)
+    }
+
 
     override suspend fun loanRepayment(
         token: String,
@@ -101,12 +125,11 @@ class PaymentRepositoryImpl @Inject constructor(private val paymentService: Paym
         paymentService.printCheque(token, chequeRequest)
     }
 
-    override suspend fun humoPay(
+    override fun humoPay(
         token: String,
         humoPayRequest: HumoPayRequest
-    ): Resource<Call<NfcResponse>> = getResult {
+    ): Call<NfcResponse> =
         paymentService.humoPay(token, humoPayRequest)
-    }
 
 
     override suspend fun getAutoPaymentList(
@@ -148,7 +171,7 @@ class PaymentRepositoryImpl @Inject constructor(private val paymentService: Paym
     override suspend fun checkSmsForPayment(
         token: String,
         checkSmsForPayment: CheckSmsForPayment
-    ): Resource<BaseResponse> = getResult {
+    ): Resource<CheckSmsForPaymentResponse> = getResult {
         paymentService.checkSmsForPayment(token, checkSmsForPayment)
     }
 
@@ -172,5 +195,41 @@ class PaymentRepositoryImpl @Inject constructor(private val paymentService: Paym
         oneTimeInfoRequest: OneTimeInfoRequest
     ): Resource<OneTimeInfoResponse> = getResult {
         paymentService.getOneTimePayInfo(token, oneTimeInfoRequest)
+    }
+
+    override suspend fun getBankNameRequest(
+        token: String, getBankNameRequest: GetBankNameRequest
+    ): Resource<BankNameResponse> = getResult {
+        paymentService.getBankName(token, getBankNameRequest)
+    }
+
+    override suspend fun oneTimeInfoRequest(
+        token: String, oneTimeInfoRequest: OneTimeInfoRequest
+    ): Resource<OneTimeInfoResponse> = getResult {
+        paymentService.getOneTimePayInfo(token, oneTimeInfoRequest)
+    }
+
+    override suspend fun getSwiftBic(
+        token: String, swiftRequest: SwiftRequest
+    ): Resource<SwiftTransferResponse> = getResult {
+        paymentService.getSwiftBic(token, swiftRequest)
+    }
+
+    override suspend fun getSwiftCommission(
+        token: String, swiftRequest: GetSwiftCommissionRequest
+    ): Resource<SwiftCommissionResponse> = getResult {
+        paymentService.getSwiftCommission(token, swiftRequest)
+    }
+
+    override suspend fun createSwiftApp(
+        token: String, swiftRequest: CreateSwiftAppRequest
+    ): Resource<BaseResponse> = getResult {
+        paymentService.createSwiftApp(token, swiftRequest)
+    }
+
+    override suspend fun getSwiftDocs(
+        token: String, swiftRequest: SwiftTransferListRequest
+    ): Resource<SwiftTransferListResponse> = getResult {
+        paymentService.getSwiftDocs(token, swiftRequest)
     }
 }

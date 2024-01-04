@@ -1,11 +1,12 @@
 package uz.fido.network.domain.model.sign_up
 
 import uz.fido.network.domain.model.abc_base.UserInfo
+import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 
 data class FinishRegRequest(
     val app_version: String? = null,
     val app_version_code: String? = null,
-    var client_id: String? = null,
+    var client_id: String = USER_CLIENT_ID,
     val device_code: String? = null,
     val device_name: String? = null,
     val device_type: String? = null,

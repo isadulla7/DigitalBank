@@ -1,0 +1,463 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteColor"
+        android:outlineSpotShadowColor="@color/appBarShadowColor"
+        android:translationZ="@dimen/elevation_8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:s_additionalIcon="@drawable/ic_history"
+        app:s_title="@string/swift_usd_transfer" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_date_value"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:hint="@string/date_value"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                    android:id="@+id/et_date_value"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:theme="@style/DefaultEditTextTheme"
+                    app:met_mask="##.##.####" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_customer_name"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/fio"
+                app:layout_constraintTop_toBottomOf="@id/ti_date_value">
+
+                <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                    android:id="@+id/et_customer_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:inputType="none"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_customer_country"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/address_sender"
+                app:layout_constraintTop_toBottomOf="@id/ti_customer_name">
+
+                <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                    android:id="@+id/et_customer_country"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textCapCharacters"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passport_serial_layout"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/document_seria"
+                app:layout_constraintTop_toBottomOf="@id/ti_customer_country">
+
+                <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                    android:id="@+id/passport_serial"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:theme="@style/DefaultEditTextTheme" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passport_number_layout"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/document_number"
+                app:layout_constraintTop_toBottomOf="@id/passport_serial_layout">
+
+                <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                    android:id="@+id/passport_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="24sp"
+                    android:imeOptions="actionNext"
+                    android:maxLength="20"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:theme="@style/DefaultEditTextTheme" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/birthday_layout"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/passport_get_date"
+                app:layout_constraintTop_toBottomOf="@id/passport_number_layout">
+
+                <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                    android:id="@+id/receive_date_passport"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:drawablePadding="24sp"
+                    android:imeOptions="actionNext"
+                    android:inputType="number"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:theme="@style/DefaultEditTextTheme"
+                    app:met_mask="##.##.####" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <ImageView
+                android:id="@+id/image_date"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginEnd="4dp"
+                android:padding="12dp"
+                android:src="@drawable/ic_calendar_24"
+                app:layout_constraintBottom_toBottomOf="@id/birthday_layout"
+                app:layout_constraintEnd_toEndOf="@id/birthday_layout"
+                app:layout_constraintTop_toTopOf="@id/birthday_layout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_beneficiary_account_name_fio"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/name_receiver"
+                app:layout_constraintTop_toBottomOf="@id/birthday_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_beneficiary_account_name_fio"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890."
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLines="1"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_beneficiary_account_name_address"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/beneficiary_account_name_address"
+                app:layout_constraintTop_toBottomOf="@id/ti_beneficiary_account_name_fio">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_beneficiary_account_name_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLines="1"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bic_account59"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/account_59"
+                app:layout_constraintTop_toBottomOf="@id/ti_beneficiary_account_name_address">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/bicAccount_only59"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890."
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLines="1"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_beneficiary_bank_account_bi"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/beneficiary_bank_account_bi"
+                app:layout_constraintTop_toBottomOf="@id/bic_account59">
+
+                <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                    android:id="@+id/et_beneficiary_bank_account_bi"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890."
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="11"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/bic_or_bei_a59"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                android:hint="@string/text_59a_bic_bei_bic_bei"
+                app:layout_constraintTop_toBottomOf="@id/ti_beneficiary_bank_account_bi">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_bic_name_a59"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890."
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="11"
+                    android:maxLines="1"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/account_bic_56a"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/account_56a_bic"
+                app:layout_constraintTop_toBottomOf="@id/bic_or_bei_a59">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_bic_56a"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890."
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLines="1"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/account_bic_57a"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/code_bank_receiver_57_swift"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/account_bic_56a">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_bic_57a"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890."
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLines="1"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name_bic_57a"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/name_57a_bic"
+                app:layout_constraintTop_toBottomOf="@id/account_bic_56a">
+
+                <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                    android:id="@+id/et_bic_name_57a"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890."
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="11"
+                    android:maxLines="1"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:id="@+id/bic_organisation_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/brandBlueColor_50"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/name_bic_57a" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleInverse"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginTop="16dp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="@+id/name_bic_57a"
+                app:layout_constraintTop_toBottomOf="@+id/name_bic_57a" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_remittance_info"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/payment_details"
+                app:counterEnabled="true"
+                app:counterMaxLength="136"
+                app:layout_constraintTop_toBottomOf="@id/bic_organisation_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_remittance_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890."
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="136"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/ti_details_of_charges"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/details_of_charges"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/ti_remittance_info">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_details_of_charges"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_infos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/ti_details_of_charges" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputAmount"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/payment_amount"
+                app:layout_constraintTop_toBottomOf="@id/layout_infos">
+
+                <uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountEditText
+                    android:id="@+id/editTextAmount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" 0123456789"
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:longClickable="false"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <uz.fido.utils.view.amount.AmountSuggestionView
+                android:id="@+id/amount_suggestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/textInputAmount" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:id="@+id/commission"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textColor="@color/hintColor"
+                android:textSize="14sp"
+                android:visibility="visible"
+                android:layout_marginBottom="64dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/amount_suggestions" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <uz.fido.utils.view.custom_circle_button.CustomFAButton
+        android:id="@+id/btn_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

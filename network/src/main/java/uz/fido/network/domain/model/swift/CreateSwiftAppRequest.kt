@@ -8,7 +8,7 @@ data class CreateSwiftAppRequest(
     var device_type: String,
     var command: String,
     var amount: String,
-    var from_object_id: String,
+    var from_object_id: String?=null,
     var service_id: String,
     var client_id: String,
     var currency_code: String,

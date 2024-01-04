@@ -37,7 +37,7 @@
                 android:gravity="center|start"
                 android:paddingVertical="16dp"
                 android:text="Your order has been placed!"
-                android:textColor="@color/white"
+                android:textColor="@color/whiteColor"
                 android:textSize="15sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>

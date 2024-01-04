@@ -16,5 +16,6 @@ data class RemittanceType(
     var control_number: String? = null,
     var country_name: String? = null,
     var phone: String? = null,
+    var amount: String? = null,
     var order: Int? = 0
 ) : Serializable

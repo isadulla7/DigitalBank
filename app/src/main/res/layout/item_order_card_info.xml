@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layout_product_price"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="20dp"
+    android:layout_weight="1"
+    android:gravity="start|center"
+    android:orientation="vertical">
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/issue_cost"
+        android:textColor="@color/hintColor"
+        android:textSize="14sp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/costs_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/blackColor"
+        android:textSize="14sp"
+        tools:text="40500 UZS" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

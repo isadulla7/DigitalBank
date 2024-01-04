@@ -1,11 +1,20 @@
 package uz.fido.network.domain.datasource.services
 
+import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
+import retrofit2.http.POST
+import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.amount_requests.*
+import uz.fido.network.domain.model.cards.CheckCardRequestP2p
+import uz.fido.network.domain.model.cards.CheckCardResponse
 import uz.fido.network.domain.model.collect_split_money.*
 import uz.fido.network.domain.model.conversion.ConversionRequest
 import uz.fido.network.domain.model.money_transfer.create.CreateTransferRequest
 import uz.fido.network.domain.model.money_transfer.list.MoneyTransferHistoryResponse
 import uz.fido.network.domain.model.money_transfer.receive.MoneyTransferParamsResponse
+import uz.fido.network.domain.model.p2p.P2PHistoryRequest
+import uz.fido.network.domain.model.p2p.P2PHistoryResponse
 import uz.fido.network.domain.model.p2p.P2PInfoRequest
 import uz.fido.network.domain.model.p2p.P2PInfoResponse
 import uz.fido.network.domain.model.p2p.P2PRequest
@@ -13,13 +22,14 @@ import uz.fido.network.domain.model.p2p.P2PResponse
 import uz.fido.network.domain.model.popular_transfers.DeletePopularTransferRequest
 import uz.fido.network.domain.model.popular_transfers.PopularTransferResponse
 import uz.fido.network.domain.model.popular_transfers.SaveToPopularTransferRequest
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import uz.fido.network.domain.model.abc_base.BaseResponse
 
 interface P2PApiInterface {
+
+    @POST("CARD_INFO")
+    suspend fun checkCardInfo(
+        @Header("Authorization") token: String,
+        @Body checkCardRequestP2p: CheckCardRequestP2p
+    ): CheckCardResponse
 
     @GET("GET_USER_TRANSFERS_WITH_COUNT")
     suspend fun getPopularTransferList(
@@ -236,5 +246,11 @@ interface P2PApiInterface {
         @Header("Authorization") token: String,
         @Body collectMoneyBindProducts: CollectMoneyBindProducts
     ): BaseResponse
+
+    @POST("GET_USER_OBJ_P2P_HIS")
+    suspend fun getP2pHistory(
+        @Header("Authorization") token: String,
+        @Body p2PHistoryRequest: P2PHistoryRequest
+    ): P2PHistoryResponse
 
 }

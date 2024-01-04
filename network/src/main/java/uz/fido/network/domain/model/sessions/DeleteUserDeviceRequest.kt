@@ -4,8 +4,8 @@ import java.io.Serializable
 
 class DeleteUserDeviceRequest(
     var device_type: String,
-    var device_code: String,
+    var selected_device_code: String,
     var del_req_type: String,
     var user_id: String,
-    var sms_code: String
+    var string_line: String
 ) : Serializable

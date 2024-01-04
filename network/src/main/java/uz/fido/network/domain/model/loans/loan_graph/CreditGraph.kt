@@ -7,5 +7,7 @@ data class CreditGraph(
     val repaymentDate: String,
     val saldo: String,
     var interestOnTermDebt: String,
-    var recommendedAmount: String
+    var recommendedAmount: String,
+    var position:Int=0
+
 ) : Serializable

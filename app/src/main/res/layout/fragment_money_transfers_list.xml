@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:clipChildren="false"
+    android:orientation="vertical"
+    tools:context=".ui.fragments.services.money_transfers.MoneyTransfersListFragment">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteColor"
+        app:s_additionalIcon="@drawable/ic_history"
+        app:s_title="@string/money_transfers" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingVertical="8dp"
+        tools:listitem="@layout/item_money_transfer" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
