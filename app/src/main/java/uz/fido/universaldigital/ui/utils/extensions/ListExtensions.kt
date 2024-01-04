@@ -24,7 +24,7 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
     )
     serviceList.add(
         MenuServiceItem(
-            icon = R.drawable.ic_illustration_order_card,
+            icon = R.drawable.ic_3d_order_card,
             serviceName = getString(R.string.order_card),
             serviceDescription = getString(R.string.order_card_description),
             serviceId = 2
@@ -32,7 +32,7 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
     )
     serviceList.add(
         MenuServiceItem(
-            icon = R.drawable.ic_illustration_apply_loan,
+            icon = R.drawable.ic_3d_apply_loan,
             serviceName = getString(R.string.apply_loan),
             serviceDescription = getString(R.string.apply_loan_description),
             serviceId = 3
@@ -40,7 +40,7 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
     )
     serviceList.add(
         MenuServiceItem(
-            icon = R.drawable.ic_illustration_open_deposit,
+            icon = R.drawable.ic_3d_open_deposit,
             serviceName = getString(R.string.open_deposit),
             serviceDescription = getString(R.string.open_deposit_description),
             serviceId = 4
@@ -48,7 +48,7 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
     )
     serviceList.add(
         MenuServiceItem(
-            icon = R.drawable.ic_illustration_open_wallet,
+            icon = R.drawable.ic_3d_open_wallet,
             serviceName = getString(R.string.open_wallet),
             serviceDescription = getString(R.string.open_wallet_description),
             serviceId = 5
