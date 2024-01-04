@@ -80,7 +80,7 @@ class MenuServicesAdapter(
         fun bind(item: MenuServiceItem) {
             binding.apply {
                 tvProductName.text = item.serviceName
-                tvProductDescription.text = item.serviceDescription
+//                tvProductDescription.text = item.serviceDescription
                 icProductIcon.setImageResource(item.icon!!)
                 itemBankProduct.setOnClickListener {
                     onItemClickListener.invoke(item.serviceId)
