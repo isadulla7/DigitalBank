@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ti_show_account"
+        style="@style/EditTextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/account_counting"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+            android:id="@+id/et_show_account"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:cursorVisible="false"
+            android:drawableEnd="@drawable/ic_arrow_down"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:focusedByDefault="false"
+            android:gravity="center_vertical"
+            android:inputType="textNoSuggestions"
+            android:theme="@style/DefaultEditTextTheme" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/indicator_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ti_from"
+            style="@style/EditTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:hint="@string/indications_from">
+
+            <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                android:id="@+id/et_from"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="8"
+                android:theme="@style/DefaultEditTextTheme" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/ti_to"
+            style="@style/EditTextInputLayoutStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:hint="@string/indications_upto">
+
+            <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                android:id="@+id/et_to"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:imeOptions="actionNext"
+                android:inputType="number"
+                android:maxLength="8"
+                android:theme="@style/DefaultEditTextTheme" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

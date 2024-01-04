@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uz.fido.utils.view.custom_text_view.TextViewRegular xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tv_name"
+    android:layout_width="wrap_content"
+    android:layout_height="36dp"
+    android:layout_marginEnd="6dp"
+    android:background="@drawable/cornered_bg_8dp"
+    android:gravity="center"
+    android:paddingHorizontal="12dp"
+    android:textColor="@color/mainTextColor"
+    android:textSize="14sp" />

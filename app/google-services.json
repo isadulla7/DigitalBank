@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "221468593329",
+    "project_id": "universal-mobile-digital",
+    "storage_bucket": "universal-mobile-digital.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:221468593329:android:acb0c632a9dc91db8fa690",
+        "android_client_info": {
+          "package_name": "uz.fido.universaldigital"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8KkCiy1RfkZ4Key8xNT16phN-iXL8BIQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

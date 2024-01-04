@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/whiteColor">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:s_title="@string/would_you_mind" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/button_copy_url"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <ImageView
+            android:layout_width="216dp"
+            android:layout_height="216dp"
+            android:layout_gravity="center"
+            tools:ignore="ContentDescription" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/empty_request_money"
+            android:textColor="@color/mainTextColor"
+            android:textSize="17sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_copy_url"
+        style="@style/MainButtonStyle"
+        android:layout_width="match_parent"
+        android:enabled="true"
+        android:text="@string/share_link"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

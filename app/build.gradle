@@ -1,0 +1,182 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-android-extensions'
+    id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
+    id 'com.google.firebase.crashlytics'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    defaultConfig {
+        applicationId ConfigData.applicationId
+        minSdkVersion ConfigData.minSdkVersion
+        compileSdk ConfigData.compileSdkVersion
+        targetSdkVersion ConfigData.targetSdkVersion
+        versionCode ConfigData.versionCode
+        versionName ConfigData.releaseVersionName
+        archivesBaseName = ConfigData.archivesBaseName
+
+        vectorDrawables.useSupportLibrary = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            ndk {
+                abiFilters "arm64-v8a", "armeabi-v7a"
+            }
+        }
+    }
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation ProjectDependencies.coreKtx
+    implementation ProjectDependencies.appCompat
+    implementation ProjectDependencies.constraintLayout
+    implementation ProjectDependencies.kotlin
+    implementation ProjectDependencies.legacySupport
+    implementation ProjectDependencies.workRuntime
+    implementation ProjectDependencies.material
+
+    //play services and maps
+    implementation ProjectDependencies.playServicesVision
+    implementation ProjectDependencies.playServicesMaps
+    implementation ProjectDependencies.playServicesLocation
+    implementation ProjectDependencies.playServicesMapsUtils
+
+    implementation ProjectDependencies.barcodeScanning
+    implementation ProjectDependencies.smsRetrieve
+    implementation ProjectDependencies.coroutinesCore
+    implementation ProjectDependencies.coroutinesAndroid
+    implementation ProjectDependencies.liveDataKtx
+
+    implementation ProjectDependencies.lifeCycleExtension
+    compileOnly ProjectDependencies.wearable
+    kapt ProjectDependencies.lifeCycleCompiler
+
+    //coil,picasso (image loader)
+    implementation ProjectDependencies.coil
+    implementation ProjectDependencies.picasso
+    implementation ProjectDependencies.videoCache
+
+    //glide(image loader)
+    implementation ProjectDependencies.glide
+    kapt ProjectDependencies.glideCompiler
+
+    implementation ProjectDependencies.circleImageView
+    implementation ProjectDependencies.expandableLayout
+
+    //cameraX dependencies(please don't update)
+    implementation ProjectDependencies.camera
+    implementation ProjectDependencies.cameraLifecycle
+    implementation ProjectDependencies.cameraView
+
+    //firebase
+    implementation platform(ProjectDependencies.firebaseBom)
+    implementation ProjectDependencies.firebaseAnalytics
+    implementation ProjectDependencies.firebaseStorage
+    implementation ProjectDependencies.firebaseCrashlytics
+    implementation ProjectDependencies.firebaseDynamicLinks
+    implementation ProjectDependencies.firebaseMessaging
+    implementation ProjectDependencies.firebaseFireStore
+
+    implementation ProjectDependencies.viewModelKoin
+
+    //smart refresh layout
+    implementation ProjectDependencies.libMaterialProgress
+    implementation ProjectDependencies.smartRefreshLayout
+    implementation ProjectDependencies.smartRefreshHeader
+
+    implementation ProjectDependencies.ticker
+    implementation ProjectDependencies.ktorAndroid
+    implementation ProjectDependencies.kotlinxCoroutines
+
+    //ml kit
+    implementation ProjectDependencies.mlkitFaceDetection
+    implementation ProjectDependencies.mlkitTextRecognition
+    implementation ProjectDependencies.mlkitBarcodeScanning
+
+    //lifecycle (please don't update)
+    implementation ProjectDependencies.lifecycleViewModel
+    implementation ProjectDependencies.lifecycleRuntime
+
+    implementation ProjectDependencies.splashScreen
+    implementation ProjectDependencies.playServiceVisionCommon
+    implementation ProjectDependencies.playServiceVision
+
+    implementation ProjectDependencies.rxBinding
+    implementation ProjectDependencies.viewPagerDotIndicator
+    implementation ProjectDependencies.pageTransformerHelper
+    implementation ProjectDependencies.rvAnimators
+
+    implementation ProjectDependencies.qrGenAndroid
+    implementation ProjectDependencies.customQrGenerator
+    implementation ProjectDependencies.commonsLang
+    implementation ProjectDependencies.animatedProgressBar
+    implementation ProjectDependencies.rxRelay
+
+    //hilt
+    implementation ProjectDependencies.hiltAndroid
+    kapt ProjectDependencies.hiltCompiler
+    implementation ProjectDependencies.paper
+
+    implementation ProjectDependencies.navigationFragment
+    implementation ProjectDependencies.navigationUi
+    implementation ProjectDependencies.navigationKtx
+
+    implementation ProjectDependencies.securityCrypto
+    implementation ProjectDependencies.biometric
+    implementation ProjectDependencies.skeleton
+    implementation ProjectDependencies.shimmerLayout
+    implementation ProjectDependencies.sharedPref
+    implementation ProjectDependencies.gson
+
+    //retrofit
+    implementation ProjectDependencies.retrofit
+    implementation ProjectDependencies.retrofitConverter
+
+    implementation ProjectDependencies.lottie
+    implementation ProjectDependencies.inAppUpdate
+    implementation ProjectDependencies.flexbox
+
+    //my id(native libs)
+    implementation ProjectDependencies.myId
+
+    //humo pay
+    implementation files(ProjectDependencies.humoPay1)
+    implementation files(ProjectDependencies.humoPay2)
+
+    //nfc card reader
+    implementation files(ProjectDependencies.nfcCardReader)
+
+    //magnifier
+    implementation ProjectDependencies.magnifier
+
+    //card scanner project
+    implementation project(':cardScanner')
+
+    //network module
+    implementation project(':network')
+
+    //utils module
+    implementation project(':utils')
+
+}

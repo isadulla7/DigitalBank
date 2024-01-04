@@ -1,0 +1,60 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+}
+
+android {
+    namespace 'uz.fido.network'
+
+    defaultConfig {
+        minSdkVersion ConfigData.minSdkVersion
+        compileSdk ConfigData.compileSdkVersion
+        targetSdkVersion ConfigData.targetSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    //hilt
+    implementation ProjectDependencies.hiltAndroid
+    kapt ProjectDependencies.hiltCompiler
+
+    //retrofit
+    implementation ProjectDependencies.retrofit
+    implementation ProjectDependencies.retrofitConverter
+    implementation ProjectDependencies.gson
+
+    implementation ProjectDependencies.roomRuntime
+    kapt ProjectDependencies.roomCompiler
+    implementation ProjectDependencies.roomKtx
+
+    //logging
+    debugImplementation ProjectDependencies.chuckerLib
+    releaseImplementation ProjectDependencies.chuckerLibNoOp
+
+    implementation ProjectDependencies.paper
+    implementation ProjectDependencies.okhttp
+    implementation ProjectDependencies.okhttpLogging
+
+    //utils module
+    implementation project(path: ':utils')
+
+}

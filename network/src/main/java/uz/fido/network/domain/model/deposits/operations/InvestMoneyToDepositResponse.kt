@@ -1,0 +1,9 @@
+package uz.fido.network.domain.model.deposits.operations
+
+import java.io.Serializable
+
+data class InvestMoneyToDepositResponse(
+    var code: Int,
+    var msg: String,
+    var operationsId: String
+) : Serializable

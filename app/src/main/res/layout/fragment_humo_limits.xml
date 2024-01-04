@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:orientation="vertical">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:s_title="@string/limit_settings" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewBold
+        android:id="@+id/limit_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/mainTextColor"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/tv_limit_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/limit_amount"
+        android:textColor="@color/hintColor"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/limit_type"
+        app:layout_constraintTop_toBottomOf="@id/limit_type" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/limit_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/mainTextColor"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_limit_amount" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/tv_limit_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/start_date"
+        android:textColor="@color/hintColor"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/tv_limit_amount"
+        app:layout_constraintTop_toBottomOf="@id/limit_amount" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/limit_start_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/mainTextColor"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/limit_amount" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/tv_limit_end_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/end_date"
+        android:textColor="@color/hintColor"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="@id/tv_limit_amount"
+        app:layout_constraintTop_toBottomOf="@id/tv_limit_start_date" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/limit_end_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:textColor="@color/mainTextColor"
+        android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_limit_start_date" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteColor"
+        android:orientation="vertical"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16sp"
+            android:layout_marginEnd="16sp"
+            android:layout_marginBottom="16sp"
+            android:gravity="center"
+            android:text="@string/empty_limit_title"
+            android:textColor="@color/hintColor"
+            android:textSize="17sp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewRegular
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="32dp"
+            android:gravity="center"
+            android:text="@string/empty_limit_description"
+            android:textColor="@color/hintColor"
+            android:textSize="15sp"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/delete_button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginVertical="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:text="@string/delete"
+            android:textColor="@color/brandRedColor"
+            android:textSize="16sp"
+            android:visibility="gone"
+            app:backgroundTint="#F4DBDB"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/add_button"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginVertical="16dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:text="@string/add"
+            android:textSize="16sp"
+            app:cornerRadius="12dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

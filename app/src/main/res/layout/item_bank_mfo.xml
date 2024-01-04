@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/father"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/cornered_bg_12dp"
+    android:elevation="28dp"
+    android:orientation="vertical"
+    android:outlineSpotShadowColor="@color/brandBlueColor_10"
+    android:paddingHorizontal="12dp"
+    android:paddingVertical="16dp">
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/bank_mfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/mib_debts"
+        android:textColor="@color/mainTextColor"
+        android:textSize="16sp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/bank_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:maxLines="3"
+        android:text="@string/mib_debts"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="14sp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    tools:context=".ui.fragments.profile.identification.VerificationInfoUserFragment">
+
+    <uz.fido.utils.view.custom_text_view.TextViewBold
+        android:id="@+id/header_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/verification"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/you_may_change_later"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/header_title" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:paddingHorizontal="16dp"
+        app:layout_constraintBottom_toTopOf="@id/check_box"
+        app:layout_constraintTop_toBottomOf="@id/subtitle"
+        tools:listitem="@layout/item_code_and_name" />
+
+    <CheckBox
+        android:id="@+id/check_box"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="4dp"
+        android:button="@drawable/custom_check_box"
+        android:paddingStart="8dp"
+        android:text="@string/verification_privacy"
+        android:textColor="@color/hintColor"
+        app:layout_constraintBottom_toTopOf="@id/bottom_layout" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/skip_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginVertical="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:text="@string/not_me"
+            android:textColor="@color/brandRedColor"
+            android:textSize="16sp"
+            app:backgroundTint="#F4DBDB"
+            app:cornerRadius="16dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/identification_btn"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginVertical="16dp"
+            android:layout_marginStart="6dp"
+            android:layout_marginEnd="16dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:text="@string/i_am"
+            android:textColor="@color/frozenWhite"
+            android:textSize="16sp"
+            app:cornerRadius="16dp"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

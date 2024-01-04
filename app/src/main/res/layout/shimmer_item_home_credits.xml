@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="12dp"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="12sp">
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_credit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shimmer_bg"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="14sp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_credit_left_amount"
+        android:layout_width="300dp"
+        android:layout_height="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/shimmer_bg"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="12sp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

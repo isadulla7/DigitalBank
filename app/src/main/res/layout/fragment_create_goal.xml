@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:outlineSpotShadowColor="@color/appBarShadowColor"
+        android:translationZ="@dimen/elevation_8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:s_title="@string/goal" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="64dp"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/name_layout"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/name"
+                app:layout_constraintTop_toBottomOf="@+id/passport_serial_layout">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionNext"
+                    android:inputType="text"
+                    android:maxLines="1"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/max_amount_layout"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="24dp"
+                android:hint="@string/accumulation_account"
+                app:layout_constraintTop_toBottomOf="@id/card_view">
+
+                <uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountEditText
+                    android:id="@+id/et_max_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" 0123456789"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/year_layout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_background_bg"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/year"
+                    style="@style/EditTextInputLayoutStyle"
+                    android:layout_width="56dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:layout_constraintTop_toBottomOf="@id/card_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/ed_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:focusableInTouchMode="false"
+                        android:focusedByDefault="false"
+                        android:gravity="center_vertical"
+                        android:hint="@string/term_goal"
+                        android:inputType="number"
+                        android:theme="@style/DefaultEditTextTheme" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/icon_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="0.3"
+                    android:src="@drawable/ic_arrow_down" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/auto_payment_layout"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="24dp"
+                android:hint="@string/amount_auto_payment"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/card_view">
+
+                <uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountEditText
+                    android:id="@+id/autopayment_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" 0123456789"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/an_initial_layout"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="24dp"
+                android:hint="@string/an_initial_free"
+                app:layout_constraintTop_toBottomOf="@id/card_view">
+
+                <uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountEditText
+                    android:id="@+id/an_initial_free"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" 0123456789"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/min_amount_goal"
+                android:textColor="@color/brandBlueColor_60" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/fireproof_layout"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="24dp"
+                android:hint="@string/fireproof"
+                app:layout_constraintTop_toBottomOf="@id/card_view">
+
+                <uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountEditText
+                    android:id="@+id/et_fireprool"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:digits=" 0123456789"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="32dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/min_amount_goal"
+                android:textColor="@color/brandBlueColor_60" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/how_often_to_top_up"
+                android:textColor="@color/mainTextColor" />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp">
+
+                <RadioButton
+                    android:id="@+id/week_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/weekly" />
+
+                <RadioButton
+                    android:id="@+id/month_radio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/every_month" />
+            </RadioGroup>
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/days_week_layout"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_background_bg"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/days_week"
+                    style="@style/EditTextInputLayoutStyle"
+                    android:layout_width="56dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    app:layout_constraintTop_toBottomOf="@id/card_view">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/et_days_week"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center_vertical"
+                        android:focusableInTouchMode="false"
+                        android:focusedByDefault="false"
+                        android:gravity="center_vertical"
+                        android:hint="@string/term_goal"
+                        android:inputType="number"
+                        android:text="@string/monday"
+                        android:theme="@style/DefaultEditTextTheme" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/icon_days_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="4dp"
+                    android:layout_weight="0.3"
+                    android:src="@drawable/ic_arrow_down" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/auto_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/icon_auto"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/check_construktor" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewRegular
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="@string/automatic_device" />
+
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <uz.fido.utils.view.custom_circle_button.CustomFAButton
+        android:id="@+id/btn_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

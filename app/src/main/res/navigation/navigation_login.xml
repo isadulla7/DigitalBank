@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_login">
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.sign_in.SignInFragment"
+        android:label="SignInFragment" />
+
+    <fragment
+        android:id="@+id/pinCodeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment"
+        android:label="PinCodeFragment" />
+
+    <fragment
+        android:id="@+id/chooseLanguageFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.change_language.ChangeLanguageFragment"
+        android:label="ChooseLanguageFragment" />
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpFragment"
+        android:label="SignUpFragment" />
+
+    <fragment
+        android:id="@+id/confirmSmsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment"
+        android:label="ConfirmSmsFragment">
+        <action
+            android:id="@+id/action_confirmSmsFragment_to_pinCodeFragment"
+            app:destination="@id/pinCodeFragment"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpPasswordFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.sign_up_password.SignUpPasswordFragment"
+        android:label="SignUpPasswordFragment" />
+
+    <fragment
+        android:id="@+id/passCodeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment"
+        android:label="PassCodeFragment" />
+
+    <fragment
+        android:id="@+id/verificationInfoUserFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.identification.VerificationInfoUserFragment"
+        android:label="fragment_verification_info_user"
+        tools:layout="@layout/fragment_verification_info_user">
+        <action
+            android:id="@+id/goto_success_identification"
+            app:destination="@id/successVerificationFragment"
+            app:popUpTo="@id/mainIdentificationFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/mainIdentificationFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.identification.MainIdentificationFragment"
+        android:label="fragment_main_identification"
+        tools:layout="@layout/fragment_main_identification" />
+
+    <fragment
+        android:id="@+id/successVerificationFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.identification.SuccessVerificationFragment"
+        android:label="fragment_success_verification"
+        tools:layout="@layout/fragment_success_verification" />
+
+    <fragment
+        android:id="@+id/restoreWithEmailFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.restore_profile.RestoreWithEmailFragment"
+        android:label="RestoreWithEmailFragment" />
+
+    <fragment
+        android:id="@+id/fingerPrintFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.pin.FingerPrintFragment"
+        android:label="FingerPrintFragment" />
+
+    <fragment
+        android:id="@+id/restoreWithCardFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.login.restore_profile.RestoreWithCardFragment"
+        android:label="fragment_restore_with_card"
+        tools:layout="@layout/fragment_restore_with_card" />
+
+    <fragment
+        android:id="@+id/changePasswordFragment2"
+        android:name="uz.fido.universaldigital.ui.fragments.login.restore_profile.ChangePasswordFragment"
+        android:label="ChangePasswordFragment" />
+
+</navigation>

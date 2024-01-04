@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="FloatingButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="srcCompat">@drawable/ic_arrow_right</item>
+        <item name="elevation">4dp</item>
+        <item name="android:outlineSpotShadowColor" tools:targetApi="p">@color/brandRedColor</item>
+        <item name="android:outlineAmbientShadowColor" tools:targetApi="p">@color/brandRedColor</item>
+        <item name="cornerRadius">16sp</item>
+        <item name="android:shadowColor">@color/brandRedColor_10</item>
+        <item name="android:disabledAlpha">1</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Full</item>
+        <item name="tint">@color/whiteColor</item>
+    </style>
+</resources>

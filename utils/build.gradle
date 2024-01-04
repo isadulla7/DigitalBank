@@ -1,0 +1,66 @@
+plugins {
+    id 'com.android.library'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'uz.fido.utils'
+
+    defaultConfig {
+        minSdkVersion ConfigData.minSdkVersion
+        compileSdk ConfigData.compileSdkVersion
+        targetSdkVersion ConfigData.targetSdkVersion
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+
+    implementation ProjectDependencies.coreKtx
+    implementation ProjectDependencies.appCompat
+    implementation ProjectDependencies.material
+    implementation ProjectDependencies.databinding
+    implementation ProjectDependencies.sharedPref
+    implementation ProjectDependencies.firebaseMessagingVersion
+
+    testImplementation ProjectDependencies.testImplJunit
+    androidTestImplementation ProjectDependencies.testJunit
+    androidTestImplementation ProjectDependencies.testEspresso
+
+    implementation ProjectDependencies.okhttp
+    implementation ProjectDependencies.okhttpLogging
+
+    implementation ProjectDependencies.lottie
+    implementation ProjectDependencies.inAppUpdate
+    implementation ProjectDependencies.paper
+
+    implementation ProjectDependencies.navigationFragment
+    implementation ProjectDependencies.navigationUi
+    implementation ProjectDependencies.navigationKtx
+
+    implementation ProjectDependencies.securityCrypto
+    implementation ProjectDependencies.biometric
+
+    implementation ProjectDependencies.skeleton
+    implementation ProjectDependencies.shimmerLayout
+    implementation ProjectDependencies.facebookShimmer
+
+}

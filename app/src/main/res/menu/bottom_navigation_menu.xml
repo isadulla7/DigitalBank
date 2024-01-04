@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/productsFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_menu_home"
+        android:title="@string/home" />
+    <item
+        android:id="@+id/menuTransfersFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_men_transfer"
+        android:title="@string/transfer" />
+    <item
+        android:id="@+id/menuServicesFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_menu_products"
+        android:title="@string/services" />
+    <item
+        android:id="@+id/basePaymentFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_menu_payment"
+        android:title="@string/payments" />
+    <item
+        android:id="@+id/menuMonitoringFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_menu_monitoring"
+        android:title="@string/monitoring" />
+</menu>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:elevation="28dp"
+    android:id="@+id/father"
+    android:layout_marginHorizontal="16dp"
+    android:outlineSpotShadowColor="#0AFFFFFF"
+    android:background="@drawable/cornered_bg_12dp_stroke"
+    android:orientation="vertical"
+    android:layout_marginTop="16dp"
+    android:layout_height="wrap_content">
+
+    <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:drawableStart="@drawable/deposit_name_icon"
+        android:drawablePadding="12dp"
+        android:gravity="center_vertical|start"
+        android:textColor="@color/mainTextColor"
+        android:textSize="20sp"
+        tools:text="Микрозайм" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="start|center">
+
+        <uz.fido.utils.view.custom_text_view.TextViewRegular
+            android:id="@+id/loan_amount_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="@string/loan_amount"
+            android:textColor="@color/brandBlueColor_40"
+            android:textSize="14sp" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/loan_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mainTextColor"
+            android:textSize="14sp"
+            tools:text="До 10 000 000.00 сум" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/dashed_line" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="start|center">
+
+        <uz.fido.utils.view.custom_text_view.TextViewRegular
+            android:id="@+id/loan_percent_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="@string/loan_percent"
+            android:textColor="@color/brandBlueColor_40"
+            android:textSize="14sp" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/loan_percent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mainTextColor"
+            android:textSize="14sp"
+            tools:text="25 %" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/dashed_line" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="start|center">
+
+        <uz.fido.utils.view.custom_text_view.TextViewRegular
+            android:id="@+id/loan_time_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="@string/loan_time"
+            android:textColor="@color/brandBlueColor_40"
+            android:textSize="14sp" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/loan_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/mainTextColor"
+            android:textSize="14sp"
+            tools:text="До 36 месяцев" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

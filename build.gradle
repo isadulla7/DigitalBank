@@ -1,0 +1,33 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath PluginDependencies.buildGradle
+        classpath PluginDependencies.kotlinGradle
+        classpath PluginDependencies.googleServices
+        classpath PluginDependencies.hilt
+        classpath PluginDependencies.firebaseCrashlytics
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        jcenter()
+        maven { url PluginDependencies.jitPackIo }
+        flatDir { dirs 'aars' }
+        maven {
+            url PluginDependencies.flutterIo
+        }
+        maven { url "https://artifactory.aigroup.uz:443/artifactory/myid" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

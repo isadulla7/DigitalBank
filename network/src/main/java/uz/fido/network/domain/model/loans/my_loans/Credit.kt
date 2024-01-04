@@ -1,0 +1,40 @@
+package uz.fido.network.domain.model.loans.my_loans
+
+import java.io.Serializable
+
+data class Credit(
+    val acc_Kred_Arrear: String,
+    val acc_dept_curr: String,
+    val acc_perc_arrear: String,
+    val acc_perc_arrear2: String,
+    val acc_perc_curr: String,
+    val client_name: String,
+    val close_date: String,
+    val condition: String,
+    val condition_name: String,
+    val contract_code: String,
+    val contract_date: String,
+    val credit_type: String,
+    val curr_balance: String,
+    val dept_arrear: String,
+    val dept_curr: String,
+    val error_code: String,
+    val error_msg: String,
+    val error_type: String,
+    val filial_mfo: String,
+    val filial_name: String,
+    val guar_types: String,
+    val kred_Curr: String,
+    val loan_id: String,
+    val open_date: String,
+    val operation_code: String,
+    val perc_arrear: String,
+    val perc_curr: String,
+    val perc_rate: String,
+    val percent: String,
+    val product_id: String,
+    val product_name: String,
+    val summ_loan: String,
+    val unused_limit_amount: String,
+    val used_limit_amount: String
+) : Serializable

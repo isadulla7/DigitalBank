@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_bg"
+    xmlns:tools="http://schemas.android.com/tools">
+
+
+    <ImageView
+        android:id="@+id/handle"
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_dialog_handle"
+        tools:ignore="ContentDescription" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:paddingEnd="16dp"
+        android:gravity="center"
+        android:paddingStart="16dp"
+        android:textColor="@color/mainTextColor"
+        android:textSize="16sp"
+        android:text="@string/pay"
+      />
+
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/month"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <ImageView
+                android:id="@+id/option_1"
+                android:button="@drawable/check_box_color"
+                android:background="@drawable/check_box_color"
+                android:layout_width="20dp"
+                android:scaleType="centerCrop"
+                android:layout_height="20dp"
+              />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="@string/by_month"
+                android:textColor="@color/mainTextColor"
+                android:textSize="15sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/day"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <ImageView
+                android:id="@+id/option_2"
+                android:button="@drawable/check_box_color"
+                android:background="@drawable/check_box_color"
+                android:layout_width="20dp"
+                android:scaleType="centerCrop"
+                android:layout_height="20dp"
+                />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="@string/by_day"
+                android:textColor="@color/mainTextColor"
+                android:textSize="15sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/create_date"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp">
+
+            <ImageView
+                android:id="@+id/option_3"
+                android:button="@drawable/check_box_color"
+                android:background="@drawable/check_box_color"
+                android:layout_width="20dp"
+                android:scaleType="centerCrop"
+                android:layout_height="20dp"
+                />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center|start"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="@string/custom"
+                android:textColor="@color/mainTextColor"
+                android:textSize="15sp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+    <uz.fido.utils.view.custom_circle_button.CustomFAButton
+        android:id="@+id/btn_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="true"
+        android:layout_gravity="end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

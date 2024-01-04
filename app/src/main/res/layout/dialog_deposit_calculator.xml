@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/dialog_bg"
+    android:layout_height="match_parent">
+    <ImageView
+        android:id="@+id/handle"
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_dialog_handle"
+        tools:ignore="ContentDescription" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:layout_width="match_parent"
+        android:text="@string/open_calculator"
+         android:gravity="center"
+        android:textSize="16sp"
+        android:layout_marginTop="6dp"
+        android:textColor="@color/mainTextColor"
+        android:layout_height="wrap_content"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/amount_lin"
+        style="@style/EditTextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:hint="@string/amount"
+        app:layout_constraintTop_toBottomOf="@id/lin_info">
+        
+
+
+        <uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountEditText
+            android:id="@+id/et_amount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="number"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:digits=" 0123456789"
+            android:theme="@style/DefaultEditTextTheme" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <uz.fido.utils.view.custom_circle_button.CustomFAButton
+        android:id="@+id/btn_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:layout_gravity="end"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
