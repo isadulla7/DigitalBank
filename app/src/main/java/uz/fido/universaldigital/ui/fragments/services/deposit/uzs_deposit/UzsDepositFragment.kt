@@ -17,6 +17,7 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.MainDepositViewMod
 import uz.fido.universaldigital.ui.fragments.services.deposit.adapter.DepositAdapter
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.gotoWithSlide
+import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
@@ -26,17 +27,11 @@ class UzsDepositFragment : BaseFragment<FragmentUzsDepositBinding, MainDepositVi
     private val saveDepositViewModel by activityViewModels<DepositSaveViewModel>()
     private var allDeposits = ArrayList<Deposit>()
     private val depositAdapter by lazy { DepositAdapter(this) }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView()
-        onClickView()
-
-    }
-
-    private fun onClickView() {
-//        binding.consLayout.setOnClickListener {
-//            gotoWithSlide(R.id.depositConstructFragment)
-//        }
+        binding.appBar.setOnBackButtonClickListener { pop() }
     }
 
     private fun recyclerView() {
@@ -52,13 +47,9 @@ class UzsDepositFragment : BaseFragment<FragmentUzsDepositBinding, MainDepositVi
 
     private fun getVmDepositList() {
         saveDepositViewModel.depositList.observe(viewLifecycleOwner) {
-            val newList = arrayListOf<Deposit>()
             allDeposits = it
-            allDeposits.forEach { if (it.currency_code == "000") newList.add(it) }
-//            if (allDeposits.isNotEmpty()) binding.consLayout.visibility = View.VISIBLE
-            depositAdapter.submitList(newList)
+            depositAdapter.submitList(allDeposits)
         }
-
     }
 
     private fun getDepositList() {
@@ -72,16 +63,10 @@ class UzsDepositFragment : BaseFragment<FragmentUzsDepositBinding, MainDepositVi
             when (resource.status) {
                 Status.SUCCESS -> {
                     val list = resource.data as DepositListResponse
-                    val newList = arrayListOf<Deposit>()
                     allDeposits = list.deposit_types
                     saveDepositViewModel.saveDepositList(allDeposits)
                     saveDepositViewModel.depositCurrent = true
-                    allDeposits.forEach { if (it.currency_code == "000") newList.add(it) }
-//                    Handler().postDelayed({
-//                        if (allDeposits.isNotEmpty()) binding.consLayout.visibility = View.VISIBLE
-//                    }, 500)
-
-                    depositAdapter.submitList(newList)
+                    depositAdapter.submitList(allDeposits)
                 }
 
                 Status.ERROR -> {
@@ -95,7 +80,6 @@ class UzsDepositFragment : BaseFragment<FragmentUzsDepositBinding, MainDepositVi
     private fun createRecyclerView() {
         binding.deposits.apply {
             adapter = depositAdapter
-
         }
     }
 

@@ -8,11 +8,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMainDepositBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringViewPagerAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
-import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringFragment
-import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringFragment
-import uz.fido.universaldigital.ui.fragments.monitoring.visa.VisaMonitoringFragment
-import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.usd_deposit.UsdDepositFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.uzs_deposit.UzsDepositFragment
 import uz.fido.utils.utility.fragment.pop

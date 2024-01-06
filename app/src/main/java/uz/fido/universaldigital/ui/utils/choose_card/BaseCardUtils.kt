@@ -46,8 +46,7 @@ object BaseCardUtils {
         this.text =
             Format.formatCardName(card.object_name) + " " + if (card.object_type != WALLET) Format.formatCardNumberNew(
                 card.object_value
-            )
-            else Format.formatWalletNumber(card.object_value)
+            ) else Format.formatWalletNumber(card.object_value)
     }
 
     fun TextView.setCardNumberFormatted(card: CardResponse) {

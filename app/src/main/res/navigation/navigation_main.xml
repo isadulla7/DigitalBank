@@ -665,4 +665,8 @@
         android:id="@+id/editProfileFragment"
         android:name="uz.fido.universaldigital.ui.fragments.profile.user_details.EditProfileFragment"
         android:label="EditProfileFragment" />
+    <fragment
+        android:id="@+id/uzsDepositFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.uzs_deposit.UzsDepositFragment"
+        android:label="UzsDepositFragment" />
 </navigation>

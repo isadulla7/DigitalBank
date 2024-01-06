@@ -404,7 +404,7 @@ class Format {
 
         fun formatCardNumberNew(cardNumber: String): String {
             return if (cardNumber.length == 16) {
-                cardNumber.substring(12, cardNumber.length)
+                cardNumber.substring(10, cardNumber.length)
             } else {
                 cardNumber
             }
@@ -742,6 +742,16 @@ class Format {
                 else -> return expire
             }
         } else return context.getString(R.string.indefinite)
+    }
+
+    fun formattedDepositAmount(context: Context, amount: String): String {
+        if (amount == "0") return context.getString(R.string.deposit_min_amount, "0")
+        if (amount.length > 2) return context.getString(
+            R.string.deposit_min_amount, formatAmount(
+                amount.toBigDecimal().divide(100.toBigDecimal()).toString()
+            )
+        )
+        return ""
     }
 
     fun setMonitoringDate(context: Context, date: String): String {

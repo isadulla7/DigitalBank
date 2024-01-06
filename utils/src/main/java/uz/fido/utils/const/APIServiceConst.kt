@@ -14,7 +14,7 @@ object APIServiceConst {
     //UNIVERSAL
     const val UNIVERSAL_PAYMENT_PHOTO = "https://ibank.ubank.uz/files/"
     private const val UNIVERSAL_URL = "https://ra.ubank.uz/api/"
-    private const val UNIVERSAL_SOCKET_URL = "https://ss.ubank.uz/api"
+    private const val UNIVERSAL_SOCKET_URL = "https://ss.ubank.uz/api/"
     private const val UNIVERSAL_CLIENT_ID = "-3"
 
     //AAB URLS
