@@ -53,7 +53,8 @@ class SecurityFragment : BaseFragment<FragmentSecurityBinding, MenuProfileViewMo
         binding.switchFingerprint.isChecked = Paper.book().read(Const.FINGER_STATE, false)
         binding.confirmPaymentSwitch.isChecked =
             Paper.book().read(Const.PAPER_PAYMENT_PIN_CONFIRMATION, false)
-        binding.confirmPaymentSwitch.isVisible = hasBiometrics()
+        binding.confirmPaymentByPin.isVisible = hasBiometrics()
+        binding.fingerprint.isVisible = hasBiometrics()
     }
 
     private fun initFingerPrintAuthSwitcher() {

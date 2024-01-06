@@ -101,9 +101,9 @@ class MenuServicesAdapter(
                     onItemClickListener.invoke(item.serviceId)
                 }
                 binding.tvSoon.isVisible =
-                    item.serviceId == 3 || item.serviceId == 200 || item.serviceId == 800 || item.serviceId == 801
+                    item.serviceId == 3 || item.serviceId == 200 || item.serviceId == 800 || item.serviceId == 801 || item.serviceId == 700
                 binding.disableBg.isVisible =
-                    item.serviceId == 3 || item.serviceId == 200 || item.serviceId == 800 || item.serviceId == 801
+                    item.serviceId == 3 || item.serviceId == 200 || item.serviceId == 800 || item.serviceId == 801 || item.serviceId == 700
             }
         }
     }

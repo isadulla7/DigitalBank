@@ -16,17 +16,16 @@ class DepositAdapter(
     inner class DepositVh(private val binding: ItemDepositProductBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: Deposit) {
-            binding.depositName.text = item.dep_name
-            binding.depositPercent.text = item.percent + " %"
-            binding.depositTerm.text =
-                Format().formattedDepositExpire(itemView.context, item.keeping_time)
-            binding.depositAmount.text = item.max_sum
-//            binding.depositReplenishment.setImageResource(if (item.replenishment == "Y") R.drawable.check_okay_deposit else R.drawable.close_x_icon)
-
-//            binding.depositCheckOkay.setImageResource(if (item.partial_write == "Y") R.drawable.check_okay_deposit else R.drawable.close_x_icon)
-
-            binding.openDepositButton.setOnClickListener {
-                onClickDeposit.invoke(item)
+            binding.apply {
+                depositName.text = item.dep_name
+                depositPercent.text = item.percent + "%"
+                depositTerm.text =
+                    Format().formattedDepositExpire(itemView.context, item.keeping_time)
+                depositAmount.text =
+                    Format().formattedDepositAmount(itemView.context, item.min_sum.toString())
+                itemView.setOnClickListener {
+                    onClickDeposit.invoke(item)
+                }
             }
 
         }

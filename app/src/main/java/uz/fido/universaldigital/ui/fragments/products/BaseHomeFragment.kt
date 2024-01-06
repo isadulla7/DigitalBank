@@ -292,7 +292,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
         )
         val snapHelper: SnapHelper = PagerSnapHelper()
         val homeDepositsAdapter = DepositAdapter {
-            gotoWithSlide(
+            goto(
                 R.id.openDepositStepFirst, bundleOf(
                     "deposit" to it,
                     "operation" to "deposit",
@@ -313,8 +313,8 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
         if (menuProductsViewModel.depositProducts.value.isNullOrEmpty()) {
             getDeposits()
         }
-        layoutBinding.llClientDeposits.setOnClickListener { goto(R.id.mainDepositFragment) }
-        layoutBinding.llEmptyViewDeposit.setOnClickListener { goto(R.id.mainDepositFragment) }
+        layoutBinding.llClientDeposits.setOnClickListener { goto(R.id.uzsDepositFragment) }
+        layoutBinding.llEmptyViewDeposit.setOnClickListener { goto(R.id.uzsDepositFragment) }
         binding.widgetsLayout.addView(layoutBinding.root)
     }
 

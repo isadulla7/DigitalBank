@@ -82,7 +82,7 @@ class ClientDepositListFragment :
 
     private fun initSetOnClickListeners() {
         binding.openDeposit.setOnClickListener {
-            goto(R.id.mainDepositFragment)
+            goto(R.id.uzsDepositFragment)
         }
         binding.appbar.setOnBackButtonClickListener { pop() }
     }

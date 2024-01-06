@@ -226,7 +226,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
 
                     "035" -> goto(R.id.orderCardListFragment)
                     "036" -> goto(R.id.loanGroupListFragment)
-                    "037" -> goto(R.id.mainDepositFragment)
+                    "037" -> goto(R.id.uzsDepositFragment)
                     "038" -> goto(R.id.openWalletFragment)
                     "039" -> goto(R.id.paymentBranchFragment)
                     "040" -> goto(R.id.mainApplicationListFragment)

@@ -30,5 +30,19 @@
     <string name="you_have_no_internet_desc">Нет подключения к интернета повторите попытку или попробуйте позже</string>
     <string name="from_card">С карты</string>
     <string name="card">Карта</string>
+    <string name="deposit_min_amount">от %s</string>
+    <string name="accured_interest">Текущие проценты</string>
+    <string name="accured_interest_deposit">Начисленный проценты</string>
+    <string name="re_registration_deposit">Переоформления вклада</string>
+    <string name="correctional_operations">Исправительная операция</string>
+    <string name="bank_service">Услуга банка</string>
+    <string name="transferrred_to_inactivity">Спящие</string>
+    <string name="excees_interests_returned">Возвращено превышение проценты</string>
+    <string name="deposit_withdrawal">Снятие с вклада</string>
+    <string name="accural_of_interest">Начисление процентов</string>
+    <string name="deposit_replenishment">Пополнение вклада</string>
+    <string name="capitalization_of_interest">Зачисление процентов</string>
+    <string name="interest_withdrawal">Снятие процентов</string>
+    <string name="re_calculate_percents">Пересчет процентов</string>
 
 </resources>
