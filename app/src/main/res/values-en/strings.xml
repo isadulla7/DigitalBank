@@ -6,7 +6,6 @@
         <item>@string/widget_3</item>
         <item>@string/widget_4</item>
         <item>@string/widget_5</item>
-        <item>@string/widget_6</item>
         <item>@string/widget_7</item>
     </string-array>
 
@@ -15,7 +14,6 @@
     <string name="widget_3">Saved transfers</string>
     <string name="widget_4">Templates and auto payments</string>
     <string name="widget_5">My home</string>
-    <string name="widget_6">Offices and ATMs</string>
     <string name="widget_7">Currency rates</string>
 
     <integer-array name="main_widgets_ids">
@@ -24,7 +22,6 @@
         <item>300</item>
         <item>400</item>
         <item>500</item>
-        <item>600</item>
         <item>700</item>
     </integer-array>
 

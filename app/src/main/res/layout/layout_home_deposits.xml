@@ -18,7 +18,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/my_deposits"
+            android:text="@string/deposit"
             android:textColor="@color/brandBlueColor"
             android:textSize="16sp" />
 

@@ -6,7 +6,6 @@
         <item>@string/widget_3</item>
         <item>@string/widget_4</item>
         <item>@string/widget_5</item>
-        <item>@string/widget_6</item>
         <item>@string/widget_7</item>
     </string-array>
 
@@ -15,7 +14,6 @@
     <string name="widget_3">Saqlangan o’tkazmalar</string>
     <string name="widget_4">Saqlangan to’lovlar</string>
     <string name="widget_5">Valyutalar kursi</string>
-    <string name="widget_6">Kreditlarim</string>
     <string name="widget_7">Omonatlarim</string>
 
     <integer-array name="main_widgets_ids">
@@ -24,7 +22,6 @@
         <item>300</item>
         <item>400</item>
         <item>500</item>
-        <item>600</item>
         <item>700</item>
     </integer-array>
 
@@ -913,7 +910,7 @@
     <string name="goal_delete">Maqsadni o‘chirish va pulni qaytarish</string>
     <string name="target_suspended">Maqsad to‘xtatildi</string>
     <string name="refund_amount">To‘lov miqdori</string>
-    <string name="deposit">Depozit</string>
+    <string name="deposit">Omonat</string>
     <string name="initial_amount">Boshlang\'ich summa</string>
     <string name="whole_amount">To‘liq summa</string>
     <string name="information_about_the_deposit">Depozit haqida ma\'lumot</string>
