@@ -16,12 +16,12 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.uzs_deposit.Deposi
 import uz.fido.utils.utility.fragment.goto
 
 @AndroidEntryPoint
-class UsdDepositFragment:BaseFragment<FragmentUsdDepositBinding, MainDepositViewModel>
-    (FragmentUsdDepositBinding::inflate,MainDepositViewModel::class.java),(Deposit) -> Unit{
+class UsdDepositFragment : BaseFragment<FragmentUsdDepositBinding, MainDepositViewModel>
+    (FragmentUsdDepositBinding::inflate, MainDepositViewModel::class.java), (Deposit) -> Unit {
 
     private val saveDepositViewModel by activityViewModels<DepositSaveViewModel>()
     private var allDeposits = ArrayList<Deposit>()
-    private val depositAdapter  by lazy { DepositAdapter(requireContext(),this) }
+    private val depositAdapter by lazy { DepositAdapter(this) }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -34,28 +34,29 @@ class UsdDepositFragment:BaseFragment<FragmentUsdDepositBinding, MainDepositView
     }
 
     private fun getDepositList() {
-       saveDepositViewModel.depositList.observe(viewLifecycleOwner){
-           allDeposits=arrayListOf()
-           it.forEach { if (it.currency_code!="000")allDeposits.add(it) }
-           if (allDeposits.isEmpty()) binding.layoutEmpty.visibility=View.VISIBLE
-           depositAdapter.submitList(allDeposits)
-       }
+        saveDepositViewModel.depositList.observe(viewLifecycleOwner) {
+            allDeposits = arrayListOf()
+            it.forEach { if (it.currency_code != "000") allDeposits.add(it) }
+            if (allDeposits.isEmpty()) binding.layoutEmpty.visibility = View.VISIBLE
+            depositAdapter.submitList(allDeposits)
+        }
     }
 
     private fun createRecyclerView() {
         binding.deposits.apply {
-            adapter=depositAdapter
+            adapter = depositAdapter
 
         }
     }
 
     override fun invoke(deposit: Deposit) {
-            goto(
-                R.id.openDepositStepFirst, bundleOf(
-                    "deposit" to deposit,
-                    "operation" to "deposit",
-                    "isSum" to  false)
+        goto(
+            R.id.openDepositStepFirst, bundleOf(
+                "deposit" to deposit,
+                "operation" to "deposit",
+                "isSum" to false
             )
+        )
 
     }
 }

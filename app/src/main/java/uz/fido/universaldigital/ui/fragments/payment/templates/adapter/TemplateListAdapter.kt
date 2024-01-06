@@ -12,6 +12,7 @@ import com.squareup.picasso.Picasso
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
+import uz.fido.utils.const.APIServiceConst
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.view.recycler_view_drag.ItemTouchHelperAdapter
 import uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -40,7 +41,7 @@ class TemplateListAdapter(
         val item = list[position]
         holder.textName.text = item.name
         if (item.icon_name != "" && item.service_group_code != "SWIFT")
-            Picasso.get().load("https://myalliance.uz/PaynetPhoto/" + item.icon_name)
+            Picasso.get().load(APIServiceConst.UNIVERSAL_PAYMENT_PHOTO + item.icon_name)
                 .error(R.drawable.ic_payments_placeholder).into(holder.imageView)
         else holder.imageView.setImageResource(R.drawable.ic_payments_placeholder)
         holder.amount.text = (item.amount.toString()) + " UZS"
