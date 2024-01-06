@@ -62,7 +62,9 @@ class MyHouseMultipleAmountFragment:BaseFragment<FragmentMyHouseMutipleAmountBin
         }
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
             list.forEach {
+                Log.d("TAG", "initView:${it.service_id} ")
                 val paymentService = dbHelper.getServiceByContractId(it.service_id.toString())
+                Log.d("TAG", "initView:${paymentService} ")
                 if (paymentService != null) {
                     it.payment_service = paymentService
                     it.min_amount = paymentService.min_amount
