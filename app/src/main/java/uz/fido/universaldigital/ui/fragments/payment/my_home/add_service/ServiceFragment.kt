@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.payment.my_home.add_service
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -60,8 +61,10 @@ class ServiceFragment : BaseFragment<FragmentAddServiceBinding, MyHomeViewModel>
         binding.btnPaymentList.setOnClickListener {
             val newList = arrayListOf<Template>()
             templateList.forEach {
-                if (it.isCurrent && it.service_state == "0")
+                Log.d("TAG", "onClickView:${it.service_state=="A"} ")
+                if (it.isCurrent && it.service_state == "A"){
                     newList.add(it)
+                }
             }
             goto(R.id.myHouseMultipleAmountFragment, bundleOf("list" to newList))
         }

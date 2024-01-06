@@ -87,7 +87,7 @@ class MyHouseSinglePaymentFragment() :
     }
 
     private fun checkAmount(it: String) {
-        amount = it.toBigDecimal()
+        amount = it.replace(" ","").toBigDecimal()
         var amount = it.replace(" ", "").toBigDecimal()
         if ((amount * BigDecimal("100")) < selectedCard?.balance.toString()
                 .toBigDecimal() && selectedCard?.state == "0" &&
