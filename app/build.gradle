@@ -160,10 +160,6 @@ dependencies {
     //my id(native libs)
     implementation ProjectDependencies.myId
 
-    //humo pay
-    implementation files(ProjectDependencies.humoPay1)
-    implementation files(ProjectDependencies.humoPay2)
-
     //nfc card reader
     implementation files(ProjectDependencies.nfcCardReader)
 

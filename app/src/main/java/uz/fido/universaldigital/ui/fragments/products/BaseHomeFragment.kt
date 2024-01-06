@@ -8,7 +8,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ethanhua.skeleton.SkeletonScreen
 import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
@@ -24,7 +23,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMenuHomeBinding
 import uz.fido.universaldigital.databinding.LayoutHomeBankProductsBinding
-import uz.fido.universaldigital.databinding.LayoutHomeCreditsBinding
 import uz.fido.universaldigital.databinding.LayoutHomeCurrencyRatesBinding
 import uz.fido.universaldigital.databinding.LayoutHomeDepositsBinding
 import uz.fido.universaldigital.databinding.LayoutHomeFastAccessBinding
@@ -36,7 +34,6 @@ import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragmen
 import uz.fido.universaldigital.ui.fragments.payment.templates.TemplateTypes
 import uz.fido.universaldigital.ui.fragments.products.adapter.BankProductsAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.FastAccessOperationAdapter
-import uz.fido.universaldigital.ui.fragments.products.adapter.HomeCreditsAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeDepositsAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomePopularTransferAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeRatesAdapter
@@ -52,7 +49,6 @@ import uz.fido.universaldigital.ui.utils.extensions.getFastAccessOperationList
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.Command
 import uz.fido.utils.const.Const
-import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
 import java.text.DecimalFormat
@@ -67,7 +63,6 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
     var mainWidgetsList = ArrayList<MainWidget>()
 
     var container: ViewGroup? = null
-    private var creditShimmer: SkeletonScreen? = null
 
     fun initWidgets() {
         if (Const.MAIN_WIDGETS_VERSION > Paper.book()
@@ -107,7 +102,6 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
                     300 -> initPopularTransfers()
                     400 -> initHomeTemplates()
                     500 -> initCurrencyRates()
-                    600 -> initHomeCredits()
                     700 -> initHomeDeposits()
                 }
             }
@@ -320,58 +314,6 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
                 }
             }
         }
-    }
-
-    private fun initHomeCredits() {
-        val layoutBinding = LayoutHomeCreditsBinding.inflate(
-            LayoutInflater.from(requireContext()), container, false
-        )
-        val homeCreditsAdapter = HomeCreditsAdapter(this@BaseHomeFragment, ArrayList(), true)
-        layoutBinding.rvCredits.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = homeCreditsAdapter
-        }
-        menuProductsViewModel.creditProduct.observe(viewLifecycleOwner) {
-            homeCreditsAdapter.setList(it as ArrayList<CreditProduct>)
-            layoutBinding.llEmptyViewLoan.isVisible = it.isEmpty()
-        }
-        if (menuProductsViewModel.creditProduct.value.isNullOrEmpty()) {
-            creditShimmer = showSkeleton(
-                layoutBinding.rvCredits, homeCreditsAdapter, R.layout.shimmer_item_home_credits, 2
-            )
-            getCreditProducts()
-        }
-        binding.widgetsLayout.addView(layoutBinding.root)
-        layoutBinding.llClientCredits.setOnClickListener { goto(R.id.clientCreditListFragment) }
-        layoutBinding.llEmptyViewLoan.setOnClickListener { goto(R.id.clientCreditListFragment) }
-    }
-
-    private fun getCreditProducts() {
-        menuProductsViewModel.getClientProducts(getClientToken())
-            .observe(viewLifecycleOwner) { resource ->
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        if (resource.data?.data != null) {
-                            resource.data!!.data.forEach { credit ->
-                                if (credit.saldo1.isNullOrEmpty()) credit.saldo1 = "0"
-                                if (credit.saldo118.isNullOrEmpty()) credit.saldo118 = "0"
-                                if (credit.saldo2.isNullOrEmpty()) credit.saldo2 = "0"
-                                if (credit.saldo22.isNullOrEmpty()) credit.saldo22 = "0"
-                                if (credit.saldo3.isNullOrEmpty()) credit.saldo3 = "0"
-                                if (credit.saldo46.isNullOrEmpty()) credit.saldo46 = "0"
-                                if (credit.saldo5.isNullOrEmpty()) credit.saldo5 = "0"
-                                if (credit.saldo7.isNullOrEmpty()) credit.saldo7 = "0"
-                            }
-                            menuProductsViewModel.updateCreditGroups(resource.data!!.data)
-                        }
-                        creditShimmer?.hide()
-                    }
-
-                    Status.ERROR -> {
-                        creditShimmer?.hide()
-                    }
-                }
-            }
     }
 
     fun fetchCurrencyRates() {

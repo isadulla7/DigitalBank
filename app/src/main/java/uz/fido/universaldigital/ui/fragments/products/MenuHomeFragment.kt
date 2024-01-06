@@ -61,14 +61,15 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         binding = FragmentMenuHomeBinding.inflate(inflater, container, false)
         this.container = container
         homeCardsAdapter = HomeCardsAdapter(this)
+        setUpTickerView()
+        initTotalBalance()
+        getCardList(null)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initDefaultStates()
-        initTotalBalance()
-        getCardList(null)
         initWidgets()
         initSetOnClickListeners()
         initUserCardsRv()
@@ -79,7 +80,6 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     private fun initDefaultStates() {
         loadProfileImage()
         setUserDetails()
-        setUpTickerView()
     }
 
     private fun initTotalBalance() {
@@ -191,6 +191,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
             openBalanceSettingsDialog()
         }
         binding.itemMainCard.setOnClickListener { goto(R.id.myCardsListFragment) }
+        binding.refreshButton.setOnClickListener { binding.refreshLayout.autoRefresh() }
     }
 
     private fun openBalanceSettingsDialog() {
