@@ -61,7 +61,6 @@ class ServiceFragment : BaseFragment<FragmentAddServiceBinding, MyHomeViewModel>
         binding.btnPaymentList.setOnClickListener {
             val newList = arrayListOf<Template>()
             templateList.forEach {
-                Log.d("TAG", "onClickView:${it.service_state=="A"} ")
                 if (it.isCurrent && it.service_state == "A"){
                     newList.add(it)
                 }
