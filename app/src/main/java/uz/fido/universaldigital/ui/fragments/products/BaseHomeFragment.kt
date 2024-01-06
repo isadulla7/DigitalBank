@@ -8,8 +8,12 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.SnapHelper
 import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
+import uz.fido.network.domain.model.deposits.Deposit
+import uz.fido.network.domain.model.deposits.GetDepositListRequest
 import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
 import uz.fido.network.domain.model.loans.loan_products.CreditProduct
 import uz.fido.network.domain.model.popular_transfers.PopularTransfers
@@ -41,6 +45,7 @@ import uz.fido.universaldigital.ui.fragments.products.adapter.HomeTemplatesAdapt
 import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
 import uz.fido.universaldigital.ui.fragments.products.widgets.bank_products.BankProductsOnBoarding
 import uz.fido.universaldigital.ui.fragments.products.widgets.settings.MainWidgetSettingsDialog
+import uz.fido.universaldigital.ui.fragments.services.deposit.adapter.DepositAdapter
 import uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.ClientDepositFragment
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCreditFragment
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
@@ -50,6 +55,7 @@ import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.Command
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 import java.text.DecimalFormat
 
@@ -284,36 +290,50 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
         val layoutBinding = LayoutHomeDepositsBinding.inflate(
             LayoutInflater.from(requireContext()), container, false
         )
-        val homeDepositsAdapter = HomeDepositsAdapter(this@BaseHomeFragment, ArrayList())
-        layoutBinding.rvDeposits.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = homeDepositsAdapter
+        val snapHelper: SnapHelper = PagerSnapHelper()
+        val homeDepositsAdapter = DepositAdapter {
+            gotoWithSlide(
+                R.id.openDepositStepFirst, bundleOf(
+                    "deposit" to it,
+                    "operation" to "deposit",
+                    "isSum" to true
+                )
+            )
         }
-        menuProductsViewModel.clientDeposit.observe(viewLifecycleOwner) {
-            homeDepositsAdapter.setList(it as ArrayList<ClientDeposit>)
+        layoutBinding.rvDeposits.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = homeDepositsAdapter
+            snapHelper.attachToRecyclerView(this)
+        }
+        menuProductsViewModel.depositProducts.observe(viewLifecycleOwner) {
+            homeDepositsAdapter.submitList(it as ArrayList<Deposit>)
             layoutBinding.llEmptyViewDeposit.isVisible = it.isEmpty()
         }
-        if (menuProductsViewModel.clientDeposit.value.isNullOrEmpty()) {
+        if (menuProductsViewModel.depositProducts.value.isNullOrEmpty()) {
             getDeposits()
         }
-        layoutBinding.llClientDeposits.setOnClickListener { goto(R.id.clientDepositListFragment) }
-        layoutBinding.llEmptyViewDeposit.setOnClickListener { goto(R.id.clientDepositListFragment) }
+        layoutBinding.llClientDeposits.setOnClickListener { goto(R.id.mainDepositFragment) }
+        layoutBinding.llEmptyViewDeposit.setOnClickListener { goto(R.id.mainDepositFragment) }
         binding.widgetsLayout.addView(layoutBinding.root)
     }
 
     private fun getDeposits() {
-        menuProductsViewModel.getClientDepositList(getClientToken()).observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    menuProductsViewModel.updateClientDepositList(it.data?.data ?: ArrayList())
-                    binding.refreshLayout.finishRefresh()
-                }
+        menuProductsViewModel.getDeposits(getClientToken(), GetDepositListRequest("dep"))
+            .observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        menuProductsViewModel.updateDepositProducts(
+                            it.data?.deposit_types ?: ArrayList()
+                        )
+                        binding.refreshLayout.finishRefresh()
+                    }
 
-                Status.ERROR -> {
-                    binding.refreshLayout.finishRefresh()
+                    Status.ERROR -> {
+                        binding.refreshLayout.finishRefresh()
+                    }
                 }
             }
-        }
     }
 
     fun fetchCurrencyRates() {

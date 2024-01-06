@@ -13,10 +13,9 @@ import uz.fido.network.domain.model.deposits.GetDepositListRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentUzsDepositBinding
-import uz.fido.universaldigital.ui.fragments.services.deposit.adapter.DepositAdapter
 import uz.fido.universaldigital.ui.fragments.services.deposit.MainDepositViewModel
+import uz.fido.universaldigital.ui.fragments.services.deposit.adapter.DepositAdapter
 import uz.fido.utils.utility.adapter.showSkeleton
-import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 
@@ -26,7 +25,7 @@ class UzsDepositFragment : BaseFragment<FragmentUzsDepositBinding, MainDepositVi
 
     private val saveDepositViewModel by activityViewModels<DepositSaveViewModel>()
     private var allDeposits = ArrayList<Deposit>()
-    private val depositAdapter by lazy { DepositAdapter(requireContext(), this) }
+    private val depositAdapter by lazy { DepositAdapter(this) }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView()

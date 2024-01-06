@@ -12,7 +12,7 @@ object APIServiceConst {
     private const val MKB_CLIENT_ID = "-2"
 
     //UNIVERSAL
-    private const val UNIVERSAL_PAYMENT_PHOTO = "https://myalliance.uz/PaynetPhoto/"
+    const val UNIVERSAL_PAYMENT_PHOTO = "https://ibank.ubank.uz/files/"
     private const val UNIVERSAL_URL = "https://ra.ubank.uz/api/"
     private const val UNIVERSAL_SOCKET_URL = "https://ss.ubank.uz/api"
     private const val UNIVERSAL_CLIENT_ID = "-3"

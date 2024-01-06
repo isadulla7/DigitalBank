@@ -206,7 +206,6 @@ class PaymentSecondStepFragment :
     private var calculatorView: ViewElectricityCalculator? = null
 
     private fun drawCalculatorView() {
-
         if (operation != null && operation == PaymentFragment.PAYMENT_OPERATION_PAYMENT) {
             if (paymentService?.payment_detail_code == "PAYNET_ELECTR" || paymentService?.payment_detail_code == "PAYNET_GAZ" ||
                 paymentService?.payment_detail_code == "PAYNET_SUV" || paymentService?.payment_detail_code == "MUNIS_0102"
@@ -497,7 +496,7 @@ class PaymentSecondStepFragment :
                         myEditText.visibility = View.GONE
                     }
                     binding.infoLayout.delayOnLifecycle(200, Dispatchers.Main) {
-                        if (navigationList!!.isNotEmpty())
+                        if (!navigationList.isNullOrEmpty())
                             setToEditText(navigationList!![0], "TARIF_TYPE")
                     }
                 }
@@ -514,7 +513,7 @@ class PaymentSecondStepFragment :
                     allServiceLists.addition = refParamList[i].flag!!
                     navigationList!!.add(allServiceLists)
                 }
-                if (navigationList!!.isNotEmpty()) {
+                if (!navigationList.isNullOrEmpty()) {
                     viewPaymentNavigationBinding.root.findViewWithTag<MaskEditText>("EARLY_CLOSURE")
                         .setText(navigationList!![0].name)
                 }
@@ -598,10 +597,12 @@ class PaymentSecondStepFragment :
                     }
                     Log.d("TAG", "setToEditText: ${paymentService?.payment_detail_code}")
                     Log.d("TAG", "setToEditText: ${allServiceLists.addition}")
-                    if (homeId == null)
-                        binding.mainLayout.findViewWithTag<ViewElectricityCalculator>(paymentService?.payment_detail_code.toString()).visibility =
-                            if (allServiceLists.addition == "P") View.GONE else View.VISIBLE
 
+                    if (binding.mainLayout.findViewWithTag<ViewElectricityCalculator>(paymentService?.payment_detail_code) != null && homeId == null)
+                        binding.mainLayout.findViewWithTag<ViewElectricityCalculator>(
+                            paymentService?.payment_detail_code
+                        ).visibility =
+                            if (allServiceLists.addition == "P") View.GONE else View.VISIBLE
                 }
             }
         }

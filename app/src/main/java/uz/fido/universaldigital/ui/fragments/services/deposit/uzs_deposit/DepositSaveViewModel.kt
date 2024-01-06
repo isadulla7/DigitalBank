@@ -8,12 +8,13 @@ import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DepositSaveViewModel @Inject constructor(application: Application): AbstractViewModel(application) {
+class DepositSaveViewModel @Inject constructor(application: Application) :
+    AbstractViewModel(application) {
 
-   val depositList=MutableLiveData<ArrayList<Deposit>>()
-   var depositCurrent=false
+    val depositList = MutableLiveData<ArrayList<Deposit>>()
+    var depositCurrent = false
 
-   fun saveDepositList(list:ArrayList<Deposit>){
-       depositList.value=list
-   }
+    fun saveDepositList(list: ArrayList<Deposit>) {
+        depositList.value = list
+    }
 }

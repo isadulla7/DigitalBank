@@ -21,6 +21,8 @@ import uz.fido.network.domain.model.cards.DeleteCardRequest
 import uz.fido.network.domain.model.cards.EditCardRequest
 import uz.fido.network.domain.model.cards.GetCVVRequest
 import uz.fido.network.domain.model.cards.Secure3DRequest
+import uz.fido.network.domain.model.deposits.Deposit
+import uz.fido.network.domain.model.deposits.GetDepositListRequest
 import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
 import uz.fido.network.domain.model.humo_pay.HumoCardInfoRequest
 import uz.fido.network.domain.model.limits.CardLimitRequest
@@ -50,6 +52,7 @@ class MenuProductsViewModel @Inject constructor(
     var updateCardState: MutableLiveData<Boolean> = MutableLiveData()
     var creditProduct: MutableLiveData<List<CreditProduct>> = MutableLiveData()
     var clientDeposit: MutableLiveData<ArrayList<ClientDeposit>> = MutableLiveData()
+    var depositProducts: MutableLiveData<List<Deposit>> = MutableLiveData()
     var shouldUpdate = false
 
     init {
@@ -63,9 +66,9 @@ class MenuProductsViewModel @Inject constructor(
                 it.apply {
                     balance = response[0].balance
                     processing_server_status =
-                        response[0].state.toString()
+                        response[0].state
                     stateName =
-                        response[0].state_name.toString()
+                        response[0].state_name
                     owerdraft_limit = response[0].overdraft_limit
                     pin_counter = response[0].pin_counter
                     overdraft_limit = response[0].overdraft_limit
@@ -86,6 +89,10 @@ class MenuProductsViewModel @Inject constructor(
 
     fun updateCreditGroups(creditProduct: List<CreditProduct>) {
         this.creditProduct.postValue(creditProduct)
+    }
+
+    fun updateDepositProducts(depositProducts: List<Deposit>) {
+        this.depositProducts.postValue(depositProducts)
     }
 
     fun getCardListRequest(token: String) = liveData(Dispatchers.IO) {
@@ -186,5 +193,11 @@ class MenuProductsViewModel @Inject constructor(
         liveData(Dispatchers.IO) {
             emit(cardRepository.getHumoCardInfo(token, humoCardInfoRequest))
         }
+
+    fun getDeposits(token: String, getDepositListRequest: GetDepositListRequest) = liveData(
+        Dispatchers.IO
+    ) {
+        emit(depositRepository.getDeposits(token, getDepositListRequest))
+    }
 
 }
