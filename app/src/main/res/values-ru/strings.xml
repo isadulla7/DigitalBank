@@ -10,7 +10,7 @@
     </string-array>
 
     <string name="widget_1">Быстрый доступ</string>
-    <string name="widget_2">Продукты банка</string>
+    <string name="widget_2">Для вас</string>
     <string name="widget_3">Частые переводы</string>
     <string name="widget_4">Сохраненные платежи</string>
     <string name="widget_5">Курсы валют</string>
@@ -981,4 +981,5 @@
     <string name="for_you_p2p">Переводы с карты на карту</string>
     <string name="for_you_online_conversion">Онлайн конверсия</string>
     <string name="for_you_target">Накопить деньги</string>
+    <string name="for_you">Для вас</string>
 </resources>

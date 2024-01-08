@@ -745,12 +745,15 @@ class Format {
     }
 
     fun formattedDepositAmount(context: Context, amount: String): String {
-        if (amount == "0") return context.getString(R.string.deposit_min_amount, "0")
+        if (amount == "0") return context.getString(
+            R.string.deposit_min_amount,
+            "0"
+        ) + " " + context.getString(R.string.sum)
         if (amount.length > 2) return context.getString(
             R.string.deposit_min_amount, formatAmount(
                 amount.toBigDecimal().divide(100.toBigDecimal()).toString()
             )
-        )
+        ) + " " + context.getString(R.string.sum)
         return ""
     }
 

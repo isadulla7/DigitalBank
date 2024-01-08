@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:textColor="@color/blackColor"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/deposit_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +30,7 @@
         android:layout_marginEnd="8dp"
         android:text="Предоставляется гражданам Республики Узбекистан имеющим постоянное место работы"
         android:textColor="@color/brandBlueColor_40"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@id/deposit_image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/deposit_name" />
@@ -44,7 +44,7 @@
         android:gravity="center"
         android:paddingHorizontal="@dimen/elevation_8dp"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/deposit_description"
         tools:text="32%" />
@@ -59,7 +59,7 @@
         android:gravity="center"
         android:paddingHorizontal="@dimen/elevation_8dp"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@id/deposit_percent"
         app:layout_constraintTop_toBottomOf="@id/deposit_description"
         tools:text="до 50 млн" />
@@ -74,7 +74,7 @@
         android:gravity="center"
         android:paddingHorizontal="@dimen/elevation_8dp"
         android:textColor="@color/white"
-        android:textSize="14sp"
+        android:textSize="12sp"
         app:layout_constraintStart_toEndOf="@id/deposit_amount"
         app:layout_constraintTop_toBottomOf="@id/deposit_description"
         tools:text="36 месяцев" />
