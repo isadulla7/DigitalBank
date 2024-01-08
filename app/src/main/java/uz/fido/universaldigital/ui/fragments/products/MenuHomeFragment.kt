@@ -191,7 +191,10 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
             openBalanceSettingsDialog()
         }
         binding.itemMainCard.setOnClickListener { goto(R.id.myCardsListFragment) }
-        binding.refreshButton.setOnClickListener { binding.refreshLayout.autoRefresh() }
+        binding.refreshButton.setOnClickListener {
+            binding.nestedScrollView.smoothScrollTo(0, 0)
+            binding.refreshLayout.autoRefresh()
+        }
     }
 
     private fun openBalanceSettingsDialog() {

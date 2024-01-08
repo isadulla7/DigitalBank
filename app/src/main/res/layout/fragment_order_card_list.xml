@@ -12,9 +12,6 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:outlineSpotShadowColor="@color/white_50"
-        android:translationZ="8dp"
-        app:layout_constraintTop_toTopOf="parent"
         app:s_additionalIcon="@drawable/ic_history"
         app:s_title="@string/order_card2" />
 
@@ -343,7 +340,7 @@
                     android:id="@+id/visa_expandable"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:el_expanded="true">
+                    app:el_expanded="false">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="match_parent"

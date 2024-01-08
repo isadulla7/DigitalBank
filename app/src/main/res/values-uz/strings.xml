@@ -10,7 +10,7 @@
     </string-array>
 
     <string name="widget_1">Saqlangan xizmatlar</string>
-    <string name="widget_2">Bank mahsulotlari</string>
+    <string name="widget_2">Siz uchun</string>
     <string name="widget_3">Saqlangan o’tkazmalar</string>
     <string name="widget_4">Saqlangan to’lovlar</string>
     <string name="widget_5">Valyutalar kursi</string>
@@ -979,4 +979,5 @@
     <string name="for_you_p2p">Kartadan kartaga pul o‘tkazmalari</string>
     <string name="for_you_online_conversion">Onlayn konvertatsiya</string>
     <string name="for_you_target">Pul jamg‘arish</string>
+    <string name="for_you">Siz uchun</string>
 </resources>

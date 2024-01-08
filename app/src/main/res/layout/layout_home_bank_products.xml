@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:paddingHorizontal="16dp"
         android:paddingVertical="4dp"
-        android:text="@string/bank_products"
+        android:text="@string/for_you"
         android:textColor="@color/brandBlueColor"
         android:textSize="16sp" />
 

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
+    android:clipChildren="false"
     android:fillViewport="true"
     android:orientation="vertical">
 
@@ -25,6 +26,7 @@
         android:orientation="vertical"
         android:overScrollMode="never"
         android:paddingHorizontal="10dp"
+        android:paddingTop="8dp"
         android:paddingBottom="16dp"
         android:scrollbars="none"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

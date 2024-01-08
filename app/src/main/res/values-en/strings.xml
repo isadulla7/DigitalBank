@@ -10,7 +10,7 @@
     </string-array>
 
     <string name="widget_1">Fast access</string>
-    <string name="widget_2">Bank products</string>
+    <string name="widget_2">For you</string>
     <string name="widget_3">Frequent transfers</string>
     <string name="widget_4">Saved payments</string>
     <string name="widget_5">Currency rates</string>
@@ -526,7 +526,7 @@
     <string name="from">From</string>
     <string name="before">Before </string>
     <string name="my_home">My home</string>
-    <string name="auto_payments">Autopayments</string>
+    <string name="auto_payments">Auto payments</string>
     <string name="service_category">Service category</string>
     <string name="saved_payments">Saved payments</string>
     <string name="add_payment">Add payment</string>
@@ -550,7 +550,7 @@
     <string name="continue_text">Continue</string>
     <string name="current_balance">Current balance</string>
     <string name="indications_from">Indications from</string>
-    <string name="indications_upto">Indications upto</string>
+    <string name="indications_upto">Indications up to</string>
     <string name="account_counting">Counter reading</string>
     <string name="have">Yes</string>
     <string name="fast_access">Fast access</string>
@@ -610,7 +610,7 @@
     <string name="empty_limit_title">You have no limits</string>
     <string name="empty_limit_description">You can set limits on transactions using a bank card</string>
     <string name="for_all_operations">For all operations</string>
-    <string name="payment_by_location_loading">To\'lovlar sozlanmoqda...\nBu biroz ko\'proq vaqt olishi mumkin...</string>
+    <string name="payment_by_location_loading">Processing payments...\nThis may take a little longer...</string>
     <string name="log_out_question">Log out of your account?</string>
     <string name="really_want_to_logout">Do you really want to log out?</string>
     <string name="exit">Exit</string>
@@ -898,7 +898,7 @@
     <string name="amount_auto_payment">Amount of autopayment</string>
     <string name="offerta_new_goal">I agree with the Universal Bank user agreement</string>
     <string name="edit_avatar">Edit avatar</string>
-    <string name="unexpected_error">Kutilmagan xatolik</string>
+    <string name="unexpected_error">Unexpected error</string>
     <string name="no_loans">No loan</string>
     <string name="empty_loan_desc">All received loans will be displayed here</string>
     <string name="no_deposit_desc">All received credits will be displayed here Deposits</string>
@@ -960,10 +960,10 @@
     <string name="bank_product_desc_3">Interest payment: In case of early withdrawal of the deposit: from 1 to 6 months - 10%, from 6 to 12 months - 20%, for more than 12 months - 22%.</string>
     <string name="bank_product_desc_4">Interest payment: Interest is paid monthly. Not capitalized. In case of early receipt of the deposit in full, interest on the deposit is not paid, the amount of previously paid interest is recalculated and deducted from the deposit amount.\n</string>
     <string name="return_back">Return back</string>
-    <string name="you_dont_have_second_card">Sizda ikkinchi karta mavjud emas</string>
+    <string name="you_dont_have_second_card">You do not have a second card</string>
     <string name="pass_identification">Pass identification</string>
     <string name="pass_identification_desc">This service is available to identified clients</string>
-    <string name="can_not_receive_balance">Balansni olishning iloji bo\'lmadi</string>
+    <string name="can_not_receive_balance">It was not possible to get the balance</string>
     <string name="updated_at">Updated at</string>
     <string name="currency_widget">Currency</string>
     <string name="lock_security_title">Protect your phone from being unlocked</string>
@@ -978,10 +978,11 @@
     <string name="add_your_home_sevice">Add payment</string>
     <string name="loan_repayment">Loan repayment</string>
     <string name="edit_profile">Edit Profile</string>
-    <string name="user_name">Имя</string>
-    <string name="surname">Фамилия</string>
-    <string name="patronic">Отчество</string>
+    <string name="user_name">Name</string>
+    <string name="surname">Surname</string>
+    <string name="patronic">Middle name</string>
     <string name="for_you_p2p">Card-to-card transfers</string>
     <string name="for_you_online_conversion">Online conversion</string>
     <string name="for_you_target">Saving money</string>
+    <string name="for_you">For you</string>
 </resources>
