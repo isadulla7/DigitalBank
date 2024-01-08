@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.all_card
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -11,14 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 import fido.mkbank.ui.ib.fragments.menu.menu_monitoring.model.ListItem
-import kotlinx.android.synthetic.main.fragment_set_card_limits.start_date
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.InParamsResponse
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.GeneralItem
-import uz.fido.network.domain.model.monitoring.filter.FilterLocalMonitoring
 import uz.fido.network.domain.model.monitoring.filter.NewFilterMonitoringFilterRequest
 import uz.fido.network.domain.model.payment.PrintChequeRequest
 import uz.fido.network.domain.model.payment.TemplateKeyValue
@@ -56,6 +53,7 @@ class LocalMonitoringFragment :
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var dialogInfo: InfoMonitoringDialog
+
     private var operationType = 2
     private var dateBegin: String = ""
     private var dateEnd: String = ""
@@ -70,7 +68,6 @@ class LocalMonitoringFragment :
             this
         )
     }
-    private var linearLayoutManager: LinearLayoutManager? = null
     private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
 
     companion object {
@@ -82,8 +79,6 @@ class LocalMonitoringFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        linearLayoutManager = LinearLayoutManager(requireContext())
-
         if (saveViewModel.allCardList.value != false)
             allOperation()
         else {
@@ -110,14 +105,15 @@ class LocalMonitoringFragment :
     }
 
     private fun checkLocalMonitoringSave() {
-        if (saveViewModel.saveLocalMonitoringCurrent){
+        if (saveViewModel.saveLocalMonitoringCurrent) {
             saveViewModel.saveLocalMonitoring.observe(viewLifecycleOwner) {
                 localMonitoringAdapter.removeList()
                 newTotalList = it
                 successMonitoringList(it, 2)
                 getNewListMonitoringList()
                 binding.shimmerView.visibility = View.GONE
-            } }else getLocalMonitoringList(page = 1, operationType)
+            }
+        } else getLocalMonitoringList(page = 1, operationType)
 
     }
 
@@ -161,68 +157,30 @@ class LocalMonitoringFragment :
                 else -> 2
             }
             val cardList = arrayListOf<Int>()
-            val cardListCheck=it.cardList.filter { it.is_selected_monitoring }
-            if (cardListCheck.isNotEmpty()){
+            val cardListCheck = it.cardList.filter { it.is_selected_monitoring }
+            if (cardListCheck.isNotEmpty()) {
                 it.cardList.forEach { if (!it.is_selected_monitoring) cardList.add(it.object_id) }
-            }else{
-            it.cardList.forEach { cardList.add(it.object_id) }
+            } else {
+                it.cardList.forEach { cardList.add(it.object_id) }
             }
             val cardIdList = Format.listToStringMonitoringFilter(cardList)
             val serviceList = arrayListOf<Int>()
 
-            val serviceIdCheck=it.serviceList.filter { it.service_current }
-            val listParentObj= arrayListOf<String>()
-            if (serviceIdCheck.isEmpty()){
+            val serviceIdCheck = it.serviceList.filter { it.service_current }
+            val listParentObj = arrayListOf<String>()
+            if (serviceIdCheck.isEmpty()) {
                 it.serviceList.forEach { serviceList.add(it.service_id!!.toInt()) }
-            }else{
-                it.serviceList.forEach { if (it.service_current){
-                    serviceList.add(it.service_id!!.toInt())
-                    it.list.forEach {
-                        listParentObj.add(it.partner_obj)
+            } else {
+                it.serviceList.forEach {
+                    if (it.service_current) {
+                        serviceList.add(it.service_id!!.toInt())
+                        it.list.forEach {
+                            listParentObj.add(it.partner_obj)
+                        }
                     }
-                } }
+                }
 
             }
-            //
-            ///t.user_id=${Paper.book().read<String>(Const.PAPER_CLIENT_ID)}
-            //
-         /*   val serviceIds = Format.listToStringMonitoringFilter(serviceList)
-            val localMonitoringList=Format.listToStringParentObj(listParentObj)
-            val filterParentObject=if (listParentObj.isNotEmpty())"and t.to_object_value in (${localMonitoringList})" else ""
-            val startDate =
-                if (it.startDate == "") "" else " and t.Create_Date >to_date('${dateBegin}','dd.mm.yyyy')"
-            val endDate =
-                if (it.endDate == "") "" else " and t.Create_Date <to_date('${dateEnd}','dd.mm.yyyy')"
-            val min = if (it.minAmount == "") "" else " and t.amount > '${
-                it.minAmount.replace(
-                    " ",
-                    ""
-                )
-            }00'"
-            val max = if (it.maxAmount == "") "" else " and t.amount < '${
-                it.maxAmount.replace(
-                    " ",
-                    ""
-                )
-            }00'"
-            val filterCard =
-                if (it.cardNumber == "") "" else "and t.Request_Id in (select St.Request_Id" +
-                        "  from St_Transacts St" +
-                        "  where St.To_Object_Value like '${it.cardNumber.replace(" ", "")}')"
-            val newFilter = NewFilterMonitoringFilterRequest(
-                page_number = page,
-                page_item_size = 20,
-                condition = "t.Object_Id in (${cardIdList})" +
-                        " and t.Service_Id in (${serviceIds})" +
-                        startDate +
-                        endDate +
-                        min +
-                        max +
-                        filterCard+
-                        filterParentObject
-
-            )*/
-
             var skeletonScreen: SkeletonScreen? = null
             if (page == 0) {
                 totalList = arrayListOf()
@@ -238,16 +196,26 @@ class LocalMonitoringFragment :
             } else {
                 binding.progress.visibility = View.VISIBLE
             }
-            val newFilter=NewFilterMonitoringFilterRequest(
-                start_date = if (it.startDate.isNotEmpty())dateBegin else null,
-                end_date = if (it.endDate.isNotEmpty())dateEnd else null,
+            val newFilter = NewFilterMonitoringFilterRequest(
+                start_date = if (it.startDate.isNotEmpty()) dateBegin else null,
+                end_date = if (it.endDate.isNotEmpty()) dateEnd else null,
                 page_number = page,
                 page_item_size = 20,
                 service_ids = serviceList,
                 object_ids = cardList,
                 to_object_value = listParentObj,
-                max_amount = if (it.maxAmount.isNotEmpty())"${it.maxAmount.replace(" ","")}00" else null,
-                min_amount = if (it.minAmount.isNotEmpty()) "${it.minAmount.replace(" ","")}00" else null
+                max_amount = if (it.maxAmount.isNotEmpty()) "${
+                    it.maxAmount.replace(
+                        " ",
+                        ""
+                    )
+                }00" else null,
+                min_amount = if (it.minAmount.isNotEmpty()) "${
+                    it.minAmount.replace(
+                        " ",
+                        ""
+                    )
+                }00" else null
             )
             viewModel.newFilterLocalMonitoring(getClientToken(), newFilter)
                 .observe(viewLifecycleOwner) {
@@ -298,21 +266,22 @@ class LocalMonitoringFragment :
     }
 
     private fun recyclerViewScroll() {
-        scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                if (saveViewModel.localFilter)
-                    getFilterLocalMonitoringList(page, operationType)
-                else
-                    getLocalMonitoringListScroll(page, operationType)
+        scrollListener =
+            object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
+                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                    if (saveViewModel.localFilter)
+                        getFilterLocalMonitoringList(page, operationType)
+                    else
+                        getLocalMonitoringListScroll(page, operationType)
+                }
             }
-        }
     }
 
     private fun createMonitoringAdapter() {
         binding.rec.apply {
             adapter = localMonitoringAdapter
             setHasFixedSize(true)
-            layoutManager = linearLayoutManager
+            layoutManager = LinearLayoutManager(requireContext())
             addOnScrollListener(scrollListener)
             addItemDecoration(StickyHeaderDecoration(localMonitoringAdapter))
         }

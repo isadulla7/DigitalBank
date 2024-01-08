@@ -286,28 +286,28 @@ fun getFastAccessOperationList(context: Context): ArrayList<FastAccessOperation>
 
 fun getBankProducts(context: Context): ArrayList<BankProducts> {
     val operations = ArrayList<BankProducts>()
+//    operations.add(
+//        BankProducts(
+//            id = 0, name = context.getString(R.string.bank_product_1), icon = "illustration_1"
+//        )
+//    )
     operations.add(
         BankProducts(
-            id = 0, name = context.getString(R.string.bank_product_1), icon = "illustration_1"
-        )
-    )
-    operations.add(
-        BankProducts(
-            id = 1, name = context.getString(R.string.bank_product_2), icon = "illustration_2"
+            id = 1, name = context.getString(R.string.for_you_p2p), icon = "ic_3d_p2p"
         )
     )
     operations.add(
         BankProducts(
             id = 2,
-            name = context.getString(R.string.bank_product_3),
-            icon = "illustration_3"
+            name = context.getString(R.string.for_you_online_conversion),
+            icon = "ic_3d_conversion"
         )
     )
     operations.add(
         BankProducts(
             id = 3,
-            name = context.getString(R.string.microloan),
-            icon = "illustration_4"
+            name = context.getString(R.string.for_you_target),
+            icon = "ic_3d_target"
         )
     )
     return operations
