@@ -610,7 +610,7 @@
     <string name="empty_limit_title">You have no limits</string>
     <string name="empty_limit_description">You can set limits on transactions using a bank card</string>
     <string name="for_all_operations">For all operations</string>
-    <string name="payment_by_location_loading">Processing payments...\nThis may take a little longer...</string>
+    <string name="payment_by_location_loading">Processing payments…\nThis may take a little longer…</string>
     <string name="log_out_question">Log out of your account?</string>
     <string name="really_want_to_logout">Do you really want to log out?</string>
     <string name="exit">Exit</string>
@@ -653,7 +653,7 @@
     <string name="finger_print_description">Enable app login with fingerprint for better data</string>
     <string name="currency_rate_date">Current exchange rates for</string>
     <string name="balance">Balance</string>
-    <string name="please_wait">Please wait...</string>
+    <string name="please_wait">Please wait…</string>
     <string name="empty_transfers">Your \nlatest transfers will be displayed here</string>
     <string name="choose_filial">Choose branch</string>
     <string name="name_or_mfo">Name or MFO of the bank</string>

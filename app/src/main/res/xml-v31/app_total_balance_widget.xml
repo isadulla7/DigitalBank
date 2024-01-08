@@ -2,6 +2,8 @@
 <appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
     android:initialKeyguardLayout="@layout/total_balance_widget_layout"
     android:initialLayout="@layout/total_balance_widget_layout"
+    android:minWidth="190dp"
+    android:minHeight="100dp"
     android:previewImage="@drawable/total_balance_review"
     android:resizeMode="horizontal"
     android:targetCellWidth="1"

@@ -42,7 +42,7 @@ class HomeCreditsAdapter(
             binding.apply {
                 tvCreditName.text = item.productName
                 tvCreditBalance.text = Format.formatAmountWithAppend(
-                    item.amount, "UZS", itemView.context
+                    item.amount, "UZS"
                 )
                 val paidAmount = item.amount.toBigDecimal() - item.totalDebt.toBigDecimal()
                 val percent = (paidAmount * 100.toBigDecimal() / item.amount.toBigDecimal()).toInt()
@@ -50,8 +50,7 @@ class HomeCreditsAdapter(
                 tvCreditLeftAmount.text = itemView.context.getString(R.string.paid) + " " +
                         Format.formatAmountWithAppend(
                             paidAmount.toString(),
-                            "UZS",
-                            itemView.context
+                            "UZS"
                         )
 
 

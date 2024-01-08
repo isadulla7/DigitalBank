@@ -442,13 +442,6 @@ fun Context.getDrawableFromRes(name: String): Int {
     } else R.drawable.bg_0
 }
 
-fun Context.getMiniDrawableFromRes(name: String): Int {
-    val resId = this.resources.getIdentifier(name + "_mini", "drawable", this.packageName)
-    return if (resId != 0) {
-        resId
-    } else R.drawable.bg_0
-}
-
 fun getCardBackgroundList(): ArrayList<String> {
     val cardBgNames = ArrayList<String>()
     cardBgNames.add("bg_0")

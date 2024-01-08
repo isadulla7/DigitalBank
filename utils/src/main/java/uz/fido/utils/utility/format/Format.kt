@@ -6,7 +6,6 @@ import android.text.*
 import uz.fido.utils.R
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CHAR_EUR
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CHAR_RUB
-import uz.fido.utils.const.CurrencyConst.CURRENCY_CHAR_USD
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CHAR_UZS
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_EUR
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_RUB
@@ -21,8 +20,6 @@ import java.text.DecimalFormatSymbols
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.pow
-import kotlin.math.roundToInt
 
 class Format {
 
@@ -34,17 +31,12 @@ class Format {
                 .replace(",", ".")
         }
 
-        fun naiveRound(num: Float, decimalPlaces: Int): Double {
-            val p = 10.0.pow(decimalPlaces.toDouble());
-            return (num * p).roundToInt() / p
-        }
-
         fun formatChatDate(date: String): String {
             val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
             val secondFormat = SimpleDateFormat("HH:mm", Locale.US)
             return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                 try {
-                    secondFormat.format(df.parse(date)).toString()
+                    secondFormat.format(df.parse(date)!!).toString()
                 } catch (e: ParseException) {
                     date
                 }
@@ -132,10 +124,7 @@ class Format {
 
         fun formatAmountWithAppend(
             amount: String? = "0",
-            currency: String? = "",
-            context: Context,
-            amountColor: Int? = null,
-            textSize: Int? = null
+            currency: String? = ""
         ): SpannableStringBuilder {
             val builder = SpannableStringBuilder()
             val filteredAmount = amount?.replace(" ", "")?.replace(",", ".")
@@ -195,13 +184,6 @@ class Format {
             }
         }
 
-        fun formatAmountToInteger(amount: String): String {
-            return if (amount.isNotEmpty()) {
-                val newAmount: String = amount.substring(0, amount.length - 2)
-                amountWithSpacesInteger(newAmount)
-            } else ""
-        }
-
         fun formatAmountFromTiynToInteger(amount: String): String {
             var newAmount = amount.replace(" ", "").replace(",", ".")
             if (newAmount.startsWith("0")) {
@@ -216,15 +198,6 @@ class Format {
             return newAmount
         }
 
-        fun formatTiynToBigDecimal(amount: String?): BigDecimal {
-            return if (amount != null && amount.isNotEmpty()) {
-                val a = amount.replace(",", ".").replace(" ", "")
-                a.toBigDecimal().divide(BigDecimal(100))
-            } else {
-                BigDecimal.ZERO
-            }
-        }
-
         fun formatAmountToTiyn(amount: String?): String {
             if (amount.isNullOrBlank()) {
                 return "0"
@@ -237,52 +210,6 @@ class Format {
             }
             Logger.writeErrorLog(newAmountStr)
             return newAmountStr
-        }
-
-        private fun amountWithSpacesInteger(str: String): String {
-            var value = str
-            if (value != null) {
-                if (value.contains(",")) {
-                    value = value.replace(",", ".")
-                }
-                val lst = StringTokenizer(value, ".")
-                var str1: String = value
-                var str2 = ""
-                if (lst.countTokens() > 1) {
-                    str1 = lst.nextToken()
-                    str2 = lst.nextToken()
-                }
-                var str3 = StringBuilder()
-                var i = 0
-                var j = -1 + str1.length
-                if (str1[-1 + str1.length] == '.') {
-                    j--
-                    str3 = StringBuilder(".")
-                }
-                var k = j
-                while (true) {
-                    if (k < 0) {
-                        if (str2.isNotEmpty()) str3.append(".").append(str2)
-                        return str3.toString()
-                    }
-                    if (i == 3) {
-                        str3.insert(0, " ")
-                        i = 0
-                    }
-                    str3.insert(0, str1[k])
-                    i++
-                    k--
-                }
-            } else {
-                return ""
-            }
-        }
-
-        fun checkForPassword(password: String): Boolean {
-            if (password.isNotEmpty()) {
-                return password.length in 8..25
-            }
-            return false
         }
 
         fun checkForPhoneNumber(phoneNumber: String): Boolean {
@@ -384,24 +311,6 @@ class Format {
             }
         }
 
-        fun formatCardAndWalletNumber(cardNumber: String): String {
-            return when (cardNumber.length) {
-                16 -> {
-                    cardNumber.substring(0, 4) + " " + cardNumber.substring(
-                        4, 6
-                    ) + "** **** " + cardNumber.substring(12, cardNumber.length)
-                }
-
-                11 -> {
-                    cardNumber.substring(0, 3) + " **" + cardNumber.substring(7, cardNumber.length)
-                }
-
-                else -> {
-                    cardNumber
-                }
-            }
-        }
-
         fun formatCardNumberNew(cardNumber: String): String {
             return if (cardNumber.length == 16) {
                 cardNumber.substring(10, cardNumber.length)
@@ -461,13 +370,6 @@ class Format {
             }
         }
 
-        fun getExpireDate(str: String): String {
-            val month = str.substring(0, 2)
-            val day = str.substring(2)
-            val date = day + month
-            return date
-        }
-
         fun sentExpireDate(str: String): String {
             return if (str.isNotEmpty() && str.length > 3) {
                 str.substring(2, 4) + str.substring(0, 2)
@@ -514,54 +416,6 @@ class Format {
                 str3.insert(0, str1[k])
                 i++
                 k--
-            }
-        }
-
-        fun formatAmountScale(str: String?, currency: String): String {
-            if (str == null) {
-                return ""
-            }
-            val scale = if (currency == CURRENCY_CHAR_USD) 3 else 2
-            if (str.isEmpty()) {
-                return "0"
-            }
-            val rounded = str.replace(" ", "").replace(",", ".").toBigDecimal()
-                .setScale(scale, RoundingMode.UP).toString()
-            var value = rounded
-            if (value != null) {
-                if (value.contains(",")) {
-                    value = value.replace(",", ".")
-                }
-                val lst = StringTokenizer(value, ".")
-                var str1: String = value
-                var str2 = ""
-                if (lst.countTokens() > 1) {
-                    str1 = lst.nextToken()
-                    str2 = lst.nextToken()
-                }
-                var str3 = java.lang.StringBuilder()
-                var i = 0
-                var j = -1 + str1.length
-                if (str1[-1 + str1.length] == '.') {
-                    j--
-                    str3 = java.lang.StringBuilder(".")
-                }
-                var k = j
-                while (true) {
-                    if (k < 0) {
-                        if (str2.isNotEmpty()) str3.append(".").append(str2)
-                        return str3.toString()
-                    }
-                    if (i == 3) {
-                        str3.insert(0, " ")
-                        i = 0
-                    }
-                    str3.insert(0, str1[k])
-                    i++
-                    k--
-                }
-            } else {
-                return ""
             }
         }
 
@@ -620,19 +474,6 @@ class Format {
             return formatter.format(calendar.time)
         }
 
-        fun getMilliseconds(givenDateString: String): Long {
-            val df = SimpleDateFormat("yyyyMMdd")
-            var timeInMilliseconds: Long = 0
-            try {
-                val mDate = df.parse(givenDateString)
-                timeInMilliseconds = mDate.time
-            } catch (e: ParseException) {
-                e.printStackTrace()
-            }
-
-            return timeInMilliseconds
-        }
-
         var locale: Locale? = null
             get() {
                 field = Locale("en", "UK")
@@ -666,11 +507,6 @@ class Format {
             return res
         }
 
-        fun formatAmountTariffs(summ: Int): String {
-            return amountWithSpacesInteger(summ.toString())
-        }
-
-
     }
 
     fun formatAmount(value: String?): String {
@@ -696,7 +532,7 @@ class Format {
             var k = j
             while (true) {
                 if (k < 0) {
-                    if (str2.length > 0) str3.append(".").append(str2)
+                    if (str2.isNotEmpty()) str3.append(".").append(str2)
                     return str3.toString()
                 }
                 if (i == 3) {
@@ -755,78 +591,6 @@ class Format {
             )
         ) + " " + context.getString(R.string.sum)
         return ""
-    }
-
-    fun setMonitoringDate(context: Context, date: String): String {
-        val calendar = Calendar.getInstance()
-        val today = calendar.time
-        calendar.add(Calendar.DATE, -1)
-        val yesterday = calendar.time
-        val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val secondFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.getDefault())
-        return when (date) {
-            df.format(today) -> context.getString(R.string.today)
-            df.format(yesterday) -> context.getString(R.string.yesterday)
-            else -> if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                try {
-                    val newFormat: Date = df.parse(date)
-                    secondFormat.format(newFormat).toString()
-                } catch (e: ParseException) {
-                    date
-                }
-            } else {
-                date
-            }
-        }
-    }
-
-    fun setChequeDate(context: Context, date: String): String {
-        val calendar = Calendar.getInstance()
-        val today = calendar.time
-        calendar.add(Calendar.DATE, -1)
-        val yesterday = calendar.time
-        val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
-        val secondFormat = SimpleDateFormat("dd MMMM, HH:mm", Locale.getDefault())
-        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            try {
-                val newFormat: Date = df.parse(date)
-                when (date.substring(0, 9)) {
-                    df.format(today).substring(
-                        0, 9
-                    ) -> context.getString(R.string.today) + " " + secondFormat.format(newFormat)
-                        .toString()
-
-                    df.format(yesterday).substring(
-                        0, 9
-                    ) -> context.getString(R.string.yesterday) + " " + secondFormat.format(newFormat)
-                        .toString()
-
-                    else -> secondFormat.format(newFormat).toString()
-                }
-            } catch (e: ParseException) {
-                date
-            }
-        } else {
-            date
-        }
-    }
-
-    fun setApplicationDate(date: String): String {
-        val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
-        val secondFormat = SimpleDateFormat("dd MMMM, yyyy", Locale.US)
-        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            try {
-                secondFormat.format(df.parse(date)!!).toString()
-            } catch (e: ParseException) {
-                date
-            }
-        } else {
-            date
-        }
-    }
-
-    fun firstLetterUpperCase(text: String): String {
-        return if (text.isNotEmpty()) text[0].uppercase() + text.substring(0, text.length) else ""
     }
 
     fun percentAmount(amount: String, percent: String?): String {

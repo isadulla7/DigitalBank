@@ -39,12 +39,10 @@ import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragmen
 import uz.fido.universaldigital.ui.fragments.payment.templates.TemplateTypes
 import uz.fido.universaldigital.ui.fragments.products.adapter.BankProductsAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.FastAccessOperationAdapter
-import uz.fido.universaldigital.ui.fragments.products.adapter.HomeDepositsAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomePopularTransferAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeRatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeTemplatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
-import uz.fido.universaldigital.ui.fragments.products.widgets.bank_products.BankProductsOnBoarding
 import uz.fido.universaldigital.ui.fragments.products.widgets.bank_products.ForYouOnBoarding
 import uz.fido.universaldigital.ui.fragments.products.widgets.settings.MainWidgetSettingsDialog
 import uz.fido.universaldigital.ui.fragments.services.deposit.adapter.DepositAdapter
@@ -57,7 +55,6 @@ import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.Command
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.goto
-import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 import java.text.DecimalFormat
 

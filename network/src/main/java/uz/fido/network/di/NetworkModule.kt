@@ -15,6 +15,7 @@ import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import uz.fido.network.BuildConfig
 import uz.fido.network.R
 import uz.fido.network.data.interceptor.AuthInterceptor
 import uz.fido.network.data.interceptor.DecryptionInterceptor
@@ -114,7 +115,8 @@ object NetworkModule {
     @Singleton
     fun loggingInterceptor(): HttpLoggingInterceptor {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        if (BuildConfig.DEBUG) httpLoggingInterceptor.level =
+            HttpLoggingInterceptor.Level.BODY
         return httpLoggingInterceptor
     }
 
@@ -128,7 +130,8 @@ object NetworkModule {
         apiInterface: dagger.Lazy<UserApiInterface>
     ): OkHttpClient = unSafeOkHttpClient()
 //        .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
-        .addInterceptor(HeaderInterceptor()).addInterceptor(loggingInterceptor).addInterceptor(
+        .addInterceptor(HeaderInterceptor())
+        .addInterceptor(loggingInterceptor).addInterceptor(
             AuthInterceptor(
                 swapKeyService = swapKeyService, context = appContext, apiInterface
             )

@@ -67,7 +67,7 @@ object BaseCardUtils {
         val visibility = Paper.book().read<Boolean>(Const.BALANCE_VISIBILITY) ?: true
         if (visibility) {
             this.text = Format.formatAmountWithAppend(
-                cardResponse.balance, cardResponse.currency_char, this.context, textSize = 40
+                cardResponse.balance, cardResponse.currency_char
             )
         } else {
             this.text = "••• ••• ••• •••"
