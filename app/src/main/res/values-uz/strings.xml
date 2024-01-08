@@ -14,7 +14,7 @@
     <string name="widget_3">Saqlangan o’tkazmalar</string>
     <string name="widget_4">Saqlangan to’lovlar</string>
     <string name="widget_5">Valyutalar kursi</string>
-    <string name="widget_7">Omonatlarim</string>
+    <string name="widget_7">Omonatlar</string>
 
     <integer-array name="main_widgets_ids">
         <item>100</item>
@@ -976,4 +976,7 @@
     <string name="user_name">Ism</string>
     <string name="surname">Familiya</string>
     <string name="patronic">Otasining ismi</string>
+    <string name="for_you_p2p">Kartadan kartaga pul o‘tkazmalari</string>
+    <string name="for_you_online_conversion">Onlayn konvertatsiya</string>
+    <string name="for_you_target">Pul jamg‘arish</string>
 </resources>

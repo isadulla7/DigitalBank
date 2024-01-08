@@ -29,17 +29,29 @@ import java.util.Locale
 class LocalMonitoringAdapter(
     private var context: Context,
     private var consolidatedList: ArrayList<ListItem>,
-    private val onClick:(LocalMonitoring)->Unit
-):RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHeaderInterface {
+    private val onClick: (LocalMonitoring) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHeaderInterface {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == ListItem.TYPE_DATE) {
-            DateViewHolder(ItemHistoriesHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            DateViewHolder(
+                ItemHistoriesHeaderBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
         } else {
-            GeneralItemViewHolder(ItemMonitoringBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            GeneralItemViewHolder(
+                ItemMonitoringBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
         }
     }
 
-    override fun getItemCount(): Int =consolidatedList.size
+    override fun getItemCount(): Int = consolidatedList.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = consolidatedList[position]
@@ -50,7 +62,8 @@ class LocalMonitoringAdapter(
         }
     }
 
-    inner class GeneralItemViewHolder(private val binding: ItemMonitoringBinding):RecyclerView.ViewHolder(binding.root){
+    inner class GeneralItemViewHolder(private val binding: ItemMonitoringBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ListItem) {
             val svMonitoringItem: GeneralItem = item as GeneralItem
@@ -60,64 +73,81 @@ class LocalMonitoringAdapter(
                 onClick.invoke(monitoringItem!!)
             }
 
-                val name = Format.firstLetterUpperCase(monitoringItem!!.name)
-                val newName =
-                    if (name.isNotEmpty()) name.substring(0, 1) + name.substring(2) else context.getString(R.string.no_name)
-                binding.tvName.text =newName
-                binding.tvTime.text = if (monitoringItem.created_date.length == 19)
-                    monitoringItem.created_date.substring(10, 16)
-                else monitoringItem.created_date
+            val name = Format.firstLetterUpperCase(monitoringItem!!.name)
+            val newName =
+                if (name.isNotEmpty()) name.substring(
+                    0,
+                    1
+                ) + name.substring(2) else context.getString(R.string.no_name)
+            binding.tvName.text = newName
+            binding.tvTime.text = if (monitoringItem.created_date.length == 19)
+                monitoringItem.created_date.substring(10, 16)
+            else monitoringItem.created_date
 
-                val symbol = if (monitoringItem.tran_type == "credit"){
-                    binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.monitoring_amount))
-                    "+"
-                }else{
-                    binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.mainTextColor))
-                    "-"}
-
-            if (monitoringItem.service_id=="-1")
-            if (monitoringItem.tran_type == "credit"){
-                binding.tvType.text =
-                    if (monitoringItem.partner_obj.length == 16) Format.formatCardNumberMonitoring(context,
-                        monitoringItem.partner_obj
-                    )  else monitoringItem.partner_obj
-            }else{
-                binding.tvType.text =
-                    if (monitoringItem.object_value.length == 16) Format.formatCardNumberObjectMonitoring(context,
-                        monitoringItem.object_value
-                    )  else monitoringItem.object_value
+            val symbol = if (monitoringItem.tran_type == "credit") {
+                binding.tvAmount.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.monitoring_amount
+                    )
+                )
+                "+"
+            } else {
+                binding.tvAmount.setTextColor(
+                    ContextCompat.getColor(
+                        context,
+                        R.color.mainTextColor
+                    )
+                )
+                "-"
             }
-            else binding.tvType.text=context.getText(R.string.payment)
+
+            if (monitoringItem.service_id == "-1")
+                if (monitoringItem.tran_type == "credit") {
+                    binding.tvType.text =
+                        if (monitoringItem.partner_obj.length == 16) Format.formatCardNumberMonitoring(
+                            context,
+                            monitoringItem.partner_obj
+                        ) else monitoringItem.partner_obj
+                } else {
+                    binding.tvType.text =
+                        if (monitoringItem.object_value.length == 16) Format.formatCardNumberObjectMonitoring(
+                            context,
+                            monitoringItem.object_value
+                        ) else monitoringItem.object_value
+                }
+            else binding.tvType.text = context.getText(R.string.payment)
 
 //            if (monitoringItem.service_id=="-1")
 //                if (monitoringItem.partner_obj.isEmpty()) binding.tvType.text =
 //                    Format.formatCardNumberMonitoring(context,monitoringItem.object_value)
-//                Picasso.get().load(PAYNET_PHOTO + monitoringItem.icon_name)
-//                    .error(R.drawable.ic_payments_placeholder)
-//                    .into(binding.icon)
+            Picasso.get().load(PAYNET_PHOTO + monitoringItem.icon_name)
+                .error(R.drawable.ic_payments_placeholder)
+                .into(binding.icon)
 
-            val sum=BigDecimal(100)
-                binding.tvAmount.text =
-                    "$symbol ${
-                        Format.formatAmount((monitoringItem.amount.toBigDecimal() / sum).toString())
-                            .replace(".0", "")
-                    } ${Format.currencyCode(monitoringItem.currency_code)}"
+            val sum = BigDecimal(100)
+            binding.tvAmount.text =
+                "$symbol ${
+                    Format.formatAmount((monitoringItem.amount.toBigDecimal() / sum).toString())
+                        .replace(".0", "")
+                } ${Format.currencyCode(monitoringItem.currency_code)}"
 
         }
 
     }
 
-    inner class DateViewHolder(private val binding: ItemHistoriesHeaderBinding):RecyclerView.ViewHolder(binding.root){
+    inner class DateViewHolder(private val binding: ItemHistoriesHeaderBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ListItem) {
             val dateItem: DateItem = item as DateItem
             val date = dateItem.date
-            binding.dateView.text= date?.let { Format.monitoringDate(it) }
+            binding.dateView.text = date?.let { Format.monitoringDate(it) }
         }
 
     }
 
-    override fun getItemViewType(position: Int): Int =consolidatedList[position].type
+    override fun getItemViewType(position: Int): Int = consolidatedList[position].type
 
     fun setListAdapter(totalList: ArrayList<ListItem>) {
         consolidatedList = totalList
@@ -143,10 +173,12 @@ class LocalMonitoringAdapter(
         date.text = Format.monitoringDate(dateItem.date.toString())
     }
 
-    override fun isHeader(itemPosition: Int): Boolean = getItemViewType(itemPosition) == ListItem.TYPE_DATE
+    override fun isHeader(itemPosition: Int): Boolean =
+        getItemViewType(itemPosition) == ListItem.TYPE_DATE
+
     fun removeList() {
-            consolidatedList.clear()
-            notifyDataSetChanged()
+        consolidatedList.clear()
+        notifyDataSetChanged()
     }
 
 

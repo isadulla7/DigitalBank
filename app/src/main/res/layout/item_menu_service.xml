@@ -41,7 +41,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/disable_service_background"
-        android:visibility="visible" />
+        android:visibility="gone" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/tv_soon"

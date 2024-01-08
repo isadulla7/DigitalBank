@@ -1,15 +1,14 @@
 package uz.fido.universaldigital.ui.fragments.products.widgets.bank_products
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.AndroidEntryPoint
-import uz.fido.universaldigital.databinding.FragmentAppFunctionsBinding
 import uz.fido.utils.R
-import uz.fido.utils.log.Log
+import uz.fido.universaldigital.databinding.FragmentAppFunctionsBinding
 
 @AndroidEntryPoint
 class ForYouOnBoarding(private var currentItem: Int) : DialogFragment() {
@@ -43,22 +42,13 @@ class ForYouOnBoarding(private var currentItem: Int) : DialogFragment() {
 
 
     private fun initStoriesView() {
-        val storage = FirebaseStorage.getInstance()
+        val uri =
+            "android.resource://" + requireContext().packageName + "/" + uz.fido.universaldigital.R.raw.service_conversion_mini
+        binding.videoView.setVideoURI(Uri.parse(uri))
+        binding.videoView.setOnCompletionListener {
 
-// Create a storage reference pointing to your video
-        val storageRef =
-            storage.reference.child("media/service_target_mini.mp4") // Replace with your video path
-
-// Get the download URL for the video
-        storageRef.downloadUrl.addOnSuccessListener { uri ->
-            // Use the URL to load the video into VideoView
-            // Replace with your VideoView ID
-            binding.videoView.setVideoURI(uri)
-            binding.videoView.start() // Start playing the video
-        }.addOnFailureListener { exception ->
-            // Handle any errors
-            Log.e("Firebase", "Failed to get download URL: ${exception.message}")
         }
+        binding.videoView.start()
     }
 
     private fun initStoriesData() {

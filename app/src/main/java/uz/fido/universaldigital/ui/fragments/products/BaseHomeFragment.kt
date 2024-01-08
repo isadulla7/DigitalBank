@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.products
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -44,6 +45,7 @@ import uz.fido.universaldigital.ui.fragments.products.adapter.HomeRatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeTemplatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
 import uz.fido.universaldigital.ui.fragments.products.widgets.bank_products.BankProductsOnBoarding
+import uz.fido.universaldigital.ui.fragments.products.widgets.bank_products.ForYouOnBoarding
 import uz.fido.universaldigital.ui.fragments.products.widgets.settings.MainWidgetSettingsDialog
 import uz.fido.universaldigital.ui.fragments.services.deposit.adapter.DepositAdapter
 import uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.ClientDepositFragment
@@ -69,6 +71,11 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
     var mainWidgetsList = ArrayList<MainWidget>()
 
     var container: ViewGroup? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentMenuHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
     fun initWidgets() {
         if (Const.MAIN_WIDGETS_VERSION > Paper.book()
@@ -400,7 +407,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
 
     override fun openBankProduct(id: Int) {
         super.openBankProduct(id)
-        BankProductsOnBoarding(
+        ForYouOnBoarding(
             id
         ).show(childFragmentManager, "")
     }

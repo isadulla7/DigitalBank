@@ -9,12 +9,12 @@
         <item>@string/widget_7</item>
     </string-array>
 
-    <string name="widget_1">Advertising and offers</string>
-    <string name="widget_2">Quick access</string>
-    <string name="widget_3">Saved transfers</string>
-    <string name="widget_4">Templates and auto payments</string>
-    <string name="widget_5">My home</string>
-    <string name="widget_7">Currency rates</string>
+    <string name="widget_1">Fast access</string>
+    <string name="widget_2">Bank products</string>
+    <string name="widget_3">Frequent transfers</string>
+    <string name="widget_4">Saved payments</string>
+    <string name="widget_5">Currency rates</string>
+    <string name="widget_7">Deposit</string>
 
     <integer-array name="main_widgets_ids">
         <item>100</item>
@@ -981,4 +981,7 @@
     <string name="user_name">Имя</string>
     <string name="surname">Фамилия</string>
     <string name="patronic">Отчество</string>
+    <string name="for_you_p2p">Card-to-card transfers</string>
+    <string name="for_you_online_conversion">Online conversion</string>
+    <string name="for_you_target">Saving money</string>
 </resources>
