@@ -609,7 +609,7 @@
     <string name="show_more">Показать больше</string>
     <string name="all_cards">Все карты</string>
     <string name="show_less">Показать меньше</string>
-    <string name="payment_by_location_loading">Обработка платежей...\nЭто может занять немного больше времени...</string>
+    <string name="payment_by_location_loading">Обработка платежей…\nЭто может занять немного больше времени…</string>
     <string name="log_out_question">Выйти из аккаунта?</string>
     <string name="really_want_to_logout">Вы действительно хотите выйти из аккаунта?</string>
     <string name="exit">Выйти</string>
@@ -670,7 +670,7 @@
     <string name="finger_print_description">Включите вход в приложение с отпечатком пальца для более улучшенной данных</string>
     <string name="currency_rate_date">Актуальные курсы обмена валют на</string>
     <string name="balance">Баланс</string>
-    <string name="please_wait">Пожалуйста, подождите...</string>
+    <string name="please_wait">Пожалуйста, подождите…</string>
     <string name="empty_transfers">Здесь будут отображаться ваши \nпоследние переводы</string>
     <string name="choose_filial">Выберите филиал</string>
     <string name="name_or_mfo">Название или МФО банка</string>

@@ -163,7 +163,6 @@ class LocalMonitoringFragment :
             } else {
                 it.cardList.forEach { cardList.add(it.object_id) }
             }
-            val cardIdList = Format.listToStringMonitoringFilter(cardList)
             val serviceList = arrayListOf<Int>()
 
             val serviceIdCheck = it.serviceList.filter { it.service_current }

@@ -48,7 +48,7 @@ class HomeDepositsAdapter(
             binding.apply {
                 tvDepositName.text = item.depName
                 tvDepositBalance.text = Format.formatAmountWithAppend(
-                    item.sumDep, item.currencyChar, itemView.context
+                    item.sumDep, item.currencyChar
                 )
                 tvDepositPercentage.text =
                     itemView.context.getString(R.string.yield_per_year, item.percent, "%")

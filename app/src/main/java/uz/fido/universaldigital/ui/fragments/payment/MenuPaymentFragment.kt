@@ -19,7 +19,6 @@ import uz.fido.network.domain.model.template.GetTemplateRequest
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
-import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.databinding.FragmentMenuPaymentsBinding
 import uz.fido.universaldigital.ui.fragments.payment.abc_adapter.MainPaymentsAdapter
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.DownloadPayment
@@ -29,6 +28,7 @@ import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragmen
 import uz.fido.universaldigital.ui.fragments.payment.payment_list.PaymentListFragment
 import uz.fido.universaldigital.ui.fragments.payment.templates.TemplateTypes
 import uz.fido.universaldigital.ui.fragments.payment.templates.adapter.PaymentTemplatesAdapter
+import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchList
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
@@ -38,7 +38,6 @@ import uz.fido.utils.utility.user.getClientToken
 import java.text.DecimalFormat
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import java.util.logging.Logger
 
 @AndroidEntryPoint
 class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInterface {

@@ -26,9 +26,9 @@ class WidgetView : View {
         val views = RemoteViews(context.packageName, R.layout.currency_rates_widget)
 
         // Set updated date
-        val dateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
-        val updatedDate = context.getString(R.string.updated_at) + " " + dateFormat.format(Date())
-        views.setTextViewText(R.id.tv_updated_date, updatedDate)
+//        val dateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
+//        val updatedDate = context.getString(R.string.updated_at) + " " + dateFormat.format(Date())
+//        views.setTextViewText(R.id.tv_updated_date, updatedDate)
 
         // Set Currency Rates
         val rates = currencyRatesFilter(data)
@@ -65,7 +65,7 @@ class WidgetView : View {
     }
 
     private fun formattedRate(rate: Double) =
-        Format.formatAmountToTiyn((rate / 100).toString()) + " UZS"
+        Format.formatAmount(Format.formatAmountToTiyn((rate / 100).toString())) + " UZS"
 
     private fun currencyRatesFilter(courseList: ArrayList<CourseItem>): ArrayList<CourseItem> {
         val filteredList = ArrayList<CourseItem>()
