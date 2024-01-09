@@ -69,7 +69,11 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
 
     var container: ViewGroup? = null
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentMenuHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
