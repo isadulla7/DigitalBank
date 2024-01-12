@@ -3,4 +3,7 @@
     <dimen name="elevation_2dp">0dp</dimen>
     <dimen name="elevation_6dp">4dp</dimen>
     <dimen name="elevation_8dp">8dp</dimen>
+
+    <dimen name="rippleStrokeWidth">2dp</dimen>
+    <dimen name="rippleRadius">64dp</dimen>
 </resources>

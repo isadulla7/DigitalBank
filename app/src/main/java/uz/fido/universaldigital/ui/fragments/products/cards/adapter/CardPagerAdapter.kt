@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import uz.fido.universaldigital.R
-import java.util.*
 
 class CardPagerAdapter(private var context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -30,11 +29,9 @@ class CardPagerAdapter(private var context: Context, fm: FragmentManager) :
 
     override fun getPageTitle(position: Int): CharSequence {
         return when (position) {
-            0 -> context.getString(R.string.all)
-            1 -> context.getString(R.string.uzcard)
-            2 -> context.getString(R.string.humo)
-            3 -> context.getString(R.string.currency_cards)
-            else -> context.getString(R.string.wallets)
+            0 -> context.getString(R.string.my_cards)
+            1 -> context.getString(R.string.my_deposits)
+            else -> context.getString(R.string.my_credits)
         }
     }
 

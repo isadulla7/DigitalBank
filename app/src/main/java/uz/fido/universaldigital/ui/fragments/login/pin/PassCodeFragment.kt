@@ -40,7 +40,6 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.device.vibrateTick
-import uz.fido.utils.log.Log
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.security.getDecodedString
 import uz.fido.utils.utility.context.getDeviceIds
@@ -61,6 +60,10 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     companion object {
         const val PASS_OPERATION_POP = "PASS_OPERATION_POP"
+        const val DEEP_LINK_OBJECT_VALUE = "DEEP_LINK_OBJECT_NUMBER"
+        const val DEEP_LINK_OBJECT_ID = "DEEP_LINK_OBJECT_ID"
+        const val DEEP_LINK_AMOUNT = "DEEP_LINK_AMOUNT"
+        const val DEEP_LINK_COMMENT = "DEEP_LINK_COMMENT"
     }
 
     private var operation: String = ""
@@ -371,8 +374,32 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun openMainActivity() {
-        CoroutineScope(Dispatchers.Default).launch { // Main, because UI is changed
+        CoroutineScope(Dispatchers.Default).launch {
             val intent = Intent(requireActivity(), MainActivity::class.java)
+            if (arguments != null) {
+                if (!requireArguments().getString(DEEP_LINK_OBJECT_VALUE).isNullOrEmpty()) {
+                    intent.putExtra(
+                        DEEP_LINK_OBJECT_VALUE, requireArguments().getString(
+                            DEEP_LINK_OBJECT_VALUE
+                        )
+                    )
+                    intent.putExtra(
+                        DEEP_LINK_OBJECT_ID, requireArguments().getString(
+                            DEEP_LINK_OBJECT_ID
+                        )
+                    )
+                    intent.putExtra(
+                        DEEP_LINK_AMOUNT, requireArguments().getString(
+                            DEEP_LINK_AMOUNT
+                        )
+                    )
+                    intent.putExtra(
+                        DEEP_LINK_COMMENT, requireArguments().getString(
+                            DEEP_LINK_COMMENT
+                        )
+                    )
+                }
+            }
             startActivity(intent)
             requireActivity().overridePendingTransition(
                 android.R.anim.fade_in, android.R.anim.fade_out

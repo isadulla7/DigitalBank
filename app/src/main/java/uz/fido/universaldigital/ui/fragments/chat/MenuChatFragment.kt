@@ -155,27 +155,26 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
         }
     }
 
-    private fun receiveMessagesRequest(page: Int, roomId: String) {
-        val shimmer =
-            showSkeleton(binding.shimmerView, shimmerAdapter, R.layout.shimmer_item_chat, 5)
+    private fun receiveMessagesRequest(roomId: String) {
+        showSkeleton(binding.shimmerView, shimmerAdapter, R.layout.shimmer_item_chat, 5)
         binding.imageSend.isEnabled = false
         val request = ReceiveMessagesRequest(
             room_id = roomId
         )
         viewModel.receiveMessages(getClientToken(), request).observe(viewLifecycleOwner) {
             stopAnimation()
-            binding.shimmerView.visibility = View.GONE
-            when (it.status) {
-                Status.SUCCESS -> {
-                    val response = it.data as MessageHistoryResponse
-                    if (response.msg_list != null && response.msg_list!!.size > 0) {
-                        val messageList = response.msg_list
-                        list.addAll(messageList!!)
+            if (isVisible) {
+                Handler(Looper.getMainLooper()).postDelayed({
+                    binding.shimmerView.visibility = View.GONE
+                }, 500)
+            }
+            if (it.status == Status.SUCCESS) {
+                val response = it.data as MessageHistoryResponse
+                response.msg_list?.let { messageHistory ->
+                    if (messageHistory.isNotEmpty()) {
+                        list.addAll(messageHistory)
                         updateAdapter()
                     }
-                }
-
-                Status.ERROR -> {
                 }
             }
         }
@@ -406,7 +405,7 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
                     roomName = roomModel.room_name.toString()
                     roomImgName = roomModel.default_img_name.toString()
 //                    binding.textUserName.text = roomName
-                    receiveMessagesRequest(1, roomId.toString())
+                    receiveMessagesRequest(roomId.toString())
                 }
 
                 Status.ERROR -> {

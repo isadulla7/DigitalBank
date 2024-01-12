@@ -15,7 +15,7 @@ object Const {
     const val MAIN_WIDGETS_VERSION_SAVED = "main_widget_version_saved"
     const val UPDATE_MAIN_WIDGETS = "false"
     const val MAIN_WIDGETS = "main_widgets"
-    const val MAIN_WIDGETS_VERSION = 4
+    const val MAIN_WIDGETS_VERSION = 5
     const val TOTAL_BALANCE_TYPE = "balance_type"
     const val PAPER_CLIENT_TOKEN = "client_token"
     const val PAPER_PAYMENT_VERSION = "payment_version"

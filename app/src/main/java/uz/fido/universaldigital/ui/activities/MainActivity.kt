@@ -62,6 +62,7 @@ class MainActivity : BaseActivity() {
         checkUpdate()
         askNotificationPermission()
         initSearchList()
+        checkForDeepLink()
     }
 
     override fun onResume() {
@@ -132,6 +133,28 @@ class MainActivity : BaseActivity() {
     private fun checkUpdate() {
         updateChecker = UpdateChecker(this)
         updateChecker.checkUpdate()
+    }
+
+    private fun checkForDeepLink() {
+        if (!intent.getStringExtra(PassCodeFragment.DEEP_LINK_OBJECT_VALUE).isNullOrEmpty()) {
+            openPage(
+                R.id.requestMoneyPaymentFragment,
+                bundleOf(
+                    PassCodeFragment.DEEP_LINK_OBJECT_VALUE to intent.getStringExtra(
+                        PassCodeFragment.DEEP_LINK_OBJECT_VALUE
+                    ),
+                    PassCodeFragment.DEEP_LINK_OBJECT_ID to intent.getStringExtra(
+                        PassCodeFragment.DEEP_LINK_OBJECT_ID
+                    ),
+                    PassCodeFragment.DEEP_LINK_AMOUNT to intent.getStringExtra(
+                        PassCodeFragment.DEEP_LINK_AMOUNT
+                    ),
+                    PassCodeFragment.DEEP_LINK_COMMENT to intent.getStringExtra(
+                        PassCodeFragment.DEEP_LINK_COMMENT
+                    )
+                )
+            )
+        }
     }
 
     private fun internetListener() {

@@ -177,22 +177,6 @@ fun Fragment.getTransferTypes(): ArrayList<MenuServiceItem> {
             getString(R.string.request_money_desc)
         )
     )
-//    transferTypes.add(
-//        MenuServiceItem(
-//            R.drawable.ic_transfer_by_requisites,
-//            getString(R.string.by_requisites),
-//            700,
-//            getString(R.string.by_requisites_desc),
-//        )
-//    )
-//    transferTypes.add(
-//        MenuServiceItem(
-//            R.drawable.ic_transfer_swift,
-//            getString(R.string.swift_transfer),
-//            800,
-//            getString(R.string.swift_transfer_desc)
-//        )
-//    )
     return transferTypes
 }
 
@@ -201,8 +185,8 @@ fun getFastAccessOperationList(context: Context): ArrayList<FastAccessOperation>
     operations.add(
         FastAccessOperation(
             id = 10,
-            name = context.getString(R.string.my_cards),
-            icon = "all_cards",
+            name = context.getString(R.string.my_products),
+            icon = "ic_my_products",
             isVisible = true
         )
     )
@@ -230,13 +214,6 @@ fun getFastAccessOperationList(context: Context): ArrayList<FastAccessOperation>
             isVisible = true
         )
     )
-//    operations.add(
-//        FastAccessOperation(
-//            id = 12,
-//            name = context.getString(R.string.humo_pay),
-//            icon = "ic_services_humo_pay"
-//        )
-//    )
     operations.add(
         FastAccessOperation(
             id = 121,
@@ -274,23 +251,11 @@ fun getFastAccessOperationList(context: Context): ArrayList<FastAccessOperation>
             icon = "ic_transfer_swift"
         )
     )
-//    operations.add(
-//        FastAccessOperation(
-//            id = 17,
-//            name = context.getString(R.string.mobile_network),
-//            icon = "ic_phone_28"
-//        )
-//    )
     return operations
 }
 
 fun getBankProducts(context: Context): ArrayList<BankProducts> {
     val operations = ArrayList<BankProducts>()
-//    operations.add(
-//        BankProducts(
-//            id = 0, name = context.getString(R.string.bank_product_1), icon = "illustration_1"
-//        )
-//    )
     operations.add(
         BankProducts(
             id = 1, name = context.getString(R.string.for_you_p2p), icon = "ic_3d_p2p"

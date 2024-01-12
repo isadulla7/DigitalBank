@@ -15,9 +15,10 @@ import uz.fido.network.domain.model.applications.GetProductDetailsRequest
 import uz.fido.network.domain.model.applications.OrderCardApp
 import uz.fido.network.domain.model.applications.ProductDetailsResponse
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.databinding.DialogAppDetailsBinding
+import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.services.applications.adapter.AppDetailsAdapter
+import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
@@ -66,6 +67,7 @@ class AppDetailsDialog(
                 }
 
                 Status.ERROR -> {
+                    showSnackbar(it.message.toString())
                 }
             }
         }

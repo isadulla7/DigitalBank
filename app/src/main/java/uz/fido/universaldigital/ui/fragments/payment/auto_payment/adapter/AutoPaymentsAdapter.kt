@@ -1,5 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.payment.auto_payment.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,6 +14,7 @@ import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
 import uz.fido.utils.const.CardConst.STATE_ACTIVE
 import uz.fido.utils.format.Format
 
+@SuppressLint("SetTextI18n")
 class AutoPaymentsAdapter(
     private var list: ArrayList<AutoPayment>,
     private val context: Context,
@@ -24,7 +26,8 @@ class AutoPaymentsAdapter(
 
         fun bind(item: AutoPayment) {
             binding.paymentAmount.text =
-                Format.formatAmount(Format.convertFromTiynDivide(item.amount))
+                Format.formatAmount(Format.convertFromTiynDivide(item.amount)) + " " +
+                        itemView.context.getString(uz.fido.utils.R.string.sum)
             binding.textDate.text =
                 if (item.state == STATE_ACTIVE) itemView.context.getString(R.string.active) else itemView.context.getString(
                     R.string.ne_active
@@ -59,7 +62,7 @@ class AutoPaymentsAdapter(
                 onClick.invoke(adapterPosition, "more")
             }
             itemView.setOnClickListener {
-                onClick.invoke(adapterPosition, "activ")
+                onClick.invoke(adapterPosition, "active")
             }
         }
     }

@@ -11,12 +11,12 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemMibDetailsBinding
 import uz.fido.utils.utility.format.Format
 
-class MibDetailsAdapter(val context: Context,private val baseInterface: BaseInterface)
-    :ListAdapter<MibDetail, MibDetailsAdapter.MibDetailVh>(MibDetailItemCallback()) {
+class MibDetailsAdapter(val context: Context, private val baseInterface: BaseInterface) :
+    ListAdapter<MibDetail, MibDetailsAdapter.MibDetailVh>(MibDetailItemCallback()) {
 
 
-    inner class MibDetailVh(private val binding:ItemMibDetailsBinding)
-        :RecyclerView.ViewHolder(binding.root){
+    inner class MibDetailVh(private val binding: ItemMibDetailsBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: MibDetail) {
             var fio = ""
             var purpose = ""
@@ -25,6 +25,7 @@ class MibDetailsAdapter(val context: Context,private val baseInterface: BaseInte
                     "fio" -> {
                         fio = it.field_value.toString()
                     }
+
                     "purpose" -> {
                         purpose = it.field_value.toString()
                     }
@@ -33,15 +34,21 @@ class MibDetailsAdapter(val context: Context,private val baseInterface: BaseInte
             binding.father.setOnClickListener {
                 baseInterface.openInfoMib(mibDetail = item)
             }
-            binding.tvFio.text=fio
-            binding.tvType.text=purpose
-            binding.tvAmount.text= Format.formatAmount(item.debet_summa) + " UZS"
+            binding.tvFio.text = fio
+            binding.tvType.text = purpose
+            binding.tvAmount.text = Format.formatAmount(item.debet_summa) + " UZS"
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MibDetailVh {
-       return MibDetailVh(ItemMibDetailsBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return MibDetailVh(
+            ItemMibDetailsBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: MibDetailVh, position: Int) {
@@ -51,8 +58,10 @@ class MibDetailsAdapter(val context: Context,private val baseInterface: BaseInte
 }
 
 
-class MibDetailItemCallback:DiffUtil.ItemCallback<MibDetail>(){
-    override fun areItemsTheSame(oldItem: MibDetail, newItem: MibDetail): Boolean =oldItem==newItem
+class MibDetailItemCallback : DiffUtil.ItemCallback<MibDetail>() {
+    override fun areItemsTheSame(oldItem: MibDetail, newItem: MibDetail): Boolean =
+        oldItem == newItem
 
-    override fun areContentsTheSame(oldItem: MibDetail, newItem: MibDetail): Boolean =oldItem.id==newItem.id
+    override fun areContentsTheSame(oldItem: MibDetail, newItem: MibDetail): Boolean =
+        oldItem.id == newItem.id
 }

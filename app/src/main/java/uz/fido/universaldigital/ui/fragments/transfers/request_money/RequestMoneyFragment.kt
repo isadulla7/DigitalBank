@@ -2,13 +2,13 @@ package uz.fido.universaldigital.ui.fragments.transfers.request_money
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import com.google.firebase.dynamiclinks.ktx.androidParameters
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
+import com.google.firebase.dynamiclinks.ktx.socialMetaTagParameters
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
@@ -24,6 +24,7 @@ import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.view.amount.AmountSuggestionView
+
 
 @AndroidEntryPoint
 class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, RequestMoneyViewModel>(
@@ -84,12 +85,21 @@ class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, Req
         binding.btnContinue.setOnClickListener {
             binding.btnContinue.setProgress(true)
             val url =
-                "https://universaldigitalbank.page.link/qrcard?cardNumber=${receiverCard?.object_value}"
+                "https://universaldigitalbank.page.link/qrcard?cardNumber=${receiverCard?.object_value}&amount=${
+                    Format.sendFormat(binding.etAmount.text.toString())
+                }&objectId=${receiverCard?.object_id}&comment=${binding.etComment.text.toString()}"
             Firebase.dynamicLinks.shortLinkAsync {
                 link = Uri.parse(url)
                 domainUriPrefix = "https://universaldigitalbank.page.link"
                 androidParameters {
                     minimumVersion = 24
+                }
+                val uri =
+                    Uri.parse("https://firebasestorage.googleapis.com/v0/b/universal-mobile-digital.appspot.com/o/Uploads%2Fsocial_media.png?alt=media&token=0bb1942b-946a-4712-aff7-a77318b17fb6")
+                socialMetaTagParameters {
+                    title = requireContext().getString(R.string.request_money)
+                    description = requireContext().getString(R.string.request_money_desc)
+                    imageUrl = uri
                 }
             }.addOnSuccessListener { result ->
                 binding.btnContinue.setProgress(false)

@@ -302,9 +302,9 @@
     <string name="constructor_precent">Куда перечислять проценты</string>
     <string name="add_to_deposit">Оставить на вкладе</string>
     <string name="to_card">На карту</string>
-    <string name="good_morning">Good Morning</string>
-    <string name="good_afteroon">Good Afternoon</string>
-    <string name="good_evening">Good Evening</string>
+    <string name="good_morning">Доброе утро</string>
+    <string name="good_afteroon">Добрый день</string>
+    <string name="good_evening">Добрый вечер</string>
     <string name="use_touch_id">Использовать</string>
     <string name="no_thanks">Нет, спасибо</string>
     <string name="from_card">С карты</string>
@@ -695,7 +695,7 @@
     <string name="wallet_settings">Настройка кошелька</string>
     <string name="unknown">Неизвестный</string>
     <string name="given_date">Дата выдачи</string>
-    <string name="support_center">Support center</string>
+    <string name="support_center">Центр поддержки</string>
     <string name="input_message">Введите сообщение</string>
     <string name="edited">edited</string>
     <string name="add_auto_payment">Создание автоплатежа</string>
@@ -982,4 +982,7 @@
     <string name="for_you_online_conversion">Онлайн конверсия</string>
     <string name="for_you_target">Накопить деньги</string>
     <string name="for_you">Для вас</string>
+    <string name="universal_boom">Universal Boom</string>
+    <string name="my_products">Мои продукты</string>
+    <string name="apply_for_loan">Оформить</string>
 </resources>

@@ -272,7 +272,7 @@
         android:label="FragmentTransferHistories" />
     <fragment
         android:id="@+id/myCardsListFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.products.cards.MyCardsListFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.product_types.MyCardsListFragment"
         android:label="fragment_my_cards_list"
         tools:layout="@layout/fragment_my_cards_list" />
     <fragment
@@ -669,4 +669,12 @@
         android:id="@+id/uzsDepositFragment"
         android:name="uz.fido.universaldigital.ui.fragments.services.deposit.uzs_deposit.UzsDepositFragment"
         android:label="UzsDepositFragment" />
+    <fragment
+        android:id="@+id/transferViaBluetoothFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.via_bluetooh.TransferViaBluetoothFragment"
+        android:label="TransferViaBluetoothFragment" />
+    <fragment
+        android:id="@+id/requestMoneyPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.request_money.RequestMoneyPaymentFragment"
+        android:label="RequestMoneyPaymentFragment" />
 </navigation>

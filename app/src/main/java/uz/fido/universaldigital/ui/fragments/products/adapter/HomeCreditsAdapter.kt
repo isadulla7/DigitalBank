@@ -54,21 +54,23 @@ class HomeCreditsAdapter(
                         )
 
 
-                if (item.is_reacted==1){
-                   binding.progressView.visibility=View.GONE
-                    binding.tvCreditText.visibility=View.VISIBLE
-                    binding.contentButton.visibility=View.VISIBLE
+                if (item.is_reacted == 1) {
+                    binding.progressView.visibility = View.GONE
+                    binding.tvCreditText.visibility = View.VISIBLE
+                    binding.contentButton.visibility = View.VISIBLE
+                    binding.tvCreditLeftAmount.text =
+                        itemView.context.getString(R.string.application_approved)
                     itemView.setOnClickListener {
                         baseInterface.confirmTakeLoan(item)
                     }
 
-                }else{
+                } else {
                     itemView.setOnClickListener {
                         baseInterface.openCreditDetails(item)
                     }
-                    binding.progressView.visibility=View.VISIBLE
-                    binding.tvCreditText.visibility=View.GONE
-                    binding.contentButton.visibility=View.GONE
+                    binding.progressView.visibility = View.VISIBLE
+                    binding.tvCreditText.visibility = View.GONE
+                    binding.contentButton.visibility = View.GONE
                 }
             }
         }
