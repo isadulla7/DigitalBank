@@ -1,8 +1,9 @@
-package uz.fido.universaldigital.ui.fragments.products.cards
+package uz.fido.universaldigital.ui.fragments.products.product_types
 
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import uz.fido.universaldigital.R
@@ -11,14 +12,7 @@ import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentMyCardsListBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.cards.adapter.CardPagerAdapter
-import uz.fido.universaldigital.ui.fragments.products.cards.card_types.AllCardsFragment
-import uz.fido.universaldigital.ui.fragments.products.cards.card_types.CurrencyCardsFragment
-import uz.fido.universaldigital.ui.fragments.products.cards.card_types.HumoCardsFragment
-import uz.fido.universaldigital.ui.fragments.products.cards.card_types.UzCardFragment
-import uz.fido.universaldigital.ui.fragments.products.cards.card_types.WalletsFragment
-import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.AddCardDialog
 import uz.fido.utils.const.Const
-import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 
 @AndroidEntryPoint
@@ -45,15 +39,6 @@ class MyCardsListFragment : BaseSimpleFragment<FragmentMyCardsListBinding>(
             (adapter.getItem(binding.viewPager.currentItem) as BaseInterface).switchList()
             menuProductsViewModel.updateCardState.postValue(true)
         }
-        binding.addCardBtn.setOnClickListener {
-            AddCardDialog {
-                if (it == Const.ORDER_CARD) {
-                    goto(R.id.orderCardListFragment)
-                } else {
-                    goto(R.id.addCardFragment)
-                }
-            }.show(parentFragmentManager, "")
-        }
     }
 
     private fun setAdditionIcon() {
@@ -69,13 +54,25 @@ class MyCardsListFragment : BaseSimpleFragment<FragmentMyCardsListBinding>(
 
     private fun initCardTypes() {
         adapter = CardPagerAdapter(requireContext(), childFragmentManager)
-        adapter.addFragment(AllCardsFragment())
-        adapter.addFragment(UzCardFragment())
-        adapter.addFragment(HumoCardsFragment())
-        adapter.addFragment(CurrencyCardsFragment())
-        adapter.addFragment(WalletsFragment())
+        adapter.addFragment(MyCardsFragment())
+        adapter.addFragment(MyDepositsFragment())
+        adapter.addFragment(MyCreditsFragment())
         binding.viewPager.offscreenPageLimit = 1
         binding.viewPager.adapter = adapter
         binding.tabLayout.setupWithViewPager(binding.viewPager)
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                binding.appBar.setAdditionalBtnVisibility(tab?.position == 0)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+
+            }
+
+        })
     }
 }

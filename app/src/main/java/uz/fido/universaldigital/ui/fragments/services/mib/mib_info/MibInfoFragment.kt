@@ -38,7 +38,6 @@ class MibInfoFragment : BaseFragment<FragmentMibInfoBinding, MibViewModel>
             val view =
                 ItemMibInfoDetailBinding.inflate(LayoutInflater.from(requireContext()), null, false)
             var name = ""
-            var personalAccount = ""
             when (it.field_key) {
                 "fio" -> {
                     name = getString(R.string.fio)
@@ -58,7 +57,6 @@ class MibInfoFragment : BaseFragment<FragmentMibInfoBinding, MibViewModel>
 
                 "customer_code", "licshet" -> {
                     name = getString(R.string.personal_account)
-                    personalAccount = it.field_value.toString()
                 }
             }
             if (name.isNotEmpty()) {

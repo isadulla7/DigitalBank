@@ -8,7 +8,9 @@
     android:layout_marginTop="12dp"
     android:background="@drawable/cornered_bg_12dp"
     android:orientation="vertical"
-    android:padding="12dp">
+    android:outlineSpotShadowColor="@color/appBarShadowColor"
+    android:padding="12dp"
+    android:translationZ="@dimen/elevation_8dp">
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/tv_deposit_name"

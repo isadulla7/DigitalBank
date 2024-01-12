@@ -164,7 +164,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                 }
 
                 Status.ERROR -> {
-                    it.message.toString()
+                    showSnackbar(it.message.toString())
                 }
             }
         }

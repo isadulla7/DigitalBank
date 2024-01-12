@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.payment.auto_payment
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
@@ -46,73 +47,87 @@ class AutoPaymentFragment : BaseFragment<FragmentAutoPaymentBinding, AutoPayment
         gotoWithSlide(R.id.newPaymentGroupListFragment)
     }
 
-    fun init(){
-        autoPaymentAdapter= AutoPaymentsAdapter(list,requireContext()){postion,type->
-          if(type=="more"){
-           dialog=AutoPaymentOperationDialog(list[postion]){
-               if (it=="delete"){
-                   dialog.dismiss()
-                   showProgress()
-                   viewModel.deleteAutoPayment(getClientToken(),
-                       DeleteAutoPaymentRequest(list[postion].id.toString())).observe(viewLifecycleOwner){
-                       hideProgress()
-                       when(it.status){
-                           Status.SUCCESS->{
-                               list.removeAt(postion)
-                               autoPaymentAdapter.setList(list)
-                               emptyView()
-                           }
-                           Status.ERROR->{showSnackbar(it.message.toString())}
-                       }
-                   }
-               }else{
-                   dialog.dismiss()
-                   editPayment(list[postion])
-               }
-           }
-              dialog.show(childFragmentManager,"")
-          }else{
-            gotoWithSlide(R.id.autoPaymentDetailsFragment, bundleOf("item" to list[postion]))
-          }
+    fun init() {
+        autoPaymentAdapter = AutoPaymentsAdapter(list, requireContext()) { postion, type ->
+            if (type == "more") {
+                dialog = AutoPaymentOperationDialog(list[postion]) {
+                    if (it == "delete") {
+                        dialog.dismiss()
+                        showProgress()
+                        viewModel.deleteAutoPayment(
+                            getClientToken(),
+                            DeleteAutoPaymentRequest(list[postion].id.toString())
+                        ).observe(viewLifecycleOwner) {
+                            hideProgress()
+                            when (it.status) {
+                                Status.SUCCESS -> {
+                                    list.removeAt(postion)
+                                    autoPaymentAdapter.setList(list)
+                                    binding.layoutEmpty.isVisible = list.isEmpty()
+                                }
+
+                                Status.ERROR -> {
+                                    showSnackbar(it.message.toString())
+                                }
+                            }
+                        }
+                    } else {
+                        dialog.dismiss()
+                        editPayment(list[postion])
+                    }
+                }
+                dialog.show(childFragmentManager, "")
+            } else {
+                gotoWithSlide(R.id.autoPaymentDetailsFragment, bundleOf("item" to list[postion]))
+            }
         }
         binding.recyclerView.apply {
-             layoutManager = LinearLayoutManager(requireContext())
-             adapter = autoPaymentAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = autoPaymentAdapter
         }
         getListItem()
     }
 
     private fun editPayment(autoPayment: AutoPayment) {
-        when(autoPayment.type){
-            "D"->{gotoWithSlide(R.id.saveAutoPaymentDayFragment, bundleOf("item" to autoPayment))}
-            "S" ->gotoWithSlide(R.id.saveAutoPaymentSpecialFragment, bundleOf("item" to autoPayment))
-            else->{gotoWithSlide(R.id.saveAutoPaymentMonthFragment, bundleOf("item" to autoPayment))}
+        when (autoPayment.type) {
+            "D" -> {
+                gotoWithSlide(R.id.saveAutoPaymentDayFragment, bundleOf("item" to autoPayment))
+            }
+
+            "S" -> gotoWithSlide(
+                R.id.saveAutoPaymentSpecialFragment,
+                bundleOf("item" to autoPayment)
+            )
+
+            else -> {
+                gotoWithSlide(R.id.saveAutoPaymentMonthFragment, bundleOf("item" to autoPayment))
+            }
         }
     }
 
     private fun getListItem() {
-        val skeletonScreen = showSkeleton(binding.recyclerView, autoPaymentAdapter, R.layout.shimmer_item_history)
-        viewModel.getAutoPaymentList(getClientToken(),
-            AutoPaymentRequest(Paper.book().read(Const.PAPER_CLIENT_PHONE, ""))).observe(viewLifecycleOwner){
-              skeletonScreen.hide()
-            when(it.status){
-                Status.SUCCESS->{
-                    val response=it.data?.auto_payment_list?: arrayListOf()
-                    list=response
-                    emptyView()
+        val skeletonScreen =
+            showSkeleton(binding.recyclerView, autoPaymentAdapter, R.layout.shimmer_item_history)
+        viewModel.getAutoPaymentList(
+            getClientToken(),
+            AutoPaymentRequest(Paper.book().read(Const.PAPER_CLIENT_PHONE, ""))
+        ).observe(viewLifecycleOwner) {
+            skeletonScreen.hide()
+            when (it.status) {
+                Status.SUCCESS -> {
+                    val response = it.data?.auto_payment_list ?: arrayListOf()
+                    list = response
+                    binding.layoutEmpty.isVisible = list.isEmpty()
                     autoPaymentAdapter.setList(list)
                 }
-                Status.ERROR->{
-                    list= arrayListOf()
-                    emptyView()
+
+                Status.ERROR -> {
+                    list = arrayListOf()
+                    binding.layoutEmpty.isVisible = list.isEmpty()
                     showSnackbar(it.message.toString())
                 }
             }
         }
     }
-    fun emptyView(){
-        if (list.isEmpty()){
-            binding.layoutEmpty.visibility=View.VISIBLE
-        }
-    }
+
 }

@@ -8,8 +8,8 @@ import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.applications.OrderCardApp
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
-import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.databinding.FragmentAllAppBinding
+import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.services.applications.AppDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.applications.MainApplicationListFragment
 import uz.fido.universaldigital.ui.fragments.services.applications.adapter.AppListAdapter
@@ -50,7 +50,6 @@ class AllAppFragment : BaseFragment<FragmentAllAppBinding, UtilsViewModel>(
         }
         applicationAdapter.notifyDataSetChanged()
     }
-
 
     private fun getMyApplications() {
         val skeletonScreen = showSkeleton(

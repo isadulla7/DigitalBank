@@ -2,15 +2,15 @@
 <resources>
     <!-- RED -->
     <color name="brandRedColor">#BF272B</color>
-    <color name="brandRedColor_90">#BF272B</color>
-    <color name="brandRedColor_80">#BF272B</color>
-    <color name="brandRedColor_70">#BF272B</color>
-    <color name="brandRedColor_60">#BF272B</color>
-    <color name="brandRedColor_50">#BF272B</color>
-    <color name="brandRedColor_40">#BF272B</color>
-    <color name="brandRedColor_30">#BF272B</color>
-    <color name="brandRedColor_20">#BF272B</color>
-    <color name="brandRedColor_10">#BF272B</color>
+    <color name="brandRedColor_90">#E6BF272B</color>
+    <color name="brandRedColor_80">#CCBF272B</color>
+    <color name="brandRedColor_70">#B3BF272B</color>
+    <color name="brandRedColor_60">#99BF272B</color>
+    <color name="brandRedColor_50">#80BF272B</color>
+    <color name="brandRedColor_40">#66BF272B</color>
+    <color name="brandRedColor_30">#4DBF272B</color>
+    <color name="brandRedColor_20">#33BF272B</color>
+    <color name="brandRedColor_10">#1ABF272B</color>
     <color name="secondary_red">#FF4646</color>
     <color name="bank_red_color">#BD282B</color>
 

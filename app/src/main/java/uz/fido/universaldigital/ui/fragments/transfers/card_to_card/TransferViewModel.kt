@@ -40,9 +40,10 @@ class TransferViewModel @Inject constructor(
         }
     }
 
-    fun getCardInfo(cardNumber: String) {
+    fun getCardInfo(cardNumber: String, objectId: String? = null) {
         vmScope.launch {
-            val result = useCase.getCardInfo(CheckCardRequestP2p(Command.CARD, cardNumber))
+            val result =
+                useCase.getCardInfo(CheckCardRequestP2p(Command.CARD, cardNumber, objectId))
             cardInfo.postValue(result)
         }
     }

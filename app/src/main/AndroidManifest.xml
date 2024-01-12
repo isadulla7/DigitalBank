@@ -70,9 +70,12 @@
                 <data android:host="universaldigitalbank.page.link" />
                 <data android:host="https://universaldigitalbank.page.link" />
                 <data android:path="/qrcard" />
+                <data android:pathPrefix="/"/>
+
             </intent-filter>
 
         </activity>
+
         <activity
             android:name=".ui.activities.LockSetActivity"
             android:exported="true" />

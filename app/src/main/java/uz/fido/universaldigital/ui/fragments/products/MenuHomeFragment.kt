@@ -39,7 +39,6 @@ import uz.fido.universaldigital.ui.utils.home_utils.setUserDetails
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
-import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.utility.view.recycler_view_drag.EditItemTouchHelperCallback
 
@@ -54,6 +53,8 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     private var moreButtonClicked = false
     private var totalBalance = 0.0
     private var currency = "UZS"
+    private var balanceUpdateCounter = 0
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -145,6 +146,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
             .observe(viewLifecycleOwner) { resource ->
                 when (resource.status) {
                     Status.SUCCESS -> {
+                        balanceUpdateCounter++
                         val response = resource.data?.objects ?: ArrayList()
                         if (response.isNotEmpty()) {
                             cardList[position].apply {
@@ -157,15 +159,18 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
                                 object_status = response[0].object_status
                             }
                             userCards = cardList
-                            menuProductsViewModel.updateCards(cardList)
+                            if (balanceUpdateCounter == cardList.size)
+                                menuProductsViewModel.updateCards(cardList)
                         }
                         refreshLayout?.finishRefresh()
                     }
 
                     Status.ERROR -> {
+                        balanceUpdateCounter++
                         cardList[position].processing_server_status = "-100"
                         userCards = cardList
-                        menuProductsViewModel.updateCards(userCards)
+                        if (balanceUpdateCounter == cardList.size)
+                            menuProductsViewModel.updateCards(userCards)
                         refreshLayout?.finishRefresh()
                     }
                 }
@@ -185,7 +190,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         binding.btnShowMore.setOnClickListener {
             showMoreButtonClickEvent()
         }
-        binding.notifications.setOnClickListener { gotoWithSlide(R.id.notificationsFragment) }
+        binding.notifications.setOnClickListener { goto(R.id.notificationsFragment) }
         binding.addCardLayout.setOnClickListener { goto(R.id.addCardFragment) }
         binding.balanceSettings.setOnClickListener {
             openBalanceSettingsDialog()

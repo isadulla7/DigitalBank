@@ -1,30 +1,22 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
-import uz.fido.network.domain.model.monitoring.DateItem
 import fido.mkbank.ui.ib.fragments.menu.menu_monitoring.model.ListItem
+import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.GeneralItem
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
-import uz.fido.utils.sticky.StickyHeaderInterface
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemHistoriesHeaderBinding
 import uz.fido.universaldigital.databinding.ItemMonitoringBinding
-import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
-import uz.fido.utils.device.longVibrate
 import uz.fido.utils.format.Format
+import uz.fido.utils.sticky.StickyHeaderInterface
 import java.math.BigDecimal
-import java.text.DecimalFormat
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 
 class LocalMonitoringAdapter(
     private var context: Context,
@@ -121,9 +113,9 @@ class LocalMonitoringAdapter(
 //            if (monitoringItem.service_id=="-1")
 //                if (monitoringItem.partner_obj.isEmpty()) binding.tvType.text =
 //                    Format.formatCardNumberMonitoring(context,monitoringItem.object_value)
-            Picasso.get().load(PAYNET_PHOTO + monitoringItem.icon_name)
-                .error(R.drawable.ic_payments_placeholder)
-                .into(binding.icon)
+//            Picasso.get().load(PAYNET_PHOTO + monitoringItem.icon_name)
+//                .error(R.drawable.ic_payments_placeholder)
+//                .into(binding.icon)
 
             val sum = BigDecimal(100)
             binding.tvAmount.text =

@@ -50,6 +50,7 @@ interface IUserRepository {
     suspend fun checkForgetPassword(checkForgetPasswordModel: CheckForgetPasswordModel): Resource<BaseResponse>
 
     suspend fun changePassword(changePasswordRequest: ChangePasswordRequest): Resource<BaseResponse>
+
     suspend fun changePasswordWithoutSMS(
         token: String, changePasswordRequest: ChangePasswordRequest
     ): Resource<BaseResponse>

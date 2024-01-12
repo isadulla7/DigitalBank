@@ -1,19 +1,17 @@
 package uz.fido.universaldigital.ui.fragments.services.mib.addmib
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentAddMibBinding
+import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringViewPagerAdapter
 import uz.fido.universaldigital.ui.fragments.services.mib.MibViewModel
 import uz.fido.universaldigital.ui.fragments.services.mib.addmib.fiz_mib.MibFizFragment
 import uz.fido.universaldigital.ui.fragments.services.mib.addmib.you_mib.MibYouFragment
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringViewPagerAdapter
 import uz.fido.utils.utility.fragment.pop
-import java.util.ArrayList
 
 class MibAddFragment : BaseFragment<FragmentAddMibBinding, MibViewModel>
     (FragmentAddMibBinding::inflate, MibViewModel::class.java) {
@@ -22,7 +20,6 @@ class MibAddFragment : BaseFragment<FragmentAddMibBinding, MibViewModel>
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         createViewPager()
         appBar()
     }

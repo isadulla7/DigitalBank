@@ -154,11 +154,8 @@ class MibFragment : BaseFragment<FragmentMainMibBinding, MibViewModel>
                                showSnackbar(resources.message.toString())
                             }
                         }
-
                     }
                 }
-
-
             }
             dialog.show(childFragmentManager, "")
         } else {

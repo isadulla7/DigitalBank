@@ -99,4 +99,14 @@
         app:ev_desc="@string/no_card_description"
         app:ev_title="@string/you_dont_have_card" />
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_card_btn"
+        style="@style/FloatingButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/add_card"
+        android:src="@drawable/add_for_fab_btn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

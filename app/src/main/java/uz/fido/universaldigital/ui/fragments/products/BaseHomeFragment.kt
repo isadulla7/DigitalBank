@@ -448,12 +448,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
             }
 
             18 -> goto(R.id.clientDepositListFragment)
-            19 -> /*goto(R.id.clientCreditListFragment)*/ {
-                showSnackbar(
-                    getString(R.string.service_under_development),
-                    title = getString(R.string.info)
-                )
-            }
+            19 -> goto(R.id.clientCreditListFragment)
         }
     }
 
