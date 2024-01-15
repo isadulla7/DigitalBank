@@ -991,4 +991,6 @@
     <string name="for_you_conversion_description">Конвертируйте онлайн по выгодным курсам обмена без лишних хлопот!</string>
     <string name="for_you_target_title">Хотите сэкономить?</string>
     <string name="for_you_target_description">Настройте свои сбережения и цель с помощью функции «Цель» приложения. Просто наслаждайтесь сбором денег!</string>
+    <string name="others">Другие</string>
+    <string name="add_favorite_receivers">Добавляйте часто используемых получателей в избранное</string>
 </resources>

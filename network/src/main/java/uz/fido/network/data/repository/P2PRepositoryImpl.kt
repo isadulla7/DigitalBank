@@ -48,6 +48,7 @@ import uz.fido.network.domain.model.p2p.P2PInfoRequest
 import uz.fido.network.domain.model.p2p.P2PInfoResponse
 import uz.fido.network.domain.model.p2p.P2PRequest
 import uz.fido.network.domain.model.p2p.P2PResponse
+import uz.fido.network.domain.model.p2p.SetPopularityRequest
 import uz.fido.network.domain.model.popular_transfers.DeletePopularTransferRequest
 import uz.fido.network.domain.model.popular_transfers.PopularTransferResponse
 import uz.fido.network.domain.model.popular_transfers.SaveToPopularTransferRequest
@@ -339,6 +340,20 @@ class P2PRepositoryImpl @Inject constructor(private val p2pService: P2PApiInterf
         p2PInfoRequest: P2PInfoRequest
     ): Resource<P2PInfoResponse> {
         return getResult { p2pService.p2pInfo(token, p2PInfoRequest) }
+    }
+
+    override suspend fun setToPopularTransfer(
+        token: String,
+        setPopularityRequest: SetPopularityRequest
+    ): Resource<PopularTransferResponse> {
+        return getResult { p2pService.setToPopularTransfer(token, setPopularityRequest) }
+    }
+
+    override suspend fun setToNonPopularTransfer(
+        token: String,
+        setPopularityRequest: SetPopularityRequest
+    ): Resource<PopularTransferResponse> {
+        return getResult { p2pService.setToNonPopularTransfer(token, setPopularityRequest) }
     }
 
 

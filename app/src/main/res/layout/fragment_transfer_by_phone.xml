@@ -38,18 +38,6 @@
                 android:visibility="visible"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <uz.fido.utils.view.custom_text_view.TextViewSemiBold
-                    android:id="@+id/from_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="20dp"
-                    android:includeFontPadding="false"
-                    android:text="@string/choose_card"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="20sp"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/sender_cards"
                     android:layout_width="match_parent"

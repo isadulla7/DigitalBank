@@ -43,6 +43,7 @@ import uz.fido.network.domain.model.p2p.P2PInfoRequest
 import uz.fido.network.domain.model.p2p.P2PInfoResponse
 import uz.fido.network.domain.model.p2p.P2PRequest
 import uz.fido.network.domain.model.p2p.P2PResponse
+import uz.fido.network.domain.model.p2p.SetPopularityRequest
 import uz.fido.network.domain.model.popular_transfers.DeletePopularTransferRequest
 import uz.fido.network.domain.model.popular_transfers.PopularTransferResponse
 import uz.fido.network.domain.model.popular_transfers.SaveToPopularTransferRequest
@@ -205,7 +206,19 @@ interface IP2PRepository {
         token: String, collectMoneyBindProducts: CollectMoneyBindProducts
     ): Resource<BaseResponse>
 
-    suspend fun  p2pInfoRequest(token: String,
-                                p2PInfoRequest: P2PInfoRequest)
-    : Resource<P2PInfoResponse>
+    suspend fun p2pInfoRequest(
+        token: String,
+        p2PInfoRequest: P2PInfoRequest
+    ): Resource<P2PInfoResponse>
+
+    suspend fun setToPopularTransfer(
+        token: String,
+        setPopularityRequest: SetPopularityRequest
+    ): Resource<PopularTransferResponse>
+
+    suspend fun setToNonPopularTransfer(
+        token: String,
+        setPopularityRequest: SetPopularityRequest
+    ): Resource<PopularTransferResponse>
+
 }

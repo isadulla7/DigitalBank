@@ -25,11 +25,13 @@ class TransferViewModel @Inject constructor(
 ) : AbstractViewModel(application) {
 
     var popularTransfers = LiveEvent<ArrayList<PopularTransfers>>()
+    var favoriteTransfers = LiveEvent<ArrayList<PopularTransfers>>()
     var cardInfo = LiveEvent<CardInfoDto>()
     var p2pInfo = LiveEvent<P2PInfoDto>()
     var popularTransfersLoader = LiveEvent<Boolean>()
     var historiesByPhoneNumber = LiveEvent<ArrayList<CardByPhone>>()
     var historiesByWalletNumber = LiveEvent<ArrayList<CardByPhone>>()
+    var setToPopularTransfer = LiveEvent<ArrayList<PopularTransfers>>()
 
     fun getPopularTransfers() {
         vmScope.launch {
@@ -37,6 +39,17 @@ class TransferViewModel @Inject constructor(
             val result = useCase.getPopularTransferList()
             popularTransfers.postValue(result)
             popularTransfersLoader.postValue(false)
+        }
+    }
+
+    fun getFavoriteTransfers() {
+        vmScope.launch {
+            popularTransfersLoader.postValue(true)
+            val result = useCase.getPopularTransferList()
+            val sortedList = result.filter { it.is_favourite == "Y" }
+            popularTransfers.postValue(sortedList as ArrayList<PopularTransfers>?)
+            popularTransfersLoader.postValue(false)
+
         }
     }
 
@@ -110,6 +123,13 @@ class TransferViewModel @Inject constructor(
                 }
             }
             historiesByWalletNumber.postValue(result)
+        }
+    }
+
+    fun setToPopularTransfer(objectValue: String) {
+        vmScope.launch {
+            val response = useCase.setToPopularTransfer(objectValue)
+            setToPopularTransfer.postValue(response)
         }
     }
 
