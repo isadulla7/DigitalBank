@@ -983,4 +983,10 @@
     <string name="universal_boom">Universal Boom</string>
     <string name="my_products">Mahsulotlarim</string>
     <string name="apply_for_loan">Rasmiylashtirish</string>
+    <string name="for_you_p2p_title">Kartadan kartaga pul o\'tkazmalari endi yanada oson!</string>
+    <string name="for_you_p2p_description">Kartalaringiz orasidagi pul o\'tkazmasini endi birgina urinish bilan amalga oshirishingiz mumkin. Shunchaki kartangiz ustiga bosing va kerakli karta ustiga suring, mablag\'laringiz oqimidan zavqlaning!</string>
+    <string name="for_you_conversion_title">Online konversiya bilan vaqtdan ustun kelish imkoni bor</string>
+    <string name="for_you_conversion_description">Hech qanday ortiqcha ovoragarchiliklarsiz foydali valyuta kurslari bilan online konversiyani amalga oshiring!</string>
+    <string name="for_you_target_title">Pul jamg\'arishga qiynalyapsizmi?</string>
+    <string name="for_you_target_description">Ilovaning \"Maqsad\" funksiyasi orqali o\'z jamg\'armangiz va maqsadingizni sozlab oling. Shunchaki pul yig\'ishdan bahramand bo\'ling!</string>
 </resources>

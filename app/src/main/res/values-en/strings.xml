@@ -988,4 +988,10 @@
     <string name="universal_boom">Universal Boom</string>
     <string name="my_products">My products</string>
     <string name="apply_for_loan">Apply</string>
+    <string name="for_you_p2p_title">Card-to-card transfers are now easier!</string>
+    <string name="for_you_p2p_description">You can now transfer money between your cards in just one attempt. Just click on your card and swipe on the desired card, enjoy the flow of your funds!</string>
+    <string name="for_you_conversion_title">It is possible to beat time with online conversion</string>
+    <string name="for_you_conversion_description">Convert online with useful exchange rates without any extra fuss!</string>
+    <string name="for_you_target_title">Struggling to save money?</string>
+    <string name="for_you_target_description">Set up your savings and target through the "Target" function of the application. Just enjoy collecting money!</string>
 </resources>

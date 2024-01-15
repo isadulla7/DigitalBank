@@ -9,8 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import uz.fido.utils.R
 import uz.fido.universaldigital.databinding.FragmentAppFunctionsBinding
+import uz.fido.utils.R
 
 @AndroidEntryPoint
 class ForYouOnBoarding(private var currentItem: Int) : DialogFragment() {
@@ -46,20 +46,38 @@ class ForYouOnBoarding(private var currentItem: Int) : DialogFragment() {
         when (currentItem) {
             1 -> {
                 uri =
-                    "android.resource://" + requireContext().packageName + "/" + uz.fido.universaldigital.R.raw.service_transer_mini
+                    "android.resource://" + requireContext().packageName + "/" + uz.fido.universaldigital.R.raw.video_service_transfer
                 initStoriesTimer(10000L)
+                setDetails(
+                    requireContext().getString(uz.fido.universaldigital.R.string.for_you_p2p_title),
+                    requireContext().getString(
+                        uz.fido.universaldigital.R.string.for_you_p2p_description
+                    )
+                )
             }
 
             2 -> {
                 uri =
-                    "android.resource://" + requireContext().packageName + "/" + uz.fido.universaldigital.R.raw.service_conversion_mini
+                    "android.resource://" + requireContext().packageName + "/" + uz.fido.universaldigital.R.raw.video_service_conversion
                 initStoriesTimer(20000L)
+                setDetails(
+                    requireContext().getString(uz.fido.universaldigital.R.string.for_you_conversion_title),
+                    requireContext().getString(
+                        uz.fido.universaldigital.R.string.for_you_conversion_description
+                    )
+                )
             }
 
             3 -> {
                 uri =
-                    "android.resource://" + requireContext().packageName + "/" + uz.fido.universaldigital.R.raw.service_target_mini
+                    "android.resource://" + requireContext().packageName + "/" + uz.fido.universaldigital.R.raw.video_service_target
                 initStoriesTimer(15000L)
+                setDetails(
+                    requireContext().getString(uz.fido.universaldigital.R.string.for_you_target_title),
+                    requireContext().getString(
+                        uz.fido.universaldigital.R.string.for_you_target_description
+                    )
+                )
             }
         }
         binding.videoView.setVideoURI(Uri.parse(uri))
@@ -82,6 +100,11 @@ class ForYouOnBoarding(private var currentItem: Int) : DialogFragment() {
             }
         }
         countDownTimer.start()
+    }
+
+    private fun setDetails(title: String, description: String) {
+        binding.serviceTitle.text = title
+        binding.serviceDescription.text = description
     }
 
 }

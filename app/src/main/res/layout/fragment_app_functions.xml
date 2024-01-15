@@ -7,10 +7,15 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <VideoView
+        android:id="@+id/video_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/top_view"
         android:layout_width="match_parent"
-        android:layout_height="72dp"
+        android:layout_height="56dp"
         android:gravity="center"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -20,11 +25,11 @@
             android:layout_height="6dp"
             android:layout_marginHorizontal="16dp"
             android:layout_weight="1"
-            android:progressBackgroundTint="@color/brandRedColor"
-            android:progressTint="@color/brandRedColor"
-            app:indicatorColor="@color/brandRedColor"
+            android:progressBackgroundTint="@color/frozenWhite"
+            android:progressTint="@color/frozenWhite"
+            app:indicatorColor="@color/frozenWhite"
             app:layout_constraintTop_toTopOf="parent"
-            app:trackColor="@color/frozenWhite"
+            app:trackColor="@color/brandRedColor_60"
             app:trackCornerRadius="6dp"
             app:trackThickness="6dp" />
 
@@ -39,25 +44,29 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.cardview.widget.CardView
+    <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+        android:id="@+id/service_title"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="72dp"
-        android:layout_marginBottom="32dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="0dp">
+        android:gravity="center"
+        android:text="@string/for_you_p2p_title"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/top_view" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/service_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:text="@string/for_you_p2p_description"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/service_title" />
 
-            <VideoView
-                android:id="@+id/video_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

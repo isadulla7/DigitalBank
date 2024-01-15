@@ -985,4 +985,10 @@
     <string name="universal_boom">Universal Boom</string>
     <string name="my_products">Мои продукты</string>
     <string name="apply_for_loan">Оформить</string>
+    <string name="for_you_p2p_title">Переводить деньги с карты на карту теперь стало проще!</string>
+    <string name="for_you_p2p_description">Теперь вы можете переводить деньги между своими картами всего за одну попытку. Просто нажмите на свою карту и проведите пальцем по нужной карте, наслаждайтесь потоком своих средств!</string>
+    <string name="for_you_conversion_title">С помощью онлайн-конверсий можно выиграть время</string>
+    <string name="for_you_conversion_description">Конвертируйте онлайн по выгодным курсам обмена без лишних хлопот!</string>
+    <string name="for_you_target_title">Хотите сэкономить?</string>
+    <string name="for_you_target_description">Настройте свои сбережения и цель с помощью функции «Цель» приложения. Просто наслаждайтесь сбором денег!</string>
 </resources>
