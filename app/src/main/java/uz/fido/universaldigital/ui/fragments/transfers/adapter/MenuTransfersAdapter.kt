@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import androidx.appcompat.widget.LinearLayoutCompat
+import androidx.core.view.isVisible
 import coil.load
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.ui.utils.recyclerview.MenuServiceItem
@@ -46,6 +47,7 @@ class MenuTransfersAdapter(
             findViewById<LinearLayoutCompat>(R.id.father).setOnClickListener {
                 onItemClickListener.invoke(item.serviceId)
             }
+            findViewById<TextViewMedium>(R.id.tv_soon).isVisible = item.serviceId == 500
         }
         return itemView
     }
