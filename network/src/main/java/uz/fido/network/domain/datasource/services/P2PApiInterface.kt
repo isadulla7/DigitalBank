@@ -19,6 +19,7 @@ import uz.fido.network.domain.model.p2p.P2PInfoRequest
 import uz.fido.network.domain.model.p2p.P2PInfoResponse
 import uz.fido.network.domain.model.p2p.P2PRequest
 import uz.fido.network.domain.model.p2p.P2PResponse
+import uz.fido.network.domain.model.p2p.SetPopularityRequest
 import uz.fido.network.domain.model.popular_transfers.DeletePopularTransferRequest
 import uz.fido.network.domain.model.popular_transfers.PopularTransferResponse
 import uz.fido.network.domain.model.popular_transfers.SaveToPopularTransferRequest
@@ -252,5 +253,17 @@ interface P2PApiInterface {
         @Header("Authorization") token: String,
         @Body p2PHistoryRequest: P2PHistoryRequest
     ): P2PHistoryResponse
+
+    @POST("SET_TO_POPULAR_VALUE")
+    suspend fun setToPopularTransfer(
+        @Header("Authorization") token: String,
+        @Body setPopularityRequest: SetPopularityRequest
+    ): PopularTransferResponse
+
+    @POST("SET_TO_NONPOPULAR_VALUE")
+    suspend fun setToNonPopularTransfer(
+        @Header("Authorization") token: String,
+        @Body setPopularityRequest: SetPopularityRequest
+    ): PopularTransferResponse
 
 }

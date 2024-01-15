@@ -994,4 +994,6 @@
     <string name="for_you_conversion_description">Convert online with useful exchange rates without any extra fuss!</string>
     <string name="for_you_target_title">Struggling to save money?</string>
     <string name="for_you_target_description">Set up your savings and target through the "Target" function of the application. Just enjoy collecting money!</string>
+    <string name="others">Other</string>
+    <string name="add_favorite_receivers">Add frequently used recipients to favorites</string>
 </resources>

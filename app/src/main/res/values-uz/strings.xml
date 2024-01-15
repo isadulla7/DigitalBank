@@ -989,4 +989,6 @@
     <string name="for_you_conversion_description">Hech qanday ortiqcha ovoragarchiliklarsiz foydali valyuta kurslari bilan online konversiyani amalga oshiring!</string>
     <string name="for_you_target_title">Pul jamg\'arishga qiynalyapsizmi?</string>
     <string name="for_you_target_description">Ilovaning \"Maqsad\" funksiyasi orqali o\'z jamg\'armangiz va maqsadingizni sozlab oling. Shunchaki pul yig\'ishdan bahramand bo\'ling!</string>
+    <string name="others">Boshqalari</string>
+    <string name="add_favorite_receivers">Ko\'p ishlatiladigan qabul qiluvchilarni tanlanganlarga qo\'shing</string>
 </resources>

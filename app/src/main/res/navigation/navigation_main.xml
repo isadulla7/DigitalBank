@@ -677,4 +677,8 @@
         android:id="@+id/requestMoneyPaymentFragment"
         android:name="uz.fido.universaldigital.ui.fragments.transfers.request_money.RequestMoneyPaymentFragment"
         android:label="RequestMoneyPaymentFragment" />
+    <fragment
+        android:id="@+id/favoriteTransfersFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.transfer_history.FavoriteTransfersFragment"
+        android:label="FavoriteTransfersFragment" />
 </navigation>

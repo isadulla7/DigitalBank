@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.core.view.size
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
@@ -65,8 +66,8 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.getPopularTransfers()
-        popularTransfersAdapter = PopularTransfersAdapter(false, ::popularTransferClickEvent)
+        popularTransfersAdapter =
+            PopularTransfersAdapter(false, ::popularTransferClickEvent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,7 +80,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
         initCardList {
             initSenderCards()
         }
-
+        viewModel.getFavoriteTransfers()
         observe(viewModel.popularTransfers, ::popularTransferLoaded)
         observe(viewModel.popularTransfersLoader, ::showLoader)
         observe(viewModel.cardInfo, ::cardInfoLoaded)
@@ -192,7 +193,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
     }
 
     private fun showLoader(isVisible: Boolean) {
-        if (isVisible) {
+        if (isVisible && binding.savedReceivers.size == 0) {
             skeletonScreen = showTransferSkeleton(popularTransfersAdapter, binding.savedReceivers)
         } else {
             skeletonScreen?.hide()
@@ -303,6 +304,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
                 bundleOf(Const.ADD_CARD_OPERATION to AddCardFragment.OPERATION_CARD_TO_CARD)
             )
         }
+        binding.icAddButton.setOnClickListener { goto(R.id.favoriteTransfersFragment) }
     }
 
     private fun continueButtonClickEvent() {

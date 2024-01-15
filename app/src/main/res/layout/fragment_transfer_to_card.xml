@@ -38,18 +38,6 @@
                 android:visibility="visible"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <uz.fido.utils.view.custom_text_view.TextViewSemiBold
-                    android:id="@+id/from_card"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="20dp"
-                    android:includeFontPadding="false"
-                    android:text="@string/choose_card"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="20sp"
-                    app:layout_constraintTop_toTopOf="parent" />
-
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/sender_cards"
                     android:layout_width="match_parent"
@@ -231,6 +219,18 @@
                 android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_min_amount" />
 
+            <ImageView
+                android:id="@+id/ic_add_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_add_btn"
+                app:layout_constraintBottom_toBottomOf="@id/tv_saved_receivers"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_saved_receivers"
+                app:tint="@color/brandBlueColor"
+                tools:ignore="ContentDescription" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/saved_receivers"
                 android:layout_width="match_parent"
@@ -265,7 +265,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
                     android:gravity="center"
-                    android:text="@string/empty_transfers"
+                    android:text="@string/add_favorite_receivers"
                     android:textColor="@color/brandBlueColor_50"
                     android:textSize="14sp" />
             </androidx.appcompat.widget.LinearLayoutCompat>

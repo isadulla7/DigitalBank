@@ -2,10 +2,12 @@ package uz.fido.universaldigital.ui.fragments.transfers.transfer_history
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.popular_transfers.PopularTransfers
+import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemPopularTransferBinding
 import uz.fido.universaldigital.ui.fragments.transfers.utils.getUserNameFormatted
 import uz.fido.universaldigital.ui.utils.extensions.cardLogoByType
@@ -14,7 +16,7 @@ import uz.fido.utils.utility.format.Format
 
 class PopularTransfersAdapter(
     private var isMain: Boolean? = false,
-    private var onItemClickListener: (PopularTransfers) -> Unit
+    private var onItemClickListener: (PopularTransfers) -> Unit,
 ) : ListAdapter<PopularTransfers, PopularTransfersAdapter.ViewHolder>(MyDiffUtil()) {
 
     override fun getItemCount(): Int {
@@ -40,11 +42,10 @@ class PopularTransfersAdapter(
                 name.text = getUserNameFormatted(item.empbossed_name)
                 item.object_type?.let { cardLogoByType(it) }
                     ?.let { cardTypeLogo.setImageResource(it) }
+                binding.btnSaved.isVisible = isMain != true
+                binding.btnSaved.setImageResource(if (item.is_favourite == "Y") R.drawable.ic_star else R.drawable.ic_star_unselected)
                 itemView.setOnClickListener {
                     onItemClickListener.invoke(item)
-                }
-                btnSaved.setOnClickListener {
-
                 }
             }
         }

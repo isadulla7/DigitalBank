@@ -8,6 +8,7 @@ import uz.fido.network.domain.model.get_card_by_phone.CardByPhone
 import uz.fido.network.domain.model.p2p.P2PHistoryRequest
 import uz.fido.network.domain.model.p2p.P2PInfoDto
 import uz.fido.network.domain.model.p2p.P2PInfoRequest
+import uz.fido.network.domain.model.p2p.SetPopularityRequest
 import uz.fido.network.domain.model.popular_transfers.PopularTransfers
 import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 import uz.fido.utils.const.Command
@@ -20,6 +21,8 @@ interface TransferToCardUseCase {
     suspend fun getCardInfo(checkCardRequestP2p: CheckCardRequestP2p): CardInfoDto
     suspend fun getTransferInfo(p2PInfoRequest: P2PInfoRequest): P2PInfoDto
     suspend fun getTransferHistories(): ArrayList<CardByPhone>
+    suspend fun setToPopularTransfer(toObjectValue: String): ArrayList<PopularTransfers>
+    suspend fun setToNonPopularTransfer(toObjectValue: String): ArrayList<PopularTransfers>
 }
 
 class TransferToCardUseCaseImpl @Inject constructor(
@@ -57,6 +60,26 @@ class TransferToCardUseCaseImpl @Inject constructor(
         )
         return if (response.status == Status.SUCCESS) {
             response.data?.cards ?: ArrayList()
+        } else ArrayList()
+    }
+
+    override suspend fun setToPopularTransfer(toObjectValue: String): ArrayList<PopularTransfers> {
+        val response = p2PRepository.setToPopularTransfer(
+            getClientToken(),
+            SetPopularityRequest(to_object_value = toObjectValue)
+        )
+        return if (response.status == Status.SUCCESS) {
+            response.data?.popular_transfers ?: ArrayList()
+        } else ArrayList()
+    }
+
+    override suspend fun setToNonPopularTransfer(toObjectValue: String): ArrayList<PopularTransfers> {
+        val response = p2PRepository.setToNonPopularTransfer(
+            getClientToken(),
+            SetPopularityRequest(to_object_value = toObjectValue)
+        )
+        return if (response.status == Status.SUCCESS) {
+            response.data?.popular_transfers ?: ArrayList()
         } else ArrayList()
     }
 

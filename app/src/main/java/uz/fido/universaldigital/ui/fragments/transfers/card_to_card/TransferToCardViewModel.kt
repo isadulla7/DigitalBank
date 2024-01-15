@@ -9,7 +9,9 @@ import uz.fido.network.domain.model.cards.CheckCardRequestP2p
 import uz.fido.network.domain.model.p2p.P2PHistoryRequest
 import uz.fido.network.domain.model.p2p.P2PInfoRequest
 import uz.fido.network.domain.model.p2p.P2PRequest
+import uz.fido.network.domain.model.p2p.SetPopularityRequest
 import uz.fido.universaldigital.base.AbstractViewModel
+import uz.fido.utils.utility.user.getClientToken
 import javax.inject.Inject
 
 @HiltViewModel
@@ -39,5 +41,23 @@ class TransferToCardViewModel @Inject constructor(
 
     fun getPopularTransferList(token: String) = liveData(Dispatchers.IO) {
         emit(p2PRepository.getPopularTransferList(token))
+    }
+
+    fun setToFavoriteTransfer(objectValue: String) = liveData(Dispatchers.IO) {
+        emit(
+            p2PRepository.setToPopularTransfer(
+                getClientToken(),
+                SetPopularityRequest(to_object_value = objectValue)
+            )
+        )
+    }
+
+    fun setToNonFavoriteTransfer(objectValue: String) = liveData(Dispatchers.IO) {
+        emit(
+            p2PRepository.setToNonPopularTransfer(
+                getClientToken(),
+                SetPopularityRequest(to_object_value = objectValue)
+            )
+        )
     }
 }
