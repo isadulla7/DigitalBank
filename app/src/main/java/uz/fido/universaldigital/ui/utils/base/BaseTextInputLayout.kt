@@ -14,6 +14,7 @@ open class BaseTextInputLayout constructor(
 ) : LinearLayoutCompat(context, attrs) {
 
     private val binding: BaseTextInputLayoutBinding
+    //small change
 
     init {
         val attributes =
