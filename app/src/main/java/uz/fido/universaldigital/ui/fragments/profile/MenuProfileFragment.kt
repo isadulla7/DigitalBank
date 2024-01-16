@@ -125,10 +125,10 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
                 device_type = "A",
                 fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
                 phone_number = Paper.book().read(Const.PAPER_CLIENT_PHONE),
-                sim_iccd = device.sim_iccd,
-                network_state = device.network_state,
-                imei_data = device.imei_data,
-                os_system_version_api = device.os_system_version_api,
+                sim_iccd = device.simCcd,
+                network_state = device.networkState,
+                imei_data = device.imeiData,
+                os_system_version_api = device.osSystemVersionApi,
                 client_id = getClientId()
             )
         ).observe(viewLifecycleOwner) {
