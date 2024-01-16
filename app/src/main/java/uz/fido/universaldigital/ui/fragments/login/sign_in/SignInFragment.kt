@@ -146,12 +146,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             userInfo = data,
             fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
             version = "0",
-            sim_iccd = device.sim_iccd.toString(),
-            os_system_version_api = device.os_system_version_api.toString(),
-            network_state = device.network_state.toString(),
+            sim_iccd = device.simCcd.toString(),
+            os_system_version_api = device.osSystemVersionApi.toString(),
+            network_state = device.networkState.toString(),
             client_id = USER_CLIENT_ID,
             ip = requireContext().getIpAddress(),
-            imei_data = device.imei_data.toString()
+            imei_data = device.imeiData.toString()
         )
         viewModel.checkUserSignInRequest(model).observe(viewLifecycleOwner) {
             it?.let {

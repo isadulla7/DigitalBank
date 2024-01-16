@@ -61,13 +61,13 @@ class HumoMonitoringFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setTime()
-        createMonitoringAdapter()
+        initRecyclerView()
         checkFilter()
         onClickView()
     }
 
     private fun checkFilter() {
-        totalList= arrayListOf()
+        totalList = arrayListOf()
         if (!saveViewModel.humoFilter) {
             checkHumoMonitoringSave()
         } else {
@@ -171,7 +171,6 @@ class HumoMonitoringFragment :
         } else {
             Handler(Looper.getMainLooper()).postDelayed({
                 if (isVisible) {
-                    // skeletonScreen.hide()
                     binding.shimmerView.visibility = View.GONE
                     binding.rec.visibility = View.GONE
                     binding.layoutEmpty.visibility = View.VISIBLE
@@ -188,11 +187,10 @@ class HumoMonitoringFragment :
         dateBegin = dateFormat.format(calendarEnd.time)
     }
 
-    private fun createMonitoringAdapter() {
+    private fun initRecyclerView() {
         binding.rec.apply {
             adapter = humoMonitoringAdapter
             addItemDecoration(StickyHeaderDecoration(humoMonitoringAdapter))
-
         }
     }
 

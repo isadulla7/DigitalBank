@@ -21,8 +21,6 @@ class AppSignatureHelper(context: Context) : ContextWrapper(context) {
             try {
                 val packageName = packageName
                 val packageManager = packageManager
-//                For API level 28 use PackageManager.GET_SIGNING_CERTIFICATES
-//                For API level less than 27 use PackageManager.GET_SIGNATURES
                 val signatures = packageManager.getPackageInfo(
                         packageName,
                         PackageManager.GET_SIGNATURES
