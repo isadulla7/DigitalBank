@@ -14,6 +14,7 @@ class AmountSuggestionAdapter(
     private val currency: String, private val onItemClickListener: (String) -> Unit
 ) : ListAdapter<String, AmountSuggestionAdapter.ViewHolder>(MyDiffUtil()) {
 
+    //for git
     inner class ViewHolder(
         private val binding: ItemAmountSuggestionBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
