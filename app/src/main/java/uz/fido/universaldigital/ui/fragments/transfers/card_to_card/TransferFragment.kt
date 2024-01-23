@@ -66,8 +66,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        popularTransfersAdapter =
-            PopularTransfersAdapter(false, ::popularTransferClickEvent)
+        popularTransfersAdapter = PopularTransfersAdapter(false, ::popularTransferClickEvent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -309,18 +308,20 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
 
     private fun continueButtonClickEvent() {
         val amount = binding.etAmount.editableText.toString()
-        gotoWithSlide(
-            R.id.confirmTransferFragment, bundleOf(
-                SuccessTransferFragment.TRANSFER_DTO to TransferDto(
-                    senderCard = senderCard,
-                    receiverCard = cardInfoDto,
-                    transferAmount = Format.sendFormat(amount),
-                    commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
-                    operation = SuccessTransferFragment.TRANSFER_BY_CARD,
-                    requestId = p2PInfoDto?.requestId
+        if (p2PInfoDto?.isSuccess == true) {
+            gotoWithSlide(
+                R.id.confirmTransferFragment, bundleOf(
+                    SuccessTransferFragment.TRANSFER_DTO to TransferDto(
+                        senderCard = senderCard,
+                        receiverCard = cardInfoDto,
+                        transferAmount = Format.sendFormat(amount),
+                        commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
+                        operation = SuccessTransferFragment.TRANSFER_BY_CARD,
+                        requestId = p2PInfoDto?.requestId
+                    )
                 )
             )
-        )
+        } else showSnackbar(p2PInfoDto?.errorMessage ?: "")
     }
 
     private fun openCameraForCardRead() {

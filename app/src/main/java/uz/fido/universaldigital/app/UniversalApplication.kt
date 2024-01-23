@@ -16,10 +16,13 @@ import uz.fido.utils.utility.language.LocaleHelper.getLanguage
 class UniversalApplication : Application() {
 
     companion object {
+
         private lateinit var instance: UniversalApplication
+
         fun getContext(): Context {
             return instance.applicationContext
         }
+
     }
 
     override fun onCreate() {
