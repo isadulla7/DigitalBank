@@ -49,6 +49,26 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
+                android:text="@string/receiver_card"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/tv_receiver_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="4dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16sp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
                 android:text="@string/commission"
                 android:textColor="@color/brandBlueColor_40"
                 android:textSize="14sp" />

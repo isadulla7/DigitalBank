@@ -25,7 +25,6 @@ class TransferViewModel @Inject constructor(
 ) : AbstractViewModel(application) {
 
     var popularTransfers = LiveEvent<ArrayList<PopularTransfers>>()
-    var favoriteTransfers = LiveEvent<ArrayList<PopularTransfers>>()
     var cardInfo = LiveEvent<CardInfoDto>()
     var p2pInfo = LiveEvent<P2PInfoDto>()
     var popularTransfersLoader = LiveEvent<Boolean>()

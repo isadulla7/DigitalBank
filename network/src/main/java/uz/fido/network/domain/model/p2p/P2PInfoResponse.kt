@@ -19,7 +19,8 @@ data class P2PInfoResponse(
             minAmount = min_amount,
             percent = percent,
             receiverCardOwner = empbossed_name,
-            requestId = request_id
+            requestId = request_id,
+            errorMessage = msg
         )
     }
 }
@@ -30,5 +31,6 @@ data class P2PInfoDto(
     val percent: String? = "0",
     val receiverCardOwner: String? = "",
     val isSuccess: Boolean = true,
-    val requestId: String? = ""
+    val requestId: String? = "",
+    val errorMessage: String? = ""
 )

@@ -23,21 +23,21 @@ abstract class AbstractFragment<VB : ViewBinding, VM : AbstractViewModel>(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = inflate.invoke(inflater, container, false)
-        initObserver()
         onInit(inflater, container, savedInstanceState)
         onInit(savedInstanceState)
         return binding.root
     }
 
-    private fun initObserver() {}
+    open fun onInit(savedInstanceState: Bundle?) {
 
-    open fun onInit(savedInstanceState: Bundle?) {}
+    }
 
     open fun onInit(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ) {
+
     }
 
     fun toast(string: String) {

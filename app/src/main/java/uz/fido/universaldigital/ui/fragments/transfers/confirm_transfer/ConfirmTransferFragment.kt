@@ -36,8 +36,6 @@ class ConfirmTransferFragment :
 
     companion object {
         const val NAVIGATION_BACK = "navigation_back"
-        const val RECEIVER_CARD = "receiver_card"
-        const val SENDER_CARD = "sender_card"
         const val AMOUNT = "amount"
     }
 
@@ -61,10 +59,9 @@ class ConfirmTransferFragment :
     }
 
     private fun initDetails() {
-        binding.tvReceiver.text =
-            transferDto.receiverCard?.card_owner + Format.formatCardNumberNew(
-                transferDto.receiverCard?.card_number ?: ""
-            )
+        binding.tvReceiver.text = transferDto.receiverCard?.card_owner
+        binding.tvReceiverCard.text =
+            Format.formatCardNumber(transferDto.receiverCard?.card_number ?: "")
         binding.tvReceivedAmount.text =
             "${
                 Format.conversionFormat(
