@@ -80,7 +80,7 @@
     <string name="pass_description">В пароле должно быть не менее 8-ми символов</string>
     <string name="pass_dont_match">Пароли не совпадают</string>
     <string name="number_and_password">С помощью номера телефона и пароля</string>
-    <string name="recover_with_mail">С помощью email</string>
+    <string name="recover_with_mail">С помощью электронная почта</string>
     <string name="recover_with_indentification">С помощью аутентификации</string>
     <string name="recover_with_card_number">С помощью карты</string>
     <string name="continue_registration">Продолжить регистрацию</string>
@@ -131,7 +131,7 @@
     <string name="to_usd_account">На валютный счет</string>
     <string name="amount_in_dollar">Сумма (В долларах США)</string>
     <string name="receiver_account_budget">Счет получателя (25/27 знаков)</string>
-    <string name="warning">Warning</string>
+    <string name="warning">Предупреждение</string>
     <string name="this_is_last_attempt">Осталось последняя попытка ввода PIN-кода</string>
     <string name="too_many_attempts">Слишком много неудачных попыток</string>
     <string name="wrong_pin">Неверный PIN-код</string>
@@ -257,8 +257,8 @@
     <string name="deposit_replenishment">С пополнением</string>
     <string name="no_replenishment">Без пополнения</string>
     <string name="no_partial_removal">Без частичного снятия</string>
-    <string name="percent_text">"Ствака до "</string>
-    <string name="time_deposit">"Срок вклад "</string>
+    <string name="percent_text">Ствака до </string>
+    <string name="time_deposit">Срок вклад </string>
     <string name="min_summa">Минимальная сумма</string>
     <string name="max_summ_deposit">Максимальная сумма вклада до 50 000 000 сум</string>
     <string name="name_depoist">Название</string>
@@ -457,7 +457,7 @@
     <string name="print_qr">Распечатать</string>
     <string name="for_getting_transfer_share_qr">Поднестие QR-код для получения перевода</string>
     <string name="copy_url">Копировать ссылку</string>
-    <string name="share_link">Поделиться ссылкой\n</string>
+    <string name="share_link">Поделиться ссылкой</string>
     <string name="restart">Возобновить</string>
     <string name="pause">Приостановить</string>
     <string name="delete_request">Удалить запрос</string>
@@ -505,7 +505,7 @@
     <string name="canselled">Отказано</string>
     <string name="humo_operation">Humo операция</string>
     <string name="history_error">Мониторинг временно недоступен</string>
-    <string name="error_title_monitoring">"Ведутся технические работы повторите позже "</string>
+    <string name="error_title_monitoring">Ведутся технические работы повторите позже</string>
     <string name="usd">USD</string>
     <string name="filter">Фильтр</string>
     <string name="select_period">Выбрать период</string>

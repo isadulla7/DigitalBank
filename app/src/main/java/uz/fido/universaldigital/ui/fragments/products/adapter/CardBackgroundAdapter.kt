@@ -41,7 +41,6 @@ class CardBackgroundAdapter(
         return if (resId != 0) resId else R.drawable.bg_1
     }
 
-
     override fun getItemPosition(`object`: Any): Int {
         return POSITION_NONE
     }

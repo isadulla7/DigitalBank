@@ -55,7 +55,6 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     private var currency = "UZS"
     private var balanceUpdateCounter = 0
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {

@@ -46,7 +46,6 @@ class UtilsViewModel @Inject constructor(
         }
     }
 
-
     fun updateRates(rates: List<CourseItem>) {
         currencyRates.postValue(rates)
     }
@@ -101,4 +100,5 @@ class UtilsViewModel @Inject constructor(
         liveData(Dispatchers.IO) {
             emit(templatesRepository.setTemplateOrder(token, setTemplateOrderRequest))
         }
+
 }
