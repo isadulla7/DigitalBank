@@ -42,11 +42,11 @@ class CardsUseCaseImpl @Inject constructor(
                 } else return arrayListOf()
             }
         } else {
-            val objInfos = ArrayList<CardInfo>()
+            val objInfoList = ArrayList<CardInfo>()
             objectId.forEach { _ ->
-                objInfos.add(CardInfo(state = "-100"))
+                objInfoList.add(CardInfo(state = "-100"))
             }
-            return objInfos
+            return objInfoList
         }
     }
 

@@ -257,8 +257,8 @@
     <string name="deposit_replenishment">С пополнением</string>
     <string name="no_replenishment">Без пополнения</string>
     <string name="no_partial_removal">Без частичного снятия</string>
-    <string name="percent_text">"Ствака до "</string>
-    <string name="time_deposit">"Срок вклад "</string>
+    <string name="percent_text">Ствака до </string>
+    <string name="time_deposit">Срок вклад </string>
     <string name="min_summa">Минимальная сумма</string>
     <string name="max_summ_deposit">Максимальная сумма вклада до 50 000 000 сум</string>
     <string name="name_depoist">Название</string>
@@ -852,7 +852,7 @@
     <string name="you_dont_have_templates">Шаблонов пока нет</string>
     <string name="template_operation">Операция с шаблоном</string>
     <string name="take_off">Снять</string>
-    <string name="profit_per_year">\"Доходность в год</string>
+    <string name="profit_per_year">Доходность в год</string>
     <string name="deposit_edit">Переименовать депозит</string>
     <string name="early_closing_of_the_deposit">Досрочное закрытие вклад</string>
     <string name="close_deposit">Закрыть вклад</string>
@@ -894,8 +894,8 @@
     <string name="min_amount_goal">Минимальная сумма 500.0 uzs</string>
     <string name="amount_auto_payment">Сумма автоплаты</string>
     <string name="offerta_new_goal">Я согласен с пользователским \nсоглашением Universal Bank</string>
-    <string name="edit_avatar">Edit avatar</string>
-    <string name="unexpected_error">Kutilmagan xatolik</string>
+    <string name="edit_avatar">Изменить аватар</string>
+    <string name="unexpected_error">Неожиданная ошибка</string>
     <string name="no_loans">Нет кредита</string>
     <string name="empty_loan_desc">Здесь будет отображаться все полученные кредиты</string>
     <string name="no_deposit_desc">Здесь будет отображаться все полученные кредиты Депозиты</string>
