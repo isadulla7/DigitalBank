@@ -7,6 +7,7 @@ data class PartialWithdrawMoneyDepositRequest(
     var savDepId: String,
     var amount: String,
     var to_object_value: String,
+    var to_object_id: String,
     var service_id: String,
     var to_object_expire: String
 ) : Serializable

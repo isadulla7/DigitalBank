@@ -77,6 +77,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                 savDepId = deposit.savDepId,
                 amount = Format.formatAmountToTiyn(amount),
                 to_object_value = selectedCard.object_value,
+                to_object_id = selectedCard.object_id,
                 service_id = "-7",
                 to_object_expire = selectedCard.object_expiry
             )
@@ -103,6 +104,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
             EarlyClosureRequest(
                 command = if (selectedCard.object_type == WALLET) "dep&purse" else "dep&card",
                 to_object_value = selectedCard.object_value,
+                to_object_id = selectedCard.object_id,
                 to_object_expire = selectedCard.object_expiry,
                 savDepId = deposit.savDepId,
                 credit_amount = amount.replace(",", "."),
@@ -184,14 +186,13 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         binding.appBar.setTitle(getString(R.string.take_off))
         binding.etAmount.addTextChangedListener { s ->
             val balanceTiyn = deposit.sumDep.replace(" ", "").toBigDecimal()
-            var amountTiyn = Format.formatAmountToTiyn(s.toString().replace(" ", "")).toBigDecimal()
+            val amountTiyn = Format.formatAmountToTiyn(s.toString().replace(" ", "")).toBigDecimal()
             binding.btnContinue.isEnabled(balanceTiyn >= amountTiyn)
         }
     }
 
     private fun percentWithDraw() {
         binding.appBar.setTitle(getString(R.string.percents_withdraw))
-
         binding.etAmount.addTextChangedListener { s ->
             deposit.interestPayable?.let {
                 val balanceTiyn = it.replace(" ", "").toBigDecimal()
