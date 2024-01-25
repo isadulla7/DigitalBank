@@ -101,7 +101,7 @@
     <string name="qr_payment">QR orqali to’lov</string>
     <string name="connect_sms_info">SMS xabarnomani ulash</string>
     <string name="humo_pay">Humo Pay</string>
-    <string name="enter_sms_code_from_mail">Введите код, полученный по</string>
+    <string name="enter_sms_code_from_mail">Qabul qilingan kodni kiriting </string>
     <string name="card_number">Karta raqami</string>
     <string name="card_expire">Kartaning amal qilish muddati</string>
     <string name="wrong_card_expire_date">Kartaning amal qilish muddati noto’g’ri</string>
@@ -175,7 +175,7 @@
     <string name="card_blocked">Karta bloklangan</string>
     <string name="commission">Kommissiya</string>
     <string name="to_main_page">Asosiy oynaga</string>
-    <string name="cheque">Check</string>
+    <string name="cheque">Chek</string>
     <string name="repeat">Takrorlash</string>
     <string name="add_to_saved">Sevimlilarga</string>
     <string name="passport_serial">Pasport seriyasi</string>
@@ -315,9 +315,9 @@
     <string name="extra_option">Qo’shimcha parametrlar</string>
     <string name="to_lower">gacha</string>
     <string name="interest_payment">Foizlarni to’lash</string>
-    <string name="capitalization">Капитализация</string>
+    <string name="capitalization">Kapitalizatsiya</string>
     <string name="partial_withdrawal">Qisman yechib olish</string>
-    <string name="deposit_deadline_until">Omon muddati gacha</string>
+    <string name="deposit_deadline_until">Omonat muddati gacha</string>
     <string name="interest_paid">To’langan foizlar</string>
     <string name="to_deposit">Omonat hisobi uchun</string>
     <string name="yes">Ha</string>
@@ -424,7 +424,7 @@
     <string name="add_card">Karta qo’shish</string>
     <string name="account_permanently_closed">Hisob butunlay yopilgan</string>
     <string name="account_closed_temporarily">Hisob vaqtinchalik yopilgan</string>
-    <string name="special_bank_restrictions">Hisobingiz 6 oydan ortiq vaqt davomida faol emas deb bloklangan. Bank bilan bog’laning</string>
+    <string name="special_bank_restrictions">Hisobingiz 6 oydan ortiq vaqt davomida faol bo\'lmagani uchun bloklangan. Bank bilan bog’laning</string>
     <string name="share">Ulashish</string>
     <string name="copy_card_number">Karta raqamini nusxalash</string>
     <string name="copy_wallet_number">Hamyon raqamini nusxalash</string>
@@ -693,7 +693,7 @@
     <string name="given_date">Berilgan sana</string>
     <string name="support_center">Qo’llab quvvatlash markazi</string>
     <string name="input_message">Xabaringizni kiriting</string>
-    <string name="edited">edited</string>
+    <string name="edited">tahrirlangan</string>
     <string name="add_auto_payment">Avtoto’lov yaratish</string>
     <string name="auto_payment_name">Avtoto’lov nomi</string>
     <string name="daily_2">Oylik</string>
@@ -719,7 +719,7 @@
     <string name="month_nov">Noyabr</string>
     <string name="pay">To’lash</string>
     <string name="choose_hour">Soatni tanlang</string>
-    <string name="state_of_number">Статус номера</string>
+    <string name="state_of_number">Raqam holati</string>
     <string name="days_of_payment">To’lov kunlari</string>
     <string name="name_of_autopayment">Avtoto’lov nomi</string>
     <string name="months_of_payment">To’lov oylari</string>
@@ -789,9 +789,9 @@
     <string name="perc_dlp">Hisoblangan foizlarni kechiktirilganlik uchun jarima</string>
     <string name="repayment_type">To‘lov jadvali turi</string>
     <string name="annuity">Annuitet</string>
-    <string name="differencial">differentsial</string>
+    <string name="differencial">Differentsial</string>
     <string name="start_contract_date">Shartnomaning boshlanish sanasi</string>
-    <string name="contract_number">Shartnoma mumkin</string>
+    <string name="contract_number">Shartnoma raqami</string>
     <string name="end_contract_date">Shartnomaning tugash sanasi</string>
     <string name="loan_id_for_payment">To‘lov uchun kredit identifikatori</string>
     <string name="bank_mfo">Bank kodi</string>
@@ -837,7 +837,7 @@
     <string name="main_debt">Asosiy qarz</string>
     <string name="percents">Foizlar</string>
     <string name="contract_date">Shartnoma sanasi</string>
-    <string name="account_number_for_repayment">Номер счета для погашения кредита</string>
+    <string name="account_number_for_repayment">Kreditni so\'rdirish uchun hisob raqami</string>
     <string name="repayment_amount">To‘lanadigan summa</string>
     <string name="total">Jami</string>
     <string name="empty_payment">To’lovlar tarixi bo’sh</string>
@@ -853,7 +853,7 @@
     <string name="close_deposit">Omonatni yopish</string>
     <string name="new_name">Yangi nom</string>
     <string name="deposit_edit_name">Depozit nomi o‘zgartirildi</string>
-    <string name="percent_withdraw">"Yig‘ilgan foiz o‘chirildi"</string>
+    <string name="percent_withdraw">Hisoblangan foiz o‘chirildi</string>
     <string name="percents_withdraw">Hisoblangan foizlarni yechib olish</string>
     <string name="calculated_percents">Hisoblangan foizlar</string>
     <string name="interest_is_not_available">Foizlar mavjud emas</string>
@@ -894,7 +894,7 @@
     <string name="month_12">12 oy</string>
     <string name="unlimited">Cheklanmagan</string>
     <string name="custom_term">Boshqa atama\n</string>
-    <string name="min_amount_goal">Minimal miqdor 500,0 uzs</string>
+    <string name="min_amount_goal">Minimal miqdor 500,0 so‘m</string>
     <string name="amount_auto_payment">Avtomatik to‘lov miqdori</string>
     <string name="offerta_new_goal">Men Universal Bank foydalanuvchi shartnomasiga roziman</string>
     <string name="bank_product_1">Yuksalish 23%</string>
@@ -932,14 +932,14 @@
     <string name="humo_pay_not_supported">HumoPay ushbu qurilmada ishlamaydi</string>
     <string name="nfc_not_supported">Telefoningiz NFC-ni qo‘llab-quvvatlamaydi</string>
     <string name="no_connected_cards">Ulangan kartalar yo‘q</string>
-    <string name="humo_pay_description">Xaridlarni smartfon orqali to‘lash uchun HumoPay-ga ulaning</string>
+    <string name="humo_pay_description">Xaridlarni smartfon orqali to‘lash uchun HumoPayni yoqing</string>
     <string name="humo_pay_timer">Kutilayotgan holat %1$s soniyadan keyin tugaydi</string>
     <string name="set_pin_humo_pay">HUMO Pay uchun PIN kodni o‘rnating</string>
     <string name="repeat_pin_humo_pay">HUMO Pay PIN-kodini takrorlang</string>
     <string name="your_phone_number">Telefon raqamingiz</string>
     <string name="been_processed">So‘rovingiz ko‘rib chiqildi</string>
     <string name="application_approved">Ariza tasdiqlangan</string>
-    <string name="formats">"Formatlar"</string>
+    <string name="formats">Formatlar</string>
     <string name="take_credit">Kredit olish</string>
     <string name="loan_expire">Kredit muddati:</string>
     <string name="day_of_payment">To\'lov kuni</string>
@@ -977,7 +977,7 @@
     <string name="surname">Familiya</string>
     <string name="patronic">Otasining ismi</string>
     <string name="for_you_p2p">Kartadan kartaga pul o‘tkazmalari</string>
-    <string name="for_you_online_conversion">Onlayn konvertatsiya</string>
+    <string name="for_you_online_conversion">Onlayn konversiya</string>
     <string name="for_you_target">Pul jamg‘arish</string>
     <string name="for_you">Siz uchun</string>
     <string name="universal_boom">Universal Boom</string>
