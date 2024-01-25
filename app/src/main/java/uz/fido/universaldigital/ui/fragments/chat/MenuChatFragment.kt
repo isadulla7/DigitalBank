@@ -416,7 +416,7 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
     }
 
     private fun setTestRequest() {
-        viewModel.testSocket(getClientToken(), requireContext().getDeviceIds())
+        viewModel.testSocket(getClientId(), requireContext().getDeviceIds())
             .observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.SUCCESS -> {

@@ -69,7 +69,6 @@ class ClientDepositListFragment :
                 }
 
                 Status.ERROR -> {
-
                 }
             }
         }
@@ -77,7 +76,10 @@ class ClientDepositListFragment :
 
     override fun openDepositDetails(item: ClientDeposit) {
         super.openDepositDetails(item)
-        goto(R.id.clientDepositFragment, bundleOf(ClientDepositFragment.CLIENT_DEPOSIT_MODEL to item))
+        goto(
+            R.id.clientDepositFragment,
+            bundleOf(ClientDepositFragment.CLIENT_DEPOSIT_MODEL to item)
+        )
     }
 
     private fun initSetOnClickListeners() {
