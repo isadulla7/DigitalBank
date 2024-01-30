@@ -300,20 +300,21 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun getUserInfo() {
-        viewModel.getUserDetailedInfo(APIServiceConst.USER_INFO_URL).observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> it.data?.let { data ->
-                    signInRequest(data)
-                }
+        viewModel.getUserDetailedInfo(APIServiceConst.USER_INFO_URL + requireContext().getIpAddress())
+            .observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.SUCCESS -> it.data?.let { data ->
+                        signInRequest(data)
+                    }
 
-                Status.ERROR -> {
-                    showSnackbar(it.message.toString())
-                    secondPin = ""
-                    pin = ""
-                    clearDots()
+                    Status.ERROR -> {
+                        showSnackbar(it.message.toString())
+                        secondPin = ""
+                        pin = ""
+                        clearDots()
+                    }
                 }
             }
-        }
     }
 
     private fun signInRequest(userInfo: UserInfo) {

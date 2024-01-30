@@ -23,6 +23,7 @@ import uz.fido.utils.const.APIServiceConst.USER_INFO_URL
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.utility.context.getDeviceIds
+import uz.fido.utils.utility.context.getIpAddress
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 
@@ -96,18 +97,19 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun getUserInfo() {
-        viewModel.getUserDetailedInfo(USER_INFO_URL).observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> it.data?.let { data ->
-                    signUpRequest(data)
-                }
+        viewModel.getUserDetailedInfo(USER_INFO_URL + requireContext().getIpAddress())
+            .observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.SUCCESS -> it.data?.let { data ->
+                        signUpRequest(data)
+                    }
 
-                Status.ERROR -> {
-                    binding.btnContinue.setProgress(false)
-                    showSnackbar(it.message.toString())
+                    Status.ERROR -> {
+                        binding.btnContinue.setProgress(false)
+                        showSnackbar(it.message.toString())
+                    }
                 }
             }
-        }
     }
 
     private fun signUpRequest(userInfo: UserInfo) {

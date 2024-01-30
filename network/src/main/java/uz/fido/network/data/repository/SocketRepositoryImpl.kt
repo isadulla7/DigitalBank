@@ -1,5 +1,6 @@
 package uz.fido.network.data.repository
 
+import retrofit2.Call
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
 import uz.fido.network.domain.datasource.interfaces.ISocketRepository
@@ -10,6 +11,13 @@ class SocketRepositoryImpl @Inject constructor(private val socketService: Socket
     ISocketRepository {
     override suspend fun testSocket(token: String, deviceId: String): Resource<Any> = getResult {
         socketService.testSocket(token, deviceId)
+    }
+
+    override suspend fun getMessages(
+        token: String,
+        deviceId: String
+    ): Resource<Call<SocketInterface.BgTaskResponse>> = getResult {
+        socketService.socketTest(token, deviceId)
     }
 
 }

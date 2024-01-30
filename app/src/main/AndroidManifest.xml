@@ -24,7 +24,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.NFC" />
-
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="29" />
@@ -70,7 +70,7 @@
                 <data android:host="universaldigitalbank.page.link" />
                 <data android:host="https://universaldigitalbank.page.link" />
                 <data android:path="/qrcard" />
-                <data android:pathPrefix="/"/>
+                <data android:pathPrefix="/" />
 
             </intent-filter>
 

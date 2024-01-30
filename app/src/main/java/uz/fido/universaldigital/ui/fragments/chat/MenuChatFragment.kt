@@ -12,11 +12,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import uz.fido.network.data.utility.Status
+import uz.fido.network.di.SocketClient
+import uz.fido.network.domain.datasource.services.SocketInterface
 import uz.fido.network.domain.model.chat.EditMessageRequest
 import uz.fido.network.domain.model.chat.MessageHistory
 import uz.fido.network.domain.model.chat.MessageHistoryResponse
@@ -108,7 +114,7 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
         super.onInit(savedInstanceState)
         initSetOnClickListeners()
         fetchRoomList()
-        setTestRequest()
+        sendTestRequest()
     }
 
     private fun initSetOnClickListeners() {
@@ -415,19 +421,45 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
         }
     }
 
-    private fun setTestRequest() {
-        viewModel.testSocket(getClientId(), requireContext().getDeviceIds())
-            .observe(viewLifecycleOwner) {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        setTestRequest()
+    private fun sendTestRequest() {
+        val socketClient = SocketClient.retrofitService()
+        socketClient.socketTest(getClientId(), requireContext().getDeviceIds()).enqueue(object :
+            Callback<SocketInterface.BgTaskResponse> {
+            override fun onResponse(
+                call: Call<SocketInterface.BgTaskResponse>,
+                response1: Response<SocketInterface.BgTaskResponse>
+            ) {
+                try {
+                    val response = response1.body()
+                    if (response?.data != null && response.data.size > 0) {
+                        response.data.forEach {
+                            if (it.method != null) {
+                                when (it.method) {
+                                    "USER_MESSAGE", "USER_MESSAGE_EDITED", "USER_IS_TYPING", "USER_MESSAGE_DELETED" -> {
+                                        val sendMessageResponse = Gson().fromJson(
+                                            it.responses,
+                                            SendMessageResponse::class.java
+                                        )
+                                        checkForList(sendMessageResponse)
+                                    }
+                                }
+                            }
+                        }
                     }
-
-                    Status.ERROR -> {
-
-                    }
+                    sendTestRequest()
+                } catch (e: Exception) {
+                    e.printStackTrace()
                 }
             }
+
+            override fun onFailure(call: Call<SocketInterface.BgTaskResponse>, t: Throwable) {
+                try {
+                    sendTestRequest()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        })
     }
 
 }
