@@ -223,18 +223,19 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     private fun getUserInfo() {
         binding.btnContinue.setProgress(true)
-        viewModel.getUserDetailedInfo(APIServiceConst.USER_INFO_URL).observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> it.data?.let { data ->
-                    signInRequest(data)
-                }
+        viewModel.getUserDetailedInfo(APIServiceConst.USER_INFO_URL + requireContext().getIpAddress())
+            .observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.SUCCESS -> it.data?.let { data ->
+                        signInRequest(data)
+                    }
 
-                Status.ERROR -> {
-                    binding.btnContinue.setProgress(false)
-                    showSnackbar(it.message.toString())
+                    Status.ERROR -> {
+                        binding.btnContinue.setProgress(false)
+                        showSnackbar(it.message.toString())
+                    }
                 }
             }
-        }
     }
 
     private fun signInRequest(userInfo: UserInfo) {

@@ -58,14 +58,12 @@ fun Context.wifiIpAddress(): String {
     val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
     var ipAddress = wifiManager.connectionInfo.ipAddress
 
-    // Convert little-endian to big-endianif needed
     if (ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN) {
         ipAddress = Integer.reverseBytes(ipAddress)
     }
     val ipByteArray = BigInteger.valueOf(ipAddress.toLong()).toByteArray()
-    var ipAddressString = ""
-    ipAddressString = try {
-        InetAddress.getByAddress(ipByteArray).hostAddress
+    val ipAddressString: String = try {
+        InetAddress.getByAddress(ipByteArray).hostAddress ?: ""
     } catch (ex: UnknownHostException) {
         Log.e("INFO_ERROR", "Unable to get host address.")
         ""

@@ -100,7 +100,8 @@ class AuthInterceptor @Inject constructor(
     }
 
     private fun getIpResponse(): retrofit2.Response<UserInfo> {
-        return swapKeyService.getUserDetailedInfo(APIServiceConst.USER_INFO_URL).execute()
+        return swapKeyService.getUserDetailedInfo(APIServiceConst.USER_INFO_URL + context.getIpAddress())
+            .execute()
     }
 
     private fun getSignInResponse(userInfo: UserInfo): retrofit2.Response<SignInResponse> {

@@ -80,7 +80,7 @@ class GetDeviceInfo(var context: Context) {
         }
 
     // получить IP адрес, возвращает IP в зависимости от сети WIFI или MobileData
-    private fun getIpAdress(): String? {
+    private fun getIpAddress(): String? {
         var ipAddress: String? = ""
         try {
             Logger.writeLog("Network status: " + checkNetworkStatus(context))

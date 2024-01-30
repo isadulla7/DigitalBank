@@ -70,17 +70,18 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
     }
 
     private fun getUserInfo() {
-        viewModel.getUserDetailedInfo(USER_INFO_URL).observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> it.data?.let { data ->
-                    finishRegistration(data)
-                }
+        viewModel.getUserDetailedInfo(USER_INFO_URL + requireContext().getIpAddress())
+            .observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.SUCCESS -> it.data?.let { data ->
+                        finishRegistration(data)
+                    }
 
-                Status.ERROR -> {
-                    showSnackbar(it.message.toString())
+                    Status.ERROR -> {
+                        showSnackbar(it.message.toString())
+                    }
                 }
             }
-        }
     }
 
     private fun finishRegistration(data: UserInfo) {
@@ -103,7 +104,8 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
             os_system_version_api = device.os_system_version_api.toString(),
             os_version = Build.VERSION.SDK_INT.toString(),
             patronymic = "",
-            phone_number = requireArguments().getString(SIGN_UP_PHONE_NUMBER)?.replace("+","")?.replace(" ",""),
+            phone_number = requireArguments().getString(SIGN_UP_PHONE_NUMBER)?.replace("+", "")
+                ?.replace(" ", ""),
             sms_code = requireArguments().getString(SIGN_UP_SMS_CODE),
             sim_iccd = device.sim_iccd.toString(),
             version = "0",

@@ -1,5 +1,7 @@
 package uz.fido.utils.const
 
+import uz.fido.utils.device.GetDeviceInfo
+
 object APIServiceConst {
 
     //PROFILE IMAGE URL
@@ -26,7 +28,7 @@ object APIServiceConst {
 
     //LOCAL
     const val FB_LOCAL_URL = "https://my.fido.uz/dgb_api/"
-    const val USER_INFO_URL = "http://ip-api.com/json/"
+    const val USER_INFO_URL = "https://requestid.universalbank.uz/api/request/identify/"
 
     //APP CONFIG
     const val BASE_URL = UNIVERSAL_URL

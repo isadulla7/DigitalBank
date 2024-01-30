@@ -96,4 +96,8 @@ class MenuChatViewModel @Inject constructor(
         emit(socketRepository.testSocket(token, deviceId))
     }
 
+    fun getMessages(token: String, deviceId: String) = liveData(Dispatchers.IO) {
+        emit(socketRepository.getMessages(token, deviceId))
+    }
+
 }
