@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.domain.model.monitoring.DateItem
-import fido.mkbank.ui.ib.fragments.menu.menu_monitoring.model.ListItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.monitoring.UzcardItem
@@ -27,7 +27,6 @@ import uz.fido.universaldigital.ui.fragments.monitoring.adapter.SvMonitoringAdap
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.UzCardMonitoringDetailsDialog
-import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.utils.format.Format
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener

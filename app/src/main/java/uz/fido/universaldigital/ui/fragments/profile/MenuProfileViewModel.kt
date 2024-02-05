@@ -46,4 +46,8 @@ class MenuProfileViewModel @Inject constructor(
         emit(userRepository.editUserInfo(token, editUserInfo))
     }
 
+    fun deleteAccount(token: String) = liveData(Dispatchers.IO) {
+        emit(userRepository.deleteAccount(token))
+    }
+
 }

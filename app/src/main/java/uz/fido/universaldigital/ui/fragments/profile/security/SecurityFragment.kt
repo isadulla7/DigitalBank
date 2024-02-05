@@ -1,22 +1,28 @@
 package uz.fido.universaldigital.ui.fragments.profile.security
 
+import DeleteAccountDialog
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import androidx.biometric.BiometricManager
 import androidx.biometric.BiometricPrompt
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
+import uz.fido.network.data.utility.Status
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSecurityBinding
 import uz.fido.universaldigital.ui.activities.MainActivity
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
 import uz.fido.universaldigital.ui.fragments.login.restore_profile.ChangePasswordFragment
 import uz.fido.universaldigital.ui.fragments.profile.MenuProfileViewModel
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
+import uz.fido.utils.utility.user.getClientToken
 import java.util.concurrent.Executors
 
 @AndroidEntryPoint
@@ -46,6 +52,29 @@ class SecurityFragment : BaseFragment<FragmentSecurityBinding, MenuProfileViewMo
                 R.id.pinCodeFragment2,
                 bundleOf(PinCodeFragment.PIN_OPERATION to PinCodeFragment.PIN_OPERATION_CHANGE_PIN)
             )
+        }
+        binding.deleteAccount.setOnClickListener {
+            DeleteAccountDialog { deleteAccount() }.show(childFragmentManager, "")
+        }
+    }
+
+    private fun deleteAccount() {
+        showProgress()
+        viewModel.deleteAccount(getClientToken()).observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    hideProgress()
+                    showSnackbar(getString(R.string.successfully_deleted))
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        requireActivity().logOut()
+                    }, 1000)
+                }
+
+                Status.ERROR -> {
+                    hideProgress()
+                    showSnackbar(it.message.toString())
+                }
+            }
         }
     }
 

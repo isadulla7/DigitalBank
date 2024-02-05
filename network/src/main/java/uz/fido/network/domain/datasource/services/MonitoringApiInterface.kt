@@ -100,4 +100,5 @@ interface MonitoringApiInterface {
     suspend fun newFilterMonitoringFilter(
         @Header("Authorization") token: String, @Body request: NewFilterMonitoringFilterRequest
     ): LocalMonitoringResponse
+
 }

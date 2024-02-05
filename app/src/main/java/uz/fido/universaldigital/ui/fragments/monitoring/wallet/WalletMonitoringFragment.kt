@@ -1,14 +1,12 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.wallet
 
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import fido.mkbank.ui.ib.fragments.menu.menu_monitoring.model.ListItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import io.paperdb.Paper
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Status
@@ -24,7 +22,6 @@ import uz.fido.universaldigital.databinding.FragmentWalletMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.WalletMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.VisaMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.WalletMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.utils.const.Const
@@ -37,7 +34,6 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.HashMap
 import java.util.Locale
-import java.util.SortedMap
 
 @AndroidEntryPoint
 class WalletMonitoringFragment :

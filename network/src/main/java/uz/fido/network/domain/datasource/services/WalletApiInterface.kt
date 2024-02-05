@@ -10,6 +10,7 @@ import uz.fido.network.domain.model.wallet.RenameWalletRequest
 import uz.fido.network.domain.model.wallet.WalletDataRequest
 
 interface WalletApiInterface {
+
     @POST("CREATE_PURSE")
     suspend fun createWallet(
         @Header("Authorization") token: String,
@@ -39,4 +40,5 @@ interface WalletApiInterface {
         @Header("Authorization") token: String,
         @Body renameWalletRequest: RenameWalletRequest
     ): BaseResponse
+
 }

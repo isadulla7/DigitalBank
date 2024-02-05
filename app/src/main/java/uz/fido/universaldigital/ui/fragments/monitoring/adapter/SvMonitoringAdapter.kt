@@ -8,17 +8,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.squareup.picasso.Picasso
 import uz.fido.network.domain.model.monitoring.DateItem
-import fido.mkbank.ui.ib.fragments.menu.menu_monitoring.model.ListItem
-import uz.fido.network.domain.model.monitoring.GeneralItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.UzcardItem
 import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemHistoriesHeaderBinding
 import uz.fido.universaldigital.databinding.ItemMonitoringBinding
-import uz.fido.universaldigital.databinding.ItemUzcardMonitoringBinding
 import uz.fido.utils.format.Format
 import uz.fido.utils.sticky.StickyHeaderInterface
 

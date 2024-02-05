@@ -14,7 +14,6 @@ class RatesRetrofit {
         val ratesApi: RatesApi
     }
 
-    val myClassInterface =
-        EntryPoints.get(getContext(), RequestInterface::class.java)
+    private val myClassInterface = EntryPoints.get(getContext(), RequestInterface::class.java)
     val foo = myClassInterface.ratesApi
 }

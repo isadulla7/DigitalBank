@@ -25,7 +25,6 @@ import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragmen
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.MainDepositViewModel
 import uz.fido.utils.const.Const
-import uz.fido.utils.const.Const.DEPOSIT_BAXTLI_BOLALIK
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
@@ -75,10 +74,10 @@ class OpenDepositStepTwoFragment :
     }
 
     private fun cardListTip() {
-        if (!isSum) {
-            type = CurrencyConst.CURRENCY_CHAR_USD
+        type = if (!isSum) {
+            CurrencyConst.CURRENCY_CHAR_USD
         } else {
-            type = CurrencyConst.CURRENCY_CHAR_UZS
+            CurrencyConst.CURRENCY_CHAR_UZS
         }
     }
 
@@ -231,8 +230,13 @@ class OpenDepositStepTwoFragment :
         val annotations = fullText.getSpans(0, fullText.length, Annotation::class.java)
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-
-                val website = "https://universalbank.uz/juristic"
+                val website = when (deposit.dep_id) {
+                    1874 -> "https://ibank.ubank.uz/cib/sarmoya-25.html"
+                    1674 -> "https://ibank.ubank.uz/cib/qulay_daromad.html"
+                    1694 -> "https://ibank.ubank.uz/cib/yubiley.html"
+                    1753 -> "https://ibank.ubank.uz/cib/qulay_daromad.html"
+                    else -> "https://universalbank.uz/juristic"
+                }
                 val webIntent = Intent(Intent.ACTION_VIEW)
                 webIntent.data = Uri.parse(website)
                 requireActivity().startActivity(webIntent)
@@ -255,18 +259,15 @@ class OpenDepositStepTwoFragment :
     }
 
     override fun invoke(sms_cofirm: String, line_string: String) {
-        var lineString = line_string
-
         if (sms_cofirm == "Y")
             goto(
                 R.id.confirmSmsFragment,
                 bundleOf(
                     Const.OPERATION to ConfirmSmsFragment.SMS_DEPOSIT_OPERATION,
-                    "string_line" to lineString
+                    "string_line" to line_string
                 )
             )
         else createDeposit()
     }
-
 
 }

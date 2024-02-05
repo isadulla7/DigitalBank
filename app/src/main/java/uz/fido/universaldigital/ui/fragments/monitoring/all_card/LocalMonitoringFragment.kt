@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
-import fido.mkbank.ui.ib.fragments.menu.menu_monitoring.model.ListItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status

@@ -8,7 +8,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import fido.mkbank.ui.ib.fragments.menu.menu_monitoring.model.ListItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.monitoring.DateItem

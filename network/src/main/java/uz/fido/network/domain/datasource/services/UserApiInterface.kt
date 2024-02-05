@@ -1,7 +1,5 @@
 package uz.fido.network.domain.datasource.services
 
-import okhttp3.MultipartBody
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 import uz.fido.network.domain.model.abc_base.BaseResponse
@@ -9,17 +7,14 @@ import uz.fido.network.domain.model.abc_base.ChangeNotifStateRequest
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
 import uz.fido.network.domain.model.abc_base.SwapKeysResponse
 import uz.fido.network.domain.model.edit_user.EditUserInfo
-import uz.fido.network.domain.model.liveness.CheckLivenessResponse
 import uz.fido.network.domain.model.my_id.*
 import uz.fido.network.domain.model.password.ChangePasswordRequest
 import uz.fido.network.domain.model.password.CheckForgetPasswordModel
-import uz.fido.network.domain.model.payment.Payment
 import uz.fido.network.domain.model.profile.LogOutRequest
 import uz.fido.network.domain.model.sessions.CheckDeviceRequest
 import uz.fido.network.domain.model.sessions.DeleteUserDeviceRequest
 import uz.fido.network.domain.model.sessions.GetUserDevicesRequest
 import uz.fido.network.domain.model.sessions.GetUserDevicesResponse
-import uz.fido.network.domain.model.sign_in.CheckUserSignInRequest
 import uz.fido.network.domain.model.sign_in.SignInRequest
 import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.network.domain.model.sign_in.SignInResponse
@@ -31,26 +26,15 @@ import uz.fido.network.domain.model.sms.SendEmailCode
 
 interface UserApiInterface {
 
-    @POST("liveness")
-    fun checkLiveness(@Body image: MultipartBody): Call<CheckLivenessResponse>
-
-    @FormUrlEncoded
-    @POST("api/v1/oauth2/access-token/")
-    suspend fun getAccessTokenMyId(
-        @Field("grant_type") grant_type: String,
-        @Field("code") code: String,
-        @Field("client_id") client_id: String,
-        @Field("client_secret") client_secret: String,
-        @Field("redirect_url") redirect_url: String,
-    ): MyIdGetAccessTokenResponse
+    @GET("DELETE_ACCOUNT")
+    suspend fun deleteAccount(
+        @Header("Authorization") token: String,
+    ): BaseResponse
 
     @POST("GET_ACCESS_TOKEN")
     suspend fun getAccessTokenMyId(
         @Body myIdGetAccessTokenRequest: MyIdGetAccessTokenRequest
     ): MyIdMeResponse
-
-    @GET("api/v1/users/me")
-    suspend fun getMyIdMe(@Header("Authorization") token: String): MyIdMeResponse
 
     @POST("USER_SIGN_IN_NEW")
     suspend fun signIn(
@@ -87,7 +71,6 @@ interface UserApiInterface {
     suspend fun finishReg(
         @Body signUpRequest: FinishRegRequest
     ): SignInResponse
-
 
     @POST("CHECK_FORGOT_PASSWORD")
     suspend fun checkForgetPassword(@Body checkForgetPasswordModel: CheckForgetPasswordModel): BaseResponse

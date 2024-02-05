@@ -76,11 +76,6 @@ interface DepositApiInterface {
         @Body request: RenameDepositRequest
     ): BaseResponse
 
-    @POST("CHECK_SMS_FOR_PAYMENT")
-    suspend fun checkSmsForPayment(
-        @Header("Authorization") token: String, @Body checkSmsForPayment: CheckSmsForPayment
-    ): CheckSmsForPaymentResponse
-
     @POST("CLOSURE_DEPOSIT")
     suspend fun closeDeposit(
         @Header("Authorization") token: String, @Body earlyClosureRequest: EarlyClosureRequest

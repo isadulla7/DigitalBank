@@ -3,6 +3,7 @@ package uz.fido.network.domain.datasource.interfaces
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.cards.AddCardRequest
+import uz.fido.network.domain.model.cards.AddCheckCardResponse
 import uz.fido.network.domain.model.cards.BlockCardRequest
 import uz.fido.network.domain.model.cards.BlockCardResponse
 import uz.fido.network.domain.model.cards.CardInfoRequest
@@ -47,7 +48,7 @@ interface ICardRepository {
 
     suspend fun checkCard(
         token: String, checkCardRequest: CheckCardRequest
-    ): Resource<BaseResponse>
+    ): Resource<AddCheckCardResponse>
 
     suspend fun addCard(token: String, addCardRequest: AddCardRequest): Resource<BaseResponse>
 

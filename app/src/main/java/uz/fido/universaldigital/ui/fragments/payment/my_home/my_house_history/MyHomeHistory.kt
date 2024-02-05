@@ -5,7 +5,7 @@ import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import fido.mkbank.ui.ib.fragments.menu.menu_monitoring.model.ListItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.home.HomeGeneralItem
