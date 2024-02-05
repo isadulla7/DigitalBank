@@ -991,4 +991,9 @@
     <string name="for_you_target_description">Ilovaning \"Maqsad\" funksiyasi orqali o\'z jamg\'armangiz va maqsadingizni sozlab oling. Shunchaki pul yig\'ishdan bahramand bo\'ling!</string>
     <string name="others">Boshqalari</string>
     <string name="add_favorite_receivers">Ko\'p ishlatiladigan qabul qiluvchilarni tanlanganlarga qo\'shing</string>
+    <string name="delete_account">Hisobni o\'chirish</string>
+    <string name="log_out">Hisobdan chiqish</string>
+    <string name="delete_account_q">Удалить аккаунт?</string>
+    <string name="delete_account_description">Вы уверены, что хотите удалить свою учетную запись? Эту операцию нельзя отменить</string>
+    <string name="successfully_deleted">Hisobingiz muvaffaqiyatli o\'chirildi</string>
 </resources>

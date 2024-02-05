@@ -7,6 +7,7 @@ import uz.fido.network.domain.datasource.interfaces.ICardRepository
 import uz.fido.network.domain.datasource.services.CardApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.cards.AddCardRequest
+import uz.fido.network.domain.model.cards.AddCheckCardResponse
 import uz.fido.network.domain.model.cards.BlockCardRequest
 import uz.fido.network.domain.model.cards.BlockCardResponse
 import uz.fido.network.domain.model.cards.CardInfoRequest
@@ -60,7 +61,7 @@ class CardRepositoryImpl @Inject constructor(private val cardApiService: CardApi
 
     override suspend fun checkCard(
         token: String, checkCardRequest: CheckCardRequest
-    ): Resource<BaseResponse> = getResult {
+    ): Resource<AddCheckCardResponse> = getResult {
         cardApiService.checkCard(token, checkCardRequest)
     }
 

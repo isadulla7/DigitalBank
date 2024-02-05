@@ -8,20 +8,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 
-import fido.mkbank.ui.ib.fragments.menu.menu_monitoring.model.ListItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.home.HomeGeneralItem
 import uz.fido.network.domain.model.monitoring.home.ItemHomeHistory
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemHistoriesHeaderBinding
 import uz.fido.universaldigital.databinding.ItemMonitoringBinding
 import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
-import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format
 import uz.fido.utils.sticky.StickyHeaderInterface
-import uz.fido.utils.view.custom_text_view.TextViewMedium
 import uz.fido.utils.view.custom_text_view.TextViewRegular
 
 

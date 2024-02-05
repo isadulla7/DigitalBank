@@ -77,7 +77,6 @@
 
                 </LinearLayout>
 
-
                 <uz.fido.utils.view.custom_circle_button.CustomFAButton
                     android:id="@+id/btn_continue"
                     android:layout_width="wrap_content"
@@ -86,8 +85,8 @@
                     android:enabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
 
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

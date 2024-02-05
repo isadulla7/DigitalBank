@@ -24,6 +24,7 @@ import uz.fido.network.domain.model.sessions.GetUserDevicesRequest
 import uz.fido.network.domain.model.sessions.GetUserDevicesResponse
 
 interface UtilsApiInterface {
+
     @POST("SEARCH")
     suspend fun searchRequest(
         @Header("Authorization") token: String,
@@ -127,4 +128,5 @@ interface UtilsApiInterface {
         @Header("Authorization") token: String,
         @Body updateNewsStatusRequest: UpdateNotificationState
     ): BaseResponse
+
 }

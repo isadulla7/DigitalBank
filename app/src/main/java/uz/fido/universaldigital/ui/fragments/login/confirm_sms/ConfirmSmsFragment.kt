@@ -99,6 +99,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         const val SMS_AMOUNT = "amount"
         const val SMS_SERVICE_ID = "service_id"
         const val SMS_FROM_OBJECT_VALUE = "from_object_value"
+        const val SMS_MAX_LENGTH = "SMS_MAX_LENGTH"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,8 +127,11 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     }
 
     private fun initTextChangeListener() {
+        val smsLength = if (arguments != null) {
+            arguments?.getInt(SMS_MAX_LENGTH) ?: 8
+        } else 8
         binding.etSms.addTextChangedListener {
-            binding.btnContinue.isEnabled(it.toString().length == 8 || it.toString().length == 5)
+            binding.btnContinue.isEnabled(it.toString().length == smsLength)
         }
     }
 
@@ -390,7 +394,8 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                     data.object_name,
                     binding.etSms.editableText.toString(),
                     data.is_main,
-                    data.bg_icon_name
+                    data.bg_icon_name,
+                    data.otp_id
                 )
             ).observe(viewLifecycleOwner) {
                 it?.let {
@@ -423,9 +428,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         if (operation != SMS_OPERATION_FORGOT_PASSWORD) {
             model.name = getString(R.string.number_and_password)
             model.code = SignInTypes.SIGN_IN.toString()
-            list.add(
-                model
-            )
+            list.add(model)
         }
         if (checkSmsResponse.is_email == "Y") {
             model = AllServiceLists()
@@ -452,9 +455,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         model = AllServiceLists()
         model.name = getString(R.string.continue_registration)
         model.code = SignInTypes.SIGN_UP.toString()
-        list.add(
-            model
-        )
+        list.add(model)
 
         allServicesDialog = AllServicesDialog(
             baseInterface = this@ConfirmSmsFragment,
@@ -472,7 +473,6 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             .replace(" ", "")
             .replace("+", "")
         when (allServiceLists.code) {
-
             SignInTypes.CARD.toString() -> {
                 gotoWithSlide(R.id.restoreWithCardFragment, bundleOf(PHONE_NUMBER to phoneNumber))
             }

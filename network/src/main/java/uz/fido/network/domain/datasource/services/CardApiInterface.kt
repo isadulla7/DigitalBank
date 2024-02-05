@@ -21,8 +21,6 @@ import uz.fido.network.domain.model.limits.gl.GlLimitResponse
 import uz.fido.network.domain.model.limits.gl.GlSetCardLimitRequest
 import uz.fido.network.domain.model.p2p.P2PHistoryRequest
 import uz.fido.network.domain.model.p2p.P2PHistoryResponse
-import uz.fido.network.domain.model.sms.CheckSmsForPayment
-import uz.fido.network.domain.model.sms.CheckSmsForPaymentResponse
 
 interface CardApiInterface {
 
@@ -30,7 +28,7 @@ interface CardApiInterface {
     suspend fun checkCard(
         @Header("Authorization") token: String,
         @Body checkCardRequest: CheckCardRequest
-    ): BaseResponse
+    ): AddCheckCardResponse
 
     @POST("USER_OBJ_ADD")
     suspend fun addCard(
@@ -200,6 +198,5 @@ interface CardApiInterface {
     suspend fun getGlLimitParams(
         @Header("Authorization") token: String
     ): GlLimitParamsResponse
-
 
 }

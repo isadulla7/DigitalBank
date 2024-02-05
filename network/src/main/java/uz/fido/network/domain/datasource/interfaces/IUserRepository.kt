@@ -27,6 +27,8 @@ import uz.fido.network.domain.model.sms.SendEmailCode
 
 interface IUserRepository {
 
+    suspend fun deleteAccount(token: String): Resource<BaseResponse>
+
     suspend fun signIn(signInRequestNew: SignInRequestNew): Resource<SignInResponse>
 
     suspend fun checkUserSms(

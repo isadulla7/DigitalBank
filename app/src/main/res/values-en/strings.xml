@@ -996,4 +996,9 @@
     <string name="for_you_target_description">Set up your savings and target through the "Target" function of the application. Just enjoy collecting money!</string>
     <string name="others">Other</string>
     <string name="add_favorite_receivers">Add frequently used recipients to favorites</string>
+    <string name="delete_account">Delete account</string>
+    <string name="log_out">Log out</string>
+    <string name="delete_account_q">Удалить аккаунт?</string>
+    <string name="delete_account_description">Вы уверены, что хотите удалить свою учетную запись? Эту операцию нельзя отменить</string>
+    <string name="successfully_deleted">Hisobingiz muvaffaqiyatli o\'chirildi</string>
 </resources>

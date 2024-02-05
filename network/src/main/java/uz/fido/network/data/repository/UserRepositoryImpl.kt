@@ -34,6 +34,12 @@ import javax.inject.Singleton
 class UserRepositoryImpl @Inject constructor(private val userApiService: UserApiInterface) :
     IUserRepository {
 
+    override suspend fun deleteAccount(token: String): Resource<BaseResponse> =
+        getResult {
+            userApiService.deleteAccount(token)
+        }
+
+
     override suspend fun signIn(signInRequestNew: SignInRequestNew): Resource<SignInResponse> =
         getResult {
             userApiService.signIn(signInRequestNew)

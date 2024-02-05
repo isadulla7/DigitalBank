@@ -993,4 +993,9 @@
     <string name="for_you_target_description">Настройте свои сбережения и цель с помощью функции «Цель» приложения. Просто наслаждайтесь сбором денег!</string>
     <string name="others">Другие</string>
     <string name="add_favorite_receivers">Добавляйте часто используемых получателей в избранное</string>
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="log_out">Выйти из профиля</string>
+    <string name="delete_account_q">Удалить аккаунт?</string>
+    <string name="delete_account_description">Вы уверены, что хотите удалить свою учетную запись? Эту операцию нельзя отменить</string>
+    <string name="successfully_deleted">Hisobingiz muvaffaqiyatli o\'chirildi</string>
 </resources>

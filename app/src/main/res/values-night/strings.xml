@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="delete_account">Удалить аккаунт</string>
+    <string name="log_out">Выйти из профиля</string>
+    <string name="delete_account_q">Удалить аккаунт?</string>
+    <string name="delete_account_description">Вы уверены, что хотите удалить свою учетную запись? Эту операцию нельзя отменить</string>
+    <string name="successfully_deleted">Hisobingiz muvaffaqiyatli o\'chirildi</string>
+</resources>

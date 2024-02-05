@@ -18,6 +18,7 @@ import uz.fido.network.domain.model.template.SetTemplateOrderRequest
 import uz.fido.network.domain.model.template.TemplateGroupResponse
 
 interface TemplateApiInterface {
+
     @POST("CREATE_TEMPLATE")
     suspend fun createTemplate(
         @Header("Authorization") token: String,
@@ -70,4 +71,5 @@ interface TemplateApiInterface {
         @Header("Authorization") token: String,
         @Body getTemplateListRequest: GetTemplateListRequest
     ): BaseResponse
+
 }

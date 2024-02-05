@@ -1,14 +1,11 @@
 package uz.fido.network.domain.datasource.services
 
-import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import retrofit2.http.Path
-import retrofit2.http.Url
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.abc_base.InParamsResponse
 import uz.fido.network.domain.model.branches.BankNameResponse
@@ -36,9 +33,6 @@ import uz.fido.network.domain.model.swift.SwiftTransferResponse
 
 interface PaymentApiInterface {
 
-    @GET
-    fun downloadPayments(@Url fileUrl: String?): Call<ResponseBody>
-
     @GET("GET_PAYMENT_FILE")
     suspend fun getPaymentFile(
         @Header("Authorization") token: String
@@ -58,7 +52,9 @@ interface PaymentApiInterface {
 
     @POST("{path}/")
     suspend fun createPayment(
-        @Header("Authorization") token: String, @Body createPaymentRequest: CreatePaymentRequest, @Path("path") path: String
+        @Header("Authorization") token: String,
+        @Body createPaymentRequest: CreatePaymentRequest,
+        @Path("path") path: String
     ): CreatePaymentResponse
 
     @POST("LOAN_REPAYMENT")
@@ -179,6 +175,5 @@ interface PaymentApiInterface {
     suspend fun getSwiftDocs(
         @Header("Authorization") token: String, @Body listRequest: SwiftTransferListRequest
     ): SwiftTransferListResponse
-
 
 }

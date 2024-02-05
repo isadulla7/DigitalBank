@@ -31,6 +31,7 @@ import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
+import uz.scan_card.cardscan.ScanActivity
 
 @AndroidEntryPoint
 class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewModel>(
@@ -149,13 +150,14 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
                 when (it.status) {
                     Status.SUCCESS -> {
                         val addCardRequest = AddCardRequest(
-                            cardNumber,
-                            expireDate,
-                            Paper.book().read("client_phone"),
-                            cardName,
-                            "",
-                            isMain(),
-                            "bg_1"
+                            object_value = cardNumber,
+                            object_expiry = expireDate,
+                            phone_number = Paper.book().read("client_phone"),
+                            object_name = cardName,
+                            sms_code = "",
+                            is_main = isMain(),
+                            bg_icon_name = "bg_1",
+                            otp_id = it.data?.otp_id ?: ""
                         )
                         val bundle = Bundle()
                         bundle.putString(Const.OPERATION, ConfirmSmsFragment.ADD_CARD)
@@ -163,6 +165,10 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
                             bundle.putString(Const.ADD_CARD_OPERATION, addCardOperation)
                         }
                         bundle.putSerializable("data", addCardRequest)
+                        bundle.putInt(
+                            ConfirmSmsFragment.SMS_MAX_LENGTH,
+                            it.data?.sms_length ?: 8
+                        )
                         gotoWithSlide(R.id.confirmSmsFragment, bundle)
                     }
 
@@ -175,15 +181,15 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
     }
 
     private fun openCameraForCardRead() {
-      /*  val intent = ScanActivity.buildIntent(
+        val intent = ScanActivity.buildIntent(
             requireActivity(), true, null, R.string.card_scan_position_card, null, null
         )
-        getActivityResult.launch(intent)*/
+        getActivityResult.launch(intent)
     }
 
     private val getActivityResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-      /*      if (it.resultCode == Activity.RESULT_OK && it.data != null) {
+            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
                 val scanResult = ScanActivity.creditCardFromResult(it.data)
                 val result = scanResult?.number
                 val expireDate = scanResult?.expiryForDisplay()
@@ -205,7 +211,7 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
                         }
                     }
                 }
-            }*/
+            }
         }
 
     override fun cameraPermissionGranted() {

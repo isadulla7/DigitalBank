@@ -9,5 +9,6 @@ data class AddCardRequest(
     val object_name: String,
     val sms_code: String,
     val is_main: String,
-    val bg_icon_name: String
-):Serializable
+    val bg_icon_name: String,
+    val otp_id: String
+) : Serializable
