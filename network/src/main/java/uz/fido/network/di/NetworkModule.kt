@@ -57,7 +57,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideCertificate(@ApplicationContext appContext: Context): InputStream =
-        appContext.resources.openRawResource(R.raw.mkb_uz)
+        appContext.resources.openRawResource(R.raw.unversal_uz)
 
     @Provides
     @Singleton
@@ -128,14 +128,15 @@ object NetworkModule {
         loggingInterceptor: HttpLoggingInterceptor,
         swapKeyService: SwapKeyApiInterface,
         apiInterface: dagger.Lazy<UserApiInterface>
-    ): OkHttpClient = unSafeOkHttpClient()
-//        .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
+    ): OkHttpClient = OkHttpClient.Builder()
+        .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
         .addInterceptor(HeaderInterceptor())
         .addInterceptor(loggingInterceptor).addInterceptor(
             AuthInterceptor(
                 swapKeyService = swapKeyService, context = appContext, apiInterface
             )
-        ).addInterceptor(ChuckerInterceptor.Builder(appContext).build())
+        )
+   //     .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
         .addInterceptor(EncryptionInterceptor())
         .addInterceptor(DecryptionInterceptor())
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
@@ -145,9 +146,9 @@ object NetworkModule {
     @Provides
     fun provideSimpleOkhttpClient(
         @ApplicationContext appContext: Context,
-    ): OkHttpClient = unSafeOkHttpClient()
-//        .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
-        .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
+    ): OkHttpClient = OkHttpClient.Builder()
+     //   .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
+   //     .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS).build()
 
@@ -206,13 +207,13 @@ object NetworkModule {
     fun swapKeyRetrofitClient(
         @ApplicationContext appContext: Context, sslSocketFactory: SSLSocketFactory,
         loggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient = unSafeOkHttpClient()
-//        .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
+    ): OkHttpClient = OkHttpClient.Builder()
+        .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
         .addInterceptor(Interceptor {
             val request: Request = it.request().newBuilder().build()
             return@Interceptor it.proceed(request)
         }).addInterceptor(loggingInterceptor)
-        .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
+      //  .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
         .readTimeout(180, TimeUnit.SECONDS)
         .connectTimeout(180, TimeUnit.SECONDS).writeTimeout(180, TimeUnit.SECONDS).build()
 

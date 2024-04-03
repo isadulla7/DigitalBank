@@ -290,7 +290,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 }
 
                 Status.ERROR -> {
-                    showSnackbar(it.message.toString())
+                    showSnackbar("Error swap:: "+it.message.toString())
                     secondPin = ""
                     pin = ""
                     clearDots()
@@ -308,7 +308,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                     }
 
                     Status.ERROR -> {
-                        showSnackbar(it.message.toString())
+                        showSnackbar("Error::ip " + it.message.toString())
                         secondPin = ""
                         pin = ""
                         clearDots()
@@ -361,7 +361,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 Status.ERROR -> {
                     clearDots()
                     PinDotsAnimation.stopPinDotsAnimation()
-                    showSnackbar(it.message.toString())
+                    showSnackbar("Error sign:: "+it.message.toString())
                     removeUnregisteredDevice(it.message.toString())
                 }
             }
@@ -505,9 +505,9 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     private fun initAvatar() {
         loadProfileImage()
-        if (Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotEmpty() &&
-            Paper.book().read(Const.PAPER_CLIENT_NAME, "").isNotEmpty() &&
-            Paper.book().read(Const.PAPER_CLIENT_SURNAME, "").isNotEmpty()
+        if (Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotEmpty() && Paper.book()
+                .read(Const.PAPER_CLIENT_NAME, "").isNotEmpty() && Paper.book()
+                .read(Const.PAPER_CLIENT_SURNAME, "").isNotEmpty()
         ) {
             binding.tvShortName.text =
                 (Paper.book().read(Const.PAPER_CLIENT_NAME, "").first().toString() + Paper.book()

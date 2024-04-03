@@ -45,6 +45,8 @@ fun MenuHomeFragment.setUserDetails() {
     }
 }
 
+
+
 fun MenuHomeFragment.setUpTickerView() {
     binding.balance.apply {
         setCharacterLists(TickerUtils.provideNumberList())
