@@ -91,9 +91,9 @@ class OpenDepositStepTwoFragment :
     private fun onClickView() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
-            if (binding.checkBox.isChecked) {
+        //    if (binding.checkBox.isChecked) {
                 forSmsCheck()
-            } else showSnackbar(getString(R.string.please_accept_privacy))
+         //   } else showSnackbar(getString(R.string.please_accept_privacy))
         }
     }
 

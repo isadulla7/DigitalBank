@@ -85,7 +85,7 @@ class UzsDepositFragment : BaseFragment<FragmentUzsDepositBinding, MainDepositVi
 
     override fun invoke(deposit: Deposit) {
         gotoWithSlide(
-            R.id.openDepositStepFirst, bundleOf(
+            R.id.openDepositOferta, bundleOf(
                 "deposit" to deposit,
                 "operation" to "deposit",
                 "isSum" to true

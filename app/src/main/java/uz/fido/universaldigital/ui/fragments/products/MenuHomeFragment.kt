@@ -15,6 +15,7 @@ import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardInfoRequest
 import uz.fido.network.domain.model.cards.CardResponse
+import uz.fido.network.domain.model.news.GetNotificationsRequest
 import uz.fido.network.domain.model.widget.MainWidget
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
@@ -80,6 +81,34 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     private fun initDefaultStates() {
         loadProfileImage()
         setUserDetails()
+        getNotification()
+    }
+
+    private fun getNotification() {
+        binding.notificationHide.setOnClickListener {
+            binding.consNotification.visibility=View.GONE
+        }
+        menuProductsViewModel.getNotifications(getClientToken(), GetNotificationsRequest(
+            page_number = "0", page_item_size = "20"
+        )
+        ).observe(viewLifecycleOwner){
+            when(it.status){
+                Status.SUCCESS -> {
+                    val notificationList=it.data?.notifications?.filter { it.is_read=="N" }?: arrayListOf()
+                    if (notificationList.isNotEmpty()){
+                        binding.notificationItem.visibility=View.VISIBLE
+                        binding.consNotification.visibility=View.VISIBLE
+                        binding.notificationItem.text=notificationList.size.toString()
+                        binding.notificationTitle.text=notificationList[0].title
+                        binding.notificationText.text=notificationList[0].text
+                    }else{
+                        binding.notificationItem.visibility=View.GONE
+                        binding.consNotification.visibility=View.GONE
+                    }
+                }
+                Status.ERROR -> {}
+            }
+        }
     }
 
     private fun initTotalBalance() {

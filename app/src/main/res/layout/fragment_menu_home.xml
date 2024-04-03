@@ -56,9 +56,19 @@
         android:padding="12sp"
         android:src="@drawable/ic_chat"
         app:layout_constraintBottom_toBottomOf="@id/user_name"
-        app:layout_constraintEnd_toStartOf="@id/notifications"
+        app:layout_constraintEnd_toStartOf="@id/notifications_layout"
         app:layout_constraintTop_toTopOf="@id/user_name"
         tools:ignore="ContentDescription" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/notifications_layout"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@id/user_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/user_name">
+
+
 
     <ImageView
         android:id="@+id/notifications"
@@ -67,10 +77,27 @@
         android:layout_marginEnd="4dp"
         android:padding="12sp"
         android:src="@drawable/ic_home_notification"
-        app:layout_constraintBottom_toBottomOf="@id/user_name"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/user_name"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         tools:ignore="ContentDescription" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/notification_item"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:layout_margin="4dp"
+            tools:text="5"
+            android:visibility="gone"
+            android:gravity="center"
+            android:textSize="12sp"
+            android:background="@drawable/notification_backgroud"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -419,6 +446,46 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:id="@+id/cons_notification"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="24dp"
+                    android:visibility="gone"
+                    android:background="@drawable/cornered_bg_12dp">
+
+                    <uz.fido.utils.view.custom_text_view.TextViewMedium
+                        android:id="@+id/notification_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="17sp"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="8dp"
+                        tools:text="HUMO VAQTINCHALIK"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/notification_hide"
+                        android:layout_width="24dp"
+                        android:layout_margin="8dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/hide_notification_icon"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"/>
+
+                    <uz.fido.utils.view.custom_text_view.TextViewRegular
+                        android:id="@+id/notification_text"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@id/notification_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:layout_marginHorizontal="16dp"
+                        tools:text="Humo tizimi vaqtinchalik ishlfaoliyatida emas qaytadan urinib kuring"
+                        android:layout_marginVertical="8dp"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/widgets_layout"
                     android:layout_width="match_parent"

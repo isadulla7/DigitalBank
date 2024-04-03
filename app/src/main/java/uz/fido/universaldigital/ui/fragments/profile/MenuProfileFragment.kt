@@ -120,7 +120,8 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
         showProgress()
         val device = GetDeviceInfo(context = requireContext()).deviceInfo
         viewModel.logOutRequest(
-            token = getClientToken(), logOutRequest = LogOutRequest(
+            token = getClientToken(),
+            logOutRequest = LogOutRequest(
                 device_code = requireContext().getDeviceIds(),
                 device_type = "A",
                 fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",

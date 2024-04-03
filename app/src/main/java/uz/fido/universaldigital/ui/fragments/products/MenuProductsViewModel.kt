@@ -11,6 +11,7 @@ import uz.fido.network.data.repository.CardRepositoryImpl
 import uz.fido.network.domain.datasource.interfaces.ICreditRepository
 import uz.fido.network.domain.datasource.interfaces.IDepositRepository
 import uz.fido.network.domain.datasource.interfaces.IP2PRepository
+import uz.fido.network.domain.datasource.interfaces.IUtilsRepository
 import uz.fido.network.domain.datasource.interfaces.IWalletRepository
 import uz.fido.network.domain.model.amount_requests.RmSetStateRequest
 import uz.fido.network.domain.model.cards.BlockCardRequest
@@ -33,6 +34,7 @@ import uz.fido.network.domain.model.limits.gl.GlLimitDeleteRequest
 import uz.fido.network.domain.model.limits.gl.GlLimitListRequest
 import uz.fido.network.domain.model.limits.gl.GlSetCardLimitRequest
 import uz.fido.network.domain.model.loans.loan_products.CreditProduct
+import uz.fido.network.domain.model.news.GetNotificationsRequest
 import uz.fido.network.domain.model.wallet.DeleteWalletRequest
 import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject
@@ -45,7 +47,8 @@ class MenuProductsViewModel @Inject constructor(
     private val walletRepository: IWalletRepository,
     private val depositRepository: IDepositRepository,
     private val creditRepository: ICreditRepository,
-    private val cardsUseCase: CardsUseCase
+    private val cardsUseCase: CardsUseCase,
+    private val utilsRepository: IUtilsRepository,
 ) : AbstractViewModel(application) {
 
     var cards: LiveData<List<CardResponse>> = cardRepository.cardList
@@ -199,5 +202,10 @@ class MenuProductsViewModel @Inject constructor(
     ) {
         emit(depositRepository.getDeposits(token, getDepositListRequest))
     }
+
+    fun getNotifications(token: String, request: GetNotificationsRequest) =
+        liveData(Dispatchers.IO) {
+            emit(utilsRepository.getNotifications(token, request))
+        }
 
 }

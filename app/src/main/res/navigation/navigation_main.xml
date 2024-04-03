@@ -149,6 +149,11 @@
         android:name="uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.OpenDepositStepFirst"
         android:label="OpenDepositStepFirst" />
     <fragment
+        android:id="@+id/openDepositOferta"
+        android:name="uz.fido.universaldigital.ui.fragments.services.deposit.oferta.DepositOfertaFragment"
+        android:label="DepositOfertaFragment" />
+
+    <fragment
         android:id="@+id/openDepositStepTwoFragment"
         android:name="uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.OpenDepositStepTwoFragment"
         android:label="OpenDepositStepTwoFragment" />
