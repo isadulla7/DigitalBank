@@ -58,7 +58,7 @@
     <string name="sign_up_description">Введите номер телефона что-бы зарегистрироваться, если у вас уже есть аккаунт то сделайте Вход</string>
     <string name="sign_in">Вход</string>
     <string name="sign_in_description">Введите номер телефона и пароль для входа в приложение</string>
-    <string name="sign_up_privacy">Нажимая кнопку \"Продолжить\", Вы подтверждаете свое согласие с условиями <a href="https://universalbank.uz/">пользовательского соглашения</a></string>
+    <string name="sign_up_privacy">Нажимая кнопку \"Продолжить\", Вы подтверждаете свое согласие с условиями <a href="https://ibank.ubank.uz/cib/default.htm">пользовательского соглашения</a></string>
     <string name="please_accept_privacy">Пожалуйста, примите все условия договора</string>
     <string name="verification_privacy">Я соглашаюсь с <a href="https://universalbank.uz/">условиями</a> Universal Bank </string>
     <string name="create_password">Создайте пароль</string>

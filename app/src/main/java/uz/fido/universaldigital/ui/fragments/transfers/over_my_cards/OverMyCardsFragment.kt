@@ -57,6 +57,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
     private var receiverName = ""
     private var percent = "0"
     private var amount = "0"
+    private var p2pInfo=false
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -211,6 +212,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                         }
 
                         Status.ERROR -> {
+                            p2pInfo=true
                             setErrorText(it?.message)
                             binding.btnContinue.isEnabled(false)
                         }
@@ -259,7 +261,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
 
     private fun initAmountTextWatcher() {
         binding.etAmount.doAfterTextChanged {
-            binding.btnContinue.isEnabled(continueButtonState())
+            binding.btnContinue.isEnabled(continueButtonState() && !p2pInfo)
         }
     }
 

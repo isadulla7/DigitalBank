@@ -131,7 +131,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             arguments?.getInt(SMS_MAX_LENGTH) ?: 8
         } else 8
         binding.etSms.addTextChangedListener {
-            binding.btnContinue.isEnabled(it.toString().length == 8 || it.toString().length == 5)
+            binding.btnContinue.isEnabled(it.toString().length == 8 || it.toString().length == 5 || it.toString().length==6)
         }
     }
 
