@@ -290,7 +290,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 }
 
                 Status.ERROR -> {
-                    showSnackbar("Error swap:: "+it.message.toString())
+                    showSnackbar(it.message.toString())
                     secondPin = ""
                     pin = ""
                     clearDots()
@@ -308,7 +308,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                     }
 
                     Status.ERROR -> {
-                        showSnackbar("Error::ip " + it.message.toString())
+                        showSnackbar( it.message.toString())
                         secondPin = ""
                         pin = ""
                         clearDots()
@@ -361,7 +361,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 Status.ERROR -> {
                     clearDots()
                     PinDotsAnimation.stopPinDotsAnimation()
-                    showSnackbar("Error sign:: "+it.message.toString())
+                    showSnackbar(it.message.toString())
                     removeUnregisteredDevice(it.message.toString())
                 }
             }

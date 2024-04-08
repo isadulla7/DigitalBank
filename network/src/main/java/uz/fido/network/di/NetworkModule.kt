@@ -131,7 +131,8 @@ object NetworkModule {
     ): OkHttpClient = OkHttpClient.Builder()
         .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
         .addInterceptor(HeaderInterceptor())
-        .addInterceptor(loggingInterceptor).addInterceptor(
+        .addInterceptor(loggingInterceptor)
+        .addInterceptor(
             AuthInterceptor(
                 swapKeyService = swapKeyService, context = appContext, apiInterface
             )
@@ -212,7 +213,8 @@ object NetworkModule {
         .addInterceptor(Interceptor {
             val request: Request = it.request().newBuilder().build()
             return@Interceptor it.proceed(request)
-        }).addInterceptor(loggingInterceptor)
+        })
+        //.addInterceptor(loggingInterceptor)
       //  .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
         .readTimeout(180, TimeUnit.SECONDS)
         .connectTimeout(180, TimeUnit.SECONDS).writeTimeout(180, TimeUnit.SECONDS).build()

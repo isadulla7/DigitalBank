@@ -56,7 +56,7 @@
     <string name="russian">Русский</string>
     <string name="sign_in">Kirish</string>
     <string name="sign_in_description">Ilovaga kirish uchun telefon raqamingiz va parolingizni kiriting</string>
-    <string name="sign_up_privacy">Davom etish tugmasini bosish orqali siz <a href="https://universalbank.uz/">foydalanuvchi shartnomasi</a> shartlariga roziligingizni tasdiqlaysiz.</string>
+    <string name="sign_up_privacy">Davom etish tugmasini bosish orqali siz <a href="https://ibank.ubank.uz/cib/default.htm">foydalanuvchi shartnomasi</a> shartlariga roziligingizni tasdiqlaysiz.</string>
     <string name="verification_privacy">Men Universal Bank <a href="https://universalbank.uz/">shartlariga</a> roziman </string>
     <string name="create_password">Parol yarating</string>
     <string name="create_password_description">O’zingiz uchun kuchli va esda qolarli parol yarating</string>
