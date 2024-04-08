@@ -56,7 +56,7 @@
     <string name="russian">Русский</string>
     <string name="sign_in">Login</string>
     <string name="sign_in_description">Enter your phone number and password to login the application</string>
-    <string name="sign_up_privacy">By clicking the \"Continue\" button, you confirm your acceptance of the terms of <a href="https://ibank.ubank.uz/cib/default.htm">user agreement</a></string>
+    <string name="sign_up_privacy">By clicking the \"Continue\" button, you confirm your acceptance of the terms of <a href="https://universalbank.uz/private">user agreement</a></string>
     <string name="please_accept_privacy">Please accept all terms of the agreement</string>
     <string name="verification_privacy">I agree with <a href="https://universalbank.uz/private">terms</a> Universal Bank </string>
     <string name="create_password">Create a password</string>
