@@ -34,6 +34,7 @@ fun <T : Any> handleException(e: Exception): Resource<T> {
             errorResource = Resource.error(
                 message = error.message, data = null, errorBody = error
             )
+
         }
 
         is SocketTimeoutException -> {

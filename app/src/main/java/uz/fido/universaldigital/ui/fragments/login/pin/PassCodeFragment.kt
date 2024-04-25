@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.biometric.BiometricPrompt
@@ -290,7 +291,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 }
 
                 Status.ERROR -> {
-                    showSnackbar("Error swap:: "+it.message.toString())
+                    showSnackbar(it.message.toString())
                     secondPin = ""
                     pin = ""
                     clearDots()
@@ -308,7 +309,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                     }
 
                     Status.ERROR -> {
-                        showSnackbar("Error::ip " + it.message.toString())
+                        showSnackbar(it.message.toString())
                         secondPin = ""
                         pin = ""
                         clearDots()
@@ -319,6 +320,10 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     private fun signInRequest(userInfo: UserInfo) {
         val device = GetDeviceInfo(requireContext()).deviceInfo
+        val password=requireContext().getUserQwerty()
+        if (password=="404"){
+            showSnackbar(getString(R.string.error_password))
+        }else{
         val signInRequest = SignInRequestNew(
             phone_number = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).replace("", ""),
             device_type = "A",
@@ -328,7 +333,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             ip = requireContext().getIpAddress(),
             client_id = USER_CLIENT_ID,
             fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
-            password = requireContext().getUserQwerty(),
+            password = password,
             is_pin = 1,
             sim_iccd = device.simCcd.toString(),
             network_state = device.networkState.toString(),
@@ -361,11 +366,12 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 Status.ERROR -> {
                     clearDots()
                     PinDotsAnimation.stopPinDotsAnimation()
-                    showSnackbar("Error sign:: "+it.message.toString())
+                    showSnackbar(it.message.toString())
                     removeUnregisteredDevice(it.message.toString())
                 }
             }
         }
+    }
     }
 
     private fun saveSignInResponse(signInResponse: SignInResponse) {

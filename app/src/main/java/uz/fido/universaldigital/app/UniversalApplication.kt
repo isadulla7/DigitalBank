@@ -1,7 +1,9 @@
 package uz.fido.universaldigital.app
 
+import android.app.Activity
 import android.app.Application
 import android.content.Context
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.HiltAndroidApp
 import io.paperdb.Paper
@@ -33,6 +35,7 @@ class UniversalApplication : Application() {
         DiffieHellman.getDiffieHellman()
         Paper.book().write(DEVICE_CODE, this.getDeviceIds())
         initLocale()
+
     }
 
     private fun initLocale() {

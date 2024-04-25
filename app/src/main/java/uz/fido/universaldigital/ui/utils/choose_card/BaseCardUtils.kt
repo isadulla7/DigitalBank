@@ -185,8 +185,8 @@ object BaseCardUtils {
     }
 
     fun isBankCard(card: CardResponse): Boolean {
-        return card.object_value.startsWith("860055") || card.object_value.startsWith("626272") || card.object_value.startsWith(
-            "986009"
+        return card.object_value.startsWith("860048") || card.object_value.startsWith("626272") || card.object_value.startsWith(
+            "986023"
         ) || card.object_value.startsWith("4685") || card.object_value.startsWith("4787") || card.object_value.startsWith(
             "511662"
         ) || card.object_value.startsWith("5130")

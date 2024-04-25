@@ -5,4 +5,6 @@
     <string name="delete_account_q">Удалить аккаунт?</string>
     <string name="delete_account_description">Вы уверены, что хотите удалить свою учетную запись? Эту операцию нельзя отменить</string>
     <string name="successfully_deleted">Hisobingiz muvaffaqiyatli o\'chirildi</string>
+    <string name="pass_check">Пароль должен содержать хотя бы одну букву или одну цифру и один символ.</string>
+    <string name="delete_all">Удалить все</string>
 </resources>

@@ -240,6 +240,7 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
                 cardInfoDto = cardInfo
                 cardInfoDto!!.card_number = senderWallet
                 viewModel.getTransferInfo(senderCard, cardInfoDto)
+                btnContinue.isEnabled(etAmount.text.toString()=="" || etAmount.text.toString()=="0")
                 if (senderCard?.object_value == cardInfoDto?.card_number) {
                     binding.tvMinAmount.visibility = View.VISIBLE
                     binding.tvMinAmount.text = getString(R.string.sender_and_receiver_the_same)
@@ -259,7 +260,7 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
                 binding.etAmount,
                 p2PInfoDto,
                 requireContext()
-            )
+            ) && (binding.etAmount.text.toString()!="" && binding.etAmount.text.toString()!="0")
         )
     }
 

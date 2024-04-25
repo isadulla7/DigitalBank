@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.util.Base64
+import android.util.Log
 import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKey
 import com.google.firebase.messaging.FirebaseMessaging
@@ -30,15 +31,21 @@ fun Context.saveSignInResponse(signInResponse: SignInResponse) {
     Paper.book().write(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
     Paper.book().write(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
     Paper.book().write(
-        Const.PAPER_CLIENT_PHONE,
-        signInResponse.phone_number?.replace("+", "")?.replace(" ", "")
+        Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", "")
     )
     Paper.book().write(Const.PAPER_CLIENT_ID, signInResponse.user_id)
     Paper.book().write(Const.PAPER_CLIENT_NAME, signInResponse.name)
     Paper.book().write(Const.PAPER_CLIENT_SURNAME, signInResponse.surname)
     Paper.book()
         .write(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
-    (signInResponse.password_enc.ifEmpty { signInResponse.password })?.let { saveUserQwerty(it) }
+ /*   signInResponse.password?.let {
+        saveUserQwerty(it)
+    }*/
+        (signInResponse.password_enc.ifEmpty { signInResponse.password })?.let {
+            Log.d("TAG", "saveSignInResponse: ${signInResponse.password_enc}")
+            Log.d("TAG", "saveSignInResponse: ${signInResponse.password}")
+            Log.d("TAG", "saveSignInResponse: $it")
+            saveUserQwerty(it) }
 }
 
 fun saveSignInPinResponse(signInResponse: SignInResponse) {
@@ -55,8 +62,7 @@ fun saveSignInPinResponse(signInResponse: SignInResponse) {
     Paper.book().write(Const.PAPER_CLIENT_STATUS_NAME, signInResponse.user_status_name)
     Paper.book().write(Const.PAPER_CLIENT_STATUS_ID, signInResponse.user_status_id)
     Paper.book().write(
-        Const.PAPER_CLIENT_PHONE,
-        signInResponse.phone_number?.replace("+", "")?.replace(" ", "")
+        Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", "")
     )
     Paper.book().write(
         Const.PAPER_CLIENT_APPLICATION_COUNT,
@@ -96,19 +102,22 @@ fun Context.saveUserQwerty(qwerty: String) {
         if (file.exists()) {
             file.delete()
         }
+        try {
+            val encryptedFile = EncryptedFile.Builder(
+                applicationContext,
+                file,
+                mainKey,
+                EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
+            ).build()
 
-        val encryptedFile = EncryptedFile.Builder(
-            applicationContext,
-            file,
-            mainKey,
-            EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
-        ).build()
-
-        val fileContent = qwerty.toByteArray(StandardCharsets.UTF_8)
-        encryptedFile.openFileOutput().apply {
-            write(fileContent)
-            flush()
-            close()
+            val fileContent = qwerty.toByteArray(StandardCharsets.UTF_8)
+            encryptedFile.openFileOutput().apply {
+                write(fileContent)
+                flush()
+                close()
+            }
+        } catch (e: Exception) {
+            e.stackTrace
         }
     } else {
         Paper.book().write(USER_QWERTY_KEY, qwerty)
@@ -125,19 +134,23 @@ fun Context.saveUserSms(qwerty: String) {
         if (file.exists()) {
             file.delete()
         }
+        try {
 
-        val encryptedFile = EncryptedFile.Builder(
-            applicationContext,
-            file,
-            mainKey,
-            EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
-        ).build()
+            val encryptedFile = EncryptedFile.Builder(
+                applicationContext,
+                file,
+                mainKey,
+                EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
+            ).build()
 
-        val fileContent = qwerty.toByteArray(StandardCharsets.UTF_8)
-        encryptedFile.openFileOutput().apply {
-            write(fileContent)
-            flush()
-            close()
+            val fileContent = qwerty.toByteArray(StandardCharsets.UTF_8)
+            encryptedFile.openFileOutput().apply {
+                write(fileContent)
+                flush()
+                close()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     } else {
         Paper.book().write(USER_SMS_KEY, qwerty)
@@ -145,19 +158,21 @@ fun Context.saveUserSms(qwerty: String) {
 }
 
 fun Context.getUserQwerty(): String {
+
     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
         val mainKey = MasterKey.Builder(this, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
 
         val fileToRead = "universal_digital_qwerty.md"
         val file = File(filesDir, fileToRead)
+        return try {
         val encryptedFile = EncryptedFile.Builder(
             applicationContext,
             file,
             mainKey,
             EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
         ).build()
-        return try {
+
             val inputStream = encryptedFile.openFileInput()
             val byteArrayOutputStream = ByteArrayOutputStream()
             var nextByte: Int = inputStream.read()
@@ -169,7 +184,7 @@ fun Context.getUserQwerty(): String {
             val plaintext: ByteArray = byteArrayOutputStream.toByteArray()
             String(plaintext, StandardCharsets.UTF_8)
         } catch (e: Exception) {
-            ""
+            "404"
         }
     } else {
         return Paper.book().read(USER_QWERTY_KEY, "")

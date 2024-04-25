@@ -71,7 +71,7 @@ class MenuServicesFragment :
             5 -> goto(R.id.openWalletFragment)
             100 -> goto(R.id.conversionFragment)
             200 -> /*openPaymentInPlaces()*/functionInProgress()
-            201 -> checkIdentificationAndGoto(R.id.goalListFragment)
+            201 -> /*checkIdentificationAndGoto(R.id.goalListFragment)*/functionInProgress()
             202 -> goto(R.id.mainApplicationListFragment)
             500 -> goto(R.id.transferToAccountFragment)
             700 -> /*checkIdentificationAndGoto(R.id.mibFragment)*/functionInProgress()

@@ -43,11 +43,13 @@ class CardSafetyFragment : BaseFragment<FragmentCardSafetyBinding, UtilsViewMode
             binding.limitLayout.visibility = View.GONE
         }
         binding.changePinLayout.isVisible =
-            card.object_value.startsWith("860055") || card.object_value.startsWith("986009")
+            card.object_value.startsWith("860055") || card.object_value.startsWith("986023")
         binding.visaSecureLayout.isVisible = card.object_value.startsWith("46")
 
         binding.changePinLayout.setOnClickListener {
-//            gotoWithTransition(R.id.clearPinFragment, bundleOf(Const.CARD to card))
+            if (card.object_type=="GL"){
+                goto(R.id.clearPinFragment, bundleOf(Const.CARD to card))
+            }
         }
         binding.safeModeLayout.setOnClickListener {
             goto(R.id.safeModeFragment, bundleOf(Const.CARD to card))

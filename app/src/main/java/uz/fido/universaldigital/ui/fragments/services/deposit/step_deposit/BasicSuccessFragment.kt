@@ -55,6 +55,7 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
         const val GOAL_INCOME = "goal_income"
         const val MY_HOME_PAYMENT_LIST = "my_home_payment_list"
         const val DEPOSIT_WITH_DRAW_PERCENT = "deposit_with_draw_percent"
+        const val HUMO_ACTIVATION="humo_activation"
 
     }
 
@@ -86,7 +87,9 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
                     MY_HOME_PAYMENT_LIST -> {
                         gotoMainPage()
                     }
-
+                    HUMO_ACTIVATION -> {
+                        gotoMainPage()
+                    }
                     else -> {
                         gotoMainPage()
                     }
@@ -185,7 +188,7 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
                     "${Format.formatAmount(requireArguments().getString(Const.OPERATION_AMOUNT))} UZS"
             }
 
-            EDIT_GOAL, MY_HOME_PAYMENT_LIST -> {
+            EDIT_GOAL, MY_HOME_PAYMENT_LIST, HUMO_ACTIVATION -> {
                 binding.successTitle.text = getString(R.string.successfully)
                 binding.amount.visibility = View.GONE
             }
@@ -256,6 +259,9 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
 
                 DEPOSIT_EDIT_NAME, DEPOSIT_FILLING, DEPOSIT_CLOSE -> {
                     goto(R.id.action_basicSuccessFragment_to_clientDepositListFragment)
+                }
+                HUMO_ACTIVATION->{
+                    gotoMainPage()
                 }
 
                 "credit_take" -> {

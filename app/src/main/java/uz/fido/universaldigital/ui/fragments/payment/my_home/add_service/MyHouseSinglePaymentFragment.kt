@@ -87,14 +87,19 @@ class MyHouseSinglePaymentFragment() :
     }
 
     private fun checkAmount(it: String) {
-        amount = it.replace(" ","").toBigDecimal()
-        var amount = it.replace(" ", "").toBigDecimal()
-        if ((amount * BigDecimal("100")) < selectedCard?.balance.toString()
-                .toBigDecimal() && selectedCard?.state == "0" &&
-            amount >= minAmount.toBigDecimal() && amount <= maxAmount.toBigDecimal()
-        ) {
-            binding.btnContinue.isEnabled(true)
-        } else binding.btnContinue.isEnabled(false)
+        try {
+            amount = it.replace(" ","").toBigDecimal()
+            var amount = it.replace(" ", "").toBigDecimal()
+            if ((amount * BigDecimal("100")) < selectedCard?.balance.toString()
+                    .toBigDecimal() && selectedCard?.state == "0" &&
+                amount >= minAmount.toBigDecimal() && amount <= maxAmount.toBigDecimal()
+            ) {
+                binding.btnContinue.isEnabled(true)
+            } else binding.btnContinue.isEnabled(false)
+        }catch (e:Exception){
+            binding.btnContinue.isEnabled(false)
+        }
+
     }
 
     private fun onclickView() {

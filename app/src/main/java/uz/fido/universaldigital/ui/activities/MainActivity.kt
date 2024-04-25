@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import uz.fido.network.data.utility.CurrentActivityHolder
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityMainBinding
@@ -67,6 +68,7 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
+        CurrentActivityHolder.currentActivity = this
         internetListener()
         isStop = false
         if (!showPinCode) {
@@ -128,6 +130,13 @@ class MainActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         pausedMillis = 0
+    }
+
+    override fun onPause() {
+        super.onPause()
+        if (CurrentActivityHolder.currentActivity == this) {
+            CurrentActivityHolder.currentActivity = null
+        }
     }
 
     private fun checkUpdate() {

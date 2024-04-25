@@ -466,6 +466,7 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
             payment_details = keyValueList,
             template_id = if (isEdit) templateItem!!.template_id else null
         )
+        if (templateName!=""){
         menuPaymentsViewModel.createTemplate(getClientToken(), model).observe(viewLifecycleOwner) {
             binding.btnContinue.setProgress(false)
             when (it.status) {
@@ -493,6 +494,10 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
                     showSnackbar(it.message.toString())
                 }
             }
+        }
+        }else{
+            binding.btnContinue.setProgress(false)
+            showSnackbar("Имя шаблона пусто")
         }
     }
 

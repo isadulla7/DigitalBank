@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.products.cards.card_operations.add
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
@@ -64,7 +65,11 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.addCardBtn.setOnClickListener {
+            if (isValid(binding.cardNumber.editableText.toString().replace(" ", ""))){
             checkCardRequest()
+            }else{
+                showSnackbar("Karta raqam xato bo'lishi munkin")
+            }
         }
         binding.imageScanner.setOnClickListener {
             val dialog = ChooseScanCardOptionDialog(onCameraClickListener = {
@@ -231,4 +236,28 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
         binding.dotsIndicator.setViewPager(binding.viewPager)
         binding.viewPager.setPageTransformer(true, AlphaAndScalePageTransformer())
     }
+
+    fun isValid(cardNumber: String): Boolean {
+        var s1 = 0
+        var s2 = 0
+        val reverse = StringBuffer(cardNumber).reverse().toString()
+        for (i in reverse.indices) {
+            val digit = Character.digit(reverse[i], 10)
+            when {
+                i % 2 == 0 -> s1 += digit
+                else -> {
+                    s2 += 2 * digit
+                    when {
+                        digit >= 5 -> s2 -= 9
+                    }
+                }
+            }
+        }
+        return (s1 + s2) % 10 == 0
+    }
+
 }
+
+
+
+

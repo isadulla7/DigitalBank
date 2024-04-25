@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_bg"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/handle"
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_dialog_handle"
+        tools:ignore="ContentDescription" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:textSize="18sp"
+        android:visibility="gone" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/tv_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?selectableItemBackground"
+        android:background="@color/whiteColor"
+        android:padding="16dp"
+        android:gravity="start"
+        android:text="@string/delete"
+        android:textColor="@color/blackColor"
+        android:textSize="16sp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/tv_state"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?selectableItemBackground"
+        android:background="@color/whiteColor"
+        android:padding="16dp"
+        android:gravity="start"
+        android:text="@string/activ"
+        android:textColor="@color/blackColor"
+        android:textSize="16sp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/tv_delete_all"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?selectableItemBackground"
+        android:background="@color/whiteColor"
+        android:visibility="gone"
+        android:padding="16dp"
+        android:gravity="start"
+        android:text="@string/delete_all"
+        android:textColor="@color/blackColor"
+        android:textSize="16sp" />
+</androidx.appcompat.widget.LinearLayoutCompat>

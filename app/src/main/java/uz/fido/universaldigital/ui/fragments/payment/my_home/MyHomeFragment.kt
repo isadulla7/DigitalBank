@@ -21,6 +21,7 @@ import uz.fido.universaldigital.ui.fragments.payment.download_payment.DownloadPa
 import uz.fido.universaldigital.ui.fragments.payment.my_home.adapter.MyHouseAdapter
 import uz.fido.universaldigital.ui.fragments.payment.my_home.dialog.MyHouseAddDialog
 import uz.fido.universaldigital.ui.fragments.payment.my_home.dialog.MyHouseOperationDialog
+import uz.fido.universaldigital.ui.utils.extensions.deviceCheck
 import uz.fido.universaldigital.ui.utils.extensions.hideProgress
 import uz.fido.universaldigital.ui.utils.extensions.showProgress
 import uz.fido.utils.utility.adapter.showSkeleton
@@ -87,6 +88,7 @@ class MyHomeFragment : DownloadPayment(), BaseInterface {
                 Status.ERROR -> {
                     ///showSnackbar(it.message.toString())
                     initEmptyView()
+
                 }
             }
         }

@@ -6,11 +6,13 @@ import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import uz.fido.network.domain.datasource.interfaces.ICardRepository
 import uz.fido.network.domain.datasource.interfaces.IP2PRepository
 import uz.fido.network.domain.datasource.interfaces.IServiceRepository
 import uz.fido.network.domain.datasource.interfaces.ITemplateRepository
 import uz.fido.network.domain.datasource.interfaces.IUtilsRepository
 import uz.fido.network.domain.model.applications.GetProductDetailsRequest
+import uz.fido.network.domain.model.cards.ResetPinCountCheck
 import uz.fido.network.domain.model.popular_transfers.PopularTransfers
 import uz.fido.network.domain.model.rates.CourseItem
 import uz.fido.network.domain.model.rates.GetCurrencyRatesRequest
@@ -30,7 +32,8 @@ class UtilsViewModel @Inject constructor(
     private val serviceRepository: IServiceRepository,
     private val templatesRepository: ITemplateRepository,
     private val p2PRepository: IP2PRepository,
-    private val cardsUseCase: CardsUseCase
+    private val cardsUseCase: CardsUseCase,
+    private val iCardRepository: ICardRepository
 ) : AbstractViewModel(application) {
 
     var shouldTemplateUpdate = true
@@ -99,6 +102,11 @@ class UtilsViewModel @Inject constructor(
     fun setTemplateOrder(token: String, setTemplateOrderRequest: SetTemplateOrderRequest) =
         liveData(Dispatchers.IO) {
             emit(templatesRepository.setTemplateOrder(token, setTemplateOrderRequest))
+        }
+
+    fun checkResetPinCount(token: String, resetPinCountCheck: ResetPinCountCheck) =
+        liveData(Dispatchers.IO) {
+            emit(iCardRepository.checkResetPinCount(token, resetPinCountCheck))
         }
 
 }

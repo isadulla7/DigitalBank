@@ -81,14 +81,14 @@ class TransferViewModel @Inject constructor(
                     val result = useCase.getTransferInfo(
                         P2PInfoRequest(
                             service_id = getServiceIdInfo(
-                                receiverCardDto.card_number!!,
+                                receiverCardDto.card_number?:"",
                                 senderCard.object_value
                             ),
                             from_object_id = senderCard.object_id,
                             expire = senderCard.object_expiry,
-                            to_object_value = receiverCardDto.card_number!!,
+                            to_object_value = receiverCardDto.card_number?:"",
                             to_object_id = receiverCardDto.card_id,
-                            command = getInfoCommand(receiverCardDto.card_number!!)
+                            command = getInfoCommand(receiverCardDto.card_number?:"")
                         )
                     )
                     p2pInfo.postValue(result)

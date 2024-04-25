@@ -75,11 +75,13 @@ class ConnectSmsNotificationFragment :
         ).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
+                    val line=it.data?.string_line?:""
                     gotoWithSlide(
                         R.id.confirmSmsFragment, bundleOf(
                             Const.OPERATION to ConfirmSmsFragment.SMS_OPERATION_CONNECT_SMS_INFO,
                             Const.PHONE_NUMBER to getClientPhoneNumber(),
-                            Const.CARD_NUMBER to cardNumber
+                            Const.CARD_NUMBER to cardNumber,
+                            ConfirmSmsFragment.STRING_LINE to line
                         )
                     )
                 }

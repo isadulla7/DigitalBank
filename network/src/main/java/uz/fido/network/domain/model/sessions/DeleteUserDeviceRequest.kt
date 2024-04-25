@@ -6,6 +6,7 @@ class DeleteUserDeviceRequest(
     var device_type: String,
     var selected_device_code: String,
     var del_req_type: String,
+    var current_device_code:String,
     var user_id: String,
     var string_line: String
 ) : Serializable

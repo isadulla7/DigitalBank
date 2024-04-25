@@ -14,6 +14,7 @@ import java.net.Inet4Address
 import java.net.NetworkInterface
 import java.net.SocketException
 import java.util.Locale
+import java.util.regex.Pattern
 
 object Utility {
 
@@ -49,9 +50,9 @@ object Utility {
     }
 
     fun isValidPasswordFormat(password: String): Boolean {
-        return password.length >= 8
-//    val passwordREGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+*/!()_=-])(?=\\S+\$).{4,}\$")
-//    return passwordREGEX.matcher(password).matches()
+      //  return password.length >= 8
+    val passwordREGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+*/!()_=-])(?=\\S+\$).{4,}\$")
+    return passwordREGEX.matcher(password).matches()
     }
 
 

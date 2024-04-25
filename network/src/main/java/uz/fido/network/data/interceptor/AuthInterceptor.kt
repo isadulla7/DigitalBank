@@ -1,15 +1,22 @@
 package uz.fido.network.data.interceptor
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Build
+import android.util.Log
 import android.widget.Toast
 import io.paperdb.BuildConfig
 import io.paperdb.Paper
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
+import org.json.JSONObject
+import uz.fido.network.data.utility.CurrentActivityHolder
+import uz.fido.network.data.utility.ErrorUtils
 import uz.fido.network.domain.datasource.services.SwapKeyApiInterface
 import uz.fido.network.domain.datasource.services.UserApiInterface
+import uz.fido.network.domain.model.abc_base.APIError
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
 import uz.fido.network.domain.model.abc_base.SwapKeysResponse
 import uz.fido.network.domain.model.abc_base.UserInfo
@@ -25,6 +32,7 @@ import uz.fido.utils.security.getClientEncodedToken
 import uz.fido.utils.utility.context.AppSignatureHelper
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
+import uz.fido.utils.utility.context.startActivityWithClearTask
 import uz.fido.utils.utility.language.Utility.getDeviceName
 import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.utility.user.getUserQwerty
@@ -53,6 +61,22 @@ class AuthInterceptor @Inject constructor(
         if (originalResponse.code != TOKEN_EXPIRED && originalResponse.code != UNAUTHORIZED) {
             return originalResponse
         }
+
+        if (originalResponse.code == UNAUTHORIZED) {
+            val jsonObject = JSONObject(originalResponse.body!!.string())
+            val code = jsonObject.getInt("code")
+            if (code == 66) {
+//                val pid=android.os.Process.myPid()
+//                android.os.Process.killProcess(pid);
+                // System.runFinalizersOnExit(true)
+                // (context as Activity).finishAffinity()
+                val activity=CurrentActivityHolder.currentActivity
+            //    val intent=activity!!.intent
+                activity?.finishAffinity()
+                System.exit(0)
+            }
+        }
+
         synchronized(this) {
             if (isNeedToCallSwapKey()) {
                 lastSwapKeyCallTime = Calendar.getInstance().time
@@ -66,9 +90,8 @@ class AuthInterceptor @Inject constructor(
                             if (signInResponse.code() == 200) {
                                 signInResponse.body()?.let {
                                     saveSignInPinResponse(it)
-                                    modifiedRequest =
-                                        originalRequest.newBuilder()
-                                            .header("Authorization", getClientToken()).build()
+                                    modifiedRequest = originalRequest.newBuilder()
+                                        .header("Authorization", getClientToken()).build()
                                     return chain.proceed(modifiedRequest!!)
                                 }
                             }
