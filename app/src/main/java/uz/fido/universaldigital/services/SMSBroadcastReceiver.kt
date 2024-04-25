@@ -21,7 +21,7 @@ open class SMSBroadcastReceiver : BroadcastReceiver() {
                     CommonStatusCodes.SUCCESS -> {
                         val message = extras.get(SmsRetriever.EXTRA_SMS_MESSAGE) as String
                         val pattern1 = Pattern.compile("\\d{8}")
-                        val pattern2 = Pattern.compile("\\d{5}")
+                        val pattern2 = Pattern.compile("\\d{6}")
                         val matcher1 = pattern1.matcher(message)
                         val matcher2 = pattern2.matcher(message)
                         if (matcher1.find()) {
