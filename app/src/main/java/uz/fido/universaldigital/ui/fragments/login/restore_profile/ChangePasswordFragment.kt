@@ -58,8 +58,12 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
         binding.etPassword.addTextChangedListener { checkForButton() }
         binding.etRepeatPassword.addTextChangedListener { checkForButton() }
         binding.btnContinue.setOnClickListener {
+            if (isValidPasswordFormat(binding.etPassword.text.toString())){
             binding.btnContinue.setProgress(true)
             changePasswordOperation()
+            }else{
+                showSnackbar(requireContext().getString(R.string.pass_check))
+            }
         }
     }
 

@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.login.sign_up_password
 
 import android.os.Build
 import android.os.Bundle
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -25,6 +26,7 @@ import uz.fido.utils.utility.context.getIpAddress
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.Utility.getDeviceName
+import uz.fido.utils.utility.language.Utility.isValidPasswordFormat
 
 @AndroidEntryPoint
 class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignUpPasswordViewModel>(
@@ -45,9 +47,11 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
 
     private fun initFieldsListener() {
         binding.etPassword.addTextChangedListener {
+            binding.passCheck.visibility=View.GONE
             checkForButton()
         }
         binding.etRepeatPassword.addTextChangedListener {
+            binding.passCheck.visibility=View.GONE
             checkForButton()
         }
 
@@ -63,8 +67,12 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
 
     private fun initSetOnClickListeners() {
         binding.btnContinue.setOnClickListener {
+            if (isValidPasswordFormat(binding.etPassword.text.toString())){
             binding.btnContinue.setProgress(true)
             getUserInfo()
+            }else{
+                binding.passCheck.visibility=View.VISIBLE
+            }
         }
         binding.appBar.setOnBackButtonClickListener { pop() }
     }

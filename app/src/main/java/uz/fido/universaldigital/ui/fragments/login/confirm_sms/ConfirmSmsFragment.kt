@@ -9,6 +9,7 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
@@ -23,6 +24,8 @@ import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.UserInfo
 import uz.fido.network.domain.model.cards.AddCardRequest
+import uz.fido.network.domain.model.cards.ResetPinCount
+import uz.fido.network.domain.model.cards.ResetPinCountCheck
 import uz.fido.network.domain.model.home.GlSMSActivateRequest
 import uz.fido.network.domain.model.payment.AllServiceLists
 import uz.fido.network.domain.model.sessions.DeleteUserDeviceRequest
@@ -48,6 +51,7 @@ import uz.fido.universaldigital.ui.fragments.login.restore_profile.ChangePasswor
 import uz.fido.universaldigital.ui.fragments.login.sign_in.SignInViewModel
 import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpViewModel
 import uz.fido.universaldigital.ui.fragments.login.sign_up_password.SignUpPasswordFragment
+import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.main_dialogs.AllServicesDialog
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.app.getFCMToken
@@ -61,10 +65,12 @@ import uz.fido.utils.security.encryptPassword
 import uz.fido.utils.utility.bundle.serializable
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
+import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.Utility.getDeviceName
 import uz.fido.utils.utility.user.getClientId
+import uz.fido.utils.utility.user.getClientPhoneNumber
 import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.utility.user.getFormattedClientPhone
 import java.text.DecimalFormat
@@ -100,6 +106,8 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         const val SMS_SERVICE_ID = "service_id"
         const val SMS_FROM_OBJECT_VALUE = "from_object_value"
         const val SMS_MAX_LENGTH = "SMS_MAX_LENGTH"
+
+        const val SMS_RESET_PIN = "sms_reset_pin"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -130,8 +138,9 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         val smsLength = if (arguments != null) {
             arguments?.getInt(SMS_MAX_LENGTH) ?: 8
         } else 8
+        val newSmsLength = if (smsLength == 0) 8 else smsLength
         binding.etSms.addTextChangedListener {
-            binding.btnContinue.isEnabled(it.toString().length == 8 || it.toString().length == 5)
+            binding.btnContinue.isEnabled(it.toString().length == newSmsLength)
         }
     }
 
@@ -160,7 +169,45 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             SMS_OPERATION_TERMINATE_SESSION -> {
                 val userDevice =
                     requireArguments().serializable<UserDevices>("user_device") as UserDevices
-                terminateSessionRequest(userDevice, "delete")
+                terminateSessionRequest(userDevice, requireArguments().getString("type").toString())
+            }
+
+            SMS_RESET_PIN -> {
+                checkResetPin()
+            }
+        }
+    }
+
+    private fun checkResetPin() {
+        binding.btnContinue.setProgress(true)
+        val smsCode = binding.etSms.editableText.toString()
+        val objectValue = requireArguments().getString(Const.CARD_NUMBER).toString()
+        val objectExp = requireArguments().getString("object_data").toString()
+        val string_line = requireArguments().getString(STRING_LINE).toString()
+
+        val item = ResetPinCount(
+            "card",
+            objectValue,
+            objectExp,
+            null,
+            getClientPhoneNumber(),
+            CryptoUtil.encryptWithoutSalt(
+                string_line, smsCode
+            )
+        )
+        viewModel.resetPinCount(getClientToken(), item).observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    binding.btnContinue.setProgress(false)
+                    val bundle = Bundle().apply {
+                        this.putString(Const.OPERATION, BasicSuccessFragment.HUMO_ACTIVATION)
+                    }
+                    goto(R.id.basicSuccessFragment, bundle)
+                }
+
+                Status.ERROR -> {
+                    showSnackbar(it.message.toString())
+                }
             }
         }
     }
@@ -173,6 +220,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             getClientToken(), DeleteUserDeviceRequest(
                 device_type = item.device_type,
                 selected_device_code = item.device_code,
+                current_device_code = item.my_device_code,
                 del_req_type = terminateType,
                 user_id = getClientId(),
                 string_line = CryptoUtil.encryptWithoutSalt(
@@ -210,8 +258,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                 Status.SUCCESS -> {
                     if (it.data?.msg == "100") {
                         setFragmentResult(
-                            SMS_OPERATION_PAYMENT_KEY,
-                            bundleOf("sms_code" to smsCode)
+                            SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode)
                         )
                         findNavController().navigateUp()
                     }
@@ -365,13 +412,24 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         binding.btnContinue.setProgress(true)
         val smsCode = binding.etSms.editableText.toString()
         val objectValue = requireArguments().getString(Const.CARD_NUMBER).toString()
+        val string_line = requireArguments().getString(STRING_LINE).toString()
         viewModel.glSMSActivate(
-            getClientToken(), GlSMSActivateRequest(object_value = objectValue, sms_code = smsCode)
+            getClientToken(), GlSMSActivateRequest(
+                object_value = objectValue,
+                //  sms_code = smsCode,
+                string_line = CryptoUtil.encryptWithoutSalt(
+                    string_line, smsCode
+                )
+            )
         ).observe(viewLifecycleOwner) {
             hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {
                     binding.btnContinue.setProgress(false)
+                    val bundle = Bundle().apply {
+                        this.putString(Const.OPERATION, BasicSuccessFragment.HUMO_ACTIVATION)
+                    }
+                    goto(R.id.basicSuccessFragment, bundle)
                 }
 
                 Status.ERROR -> {
@@ -469,9 +527,8 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     override fun setToEditText(allServiceLists: AllServiceLists, tag: String) {
         allServicesDialog.dismiss()
-        val phoneNumber = requireArguments().getString(PHONE_NUMBER).toString()
-            .replace(" ", "")
-            .replace("+", "")
+        val phoneNumber =
+            requireArguments().getString(PHONE_NUMBER).toString().replace(" ", "").replace("+", "")
         when (allServiceLists.code) {
             SignInTypes.CARD.toString() -> {
                 gotoWithSlide(R.id.restoreWithCardFragment, bundleOf(PHONE_NUMBER to phoneNumber))
@@ -514,8 +571,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     private fun finishOperation() {
         binding.btnContinue.setProgress(true)
-        val phoneNumber = requireArguments().getString("phone_number").toString()
-            .replace(" ", "")
+        val phoneNumber = requireArguments().getString("phone_number").toString().replace(" ", "")
             .replace("+", "")
         val device = GetDeviceInfo(requireContext()).deviceInfo
         val model = FinishRegRequest(
@@ -540,7 +596,14 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                 binding.btnContinue.setProgress(false)
                 when (it.status) {
                     Status.SUCCESS -> {
-                        //need to set password or not?
+                        val signInResponse = it.data!!
+                        requireContext().saveSignInResponse(signInResponse)
+                        val bundle = Bundle()
+                        bundle.putString(
+                            ChangePasswordFragment.CHANGE_PASSWORD_OPERATION,
+                            ChangePasswordFragment.CHANGE_PASSWORD_SIGNUP
+                        )
+                        gotoWithSlide(R.id.changePasswordFragment2, bundle)
                     }
 
                     Status.ERROR -> {}
@@ -629,7 +692,8 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             task.addOnSuccessListener {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                     requireActivity().registerReceiver(
-                        smsBroadcastReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
+                        smsBroadcastReceiver,
+                        IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
                         Context.RECEIVER_EXPORTED
                     )
                 } else {

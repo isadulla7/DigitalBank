@@ -686,4 +686,8 @@
         android:id="@+id/favoriteTransfersFragment"
         android:name="uz.fido.universaldigital.ui.fragments.transfers.transfer_history.FavoriteTransfersFragment"
         android:label="FavoriteTransfersFragment" />
+    <fragment
+        android:id="@+id/clearPinFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.clear_pin.ClearPinFragment"
+        android:label="ClearPinFragment" />
 </navigation>

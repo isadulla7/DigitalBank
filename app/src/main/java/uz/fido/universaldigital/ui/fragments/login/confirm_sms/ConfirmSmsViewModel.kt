@@ -11,6 +11,7 @@ import uz.fido.network.domain.datasource.interfaces.ISwapKeyRepository
 import uz.fido.network.domain.datasource.interfaces.IUserRepository
 import uz.fido.network.domain.datasource.interfaces.IUtilsRepository
 import uz.fido.network.domain.model.cards.AddCardRequest
+import uz.fido.network.domain.model.cards.ResetPinCount
 import uz.fido.network.domain.model.home.GlSMSActivateRequest
 import uz.fido.network.domain.model.p2p.P2PRequest
 import uz.fido.network.domain.model.payment.CreatePaymentRequest
@@ -31,7 +32,7 @@ class ConfirmSmsViewModel @Inject constructor(
     private val cardRepository: ICardRepository,
     private val paymentRepository: IPaymentRepository,
     private val p2PRepository: IP2PRepository,
-    private val utilsRepository: IUtilsRepository
+    private val utilsRepository: IUtilsRepository,
 ) : AbstractViewModel(application) {
 
     fun signIn(signInRequest: SignInRequest) = liveData(Dispatchers.IO) {
@@ -70,6 +71,9 @@ class ConfirmSmsViewModel @Inject constructor(
 
     fun addCard(token: String, addCardRequest: AddCardRequest) = liveData(Dispatchers.IO) {
         emit(cardRepository.addCard(token, addCardRequest))
+    }
+    fun resetPinCount(token: String,  resetPinCount: ResetPinCount) = liveData(Dispatchers.IO) {
+        emit(cardRepository.resetPinCount(token, resetPinCount))
     }
 
     fun terminateSession(token: String, deleteUserDeviceRequest: DeleteUserDeviceRequest) =

@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.profile.security
 import TerminateSessionDialog
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,7 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMyDevicesBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment.Companion.SMS_OPERATION_TERMINATE_SESSION
+import uz.fido.universaldigital.ui.fragments.profile.dialog.DeviceDialog
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.context.AppSignatureHelper
@@ -37,9 +39,17 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
     private var devicesAdapter: DevicesAdapter? = null
     private var userDevices: UserDevices? = null
     private var list = ArrayList<UserDevices>()
+    private lateinit var deviceDialog:DeviceDialog
 
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
+        binding.appBar.setOnAdditionalBtnClickListener {
+            if (list.isNotEmpty()) {
+                val first=list[0]
+                first?.my_device_code=requireActivity().getDeviceIds()
+                terminateSessionRequest(first, "deleteAll")
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -52,7 +62,7 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
     private fun initRecyclerView() {
         binding.trustedDevices.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            devicesAdapter = DevicesAdapter(list, this@MyDevicesFragment)
+            devicesAdapter = DevicesAdapter(list, this@MyDevicesFragment,requireContext())
             adapter = devicesAdapter
         }
     }
@@ -64,6 +74,9 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
 
     private fun getActiveSessions() {
         binding.currentDevice.visibility = View.GONE
+        binding.myDevice.visibility = View.GONE
+        binding.myDeviceTitle.visibility = View.GONE
+        binding.otherDeviceTitle.visibility = View.GONE
         val skeleton = showSkeleton(
             binding.trustedDevices, devicesAdapter!!, R.layout.shimmer_item_my_devices, 4
         )
@@ -76,10 +89,13 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
             binding.currentDevice.visibility = View.VISIBLE
             when (it.status) {
                 Status.SUCCESS -> {
-
+                    binding.myDevice.visibility = View.VISIBLE
+                    binding.myDeviceTitle.visibility = View.VISIBLE
+                    binding.otherDeviceTitle.visibility = View.VISIBLE
                     val data = it.data?.user_devices
                     list.clear()
                     data?.forEach {
+                        Log.d("TAG", "getActiveSessions: ${requireContext().getDeviceIds()}")
                         if (it.device_code != requireContext().getDeviceIds()) list.add(it)
                         else {
                             binding.deviceName.text =
@@ -89,9 +105,15 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
                         }
                     }
                     initRecyclerView()
+                    if(list.isEmpty()){
+                        binding.emptyView.visibility=View.VISIBLE
+                    }else{
+                        binding.emptyView.visibility=View.GONE
+                    }
                 }
 
                 Status.ERROR -> {
+                    binding.emptyView.visibility=View.VISIBLE
                     showSnackbar(it.message.toString())
                 }
             }
@@ -99,7 +121,7 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
     }
 
     private fun terminateSessionRequest(item: UserDevices, type: String) {
-        terminateSessionDialog.dismiss()
+      //  terminateSessionDialog.dismiss()
         showProgress()
         viewModel.checkDevice(
             getClientToken(), CheckDeviceRequest(
@@ -133,12 +155,36 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
     }
 
     override fun terminateSession(item: UserDevices) {
-        super<BaseFragment>.terminateSession(item)
         userDevices = item
-        terminateSessionDialog = TerminateSessionDialog("") {
+        userDevices?.my_device_code=requireActivity().getDeviceIds()
+        super<BaseFragment>.terminateSession(item)
+        deviceDialog= DeviceDialog(item,object :BaseInterface{
+            override fun deviceDelete() {
+                super.deviceDelete()
+                deviceDialog.dismiss()
+                terminateSessionRequest(userDevices!!, "delete")
+            }
+
+            override fun deviceState() {
+                super.deviceState()
+                deviceDialog.dismiss()
+                val state=if (item.status=="A")"deactivate" else "activate"
+                terminateSessionRequest(userDevices!!, state)
+            }
+
+            override fun deviceDeleteAll() {
+                super.deviceDeleteAll()
+                deviceDialog.dismiss()
+                terminateSessionRequest(userDevices!!, "deleteAll")
+            }
+        })
+        deviceDialog.show(childFragmentManager,"")
+
+
+     /*   terminateSessionDialog = TerminateSessionDialog("") {
             terminateSessionRequest(userDevices!!, "delete")
         }
-        terminateSessionDialog.show(childFragmentManager, "TAG")
+        terminateSessionDialog.show(childFragmentManager, "TAG")*/
     }
 
 }

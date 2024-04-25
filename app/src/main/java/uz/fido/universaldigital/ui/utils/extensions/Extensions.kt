@@ -17,6 +17,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Html
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.PixelCopy
 import android.view.View
 import android.view.ViewTreeObserver
@@ -48,14 +49,16 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import uz.fido.network.domain.model.abc_base.APIError
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.payment.PaymentParams
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
+import uz.fido.universaldigital.ui.activities.LoginActivity
+import uz.fido.universaldigital.ui.activities.MainActivity
 import uz.fido.universaldigital.ui.utils.validator.RangeValidator
 import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
-import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.const.ServerMessages.getMeaningFulMessage
@@ -430,5 +433,15 @@ fun RecyclerView.runWhenReady(action: () -> Unit) {
         }
     }
     viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
+}
+
+fun deviceCheck(activity: Activity, errorBody: APIError?){
+    Log.d("TAG", "deviceCheck:${errorBody?.code} ")
+    Log.d("TAG", "deviceCheck:${errorBody?.message} ")
+    if (errorBody!=null){
+        if (errorBody.code==66){
+            activity.finish()
+        }
+    }
 }
 

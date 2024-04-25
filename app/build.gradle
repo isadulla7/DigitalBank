@@ -33,6 +33,11 @@ android {
             }
         }
     }
+    bundle {
+        language {
+            enableSplit = false
+        }
+    }
     dexOptions {
         incremental true
         javaMaxHeapSize "4g"
@@ -174,5 +179,4 @@ dependencies {
 
     //utils module
     implementation project(':utils')
-
 }

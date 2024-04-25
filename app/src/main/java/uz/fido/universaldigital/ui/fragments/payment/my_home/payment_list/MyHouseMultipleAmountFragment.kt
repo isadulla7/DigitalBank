@@ -72,8 +72,13 @@ class MyHouseMultipleAmountFragment:BaseFragment<FragmentMyHouseMutipleAmountBin
 
             withContext(Dispatchers.Main) {
                 binding.rec.adapter = MyHouseAmountAdapter(requireContext(),list){it,postion->
-                    list[postion].check_amount = it.toBigDecimal()>BigDecimal("499")
-                    checkBottom()
+                    try {
+                        list[postion].check_amount = it.toBigDecimal()>BigDecimal("499")
+                        checkBottom()
+                    }catch (e:Exception){
+
+                    }
+
                 }
             }
         }

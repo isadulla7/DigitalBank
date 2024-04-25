@@ -27,6 +27,7 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isValidVisaCa
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardBalance
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardNameAndNumber
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardTypeImage
+import uz.fido.universaldigital.ui.utils.extensions.deviceCheck
 import uz.fido.universaldigital.ui.utils.extensions.doTransferOperationByType
 import uz.fido.universaldigital.ui.utils.extensions.getDrawableFromRes
 import uz.fido.universaldigital.ui.utils.extensions.setCardState
@@ -159,6 +160,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
                 }
 
                 Status.ERROR -> {
+                    deviceCheck(requireActivity(),it.errorBody)
                     refreshLayout?.finishRefresh()
                 }
             }

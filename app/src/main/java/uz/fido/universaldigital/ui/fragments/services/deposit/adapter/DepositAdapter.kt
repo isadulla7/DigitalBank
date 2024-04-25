@@ -23,6 +23,7 @@ class DepositAdapter(
                     Format().formattedDepositExpire(itemView.context, item.keeping_time)
                 depositAmount.text =
                     Format().formattedDepositAmount(itemView.context, item.min_sum.toString())
+                depositDescription.text=item.description
                 itemView.setOnClickListener {
                     onClickDeposit.invoke(item)
                 }

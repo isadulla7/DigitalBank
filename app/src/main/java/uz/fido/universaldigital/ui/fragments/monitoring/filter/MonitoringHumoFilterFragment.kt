@@ -206,7 +206,7 @@ class MonitoringHumoFilterFragment:BaseFragment<FragmentMonitoringUzcardFilterBi
         val filter=FilterSaveVh(startDate,endDate,maxAmount,minAmount,choose,"",cardList, arrayListOf())
         saveViewModel.setHumoMonitoringFilter(filter)
         saveViewModel.humoFilter=true
-        pop()}else Toast.makeText(requireContext(), "Karta tanlang", Toast.LENGTH_SHORT).show()
+        pop()}else Toast.makeText(requireContext(), requireContext().getString(R.string.select_card), Toast.LENGTH_SHORT).show()
     }
 
     private fun showAmountFilter() {

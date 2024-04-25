@@ -137,7 +137,7 @@
             android:layout_height="match_parent"
             android:digits=" 0123456789"
             android:imeOptions="actionDone"
-            android:inputType="number"
+            android:inputType="numberDecimal"
             android:maxLength="10"
             android:maxLines="1"
             android:theme="@style/DefaultEditTextTheme" />

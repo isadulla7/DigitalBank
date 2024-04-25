@@ -112,16 +112,20 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
     }
 
     private fun checkForError(): Boolean {
-        if (binding.etBankAmount.text.toString().isEmpty()) {
-            return false
-        }
-        val amount = binding.etBankAmount.text.toString().replace(" ", "").toBigDecimal()
-        if (amount < minAmount || amount > maxAmount) {
-            return false
-        }
-        return (binding.etReceiverAccount.editableText.toString().length == 27 || binding.etReceiverAccount.editableText.toString().length == 25) &&
-                binding.etPurpose.editableText.toString().isNotEmpty() &&
-                binding.etBankAmount.editableText.toString().isNotEmpty()
+       try {
+           if (binding.etBankAmount.text.toString().isEmpty()) {
+               return false
+           }
+           val amount = binding.etBankAmount.text.toString().replace(" ", "").toBigDecimal()
+           if (amount < minAmount || amount > maxAmount) {
+               return false
+           }
+           return (binding.etReceiverAccount.editableText.toString().length == 27 || binding.etReceiverAccount.editableText.toString().length == 25) &&
+                   binding.etPurpose.editableText.toString().isNotEmpty() &&
+                   binding.etBankAmount.editableText.toString().isNotEmpty()
+       }catch (e:Exception){
+           return false
+       }
     }
 
     private fun oneTimeInfo(accountCode: String) {

@@ -100,5 +100,8 @@ interface BaseInterface {
     fun humoOperationPay(){}
     fun openSearchItem(searchItem: SearchItem) {}
     fun confirmTakeLoan(item: CreditProduct) {}
+    fun deviceDelete(){}
+    fun deviceState(){}
+    fun deviceDeleteAll(){}
 
 }

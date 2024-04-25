@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         app:ev_desc="@string/you_have_no_internet_desc"
-        app:ev_icon="@drawable/illustration_no_connection"
+        app:ev_icon="@drawable/empty_view_no_connection"
         app:ev_title="@string/you_have_no_internet" />
 
     <com.google.android.material.button.MaterialButton

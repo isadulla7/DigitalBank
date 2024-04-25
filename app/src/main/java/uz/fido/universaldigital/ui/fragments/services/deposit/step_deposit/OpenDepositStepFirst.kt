@@ -81,14 +81,18 @@ class OpenDepositStepFirst : BaseFragment<FragmentDepositStepFirstBinding, MainD
     private fun textWatchers() {
         binding.etAmount.addTextChangedListener { text ->
             if (deposit.percent != "0") {
-                if (text!!.isEmpty()) {
+                try {
+                    if (text!!.isEmpty()) {
+                        binding.btnContinue.isEnabled(false)
+                    } else if (text.toString().replace(" ", "")
+                            .toDouble() >= Format.formatAmountFromTiynToInteger(deposit.min_sum.toString())
+                            .toDouble()
+                    ) {
+                        binding.btnContinue.isEnabled(true)
+                    } else binding.btnContinue.isEnabled(false)
+                }catch (e:Exception){
                     binding.btnContinue.isEnabled(false)
-                } else if (text.toString().replace(" ", "")
-                        .toDouble() >= Format.formatAmountFromTiynToInteger(deposit.min_sum.toString())
-                        .toDouble()
-                ) {
-                    binding.btnContinue.isEnabled(true)
-                } else binding.btnContinue.isEnabled(false)
+                }
             } else binding.btnContinue.isEnabled(true)
         }
     }
