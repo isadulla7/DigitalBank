@@ -1,8 +1,13 @@
 package uz.fido.utils.security;
 
+import android.app.Activity;
+import android.provider.Settings;
+
 import java.math.BigInteger;
+import java.net.Authenticator;
 import java.util.Random;
 
+import io.paperdb.Paper;
 import uz.fido.utils.log.Logger;
 
 public class DiffieHellman {

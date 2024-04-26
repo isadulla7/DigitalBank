@@ -65,16 +65,15 @@ class AuthInterceptor @Inject constructor(
 
         if (originalResponse.code == UNAUTHORIZED) {
             try {
-                val jsonObject = JSONObject(originalResponse.body?.string()?:"")
+                val jsonObject = JSONObject(originalResponse.body?.string() ?: "")
                 val code = jsonObject.getInt("code")
                 if (code == DEVICE_DELETE) {
                     activity?.finishAffinity()
                     exitProcess(0)
                 }
-            }catch (e:Exception){
+            } catch (e: Exception) {
                 Toast.makeText(context, "error code", Toast.LENGTH_SHORT).show()
             }
-
 
 
         }
@@ -178,7 +177,7 @@ class AuthInterceptor @Inject constructor(
     companion object {
         const val TOKEN_EXPIRED = 406
         const val UNAUTHORIZED = 401
-        const val DEVICE_DELETE=66
+        const val DEVICE_DELETE = 66
     }
 
 }

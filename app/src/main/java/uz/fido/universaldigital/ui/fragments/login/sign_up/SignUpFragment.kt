@@ -23,6 +23,7 @@ import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.APIServiceConst.USER_INFO_URL
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
@@ -81,7 +82,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                 device_code = requireContext().getDeviceIds(),
                 public_key1 = DiffieHellman.getDiffieHellman()._g.toBigInteger(),
                 public_key2 = DiffieHellman.getDiffieHellman()._p.toBigInteger(),
-                encryptData = DiffieHellman.getDiffieHellman().keyA
+                encryptData = DiffieHellman.getDiffieHellman().keyA,
+                isPasEncrypt = 0,
+                phone_number = "01"
             )
         ).observe(viewLifecycleOwner) {
             when (it.status) {
@@ -121,7 +124,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             device_code = requireContext().getDeviceIds(),
             userInfo = userInfo,
             device_id = requireContext().getDeviceIds(),
-            app_version_code= BuildConfig.VERSION_CODE.toString(),
+            app_version_code = BuildConfig.VERSION_CODE.toString(),
         )
         viewModel.checkSignUpRequest(
             model
@@ -134,12 +137,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
                     Status.ERROR -> {
                         binding.btnContinue.setProgress(false)
-                        val errorCode=it.errorBody?.code?:0
-                        if (errorCode==1204){
-                            showSnackbar(it.message.toString()){
+                        val errorCode = it.errorBody?.code ?: 0
+                        if (errorCode == 1204) {
+                            showSnackbar(it.message.toString()) {
                                 requireActivity().openPlayMarket()
                             }
-                        }else{
+                        } else {
                             showSnackbar(it.message.toString())
                         }
                     }
