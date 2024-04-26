@@ -184,20 +184,21 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         val objectValue = requireArguments().getString(Const.CARD_NUMBER).toString()
         val objectExp = requireArguments().getString("object_data").toString()
         val string_line = requireArguments().getString(STRING_LINE).toString()
-
+        val stringLineEnc=CryptoUtil.encryptWithoutSalt(
+            string_line, smsCode
+        )
         val item = ResetPinCount(
             "card",
             objectValue,
             objectExp,
             null,
             getClientPhoneNumber(),
-            CryptoUtil.encryptWithoutSalt(
-                string_line, smsCode
-            )
+            stringLineEnc
         )
         viewModel.resetPinCount(getClientToken(), item).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
+                    Paper.book().write(Const.STRING_LINE, stringLineEnc)
                     binding.btnContinue.setProgress(false)
                     val bundle = Bundle().apply {
                         this.putString(Const.OPERATION, BasicSuccessFragment.HUMO_ACTIVATION)
@@ -215,6 +216,9 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private fun terminateSessionRequest(item: UserDevices, terminateType: String) {
         smsCode = binding.etSms.text.toString().replace(" ", "")
         val stringLine = requireArguments().getString(STRING_LINE).toString()
+        val stringLineEnc = CryptoUtil.encryptWithoutSalt(
+            stringLine, smsCode
+        )
         showProgress()
         viewModel.terminateSession(
             getClientToken(), DeleteUserDeviceRequest(
@@ -223,13 +227,12 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                 current_device_code = item.my_device_code,
                 del_req_type = terminateType,
                 user_id = getClientId(),
-                string_line = CryptoUtil.encryptWithoutSalt(
-                    stringLine, smsCode
-                )
+                string_line = stringLineEnc
             )
         ).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
+                    Paper.book().write(Const.STRING_LINE, stringLineEnc)
                     hideProgress()
                     pop()
                 }
@@ -292,14 +295,14 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private fun signInRequest(userInfo: UserInfo) {
         if (context != null && !isDetached) {
             val smsCode = binding.etSms.editableText.toString()
-           // val password = requireArguments().getString("qwerty").toString()
             val data = requireArguments().serializable<SignInRequestNew>("data") as SignInRequestNew
             val device = GetDeviceInfo(requireContext()).deviceInfo
+            val stringLineEnc = CryptoUtil.encryptWithoutSalt(
+                data.string_line.toString().replace(" ", ""), smsCode
+            )
             val signInRequest = CheckUserSms(
                 phone_number = data.phone_number.replace("+", ""),
-                string_line = CryptoUtil.encryptWithoutSalt(
-                    data.string_line.toString().replace(" ", ""), smsCode
-                ),
+                string_line = stringLineEnc,
                 fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
                 device_code = requireContext().getDeviceIds(),
                 device_name = getDeviceName(),
@@ -325,6 +328,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                         Status.SUCCESS -> {
                             val signInResponse = it.data
                             if (signInResponse?.token != null) {
+                                Paper.book().write(Const.STRING_LINE, stringLineEnc)
                                 signInResponse.password = encryptPassword(data.password)
                                 requireContext().saveSignInResponse(signInResponse)
                                 requireContext().saveUserSms(smsCode)
@@ -364,14 +368,15 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         val smsType =
             if (operation == SMS_OPERATION_SIGN_UP || operation == SMS_OPERATION_FORGOT_PASSWORD) 1 else 5
         if (binding.etSms.text.toString().isNotEmpty()) {
+            val stringLineEnc = CryptoUtil.encryptWithoutSalt(
+                requireArguments().getString("random_text") ?: "", smsCode
+            )
             binding.btnContinue.setProgress(true)
             val phoneNumber =
                 requireArguments().getString("phone_number")!!.replace("+", "").replace(" ", "")
             val model = CheckUserSms(
                 phone_number = phoneNumber,
-                string_line = CryptoUtil.encryptWithoutSalt(
-                    requireArguments().getString("random_text")!!, smsCode
-                ),
+                string_line = stringLineEnc,
                 device_id = requireContext().getDeviceIds(),
                 sms_type = smsType,
                 device_code = requireContext().getDeviceIds()
@@ -382,6 +387,8 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                     binding.btnContinue.setProgress(false)
                     when (it.status) {
                         Status.SUCCESS -> {
+                            Paper.book().write(Const.STRING_LINE, stringLineEnc)
+
                             if (it.data != null) {
                                 if (operation == SMS_OPERATION_SIGN_UP) {
                                     requireContext().saveUserSms(smsCode)
@@ -413,18 +420,19 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         val smsCode = binding.etSms.editableText.toString()
         val objectValue = requireArguments().getString(Const.CARD_NUMBER).toString()
         val string_line = requireArguments().getString(STRING_LINE).toString()
+        val stringLineEnc = CryptoUtil.encryptWithoutSalt(
+            string_line, smsCode
+        )
         viewModel.glSMSActivate(
             getClientToken(), GlSMSActivateRequest(
                 object_value = objectValue,
-                //  sms_code = smsCode,
-                string_line = CryptoUtil.encryptWithoutSalt(
-                    string_line, smsCode
-                )
+                string_line = stringLineEnc
             )
         ).observe(viewLifecycleOwner) {
             hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {
+                    Paper.book().write(Const.STRING_LINE, stringLineEnc)
                     binding.btnContinue.setProgress(false)
                     val bundle = Bundle().apply {
                         this.putString(Const.OPERATION, BasicSuccessFragment.HUMO_ACTIVATION)

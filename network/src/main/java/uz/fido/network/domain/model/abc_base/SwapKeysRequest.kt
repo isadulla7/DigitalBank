@@ -8,6 +8,6 @@ data class SwapKeysRequest(
     val public_key1: BigInteger,
     val public_key2: BigInteger,
     val encryptData: String,
-    val phone_number: String? = null,
+    val phoneNumber: String? = null,
     val isPasEncrypt: Int? = null
 ) : Serializable

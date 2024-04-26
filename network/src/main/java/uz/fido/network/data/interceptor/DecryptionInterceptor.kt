@@ -1,12 +1,18 @@
 package uz.fido.network.data.interceptor
 
+import android.content.Context
 import android.text.TextUtils
+import android.util.Log
+import io.paperdb.Paper
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Response
 import okhttp3.ResponseBody
+import uz.fido.utils.const.Const
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
+import uz.fido.utils.utility.context.getDeviceIds
+import uz.fido.utils.utility.user.getUserQwerty
 import java.io.IOException
 
 /**
@@ -20,11 +26,11 @@ import java.io.IOException
  */
 
 
-class DecryptionInterceptor : Interceptor {
+class DecryptionInterceptor(val context: Context) : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
-
+        val request = chain.request()
         val response = chain.proceed(chain.request())
         val newResponse = response.newBuilder()
 
@@ -36,17 +42,43 @@ class DecryptionInterceptor : Interceptor {
             val responseString = response.peekBody(Long.MAX_VALUE).string()
             var decryptedString: String? = null
             try {
-                decryptedString = CryptoUtil.decrypt(responseString, DiffieHellman.getDiffieHellman().keyK)
+                val qwertyForEncrypt = if (request.header("Authorization") != null) {
+                    Log.d("===headers", "has header")
+                    CryptoUtil.encrypt(
+                        context.getUserQwerty(),
+                        Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+                            .insertStringBetween("528", 3)
+                    ) + DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
+                        Paper.book().read(Const.STRING_LINE),
+                        Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+                            .insertStringBetween("963", 6)
+                    )
+                } else {
+                    Log.d("===headers", "there is no header")
+                    DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
+                        context.getDeviceIds(),
+                        context.getDeviceIds()
+                    )
+                }
+                decryptedString = CryptoUtil.decrypt(responseString, qwertyForEncrypt)
             } catch (e: Exception) {
                 e.printStackTrace()
             }
             if (decryptedString != null) {
-                newResponse.body(ResponseBody.create(contentType.toString().toMediaTypeOrNull(), decryptedString))
+                newResponse.body(
+                    ResponseBody.create(
+                        contentType.toString().toMediaTypeOrNull(),
+                        decryptedString
+                    )
+                )
             }
         }
 
         return newResponse.build()
+    }
 
+    private fun String.insertStringBetween(insert: String, index: Int): String {
+        return StringBuilder(this).insert(index, insert).toString()
     }
 
 }

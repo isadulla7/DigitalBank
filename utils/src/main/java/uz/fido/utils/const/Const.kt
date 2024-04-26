@@ -74,6 +74,7 @@ object Const {
     const val TYPE_LOAN = "TYPE_LOAN"
     const val TYPE_DEPOSIT = "TYPE_DEPOSIT"
     const val SEARCH_LIST = "SEARCH_LIST"
+    const val STRING_LINE = "STRING_LINE"
 
     var request_id = ""
 
@@ -90,5 +91,5 @@ object Const {
 
     const val MY_ID_CLIENT_HASH_ID = "4cc848bb-49ee-4db4-bf3b-119f141f52e4"
 
-    const val PLAY_MARKET="https://play.google.com/store/apps/details?id=uz.fido.universaldigital"
+    const val PLAY_MARKET = "https://play.google.com/store/apps/details?id=uz.fido.universaldigital"
 }

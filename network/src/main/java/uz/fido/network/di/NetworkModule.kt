@@ -139,7 +139,7 @@ object NetworkModule {
         )
         //     .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
         .addInterceptor(EncryptionInterceptor(appContext))
-        .addInterceptor(DecryptionInterceptor())
+        .addInterceptor(DecryptionInterceptor(appContext))
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS).build()
 
