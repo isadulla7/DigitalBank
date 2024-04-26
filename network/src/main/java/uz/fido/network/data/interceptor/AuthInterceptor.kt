@@ -118,7 +118,8 @@ class AuthInterceptor @Inject constructor(
                 device_code = context.getDeviceIds(),
                 public_key1 = DiffieHellman.getDiffieHellman()._g.toBigInteger(),
                 public_key2 = DiffieHellman.getDiffieHellman()._p.toBigInteger(),
-                encryptData = DiffieHellman.getDiffieHellman().keyA
+                encryptData = DiffieHellman.getDiffieHellman().keyA,
+                phoneNumber = Paper.book().read(Const.PHONE_NUMBER)
             )
         ).execute()
     }
