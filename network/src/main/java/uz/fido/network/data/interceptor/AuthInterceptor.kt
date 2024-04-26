@@ -1,6 +1,10 @@
 package uz.fido.network.data.interceptor
 
+import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import android.widget.Toast
 import io.paperdb.BuildConfig
@@ -53,18 +57,26 @@ class AuthInterceptor @Inject constructor(
         var modifiedRequest: Request? = null
         val originalRequest = chain.request()
         val originalResponse = chain.proceed(originalRequest)
+        val activity = CurrentActivityHolder.currentActivity
+
         if (originalResponse.code != TOKEN_EXPIRED && originalResponse.code != UNAUTHORIZED) {
             return originalResponse
         }
 
         if (originalResponse.code == UNAUTHORIZED) {
-            val jsonObject = JSONObject(originalResponse.body!!.string())
-            val code = jsonObject.getInt("code")
-            if (code == 66) {
-                val activity = CurrentActivityHolder.currentActivity
-                activity?.finishAffinity()
-                exitProcess(0)
+            try {
+                val jsonObject = JSONObject(originalResponse.body?.string()?:"")
+                val code = jsonObject.getInt("code")
+                if (code == DEVICE_DELETE) {
+                    activity?.finishAffinity()
+                    exitProcess(0)
+                }
+            }catch (e:Exception){
+                Toast.makeText(context, "error code", Toast.LENGTH_SHORT).show()
             }
+
+
+
         }
 
         synchronized(this) {
@@ -133,7 +145,7 @@ class AuthInterceptor @Inject constructor(
             sim_iccd = device.simCcd.toString(),
             network_state = device.networkState.toString(),
             imei_data = device.imeiData.toString(),
-            os_system_version_api = device.osSystemVersionApi.toString(),
+            os_system_version_api = "A",
             os_version = Build.VERSION.SDK_INT.toString(),
             app_version_code = BuildConfig.VERSION_CODE.toString(),
             app_version = BuildConfig.VERSION_NAME,
@@ -166,6 +178,7 @@ class AuthInterceptor @Inject constructor(
     companion object {
         const val TOKEN_EXPIRED = 406
         const val UNAUTHORIZED = 401
+        const val DEVICE_DELETE=66
     }
 
 }

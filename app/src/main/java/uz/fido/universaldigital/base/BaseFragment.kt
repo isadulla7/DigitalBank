@@ -106,7 +106,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
         snackbarText: String,
         title: String? = null,
         buttonText: String? = null,
-        onClickListener: (() -> Unit)? = null
+        onClickListener: (() -> Unit)? = null,
     ) {
         hideProgress()
         var message = snackbarText

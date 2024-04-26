@@ -14,10 +14,12 @@ import uz.fido.network.domain.model.abc_base.SwapKeysRequest
 import uz.fido.network.domain.model.abc_base.SwapKeysResponse
 import uz.fido.network.domain.model.abc_base.UserInfo
 import uz.fido.network.domain.model.sign_up.SignUpCheckRequest
+import uz.fido.universaldigital.BuildConfig
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
+import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.APIServiceConst.USER_INFO_URL
 import uz.fido.utils.const.Const
@@ -118,7 +120,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             phone_number = phoneNumberFormatted(),
             device_code = requireContext().getDeviceIds(),
             userInfo = userInfo,
-            device_id = requireContext().getDeviceIds()
+            device_id = requireContext().getDeviceIds(),
+            app_version_code= BuildConfig.VERSION_CODE.toString(),
         )
         viewModel.checkSignUpRequest(
             model
@@ -131,7 +134,14 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
                     Status.ERROR -> {
                         binding.btnContinue.setProgress(false)
-                        showSnackbar(it.message.toString())
+                        val errorCode=it.errorBody?.code?:0
+                        if (errorCode==1204){
+                            showSnackbar(it.message.toString()){
+                                requireActivity().openPlayMarket()
+                            }
+                        }else{
+                            showSnackbar(it.message.toString())
+                        }
                     }
                 }
             }

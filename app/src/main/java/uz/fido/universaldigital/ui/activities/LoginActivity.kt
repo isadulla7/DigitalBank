@@ -12,6 +12,7 @@ import androidx.work.WorkManager
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
+import uz.fido.network.data.utility.CurrentActivityHolder
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityLoginBinding
@@ -35,6 +36,11 @@ class LoginActivity : BaseActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         checkForDeviceLock()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        CurrentActivityHolder.currentActivity = this
     }
 
     private fun checkForDeviceLock() {
@@ -103,6 +109,12 @@ class LoginActivity : BaseActivity() {
             PeriodicWorkRequestBuilder<Worker>(3, TimeUnit.HOURS).setConstraints(constraints)
                 .build()
         WorkManager.getInstance(this).enqueue(workRequest)
+    }
+    override fun onPause() {
+        super.onPause()
+        if (CurrentActivityHolder.currentActivity == this) {
+            CurrentActivityHolder.currentActivity = null
+        }
     }
 
 }

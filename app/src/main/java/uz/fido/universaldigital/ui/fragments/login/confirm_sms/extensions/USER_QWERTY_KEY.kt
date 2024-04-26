@@ -38,14 +38,10 @@ fun Context.saveSignInResponse(signInResponse: SignInResponse) {
     Paper.book().write(Const.PAPER_CLIENT_SURNAME, signInResponse.surname)
     Paper.book()
         .write(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
- /*   signInResponse.password?.let {
-        saveUserQwerty(it)
-    }*/
+
         (signInResponse.password_enc.ifEmpty { signInResponse.password })?.let {
-            Log.d("TAG", "saveSignInResponse: ${signInResponse.password_enc}")
-            Log.d("TAG", "saveSignInResponse: ${signInResponse.password}")
-            Log.d("TAG", "saveSignInResponse: $it")
-            saveUserQwerty(it) }
+            saveUserQwerty(it)
+        }
 }
 
 fun saveSignInPinResponse(signInResponse: SignInResponse) {
