@@ -137,7 +137,7 @@ object NetworkModule {
                 swapKeyService = swapKeyService, context = appContext, apiInterface
             )
         )
-   //     .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
+        //     .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
         .addInterceptor(EncryptionInterceptor(appContext))
         .addInterceptor(DecryptionInterceptor())
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
@@ -148,8 +148,8 @@ object NetworkModule {
     fun provideSimpleOkhttpClient(
         @ApplicationContext appContext: Context,
     ): OkHttpClient = OkHttpClient.Builder()
-     //   .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
-     //   .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
+        //   .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
+        //   .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS).build()
 
@@ -172,7 +172,7 @@ object NetworkModule {
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
-        //    .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
+            //    .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
             .readTimeout(180, TimeUnit.SECONDS)
             .connectTimeout(180, TimeUnit.SECONDS).build()
 
@@ -216,7 +216,7 @@ object NetworkModule {
             return@Interceptor it.proceed(request)
         })
         .addInterceptor(loggingInterceptor)
-      //  .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
+        //  .addInterceptor(ChuckerInterceptor.Builder(appContext).build())
         .readTimeout(180, TimeUnit.SECONDS)
         .connectTimeout(180, TimeUnit.SECONDS).writeTimeout(180, TimeUnit.SECONDS).build()
 
