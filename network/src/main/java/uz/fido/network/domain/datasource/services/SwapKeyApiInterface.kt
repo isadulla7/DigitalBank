@@ -9,12 +9,12 @@ import uz.fido.network.domain.model.payment.Payment
 
 interface SwapKeyApiInterface {
 
-    @POST("swapKey")
+    @POST("v1/swapKey")
     suspend fun swapKeys(
         @Body request: SwapKeysRequest
     ): SwapKeysResponse
 
-    @POST("swapKey")
+    @POST("v1/swapKey")
     fun swapKey(
         @Body request: SwapKeysRequest
     ): Call<SwapKeysResponse>

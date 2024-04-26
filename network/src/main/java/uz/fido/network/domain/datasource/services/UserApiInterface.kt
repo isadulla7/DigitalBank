@@ -125,7 +125,7 @@ interface UserApiInterface {
         @Body deleteUserDeviceRequest: DeleteUserDeviceRequest
     ): BaseResponse
 
-    @POST("swapKey")
+    @POST("v1/swapKey")
     suspend fun swapKeys(
         @Body request: SwapKeysRequest
     ): SwapKeysResponse

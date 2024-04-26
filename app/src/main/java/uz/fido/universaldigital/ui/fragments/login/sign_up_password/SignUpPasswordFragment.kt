@@ -15,6 +15,7 @@ import uz.fido.universaldigital.BuildConfig
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpPasswordBinding
+import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignUpRequest
 import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
 import uz.fido.utils.const.APIServiceConst.USER_INFO_URL
@@ -23,6 +24,7 @@ import uz.fido.utils.security.encryptPassword
 import uz.fido.utils.utility.context.GetDeviceInfo
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
+import uz.fido.utils.utility.context.startActivityWithClearTask
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.Utility.getDeviceName
@@ -47,11 +49,11 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
 
     private fun initFieldsListener() {
         binding.etPassword.addTextChangedListener {
-            binding.passCheck.visibility=View.GONE
+            binding.passCheck.visibility = View.GONE
             checkForButton()
         }
         binding.etRepeatPassword.addTextChangedListener {
-            binding.passCheck.visibility=View.GONE
+            binding.passCheck.visibility = View.GONE
             checkForButton()
         }
 
@@ -67,11 +69,11 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
 
     private fun initSetOnClickListeners() {
         binding.btnContinue.setOnClickListener {
-            if (isValidPasswordFormat(binding.etPassword.text.toString())){
-            binding.btnContinue.setProgress(true)
-            getUserInfo()
-            }else{
-                binding.passCheck.visibility=View.VISIBLE
+            if (isValidPasswordFormat(binding.etPassword.text.toString())) {
+                binding.btnContinue.setProgress(true)
+                getUserInfo()
+            } else {
+                binding.passCheck.visibility = View.VISIBLE
             }
         }
         binding.appBar.setOnBackButtonClickListener { pop() }
@@ -127,17 +129,21 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
                 binding.btnContinue.setProgress(false)
                 when (it.status) {
                     Status.SUCCESS -> {
-                        val signInResponse = it.data
-                        finishRegRequest.fcm_token = signInResponse?.token!!
-                        finishRegRequest.client_id = signInResponse.user_id
-                        requireContext().saveSignUpRequest(finishRegRequest)
-                        Paper.book().write(Const.PAPER_CLIENT_INFO, signInResponse)
-                        val bundle = Bundle()
-                        bundle.putString(
-                            PinCodeFragment.PIN_OPERATION,
-                            PinCodeFragment.PIN_OPERATION_SIGN_UP
-                        )
-                        gotoWithSlide(R.id.pinCodeFragment, bundle)
+                        showSnackbar(getString(R.string.sign_up_success)) {
+                            requireContext().startActivityWithClearTask(LoginActivity::class.java)
+                        }
+                        /* val signInResponse = it.data
+                         finishRegRequest.fcm_token = signInResponse?.token!!
+                         finishRegRequest.client_id = signInResponse.user_id
+                         requireContext().saveSignUpRequest(finishRegRequest)
+                         Paper.book().write(Const.PAPER_CLIENT_INFO, signInResponse)
+                         val bundle = Bundle()
+                         bundle.putString(
+                             PinCodeFragment.PIN_OPERATION,
+                             PinCodeFragment.PIN_OPERATION_SIGN_UP
+                         )*/
+//                        gotoWithSlide(R.id.pinCodeFragment)
+
                     }
 
                     Status.ERROR -> {

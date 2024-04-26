@@ -1,15 +1,18 @@
 package uz.fido.network.data.interceptor
 
+import android.content.Context
 import io.paperdb.Paper
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import org.json.JSONObject
 import uz.fido.utils.const.LanguageConst
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
+import uz.fido.utils.utility.context.getDeviceIds
 import java.io.IOException
 import java.util.*
 
-class EncryptionInterceptor : Interceptor {
+class EncryptionInterceptor(val context: Context) : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -35,22 +38,18 @@ class EncryptionInterceptor : Interceptor {
 
     private fun getRequest(request: Request, requestBody: RequestBody): Request {
         return if (request.method == "GET") {
-            request.newBuilder()
-                .header(HEADER_CONTENT_TYPE, requestBody.contentType().toString())
+            request.newBuilder().header(HEADER_CONTENT_TYPE, requestBody.contentType().toString())
                 .header(HEADER_CONTENT_LENGTH, requestBody.contentLength().toString())
-                .header(HEADER_APP_LANGUAGE, language)
-                .build()
+                .header(HEADER_APP_LANGUAGE, language).build()
         } else {
-            request.newBuilder()
-                .header(HEADER_CONTENT_TYPE, requestBody.contentType().toString())
+            request.newBuilder().header(HEADER_CONTENT_TYPE, requestBody.contentType().toString())
                 .header(HEADER_CONTENT_LENGTH, requestBody.contentLength().toString())
-                .header(HEADER_APP_LANGUAGE, language)
-                .method(request.method, requestBody).build()
+                .header(HEADER_APP_LANGUAGE, language).method(request.method, requestBody).build()
         }
     }
 
-    private var language = Paper.book().read(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN)
-        .uppercase(Locale.ROOT)
+    private var language =
+        Paper.book().read(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN).uppercase(Locale.ROOT)
 
     private companion object {
         const val HEADER_CONTENT_TYPE = "Content-Type"
