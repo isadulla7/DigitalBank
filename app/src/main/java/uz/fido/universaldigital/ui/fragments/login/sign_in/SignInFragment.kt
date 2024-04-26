@@ -19,6 +19,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignInBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
+import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.app.getFCMToken
 import uz.fido.utils.const.APIServiceConst
@@ -148,7 +149,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
             version = "0",
             sim_iccd = device.simCcd.toString(),
-            os_system_version_api = device.osSystemVersionApi.toString(),
+            os_system_version_api = "A",
             network_state = device.networkState.toString(),
             client_id = USER_CLIENT_ID,
             ip = requireContext().getIpAddress(),
@@ -165,7 +166,14 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
                     Status.ERROR -> {
                         binding.btnContinue.setProgress(false)
-                        showSnackbar(it.message.toString())
+                        val errorCode=it.errorBody?.code?:0
+                        if (errorCode==1204){
+                            showSnackbar(it.message.toString()){
+                                requireActivity().openPlayMarket()
+                            }
+                        }else{
+                            showSnackbar(it.message.toString())
+                        }
                     }
                 }
             }
@@ -177,7 +185,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             putString(Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString())
             putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_IN)
             putSerializable("data", model)
-            putString("qwerty", passwordFormatted())
+           // putString("qwerty", passwordFormatted())
         }
         Paper.book().write(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
         gotoWithSlide(R.id.confirmSmsFragment, bundle)

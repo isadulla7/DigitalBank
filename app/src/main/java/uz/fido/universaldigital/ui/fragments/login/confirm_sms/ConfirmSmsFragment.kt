@@ -292,7 +292,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private fun signInRequest(userInfo: UserInfo) {
         if (context != null && !isDetached) {
             val smsCode = binding.etSms.editableText.toString()
-            val password = requireArguments().getString("qwerty").toString()
+           // val password = requireArguments().getString("qwerty").toString()
             val data = requireArguments().serializable<SignInRequestNew>("data") as SignInRequestNew
             val device = GetDeviceInfo(requireContext()).deviceInfo
             val signInRequest = CheckUserSms(
@@ -304,7 +304,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                 device_code = requireContext().getDeviceIds(),
                 device_name = getDeviceName(),
                 device_type = "A",
-                sms_code = smsCode,
+                sms_code = null,
                 os_version = Build.VERSION.SDK_INT.toString(),
                 app_version_code = BuildConfig.VERSION_CODE.toString(),
                 app_version = BuildConfig.VERSION_NAME,
@@ -315,8 +315,8 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                 sms_type = 3,
                 is_pin = 0,
                 version = "0",
-                password = password,
-                os_system_version_api = device.osSystemVersionApi,
+                password = null,
+                os_system_version_api = "A",
                 userInfo = userInfo
             )
             viewModel.checkUserSms(signInRequest).observe(viewLifecycleOwner) {

@@ -1,6 +1,8 @@
 package uz.fido.universaldigital.ui.fragments.products
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -27,10 +29,11 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isValidVisaCa
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardBalance
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardNameAndNumber
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardTypeImage
-import uz.fido.universaldigital.ui.utils.extensions.deviceCheck
 import uz.fido.universaldigital.ui.utils.extensions.doTransferOperationByType
 import uz.fido.universaldigital.ui.utils.extensions.getDrawableFromRes
+import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.extensions.setCardState
+import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.universaldigital.ui.utils.home_utils.getCardsWithBalanceVisibility
 import uz.fido.universaldigital.ui.utils.home_utils.initBalanceWidget
 import uz.fido.universaldigital.ui.utils.home_utils.initRefreshLayout
@@ -160,7 +163,19 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
                 }
 
                 Status.ERROR -> {
-                    deviceCheck(requireActivity(),it.errorBody)
+                    val code=it.errorBody?.code?:0
+                    if (code==1024){
+                        val dialog=AlertDialog.Builder(requireContext())
+                            .setTitle("Play Market")
+                            .setMessage("Play marketda yangi versiya mavjud")
+                            .setCancelable(false)
+                            .setPositiveButton("Ok") { _, _ ->
+                                requireActivity().openPlayMarket()
+                            }
+                        dialog.create()
+                        dialog.show()
+                    }
+                  //  deviceCheck(requireActivity(),it.errorBody)
                     refreshLayout?.finishRefresh()
                 }
             }

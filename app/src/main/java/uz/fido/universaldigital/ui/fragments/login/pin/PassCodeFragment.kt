@@ -34,6 +34,7 @@ import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.getUse
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInPinResponse
 import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAndOutAnim
+import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.APIServiceConst
 import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
@@ -338,7 +339,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             sim_iccd = device.simCcd.toString(),
             network_state = device.networkState.toString(),
             imei_data = device.imeiData.toString(),
-            os_system_version_api = device.osSystemVersionApi.toString(),
+            os_system_version_api = "A",
             os_version = Build.VERSION.SDK_INT.toString(),
             app_version_code = BuildConfig.VERSION_CODE.toString(),
             app_version = BuildConfig.VERSION_NAME,
@@ -366,7 +367,15 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 Status.ERROR -> {
                     clearDots()
                     PinDotsAnimation.stopPinDotsAnimation()
-                    showSnackbar(it.message.toString())
+                    val errorCode=it.errorBody?.code?:0
+                    if (errorCode==1204){
+                        showSnackbar(it.message.toString()){
+                         requireActivity().openPlayMarket()
+                        }
+                    }else{
+                        showSnackbar(it.message.toString())
+                    }
+
                     removeUnregisteredDevice(it.message.toString())
                 }
             }

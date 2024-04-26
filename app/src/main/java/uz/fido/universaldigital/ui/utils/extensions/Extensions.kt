@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -435,13 +436,10 @@ fun RecyclerView.runWhenReady(action: () -> Unit) {
     viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
 }
 
-fun deviceCheck(activity: Activity, errorBody: APIError?){
-    Log.d("TAG", "deviceCheck:${errorBody?.code} ")
-    Log.d("TAG", "deviceCheck:${errorBody?.message} ")
-    if (errorBody!=null){
-        if (errorBody.code==66){
-            activity.finish()
-        }
+fun Activity.openPlayMarket(){
+    val intent=Intent(Intent.ACTION_VIEW).apply {
+        setData(Uri.parse(Const.PLAY_MARKET))
     }
+    this.startActivity(intent)
 }
 
