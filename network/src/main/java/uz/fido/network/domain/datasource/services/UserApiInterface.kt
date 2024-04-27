@@ -42,7 +42,14 @@ interface UserApiInterface {
     ): SignInResponse
 
     @POST("USER_SIGN_IN_NEW")
+    suspend fun signInPin(
+        @Header("Authorization") token: String,
+        @Body signInRequest: SignInRequestNew
+    ): SignInResponse
+
+    @POST("USER_SIGN_IN_NEW")
     fun signInNew(
+        @Header("Authorization") token: String,
         @Body signInRequest: SignInRequestNew
     ): Call<SignInResponse>
 
@@ -137,7 +144,8 @@ interface UserApiInterface {
 
     @POST("CHANGE_USER_NOTIF_STATE")
     suspend fun changeNotificationState(
-        @Header("Authorization") token: String, @Body request: ChangeNotifStateRequest
+        @Header("Authorization") token: String,
+        @Body request: ChangeNotifStateRequest
     ): BaseResponse
 
 }

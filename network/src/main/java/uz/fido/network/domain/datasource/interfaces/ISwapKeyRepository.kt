@@ -13,6 +13,10 @@ interface ISwapKeyRepository {
         request: SwapKeysRequest
     ): Resource<SwapKeysResponse>
 
+    suspend fun swapKeysPin(
+        request: SwapKeysRequest
+    ): Resource<SwapKeysResponse>
+
     fun swapKey(
         request: SwapKeysRequest
     ): Call<SwapKeysResponse>

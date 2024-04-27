@@ -129,7 +129,10 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
                 binding.btnContinue.setProgress(false)
                 when (it.status) {
                     Status.SUCCESS -> {
-                        showSnackbar(getString(R.string.sign_up_success)) {
+                        showSnackbar(
+                            getString(R.string.sign_up_success),
+                            getString(R.string.successfully)
+                        ) {
                             requireContext().startActivityWithClearTask(LoginActivity::class.java)
                         }
                         /* val signInResponse = it.data

@@ -53,19 +53,19 @@ fun getClientId(): String {
 
 fun Context.getUserQwerty(): String {
     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
-        val mainKey = MasterKey.Builder(this, MasterKey.DEFAULT_MASTER_KEY_ALIAS).setKeyScheme(
-            MasterKey.KeyScheme.AES256_GCM
-        ).build()
+        val mainKey = MasterKey.Builder(this, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()
 
         val fileToRead = "universal_digital_qwerty.md"
         val file = File(filesDir, fileToRead)
-        val encryptedFile = EncryptedFile.Builder(
-            applicationContext,
-            file,
-            mainKey,
-            EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
-        ).build()
         return try {
+            val encryptedFile = EncryptedFile.Builder(
+                applicationContext,
+                file,
+                mainKey,
+                EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
+            ).build()
+
             val inputStream = encryptedFile.openFileInput()
             val byteArrayOutputStream = ByteArrayOutputStream()
             var nextByte: Int = inputStream.read()
@@ -77,7 +77,7 @@ fun Context.getUserQwerty(): String {
             val plaintext: ByteArray = byteArrayOutputStream.toByteArray()
             String(plaintext, StandardCharsets.UTF_8)
         } catch (e: Exception) {
-            ""
+            "404"
         }
     } else {
         return Paper.book().read(USER_QWERTY_KEY, "")

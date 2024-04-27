@@ -22,7 +22,9 @@ import java.util.Locale
 
 fun MenuHomeFragment.loadProfileImage() {
     if (Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNotEmpty()) {
-        Glide.with(requireContext()).load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
+        Glide.with(requireContext())
+            .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
+            .error(R.drawable.ic_profile_image_empty)
             .into(binding.userAvatar)
     }
 }
@@ -44,7 +46,6 @@ fun MenuHomeFragment.setUserDetails() {
         binding.userAvatar.load(R.drawable.ic_profile_image_empty)
     }
 }
-
 
 
 fun MenuHomeFragment.setUpTickerView() {

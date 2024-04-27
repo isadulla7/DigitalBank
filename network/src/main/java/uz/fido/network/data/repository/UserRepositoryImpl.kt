@@ -27,6 +27,7 @@ import uz.fido.network.domain.model.sign_up.FinishRegRequest
 import uz.fido.network.domain.model.sign_up.SignUpCheckRequest
 import uz.fido.network.domain.model.sign_up.SignUpRequest
 import uz.fido.network.domain.model.sms.SendEmailCode
+import uz.fido.utils.utility.user.getClientToken
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -55,6 +56,13 @@ class UserRepositoryImpl @Inject constructor(private val userApiService: UserApi
         signInRequest: SignInRequest
     ): Resource<SignInResponse> = getResult {
         userApiService.signIn(signInRequest)
+    }
+
+    override suspend fun signInPin(
+        token: String,
+        signInRequestNew: SignInRequestNew
+    ): Resource<SignInResponse> = getResult {
+        userApiService.signInPin(getClientToken(), signInRequestNew)
     }
 
     override suspend fun signUpCheck(

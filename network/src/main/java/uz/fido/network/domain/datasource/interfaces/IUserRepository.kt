@@ -31,6 +31,11 @@ interface IUserRepository {
 
     suspend fun signIn(signInRequestNew: SignInRequestNew): Resource<SignInResponse>
 
+    suspend fun signInPin(
+        token: String,
+        signInRequestNew: SignInRequestNew
+    ): Resource<SignInResponse>
+
     suspend fun checkUserSms(
         checkUserSms: CheckUserSms
     ): Resource<SignInResponse>

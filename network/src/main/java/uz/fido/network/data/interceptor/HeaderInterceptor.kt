@@ -22,7 +22,7 @@ class HeaderInterceptor : Interceptor {
                 .header(HEADER_APP_VERSION, BuildConfig.VERSION_CODE.toString())
                 .header(HEADER_APP_LANGUAGE, language)
                 .header(HEADER_DEVICE_TYPE, DEVICE)
-                .header(HEADER_DEVICE_CODE, Paper.book().read(Const.DEVICE_CODE))
+                .header(HEADER_DEVICE_CODE, Paper.book().read(Const.DEVICE_CODE) ?: "")
                 .build()
         return chain.proceed(request)
     }

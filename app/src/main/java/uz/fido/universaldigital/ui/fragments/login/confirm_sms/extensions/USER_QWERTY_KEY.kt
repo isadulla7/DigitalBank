@@ -38,10 +38,9 @@ fun Context.saveSignInResponse(signInResponse: SignInResponse) {
     Paper.book().write(Const.PAPER_CLIENT_SURNAME, signInResponse.surname)
     Paper.book()
         .write(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
-
-        (signInResponse.password_enc.ifEmpty { signInResponse.password })?.let {
-            saveUserQwerty(it)
-        }
+    signInResponse.password?.let {
+        saveUserQwerty(it)
+    }
 }
 
 fun saveSignInPinResponse(signInResponse: SignInResponse) {
@@ -162,12 +161,12 @@ fun Context.getUserQwerty(): String {
         val fileToRead = "universal_digital_qwerty.md"
         val file = File(filesDir, fileToRead)
         return try {
-        val encryptedFile = EncryptedFile.Builder(
-            applicationContext,
-            file,
-            mainKey,
-            EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
-        ).build()
+            val encryptedFile = EncryptedFile.Builder(
+                applicationContext,
+                file,
+                mainKey,
+                EncryptedFile.FileEncryptionScheme.AES256_GCM_HKDF_4KB
+            ).build()
 
             val inputStream = encryptedFile.openFileInput()
             val byteArrayOutputStream = ByteArrayOutputStream()
@@ -193,15 +192,17 @@ fun getClientEncodedToken(token: String): String {
 
 fun Activity.logOut() {
     GlobalScope.launch { FirebaseMessaging.getInstance().deleteToken() }
-    Paper.book().write(Const.PAPER_CARDS_WITH_BALANCE_VIS, ArrayList<CardResponse>())
-    Paper.book().write(Const.PAPER_CLIENT_CARDS, ArrayList<CardResponse>())
-    Paper.book().write(Const.USER_LOGGED, false)
-    Paper.book().write(Const.PAPER_USER_PHOTO_PATH, "")
-    Paper.book().write(Const.PAPER_FCM_TOKEN, "")
-    Paper.book().write(Const.USER_NAME, "")
-    Paper.book().write(Const.USER_FULL_NAME, "")
-    Paper.book().write(Const.USER_CITIZENSHIP, "")
-    Paper.book().write(Const.USER_PASSWORD_DATA, "")
-    Paper.book().write(Const.USER_PASS_EXPIRE_DATE, "")
+//    Paper.book().delete(Const.PAPER_CARDS_WITH_BALANCE_VIS,)
+//    Paper.book().delete(Const.PAPER_CLIENT_CARDS, )
+//    Paper.book().delete(Const.USER_LOGGED)
+//    Paper.book().delete(Const.PAPER_USER_PHOTO_PATH, )
+//    Paper.book().delete(Const.PAPER_FCM_TOKEN, )
+//    Paper.book().delete(Const.USER_NAME, )
+//    Paper.book().delete(Const.USER_FULL_NAME, )
+//    Paper.book().delete(Const.USER_CITIZENSHIP, )
+//    Paper.book().delete(Const.USER_PASSWORD_DATA, )
+//    Paper.book().delete(Const.USER_PASS_EXPIRE_DATE, )
+//    Paper.book().delete("ENC_PASS")
+    Paper.book().destroy()
     startActivityWithClearTask(LoginActivity::class.java)
 }

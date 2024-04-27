@@ -1,10 +1,6 @@
 package uz.fido.network.data.interceptor
 
-import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
-import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.widget.Toast
 import io.paperdb.BuildConfig
@@ -119,7 +115,7 @@ class AuthInterceptor @Inject constructor(
                 public_key1 = DiffieHellman.getDiffieHellman()._g.toBigInteger(),
                 public_key2 = DiffieHellman.getDiffieHellman()._p.toBigInteger(),
                 encryptData = DiffieHellman.getDiffieHellman().keyA,
-                phoneNumber = Paper.book().read(Const.PHONE_NUMBER)
+                phoneNumber = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).replace("", ""),
             )
         ).execute()
     }
@@ -152,7 +148,7 @@ class AuthInterceptor @Inject constructor(
             userInfo = userInfo,
             app_key_hash = AppSignatureHelper(context).appKeyHash
         )
-        return apiInterface.get().signInNew(signInRequest).execute()
+        return apiInterface.get().signInNew(getClientToken(), signInRequest).execute()
     }
 
     private fun setKeyForDiffieHellman(swapKeysResponse: SwapKeysResponse?) {

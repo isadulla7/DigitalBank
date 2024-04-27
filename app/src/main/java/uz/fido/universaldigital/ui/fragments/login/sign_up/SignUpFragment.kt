@@ -23,7 +23,6 @@ import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.APIServiceConst.USER_INFO_URL
 import uz.fido.utils.const.Const
-import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
@@ -83,8 +82,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                 public_key1 = DiffieHellman.getDiffieHellman()._g.toBigInteger(),
                 public_key2 = DiffieHellman.getDiffieHellman()._p.toBigInteger(),
                 encryptData = DiffieHellman.getDiffieHellman().keyA,
-                isPasEncrypt = 0,
-                phone_number = "01"
             )
         ).observe(viewLifecycleOwner) {
             when (it.status) {

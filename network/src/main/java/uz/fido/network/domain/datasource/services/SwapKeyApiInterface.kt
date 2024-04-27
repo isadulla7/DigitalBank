@@ -14,7 +14,12 @@ interface SwapKeyApiInterface {
         @Body request: SwapKeysRequest
     ): SwapKeysResponse
 
-    @POST("v1/swapKey")
+    @POST("v1/swapKeyPin")
+    suspend fun swapKeysPin(
+        @Body request: SwapKeysRequest
+    ): SwapKeysResponse
+
+    @POST("v1/swapKeyPin")
     fun swapKey(
         @Body request: SwapKeysRequest
     ): Call<SwapKeysResponse>

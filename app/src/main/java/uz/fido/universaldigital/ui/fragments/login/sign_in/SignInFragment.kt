@@ -166,12 +166,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
                     Status.ERROR -> {
                         binding.btnContinue.setProgress(false)
-                        val errorCode=it.errorBody?.code?:0
-                        if (errorCode==1204){
-                            showSnackbar(it.message.toString()){
+                        val errorCode = it.errorBody?.code ?: 0
+                        if (errorCode == 1204) {
+                            showSnackbar(it.message.toString()) {
                                 requireActivity().openPlayMarket()
                             }
-                        }else{
+                        } else {
                             showSnackbar(it.message.toString())
                         }
                     }
@@ -185,7 +185,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             putString(Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString())
             putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_IN)
             putSerializable("data", model)
-           // putString("qwerty", passwordFormatted())
+            // putString("qwerty", passwordFormatted())
         }
         Paper.book().write(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
         gotoWithSlide(R.id.confirmSmsFragment, bundle)
