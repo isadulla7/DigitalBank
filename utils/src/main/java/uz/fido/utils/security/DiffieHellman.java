@@ -1,13 +1,8 @@
 package uz.fido.utils.security;
 
-import android.app.Activity;
-import android.provider.Settings;
-
 import java.math.BigInteger;
-import java.net.Authenticator;
 import java.util.Random;
 
-import io.paperdb.Paper;
 import uz.fido.utils.log.Logger;
 
 public class DiffieHellman {
@@ -17,6 +12,7 @@ public class DiffieHellman {
 
     BigInteger biA, biB;
     BigInteger biK;
+    String biKString;
 
     private static DiffieHellman diffieHellman = null;
 
@@ -50,11 +46,12 @@ public class DiffieHellman {
     public void SetKeyB(String B) {
         biB = new BigInteger(B);
         biK = biB.modPow(a, p);
+        biKString = biK.toString();
         Logger.writeLog("bik________________________" + biK);
     }
 
     public String getKeyK() {
         Logger.writeLog("get_bik________________________" + biK);
-        return biK.toString();
+        return biKString;
     }
 }

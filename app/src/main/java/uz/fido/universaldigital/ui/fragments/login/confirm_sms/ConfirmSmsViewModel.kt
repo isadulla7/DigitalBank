@@ -10,6 +10,7 @@ import uz.fido.network.domain.datasource.interfaces.IPaymentRepository
 import uz.fido.network.domain.datasource.interfaces.ISwapKeyRepository
 import uz.fido.network.domain.datasource.interfaces.IUserRepository
 import uz.fido.network.domain.datasource.interfaces.IUtilsRepository
+import uz.fido.network.domain.model.abc_base.SwapKeysRequest
 import uz.fido.network.domain.model.cards.AddCardRequest
 import uz.fido.network.domain.model.cards.ResetPinCount
 import uz.fido.network.domain.model.home.GlSMSActivateRequest
@@ -17,11 +18,13 @@ import uz.fido.network.domain.model.p2p.P2PRequest
 import uz.fido.network.domain.model.payment.CreatePaymentRequest
 import uz.fido.network.domain.model.sessions.DeleteUserDeviceRequest
 import uz.fido.network.domain.model.sign_in.SignInRequest
+import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.network.domain.model.sign_up.CheckUserSms
 import uz.fido.network.domain.model.sign_up.FinishRegRequest
 import uz.fido.network.domain.model.sms.CheckSmsForPayment
 import uz.fido.network.domain.model.sms.SendEmailCode
 import uz.fido.universaldigital.base.AbstractViewModel
+import uz.fido.utils.utility.user.getClientToken
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,6 +40,18 @@ class ConfirmSmsViewModel @Inject constructor(
 
     fun signIn(signInRequest: SignInRequest) = liveData(Dispatchers.IO) {
         emit(userRepository.signIn(signInRequest))
+    }
+
+    fun signInNew(signInRequest: SignInRequestNew) = liveData(Dispatchers.IO) {
+        emit(userRepository.signInPin(getClientToken(), signInRequest))
+    }
+
+    fun swapKeys(request: SwapKeysRequest) = liveData(Dispatchers.IO) {
+        emit(swapKeyRepository.swapKeys(request))
+    }
+
+    fun swapKeysPin(request: SwapKeysRequest) = liveData(Dispatchers.IO) {
+        emit(swapKeyRepository.swapKeysPin(request))
     }
 
     fun getUserDetailedInfo(fileUrl: String) = liveData(Dispatchers.IO) {

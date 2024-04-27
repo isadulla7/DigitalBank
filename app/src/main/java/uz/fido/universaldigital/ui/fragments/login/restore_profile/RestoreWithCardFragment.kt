@@ -152,7 +152,7 @@ class RestoreWithCardFragment :
             when (it.status) {
                 Status.SUCCESS -> {
                     val signInResponse = it.data
-                    signInResponse!!.phone_number = phoneNumber!!
+                    signInResponse!!.phone_number = phoneNumber
                     requireContext().saveSignInResponse(signInResponse)
 
                     gotoWithSlide(

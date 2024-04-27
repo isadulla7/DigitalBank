@@ -18,6 +18,11 @@ class SwapKeyRepositoryImpl @Inject constructor(private val swapKeyService: Swap
             swapKeyService.swapKeys(request)
         }
 
+    override suspend fun swapKeysPin(request: SwapKeysRequest): Resource<SwapKeysResponse> =
+        getResult {
+            swapKeyService.swapKeysPin(request)
+        }
+
     override fun swapKey(request: SwapKeysRequest): Call<SwapKeysResponse> =
         swapKeyService.swapKey(request)
 
@@ -29,6 +34,7 @@ class SwapKeyRepositoryImpl @Inject constructor(private val swapKeyService: Swap
         swapKeyService.getUserDetailedInfoAsync(fileUrl)
     }
 
-    override fun getUserDetailedInfo(fileUrl: String): Call<UserInfo> = swapKeyService.getUserDetailedInfo(fileUrl)
+    override fun getUserDetailedInfo(fileUrl: String): Call<UserInfo> =
+        swapKeyService.getUserDetailedInfo(fileUrl)
 
 }

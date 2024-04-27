@@ -2,13 +2,13 @@ package uz.fido.network.data.interceptor
 
 import android.content.Context
 import android.text.TextUtils
-import android.util.Log
 import io.paperdb.Paper
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Response
 import okhttp3.ResponseBody
 import uz.fido.utils.const.Const
+import uz.fido.utils.log.Log
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.utility.context.getDeviceIds
@@ -43,18 +43,18 @@ class DecryptionInterceptor(val context: Context) : Interceptor {
             var decryptedString: String? = null
             try {
                 val qwertyForEncrypt = if (request.header("Authorization") != null) {
-                    Log.d("===headers", "has header")
+                    val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+                        .insertStringBetween("528", 3)
+                    val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+                        .insertStringBetween("963", 6)
                     CryptoUtil.encrypt(
-                        context.getUserQwerty(),
-                        Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-                            .insertStringBetween("528", 3)
+                        Paper.book().read("ENC_PASS"),
+                        key1
                     ) + DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
                         Paper.book().read(Const.STRING_LINE),
-                        Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-                            .insertStringBetween("963", 6)
+                        key2
                     )
                 } else {
-                    Log.d("===headers", "there is no header")
                     DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
                         context.getDeviceIds(),
                         context.getDeviceIds()
@@ -62,6 +62,7 @@ class DecryptionInterceptor(val context: Context) : Interceptor {
                 }
                 decryptedString = CryptoUtil.decrypt(responseString, qwertyForEncrypt)
             } catch (e: Exception) {
+                Log.d("===headers dec", e.toString())
                 e.printStackTrace()
             }
             if (decryptedString != null) {

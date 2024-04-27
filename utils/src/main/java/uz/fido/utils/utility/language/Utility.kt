@@ -27,7 +27,7 @@ object Utility {
     }
 
     fun getDeviceName(): String {
-        return Build.MODEL
+        return Build.MODEL?:""
     }
 
     fun getLocalIpAddress(): String {

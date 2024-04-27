@@ -7,7 +7,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.biometric.BiometricPrompt
@@ -276,13 +275,13 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun swapKeys() {
-        viewModel.swapKeys(
+        viewModel.swapKeysPin(
             SwapKeysRequest(
                 device_code = requireContext().getDeviceIds(),
                 public_key1 = DiffieHellman.getDiffieHellman()._g.toBigInteger(),
                 public_key2 = DiffieHellman.getDiffieHellman()._p.toBigInteger(),
                 encryptData = DiffieHellman.getDiffieHellman().keyA,
-                phoneNumber = Paper.book().read(Const.PHONE_NUMBER)
+                phoneNumber = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).replace("", ""),
             )
         ).observe(viewLifecycleOwner) {
             when (it.status) {
@@ -322,65 +321,65 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     private fun signInRequest(userInfo: UserInfo) {
         val device = GetDeviceInfo(requireContext()).deviceInfo
-        val password = requireContext().getUserQwerty()
-        if (password == "404") {
-            showSnackbar(getString(R.string.error_password))
-        } else {
-            val signInRequest = SignInRequestNew(
-                phone_number = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).replace("", ""),
-                device_type = "A",
-                device_code = requireContext().getDeviceIds(),
-                device_name = getDeviceName(),
-                version = "1",
-                ip = requireContext().getIpAddress(),
-                client_id = USER_CLIENT_ID,
-                fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
-                password = password,
-                is_pin = 1,
-                sim_iccd = device.simCcd.toString(),
-                network_state = device.networkState.toString(),
-                imei_data = device.imeiData.toString(),
-                os_system_version_api = "A",
-                os_version = Build.VERSION.SDK_INT.toString(),
-                app_version_code = BuildConfig.VERSION_CODE.toString(),
-                app_version = BuildConfig.VERSION_NAME,
-                userInfo = userInfo,
-                app_key_hash = AppSignatureHelper(requireContext()).appKeyHash
-            )
-            viewModel.signIn(signInRequest = signInRequest).observe(viewLifecycleOwner) {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        val signInResponse = it.data
-                        if (signInResponse?.token != null) {
-                            saveSignInResponse(signInResponse)
-                            if (requireActivity() is MainActivity) {
-                                pop()
-                            } else {
-                                PinDotsAnimation.stopPinDotsAnimation()
-                                openMainActivity()
-                            }
+//        val password = requireContext().getUserQwerty()
+//        if (password == "404") {
+//            showSnackbar(getString(R.string.error_password))
+//        } else {
+        val signInRequest = SignInRequestNew(
+            phone_number = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).replace("", ""),
+            device_type = "A",
+            device_code = requireContext().getDeviceIds(),
+            device_name = getDeviceName(),
+            version = "1",
+            ip = requireContext().getIpAddress(),
+            client_id = USER_CLIENT_ID,
+            fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
+            password = Paper.book().read("ENC_PASS"),
+            is_pin = 1,
+            sim_iccd = device.simCcd.toString(),
+            network_state = device.networkState.toString(),
+            imei_data = device.imeiData.toString(),
+            os_system_version_api = "A",
+            os_version = Build.VERSION.SDK_INT.toString(),
+            app_version_code = BuildConfig.VERSION_CODE.toString(),
+            app_version = BuildConfig.VERSION_NAME,
+            userInfo = userInfo,
+            app_key_hash = AppSignatureHelper(requireContext()).appKeyHash
+        )
+        viewModel.signIn(signInRequest = signInRequest).observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    val signInResponse = it.data
+                    if (signInResponse?.token != null) {
+                        saveSignInResponse(signInResponse)
+                        if (requireActivity() is MainActivity) {
+                            pop()
                         } else {
-                            clearDots()
-                            showSnackbar(it.message.toString())
+                            PinDotsAnimation.stopPinDotsAnimation()
+                            openMainActivity()
                         }
-                    }
-
-                    Status.ERROR -> {
+                    } else {
                         clearDots()
-                        PinDotsAnimation.stopPinDotsAnimation()
-                        val errorCode = it.errorBody?.code ?: 0
-                        if (errorCode == 1204) {
-                            showSnackbar(it.message.toString()) {
-                                requireActivity().openPlayMarket()
-                            }
-                        } else {
-                            showSnackbar(it.message.toString())
-                        }
-
-                        removeUnregisteredDevice(it.message.toString())
+                        showSnackbar(it.message.toString())
                     }
                 }
+
+                Status.ERROR -> {
+                    clearDots()
+                    PinDotsAnimation.stopPinDotsAnimation()
+                    val errorCode = it.errorBody?.code ?: 0
+                    if (errorCode == 1204) {
+                        showSnackbar(it.message.toString()) {
+                            requireActivity().openPlayMarket()
+                        }
+                    } else {
+                        showSnackbar(it.message.toString())
+                    }
+
+                    removeUnregisteredDevice(it.message.toString())
+                }
             }
+//            }
         }
     }
 
@@ -550,15 +549,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             )
         ).observe(viewLifecycleOwner) {
             hideProgress()
-            when (it.status) {
-                Status.SUCCESS -> {
-                    requireActivity().logOut()
-                }
-
-                else -> {
-                    showSnackbar(it.message.toString())
-                }
-            }
+            requireActivity().logOut()
         }
     }
 
@@ -577,7 +568,9 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     private fun loadProfileImage() {
         if (Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNotEmpty()) {
-            Glide.with(requireContext()).load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH) ?: "")
+            Glide.with(requireContext())
+                .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH) ?: "")
+                .error(R.drawable.ic_profile_image_empty)
                 .into(binding.userAvatar)
         }
     }
