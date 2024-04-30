@@ -101,12 +101,10 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         const val SMS_DEPOSIT_OPERATION = "sms_deposit_operation"
         const val SMS_OPERATION_PAYMENT_KEY = "payment_key"
         const val STRING_LINE = "string_line"
-
         const val SMS_AMOUNT = "amount"
         const val SMS_SERVICE_ID = "service_id"
         const val SMS_FROM_OBJECT_VALUE = "from_object_value"
         const val SMS_MAX_LENGTH = "SMS_MAX_LENGTH"
-
         const val SMS_RESET_PIN = "sms_reset_pin"
     }
 
@@ -122,7 +120,6 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         registerSMSReceiver()
         initTextChangeListener()
         initSetOnClickListeners()
-        Log.d("====KEY_K", Paper.book().read("KEY_K") ?: "no key k")
     }
 
     private fun initSetOnClickListeners() {
@@ -136,9 +133,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     }
 
     private fun initTextChangeListener() {
-        val smsLength = if (arguments != null) {
-            arguments?.getInt(SMS_MAX_LENGTH) ?: 8
-        } else 8
+        val smsLength = if (arguments != null) { arguments?.getInt(SMS_MAX_LENGTH) ?: 8 } else 8
         val newSmsLength = if (smsLength == 0) 8 else smsLength
         binding.etSms.addTextChangedListener {
             binding.btnContinue.isEnabled(it.toString().length == newSmsLength)
@@ -184,9 +179,9 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         val smsCode = binding.etSms.editableText.toString()
         val objectValue = requireArguments().getString(Const.CARD_NUMBER).toString()
         val objectExp = requireArguments().getString("object_data").toString()
-        val string_line = requireArguments().getString(STRING_LINE).toString()
+        val stringLine = requireArguments().getString(STRING_LINE).toString()
         val stringLineEnc = CryptoUtil.encryptWithoutSalt(
-            string_line, smsCode
+            stringLine, smsCode
         )
         val item = ResetPinCount(
             "card",
@@ -294,7 +289,6 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     }
 
     private fun signInRequest(userInfo: UserInfo) {
-        Log.d("====KEY_K confirm sms", Paper.book().read("KEY_K") ?: "no key k")
         if (context != null && !isDetached) {
             val smsCode = binding.etSms.editableText.toString()
             val data = requireArguments().serializable<SignInRequestNew>("data") as SignInRequestNew

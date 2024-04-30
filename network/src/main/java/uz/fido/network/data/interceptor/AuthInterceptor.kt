@@ -57,7 +57,7 @@ class AuthInterceptor @Inject constructor(
         val originalResponse = chain.proceed(originalRequest)
         val activity = CurrentActivityHolder.currentActivity
 
-        if (originalResponse.code != TOKEN_EXPIRED && originalResponse.code != UNAUTHORIZED && originalRequest.header("Authorization") == null) {
+        if (originalResponse.code != TOKEN_EXPIRED && originalResponse.code != UNAUTHORIZED) {
             return originalResponse
         }
 
