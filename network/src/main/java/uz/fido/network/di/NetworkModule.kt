@@ -1,7 +1,6 @@
 package uz.fido.network.di
 
 import android.content.Context
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -30,14 +29,11 @@ import java.security.GeneralSecurityException
 import java.security.KeyStore
 import java.security.SecureRandom
 import java.security.cert.CertificateFactory
-import java.security.cert.X509Certificate
-import java.util.Arrays
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
-import javax.net.ssl.TrustManager
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
@@ -101,9 +97,7 @@ object NetworkModule {
             trustManagerFactory.init(null as KeyStore?)
             val trustManagers = trustManagerFactory.trustManagers
             check(!(trustManagers.size != 1 || trustManagers[0] !is X509TrustManager)) {
-                "Unexpected default trust managers:" + Arrays.toString(
-                    trustManagers
-                )
+                "Unexpected default trust managers:" + trustManagers.contentToString()
             }
             trustManagers[0] as X509TrustManager
         } catch (e: GeneralSecurityException) {
@@ -132,21 +126,19 @@ object NetworkModule {
         .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
         .addInterceptor(HeaderInterceptor())
         .addInterceptor(loggingInterceptor)
-//        .addInterceptor(
-//            AuthInterceptor(
-//                swapKeyService = swapKeyService, context = appContext, apiInterface
-//            )
-//        )
-        .addInterceptor(EncryptionInterceptor(appContext))
-        .addInterceptor(DecryptionInterceptor(appContext))
+        .addInterceptor(
+            AuthInterceptor(
+                swapKeyService = swapKeyService, context = appContext, apiInterface
+            )
+        )
+        .addInterceptor(EncryptionInterceptor())
+        .addInterceptor(DecryptionInterceptor())
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS).build()
 
     @SimpleClientRetrofit
     @Provides
-    fun provideSimpleOkhttpClient(
-        @ApplicationContext appContext: Context,
-    ): OkHttpClient = OkHttpClient.Builder()
+    fun provideSimpleOkhttpClient(): OkHttpClient = OkHttpClient.Builder()
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS).build()
 
@@ -164,20 +156,16 @@ object NetworkModule {
 
     @MyIdOkhttpClient
     @Provides
-    fun provideMyIdRetrofitClient(
-        @ApplicationContext appContext: Context, loggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(loggingInterceptor)
-            .readTimeout(180, TimeUnit.SECONDS)
-            .connectTimeout(180, TimeUnit.SECONDS).build()
+    fun provideMyIdRetrofitClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor(loggingInterceptor)
+        .readTimeout(180, TimeUnit.SECONDS)
+        .connectTimeout(180, TimeUnit.SECONDS).build()
 
     @MyIdRetrofit
     @Provides
     @Singleton
-    fun provideMyIdRetrofit(@MyIdOkhttpClient okHttpClient: OkHttpClient): Retrofit =
-        Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(MyIdServiceConst.MY_ID_URL).build()
+    fun provideMyIdRetrofit(@MyIdOkhttpClient okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder().client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create()).baseUrl(MyIdServiceConst.MY_ID_URL).build()
 
     /*
     *   SOCKET RETROFIT CLIENT
@@ -186,15 +174,13 @@ object NetworkModule {
     @SocketRetrofit
     @Provides
     @Singleton
-    fun provideSocketRetrofit(@BaseOkhttpClient okHttpClient: OkHttpClient): Retrofit =
-        Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(APIServiceConst.SOCKET_URL).build()
+    fun provideSocketRetrofit(@BaseOkhttpClient okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder().client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create()).baseUrl(APIServiceConst.SOCKET_URL).build()
 
     @SimpleClientRetrofit
     @Provides
-    fun provideSimpleRetrofit(@SimpleClientRetrofit okHttpClient: OkHttpClient): Retrofit =
-        Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(APIServiceConst.BASE_URL).build()
+    fun provideSimpleRetrofit(@SimpleClientRetrofit okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder().client(okHttpClient)
+        .addConverterFactory(GsonConverterFactory.create()).baseUrl(APIServiceConst.BASE_URL).build()
 
     /*
     *   SWAP KEY RETROFIT CLIENT
@@ -202,10 +188,7 @@ object NetworkModule {
 
     @SwapKeyRetrofit
     @Provides
-    fun swapKeyRetrofitClient(
-        @ApplicationContext appContext: Context, sslSocketFactory: SSLSocketFactory,
-        loggingInterceptor: HttpLoggingInterceptor
-    ): OkHttpClient = OkHttpClient.Builder()
+    fun swapKeyRetrofitClient(sslSocketFactory: SSLSocketFactory, loggingInterceptor: HttpLoggingInterceptor): OkHttpClient = OkHttpClient.Builder()
         .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
         .addInterceptor(Interceptor {
             val request: Request = it.request().newBuilder().build()
@@ -220,7 +203,6 @@ object NetworkModule {
     @Singleton
     fun swapKeyRetrofit(
         baseUrl: String, @SwapKeyRetrofit okHttpClient: OkHttpClient, gsonBuilder: Gson
-    ): Retrofit = Retrofit.Builder().client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create(gsonBuilder)).baseUrl(baseUrl).build()
+    ): Retrofit = Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create(gsonBuilder)).baseUrl(baseUrl).build()
 
 }

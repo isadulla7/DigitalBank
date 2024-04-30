@@ -3,7 +3,6 @@ package uz.fido.universaldigital.ui.fragments.login.sign_in
 import android.os.Build
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
-import android.util.Log
 import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -48,14 +47,11 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         setTermsOfUseColor()
         setPhonePrefix()
         initTextChangeListeners()
-        Log.d("====KEY_K", Paper.book().read("KEY_K") ?: "no key k")
     }
 
     private fun setPhonePrefix() {
         binding.etPhoneNumber.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus && binding.etPhoneNumber.text.toString()
-                    .isEmpty()
-            ) binding.etPhoneNumber.setText(getString(R.string.phone_number_prefix))
+            if (hasFocus && binding.etPhoneNumber.text.toString().isEmpty()) binding.etPhoneNumber.setText(getString(R.string.phone_number_prefix))
         }
         binding.etPhoneNumber.setOnKeyListener { _, _, event ->
             event.keyCode == KeyEvent.KEYCODE_DEL && binding.etPhoneNumber.text.toString().length == 4
@@ -75,24 +71,19 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     private fun initTextChangeListeners() {
         binding.etPhoneNumber.addTextChangedListener { phone ->
             binding.btnContinue.isEnabled(phone.toString().length == 17 && passwordFormatted().length > 7)
-
         }
         binding.etPassword.addTextChangedListener { password ->
             binding.btnContinue.isEnabled(password.toString().length > 7 && phoneNumberFormatted().length == 12)
-
         }
     }
 
     private fun setTermsOfUseColor() {
         binding.textSingUpTerms.movementMethod = LinkMovementMethod.getInstance()
-        binding.textSingUpTerms.setLinkTextColor(
-            ContextCompat.getColor(
-                requireContext(), R.color.brandRedColor
-            )
-        )
+        binding.textSingUpTerms.setLinkTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
     }
 
     private fun swapKeysRequest() {
+        Paper.book().write(Const.DEVICE_CODE, requireContext().getDeviceIds())
         viewModel.swapKeys(
             SwapKeysRequest(
                 device_code = requireContext().getDeviceIds(),
@@ -133,12 +124,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun setKeyBForDiffieHellman(response: SwapKeysResponse) {
         val additionalText = CryptoUtil.encrypt(requireContext().getDeviceIds(), requireContext().getDeviceIds())
-        val diffieHellman = DiffieHellman.getDiffieHellman()
-        diffieHellman.setKeyBSwapKey(response.ecnryptData, additionalText)
+        DiffieHellman.getDiffieHellman().setKeyBSwapKey(response.ecnryptData, additionalText)
     }
 
     private fun checkUserSignInRequest(data: UserInfo) {
-        Log.d("====KEY_K sign", Paper.book().read("KEY_K") ?: "no key k")
         val device = GetDeviceInfo(requireContext()).deviceInfo
         val model = SignInRequestNew(
             phone_number = phoneNumberFormatted(),
@@ -191,7 +180,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             putString(Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString())
             putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_IN)
             putSerializable("data", model)
-            // putString("qwerty", passwordFormatted())
         }
         Paper.book().write(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
         gotoWithSlide(R.id.confirmSmsFragment, bundle)

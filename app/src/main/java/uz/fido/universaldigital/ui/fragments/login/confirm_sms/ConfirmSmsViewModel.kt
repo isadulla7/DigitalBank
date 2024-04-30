@@ -10,21 +10,17 @@ import uz.fido.network.domain.datasource.interfaces.IPaymentRepository
 import uz.fido.network.domain.datasource.interfaces.ISwapKeyRepository
 import uz.fido.network.domain.datasource.interfaces.IUserRepository
 import uz.fido.network.domain.datasource.interfaces.IUtilsRepository
-import uz.fido.network.domain.model.abc_base.SwapKeysRequest
 import uz.fido.network.domain.model.cards.AddCardRequest
 import uz.fido.network.domain.model.cards.ResetPinCount
 import uz.fido.network.domain.model.home.GlSMSActivateRequest
 import uz.fido.network.domain.model.p2p.P2PRequest
 import uz.fido.network.domain.model.payment.CreatePaymentRequest
 import uz.fido.network.domain.model.sessions.DeleteUserDeviceRequest
-import uz.fido.network.domain.model.sign_in.SignInRequest
-import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.network.domain.model.sign_up.CheckUserSms
 import uz.fido.network.domain.model.sign_up.FinishRegRequest
 import uz.fido.network.domain.model.sms.CheckSmsForPayment
 import uz.fido.network.domain.model.sms.SendEmailCode
 import uz.fido.universaldigital.base.AbstractViewModel
-import uz.fido.utils.utility.user.getClientToken
 import javax.inject.Inject
 
 @HiltViewModel
@@ -37,22 +33,6 @@ class ConfirmSmsViewModel @Inject constructor(
     private val p2PRepository: IP2PRepository,
     private val utilsRepository: IUtilsRepository,
 ) : AbstractViewModel(application) {
-
-    fun signIn(signInRequest: SignInRequest) = liveData(Dispatchers.IO) {
-        emit(userRepository.signIn(signInRequest))
-    }
-
-    fun signInNew(signInRequest: SignInRequestNew) = liveData(Dispatchers.IO) {
-        emit(userRepository.signInPin(getClientToken(), signInRequest))
-    }
-
-    fun swapKeys(request: SwapKeysRequest) = liveData(Dispatchers.IO) {
-        emit(swapKeyRepository.swapKeys(request))
-    }
-
-    fun swapKeysPin(request: SwapKeysRequest) = liveData(Dispatchers.IO) {
-        emit(swapKeyRepository.swapKeysPin(request))
-    }
 
     fun getUserDetailedInfo(fileUrl: String) = liveData(Dispatchers.IO) {
         emit(swapKeyRepository.getUserDetailedInfoAsync(fileUrl))
@@ -71,10 +51,9 @@ class ConfirmSmsViewModel @Inject constructor(
         emit(cardRepository.glSMSActivate(token, request))
     }
 
-    fun checkForSmsPaymentRequest(token: String, checkSmsForPayment: CheckSmsForPayment) =
-        liveData(Dispatchers.IO) {
-            emit(paymentRepository.checkSmsForPayment(token, checkSmsForPayment))
-        }
+    fun checkForSmsPaymentRequest(token: String, checkSmsForPayment: CheckSmsForPayment) = liveData(Dispatchers.IO) {
+        emit(paymentRepository.checkSmsForPayment(token, checkSmsForPayment))
+    }
 
     fun sendEmailCode(sendEmailCode: SendEmailCode) = liveData(Dispatchers.IO) {
         emit(userRepository.sendEmailCode(sendEmailCode))
@@ -87,17 +66,16 @@ class ConfirmSmsViewModel @Inject constructor(
     fun addCard(token: String, addCardRequest: AddCardRequest) = liveData(Dispatchers.IO) {
         emit(cardRepository.addCard(token, addCardRequest))
     }
-    fun resetPinCount(token: String,  resetPinCount: ResetPinCount) = liveData(Dispatchers.IO) {
+
+    fun resetPinCount(token: String, resetPinCount: ResetPinCount) = liveData(Dispatchers.IO) {
         emit(cardRepository.resetPinCount(token, resetPinCount))
     }
 
-    fun terminateSession(token: String, deleteUserDeviceRequest: DeleteUserDeviceRequest) =
-        liveData(Dispatchers.IO) {
-            emit(utilsRepository.terminateSession(token, deleteUserDeviceRequest))
-        }
+    fun terminateSession(token: String, deleteUserDeviceRequest: DeleteUserDeviceRequest) = liveData(Dispatchers.IO) {
+        emit(utilsRepository.terminateSession(token, deleteUserDeviceRequest))
+    }
 
-    fun loanRepayment(token: String, createPaymentRequest: CreatePaymentRequest) =
-        liveData(Dispatchers.IO) {
-            emit(paymentRepository.loanRepayment(token, createPaymentRequest))
-        }
+    fun loanRepayment(token: String, createPaymentRequest: CreatePaymentRequest) = liveData(Dispatchers.IO) {
+        emit(paymentRepository.loanRepayment(token, createPaymentRequest))
+    }
 }

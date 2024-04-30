@@ -26,9 +26,8 @@ class SignInViewModel @Inject constructor(
         emit(swapKeyRepository.getUserDetailedInfoAsync(fileUrl))
     }
 
-    fun checkUserSignInRequest(checkUserSignInRequest: SignInRequestNew) =
-        liveData(Dispatchers.IO) {
-            emit(userRepository.signIn(checkUserSignInRequest))
-        }
+    fun checkUserSignInRequest(checkUserSignInRequest: SignInRequestNew) = liveData(Dispatchers.IO) {
+        emit(userRepository.signIn(checkUserSignInRequest))
+    }
 
 }
