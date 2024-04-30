@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.login.sign_in
 import android.os.Build
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -26,6 +27,7 @@ import uz.fido.utils.const.APIServiceConst
 import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 import uz.fido.utils.const.Const
 import uz.fido.utils.device.GetDeviceInfo
+import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.security.encryptPassword
 import uz.fido.utils.utility.context.getDeviceIds
@@ -46,6 +48,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         setTermsOfUseColor()
         setPhonePrefix()
         initTextChangeListeners()
+        Log.d("====KEY_K", Paper.book().read("KEY_K") ?: "no key k")
     }
 
     private fun setPhonePrefix() {
@@ -129,10 +132,13 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun setKeyBForDiffieHellman(response: SwapKeysResponse) {
-        DiffieHellman.getDiffieHellman().SetKeyB(response.ecnryptData)
+        val additionalText = CryptoUtil.encrypt(requireContext().getDeviceIds(), requireContext().getDeviceIds())
+        val diffieHellman = DiffieHellman.getDiffieHellman()
+        diffieHellman.setKeyBSwapKey(response.ecnryptData, additionalText)
     }
 
     private fun checkUserSignInRequest(data: UserInfo) {
+        Log.d("====KEY_K sign", Paper.book().read("KEY_K") ?: "no key k")
         val device = GetDeviceInfo(requireContext()).deviceInfo
         val model = SignInRequestNew(
             phone_number = phoneNumberFormatted(),

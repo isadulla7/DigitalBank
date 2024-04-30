@@ -22,8 +22,10 @@ import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 import uz.fido.utils.const.APIServiceConst.profileImageUrl
 import uz.fido.utils.const.Const
 import uz.fido.utils.device.GetDeviceInfo
+import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.security.getClientEncodedToken
+import uz.fido.utils.utility.activity.insertStringBetween
 import uz.fido.utils.utility.context.AppSignatureHelper
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
@@ -55,7 +57,7 @@ class AuthInterceptor @Inject constructor(
         val originalResponse = chain.proceed(originalRequest)
         val activity = CurrentActivityHolder.currentActivity
 
-        if (originalResponse.code != TOKEN_EXPIRED && originalResponse.code != UNAUTHORIZED) {
+        if (originalResponse.code != TOKEN_EXPIRED && originalResponse.code != UNAUTHORIZED && originalRequest.header("Authorization") == null) {
             return originalResponse
         }
 
@@ -70,8 +72,6 @@ class AuthInterceptor @Inject constructor(
             } catch (e: Exception) {
                 Toast.makeText(context, "error code", Toast.LENGTH_SHORT).show()
             }
-
-
         }
 
         synchronized(this) {
@@ -115,7 +115,7 @@ class AuthInterceptor @Inject constructor(
                 public_key1 = DiffieHellman.getDiffieHellman()._g.toBigInteger(),
                 public_key2 = DiffieHellman.getDiffieHellman()._p.toBigInteger(),
                 encryptData = DiffieHellman.getDiffieHellman().keyA,
-                phoneNumber = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).replace("", ""),
+                phoneNumber = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE) ?: "".replace("", ""),
             )
         ).execute()
     }
@@ -154,6 +154,22 @@ class AuthInterceptor @Inject constructor(
     private fun setKeyForDiffieHellman(swapKeysResponse: SwapKeysResponse?) {
         val diffieHellman = DiffieHellman.getDiffieHellman()
         diffieHellman.SetKeyB(swapKeysResponse?.ecnryptData ?: "")
+        changeKey(diffieHellman.keyK)
+    }
+
+    private fun changeKey(keyK: String) {
+        val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+            .insertStringBetween("528", 3)
+        val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+            .insertStringBetween("963", 6)
+        val newKey = CryptoUtil.encrypt(
+            Paper.book().read("ENC_PASS"),
+            key1
+        ) + keyK + CryptoUtil.encrypt(
+            Paper.book().read(Const.STRING_LINE),
+            key2
+        )
+        Paper.book().write("KEY_K", newKey)
     }
 
     private fun isNeedToCallSwapKey(): Boolean {

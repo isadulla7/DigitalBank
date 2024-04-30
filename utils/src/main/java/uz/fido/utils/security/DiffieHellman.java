@@ -3,6 +3,7 @@ package uz.fido.utils.security;
 import java.math.BigInteger;
 import java.util.Random;
 
+import io.paperdb.Paper;
 import uz.fido.utils.log.Logger;
 
 public class DiffieHellman {
@@ -21,6 +22,10 @@ public class DiffieHellman {
             diffieHellman = new DiffieHellman();
         }
         return diffieHellman;
+    }
+
+    public static void clearDiffieHellman() {
+        diffieHellman = null;
     }
 
     private DiffieHellman() {
@@ -48,6 +53,14 @@ public class DiffieHellman {
         biK = biB.modPow(a, p);
         biKString = biK.toString();
         Logger.writeLog("bik________________________" + biK);
+    }
+
+    public void setKeyBSwapKey(String B, String additionalText) {
+        biB = new BigInteger(B);
+        biK = biB.modPow(a, p);
+        biKString = biK.toString();
+        biKString += additionalText;
+        Paper.book().write("KEY_K", biKString);
     }
 
     public String getKeyK() {

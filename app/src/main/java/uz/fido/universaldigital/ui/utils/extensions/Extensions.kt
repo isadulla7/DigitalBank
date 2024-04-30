@@ -427,7 +427,7 @@ fun setCardState(
 }
 
 fun RecyclerView.runWhenReady(action: () -> Unit) {
-    val globalLayoutListener = object: ViewTreeObserver.OnGlobalLayoutListener {
+    val globalLayoutListener = object : ViewTreeObserver.OnGlobalLayoutListener {
         override fun onGlobalLayout() {
             action()
             viewTreeObserver.removeOnGlobalLayoutListener(this)
@@ -436,10 +436,14 @@ fun RecyclerView.runWhenReady(action: () -> Unit) {
     viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
 }
 
-fun Activity.openPlayMarket(){
-    val intent=Intent(Intent.ACTION_VIEW).apply {
+fun Activity.openPlayMarket() {
+    val intent = Intent(Intent.ACTION_VIEW).apply {
         setData(Uri.parse(Const.PLAY_MARKET))
     }
     this.startActivity(intent)
+}
+
+fun String.insertStringBetween(insert: String, index: Int): String {
+    return StringBuilder(this).insert(index, insert).toString()
 }
 

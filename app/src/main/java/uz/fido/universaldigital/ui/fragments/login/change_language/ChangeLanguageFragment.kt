@@ -3,10 +3,12 @@ package uz.fido.universaldigital.ui.fragments.login.change_language
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import io.paperdb.Paper
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentChangeLanguageBinding
 import uz.fido.utils.const.LanguageConst
+import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.utility.activity.tintSystemBars
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.language.LocaleHelper
@@ -29,6 +31,8 @@ class ChangeLanguageFragment : BaseSimpleFragment<FragmentChangeLanguageBinding>
         super.onInit(savedInstanceState)
         getSelectedLang()
         initSetOnClickListeners()
+        Paper.book().delete("KEY_K")
+        DiffieHellman.clearDiffieHellman()
     }
 
     private fun initSetOnClickListeners() {

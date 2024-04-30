@@ -42,24 +42,30 @@ class DecryptionInterceptor(val context: Context) : Interceptor {
             val responseString = response.peekBody(Long.MAX_VALUE).string()
             var decryptedString: String? = null
             try {
-                val qwertyForEncrypt = if (request.header("Authorization") != null) {
-                    val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-                        .insertStringBetween("528", 3)
-                    val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-                        .insertStringBetween("963", 6)
-                    CryptoUtil.encrypt(
-                        Paper.book().read("ENC_PASS"),
-                        key1
-                    ) + DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
-                        Paper.book().read(Const.STRING_LINE),
-                        key2
-                    )
-                } else {
-                    DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
-                        context.getDeviceIds(),
-                        context.getDeviceIds()
-                    )
-                }
+                val qwertyForEncrypt = Paper.book().read<String>("KEY_K")
+                android.util.Log.d("====KEY_K dec", Paper.book().read("KEY_K") ?: "no key k")
+
+//                    if (request.header("Authorization") != null) {
+//                    val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+//                        .insertStringBetween("$%@", 3)
+//                    val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+//                        .insertStringBetween("*^&", 6)
+//                    CryptoUtil.encrypt(
+//                        Paper.book().read("ENC_PASS"),
+//                        key1
+//                    ) + DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
+//                        context.getDeviceIds(),
+//                        context.getDeviceIds()
+//                    ) + CryptoUtil.encrypt(
+//                        Paper.book().read(Const.STRING_LINE),
+//                        key2
+//                    )
+//                } else {
+//                    DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
+//                        context.getDeviceIds(),
+//                        context.getDeviceIds()
+//                    )
+//                }
                 decryptedString = CryptoUtil.decrypt(responseString, qwertyForEncrypt)
             } catch (e: Exception) {
                 Log.d("===headers dec", e.toString())
