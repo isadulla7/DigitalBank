@@ -75,6 +75,8 @@ object Const {
     const val TYPE_DEPOSIT = "TYPE_DEPOSIT"
     const val SEARCH_LIST = "SEARCH_LIST"
     const val STRING_LINE = "STRING_LINE"
+    const val PASSWORD_ENC = "ENC_PASS"
+    const val KEY_K = "KEY_K"
 
     var request_id = ""
 

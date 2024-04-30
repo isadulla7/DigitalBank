@@ -1,22 +1,24 @@
 package uz.fido.network.data.interceptor
 
 import android.content.Context
+import android.util.Log
 import io.paperdb.Paper
-import okhttp3.*
+import okhttp3.Interceptor
+import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.Request
+import okhttp3.RequestBody
+import okhttp3.Response
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.LanguageConst
-import uz.fido.utils.log.Log
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
+import uz.fido.utils.utility.activity.insertStringBetween
 import uz.fido.utils.utility.context.getDeviceIds
-import uz.fido.utils.utility.user.getUserQwerty
-import java.io.IOException
-import java.util.*
+import java.util.Locale
 
 class EncryptionInterceptor(val context: Context) : Interceptor {
 
-    @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
 
         val mediaType: MediaType? = "text/plain; charset=utf-8".toMediaTypeOrNull()
@@ -25,26 +27,33 @@ class EncryptionInterceptor(val context: Context) : Interceptor {
         val rawBody = request.body
 
         try {
-            val qwertyForEncrypt = if (request.header("Authorization") != null) {
-                val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-                    .insertStringBetween("528", 3)
-                val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-                    .insertStringBetween("963", 6)
-                CryptoUtil.encrypt(
-                    Paper.book().read("ENC_PASS"),
-                    key1
-                ) + DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
-                    Paper.book().read(Const.STRING_LINE),
-                    key2
-                )
-            } else {
-                DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
-                    context.getDeviceIds(),
-                    context.getDeviceIds()
-                )
-            }
+            val qwertyForEncrypt = Paper.book().read<String>("KEY_K")
+            Log.d("====KEY_K enc", Paper.book().read("KEY_K") ?: "no key k")
+            /*if (request.header("Authorization") != null) {
+            val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+                .insertStringBetween("$%@", 3)
+            val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+                .insertStringBetween("*^&", 6)
+            CryptoUtil.encrypt(
+                Paper.book().read("ENC_PASS"),
+                key1
+            ) + DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
+                context.getDeviceIds(),
+                context.getDeviceIds()
+            ) + CryptoUtil.encrypt(
+                Paper.book().read(Const.STRING_LINE),
+                key2
+            )
+        } else {
+            DiffieHellman.getDiffieHellman().keyK + CryptoUtil.encrypt(
+                context.getDeviceIds(),
+                context.getDeviceIds()
+            )
+        }*/
+
             val rawBodyString = CryptoUtil.requestBodyToString(rawBody)
             encryptedBody = CryptoUtil.encrypt(rawBodyString, qwertyForEncrypt)
+
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -67,6 +76,7 @@ class EncryptionInterceptor(val context: Context) : Interceptor {
         }
     }
 
+
     private var language =
         Paper.book().read(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN).uppercase(Locale.ROOT)
 
@@ -74,10 +84,6 @@ class EncryptionInterceptor(val context: Context) : Interceptor {
         const val HEADER_CONTENT_TYPE = "Content-Type"
         const val HEADER_CONTENT_LENGTH = "Content-Length"
         const val HEADER_APP_LANGUAGE = "lang"
-    }
-
-    private fun String.insertStringBetween(insert: String, index: Int): String {
-        return StringBuilder(this).insert(index, insert).toString()
     }
 
 }

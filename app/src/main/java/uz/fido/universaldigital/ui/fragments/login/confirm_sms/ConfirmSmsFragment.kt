@@ -22,12 +22,9 @@ import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
-import uz.fido.network.domain.model.abc_base.SwapKeysRequest
-import uz.fido.network.domain.model.abc_base.SwapKeysResponse
 import uz.fido.network.domain.model.abc_base.UserInfo
 import uz.fido.network.domain.model.cards.AddCardRequest
 import uz.fido.network.domain.model.cards.ResetPinCount
-import uz.fido.network.domain.model.cards.ResetPinCountCheck
 import uz.fido.network.domain.model.home.GlSMSActivateRequest
 import uz.fido.network.domain.model.payment.AllServiceLists
 import uz.fido.network.domain.model.sessions.DeleteUserDeviceRequest
@@ -46,20 +43,15 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentConfirmSmsBinding
 import uz.fido.universaldigital.services.SMSBroadcastReceiver
 import uz.fido.universaldigital.ui.activities.FaceIdActivity
-import uz.fido.universaldigital.ui.activities.MainActivity
-import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.getUserQwerty
-import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInPinResponse
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInResponse
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveUserSms
 import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
-import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation
 import uz.fido.universaldigital.ui.fragments.login.restore_profile.ChangePasswordFragment
 import uz.fido.universaldigital.ui.fragments.login.sign_in.SignInViewModel
 import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpViewModel
 import uz.fido.universaldigital.ui.fragments.login.sign_up_password.SignUpPasswordFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.main_dialogs.AllServicesDialog
-import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.app.getFCMToken
 import uz.fido.utils.const.APIServiceConst
@@ -68,8 +60,8 @@ import uz.fido.utils.const.Const.EMAIL
 import uz.fido.utils.const.Const.PHONE_NUMBER
 import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.security.CryptoUtil
-import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.security.encryptPassword
+import uz.fido.utils.utility.activity.insertStringBetween
 import uz.fido.utils.utility.bundle.serializable
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
@@ -130,6 +122,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         registerSMSReceiver()
         initTextChangeListener()
         initSetOnClickListeners()
+        Log.d("====KEY_K", Paper.book().read("KEY_K") ?: "no key k")
     }
 
     private fun initSetOnClickListeners() {
@@ -301,6 +294,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     }
 
     private fun signInRequest(userInfo: UserInfo) {
+        Log.d("====KEY_K confirm sms", Paper.book().read("KEY_K") ?: "no key k")
         if (context != null && !isDetached) {
             val smsCode = binding.etSms.editableText.toString()
             val data = requireArguments().serializable<SignInRequestNew>("data") as SignInRequestNew
@@ -341,7 +335,15 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                                 signInResponse.password = encryptPassword(data.password)
                                 requireContext().saveSignInResponse(signInResponse)
                                 requireContext().saveUserSms(smsCode)
-                                swapKeys()
+                                changeKey()
+                                val bundle = Bundle()
+                                bundle.putString(
+                                    PinCodeFragment.PIN_OPERATION,
+                                    PinCodeFragment.PIN_OPERATION_SET_PIN
+                                )
+                                gotoWithSlide(
+                                    R.id.action_confirmSmsFragment_to_pinCodeFragment, bundle
+                                )
                             } else {
                                 showSnackbar(it.message.toString())
                             }
@@ -357,108 +359,19 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         }
     }
 
-    private fun swapKeys() {
-        viewModel.swapKeysPin(
-            SwapKeysRequest(
-                device_code = requireContext().getDeviceIds(),
-                public_key1 = DiffieHellman.getDiffieHellman()._g.toBigInteger(),
-                public_key2 = DiffieHellman.getDiffieHellman()._p.toBigInteger(),
-                encryptData = DiffieHellman.getDiffieHellman().keyA,
-                phoneNumber = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).replace("", ""),
-            )
-        ).observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    getUserInfoForSwapKey()
-                    val response = it.data as SwapKeysResponse
-                    DiffieHellman.getDiffieHellman().SetKeyB(response.ecnryptData)
-                }
-
-                Status.ERROR -> {
-                    showSnackbar(it.message.toString())
-                }
-            }
-        }
-    }
-
-    private fun getUserInfoForSwapKey() {
-        viewModel.getUserDetailedInfo(APIServiceConst.USER_INFO_URL + requireContext().getIpAddress())
-            .observe(viewLifecycleOwner) {
-                when (it.status) {
-                    Status.SUCCESS -> it.data?.let { data ->
-                        signInNewRequest(data)
-                    }
-
-                    Status.ERROR -> {
-                        showSnackbar(it.message.toString())
-                    }
-                }
-            }
-    }
-
-    private fun signInNewRequest(userInfo: UserInfo) {
-        val device = GetDeviceInfo(requireContext()).deviceInfo
-        val data = requireArguments().serializable<SignInRequestNew>("data") as SignInRequestNew
-        val password = data.password
-        val stringLineEnc = CryptoUtil.encryptWithoutSalt(
-            data.string_line.toString().replace(" ", ""), smsCode
+    private fun changeKey() {
+        val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+            .insertStringBetween("528", 3)
+        val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+            .insertStringBetween("963", 6)
+        val newKey = CryptoUtil.encrypt(
+            Paper.book().read("ENC_PASS"),
+            key1
+        ) + Paper.book().read("KEY_K") + CryptoUtil.encrypt(
+            Paper.book().read(Const.STRING_LINE),
+            key2
         )
-        Paper.book().write("pass", password)
-        val signInRequest = SignInRequestNew(
-            phone_number = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).replace("", ""),
-            device_type = "A",
-            device_code = requireContext().getDeviceIds(),
-            device_name = getDeviceName(),
-            version = "1",
-            ip = requireContext().getIpAddress(),
-            client_id = APIServiceConst.USER_CLIENT_ID,
-            fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
-            password = Paper.book().read("ENC_PASS"),
-            is_pin = 1,
-            sim_iccd = device.simCcd.toString(),
-            network_state = device.networkState.toString(),
-            imei_data = device.imeiData.toString(),
-            os_system_version_api = "A",
-            os_version = Build.VERSION.SDK_INT.toString(),
-            app_version_code = BuildConfig.VERSION_CODE.toString(),
-            app_version = BuildConfig.VERSION_NAME,
-            userInfo = userInfo,
-            app_key_hash = AppSignatureHelper(requireContext()).appKeyHash
-        )
-        viewModel.signInNew(signInRequest = signInRequest).observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    val signInResponse = it.data
-                    if (signInResponse?.token != null) {
-                        saveSignInResponse(signInResponse)
-//                        signInResponse.password = encryptPassword(data.password)
-//                        requireContext().saveSignInResponse(signInResponse)
-//                        requireContext().saveUserSms(smsCode)
-                        val bundle = Bundle()
-                        bundle.putString(
-                            PinCodeFragment.PIN_OPERATION,
-                            PinCodeFragment.PIN_OPERATION_SET_PIN
-                        )
-//                        Paper.book().write(Const.STRING_LINE, stringLineEnc)
-                        gotoWithSlide(
-                            R.id.action_confirmSmsFragment_to_pinCodeFragment, bundle
-                        )
-                    } else {
-                        showSnackbar(it.message.toString())
-                    }
-                }
-
-                Status.ERROR -> {
-                    showSnackbar(it.message.toString())
-                }
-            }
-        }
-    }
-
-    private fun saveSignInResponse(signInResponse: SignInResponse) {
-        Thread {
-            saveSignInPinResponse(signInResponse)
-        }.start()
+        Paper.book().write("KEY_K", newKey)
     }
 
     private fun showWrongSmsCodeDialog() {

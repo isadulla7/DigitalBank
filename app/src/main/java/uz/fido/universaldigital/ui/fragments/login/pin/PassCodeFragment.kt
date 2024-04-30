@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.biometric.BiometricPrompt
@@ -41,8 +42,10 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.device.vibrateTick
+import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.security.getDecodedString
+import uz.fido.utils.utility.activity.insertStringBetween
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
 import uz.fido.utils.utility.context.startActivityWithClearTask
@@ -90,6 +93,8 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         initSetOnClickListeners()
         setGreetingText()
         initAvatar()
+        Log.d("====KEY_K", Paper.book().read("KEY_K") ?: "no key k")
+        DiffieHellman.clearDiffieHellman()
     }
 
     override fun onClick(view: View) {
@@ -286,9 +291,12 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         ).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    getUserInfo()
                     val response = it.data as SwapKeysResponse
-                    DiffieHellman.getDiffieHellman().SetKeyB(response.ecnryptData)
+                    val diffieHellman = DiffieHellman.getDiffieHellman()
+                    diffieHellman.SetKeyB(response.ecnryptData)
+//                    DiffieHellman.getDiffieHellman().SetKeyB(response.ecnryptData)
+                    changeKey(diffieHellman.keyK)
+                    getUserInfo()
                 }
 
                 Status.ERROR -> {
@@ -320,6 +328,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun signInRequest(userInfo: UserInfo) {
+        Log.d("====KEY_K pass", Paper.book().read("KEY_K") ?: "no key k")
         val device = GetDeviceInfo(requireContext()).deviceInfo
 //        val password = requireContext().getUserQwerty()
 //        if (password == "404") {
@@ -381,6 +390,21 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             }
 //            }
         }
+    }
+
+    private fun changeKey(keyK: String) {
+        val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+            .insertStringBetween("528", 3)
+        val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+            .insertStringBetween("963", 6)
+        val newKey = CryptoUtil.encrypt(
+            Paper.book().read("ENC_PASS"),
+            key1
+        ) + keyK + CryptoUtil.encrypt(
+            Paper.book().read(Const.STRING_LINE),
+            key2
+        )
+        Paper.book().write("KEY_K", newKey)
     }
 
     private fun saveSignInResponse(signInResponse: SignInResponse) {

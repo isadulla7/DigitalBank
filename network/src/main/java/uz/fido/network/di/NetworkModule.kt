@@ -132,11 +132,11 @@ object NetworkModule {
         .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
         .addInterceptor(HeaderInterceptor())
         .addInterceptor(loggingInterceptor)
-        .addInterceptor(
-            AuthInterceptor(
-                swapKeyService = swapKeyService, context = appContext, apiInterface
-            )
-        )
+//        .addInterceptor(
+//            AuthInterceptor(
+//                swapKeyService = swapKeyService, context = appContext, apiInterface
+//            )
+//        )
         .addInterceptor(EncryptionInterceptor(appContext))
         .addInterceptor(DecryptionInterceptor(appContext))
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)

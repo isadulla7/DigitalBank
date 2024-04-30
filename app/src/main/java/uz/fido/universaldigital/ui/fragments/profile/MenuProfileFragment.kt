@@ -134,15 +134,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             )
         ).observe(viewLifecycleOwner) {
             hideProgress()
-            when (it.status) {
-                Status.SUCCESS -> {
-                    requireActivity().logOut()
-                }
-
-                else -> {
-                    showSnackbar(it.message.toString())
-                }
-            }
+            requireActivity().logOut()
         }
     }
 
