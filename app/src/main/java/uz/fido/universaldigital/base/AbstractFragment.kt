@@ -28,17 +28,9 @@ abstract class AbstractFragment<VB : ViewBinding, VM : AbstractViewModel>(
         return binding.root
     }
 
-    open fun onInit(savedInstanceState: Bundle?) {
+    open fun onInit(savedInstanceState: Bundle?) {}
 
-    }
-
-    open fun onInit(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ) {
-
-    }
+    open fun onInit(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) {}
 
     fun toast(string: String) {
         Toast.makeText(activity, string, Toast.LENGTH_SHORT).show()
@@ -48,4 +40,5 @@ abstract class AbstractFragment<VB : ViewBinding, VM : AbstractViewModel>(
         super.onDestroyView()
         _binding = null
     }
+
 }

@@ -16,13 +16,8 @@ import uz.fido.utils.utility.language.LocaleHelper.getLanguage
 class UniversalApplication : Application() {
 
     companion object {
-
         private lateinit var instance: UniversalApplication
-
-        fun getContext(): Context {
-            return instance.applicationContext
-        }
-
+        fun getContext(): Context = instance.applicationContext
     }
 
     override fun onCreate() {
@@ -33,7 +28,6 @@ class UniversalApplication : Application() {
         DiffieHellman.getDiffieHellman()
         Paper.book().write(DEVICE_CODE, this.getDeviceIds())
         initLocale()
-
     }
 
     private fun initLocale() {
@@ -41,9 +35,7 @@ class UniversalApplication : Application() {
     }
 
     private fun initTheme() {
-        AppCompatDelegate.setDefaultNightMode(
-            Paper.book().read(Const.APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        )
+        AppCompatDelegate.setDefaultNightMode(Paper.book().read(Const.APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM))
     }
 
 }

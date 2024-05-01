@@ -1,13 +1,12 @@
 package uz.fido.network.data.interceptor
 
-import io.paperdb.BuildConfig
 import io.paperdb.Paper
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.LanguageConst
-import java.util.*
+import java.util.Locale
 
 /**
  * Created by Husniddin Muhammad Amin on 02.05.2023
@@ -19,7 +18,7 @@ class HeaderInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request =
             chain.request().newBuilder()
-                .header(HEADER_APP_VERSION, BuildConfig.VERSION_CODE.toString())
+                .header(HEADER_APP_VERSION, Paper.book().read<String?>("VERSION_CODE").toString())
                 .header(HEADER_APP_LANGUAGE, language)
                 .header(HEADER_DEVICE_TYPE, DEVICE)
                 .header(HEADER_DEVICE_CODE, Paper.book().read(Const.DEVICE_CODE) ?: "")

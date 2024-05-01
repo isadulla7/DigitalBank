@@ -90,26 +90,28 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
 
     private fun getNotification() {
         binding.notificationHide.setOnClickListener {
-            binding.consNotification.visibility=View.GONE
+            binding.consNotification.visibility = View.GONE
         }
-        menuProductsViewModel.getNotifications(getClientToken(), GetNotificationsRequest(
-            page_number = "0", page_item_size = "20"
-        )
-        ).observe(viewLifecycleOwner){
-            when(it.status){
+        menuProductsViewModel.getNotifications(
+            getClientToken(), GetNotificationsRequest(
+                page_number = "0", page_item_size = "20"
+            )
+        ).observe(viewLifecycleOwner) {
+            when (it.status) {
                 Status.SUCCESS -> {
-                    val notificationList=it.data?.notifications?.filter { it.is_read=="N" }?: arrayListOf()
-                    if (notificationList.isNotEmpty()){
-                        binding.notificationItem.visibility=View.VISIBLE
-                        binding.consNotification.visibility=View.VISIBLE
-                        binding.notificationItem.text=notificationList.size.toString()
-                        binding.notificationTitle.text=notificationList[0].title
-                        binding.notificationText.text=notificationList[0].text
-                    }else{
-                        binding.notificationItem.visibility=View.GONE
-                        binding.consNotification.visibility=View.GONE
+                    val notificationList = it.data?.notifications?.filter { it.is_read == "N" } ?: arrayListOf()
+                    if (notificationList.isNotEmpty()) {
+                        binding.notificationItem.visibility = View.VISIBLE
+                        binding.consNotification.visibility = View.VISIBLE
+                        binding.notificationItem.text = notificationList.size.toString()
+                        binding.notificationTitle.text = notificationList[0].title
+                        binding.notificationText.text = notificationList[0].text
+                    } else {
+                        binding.notificationItem.visibility = View.GONE
+                        binding.consNotification.visibility = View.GONE
                     }
                 }
+
                 Status.ERROR -> {}
             }
         }
@@ -151,6 +153,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
             when (it.status) {
                 Status.SUCCESS -> {
                     val cards = it.data?.objects ?: ArrayList()
+                    balanceUpdateCounter = 0
                     if (cards.isNotEmpty()) {
                         for (i in 0 until cards.size) {
                             getCardInfo(i, cards, refreshLayout)
@@ -163,9 +166,9 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
                 }
 
                 Status.ERROR -> {
-                    val code=it.errorBody?.code?:0
-                    if (code==1024){
-                        val dialog=AlertDialog.Builder(requireContext())
+                    val code = it.errorBody?.code ?: 0
+                    if (code == 1024) {
+                        val dialog = AlertDialog.Builder(requireContext())
                             .setTitle("Play Market")
                             .setMessage("Play marketda yangi versiya mavjud")
                             .setCancelable(false)
@@ -175,7 +178,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
                         dialog.create()
                         dialog.show()
                     }
-                  //  deviceCheck(requireActivity(),it.errorBody)
+                    //  deviceCheck(requireActivity(),it.errorBody)
                     refreshLayout?.finishRefresh()
                 }
             }

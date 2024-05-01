@@ -6,7 +6,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import uz.fido.network.data.utility.CurrentActivityHolder
 import uz.fido.utils.utility.activity.adjustFontScale
 import uz.fido.utils.utility.language.LocaleHelper
 import uz.fido.utils.utility.language.LocaleHelper.getLanguage
@@ -23,11 +22,6 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(LocaleHelper.setLocale(newBase!!, getLanguage(newBase)))
-    }
-
-    override fun onResume() {
-        super.onResume()
-
     }
 
     override fun onStart() {
