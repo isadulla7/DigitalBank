@@ -1,34 +1,32 @@
 package uz.fido.universaldigital.ui.fragments.profile.identification.adapters
 
-import  android.view.LayoutInflater
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import uz.fido.network.domain.model.my_id.CodeAndName
 import uz.fido.universaldigital.databinding.ItemCodeAndNameBinding
 
 class CodeAndNameAdapter(
-    private val list: ArrayList<CodeAndName>
+    private val details: Map<String, String>
 ) : RecyclerView.Adapter<CodeAndNameAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: ItemCodeAndNameBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: CodeAndName) {
-            binding.layout.hint = item.name
-            binding.editText.setText(item.value)
+        fun bind(item: Pair<String, String>) {
+            binding.layout.hint = item.first
+            binding.editText.setText(item.second)
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding =
-            ItemCodeAndNameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemCodeAndNameBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(list[position])
+        holder.bind(details.toList()[position])
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return details.size
     }
 }

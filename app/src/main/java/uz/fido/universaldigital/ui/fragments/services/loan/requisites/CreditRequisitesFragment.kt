@@ -36,9 +36,7 @@ class CreditRequisitesFragment(private val clientProduct: CreditProduct) : Dialo
     }
 
     private fun initView() {
-        binding.value.text =
-            Paper.book().read<String>(Const.PAPER_CLIENT_SURNAME) + " " + Paper.book()
-                .read(Const.PAPER_CLIENT_NAME)
+        binding.value.text = Paper.book().read<String>(Const.LAST_NAME) + " " + Paper.book().read(Const.FIRST_NAME)
         binding.valueNumber.text = clientProduct.codeFilial
         binding.address.text = clientProduct.filialName
     }

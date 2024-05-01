@@ -196,9 +196,9 @@ class AuthInterceptor @Inject constructor(
 
 fun saveSignInPinResponse(signInResponse: SignInResponse) {
     Paper.book().write(Const.PAPER_CLIENT_INFO, signInResponse)
-    Paper.book().write(Const.PAPER_CLIENT_NAME, signInResponse.name)
+    Paper.book().write(Const.FIRST_NAME, signInResponse.name)
     Paper.book().write(Const.PAPER_CLIENT_ID, signInResponse.user_id)
-    Paper.book().write(Const.PAPER_CLIENT_SURNAME, signInResponse.surname)
+    Paper.book().write(Const.LAST_NAME, signInResponse.surname)
     Paper.book().write(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number)
     Paper.book().write(Const.PAPER_CLIENT_POINTS, signInResponse.points ?: "0")
     Paper.book().write(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")

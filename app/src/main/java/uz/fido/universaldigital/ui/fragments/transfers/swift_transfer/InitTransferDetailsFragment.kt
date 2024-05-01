@@ -121,8 +121,8 @@ class InitTransferDetailsFragment :
 
     private fun initSetOnClickListeners() {
         binding.etCustomerName.setText(
-            "${Paper.book().read(Const.PAPER_CLIENT_NAME, "")} ${
-                Paper.book().read(Const.PAPER_CLIENT_SURNAME, "")
+            "${Paper.book().read(Const.FIRST_NAME, "")} ${
+                Paper.book().read(Const.LAST_NAME, "")
             }"
         )
         binding.btnContinue.setOnClickListener { nextBtnClicked() }

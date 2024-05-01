@@ -30,6 +30,7 @@ import uz.fido.universaldigital.ui.fragments.profile.MenuProfileFragment
 import uz.fido.universaldigital.ui.fragments.profile.about_bank.branches.MainBranchesFragment
 import uz.fido.universaldigital.ui.fragments.profile.identification.MainIdentificationFragment
 import uz.fido.universaldigital.ui.fragments.profile.identification.VerificationInfoUserFragment
+import uz.fido.universaldigital.ui.fragments.profile.user_details.EditProfileFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.fragments.transfers.by_phone.TransferByPhoneFragment
 import uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferFragment
@@ -91,7 +92,8 @@ class MainActivity : BaseActivity() {
             currentFragment is SuccessTransferFragment ||
             currentFragment is BasicSuccessFragment ||
             currentFragment is PaymentFragment ||
-            currentFragment is VerificationInfoUserFragment
+            currentFragment is VerificationInfoUserFragment ||
+            currentFragment is EditProfileFragment
         ) {
             pausedMillis = 0L
         } else {

@@ -288,10 +288,6 @@ fun Fragment.isInternetConnected(context: Context): Boolean {
     return result
 }
 
-fun dpToPx(dp: Int, context: Context): Float {
-    return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-}
-
 fun View.takeScreenShot(activity: Activity, callback: (Bitmap?) -> Unit) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
         activity.window?.let { window ->
@@ -372,16 +368,6 @@ fun limitRange(): CalendarConstraints.Builder {
     return constraintsBuilderRange
 }
 
-fun Fragment.getStringResourceByName(aString: String): String {
-    val packageName: String = requireContext().packageName
-    return try {
-        getString(resources.getIdentifier(aString, "string", packageName))
-    } catch (e: Resources.NotFoundException) {
-        e.printStackTrace()
-        ""
-    }
-}
-
 fun isUserIdentified(): Boolean {
     val signInResponse = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
     return if (signInResponse != null) {
@@ -426,16 +412,6 @@ fun setCardState(
     }
 }
 
-fun RecyclerView.runWhenReady(action: () -> Unit) {
-    val globalLayoutListener = object : ViewTreeObserver.OnGlobalLayoutListener {
-        override fun onGlobalLayout() {
-            action()
-            viewTreeObserver.removeOnGlobalLayoutListener(this)
-        }
-    }
-    viewTreeObserver.addOnGlobalLayoutListener(globalLayoutListener)
-}
-
 fun Activity.openPlayMarket() {
     val intent = Intent(Intent.ACTION_VIEW).apply {
         setData(Uri.parse(Const.PLAY_MARKET))
@@ -443,7 +419,4 @@ fun Activity.openPlayMarket() {
     this.startActivity(intent)
 }
 
-fun String.insertStringBetween(insert: String, index: Int): String {
-    return StringBuilder(this).insert(index, insert).toString()
-}
-
+fun String.fixQuestionMarks() = this.replace("?", "'")

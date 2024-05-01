@@ -6,7 +6,7 @@ object ConfigData {
     const val targetSdkVersion = 34
     const val buildToolsVersion = "34.0.0"
 
-    const val versionCode = 32
+    const val versionCode = 33
     const val releaseVersionName = "1.0.1"
     const val archivesBaseName = "Universalbank($versionCode)"
 
