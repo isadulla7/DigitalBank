@@ -70,9 +70,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             Paper.book().read(Const.PAPER_CLIENT_SURNAME, "").isNotEmpty()
         ) {
             binding.userName.text = Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "")
-            binding.tvShortName.text =
-                (Paper.book().read(Const.PAPER_CLIENT_NAME, "").first().toString() + Paper.book()
-                    .read(Const.PAPER_CLIENT_SURNAME, "").first().toString())
+            binding.tvShortName.text = (Paper.book().read(Const.PAPER_CLIENT_NAME, "").first().toString() + Paper.book().read(Const.PAPER_CLIENT_SURNAME, "").first().toString())
         } else {
             binding.userName.text = getString(R.string.your_phone_number)
         }
@@ -102,7 +100,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             security.setOnClickListener { gotoWithSlide(R.id.securityFragment) }
             settings.setOnClickListener { gotoWithSlide(R.id.settingsFragment) }
             aboutBank.setOnClickListener { gotoWithSlide(R.id.aboutBankFragment) }
-            appBar.setOnAdditionalBtnClickListener { showLogOutDialog() }
+            logOut.setOnClickListener { showLogOutDialog() }
             profile.setOnClickListener { gotoWithSlide(R.id.myDetailsFragment) }
             profileImage.setOnClickListener { requestPermissionForImages() }
         }
@@ -110,9 +108,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
 
     private fun loadProfileImage() {
         if (Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNotEmpty()) {
-            Glide.with(requireContext()).load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH) ?: "")
-                .error(R.drawable.ic_profile_image_empty)
-                .into(binding.profileImage)
+            Glide.with(requireContext()).load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH) ?: "").error(R.drawable.ic_profile_image_empty).into(binding.profileImage)
         }
     }
 
@@ -139,9 +135,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
     }
 
     private fun showLogOutDialog() {
-        LogOutDialog {
-            logOutRequest()
-        }.show(childFragmentManager, "")
+        LogOutDialog { logOutRequest() }.show(childFragmentManager, "")
     }
 
     private fun openEditPhotoActivity(path: String) {
@@ -159,17 +153,14 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
     }
 
     private fun pickImage() {
-        val intent =
-            Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply {
-                type = "image/*"
-            }
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply { type = "image/*" }
         openGalleryIntent.launch(intent)
     }
 
     private fun uploadImageToFirebase(filePath: Uri) {
         val photoId = "profile_photo_${getClientId()}_${(Random().nextInt(99999 - 10000) + 10000)}"
         binding.progressBar.visibility = View.VISIBLE
-        binding.profileImage.alpha = 0.5f
+        binding.profileImage.alpha = 0.8f
         val ref = storageReference!!.child("images/$photoId")
         ref.putFile(filePath).addOnSuccessListener {
             setProfilePhotoId(photoId)
@@ -185,40 +176,35 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
     private fun setProfilePhotoId(id: String) {
         if (view != null) {
             showProgress()
-            viewModel.editUserInfo(getClientToken(), EditUserInfo(user_avatar = id))
-                .observe(viewLifecycleOwner) {
-                    hideProgress()
-                    if (it.status == Status.ERROR) {
-                        showSnackbar(it.message.toString())
-                    }
+            viewModel.editUserInfo(getClientToken(), EditUserInfo(user_avatar = id)).observe(viewLifecycleOwner) {
+                hideProgress()
+                if (it.status == Status.ERROR) {
+                    showSnackbar(it.message.toString())
                 }
+            }
         }
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) {
-        if (it) {
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { approved ->
+        if (approved) {
             pickImage()
         }
     }
 
-    private val editPhotoIntent =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
-                val path = it.data?.getStringExtra(EditPhotoActivity.RESULT_IMAGE)
-                Paper.book().write(Const.PAPER_USER_PHOTO_PATH, path)
-                Picasso.get().load(path).into(binding.profileImage)
-                uploadImageToFirebase(path!!.toUri())
-            }
+    private val editPhotoIntent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK && it.data != null) {
+            val path = it.data?.getStringExtra(EditPhotoActivity.RESULT_IMAGE)
+            Paper.book().write(Const.PAPER_USER_PHOTO_PATH, path)
+            Picasso.get().load(path).into(binding.profileImage)
+            uploadImageToFirebase(path!!.toUri())
         }
+    }
 
-    private val openGalleryIntent =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK && it.data?.data != null) {
-                val path = it.data?.data.toString()
-                openEditPhotoActivity(path)
-            }
+    private val openGalleryIntent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK && it.data?.data != null) {
+            val path = it.data?.data.toString()
+            openEditPhotoActivity(path)
         }
+    }
 
 }

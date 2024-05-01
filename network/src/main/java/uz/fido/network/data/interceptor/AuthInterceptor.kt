@@ -3,7 +3,6 @@ package uz.fido.network.data.interceptor
 import android.content.Context
 import android.os.Build
 import android.widget.Toast
-import io.paperdb.BuildConfig
 import io.paperdb.Paper
 import okhttp3.Interceptor
 import okhttp3.Request
@@ -143,8 +142,8 @@ class AuthInterceptor @Inject constructor(
             imei_data = device.imeiData.toString(),
             os_system_version_api = "A",
             os_version = Build.VERSION.SDK_INT.toString(),
-            app_version_code = BuildConfig.VERSION_CODE.toString(),
-            app_version = BuildConfig.VERSION_NAME,
+            app_version_code = Paper.book().read<String>("VERSION_CODE").toString(),
+            app_version = Paper.book().read<String?>("VERSION_NAME").toString(),
             userInfo = userInfo,
             app_key_hash = AppSignatureHelper(context).appKeyHash
         )
@@ -152,16 +151,16 @@ class AuthInterceptor @Inject constructor(
     }
 
     private fun setKeyForDiffieHellman(swapKeysResponse: SwapKeysResponse?) {
-        val diffieHellman = DiffieHellman.getDiffieHellman()
-        diffieHellman.SetKeyB(swapKeysResponse?.ecnryptData ?: "")
-        changeKey(diffieHellman.keyK)
+        DiffieHellman.clearDiffieHellman()
+        DiffieHellman.getDiffieHellman().SetKeyB(swapKeysResponse?.ecnryptData)
+        changeKey(DiffieHellman.getDiffieHellman().keyK)
     }
 
     private fun changeKey(keyK: String) {
         val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-            .insertStringBetween("528", 3)
+            .insertStringBetween("@$#", 3)
         val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-            .insertStringBetween("963", 6)
+            .insertStringBetween("&^%", 6)
         val newKey = CryptoUtil.encrypt(
             Paper.book().read("ENC_PASS"),
             key1

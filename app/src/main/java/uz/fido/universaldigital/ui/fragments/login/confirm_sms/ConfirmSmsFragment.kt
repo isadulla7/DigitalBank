@@ -355,9 +355,9 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     private fun changeKey() {
         val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-            .insertStringBetween("528", 3)
+            .insertStringBetween("@$#", 3)
         val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-            .insertStringBetween("963", 6)
+            .insertStringBetween("&^%", 6)
         val newKey = CryptoUtil.encrypt(
             Paper.book().read("ENC_PASS"),
             key1

@@ -33,11 +33,6 @@ abstract class BaseDialogFragment<VB : ViewBinding>(var inflate: Inflate<VB>) : 
 
     open fun onInit(savedInstanceState: Bundle?) {}
 
-    open fun onInit(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ) {
-    }
+    open fun onInit(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) {}
 
 }

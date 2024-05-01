@@ -7,4 +7,5 @@
     <string name="successfully_deleted">Hisobingiz muvaffaqiyatli o\'chirildi</string>
     <string name="pass_check">Пароль должен содержать хотя бы одну букву или одну цифру и один символ.</string>
     <string name="delete_all">Удалить все</string>
+    <string name="logging_out">Выйти</string>
 </resources>
