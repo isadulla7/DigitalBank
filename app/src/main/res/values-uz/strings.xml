@@ -993,15 +993,15 @@
     <string name="add_favorite_receivers">Ko\'p ishlatiladigan qabul qiluvchilarni tanlanganlarga qo\'shing</string>
     <string name="delete_account">Hisobni o\'chirish</string>
     <string name="log_out">Hisobdan chiqish</string>
-    <string name="delete_account_q">Удалить аккаунт?</string>
-    <string name="delete_account_description">Вы уверены, что хотите удалить свою учетную запись? Эту операцию нельзя отменить</string>
+    <string name="delete_account_q">Hisobni o\'chirish</string>
+    <string name="delete_account_description">Hisobingizni oʻchirib tashlamoqchimisiz? Bu amalni ortga qaytarib bo‘lmaydi</string>
     <string name="successfully_deleted">Hisobingiz muvaffaqiyatli o\'chirildi</string>
     <string name="pass_check">Пароль должен содержать хотя бы одну букву или одну цифру и один символ.</string>
     <string name="delete_all">Удалить все</string>
     <string name="nameless">Безымянный</string>
     <string name="error_password">Пожалуйста, очистите память и попробуйте войти снова.</string>
-    <string name="select_card">Выберите карту</string>
-    <string name="reset_pin_title">После подтверждения сброса пин кода количество неправильных попыток будет ноль</string>
-    <string name="sign_up_success">Вы успешно завершили регистрацию, пожалуйста, войдите снова</string>
-    <string name="logging_out">Выйти</string>
+    <string name="select_card">Kartani tanlang</string>
+    <string name="reset_pin_title">PIN-kodni qayta tiklashni tasdiqlaganingizdan so\'ng, noto\'g\'ri urinishlar soni nolga teng bo\'ladi</string>
+    <string name="sign_up_success">Siz roʻyxatdan oʻtishni muvaffaqiyatli yakunladingiz, qaytadan kiring</string>
+    <string name="logging_out">Chiqish</string>
 </resources>

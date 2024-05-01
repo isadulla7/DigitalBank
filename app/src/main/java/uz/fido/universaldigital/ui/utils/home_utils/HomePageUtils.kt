@@ -32,8 +32,8 @@ fun MenuHomeFragment.loadProfileImage() {
 @SuppressLint("SetTextI18n")
 fun MenuHomeFragment.setUserDetails() {
     val fullName = Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "")
-    val clientName = Paper.book().read(Const.PAPER_CLIENT_NAME, "")
-    val clientSurname = Paper.book().read(Const.PAPER_CLIENT_SURNAME, "")
+    val clientName = Paper.book().read(Const.FIRST_NAME, "")
+    val clientSurname = Paper.book().read(Const.LAST_NAME, "")
     val clientPhone = Format.phoneFormat(Paper.book().read(Const.PAPER_CLIENT_PHONE, ""))
     val clientPhotoPath = Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "")
     binding.userName.text = fullName.trim().ifEmpty { clientPhone }

@@ -16,8 +16,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpPasswordBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
-import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignUpRequest
-import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
 import uz.fido.utils.const.APIServiceConst.USER_INFO_URL
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.encryptPassword
@@ -25,7 +23,6 @@ import uz.fido.utils.utility.context.GetDeviceInfo
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
 import uz.fido.utils.utility.context.startActivityWithClearTask
-import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.Utility.getDeviceName
 import uz.fido.utils.utility.language.Utility.isValidPasswordFormat
@@ -114,8 +111,7 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
             os_system_version_api = device.os_system_version_api.toString(),
             os_version = Build.VERSION.SDK_INT.toString(),
             patronymic = "",
-            phone_number = requireArguments().getString(SIGN_UP_PHONE_NUMBER)?.replace("+", "")
-                ?.replace(" ", ""),
+            phone_number = requireArguments().getString(SIGN_UP_PHONE_NUMBER)?.replace("+", "")?.replace(" ", ""),
             sms_code = requireArguments().getString(SIGN_UP_SMS_CODE),
             sim_iccd = device.sim_iccd.toString(),
             version = "0",
@@ -129,30 +125,12 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
                 binding.btnContinue.setProgress(false)
                 when (it.status) {
                     Status.SUCCESS -> {
-                        showSnackbar(
-                            getString(R.string.sign_up_success),
-                            getString(R.string.successfully)
-                        ) {
-                            requireContext().startActivityWithClearTask(LoginActivity::class.java)
-                        }
-                        /* val signInResponse = it.data
-                         finishRegRequest.fcm_token = signInResponse?.token!!
-                         finishRegRequest.client_id = signInResponse.user_id
-                         requireContext().saveSignUpRequest(finishRegRequest)
-                         Paper.book().write(Const.PAPER_CLIENT_INFO, signInResponse)
-                         val bundle = Bundle()
-                         bundle.putString(
-                             PinCodeFragment.PIN_OPERATION,
-                             PinCodeFragment.PIN_OPERATION_SIGN_UP
-                         )*/
-//                        gotoWithSlide(R.id.pinCodeFragment)
-
+                        showSnackbar(getString(R.string.sign_up_success), getString(R.string.successfully)) { requireContext().startActivityWithClearTask(LoginActivity::class.java) }
                     }
 
                     Status.ERROR -> {
                         showSnackbar(it.message.toString())
                     }
-
                 }
             }
         }

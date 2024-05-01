@@ -15,6 +15,7 @@
         android:outlineSpotShadowColor="@color/appBarShadowColor"
         android:translationZ="@dimen/elevation_8dp"
         app:layout_constraintTop_toTopOf="parent"
+        app:s_additionalIcon="@drawable/ic_edit_button"
         app:s_title="@string/my_details" />
 
     <androidx.recyclerview.widget.RecyclerView

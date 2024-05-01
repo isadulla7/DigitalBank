@@ -30,7 +30,6 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentPassCodeBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.activities.MainActivity
-import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.getUserQwerty
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInPinResponse
 import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAndOutAnim
@@ -533,7 +532,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             in 12..16 -> getString(R.string.good_afteroon)
             else -> getString(R.string.good_evening)
         }
-        val name = Paper.book().read(Const.PAPER_CLIENT_NAME, "")
+        val name = Paper.book().read(Const.FIRST_NAME, "")
         if (name.isNotEmpty()) {
             binding.welcomeText.text = "$partOfDay, $name"
         } else {
@@ -543,13 +542,9 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     private fun initAvatar() {
         loadProfileImage()
-        if (Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotEmpty() && Paper.book()
-                .read(Const.PAPER_CLIENT_NAME, "").isNotEmpty() && Paper.book()
-                .read(Const.PAPER_CLIENT_SURNAME, "").isNotEmpty()
+        if (Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotEmpty() && Paper.book().read(Const.FIRST_NAME, "").isNotEmpty() && Paper.book().read(Const.LAST_NAME, "").isNotEmpty()
         ) {
-            binding.tvShortName.text =
-                (Paper.book().read(Const.PAPER_CLIENT_NAME, "").first().toString() + Paper.book()
-                    .read(Const.PAPER_CLIENT_SURNAME, "").first().toString())
+            binding.tvShortName.text = (Paper.book().read(Const.FIRST_NAME, "").first().toString() + Paper.book().read(Const.LAST_NAME, "").first().toString())
         } else {
             binding.userAvatar.setImageResource(R.drawable.ic_profile_image_empty)
         }

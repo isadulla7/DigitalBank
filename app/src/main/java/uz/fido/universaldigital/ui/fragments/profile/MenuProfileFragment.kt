@@ -66,11 +66,11 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
     private fun initDetails() {
         loadProfileImage()
         if (Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotEmpty() &&
-            Paper.book().read(Const.PAPER_CLIENT_NAME, "").isNotEmpty() &&
-            Paper.book().read(Const.PAPER_CLIENT_SURNAME, "").isNotEmpty()
+            Paper.book().read(Const.FIRST_NAME, "").isNotEmpty() &&
+            Paper.book().read(Const.LAST_NAME, "").isNotEmpty()
         ) {
             binding.userName.text = Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "")
-            binding.tvShortName.text = (Paper.book().read(Const.PAPER_CLIENT_NAME, "").first().toString() + Paper.book().read(Const.PAPER_CLIENT_SURNAME, "").first().toString())
+            binding.tvShortName.text = (Paper.book().read(Const.FIRST_NAME, "").first().toString() + Paper.book().read(Const.LAST_NAME, "").first().toString())
         } else {
             binding.userName.text = getString(R.string.your_phone_number)
         }
@@ -93,7 +93,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
     }
 
     private fun initSetOnClickListeners() {
-        binding.apply {
+        with(binding) {
             appBar.setOnBackButtonClickListener { pop() }
             gotoIdentification.setOnClickListener { gotoWithSlide(R.id.mainIdentificationFragment2) }
             tvIdentifiedClient.setOnClickListener { gotoWithSlide(R.id.mainIdentificationFragment2) }
