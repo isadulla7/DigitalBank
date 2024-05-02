@@ -66,11 +66,7 @@ class LocalMonitoringAdapter(
             }
 
             val name = Format.firstLetterUpperCase(monitoringItem!!.name)
-            val newName =
-                if (name.isNotEmpty()) name.substring(
-                    0,
-                    1
-                ) + name.substring(2) else context.getString(R.string.no_name)
+            val newName = if (name.isNotEmpty()) name.substring(0, 1) + name.substring(2) else context.getString(R.string.no_name)
             binding.tvName.text = newName
             binding.tvTime.text = if (monitoringItem.created_date.length == 19)
                 monitoringItem.created_date.substring(10, 16)
@@ -110,26 +106,15 @@ class LocalMonitoringAdapter(
                 }
             else binding.tvType.text = context.getText(R.string.payment)
 
-//            if (monitoringItem.service_id=="-1")
-//                if (monitoringItem.partner_obj.isEmpty()) binding.tvType.text =
-//                    Format.formatCardNumberMonitoring(context,monitoringItem.object_value)
-//            Picasso.get().load(PAYNET_PHOTO + monitoringItem.icon_name)
-//                .error(R.drawable.ic_payments_placeholder)
-//                .into(binding.icon)
-
             val sum = BigDecimal(100)
-            binding.tvAmount.text =
-                "$symbol ${
-                    Format.formatAmount((monitoringItem.amount.toBigDecimal() / sum).toString())
-                        .replace(".0", "")
-                } ${Format.currencyCode(monitoringItem.currency_code)}"
-
+            binding.tvAmount.text = "$symbol ${
+                Format.formatAmount((monitoringItem.amount.toBigDecimal() / sum).toString())
+                    .replace(".0", "")
+            } ${Format.currencyCode(monitoringItem.currency_code)}"
         }
-
     }
 
-    inner class DateViewHolder(private val binding: ItemHistoriesHeaderBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class DateViewHolder(private val binding: ItemHistoriesHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ListItem) {
             val dateItem: DateItem = item as DateItem

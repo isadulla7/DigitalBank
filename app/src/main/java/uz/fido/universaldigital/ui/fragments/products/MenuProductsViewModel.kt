@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import uz.fido.network.data.repository.CardRepositoryImpl
 import uz.fido.network.domain.datasource.interfaces.ICreditRepository
 import uz.fido.network.domain.datasource.interfaces.IDepositRepository
@@ -25,7 +24,6 @@ import uz.fido.network.domain.model.cards.Secure3DRequest
 import uz.fido.network.domain.model.deposits.Deposit
 import uz.fido.network.domain.model.deposits.GetDepositListRequest
 import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
-import uz.fido.network.domain.model.humo_pay.HumoCardInfoRequest
 import uz.fido.network.domain.model.limits.CardLimitRequest
 import uz.fido.network.domain.model.limits.LimitDeleteRequest
 import uz.fido.network.domain.model.limits.SvSetCardLimitRequest

@@ -14,9 +14,7 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import java.util.concurrent.Executors
 
-class FingerPrintFragment : BaseSimpleFragment<FragmentFingerPrintBinding>(
-    FragmentFingerPrintBinding::inflate
-) {
+class FingerPrintFragment : BaseSimpleFragment<FragmentFingerPrintBinding>(FragmentFingerPrintBinding::inflate) {
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
@@ -37,32 +35,27 @@ class FingerPrintFragment : BaseSimpleFragment<FragmentFingerPrintBinding>(
     private fun fingerAuth() {
         val executor = Executors.newSingleThreadExecutor()
         val activity = activity
-        val biometricPrompt = BiometricPrompt(
-            requireActivity(),
-            executor,
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationError(
-                    errorCode: Int, errString: CharSequence
-                ) {
-                    super.onAuthenticationError(errorCode, errString)
-                    if (errorCode != BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
-                        (activity as LoginActivity).runOnUiThread {
-                            Paper.book().write(Const.FINGER_STATE, false)
-                        }
-                    }
-                }
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
+        val biometricPrompt = BiometricPrompt(requireActivity(), executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationError(
+                errorCode: Int, errString: CharSequence
+            ) {
+                super.onAuthenticationError(errorCode, errString)
+                if (errorCode != BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
                     (activity as LoginActivity).runOnUiThread {
-                        Paper.book().write(Const.FINGER_STATE, true)
-                        openMainActivity()
+                        Paper.book().write(Const.FINGER_STATE, false)
                     }
                 }
-            })
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle(getString(R.string.enter_app_with_touch_id))
-            .setNegativeButtonText(getString(R.string.cancel)).build()
+            }
+
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                (activity as LoginActivity).runOnUiThread {
+                    Paper.book().write(Const.FINGER_STATE, true)
+                    openMainActivity()
+                }
+            }
+        })
+        val promptInfo = BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.enter_app_with_touch_id)).setNegativeButtonText(getString(R.string.cancel)).build()
         biometricPrompt.authenticate(promptInfo)
     }
 

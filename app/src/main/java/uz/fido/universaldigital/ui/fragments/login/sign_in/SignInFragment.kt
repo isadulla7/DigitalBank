@@ -107,19 +107,18 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun getUserInfo() {
-        viewModel.getUserDetailedInfo(APIServiceConst.USER_INFO_URL + requireContext().getIpAddress())
-            .observe(viewLifecycleOwner) {
-                when (it.status) {
-                    Status.SUCCESS -> it.data?.let { data ->
-                        checkUserSignInRequest(data)
-                    }
+        viewModel.getUserDetailedInfo(APIServiceConst.USER_INFO_URL + requireContext().getIpAddress()).observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> it.data?.let { data ->
+                    checkUserSignInRequest(data)
+                }
 
-                    Status.ERROR -> {
-                        binding.btnContinue.setProgress(false)
-                        showSnackbar(it.message.toString())
-                    }
+                Status.ERROR -> {
+                    binding.btnContinue.setProgress(false)
+                    showSnackbar(it.message.toString())
                 }
             }
+        }
     }
 
     private fun setKeyBForDiffieHellman(response: SwapKeysResponse) {

@@ -708,17 +708,17 @@ class PaymentSecondStepFragment :
     }
 
     private fun getAmount(transferAmount: String) {
-       try {
-           paymentAmount =
-               if (transferAmount.isEmpty() || transferAmount == "" || transferAmount[0] == '\u0000' || transferAmount == "." || transferAmount == ",") {
-                   0.0
-               } else {
-                   java.lang.Double.parseDouble(Format.noSpace(transferAmount))
-               }
-       }catch (e:Exception){
-           paymentAmount=0.0
-           binding.btnContinue.isEnabled(false)
-       }
+        try {
+            paymentAmount =
+                if (transferAmount.isEmpty() || transferAmount == "" || transferAmount[0] == '\u0000' || transferAmount == "." || transferAmount == ",") {
+                    0.0
+                } else {
+                    java.lang.Double.parseDouble(Format.noSpace(transferAmount))
+                }
+        } catch (e: Exception) {
+            paymentAmount = 0.0
+            binding.btnContinue.isEnabled(false)
+        }
     }
 
     private fun checkForAmount(amount: Double) {
@@ -799,9 +799,8 @@ class PaymentSecondStepFragment :
     }
 
     private fun gotoNext() {
-        keyValueList = HashMap<String, String>()
-        templateKeyValues =
-            requireArguments().getSerializable(PAYMENT_KEY_VALUES) as HashMap<String, String>
+        keyValueList = HashMap()
+        templateKeyValues = requireArguments().getSerializable(PAYMENT_KEY_VALUES) as HashMap<String, String>
 
         var loanId = ""
         for (param in paymentParamsArrayList) {

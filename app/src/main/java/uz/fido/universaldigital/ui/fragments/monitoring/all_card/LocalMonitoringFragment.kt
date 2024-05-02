@@ -46,10 +46,9 @@ import java.util.Locale
 import java.util.SortedMap
 
 @AndroidEntryPoint
-class LocalMonitoringFragment :
-    BaseFragment<FragmentLocalMonitoringBinding, LocalMonitoringViewModel>(
-        FragmentLocalMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
-    ), (LocalMonitoring) -> Unit {
+class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, LocalMonitoringViewModel>(
+    FragmentLocalMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
+), (LocalMonitoring) -> Unit {
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var dialogInfo: InfoMonitoringDialog
@@ -61,13 +60,7 @@ class LocalMonitoringFragment :
     private var totalList: ArrayList<ListItem> = ArrayList()
     private var listCard = arrayListOf<String>()
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
-    private val localMonitoringAdapter by lazy {
-        LocalMonitoringAdapter(
-            requireContext(),
-            totalList,
-            this
-        )
-    }
+    private val localMonitoringAdapter by lazy { LocalMonitoringAdapter(requireContext(), totalList, this) }
     private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
 
     companion object {
@@ -87,7 +80,6 @@ class LocalMonitoringFragment :
             binding.layoutEmpty.visibility = View.VISIBLE
             binding.layoutEmpty.title.text = getString(R.string.card_list_no)
         }
-
     }
 
     private fun allOperation() {
@@ -101,7 +93,6 @@ class LocalMonitoringFragment :
     private fun checkFilter() {
         if (saveViewModel.localFilter) getFilterLocalMonitoringList(0, operationType)
         else checkLocalMonitoringSave()
-
     }
 
     private fun checkLocalMonitoringSave() {
@@ -114,7 +105,6 @@ class LocalMonitoringFragment :
                 binding.shimmerView.visibility = View.GONE
             }
         } else getLocalMonitoringList(page = 1, operationType)
-
     }
 
     private fun getNewListMonitoringList() {
@@ -573,25 +563,15 @@ class LocalMonitoringFragment :
                     inParams.params!!.forEach {
                         templateKeyValue.add(
                             if (it.key == "AMOUNT")
-                                TemplateKeyValue(
-                                    code = it.key,
-                                    value = Format.formatAmountFromTiynToInteger(it.value)
-                                )
+                                TemplateKeyValue(code = it.key, value = Format.formatAmountFromTiynToInteger(it.value))
                             else TemplateKeyValue(code = it.key, value = it.value)
                         )
                     }
                 val bundle = Bundle()
-                val service =
-                    DatabaseHelper(requireContext()).getServiceByContractId(inParams.service_id.toString())
+                val service = DatabaseHelper(requireContext()).getServiceByContractId(inParams.service_id.toString())
                 bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, service)
-                bundle.putSerializable(
-                    PaymentFragment.PAYMENT_TEMPLATE_KEY_VALUE_LIST,
-                    templateKeyValue
-                )
-                bundle.putInt(
-                    PaymentFragment.PAYMENT_OPERATION,
-                    PaymentFragment.PAYMENT_OPERATION_TEMPLATE
-                )
+                bundle.putSerializable(PaymentFragment.PAYMENT_TEMPLATE_KEY_VALUE_LIST, templateKeyValue)
+                bundle.putInt(PaymentFragment.PAYMENT_OPERATION, PaymentFragment.PAYMENT_OPERATION_TEMPLATE)
                 gotoWithSlide(R.id.paymentFragment, bundle)
             }
         }

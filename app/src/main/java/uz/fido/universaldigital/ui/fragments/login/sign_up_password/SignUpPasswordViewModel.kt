@@ -6,10 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import uz.fido.network.domain.datasource.interfaces.ISwapKeyRepository
 import uz.fido.network.domain.datasource.interfaces.IUserRepository
-import uz.fido.network.domain.model.abc_base.SwapKeysRequest
-import uz.fido.network.domain.model.sign_in.SignInRequest
 import uz.fido.network.domain.model.sign_up.FinishRegRequest
-import uz.fido.network.domain.model.sign_up.SignUpCheckRequest
 import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject
 

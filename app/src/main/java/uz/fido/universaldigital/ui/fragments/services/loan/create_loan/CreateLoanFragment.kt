@@ -19,7 +19,6 @@ import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
-import uz.fido.network.domain.model.loans.CheckHasLoanRequest
 import uz.fido.network.domain.model.loans.loan_groups.CreditGroup
 import uz.fido.network.domain.model.payment.AllServiceLists
 import uz.fido.universaldigital.R

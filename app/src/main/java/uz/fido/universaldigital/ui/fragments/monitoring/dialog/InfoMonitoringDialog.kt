@@ -26,8 +26,7 @@ class InfoMonitoringDialog(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener {
-            val bottomSheet = bottomSheetDialog
-                .findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+            val bottomSheet = bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
             val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet!!)
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED)
         }
@@ -59,7 +58,6 @@ class InfoMonitoringDialog(
                 if (localMonitoring.tran_type == "credit") {
                     if (searchDateResponse != null)
                         if (searchDateResponse.request_code == "P2P") {
-                            //binding.repeatText.text = getString(R.string.return_text)
                             baseInterface.returnPayment(localMonitoring)
                         } else {
                             return@setOnClickListener
@@ -76,7 +74,6 @@ class InfoMonitoringDialog(
         if (isBadServiceIds(localMonitoring)) {
             binding.repeat.visibility = View.GONE
         }
-
         if (localMonitoring.tran_type == "credit") {
             if (searchDateResponse != null)
                 if (searchDateResponse.request_code == "P2P") {

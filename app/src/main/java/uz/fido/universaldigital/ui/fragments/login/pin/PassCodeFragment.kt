@@ -1,6 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.login.pin
 
-import LogOutDialog
+import uz.fido.universaldigital.ui.dialogs.LogOutDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -57,9 +57,7 @@ import java.util.Calendar
 import java.util.concurrent.Executors
 
 @AndroidEntryPoint
-class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>(
-    FragmentPassCodeBinding::inflate, PinCodeViewModel::class.java
-), View.OnClickListener {
+class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>(FragmentPassCodeBinding::inflate, PinCodeViewModel::class.java), View.OnClickListener {
 
     companion object {
         const val PASS_OPERATION_POP = "PASS_OPERATION_POP"
@@ -80,9 +78,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            operation = it.getString(Const.OPERATION, "")
-        }
+        arguments?.let { operation = it.getString(Const.OPERATION, "") }
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -292,7 +288,6 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                     val response = it.data as SwapKeysResponse
                     val diffieHellman = DiffieHellman.getDiffieHellman()
                     diffieHellman.SetKeyB(response.ecnryptData)
-//                    DiffieHellman.getDiffieHellman().SetKeyB(response.ecnryptData)
                     changeKey(diffieHellman.keyK)
                     getUserInfo()
                 }

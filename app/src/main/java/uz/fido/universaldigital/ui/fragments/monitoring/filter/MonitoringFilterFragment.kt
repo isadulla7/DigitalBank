@@ -29,7 +29,6 @@ import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAmountD
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringCardDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringChooseDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringDateDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringFilterDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringServiceFilterDialog
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.pop

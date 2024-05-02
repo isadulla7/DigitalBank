@@ -39,10 +39,7 @@ class ServiceAllMonitoringAdapter(
             binding.father.setOnClickListener {
                 baseInterface.monitoringPayed(item)
             }
-
         }
-
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VhService {

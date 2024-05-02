@@ -23,7 +23,6 @@ class SvMonitoringAdapter(
     private val onCLick: (SVMonitoringItem) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHeaderInterface {
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == ListItem.TYPE_DATE) {
             DateViewHolder(ItemHistoriesHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -101,23 +100,17 @@ class SvMonitoringAdapter(
             }
             binding.father.setOnClickListener {
                 onCLick.invoke(monitoringItem)
-
             }
-
         }
-
     }
 
     inner class DateViewHolder(private val binding: ItemHistoriesHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
-
         fun bind(item: ListItem) {
             val dateItem: DateItem = item as DateItem
             val date = dateItem.date
             binding.dateView.text = Format.monitoringDate(date.toString())
         }
-
     }
-
 
     override fun headerPositionForItem(itemPosition: Int): Int {
         var headerPosition = 0

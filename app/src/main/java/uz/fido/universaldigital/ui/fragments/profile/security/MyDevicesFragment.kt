@@ -1,6 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.profile.security
 
-import TerminateSessionDialog
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -178,7 +177,7 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
         deviceDialog.show(childFragmentManager,"")
 
 
-     /*   terminateSessionDialog = TerminateSessionDialog("") {
+     /*   terminateSessionDialog = uz.fido.universaldigital.ui.dialogs.TerminateSessionDialog("") {
             terminateSessionRequest(userDevices!!, "delete")
         }
         terminateSessionDialog.show(childFragmentManager, "TAG")*/

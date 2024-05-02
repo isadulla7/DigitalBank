@@ -45,7 +45,7 @@ class CreditGraphAdapter(
             binding.tvCount.text=item.position.toString()
             binding.time.text = item.repaymentDate
             val c: Calendar = Calendar.getInstance()
-            val sdf = SimpleDateFormat("dd.MM.yyyy")
+            val sdf = SimpleDateFormat("dd.MM.yyyy",Locale.getDefault())
             val getCurrentDate: String = sdf.format(c.time)
 
             if (sdf.parse(getCurrentDate) > sdf.parse(item.repaymentDate)) {

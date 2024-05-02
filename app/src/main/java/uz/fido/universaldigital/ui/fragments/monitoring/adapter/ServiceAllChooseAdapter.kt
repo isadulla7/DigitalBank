@@ -31,7 +31,6 @@ class ServiceAllChooseAdapter(
 
             if (item.service_current) {
                 binding.option.setImageResource(R.drawable.check_construktor)
-
             } else binding.option.setImageResource(R.drawable.check_box_color)
 
             binding.father.setOnClickListener {

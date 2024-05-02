@@ -1,6 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.login.pin
 
-import BaseInfoDialog
+import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -20,7 +20,6 @@ import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAn
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.device.isFingerEnable
-import uz.fido.utils.device.vibrateTick
 import uz.fido.utils.security.getDecodedString
 import uz.fido.utils.security.getEncodedString
 import uz.fido.utils.utility.context.startActivityWithClearTask

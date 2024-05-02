@@ -11,7 +11,6 @@ import uz.fido.network.domain.model.monitoring.AccountHistoriesRequest
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringRequest
 import uz.fido.network.domain.model.monitoring.filter.NewFilterMonitoringFilterRequest
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringRequest
-import uz.fido.network.domain.model.monitoring.local.NewMonitoringFilterRequest
 import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringRequest
 import uz.fido.network.domain.model.payment.PrintChequeRequest
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoringRequest

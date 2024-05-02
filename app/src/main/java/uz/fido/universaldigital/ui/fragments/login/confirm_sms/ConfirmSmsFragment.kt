@@ -1,6 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.login.confirm_sms
 
-import BaseInfoDialog
+import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -35,7 +35,6 @@ import uz.fido.network.domain.model.sign_up.FinishRegRequest
 import uz.fido.network.domain.model.sign_up.SignUpCheckRequest
 import uz.fido.network.domain.model.sign_up.SignUpFlagsEnum
 import uz.fido.network.domain.model.sms.CheckSmsForPayment
-import uz.fido.network.domain.model.sms.SendEmailCode
 import uz.fido.universaldigital.BuildConfig
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment

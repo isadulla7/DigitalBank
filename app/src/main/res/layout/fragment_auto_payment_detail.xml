@@ -258,7 +258,7 @@
                 android:textColor="@color/hintColor"
                 android:textSize="14sp" />
 
-            <Switch
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/status_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -1,6 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.profile
 
-import LogOutDialog
+import uz.fido.universaldigital.ui.dialogs.LogOutDialog
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity

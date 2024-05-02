@@ -5,10 +5,6 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.Navigation
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
@@ -17,13 +13,8 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityLoginBinding
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
-import uz.fido.universaldigital.widgets.currency_rates.retrofit.RatesRepository
-import uz.fido.universaldigital.widgets.currency_rates.view.WidgetView
-import uz.fido.universaldigital.widgets.currency_rates.widget.RatesWidgetProvider
-import uz.fido.universaldigital.widgets.currency_rates.worker.Worker
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.security.SecurityCheck
-import java.util.concurrent.TimeUnit
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {

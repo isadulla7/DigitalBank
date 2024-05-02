@@ -61,42 +61,25 @@ class HumoMonitoringAdapter(
         fun bind(item: ListItem) {
             val monitoringItem = (item as HumoItem).humoMonitoringItem
             binding.apply {
-                tvName.text =
-                    if (monitoringItem?.merchant_name!!.isNotEmpty()) monitoringItem.merchant_name else itemView.context.getString(
-                        R.string.humo_operation
-                    )
-                if (monitoringItem.tran_date.length == 19)
-                    tvTime.text = monitoringItem.tran_date.substring(10, 16)
-                else tvTime.text = "-"
-                tvType.text =
-                    if (monitoringItem.card_num.length == 16) Format.formatCardNumberAllMonitoring(
-                        itemView.context,
-                        monitoringItem.card_num
-                    ) else monitoringItem.card_num
+                tvName.text = if (monitoringItem?.merchant_name!!.isNotEmpty()) monitoringItem.merchant_name else itemView.context.getString(
+                    R.string.humo_operation
+                )
+                if (monitoringItem.tran_date.length == 19) tvTime.text = monitoringItem.tran_date.substring(10, 16) else tvTime.text = "-"
+                tvType.text = if (monitoringItem.card_num.length == 16) Format.formatCardNumberAllMonitoring(
+                    itemView.context, monitoringItem.card_num
+                ) else monitoringItem.card_num
                 if (monitoringItem.tran_type == "credit") {
-                    tvAmount.setTextColor(
-                        ContextCompat.getColor(
-                            itemView.context,
-                            R.color.monitoring_amount
-                        )
-                    )
+                    tvAmount.setTextColor(ContextCompat.getColor(itemView.context, R.color.monitoring_amount))
                     icon.setImageResource(R.drawable.ic_monitoring_plus)
-                    tvAmount.text =
-                        "+ " + Format.formatAmount((monitoringItem.tran_amount.toDouble() / 100).toString()) + " " + itemView.context.getString(
-                            R.string.uzs
-                        )
-                } else {
-                    tvAmount.setTextColor(
-                        ContextCompat.getColor(
-                            itemView.context,
-                            R.color.mainTextColor
-                        )
+                    tvAmount.text = "+ " + Format.formatAmount((monitoringItem.tran_amount.toDouble() / 100).toString()) + " " + itemView.context.getString(
+                        R.string.uzs
                     )
+                } else {
+                    tvAmount.setTextColor(ContextCompat.getColor(itemView.context, R.color.mainTextColor))
                     icon.setImageResource(R.drawable.icon_monitoring)
-                    tvAmount.text =
-                        "- " + Format.formatAmount((monitoringItem.tran_amount.toDouble() / 100).toString()) + " " + itemView.context.getString(
-                            R.string.uzs
-                        )
+                    tvAmount.text = "- " + Format.formatAmount((monitoringItem.tran_amount.toDouble() / 100).toString()) + " " + itemView.context.getString(
+                        R.string.uzs
+                    )
                 }
                 father.setOnClickListener {
                     onClickView.invoke(monitoringItem)

@@ -1,11 +1,9 @@
 package uz.fido.utils.utility.language
 
-import android.content.res.Resources
 import android.os.Build
 import java.net.Inet4Address
 import java.net.NetworkInterface
 import java.net.SocketException
-import java.util.Locale
 import java.util.regex.Pattern
 
 object Utility {

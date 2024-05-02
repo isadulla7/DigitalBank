@@ -37,7 +37,6 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
         const val SIGN_UP_SMS_CODE = "sms_code"
     }
 
-
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         initSetOnClickListeners()
@@ -77,18 +76,17 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
     }
 
     private fun getUserInfo() {
-        viewModel.getUserDetailedInfo(USER_INFO_URL + requireContext().getIpAddress())
-            .observe(viewLifecycleOwner) {
-                when (it.status) {
-                    Status.SUCCESS -> it.data?.let { data ->
-                        finishRegistration(data)
-                    }
+        viewModel.getUserDetailedInfo(USER_INFO_URL + requireContext().getIpAddress()).observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> it.data?.let { data ->
+                    finishRegistration(data)
+                }
 
-                    Status.ERROR -> {
-                        showSnackbar(it.message.toString())
-                    }
+                Status.ERROR -> {
+                    showSnackbar(it.message.toString())
                 }
             }
+        }
     }
 
     private fun finishRegistration(data: UserInfo) {
@@ -121,16 +119,14 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
             string_line = ""
         )
         viewModel.finishReg(finishRegRequest).observe(viewLifecycleOwner) {
-            it.let {
-                binding.btnContinue.setProgress(false)
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        showSnackbar(getString(R.string.sign_up_success), getString(R.string.successfully)) { requireContext().startActivityWithClearTask(LoginActivity::class.java) }
-                    }
+            binding.btnContinue.setProgress(false)
+            when (it.status) {
+                Status.SUCCESS -> {
+                    showSnackbar(getString(R.string.sign_up_success), getString(R.string.successfully)) { requireContext().startActivityWithClearTask(LoginActivity::class.java) }
+                }
 
-                    Status.ERROR -> {
-                        showSnackbar(it.message.toString())
-                    }
+                Status.ERROR -> {
+                    showSnackbar(it.message.toString())
                 }
             }
         }

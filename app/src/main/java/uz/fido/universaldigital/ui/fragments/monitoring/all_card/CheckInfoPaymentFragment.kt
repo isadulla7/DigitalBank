@@ -10,7 +10,6 @@ import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitor
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
 import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
 import uz.fido.network.domain.model.payment.PrintChequeResponse
-import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentCheckInfoBinding
@@ -21,9 +20,8 @@ import uz.fido.utils.format.FormatUtilsKt
 import uz.fido.utils.utility.fragment.pop
 import java.io.File
 
-class CheckInfoPaymentFragment:BaseSimpleFragment<FragmentCheckInfoBinding>(
-    FragmentCheckInfoBinding::inflate
-) {
+class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(FragmentCheckInfoBinding::inflate) {
+
     private var transactId = ""
     private var command = ""
     private lateinit var operation: String
@@ -45,7 +43,7 @@ class CheckInfoPaymentFragment:BaseSimpleFragment<FragmentCheckInfoBinding>(
                 else -> return
             }
         }
-       checkTip()
+        checkTip()
         setOnClickView()
     }
 
@@ -53,11 +51,12 @@ class CheckInfoPaymentFragment:BaseSimpleFragment<FragmentCheckInfoBinding>(
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.save.setOnClickListener {
             Toast.makeText(requireContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show()
-            save(binding.linAdd, 2)
+            save(binding.linAdd)
         }
     }
+
     private fun initUzCard() {
-        addView(getString(R.string.name),svMonitoringItem.merchant_name)
+        addView(getString(R.string.name), svMonitoringItem.merchant_name)
         addView(getString(R.string.date_time), svMonitoringItem.tran_date)
         addView(getString(R.string.terminal_id), svMonitoringItem.terminal_id)
         addView(getString(R.string.card_number), svMonitoringItem.card_num)
@@ -68,15 +67,12 @@ class CheckInfoPaymentFragment:BaseSimpleFragment<FragmentCheckInfoBinding>(
         )
         addView(
             getString(R.string.amount),
-            Format.formatAmount(Format.convertFromTiynDivide(svMonitoringItem.tran_amount)) + " UZS", true
+            Format.formatAmount(Format.convertFromTiynDivide(svMonitoringItem.tran_amount)) + " UZS"
         )
     }
 
-    private fun save(linAdd: View,operationType: Int) {
+    private fun save(linAdd: View) {
         share(linAdd)
-//        if (operationType == 1)
-//            takeScreenshot(view)
-//        else share(view)
     }
 
     private fun share(view: View) {
@@ -123,6 +119,7 @@ class CheckInfoPaymentFragment:BaseSimpleFragment<FragmentCheckInfoBinding>(
             Format.formatAmount(Format.convertFromTiynDivide(visaMonitoringItem.tran_amount)) + " " + visaMonitoringItem.currency
         )
     }
+
     private fun initLocal() {
         val item = printChequeResponse.monitoring_info!!
         transactId = item.request_id
@@ -161,10 +158,10 @@ class CheckInfoPaymentFragment:BaseSimpleFragment<FragmentCheckInfoBinding>(
         } else {
             getString(R.string.waiting)
         }
-          if (!item.fee_amount.isNullOrEmpty() && !item.fee_percent.isNullOrEmpty()){
-        addView(getString(R.string.commission), "${item.fee_amount.toDouble() / 100.toDouble()} UZS (${item.fee_percent}%)")
-          }
-        addView(getString(R.string.status), state, isState = true)
+        if (!item.fee_amount.isNullOrEmpty() && !item.fee_percent.isNullOrEmpty()) {
+            addView(getString(R.string.commission), "${item.fee_amount.toDouble() / 100.toDouble()} UZS (${item.fee_percent}%)")
+        }
+        addView(getString(R.string.status), state)
         addView(
             getString(R.string.amount),
             Format.formatAmount(Format.convertFromTiynDivide(item.amount)) + when (item.currency_code) {
@@ -172,12 +169,8 @@ class CheckInfoPaymentFragment:BaseSimpleFragment<FragmentCheckInfoBinding>(
                 "840" -> " $"
                 "978" -> " EUR"
                 else -> " RUB"
-            }, true
+            }
         )
-
-//        if ((command.contains("paynet") || command.contains("munis")) && !item.partner_obj.startsWith("AUZ")) {
-//            binding.buttonFiscal.visibility = View.VISIBLE
-//        }
     }
 
     private fun initHumo() {
@@ -191,22 +184,14 @@ class CheckInfoPaymentFragment:BaseSimpleFragment<FragmentCheckInfoBinding>(
             getString(R.string.operation_type),
             if (humoMonitoringItem.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome)
         )
-        addView(getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(humoMonitoringItem.tran_amount)) + " UZS", true)
+        addView(getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(humoMonitoringItem.tran_amount)) + " UZS")
     }
-    private fun addView(name: String, value: String, isAmount: Boolean? = null, isState: Boolean? = null) {
-        val itemBinding= ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
 
+    private fun addView(name: String, value: String) {
+        val itemBinding = ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         itemBinding.name.text = name
         itemBinding.value.text = value
         binding.linAdd.addView(itemBinding.root)
-//        if (isAmount == true) {
-//            itemBinding.textName.setTextColor(ContextCompat.getColor(requireContext(), R.color.primaryBlack))
-//            itemBinding.textValue.textSize = 20f
-//            itemBinding.textValue.typeface = Typeface.createFromAsset(requireContext().assets, "fonts/navigo_bold.ttf")
-//        }
-//        if (isState == true) {
-//            itemBinding.textValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.status_identified))
-//        }
     }
 
 }

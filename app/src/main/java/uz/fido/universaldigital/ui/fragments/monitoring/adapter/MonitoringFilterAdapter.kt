@@ -14,12 +14,6 @@ class MonitoringFilterAdapter(
 
     inner class VhFilter(val binding: ItemMonitoringFilterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(monitoringFilter: MonitoringFilter) {
-//            binding.father.startAnimation(
-//                AnimationUtils.loadAnimation(
-//                    context,
-//                    R.anim.home_bank_operation_anim
-//                )
-//            )
             binding.textName.text = if (monitoringFilter.name.length == 16) Format.formatCardNumber(monitoringFilter.name) else monitoringFilter.name
             binding.father.setOnClickListener {
                 filterOnClick.invoke(monitoringFilter)

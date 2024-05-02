@@ -1,6 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.mib
 
-import BaseDeleteDialog
+import uz.fido.universaldigital.ui.dialogs.BaseDeleteDialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf

@@ -1,30 +1,25 @@
 package uz.fido.utils.utility.context
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Rect
 import android.net.ConnectivityManager
 import android.net.wifi.WifiManager
 import android.os.Build
-import android.os.Handler
-import android.os.Looper
 import android.provider.Settings
 import android.util.Log
-import android.view.PixelCopy
-import android.view.View
 import com.google.android.material.textfield.TextInputLayout
 import uz.fido.utils.R
 import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.language.Utility.getLocalIpAddress
 import uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
 import java.math.BigInteger
-import java.net.*
+import java.net.InetAddress
+import java.net.UnknownHostException
 import java.nio.ByteOrder
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.UUID
 
 @SuppressLint("HardwareIds")
 fun Context.getDeviceIds(): String {

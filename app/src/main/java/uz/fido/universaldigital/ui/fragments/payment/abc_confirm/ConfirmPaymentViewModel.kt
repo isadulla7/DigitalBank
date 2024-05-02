@@ -8,8 +8,6 @@ import kotlinx.coroutines.Dispatchers
 import uz.fido.network.domain.datasource.interfaces.IPaymentRepository
 import uz.fido.network.domain.datasource.interfaces.ITemplateRepository
 import uz.fido.network.domain.model.payment.CreatePaymentRequest
-import uz.fido.network.domain.model.search.GetOperationInfoRequest
-import uz.fido.network.domain.model.template.GetTemplateListRequest
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject

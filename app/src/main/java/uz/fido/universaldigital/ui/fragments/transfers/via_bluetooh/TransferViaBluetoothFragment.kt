@@ -1,9 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.transfers.via_bluetooh
 
 import android.Manifest
-import android.animation.Animator
-import android.animation.AnimatorSet
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothManager
@@ -21,7 +18,6 @@ import android.os.Bundle
 import android.os.ParcelUuid
 import android.view.View
 import android.view.WindowManager
-import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager

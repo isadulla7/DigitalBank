@@ -10,8 +10,6 @@ import uz.fido.network.domain.datasource.interfaces.ITemplateRepository
 import uz.fido.network.domain.model.payment.PreparePaymentRequest
 import uz.fido.network.domain.model.search.GetOperationInfoRequest
 import uz.fido.network.domain.model.template.CreateTemplateRequest
-import uz.fido.network.domain.model.template.DeleteTemplateRequest
-import uz.fido.network.domain.model.template.GetTemplateListRequest
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject

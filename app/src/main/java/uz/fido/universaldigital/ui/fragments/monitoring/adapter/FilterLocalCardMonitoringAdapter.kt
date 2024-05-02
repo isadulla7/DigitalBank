@@ -19,19 +19,9 @@ class FilterLocalCardMonitoringAdapter(
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == 0) {
-            VH(
-                ItemMonitoringFilterCardBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent, false
-                )
-            )
+            VH(ItemMonitoringFilterCardBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         } else {
-            VHText(
-                ItemFilterMonitoringCardBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent, false
-                )
-            )
+            VHText(ItemFilterMonitoringCardBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 
@@ -47,7 +37,6 @@ class FilterLocalCardMonitoringAdapter(
 
     override fun getItemViewType(position: Int): Int {
         return list[position].type
-
     }
 
     fun setListItem(response: ArrayList<FilterCard>) {
@@ -57,25 +46,17 @@ class FilterLocalCardMonitoringAdapter(
 
 
     inner class VHText(private val binding: ItemFilterMonitoringCardBinding) : RecyclerView.ViewHolder(binding.root) {
-
         fun onBind(filterCard: FilterCard) {
             binding.cardText.text = filterCard.object_name
         }
     }
 
-    inner class VH(private val binding: ItemMonitoringFilterCardBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class VH(private val binding: ItemMonitoringFilterCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(itemId: FilterCard) {
-            binding.cardName.text =
-                if (itemId.object_value.length == 16) Format.formatCardNumberMonitoring(
-                    context,
-                    itemId.object_value
-                ) else itemId.object_value
+            binding.cardName.text = if (itemId.object_value.length == 16) Format.formatCardNumberMonitoring(context, itemId.object_value) else itemId.object_value
 
-            binding.status.text = if (itemId.state == "A")
-                "${context.getString(R.string.status)}: ${context.getString(R.string.activ)}"
-            else
-                "${context.getString(R.string.status)}: ${context.getString(R.string.no_activ)}"
+            binding.status.text =
+                if (itemId.state == "A") "${context.getString(R.string.status)}: ${context.getString(R.string.activ)}" else "${context.getString(R.string.status)}: ${context.getString(R.string.no_activ)}"
 
             when (itemId.object_type) {
                 "SV" -> binding.icon.setImageResource(R.drawable.uzcard_monitoring)
@@ -85,14 +66,11 @@ class FilterLocalCardMonitoringAdapter(
 
             if (!itemId.is_selected_monitoring) {
                 binding.option.setImageResource(R.drawable.check_construktor)
-
             } else binding.option.setImageResource(R.drawable.check_box_color)
             binding.father.setOnClickListener {
                 baseInterface.monitoringFilterCard(filterCard = itemId)
             }
         }
-
-
     }
 
 }
