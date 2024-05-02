@@ -6,6 +6,7 @@ import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Request
 import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.LanguageConst
@@ -27,7 +28,7 @@ class EncryptionInterceptor : Interceptor {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        val body = RequestBody.create(mediaType, encryptedBody)
+        val body = encryptedBody.toRequestBody(mediaType)
         request = getRequest(request, body)
         return chain.proceed(request)
     }

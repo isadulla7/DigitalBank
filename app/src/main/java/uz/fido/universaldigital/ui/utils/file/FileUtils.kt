@@ -16,9 +16,9 @@ import java.util.Objects
 
 object FileUtils {
 
-    val TAG = "FileUtils"
+    const val TAG = "FileUtils"
 
-    fun takeScreenShot(view: View): Bitmap? {
+    fun takeScreenShot(view: View): Bitmap {
         view.isDrawingCacheEnabled = true
         val bitmap = Bitmap.createBitmap(view.drawingCache)
         view.isDrawingCacheEnabled = false

@@ -2,17 +2,14 @@ package uz.fido.universaldigital.ui.fragments.profile.settings
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
-import uz.fido.universaldigital.databinding.FragmentSettingsBinding
 import uz.fido.universaldigital.databinding.FragmentSettingsChangeLangBinding
 import uz.fido.universaldigital.ui.fragments.profile.MenuProfileViewModel
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.LanguageConst
-import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.LocaleHelper
 

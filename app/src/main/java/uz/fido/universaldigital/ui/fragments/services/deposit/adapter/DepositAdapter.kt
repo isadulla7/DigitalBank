@@ -48,7 +48,7 @@ class DepositAdapter(
 
 }
 
-class CallBackDeposit() : DiffUtil.ItemCallback<Deposit>() {
+class CallBackDeposit : DiffUtil.ItemCallback<Deposit>() {
     override fun areItemsTheSame(oldItem: Deposit, newItem: Deposit) = oldItem == newItem
 
     override fun areContentsTheSame(oldItem: Deposit, newItem: Deposit) =

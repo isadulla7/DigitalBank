@@ -82,12 +82,6 @@ class MenuServicesFragment :
         }
     }
 
-    private fun openPaymentInPlaces() {
-        if (checkForLocationPermissions(this)) {
-            goto(R.id.paymentBranchFragment)
-        }
-    }
-
     override fun locationPermissionGranted() {
         goto(R.id.paymentBranchFragment)
     }

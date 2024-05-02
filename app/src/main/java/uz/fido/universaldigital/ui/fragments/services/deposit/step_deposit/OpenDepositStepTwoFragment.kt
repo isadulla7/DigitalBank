@@ -198,7 +198,7 @@ class OpenDepositStepTwoFragment :
         val viewDepositCreateBinding =
             ViewDepositCreateBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)
     }
 

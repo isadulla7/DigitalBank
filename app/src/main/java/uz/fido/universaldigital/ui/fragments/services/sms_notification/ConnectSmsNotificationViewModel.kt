@@ -22,10 +22,6 @@ class ConnectSmsNotificationViewModel @Inject constructor(
             emit(cardRepository.checkSMSActivate(token, request))
         }
 
-    fun glSMSActivate(token: String, request: GlSMSActivateRequest) = liveData(Dispatchers.IO) {
-        emit(cardRepository.glSMSActivate(token, request))
-    }
-
     fun getCardInfo(token: String, checkCardRequestP2p: CheckCardRequestP2p) =
         liveData(Dispatchers.IO) {
             emit(cardRepository.checkCardInfo(token, checkCardRequestP2p))

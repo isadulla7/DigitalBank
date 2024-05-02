@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.target.GoalModel
 import uz.fido.universaldigital.R
@@ -17,7 +15,7 @@ import java.math.RoundingMode
 @SuppressLint("SetTextI18n")
 class GoalListAdapter(
     private var list: ArrayList<GoalModel>,
-    private val onClick:(GoalModel)->Unit
+    private val onClick: (GoalModel) -> Unit
 ) : RecyclerView.Adapter<GoalListAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

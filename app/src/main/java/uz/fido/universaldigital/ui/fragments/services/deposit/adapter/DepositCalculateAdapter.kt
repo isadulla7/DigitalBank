@@ -10,9 +10,7 @@ import uz.fido.network.domain.model.deposits.DepositCalculator
 import uz.fido.universaldigital.databinding.ItemDepositCalculatorBinding
 import uz.fido.utils.utility.format.Format
 
-class DepositCalculateAdapter(
-    private var list: ArrayList<DepositCalculator>,
-) : ListAdapter<DepositCalculator,DepositCalculateAdapter.ViewHolder>(CalculatorCallback()) {
+class DepositCalculateAdapter : ListAdapter<DepositCalculator,DepositCalculateAdapter.ViewHolder>(CalculatorCallback()) {
     var count=0
     inner class ViewHolder(private val binding: ItemDepositCalculatorBinding) : RecyclerView.ViewHolder(binding.root) {
 

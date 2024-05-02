@@ -129,7 +129,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun checkUserSignInRequest(data: UserInfo) {
         Paper.book().write("VERSION_CODE", BuildConfig.VERSION_CODE.toString())
-        Paper.book().write("VERSION_NAME", BuildConfig.VERSION_NAME.toString())
+        Paper.book().write("VERSION_NAME", BuildConfig.VERSION_NAME)
         val device = GetDeviceInfo(requireContext()).deviceInfo
         val model = SignInRequestNew(
             phone_number = phoneNumberFormatted(),

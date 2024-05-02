@@ -15,7 +15,7 @@ class ChooseCountryAdapter(
 ) :
     RecyclerView.Adapter<ChooseCountryAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: ItemCountryBinding, private val context: Context) :
+    inner class ViewHolder(private val binding: ItemCountryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
@@ -30,7 +30,7 @@ class ChooseCountryAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             ItemCountryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding, context)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int {

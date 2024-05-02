@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.databinding.DialogCreditOperationBinding
 import uz.fido.universaldigital.databinding.DialogGoalOperationBinding
 
 class GoalOperationDialog(
@@ -27,7 +26,7 @@ class GoalOperationDialog(
         super.onViewCreated(view, savedInstanceState)
 
         if (state=="P"){
-            binding.pause.setText(getString(R.string.restart))
+            binding.pause.text = getString(R.string.restart)
         }
         binding.edit.setOnClickListener { onClick.invoke(1) }
         binding.pause.setOnClickListener { onClick.invoke(2) }

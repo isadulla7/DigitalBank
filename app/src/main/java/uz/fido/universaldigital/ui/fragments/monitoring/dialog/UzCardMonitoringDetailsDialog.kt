@@ -18,10 +18,10 @@ import uz.fido.utils.format.Format
 
 class UzCardMonitoringDetailsDialog(
     private val item: SVMonitoringItem,
-    private val baseInterface: BaseInterface)
-    : BottomSheetDialogFragment() {
+    private val baseInterface: BaseInterface
+) : BottomSheetDialogFragment() {
 
-      private lateinit var binding:DialogUzcardInfoMonitoringBinding
+    private lateinit var binding: DialogUzcardInfoMonitoringBinding
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener {
@@ -37,8 +37,8 @@ class UzCardMonitoringDetailsDialog(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding= DialogUzcardInfoMonitoringBinding.inflate(inflater,container,false)
+    ): View {
+        binding = DialogUzcardInfoMonitoringBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -59,7 +59,7 @@ class UzCardMonitoringDetailsDialog(
         addView(getString(R.string.name), item.merchant_name)
         addView(getString(R.string.terminal_id), item.terminal_id)
         addView(getString(R.string.card_number), item.card_num)
-        if (item!!.address.isNotEmpty() && item.address != "0") addView(getString(R.string.address), item.address)
+        if (item.address.isNotEmpty() && item.address != "0") addView(getString(R.string.address), item.address)
         addView(getString(R.string.operation_type), if (item.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome))
         addView(getString(R.string.date_time), item.tran_date.substring(0, 10) + " " + item.tran_date.substring(10, item.tran_date.length))
         addView(
@@ -72,7 +72,7 @@ class UzCardMonitoringDetailsDialog(
         val viewDepositCreateBinding =
             ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)
     }
 }

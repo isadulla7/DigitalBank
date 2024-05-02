@@ -5,10 +5,7 @@ import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import uz.fido.network.domain.datasource.interfaces.IP2PRepository
-import uz.fido.network.domain.model.cards.CheckCardRequestP2p
 import uz.fido.network.domain.model.p2p.P2PHistoryRequest
-import uz.fido.network.domain.model.p2p.P2PInfoRequest
-import uz.fido.network.domain.model.p2p.P2PRequest
 import uz.fido.network.domain.model.p2p.SetPopularityRequest
 import uz.fido.universaldigital.base.AbstractViewModel
 import uz.fido.utils.utility.user.getClientToken

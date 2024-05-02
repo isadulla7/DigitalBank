@@ -76,8 +76,7 @@ class MainActivity : BaseActivity() {
             showPinCode = true
             return
         }
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val currentFragment = navHostFragment.childFragmentManager.fragments[0]
         if (currentFragment is PassCodeFragment ||
             currentFragment is PinCodeFragment ||
@@ -106,10 +105,7 @@ class MainActivity : BaseActivity() {
                     noConnectionDialog?.dismiss()
                     startActivityWithClearTask(LoginActivity::class.java)
                 } else {
-                    openPage(
-                        R.id.passCodeFragment2,
-                        bundleOf(Const.OPERATION to PassCodeFragment.PASS_OPERATION_POP)
-                    )
+                    openPage(R.id.passCodeFragment2, bundleOf(Const.OPERATION to PassCodeFragment.PASS_OPERATION_POP))
                     pausedMillis = 0
                 }
             }
@@ -117,8 +113,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun openPage(id: Int, bundle: Bundle? = null, isSlide: Boolean? = null) {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         navController.navigate(id, bundle, if (isSlide == true) getNavOptions() else null)
     }
@@ -185,8 +180,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initBottomNavigationMenu() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         binding.bottomNavigation.setupWithNavController(navHostFragment.navController)
         navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.productsFragment ||

@@ -4,9 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.money_transfer.receive.RemittanceType
 import uz.fido.universaldigital.R
@@ -48,9 +46,9 @@ class MoneyTransferListAdapter(
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val name = view.findViewById<TextViewMedium>(R.id.name)
-        val image = view.findViewById<ImageView>(R.id.image)
-        val father = view.findViewById<LinearLayoutCompat>(R.id.father)
+        val name: TextViewMedium = view.findViewById<TextViewMedium>(R.id.name)
+        val image: ImageView = view.findViewById<ImageView>(R.id.image)
+        val father: LinearLayoutCompat = view.findViewById<LinearLayoutCompat>(R.id.father)
     }
 
 }

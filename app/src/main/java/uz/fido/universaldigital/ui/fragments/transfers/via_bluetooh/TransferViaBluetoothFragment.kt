@@ -195,20 +195,5 @@ class TransferViaBluetoothFragment :
         scanner?.stopScan(scanCallback)
     }
 
-    @SuppressLint("ObjectAnimatorBinding")
-    private fun foundDevice() {
-        val animatorSet = AnimatorSet()
-        animatorSet.setDuration(400)
-        animatorSet.interpolator = AccelerateDecelerateInterpolator()
-        val animatorList: ArrayList<Animator> = ArrayList()
-        val scaleXAnimator = ObjectAnimator.ofFloat(binding.foundDevice, "ScaleX", 0f, 1.2f, 1f)
-        animatorList.add(scaleXAnimator)
-        val scaleYAnimator = ObjectAnimator.ofFloat(binding.foundDevice, "ScaleY", 0f, 1.2f, 1f)
-        animatorList.add(scaleYAnimator)
-        animatorSet.playTogether(animatorList)
-        binding.foundDevice.visibility = View.VISIBLE
-        animatorSet.start()
-    }
-
 
 }

@@ -6,7 +6,6 @@ import android.animation.ValueAnimator
 import android.view.View
 import androidx.annotation.DimenRes
 import androidx.cardview.widget.CardView
-import androidx.constraintlayout.widget.ConstraintLayout
 
 fun getAlphaAnimator(view: View, alphaTo: Float): Animator {
     return ObjectAnimator.ofFloat(view, View.ALPHA, view.alpha, alphaTo)

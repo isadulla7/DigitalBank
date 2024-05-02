@@ -7,8 +7,5 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditAutoPaymentViewModel @Inject constructor(
-    private val application: Application
-) : AbstractViewModel(application) {
-
-
-}
+    application: Application
+) : AbstractViewModel(application)

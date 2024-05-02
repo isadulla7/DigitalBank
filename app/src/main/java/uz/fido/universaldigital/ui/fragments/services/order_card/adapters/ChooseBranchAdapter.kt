@@ -16,7 +16,7 @@ class ChooseBranchAdapter(
 ) :
     RecyclerView.Adapter<ChooseBranchAdapter.ViewHolder>() {
 
-    class ViewHolder(private val binding: ItemCountryBinding, private val context: Context) :
+    class ViewHolder(private val binding: ItemCountryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @SuppressLint("SetTextI18n")
@@ -32,7 +32,7 @@ class ChooseBranchAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =
             ItemCountryBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding, context)
+        return ViewHolder(binding)
     }
 
     override fun getItemCount(): Int {

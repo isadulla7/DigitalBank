@@ -5,7 +5,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.cards.EditCardRequest
-import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSafeModeBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel

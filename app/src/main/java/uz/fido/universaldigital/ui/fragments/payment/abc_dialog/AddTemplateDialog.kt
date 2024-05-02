@@ -45,7 +45,7 @@ class AddTemplateDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-       binding.textName.text=name.toString()
+       binding.textName.text= name
         binding.btnContinue.visibility = View.VISIBLE
         binding.etNameMin.addTextChangedListener {
             if (!it.isNullOrEmpty()) {

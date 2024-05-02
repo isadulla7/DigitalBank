@@ -177,10 +177,7 @@ class TransferToUzsAccountFragment :
             return false
         }
         val amount = binding.etBankAmount.text.toString().replace(" ", "").toBigDecimal()
-        if (amount < minAmount || amount > maxAmount) {
-            return false
-        }
-        return true
+        return !(amount < minAmount || amount > maxAmount)
     }
 
     private fun getBankName(filialCode: String) {

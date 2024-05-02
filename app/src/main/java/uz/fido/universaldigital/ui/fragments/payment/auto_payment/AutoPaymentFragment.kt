@@ -50,8 +50,8 @@ class AutoPaymentFragment : BaseFragment<FragmentAutoPaymentBinding, AutoPayment
     fun init() {
         autoPaymentAdapter = AutoPaymentsAdapter(list, requireContext()) { postion, type ->
             if (type == "more") {
-                dialog = AutoPaymentOperationDialog(list[postion]) {
-                    if (it == "delete") {
+                dialog = AutoPaymentOperationDialog(list[postion]) { s ->
+                    if (s == "delete") {
                         dialog.dismiss()
                         showProgress()
                         viewModel.deleteAutoPayment(

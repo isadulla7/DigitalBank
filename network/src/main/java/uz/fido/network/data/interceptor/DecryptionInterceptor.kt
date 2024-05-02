@@ -6,6 +6,7 @@ import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Response
 import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import uz.fido.utils.security.CryptoUtil
 import java.io.IOException
 
@@ -34,12 +35,12 @@ class DecryptionInterceptor : Interceptor {
             val responseString = response.peekBody(Long.MAX_VALUE).string()
             var decryptedString: String? = null
             try {
-                decryptedString = CryptoUtil.decrypt(responseString, Paper.book().read<String>("KEY_K"))
+                decryptedString = CryptoUtil.decrypt(responseString, Paper.book().read("KEY_K"))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
             if (decryptedString != null) {
-                newResponse.body(ResponseBody.create(contentType.toString().toMediaTypeOrNull(), decryptedString))
+                newResponse.body(decryptedString.toResponseBody(contentType.toString().toMediaTypeOrNull()))
             }
         }
         return newResponse.build()

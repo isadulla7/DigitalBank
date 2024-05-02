@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.domain.model.loans.loan_graph.CreditActualGraph
 import uz.fido.network.domain.model.loans.loan_products.CreditProduct
@@ -13,7 +12,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentLoanPaymentBinding
 import uz.fido.universaldigital.databinding.ViewDepositCreateBinding
-import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCreditFragment
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientLoanViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
@@ -108,7 +106,7 @@ class LoanPaymentFragment:BaseFragment<FragmentLoanPaymentBinding,ClientLoanView
         val viewDepositCreateBinding =
             ViewDepositCreateBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)
     }
 }

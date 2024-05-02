@@ -155,12 +155,6 @@ interface CardApiInterface {
         @Body glSetCardLimitRequest: GlSetCardLimitRequest
     ): BaseResponse
 
-    @POST("GL_GET_LIMITS_BY_SUBJECT_VALUE")
-    suspend fun getGlLimitList(
-        @Header("Authorization") token: String,
-        @Body glLimitListRequest: GlLimitListRequest
-    ): BaseResponse
-
     @POST("GL_GET_LIMITS_BALANCE")
     suspend fun getGlLimitBalance(
         @Header("Authorization") token: String,

@@ -74,7 +74,7 @@ class ChatAdapter(
                     parent,
                     false
                 )
-                ViewHolderMine(binding, baseInterface)
+                ViewHolderMine(binding)
             }
 
             TYPE_MESSAGE_RECEIVER -> {
@@ -83,7 +83,7 @@ class ChatAdapter(
                     parent,
                     false
                 )
-                ViewHolderReceiver(binding, baseInterface)
+                ViewHolderReceiver(binding)
             }
 
             else -> {
@@ -92,7 +92,7 @@ class ChatAdapter(
                     parent,
                     false
                 )
-                ViewHolderMine(binding, baseInterface)
+                ViewHolderMine(binding)
             }
         }
     }

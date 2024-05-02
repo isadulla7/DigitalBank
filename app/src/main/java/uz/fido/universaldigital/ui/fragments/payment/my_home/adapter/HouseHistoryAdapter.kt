@@ -96,11 +96,6 @@ class HouseHistoryAdapter(
         notifyDataSetChanged()
     }
 
-    fun setNewList(list: ArrayList<ListItem>) {
-        consolidatedList = list
-        notifyDataSetChanged()
-    }
-
     override fun getItemCount() = consolidatedList.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

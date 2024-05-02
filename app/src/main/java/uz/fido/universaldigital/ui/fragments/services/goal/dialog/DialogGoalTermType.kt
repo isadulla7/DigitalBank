@@ -17,7 +17,7 @@ class DialogGoalTermType(private val onClick:(Int,String)->Unit): BottomSheetDia
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding=DialogGoalTermTypeBinding.inflate(inflater,container,false)
         return binding.root
     }

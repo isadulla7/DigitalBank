@@ -13,7 +13,7 @@ import com.google.android.material.textfield.TextInputEditText
 import uz.fido.utils.R
 import kotlin.math.max
 
-class AmountEditText constructor(
+class AmountEditText(
     context: Context, attrs: AttributeSet
 ) : TextInputEditText(context, attrs), AmountInterface {
 
@@ -21,19 +21,8 @@ class AmountEditText constructor(
     private var minAmount: String? = null
     private var maxAmount: String? = null
 
-    fun setListener(amountInterface: AmountInterface) {
-        this.amountInterface = amountInterface
-    }
-
     override fun checkedForAmount(amountIsRight: Boolean) {
         amountInterface?.checkedForAmount(amountIsRight)
-    }
-
-    fun setMinMaxAmount(minAmount: String, maxAmount: String) {
-        this.minAmount = minAmount
-        this.maxAmount = maxAmount
-        amountTextWatcher = AmountTextWatcher(this, this, minAmount, maxAmount)
-        this.addTextChangedListener(amountTextWatcher)
     }
 
     private val textPaint: TextPaint by lazy {
@@ -47,9 +36,9 @@ class AmountEditText constructor(
 
     private val prefixDrawable: PrefixDrawable by lazy { PrefixDrawable(paint) }
 
-    var suffixPadding: Float = 0f
+    private var suffixPadding: Float = 0f
 
-    var prefix: String = ""
+    private var prefix: String = ""
         set(value) {
             if (value.isNotBlank()) {
                 Log.v(TAG, "prefix: $value")
@@ -59,7 +48,7 @@ class AmountEditText constructor(
             updatePrefixDrawable()
         }
 
-    var suffix: String? = null
+    private var suffix: String? = null
         set(value) {
             if (!value.isNullOrBlank()) {
                 Log.v(TAG, "suffix: $value")

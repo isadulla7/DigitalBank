@@ -2,19 +2,15 @@ package uz.fido.universaldigital.ui.fragments.services.loan.loan_client
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.res.Resources
 import android.os.Bundle
 import android.util.Log
-import android.util.TypedValue
 import android.view.View
-import androidx.annotation.ColorInt
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
-import org.koin.android.ext.android.bind
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.loans.loan_graph.CreditActualGraphResponse
 import uz.fido.network.domain.model.loans.loan_graph.CreditGraphRequest
@@ -45,16 +41,13 @@ import java.math.RoundingMode
 import java.text.DateFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.ArrayList
 import java.util.Calendar
 import java.util.Collections
-import java.util.Comparator
-import java.util.HashMap
 import java.util.Locale
 
 @AndroidEntryPoint
-class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanViewModel>(
-    FragmentClientLoanBinding::inflate,ClientLoanViewModel::class.java
+class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanViewModel>(
+    FragmentClientLoanBinding::inflate, ClientLoanViewModel::class.java
 ), View.OnClickListener {
 
     private lateinit var clientProduct: CreditProduct
@@ -67,32 +60,34 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
     private lateinit var monitoringChooseDialog: MonitoringChooseDialog
     private var accountHistoriesResponse: AccountHistoriesResponse? = null
     private var skeletonScreen: SkeletonScreen? = null
-    private var operType=3
+    private var operType = 3
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var creditOperationDialog: CreditOperationDialog
-    private var overdueDate= arrayListOf<String>()
+    private var overdueDate = arrayListOf<String>()
     private lateinit var accountHistoriesAdapter: AccountHistoriesAdapter
     private var list = ArrayList<AccountHistory>()
-    private lateinit var dateSortList:ArrayList<AccountHistory>
-    private lateinit var linerLayoutManager:LinearLayoutManager
-    private val simpleDateFormat=SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
-    private val newDateFormat=SimpleDateFormat("dd.MM.yyyy")
+    private lateinit var dateSortList: ArrayList<AccountHistory>
+    private lateinit var linerLayoutManager: LinearLayoutManager
+    private val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss")
+    private val newDateFormat = SimpleDateFormat("dd.MM.yyyy")
+
     companion object {
         const val CLIENT_CREDIT_MODEL = "model"
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         linerLayoutManager = LinearLayoutManager(context)
         arguments?.let {
             clientProduct = it.serializable<CreditProduct>(CLIENT_CREDIT_MODEL) as CreditProduct
         }
-        dateSortList=ArrayList<AccountHistory>()
+        dateSortList = ArrayList()
         setDate()
         fetchGraph(clientProduct.loanId)
         setMonitoring()
         setonCLickListener()
 
-       }
+    }
 
     private fun setonCLickListener() {
         binding.layoutControl.setOnClickListener(this)
@@ -103,14 +98,14 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
     }
 
     private fun setMonitoring() {
-        accountHistoriesAdapter = AccountHistoriesAdapter(Const.TYPE_LOAN, list, null, ){item,type->
-         loanDetailsDialog= LoanDetailsDialog(requireContext(),item,type)
-          loanDetailsDialog.show(childFragmentManager,"")
+        accountHistoriesAdapter = AccountHistoriesAdapter(Const.TYPE_LOAN, list, null) { item, type ->
+            loanDetailsDialog = LoanDetailsDialog(item, type)
+            loanDetailsDialog.show(childFragmentManager, "")
         }
         isFilter()
         scrollMonitoring()
         recyclerView()
-        getListMonitoring(1,operType)
+        getListMonitoring(1, operType)
     }
 
     private fun scrollMonitoring() {
@@ -126,15 +121,15 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
 
             layoutManager = linerLayoutManager
 
-            adapter=accountHistoriesAdapter
+            adapter = accountHistoriesAdapter
             addOnScrollListener(scrollListener)
         }
     }
 
     private fun getListMonitoring(page: Int, actionType: Int) {
-          if (page==1){
-              skeletonScreen = showSkeleton(binding.rec, accountHistoriesAdapter, R.layout.shimmer_item_account_history)
-          }
+        if (page == 1) {
+            skeletonScreen = showSkeleton(binding.rec, accountHistoriesAdapter, R.layout.shimmer_item_account_history)
+        }
         val model = AccountHistoriesRequest(
             pageNumber = page.toString(),
             pageSize = "20",
@@ -145,16 +140,16 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
             dateBegin = dateBegin
         )
 
-        viewModel.getAccountHistories(getClientToken(),model).observe(viewLifecycleOwner){resource->
-              if (page==1){
-                  skeletonScreen!!.hide()
-              }else{
+        viewModel.getAccountHistories(getClientToken(), model).observe(viewLifecycleOwner) { resource ->
+            if (page == 1) {
+                skeletonScreen!!.hide()
+            } else {
 
-              }
+            }
 
-            when(resource.status){
-                Status.SUCCESS->{
-                    list= arrayListOf()
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    list = arrayListOf()
                     val accountList = arrayListOf(
                         clientProduct.loan1,
                         clientProduct.loan5,
@@ -184,9 +179,10 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
                     list.reverse()
                     accountHistoriesResponse = resource.data
                     if (list.isNotEmpty())
-                    newDateAddImte(list)
+                        newDateAddImte(list)
                 }
-                Status.ERROR->{
+
+                Status.ERROR -> {
                     showSnackbar(resource.message.toString())
                 }
             }
@@ -195,16 +191,16 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
 
     private fun newDateAddImte(list: ArrayList<AccountHistory>) {
         list.forEach {
-            if (dateSortList.isEmpty()){
-                val accountHistory=AccountHistory("","","","","","",it.dateExecute,"","","","","","","","","","",1)
+            if (dateSortList.isEmpty()) {
+                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", "", 1)
                 dateSortList.add(accountHistory)
             }
 
-            val newlistDate=newDateFormat.format(simpleDateFormat.parse(dateSortList[dateSortList.size-1].dateExecute).time)
-            val listDate=newDateFormat.format(simpleDateFormat.parse(it.dateExecute).time)
+            val newlistDate = newDateFormat.format(simpleDateFormat.parse(dateSortList[dateSortList.size - 1].dateExecute).time)
+            val listDate = newDateFormat.format(simpleDateFormat.parse(it.dateExecute).time)
 
-            if (newlistDate!= listDate){
-                val accountHistory=AccountHistory("","","","","","",it.dateExecute,"","","","","","","","","","",1)
+            if (newlistDate != listDate) {
+                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", "", 1)
                 dateSortList.add(accountHistory)
             }
             dateSortList.add(it)
@@ -230,13 +226,12 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
     }
 
 
-
     private fun fetchGraph(loanId: String) {
         val skeletonScreen = showSkeletonView(R.layout.shimmer_view_loan_info, binding.shimmerView)
-        viewModel.getCreditGraphSecond(getClientToken(), CreditGraphRequest(loanId)).observe(viewLifecycleOwner){
+        viewModel.getCreditGraphSecond(getClientToken(), CreditGraphRequest(loanId)).observe(viewLifecycleOwner) {
             skeletonScreen.hide()
-            when(it.status){
-                Status.SUCCESS->{
+            when (it.status) {
+                Status.SUCCESS -> {
                     val response = it.data as CreditActualGraphResponse
                     creditActualGraph = response
                     calculateNextMonthPayment(
@@ -246,7 +241,8 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
                     hashMap[loanId] = response
                     statusSuccess(response)
                 }
-                Status.ERROR->{
+
+                Status.ERROR -> {
                     showSnackbar(it.message.toString())
                 }
             }
@@ -254,14 +250,14 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
     }
 
     private fun statusSuccess(response: CreditActualGraphResponse) {
-         response.data.forEach {
-             val c: Calendar = Calendar.getInstance()
-             val sdf = SimpleDateFormat("dd.MM.yyyy")
-             val getCurrentDate: String = sdf.format(c.time)
-             if (sdf.parse(getCurrentDate) > sdf.parse(it.redempDate)) {
-                 overdueDate.add(it.redempDate)
-             }
-         }
+        response.data.forEach {
+            val c: Calendar = Calendar.getInstance()
+            val sdf = SimpleDateFormat("dd.MM.yyyy")
+            val getCurrentDate: String = sdf.format(c.time)
+            if (sdf.parse(getCurrentDate) > sdf.parse(it.redempDate)) {
+                overdueDate.add(it.redempDate)
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n", "ResourceAsColor")
@@ -283,7 +279,7 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
                 if (!isOverdraft(clientProduct.creditType)) getString(R.string.nearest_payment) else getString(R.string.nearest_limit_decrease)
         }
 
-        binding.date.text=creditActualGraph.nextPaymentDate.toString()
+        binding.date.text = creditActualGraph.nextPaymentDate
 
         if (!isOverdraft(clientProduct.creditType)) {
         } else {
@@ -297,13 +293,13 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.textCreditName.text = getLoanType(context = requireContext(), clientProduct.creditType)
         binding.textBalance.text = Format.formatAmount(Format.convertFromTiynDivide(clientProduct.amount)) + " UZS"
-        binding.totalAmount.text = getString(R.string.the_rest)+" "+Format.formatAmount(Format.convertFromTiynDivide(clientProduct.totalDebt)) + " UZS"
-        binding.date.text=clientProduct.arrearDate
+        binding.totalAmount.text = getString(R.string.the_rest) + " " + Format.formatAmount(Format.convertFromTiynDivide(clientProduct.totalDebt)) + " UZS"
+        binding.date.text = clientProduct.arrearDate
         val perc = calculatePercentage()
 
         binding.progressIndicator.max = 100
         if (!isOverdraft(clientProduct.creditType)) {
-            binding.progressIndicator.progress = if (perc > 0) 100-perc else 1
+            binding.progressIndicator.progress = if (perc > 0) 100 - perc else 1
         } else calculateOverdraftPercent()
 
         if (clientProduct.saldo5!!.toBigDecimal() + clientProduct.saldo46!!.toBigDecimal() > 0.toBigDecimal()) {
@@ -314,14 +310,14 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
         if (clientProduct.saldo5!!.toBigDecimal() + clientProduct.saldo46!!.toBigDecimal() > 0.toBigDecimal()) {
             binding.nearestPayment.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
             binding.textRecommendedAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
-            binding.date.setTextColor(ContextCompat.getColor(requireContext(),R.color.whiteColor))
-            binding.nextMonthPaymentDetails.background=ContextCompat.getDrawable(requireContext(),R.drawable.credit_background_color)
+            binding.date.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
+            binding.nextMonthPaymentDetails.background = ContextCompat.getDrawable(requireContext(), R.drawable.credit_background_color)
         }
 
     }
 
 
-    fun isOverdraft(creditId: String): Boolean {
+    private fun isOverdraft(creditId: String): Boolean {
         return creditId == "54"
     }
 
@@ -330,7 +326,7 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
             .divide(clientProduct.amount.toBigDecimal(), 2, RoundingMode.HALF_UP)).toInt()
     }
 
-    fun getLoanType(context: Context, loanId: String): String {
+    private fun getLoanType(context: Context, loanId: String): String {
         return when (loanId) {
             "24" -> context.getString(R.string.loan_type_1)
             "30" -> context.getString(R.string.loan_type_2)
@@ -345,63 +341,69 @@ class ClientCreditFragment:BaseFragment<FragmentClientLoanBinding,ClientLoanView
     private fun calculateOverdraftPercent() {
         var perc = clientProduct.overdraftLimit.toDouble() / clientProduct.amount.toDouble()
         perc *= 100
-        binding.progressIndicator.progress = if (perc.toInt() > 0) 100-perc.toInt() else 1
+        binding.progressIndicator.progress = if (perc.toInt() > 0) 100 - perc.toInt() else 1
 
     }
 
     override fun onClick(p0: View?) {
-        when(p0!!.id){
-            R.id.layout_control->{
-               creditOperationDialog= CreditOperationDialog {
-                   creditOperationDialog.dismiss()
-                   when(it){
-                       CreditOperationDialog.INFO_CREDIT->{
-                         val dialogInfo=CreditDetailsFragment(clientProduct)
-                           dialogInfo.show(childFragmentManager,"")
-                       // goto(R.id.creditDetailsFragment, bundleOf(CLIENT_CREDIT_MODEL to clientProduct))
-                       }
-                       CreditOperationDialog.REQUISITES->{
-                           val dialog=CreditRequisitesFragment(clientProduct)
-                           dialog.show(childFragmentManager,"")
-                        // goto(R.id.creditRequisitesFragment,bundleOf(CLIENT_CREDIT_MODEL to clientProduct))
-                       }
-                       CreditOperationDialog.REPAYMENT_SCHEDULE->{
-                        goto(R.id.creditGraphInitialFragment, bundleOf(CLIENT_CREDIT_MODEL to clientProduct,"status" to overdueDate))
-                       }
-                   }
-               }
-              creditOperationDialog.show(childFragmentManager,"")
+        when (p0!!.id) {
+            R.id.layout_control -> {
+                creditOperationDialog = CreditOperationDialog {
+                    creditOperationDialog.dismiss()
+                    when (it) {
+                        CreditOperationDialog.INFO_CREDIT -> {
+                            val dialogInfo = CreditDetailsFragment(clientProduct)
+                            dialogInfo.show(childFragmentManager, "")
+                            // goto(R.id.creditDetailsFragment, bundleOf(CLIENT_CREDIT_MODEL to clientProduct))
+                        }
+
+                        CreditOperationDialog.REQUISITES -> {
+                            val dialog = CreditRequisitesFragment(clientProduct)
+                            dialog.show(childFragmentManager, "")
+                            // goto(R.id.creditRequisitesFragment,bundleOf(CLIENT_CREDIT_MODEL to clientProduct))
+                        }
+
+                        CreditOperationDialog.REPAYMENT_SCHEDULE -> {
+                            goto(R.id.creditGraphInitialFragment, bundleOf(CLIENT_CREDIT_MODEL to clientProduct, "status" to overdueDate))
+                        }
+                    }
+                }
+                creditOperationDialog.show(childFragmentManager, "")
             }
-            R.id.nextMonthPaymentDetails,R.id.pay->{
+
+            R.id.nextMonthPaymentDetails, R.id.pay -> {
                 if (creditActualGraph != null) gotoWithSlide(
-                    R.id.loanPaymentFragment, bundleOf(CLIENT_CREDIT_MODEL to clientProduct, "actualGraph" to creditActualGraph!!.data[0],"earlyClosure" to "1")
+                    R.id.loanPaymentFragment, bundleOf(CLIENT_CREDIT_MODEL to clientProduct, "actualGraph" to creditActualGraph!!.data[0], "earlyClosure" to "1")
                 )
             }
-            R.id.layout_credit_schedule->{
+
+            R.id.layout_credit_schedule -> {
                 if (creditActualGraph != null) gotoWithSlide(
-                    R.id.loanPaymentFragment, bundleOf(CLIENT_CREDIT_MODEL to clientProduct, "actualGraph" to creditActualGraph!!.data[0],"earlyClosure" to "2")
+                    R.id.loanPaymentFragment, bundleOf(CLIENT_CREDIT_MODEL to clientProduct, "actualGraph" to creditActualGraph!!.data[0], "earlyClosure" to "2")
                 )
             }
-            R.id.filter->{
-                monitoringChooseDialog= MonitoringChooseDialog {
+
+            R.id.filter -> {
+                monitoringChooseDialog = MonitoringChooseDialog {
                     binding.filter.setImageResource(R.drawable.ic_filter_yes)
                     monitoringChooseDialog.dismiss()
-                 getFilterList(it)
+                    getFilterList(it)
                 }
-                monitoringChooseDialog.show(childFragmentManager,"")
+                monitoringChooseDialog.show(childFragmentManager, "")
             }
         }
     }
 
     private fun getFilterList(it: String) {
-        when(it){
-            getString(R.string.write_offs)->{
-                operType=1
+        when (it) {
+            getString(R.string.write_offs) -> {
+                operType = 1
             }
-            getString(R.string.enrollments)->{
-                operType=3
+
+            getString(R.string.enrollments) -> {
+                operType = 3
             }
         }
-        getListMonitoring(1,operType)
+        getListMonitoring(1, operType)
     }
 }

@@ -18,10 +18,8 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Html
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.PixelCopy
 import android.view.View
-import android.view.ViewTreeObserver
 import android.view.Window
 import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
@@ -37,7 +35,6 @@ import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.findViewTreeLifecycleOwner
-import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -50,14 +47,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import uz.fido.network.domain.model.abc_base.APIError
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.payment.PaymentParams
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
-import uz.fido.universaldigital.ui.activities.LoginActivity
-import uz.fido.universaldigital.ui.activities.MainActivity
 import uz.fido.universaldigital.ui.utils.validator.RangeValidator
 import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
 import uz.fido.utils.const.Const
@@ -127,13 +121,6 @@ fun Activity.hideSoftKeyboard() {
     }
 }
 
-fun Activity.showKeyboard(view: View) {
-    val inputMethodManager = getSystemService(
-        Context.INPUT_METHOD_SERVICE
-    ) as InputMethodManager
-    inputMethodManager.showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
-}
-
 inline fun <reified T : Serializable> Bundle.serializable(key: String): T? = when {
     Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> getSerializable(key, T::class.java)
     else -> @Suppress("DEPRECATION") getSerializable(key) as? T
@@ -166,24 +153,6 @@ fun convertDpToPixel(dp: Float, context: Context?): Float {
         val metrics = Resources.getSystem().displayMetrics
         dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
-}
-
-fun Window.hideSystemBars() {
-    this.apply {
-        this.decorView.systemUiVisibility =
-            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-        statusBarColor = Color.TRANSPARENT
-    }
-}
-
-fun Window.showSystemBars() {
-    this.apply {
-        clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-    }
-}
-
-fun setStatusBarColor(activity: Activity, color: Int) {
-    activity.window.statusBarColor = ContextCompat.getColor(activity, color)
 }
 
 fun View.delayOnLifecycle(

@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,15 +20,16 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class DepositEditNameFragment:BaseFragment<DialogClientDepositEditNameBinding,ClientDepositViewModel>(
-    DialogClientDepositEditNameBinding::inflate,ClientDepositViewModel::class.java
+class DepositEditNameFragment : BaseFragment<DialogClientDepositEditNameBinding, ClientDepositViewModel>(
+    DialogClientDepositEditNameBinding::inflate, ClientDepositViewModel::class.java
 ) {
     private lateinit var deposit: ClientDeposit
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
 
-    companion object{
-        const val EDIT_NAME="edit_name"
+    companion object {
+        const val EDIT_NAME = "edit_name"
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.appBar.setOnBackButtonClickListener { pop() }
@@ -39,12 +39,13 @@ class DepositEditNameFragment:BaseFragment<DialogClientDepositEditNameBinding,Cl
             val name = binding.etName.editableText.toString()
 
             showProgress()
-            viewModel.renameDeposit(getClientToken(), RenameDepositRequest(name, deposit.savDepId)).observe(viewLifecycleOwner){
-                when(it.status){
-                    Status.SUCCESS->{
-                       getDeposits()
+            viewModel.renameDeposit(getClientToken(), RenameDepositRequest(name, deposit.savDepId)).observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        getDeposits()
                     }
-                    Status.ERROR->{
+
+                    Status.ERROR -> {
                         showSnackbar(it.message.toString())
                     }
                 }

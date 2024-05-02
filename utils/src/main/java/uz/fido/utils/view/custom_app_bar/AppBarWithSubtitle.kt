@@ -64,8 +64,4 @@ class AppBarWithSubtitle(context: Context, attr: AttributeSet) : LinearLayoutCom
         }
     }
 
-    fun hideBackButton() {
-        binding.back.visibility = View.INVISIBLE
-    }
-
 }

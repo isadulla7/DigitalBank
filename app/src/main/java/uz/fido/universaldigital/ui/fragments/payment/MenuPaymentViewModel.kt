@@ -25,16 +25,6 @@ class MenuPaymentViewModel @Inject constructor(
 
     var templates: MutableLiveData<List<Template>> = MutableLiveData()
 
-    fun updateTemplates(transfers: List<Template>) {
-        this.templates.postValue(transfers)
-    }
-
-    fun getTemplateList(token: String, getTemplateListRequest: GetTemplateListRequest) = liveData(
-        Dispatchers.IO
-    ) {
-        emit(templateRepository.getTemplateList(token, getTemplateListRequest))
-    }
-
     fun getOperationParams(token: String, getOperationParamRequest: GetOperationInfoRequest) =
         liveData(
             Dispatchers.IO
@@ -54,8 +44,4 @@ class MenuPaymentViewModel @Inject constructor(
             emit(templateRepository.createTemplate(token, createTemplateRequest))
         }
 
-    fun deleteTemplate(token: String, deleteTemplateRequest: DeleteTemplateRequest) =
-        liveData(Dispatchers.IO) {
-            emit(templateRepository.deleteTemplate(token, deleteTemplateRequest))
-        }
 }

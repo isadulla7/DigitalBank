@@ -2,8 +2,8 @@ package uz.fido.utils.const
 
 object Const {
 
-    val TOTAL_BALANCE = "total_balance"
-    val TOTAL_BALANCE_UPDATED_AT = "total_balance_updated_on"
+    const val TOTAL_BALANCE = "total_balance"
+    const val TOTAL_BALANCE_UPDATED_AT = "total_balance_updated_on"
 
     /*PAYMENT */
     const val DB_HELPER_VERSION = 1

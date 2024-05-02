@@ -4,15 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.DialogFragment
-import kotlinx.android.synthetic.main.list_bottom_sheet.list
 import uz.fido.network.domain.model.monitoring.filter.UserPayedService
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.DialogMonitoringFilterBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.ServiceAllChooseAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.ServiceAllMonitoringAdapter
 
 class MonitoringFilterDialog(private val serviceList: ArrayList<UserPayedService>,
                              private val onClick:(ArrayList<UserPayedService>)->Unit): DialogFragment(), BaseInterface {
@@ -24,14 +21,14 @@ class MonitoringFilterDialog(private val serviceList: ArrayList<UserPayedService
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding=DialogMonitoringFilterBinding.inflate(inflater,container,false)
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo);
+        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo)
 
     }
 

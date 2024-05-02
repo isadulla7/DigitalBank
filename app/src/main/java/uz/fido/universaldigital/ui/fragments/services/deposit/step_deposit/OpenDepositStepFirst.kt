@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener

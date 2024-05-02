@@ -38,25 +38,6 @@ fun Fragment.pop() {
     findNavController().popBackStack()
 }
 
-fun Fragment.gotoWithSlideLeft(id: Int) {
-    if (view == null) return
-    findNavController().navigate(id, null, getNavOptionsLeft())
-}
-
-fun Fragment.gotoWithTransitionAndExtras(
-    id: Int, navExtras: Navigator.Extras
-) {
-    if (view == null) return
-    findNavController().navigate(id, null, null, navExtras)
-}
-
-
-fun Fragment.gotoWithTransitionAndExtrasAndBundle(
-    id: Int, navExtras: Navigator.Extras, bundle: Bundle
-) {
-    if (view == null) return
-    findNavController().navigate(id, bundle, null, navExtras)
-}
 
 fun getNavOptions(): NavOptions {
     return NavOptions.Builder().setEnterAnim(R.anim.enter_from_right)

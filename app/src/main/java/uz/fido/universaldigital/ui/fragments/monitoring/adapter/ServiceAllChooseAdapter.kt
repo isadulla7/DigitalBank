@@ -9,7 +9,6 @@ import uz.fido.network.domain.model.monitoring.filter.UserPayedService
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemServiceChooseFilterBinding
-import uz.fido.universaldigital.databinding.ItemServiceMonitoringFilterBinding
 import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
 
 class ServiceAllChooseAdapter(

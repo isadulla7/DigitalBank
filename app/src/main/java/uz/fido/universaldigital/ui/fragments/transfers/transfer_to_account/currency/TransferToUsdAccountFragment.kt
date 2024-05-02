@@ -157,10 +157,7 @@ class TransferToUsdAccountFragment :
             return false
         }
         val amount = binding.etBankAmount.text.toString().replace(" ", "").toBigDecimal()
-        if (amount < minAmount || amount > maxAmount) {
-            return false
-        }
-        return true
+        return !(amount < minAmount || amount > maxAmount)
     }
 
     private fun oneTimeInfo(accountCode: String, bankCode: String) {

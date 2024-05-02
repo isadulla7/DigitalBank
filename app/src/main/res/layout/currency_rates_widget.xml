@@ -57,13 +57,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:drawableLeft="@drawable/home_rate_usd"
             android:drawablePadding="8dp"
             android:fontFamily="@font/inter_medium"
             android:gravity="center_vertical"
             android:text="@string/usd"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/home_rate_usd" />
 
         <TextView
             android:id="@+id/buying_rate1"
@@ -104,13 +104,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:drawableLeft="@drawable/home_rate_eur"
             android:drawablePadding="8dp"
             android:fontFamily="@font/inter_medium"
             android:gravity="center_vertical"
             android:text="@string/eur_text"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/home_rate_eur" />
 
         <TextView
             android:id="@+id/buying_rate2"
@@ -152,13 +152,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:drawableLeft="@drawable/home_rate_ruble"
             android:drawablePadding="8dp"
             android:fontFamily="@font/inter_medium"
             android:gravity="center_vertical"
             android:text="@string/rub_text"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:drawableStartCompat="@drawable/home_rate_ruble" />
 
         <TextView
             android:id="@+id/buying_rate"

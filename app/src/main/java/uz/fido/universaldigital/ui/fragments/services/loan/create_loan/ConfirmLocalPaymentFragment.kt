@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.services.loan.create_loan
 
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint

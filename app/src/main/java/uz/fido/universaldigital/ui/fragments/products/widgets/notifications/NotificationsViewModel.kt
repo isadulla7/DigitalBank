@@ -15,8 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NotificationsViewModel @Inject constructor(
     application: Application,
-    private val utilsRepository: IUtilsRepository,
-    private val useCase: NotificationUseCase
+    private val utilsRepository: IUtilsRepository
 ) : AbstractViewModel(application) {
 
     var notifications = LiveEvent<ArrayList<Notification>>()

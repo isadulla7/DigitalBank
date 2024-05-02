@@ -39,17 +39,6 @@ class GetDeviceInfo(var context: Context) {
             return deviceInfo
         }
 
-    private fun getDeviceName(): String? {
-        return Build.MODEL
-    }
-
-    @SuppressLint("HardwareIds")
-    private fun getUUID(): String? {
-        return Settings.Secure.getString(
-            context.contentResolver, Settings.Secure.ANDROID_ID
-        )
-    }
-
     // Получить серийные номера сим карт, сколько симок столько же серийных номеров,
     // при неполадке возвращает пустой лист
     private val simICCDs: ArrayList<String>
@@ -79,24 +68,6 @@ class GetDeviceInfo(var context: Context) {
             return simSerialArray
         }
 
-    // получить IP адрес, возвращает IP в зависимости от сети WIFI или MobileData
-    private fun getIpAddress(): String? {
-        var ipAddress: String? = ""
-        try {
-            Logger.writeLog("Network status: " + checkNetworkStatus(context))
-            if (checkNetworkStatus(context).equals("wifi", ignoreCase = true)) {
-                ipAddress = wifiIpAddress(context)
-            } else if (checkNetworkStatus(context).equals("mobileData", ignoreCase = true)) {
-                ipAddress = getLocalIpAddress()
-            } else if (checkNetworkStatus(context).equals("noNetwork", ignoreCase = true)) {
-                ipAddress = ""
-            }
-        } catch (ex: Exception) {
-            Log.e("INFO_ERROR: ", "IP_Adress")
-        }
-        return ipAddress
-    }//                                    imeiList.add(null);
-
     //Получить IMEI адреса устройства, так как в двух симочных две IMEI,
     // если API>28 возвращает пустой лист
     private val iMEIs: ArrayList<String>
@@ -106,17 +77,15 @@ class GetDeviceInfo(var context: Context) {
                 if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) {
                     val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
                     if (null != tm) {
-                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                            for (i in 0 until tm.phoneCount) {
-                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                                    if (tm.getImei(i) != null && !tm.getImei(i).isEmpty()) {
-                                        imeiList.add(tm.getImei(i))
-                                    } else {
-//                                    imeiList.add(null);
-                                    }
+                        for (i in 0 until tm.phoneCount) {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                if (tm.getImei(i) != null && tm.getImei(i).isNotEmpty()) {
+                                    imeiList.add(tm.getImei(i))
                                 } else {
-                                    imeiList.add(tm.deviceId)
+//                                    imeiList.add(null);
                                 }
+                            } else {
+                                imeiList.add(tm.deviceId)
                             }
                         }
                     }
@@ -155,8 +124,7 @@ class GetDeviceInfo(var context: Context) {
             ipAddress = Integer.reverseBytes(ipAddress)
         }
         val ipByteArray = BigInteger.valueOf(ipAddress.toLong()).toByteArray()
-        val ipAddressString: String?
-        ipAddressString = try {
+        val ipAddressString: String? = try {
             InetAddress.getByAddress(ipByteArray).hostAddress
         } catch (ex: UnknownHostException) {
             Log.e("INFO_ERROR", "Unable to get host address.")
@@ -177,9 +145,11 @@ class GetDeviceInfo(var context: Context) {
                         capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> {
                             "wifi"
                         }
+
                         capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> {
                             "mobileData"
                         }
+
                         else -> {
                             "noNetwork"
                         }

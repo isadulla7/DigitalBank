@@ -6,8 +6,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import uz.fido.network.domain.model.payment.location.LocalPayment
 
-import uz.fido.network.domain.model.payment.location.LocalPaymentRoom
-
 @Dao
 interface LocalPaymentDao {
 

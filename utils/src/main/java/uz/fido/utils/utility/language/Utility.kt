@@ -1,15 +1,7 @@
 package uz.fido.utils.utility.language
 
-import android.app.Activity
 import android.content.res.Resources
 import android.os.Build
-import com.google.firebase.messaging.FirebaseMessaging
-import io.paperdb.Paper
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import uz.fido.utils.const.Const
-import uz.fido.utils.log.Logger
-import uz.fido.utils.utility.context.startActivityWithClearTask
 import java.net.Inet4Address
 import java.net.NetworkInterface
 import java.net.SocketException
@@ -17,14 +9,6 @@ import java.util.Locale
 import java.util.regex.Pattern
 
 object Utility {
-
-    fun getDeviceLocale(): Locale? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Resources.getSystem().configuration.locales.get(0)
-        } else {
-            Resources.getSystem().configuration.locale
-        }
-    }
 
     fun getDeviceName(): String {
         return Build.MODEL?:""

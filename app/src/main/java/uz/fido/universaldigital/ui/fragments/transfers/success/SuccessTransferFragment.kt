@@ -24,7 +24,6 @@ import java.util.Locale
 class SuccessTransferFragment :
     BaseSimpleFragment<FragmentSuccessTransferBinding>(FragmentSuccessTransferBinding::inflate) {
 
-    private lateinit var operation: String
     private lateinit var transferDto: TransferDto
 
     companion object {

@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.services.loan.dialog
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,10 +26,6 @@ class LoanMonthDialog(
     private lateinit var binding: LoanMonthBottomSheetBinding
     private var adapter: LoanMonthAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

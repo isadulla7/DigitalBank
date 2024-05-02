@@ -1,7 +1,6 @@
 package uz.fido.network.domain.datasource.room
 
 import uz.fido.network.domain.model.payment.location.LocalPayment
-import uz.fido.network.domain.model.payment.location.LocalPaymentRoom
 import uz.fido.network.domain.model.payment.location.LocalPaymentType
 import uz.fido.network.room.LocalPaymentDao
 import uz.fido.network.room.LocalPaymentTypeDao

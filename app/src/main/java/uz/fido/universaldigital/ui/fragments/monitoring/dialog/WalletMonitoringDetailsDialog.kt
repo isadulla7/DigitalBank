@@ -10,9 +10,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.network.domain.model.monitoring.AccountHistory
-import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringItem
-import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.DialogUzcardInfoMonitoringBinding
@@ -40,7 +37,7 @@ class WalletMonitoringDetailsDialog(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding= DialogUzcardInfoMonitoringBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -62,8 +59,8 @@ class WalletMonitoringDetailsDialog(
     private fun initViews() {
 
         addView(getString(R.string.name), if (item.debit == "0") item.coAccName else item.dtAccName)
-        addView(getString(R.string.purpose), item!!.purpose.toString())
-        addView(getString(R.string.date_time), item!!.dateExecute.toString())
+        addView(getString(R.string.purpose), item.purpose.toString())
+        addView(getString(R.string.date_time), item.dateExecute.toString())
         addView(getString(R.string.account), (if (item!!.debit == "0") item!!.coAcc else item!!.dtAcc).toString())
         addView(getString(R.string.operation_type), if (item!!.debit == "0") getString(R.string.income) else getString(R.string.outcome))
         val amount =
@@ -104,7 +101,7 @@ class WalletMonitoringDetailsDialog(
         val viewDepositCreateBinding =
             ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)
     }
 }

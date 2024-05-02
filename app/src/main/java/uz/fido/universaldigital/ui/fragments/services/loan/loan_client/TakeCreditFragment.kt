@@ -80,7 +80,7 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
         }
         maxAmount = creditProduct.amount
         if (NumberUtils.isParsable(maxAmount)) {
-            maxAmount = Format.formatAmount(Format.convertFromTiynDivide(maxAmount.toString()))
+            maxAmount = Format.formatAmount(Format.convertFromTiynDivide(maxAmount))
                 .replace(" ", "")
         }
 
@@ -92,8 +92,8 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
     }
 
     private fun isCurrent() {
-        Log.d("TAG", "isCurrent: ${minAmount}")
-        Log.d("TAG", "isCurrent: ${maxAmount}")
+        Log.d("TAG", "isCurrent: $minAmount")
+        Log.d("TAG", "isCurrent: $maxAmount")
         if (!amount.isNullOrEmpty()) {
             if (minAmount.toDouble() < amount.toDouble() && maxAmount.toDouble() > amount.toDouble() && selectedCard != null) {
                 binding.btnContinue.isEnabled(true)
@@ -110,7 +110,7 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
                 }
             }
             binding.chooseCardLayout.initCards(
-                listnew as ArrayList<CardResponse>, "0"
+                listnew, "0"
             ) { cardResponse ->
                 cardResponse?.let { card ->
                     selectedCard = card

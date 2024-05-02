@@ -36,7 +36,7 @@ class MyHousePayAdapter(
                 if (templateItem.error_text != null) {
                     binding.progress.visibility = View.GONE
                     binding.image.visibility = View.VISIBLE
-                    binding.amountText.setText(context.getString(R.string.error_occured))
+                    binding.amountText.text = context.getString(R.string.error_occured)
                     binding.amountText.setTextColor(ContextCompat.getColor(context,R.color.brandRedColor))
                     binding.amount.setTextColor(ContextCompat.getColor(context,R.color.brandRedColor))
                     binding.image.setImageResource(R.drawable.ic_payment_error_icon)

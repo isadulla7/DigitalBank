@@ -62,26 +62,6 @@ class MenuProductsViewModel @Inject constructor(
         updateCardState.postValue(false)
     }
 
-    fun updateCards() {
-        vmScope.launch {
-            cards.value?.forEach {
-                val response = cardsUseCase.getCardInfo(arrayListOf(it.object_id))
-                it.apply {
-                    balance = response[0].balance
-                    processing_server_status =
-                        response[0].state
-                    stateName =
-                        response[0].state_name
-                    owerdraft_limit = response[0].overdraft_limit
-                    pin_counter = response[0].pin_counter
-                    overdraft_limit = response[0].overdraft_limit
-                    object_status = response[0].object_status
-                }
-            }
-            updateCards(cards.value!!)
-        }
-    }
-
     fun updateClientDepositList(list: ArrayList<ClientDeposit>) {
         this.clientDeposit.postValue(list)
     }
@@ -191,11 +171,6 @@ class MenuProductsViewModel @Inject constructor(
     fun getClientProducts(token: String) = liveData(Dispatchers.IO) {
         emit(creditRepository.getCreditProducts(token))
     }
-
-    fun getHumoCardInfo(token: String, humoCardInfoRequest: HumoCardInfoRequest) =
-        liveData(Dispatchers.IO) {
-            emit(cardRepository.getHumoCardInfo(token, humoCardInfoRequest))
-        }
 
     fun getDeposits(token: String, getDepositListRequest: GetDepositListRequest) = liveData(
         Dispatchers.IO

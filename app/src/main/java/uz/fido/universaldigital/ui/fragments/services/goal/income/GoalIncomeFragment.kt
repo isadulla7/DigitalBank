@@ -7,7 +7,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_deposit_constructor.percent
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.p2p.P2PInfoRequest
@@ -118,7 +117,7 @@ class GoalIncomeFragment : BaseFragment<FragmentGoalIncomeBinding, GoalViewModel
                     Status.SUCCESS -> {
                         goalModelResponse = it.data as GoalModelResponse
                         receiverCardNumber = goalModelResponse!!.fund_object_value
-                        currentAmount = goalModelResponse!!.current_amount.toString()
+                        currentAmount = goalModelResponse!!.current_amount
                         targetAmount = goalModelResponse!!.target_amount
                         p2pInfoRequest()
                     }
@@ -241,7 +240,7 @@ class GoalIncomeFragment : BaseFragment<FragmentGoalIncomeBinding, GoalViewModel
                 return false
             }
 
-            totalAmount.toDouble() > ((targetAmount.toDouble() - currentAmount.toDouble()) / 100) -> return false
+            totalAmount > ((targetAmount.toDouble() - currentAmount.toDouble()) / 100) -> return false
 
             else -> return true
         }

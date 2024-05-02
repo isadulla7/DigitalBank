@@ -46,7 +46,6 @@ class PinCodeFragment : BaseFragment<FragmentPinCodeBinding, PinCodeViewModel>(
         const val PIN_OPERATION_CHANGE_PIN = "change_pin"
         const val PIN_OPERATION_SIGN_UP = "sign_up"
         const val PIN_OPERATION_SET_PIN = "set_pin_code"
-        const val PIN_OPERATION_SET_HUMO_PAY = "set_humo_pay_pin"
         const val PIN_OPERATION_PAYMENT = "confirm_payment"
     }
 
@@ -252,17 +251,6 @@ class PinCodeFragment : BaseFragment<FragmentPinCodeBinding, PinCodeViewModel>(
                 dot4.setImageResource(R.drawable.pin_dot_disable)
                 pin = ""
             }
-        }
-    }
-
-    private fun fillDots() {
-        binding.apply {
-            dot1.setImageResource(R.drawable.pin_dot_success)
-            dot2.setImageResource(R.drawable.pin_dot_success)
-            dot3.setImageResource(R.drawable.pin_dot_success)
-            dot4.setImageResource(R.drawable.pin_dot_success)
-            vibrateTick(requireContext())
-            clear.alpha = 1f
         }
     }
 

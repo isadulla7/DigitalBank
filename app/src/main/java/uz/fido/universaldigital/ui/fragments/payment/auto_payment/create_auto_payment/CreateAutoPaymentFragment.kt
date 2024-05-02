@@ -11,10 +11,8 @@ import android.util.Log
 import android.view.View
 import android.widget.TimePicker
 import androidx.core.os.bundleOf
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.add_card_dialog.title
 import uz.fido.network.domain.model.payment.AllServiceLists
 import uz.fido.network.domain.model.subscriptions.AutoPayment
 import uz.fido.network.domain.model.subscriptions.SaveAutoPaymentModel
@@ -26,7 +24,6 @@ import uz.fido.universaldigital.ui.fragments.payment.auto_payment.adapter.AutoPa
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.adapter.AutoPaymentDaysAdapter
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.dialog.ChoosePeriodType
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.LoanMonthDialog
-import uz.fido.universaldigital.ui.main_dialogs.AllServicesDialog
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -38,9 +35,9 @@ import java.util.Locale
 
 
 @AndroidEntryPoint
-class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,AutoPaymentViewModel>
-    (FragmentCreateAutoPaymentBinding::inflate,AutoPaymentViewModel::class.java),
-    View.OnClickListener, (Int, String) -> Unit,TimePickerDialog.OnTimeSetListener {
+class CreateAutoPaymentFragment : BaseFragment<FragmentCreateAutoPaymentBinding, AutoPaymentViewModel>
+    (FragmentCreateAutoPaymentBinding::inflate, AutoPaymentViewModel::class.java),
+    View.OnClickListener, (Int, String) -> Unit, TimePickerDialog.OnTimeSetListener {
 
     private var saveAutoPaymentModel: SaveAutoPaymentModel? = null
     private var autoPayment: AutoPayment? = null
@@ -55,16 +52,16 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
     private val df = SimpleDateFormat("dd.MM.yyyy", Locale.US)
 
 
-    private lateinit var customDatesAdapterAdapter:AutoPaymentCustomDateAdapter
+    private lateinit var customDatesAdapterAdapter: AutoPaymentCustomDateAdapter
     private var days = ArrayList<String>()
     private lateinit var choosePeriodType: ChoosePeriodType
     private var selectedTime: String? = null
 
     companion object {
         const val SAVE_AUTO_PAYMENT_MODEL = "save_payment"
-        const val AUTO_PAYMENT_OPERATION = "operation"
 
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
@@ -104,90 +101,91 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
     }
 
 
-     private fun editAutoPayment() {
-         Log.d("TAG", "editAutoPayment:${selectedTime} ")
-            saveAutoPaymentModel = SaveAutoPaymentModel()
-            saveAutoPaymentModel?.phone_number = getClientPhoneNumber()
-            saveAutoPaymentModel?.name = binding.editTextName.text.toString()
-            when (autoPaymentType) {
-                1 -> {
-                    val daysArrayList = java.util.ArrayList<Int>()
-                    val days = java.util.ArrayList<String>()
-                    daysList.forEach {
-                        if (it.isSelected) {
-                            daysArrayList.add(it.code!!.toInt())
-                            days.add(it.name.toString())
-                        }
+    private fun editAutoPayment() {
+        Log.d("TAG", "editAutoPayment:${selectedTime} ")
+        saveAutoPaymentModel = SaveAutoPaymentModel()
+        saveAutoPaymentModel?.phone_number = getClientPhoneNumber()
+        saveAutoPaymentModel?.name = binding.editTextName.text.toString()
+        when (autoPaymentType) {
+            1 -> {
+                val daysArrayList = java.util.ArrayList<Int>()
+                val days = java.util.ArrayList<String>()
+                daysList.forEach {
+                    if (it.isSelected) {
+                        daysArrayList.add(it.code!!.toInt())
+                        days.add(it.name.toString())
                     }
-                    val dayName = TextUtils.join(", ", days)
-                    saveAutoPaymentModel?.months = java.util.ArrayList()
-                    saveAutoPaymentModel?.days = daysArrayList
-                    Log.d("TAG", "editAutoPayment: ${selectedTime}")
-                    saveAutoPaymentModel?.hours = selectedTime
-                    saveAutoPaymentModel?.selected_days = java.util.ArrayList()
-                    saveAutoPaymentModel?.amount = Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", ""))
-                    saveAutoPaymentModel?.daysName = dayName
-                    saveAutoPaymentModel?.type = "D"
-                    saveAutoPaymentModel?.auto_payment_id = autoPayment?.id.toString()
-                    gotoWithSlide(
-                        R.id.saveAutoPaymentFinalFragment,
-                        bundleOf(
-                            SaveAutoPaymentFinalFragment.SAVE_AUTO_PAYMENT_MODEL to saveAutoPaymentModel,
-                            "operation" to "edit"
-                        )
-                    )
                 }
-                2 -> {
-                    val monthsArrayList = java.util.ArrayList<Int>()
-                    val months = java.util.ArrayList<String>()
-                    monthsList.forEach {
-                        if (it.isSelected) {
-                            monthsArrayList.add(it.code!!.toInt())
-                            months.add(it.name.toString())
-                        }
-                    }
-                    val monthName = TextUtils.join(", ", months)
-                    val daysArrayList = java.util.ArrayList<Int>()
-                    daysArrayList.add(binding.editTextDayOfPayment.text.toString().toInt())
-                    saveAutoPaymentModel?.days = daysArrayList
-                    saveAutoPaymentModel?.months = monthsArrayList
-                    Log.d("TAG", "editAutoPayment: ${selectedTime}")
-                    saveAutoPaymentModel?.hours = selectedTime
-                    saveAutoPaymentModel?.selected_days = java.util.ArrayList()
-                    saveAutoPaymentModel?.amount = Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", ""))
-                    saveAutoPaymentModel?.monthsName = monthName
-                    saveAutoPaymentModel?.daysName = binding.editTextDayOfPayment.text.toString()
-                    saveAutoPaymentModel?.type = "M"
-                    saveAutoPaymentModel?.auto_payment_id = autoPayment?.id.toString()
-                    gotoWithSlide(
-                        R.id.saveAutoPaymentFinalFragment,
-                        bundleOf(
-                            SaveAutoPaymentFinalFragment.SAVE_AUTO_PAYMENT_MODEL to saveAutoPaymentModel,
-                            "operation" to "edit"
-                        )
+                val dayName = TextUtils.join(", ", days)
+                saveAutoPaymentModel?.months = java.util.ArrayList()
+                saveAutoPaymentModel?.days = daysArrayList
+                Log.d("TAG", "editAutoPayment: $selectedTime")
+                saveAutoPaymentModel?.hours = selectedTime
+                saveAutoPaymentModel?.selected_days = java.util.ArrayList()
+                saveAutoPaymentModel?.amount = Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", ""))
+                saveAutoPaymentModel?.daysName = dayName
+                saveAutoPaymentModel?.type = "D"
+                saveAutoPaymentModel?.auto_payment_id = autoPayment?.id.toString()
+                gotoWithSlide(
+                    R.id.saveAutoPaymentFinalFragment,
+                    bundleOf(
+                        SaveAutoPaymentFinalFragment.SAVE_AUTO_PAYMENT_MODEL to saveAutoPaymentModel,
+                        "operation" to "edit"
                     )
-                }
-                3 -> {
-                    saveAutoPaymentModel?.months = java.util.ArrayList()
-                    saveAutoPaymentModel?.days = java.util.ArrayList()
-                    saveAutoPaymentModel?.type = "S"
-                    saveAutoPaymentModel?.hours = ""
-                    saveAutoPaymentModel?.selected_days = customDates
-                    saveAutoPaymentModel?.amount = Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", ""))
-                    saveAutoPaymentModel?.daysName = binding.editTextDayOfPayment.text.toString()
-                    saveAutoPaymentModel?.auto_payment_id = autoPayment?.id.toString()
-                    gotoWithSlide(
-                        R.id.saveAutoPaymentFinalFragment,
-                        bundleOf(
-                            SaveAutoPaymentFinalFragment.SAVE_AUTO_PAYMENT_MODEL to saveAutoPaymentModel,
-                            "operation" to "edit"
-                        )
-                    )
-                }
+                )
             }
 
+            2 -> {
+                val monthsArrayList = java.util.ArrayList<Int>()
+                val months = java.util.ArrayList<String>()
+                monthsList.forEach {
+                    if (it.isSelected) {
+                        monthsArrayList.add(it.code!!.toInt())
+                        months.add(it.name.toString())
+                    }
+                }
+                val monthName = TextUtils.join(", ", months)
+                val daysArrayList = java.util.ArrayList<Int>()
+                daysArrayList.add(binding.editTextDayOfPayment.text.toString().toInt())
+                saveAutoPaymentModel?.days = daysArrayList
+                saveAutoPaymentModel?.months = monthsArrayList
+                Log.d("TAG", "editAutoPayment: $selectedTime")
+                saveAutoPaymentModel?.hours = selectedTime
+                saveAutoPaymentModel?.selected_days = java.util.ArrayList()
+                saveAutoPaymentModel?.amount = Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", ""))
+                saveAutoPaymentModel?.monthsName = monthName
+                saveAutoPaymentModel?.daysName = binding.editTextDayOfPayment.text.toString()
+                saveAutoPaymentModel?.type = "M"
+                saveAutoPaymentModel?.auto_payment_id = autoPayment?.id.toString()
+                gotoWithSlide(
+                    R.id.saveAutoPaymentFinalFragment,
+                    bundleOf(
+                        SaveAutoPaymentFinalFragment.SAVE_AUTO_PAYMENT_MODEL to saveAutoPaymentModel,
+                        "operation" to "edit"
+                    )
+                )
+            }
+
+            3 -> {
+                saveAutoPaymentModel?.months = java.util.ArrayList()
+                saveAutoPaymentModel?.days = java.util.ArrayList()
+                saveAutoPaymentModel?.type = "S"
+                saveAutoPaymentModel?.hours = ""
+                saveAutoPaymentModel?.selected_days = customDates
+                saveAutoPaymentModel?.amount = Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", ""))
+                saveAutoPaymentModel?.daysName = binding.editTextDayOfPayment.text.toString()
+                saveAutoPaymentModel?.auto_payment_id = autoPayment?.id.toString()
+                gotoWithSlide(
+                    R.id.saveAutoPaymentFinalFragment,
+                    bundleOf(
+                        SaveAutoPaymentFinalFragment.SAVE_AUTO_PAYMENT_MODEL to saveAutoPaymentModel,
+                        "operation" to "edit"
+                    )
+                )
+            }
         }
 
+    }
 
 
     private fun nextWindow() {
@@ -223,6 +221,7 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
                             )
                         )
                 }
+
                 2 -> {
                     val monthsArrayList = java.util.ArrayList<Int>()
                     val months = java.util.ArrayList<String>()
@@ -246,6 +245,7 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
                         bundleOf(SaveAutoPaymentFinalFragment.SAVE_AUTO_PAYMENT_MODEL to saveAutoPaymentModel)
                     )
                 }
+
                 3 -> {
                     saveAutoPaymentModel?.monthsName = ""
                     saveAutoPaymentModel?.daysName = ""
@@ -269,14 +269,17 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
             checkForButton()
         }
     }
+
     private fun checkForButton() {
-        binding.btnContinue.isEnabled(if (autoPaymentType != 3) {
-            binding.editTextName.text.toString().isNotEmpty() &&
-                    binding.editTextTime.text.toString().isNotEmpty() &&
-                    binding.editTextAmount.text.toString().isNotEmpty() && if (autoPayment != null) {
-                if (autoPayment!!.type == "M") monthsList.isNotEmpty() else daysList.isNotEmpty()
-            } else if (autoPaymentType == 1) daysList.isNotEmpty() else monthsList.isNotEmpty()
-        } else binding.editTextName.text.toString().isNotEmpty() && binding.editTextAmount.text.toString().isNotEmpty() && customDates.isNotEmpty())
+        binding.btnContinue.isEnabled(
+            if (autoPaymentType != 3) {
+                binding.editTextName.text.toString().isNotEmpty() &&
+                        binding.editTextTime.text.toString().isNotEmpty() &&
+                        binding.editTextAmount.text.toString().isNotEmpty() && if (autoPayment != null) {
+                    if (autoPayment!!.type == "M") monthsList.isNotEmpty() else daysList.isNotEmpty()
+                } else if (autoPaymentType == 1) daysList.isNotEmpty() else monthsList.isNotEmpty()
+            } else binding.editTextName.text.toString().isNotEmpty() && binding.editTextAmount.text.toString().isNotEmpty() && customDates.isNotEmpty()
+        )
     }
 
     private fun initDays() {
@@ -322,6 +325,7 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
             binding.switchDaily.isChecked = selectedDays == 7
         else binding.sswitchMonthly.isChecked = selectedMonths == 12
     }
+
     private fun initMonths() {
         months = arrayListOf(
             getString(R.string.month_jan),
@@ -345,7 +349,7 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
         }
         binding.recyclerView.apply {
             setHasFixedSize(true)
-            layoutManager =LinearLayoutManager(requireContext())
+            layoutManager = LinearLayoutManager(requireContext())
             monthsAdapter = AutoPaymentDaysAdapter(this@CreateAutoPaymentFragment, monthsList)
             adapter = monthsAdapter
         }
@@ -355,11 +359,11 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
         binding.customDates.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
-            customDatesAdapterAdapter = AutoPaymentCustomDateAdapter( ArrayList()){date->
+            customDatesAdapterAdapter = AutoPaymentCustomDateAdapter(ArrayList()) { date ->
                 val index = customDates.indexOf(date)
-                customDatesAdapterAdapter!!.notifyItemRemoved(index)
+                customDatesAdapterAdapter.notifyItemRemoved(index)
                 customDates.remove(date)
-              binding.btnContinue.isEnabled(customDates.isNotEmpty())
+                binding.btnContinue.isEnabled(customDates.isNotEmpty())
 
             }
             adapter = customDatesAdapterAdapter
@@ -377,8 +381,8 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
         monthsAdapter?.setList(monthsList)
     }
 
-    fun initAutoPayment(){
-        if (autoPayment!=null){
+    private fun initAutoPayment() {
+        if (autoPayment != null) {
             binding.editTextAmount.setText(Format.convertFromTiynDivide(autoPayment?.amount.toString()))
             binding.editTextName.setText(autoPayment?.name.toString())
 
@@ -409,12 +413,14 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
                     binding.monthly.visibility = View.GONE
                     binding.customDateLayout.visibility = View.GONE
                 }
+
                 2 -> {
                     binding.editTextType.setText(getString(R.string.by_month))
                     binding.daily.visibility = View.GONE
                     binding.monthly.visibility = View.VISIBLE
                     binding.customDateLayout.visibility = View.GONE
                 }
+
                 3 -> {
                     binding.customDateLayout.visibility = View.VISIBLE
                     binding.daily.visibility = View.GONE
@@ -464,7 +470,7 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
             }
             checkForButton()
 
-        }else{
+        } else {
             val amount = saveAutoPaymentModel?.payment_details?.get("AMOUNT")
             if (amount != null) {
                 binding.editTextAmount.setText(Format.convertFromTiynDivide(amount))
@@ -485,99 +491,111 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
         }
         daysAdapter?.setList(daysList)
     }
+
     override fun onClick(p0: View?) {
-        when(p0!!.id){
-            R.id.edit_text_type,R.id.icon_text_type ->{
-            choosePeriodType= ChoosePeriodType {type->
-                choosePeriodType.dismiss()
-                autoPaymentType = type
-                when (type) {
-                    1 -> {
-                        binding.editTextType.setText(getString(R.string.by_day))
-                        binding.daily.visibility = View.VISIBLE
-                        binding.monthly.visibility = View.GONE
-                        binding.customDateLayout.visibility = View.GONE
-                    }
-                    2 -> {
-                        binding.editTextType.setText(getString(R.string.by_month))
-                        binding.daily.visibility = View.GONE
-                        binding.monthly.visibility = View.VISIBLE
-                        binding.customDateLayout.visibility = View.GONE
-                    }
-                    3 -> {
-                        binding.daily.visibility = View.GONE
-                        binding.monthly.visibility = View.GONE
-                        binding.customDateLayout.visibility = View.VISIBLE
-                        binding.editTextType.setText(getString(R.string.custom))
+        when (p0!!.id) {
+            R.id.edit_text_type, R.id.icon_text_type -> {
+                choosePeriodType = ChoosePeriodType { type ->
+                    choosePeriodType.dismiss()
+                    autoPaymentType = type
+                    when (type) {
+                        1 -> {
+                            binding.editTextType.setText(getString(R.string.by_day))
+                            binding.daily.visibility = View.VISIBLE
+                            binding.monthly.visibility = View.GONE
+                            binding.customDateLayout.visibility = View.GONE
+                        }
+
+                        2 -> {
+                            binding.editTextType.setText(getString(R.string.by_month))
+                            binding.daily.visibility = View.GONE
+                            binding.monthly.visibility = View.VISIBLE
+                            binding.customDateLayout.visibility = View.GONE
+                        }
+
+                        3 -> {
+                            binding.daily.visibility = View.GONE
+                            binding.monthly.visibility = View.GONE
+                            binding.customDateLayout.visibility = View.VISIBLE
+                            binding.editTextType.setText(getString(R.string.custom))
+                        }
                     }
                 }
+                choosePeriodType.show(childFragmentManager, "")
             }
-            choosePeriodType.show(childFragmentManager,"")
-            }
-            R.id.edit_text_day_of_payment,R.id.icon_text_day_of_payment -> {
 
-                loanMonthDialog= LoanMonthDialog(this,"","day",0,requireContext())
-                loanMonthDialog.show(childFragmentManager,"")
+            R.id.edit_text_day_of_payment, R.id.icon_text_day_of_payment -> {
+
+                loanMonthDialog = LoanMonthDialog(this, "", "day", 0, requireContext())
+                loanMonthDialog.show(childFragmentManager, "")
 
             }
-            R.id.edit_text_time, R.id.icon_text_time-> {
+
+            R.id.edit_text_time, R.id.icon_text_time -> {
                 val cal = Calendar.getInstance()
 
-               val timePicker = TimePickerDialog(activity,R.style.my_dialog_theme,
+                val timePicker = TimePickerDialog(
+                    activity, R.style.my_dialog_theme,
                     { _, selectedHour, selectedMinute ->
 
-                        selectedTime=selectedHour.toString()
-                        if (selectedHour.toString()!="0"){
-                        binding.editTextTime.setText("$selectedHour:$selectedMinute")
-                        }else binding.btnContinue.isEnabled(false)
-                    if (binding.editTextDayOfPayment.text.toString().isNotEmpty() &&
+                        selectedTime = selectedHour.toString()
+                        if (selectedHour.toString() != "0") {
+                            binding.editTextTime.setText("$selectedHour:$selectedMinute")
+                        } else binding.btnContinue.isEnabled(false)
+                        if (binding.editTextDayOfPayment.text.toString().isNotEmpty() &&
                             binding.editTextAmount.text.toString().isNotEmpty() &&
                             binding.editTextName.toString().isNotEmpty() &&
-                            binding.editTextTime.text.toString().isNotEmpty()){
-                        binding.btnContinue.isEnabled(true)
-                    }else binding.btnContinue.isEnabled(false)
+                            binding.editTextTime.text.toString().isNotEmpty()
+                        ) {
+                            binding.btnContinue.isEnabled(true)
+                        } else binding.btnContinue.isEnabled(false)
                     },
-                   cal.get(Calendar.HOUR_OF_DAY),
-                   cal.get(Calendar.HOUR_OF_DAY),
+                    cal.get(Calendar.HOUR_OF_DAY),
+                    cal.get(Calendar.HOUR_OF_DAY),
                     true
                 )
                 timePicker.setTitle(getString(R.string.choose_hour))
                 timePicker.show()
-                timePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.RED);
+                timePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.RED)
             }
-            R.id.edit_text_custom,R.id.icon_text_custom->{
+
+            R.id.edit_text_custom, R.id.icon_text_custom -> {
                 val cal = Calendar.getInstance()
 
-                val timePicker = TimePickerDialog(activity,R.style.my_dialog_theme,
+                val timePicker = TimePickerDialog(
+                    activity, R.style.my_dialog_theme,
                     { _, selectedHour, selectedMinute ->
 
-                        selectedTime=selectedHour.toString()
-                        if (selectedHour.toString()!="0"){
+                        selectedTime = selectedHour.toString()
+                        if (selectedHour.toString() != "0") {
                             binding.editTextCustom.setText("$selectedHour:$selectedMinute")
-                        } },
+                        }
+                    },
                     cal.get(Calendar.HOUR_OF_DAY),
                     cal.get(Calendar.HOUR_OF_DAY),
                     true
                 )
                 timePicker.setTitle(getString(R.string.choose_hour))
                 timePicker.show()
-                timePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.RED);
+                timePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.RED)
             }
 
-                    R.id.edit_text_time_day,R.id.icon_text_time_day->{
+            R.id.edit_text_time_day, R.id.icon_text_time_day -> {
                 val cal = Calendar.getInstance()
-                val timePicker = TimePickerDialog(activity,R.style.my_dialog_theme,
+                val timePicker = TimePickerDialog(
+                    activity, R.style.my_dialog_theme,
                     { _, selectedHour, selectedMinute ->
                         selectedTime = selectedHour.toString()
-                        if (selectedHour.toString()!="0"){
-                        binding.editTextTimeDay.setText("$selectedHour:$selectedMinute")
-                        }else binding.btnContinue.isEnabled(false)
+                        if (selectedHour.toString() != "0") {
+                            binding.editTextTimeDay.setText("$selectedHour:$selectedMinute")
+                        } else binding.btnContinue.isEnabled(false)
 
                         if (binding.editTextAmount.text.toString().isNotEmpty() &&
-                                binding.editTextName.text.toString().isNotEmpty() &&
-                                binding.editTextTimeDay.text.toString().isNotEmpty()){
+                            binding.editTextName.text.toString().isNotEmpty() &&
+                            binding.editTextTimeDay.text.toString().isNotEmpty()
+                        ) {
                             binding.btnContinue.isEnabled(true)
-                        }else binding.btnContinue.isEnabled(false)
+                        } else binding.btnContinue.isEnabled(false)
 
                     },
                     cal.get(Calendar.HOUR_OF_DAY),
@@ -586,17 +604,18 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
                 )
                 timePicker.setTitle(getString(R.string.choose_hour))
                 timePicker.show()
-                timePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.RED);
+                timePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.RED)
 
             }
-            R.id.custom_date,R.id.icon_custom_date->{
+
+            R.id.custom_date, R.id.icon_custom_date -> {
                 pickDateTime()
             }
         }
     }
 
     private fun pickDateTime() {
-       val currentDateTime = Calendar.getInstance()
+        val currentDateTime = Calendar.getInstance()
         val startYear = currentDateTime.get(Calendar.YEAR)
         val startMonth = currentDateTime.get(Calendar.MONTH)
         val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
@@ -607,16 +626,17 @@ class CreateAutoPaymentFragment:BaseFragment<FragmentCreateAutoPaymentBinding,Au
             if (!customDates.contains(df.format(pickedDateTime.time))) {
                 customDates.add(df.format(pickedDateTime.time))
                 customDatesAdapterAdapter.setList(customDates)
-               binding.btnContinue.isEnabled(customDates.isNotEmpty())
+                binding.btnContinue.isEnabled(customDates.isNotEmpty())
             }
         }, startYear, startMonth, startDay).show()
     }
+
     override fun invoke(count: Int, name: String) {
-        when(name){
-            "day"->{
-                if (count==31 || count==30){
+        when (name) {
+            "day" -> {
+                if (count == 31 || count == 30) {
                     binding.infoView.visibility = View.VISIBLE
-                }else binding.infoView.visibility = View.GONE
+                } else binding.infoView.visibility = View.GONE
                 binding.editTextDayOfPayment.setText(count.toString())
                 loanMonthDialog.dismiss()
             }

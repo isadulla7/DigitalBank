@@ -27,10 +27,6 @@ class ClientLoanViewModel @Inject constructor(
             emit(creditRepository.getCreditGraphSecond(token, creditGraphRequest))
         }
 
-    fun getClientProducts(token: String) = liveData(Dispatchers.IO) {
-        emit(creditRepository.getClientCreditList(token))
-    }
-
     fun getAccountHistories(token: String, accountHistoriesRequest: AccountHistoriesRequest) =
         liveData(Dispatchers.IO) {
             emit(monitoringRepository.getAccountHistories(token, accountHistoriesRequest))

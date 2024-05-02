@@ -3,12 +3,11 @@ package uz.fido.universaldigital.ui.fragments.services.loan.create_loan
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import androidx.core.os.bundleOf
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
-import uz.fido.network.domain.model.loans.loan_groups.CreditGroup
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.loans.CreateCreditRequestNew
+import uz.fido.network.domain.model.loans.loan_groups.CreditGroup
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentCreateLoanConfirmBinding
@@ -21,8 +20,8 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class CreateLoanConfirmFragment:BaseFragment<FragmentCreateLoanConfirmBinding,LoanViewModel>
-    (FragmentCreateLoanConfirmBinding::inflate,LoanViewModel::class.java){
+class CreateLoanConfirmFragment : BaseFragment<FragmentCreateLoanConfirmBinding, LoanViewModel>
+    (FragmentCreateLoanConfirmBinding::inflate, LoanViewModel::class.java) {
     private var creditGroup: CreditGroup? = null
     private var cards: CardResponse? = null
 
@@ -47,16 +46,19 @@ class CreateLoanConfirmFragment:BaseFragment<FragmentCreateLoanConfirmBinding,Lo
     private fun createCreditRequest() {
         binding.btnContinue.setProgress(true)
         val formattedAmount = Format.formatAmountToTiyn(creditGroup?.amount?.replace(" ", ""))
-        viewModel.createCreditRequest(getClientToken(), CreateCreditRequestNew(
-            amount = formattedAmount, to_object_value = cards!!.object_value, productId = creditGroup?.productId.toString()
-        )).observe(viewLifecycleOwner){
+        viewModel.createCreditRequest(
+            getClientToken(), CreateCreditRequestNew(
+                amount = formattedAmount, to_object_value = cards!!.object_value, productId = creditGroup?.productId.toString()
+            )
+        ).observe(viewLifecycleOwner) {
             binding.btnContinue.setProgress(false)
-            when(it.status){
-                Status.SUCCESS->{
-                   goto(R.id.creditSuccessFragment)
+            when (it.status) {
+                Status.SUCCESS -> {
+                    goto(R.id.creditSuccessFragment)
                 }
-                Status.ERROR->{
-                   // goto(R.id.creditSuccessFragment)
+
+                Status.ERROR -> {
+                    // goto(R.id.creditSuccessFragment)
                     showSnackbar(it.message.toString())
                 }
             }
@@ -82,7 +84,7 @@ class CreateLoanConfirmFragment:BaseFragment<FragmentCreateLoanConfirmBinding,Lo
         val viewDepositCreateBinding =
             ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.linMain.addView(viewDepositCreateBinding.root)
     }
 }

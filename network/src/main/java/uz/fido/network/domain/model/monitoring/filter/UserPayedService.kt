@@ -1,7 +1,6 @@
 package uz.fido.network.domain.model.monitoring.filter
 
 
-import com.google.gson.annotations.SerializedName
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
 import java.io.Serializable
 

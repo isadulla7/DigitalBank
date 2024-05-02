@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.goal.outcome
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
@@ -25,7 +24,6 @@ import uz.fido.utils.utility.format.Format.Companion.sendFormat
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
-import java.text.Format
 
 @AndroidEntryPoint
 class ConfirmGoalOutComeFragment : BaseFragment<FragmentOutcomeCofirmBinding, GoalViewModel>(

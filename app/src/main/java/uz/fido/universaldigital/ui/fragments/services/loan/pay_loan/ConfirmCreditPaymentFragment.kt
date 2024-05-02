@@ -16,7 +16,6 @@ import uz.fido.universaldigital.databinding.FragmentCreditConfirmBinding
 import uz.fido.universaldigital.ui.fragments.payment.abc_success.SuccessPaymentFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCreditFragment
-import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCreditFragment_GeneratedInjector
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientLoanViewModel
 import uz.fido.universaldigital.ui.fragments.transfers.confirm_transfer.ConfirmSmsForTransfer
 import uz.fido.universaldigital.ui.utils.extensions.serializable
@@ -168,7 +167,7 @@ class ConfirmCreditPaymentFragment :
         }
     }
 
-    fun getLoanType(context: Context, loanId: String): String {
+    private fun getLoanType(context: Context, loanId: String): String {
         return when (loanId) {
             "24" -> context.getString(R.string.loan_type_1)
             "30" -> context.getString(R.string.loan_type_2)

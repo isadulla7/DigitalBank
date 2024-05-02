@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.products
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -33,7 +32,6 @@ import uz.fido.universaldigital.ui.utils.extensions.doTransferOperationByType
 import uz.fido.universaldigital.ui.utils.extensions.getDrawableFromRes
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.extensions.setCardState
-import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.universaldigital.ui.utils.home_utils.getCardsWithBalanceVisibility
 import uz.fido.universaldigital.ui.utils.home_utils.initBalanceWidget
 import uz.fido.universaldigital.ui.utils.home_utils.initRefreshLayout
@@ -96,10 +94,10 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
             getClientToken(), GetNotificationsRequest(
                 page_number = "0", page_item_size = "20"
             )
-        ).observe(viewLifecycleOwner) {
-            when (it.status) {
+        ).observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
                 Status.SUCCESS -> {
-                    val notificationList = it.data?.notifications?.filter { it.is_read == "N" } ?: arrayListOf()
+                    val notificationList = resource.data?.notifications?.filter { it.is_read == "N" } ?: arrayListOf()
                     if (notificationList.isNotEmpty()) {
                         binding.notificationItem.visibility = View.VISIBLE
                         binding.consNotification.visibility = View.VISIBLE

@@ -23,7 +23,7 @@ class LiveEvent<T> : MediatorLiveData<T>() {
         super.setValue(t)
     }
 
-    public fun call() {
+    fun call() {
         postValue(null)
     }
 

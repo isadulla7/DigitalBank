@@ -23,23 +23,6 @@ class ConfirmPaymentViewModel @Inject constructor(
 
     var templates: MutableLiveData<List<Template>> = MutableLiveData()
 
-    fun updateTemplates(transfers: List<Template>) {
-        this.templates.postValue(transfers)
-    }
-
-    fun getTemplateList(token: String, getTemplateListRequest: GetTemplateListRequest) = liveData(
-        Dispatchers.IO
-    ) {
-        emit(templateRepository.getTemplateList(token, getTemplateListRequest))
-    }
-
-    fun getOperationParams(token: String, getOperationParamRequest: GetOperationInfoRequest) =
-        liveData(
-            Dispatchers.IO
-        ) {
-            emit(paymentRepository.getOperationParams(token, getOperationParamRequest))
-        }
-
     fun createPaymentRequest(
         token: String,
         createPaymentRequest: CreatePaymentRequest,

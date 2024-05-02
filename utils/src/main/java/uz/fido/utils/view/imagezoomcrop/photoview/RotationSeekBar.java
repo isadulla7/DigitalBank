@@ -1,25 +1,12 @@
 package uz.fido.utils.view.imagezoomcrop.photoview;
 
-import android.annotation.TargetApi;
 import android.content.Context;
-import android.os.Build;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
 import androidx.annotation.NonNull;
 
-/**
- * A SeekBar whose purpose is to represent a rotation 360° spectrum. Its center is 0° and its
- * extremes represent 180° rotations, and the "progress" can be directly set in degrees.
- * <p/>
- * Usage:
- * - Do NOT call {@link #setMax(int)}
- * - Use {@link #setRotationProgress(float)} instead of {@link #setProgress(int)}
- * - Use {@link OnRotationSeekBarChangeListener} instead of {@link OnSeekBarChangeListener}
- *
- * @author marcosalis
- */
-public class RotationSeekBar extends SeekBar {
+public class RotationSeekBar extends androidx.appcompat.widget.AppCompatSeekBar {
 
     // degree values are multiplied by 10 to improve smoothness
     private static final int DEFAULT_MAX = 3600;
@@ -42,12 +29,6 @@ public class RotationSeekBar extends SeekBar {
         init();
     }
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public RotationSeekBar(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-        init();
-    }
-
     private void init() {
         setMax(DEFAULT_MAX);
         setProgress(DEFAULT_PROGRESS);
@@ -62,21 +43,6 @@ public class RotationSeekBar extends SeekBar {
         super.setOnSeekBarChangeListener(l);
     }
 
-    public void setRotationProgress(float rotation) {
-        if (rotation < -180f || rotation > 180f) {
-            throw new IllegalArgumentException("Invalid rotation value");
-        }
-        if (rotation == 0f) {
-            reset();
-        } else {
-            setProgress(fromDegreesToProgress(rotation));
-        }
-    }
-
-    public float getRotationProgress() {
-        return fromProgressToDegrees(getProgress());
-    }
-
     public void reset() {
         init();
         mRotationListener.resetPreviousProgress();
@@ -84,10 +50,6 @@ public class RotationSeekBar extends SeekBar {
 
     private static float fromProgressToDegrees(int progress) {
         return (progress - DEFAULT_PROGRESS) / 10f;
-    }
-
-    private static int fromDegreesToProgress(float degrees) {
-        return (int) ((degrees + 180f) * 10f);
     }
 
     public static abstract class OnRotationSeekBarChangeListener implements OnSeekBarChangeListener {

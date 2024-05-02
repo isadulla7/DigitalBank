@@ -72,14 +72,14 @@ class VisaMonitoringFragment :
     }
 
     private fun getFilterVisaList() {
-        menuMonitoringViewModel.visaMonitoringFilter.observe(viewLifecycleOwner) {
+        menuMonitoringViewModel.visaMonitoringFilter.observe(viewLifecycleOwner) { it ->
             val skeletonScreen = showSkeleton(
                 binding.shimmerView,
                 MibDetailsAdapter(requireContext(), this),
                 R.layout.shimmer_item_monitoring,
                 1
             )
-            var card = arrayListOf<String>()
+            val card = arrayListOf<String>()
             it.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_value) }
             currencyList = card
             totalList = arrayListOf()
@@ -121,13 +121,13 @@ class VisaMonitoringFragment :
     }
 
     private fun getVisaList() {
-        if (currencyList.isNotEmpty()){
-        val skeletonScreen = showSkeleton(
-            binding.shimmerView,
-            MibDetailsAdapter(requireContext(), this),
-            R.layout.shimmer_item_monitoring,
-            1
-        )
+        if (currencyList.isNotEmpty()) {
+            val skeletonScreen = showSkeleton(
+                binding.shimmerView,
+                MibDetailsAdapter(requireContext(), this),
+                R.layout.shimmer_item_monitoring,
+                1
+            )
 
             viewModel.getCurrencyCardMonitoring(
                 getClientToken(),
@@ -152,15 +152,16 @@ class VisaMonitoringFragment :
                     }
                 }
 
-            }} else {
+            }
+        } else {
             Handler(Looper.getMainLooper()).postDelayed({
-              //  skeletonScreen.hide()
+                //  skeletonScreen.hide()
                 if (isVisible) {
-               //     skeletonScreen.hide()
-                    binding.shimmerView.visibility=View.GONE
-                    binding.rec.visibility=View.GONE
-                    binding.layoutEmpty.visibility=View.VISIBLE
-                    binding.layoutEmpty.title.text=getString(R.string.card_list_no)
+                    //     skeletonScreen.hide()
+                    binding.shimmerView.visibility = View.GONE
+                    binding.rec.visibility = View.GONE
+                    binding.layoutEmpty.visibility = View.VISIBLE
+                    binding.layoutEmpty.title.text = getString(R.string.card_list_no)
                 }
             }, 500)
         }

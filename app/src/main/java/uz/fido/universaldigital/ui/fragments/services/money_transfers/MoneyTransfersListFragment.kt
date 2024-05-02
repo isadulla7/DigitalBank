@@ -65,14 +65,10 @@ class MoneyTransfersListFragment :
                             val bundle = Bundle()
                             bundle.putSerializable("params_model", moneyTransferParamsResponse)
                             bundle.putString("privacy", "wu_terms.txt")
-//                            gotoWithSlide(R.id.transfersPrivacyFragment, bundle)
                             return
                         }
                     }
-//                    showSnackbar(getString(R.string.please_add_visa_card))
                 }
-
-//                42216 -> gotoWithSlide(R.id.zolotayaKoronaFragment)
                 else -> {
                     val bundle = Bundle()
                     bundle.putSerializable("params_model", moneyTransferParamsResponse)

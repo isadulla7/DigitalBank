@@ -11,9 +11,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.DisplayMetrics
-import android.view.*
-import androidx.annotation.NonNull
-import androidx.annotation.RequiresApi
+import android.view.LayoutInflater
+import android.view.MotionEvent
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -21,6 +23,7 @@ import uz.fido.network.domain.model.money_transfer.receive.Country
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ChooseCountryDialogBinding
 import uz.fido.universaldigital.ui.fragments.services.money_transfers.adapters.ChooseCountryAdapter
+import java.util.Locale
 
 class ChooseCountryDialog(
     var country: List<Country>,
@@ -94,14 +97,12 @@ class ChooseCountryDialog(
         })
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    private fun setWhiteNavigationBar(@NonNull dialog: Dialog) {
+    private fun setWhiteNavigationBar(dialog: Dialog) {
         val window: Window? = dialog.window
         if (window != null) {
             val metrics = DisplayMetrics()
             window.windowManager.defaultDisplay.getMetrics(metrics)
             val dimDrawable = GradientDrawable()
-            // ...customize your dim effect here
             val navigationBarDrawable = GradientDrawable()
             navigationBarDrawable.shape = GradientDrawable.RECTANGLE
             navigationBarDrawable.setColor(Color.WHITE)
@@ -129,18 +130,16 @@ class ChooseCountryDialog(
         } else {
             val list = country
             for (i in list.indices) {
-                if (list[i].name.toLowerCase().contains(str.toLowerCase())) {
+                if (list[i].name.lowercase(Locale.getDefault()).contains(str.lowercase(Locale.getDefault()))) {
                     filteredList.add(list[i])
                 }
             }
             binding.countryList.apply {
                 setHasFixedSize(true)
-                layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                adapter =
-                    ChooseCountryAdapter(requireContext(), filteredList) {
-                        selectedCountry.invoke(it)
-                    }
+                layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                adapter = ChooseCountryAdapter(requireContext(), filteredList) {
+                    selectedCountry.invoke(it)
+                }
             }
         }
     }

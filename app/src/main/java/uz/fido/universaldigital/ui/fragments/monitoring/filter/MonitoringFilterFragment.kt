@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.monitoring.filter
 
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
@@ -12,19 +11,17 @@ import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import uz.fido.network.domain.model.monitoring.filter.UserPayedService
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CheckCardRequestP2p
 import uz.fido.network.domain.model.cards.CheckCardResponse
 import uz.fido.network.domain.model.monitoring.filter.FilterCard
 import uz.fido.network.domain.model.monitoring.filter.FilterSaveVh
 import uz.fido.network.domain.model.monitoring.filter.MonitoringFilter
-import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
+import uz.fido.network.domain.model.monitoring.filter.UserPayedService
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMonitoringFilterBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.FilterCardMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.FilterLocalCardMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringFilterAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.ServiceAllMonitoringAdapter
@@ -60,7 +57,6 @@ class MonitoringFilterFragment :
     }
     private val monitoringFilterAdapter by lazy {
         MonitoringFilterAdapter(
-            requireContext(),
             arrayListOf(),
             this
         )
@@ -70,7 +66,6 @@ class MonitoringFilterFragment :
     private lateinit var cardDialog: MonitoringCardDialog
     private lateinit var monitoringAmountDialog: MonitoringAmountDialog
     private lateinit var monitoringChooseDialog: MonitoringChooseDialog
-    private lateinit var monitoringFilterDialog: MonitoringFilterDialog
     private lateinit var monitoringServiceFilterDialog: MonitoringServiceFilterDialog
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var allOperationFilter = arrayListOf<MonitoringFilter>()
@@ -85,7 +80,6 @@ class MonitoringFilterFragment :
     private var dateCurrent = false
     private var chooseCurrent = false
     private var amountCurrent = false
-    private var position = 0
     private var cardResponseError = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -178,7 +172,7 @@ class MonitoringFilterFragment :
             )
             dateCurrent = true
             binding.time.background =
-                resources.getDrawable(R.drawable.monitoring_filter_item_color_click)
+                ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
             binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
             buttonClickVisibility()
         }
@@ -193,7 +187,7 @@ class MonitoringFilterFragment :
             )
             amountCurrent = true
             binding.amount.background =
-                resources.getDrawable(R.drawable.monitoring_filter_item_color_click)
+                ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
             binding.amount.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -204,10 +198,10 @@ class MonitoringFilterFragment :
         }
         if (filterSaveVh!!.plusMinus != "") {
             choose = filterSaveVh!!.plusMinus
-            addFilterList("choose", "${filterSaveVh!!.plusMinus}", false)
+            addFilterList("choose", filterSaveVh!!.plusMinus, false)
             chooseCurrent = true
             binding.minPlus.background =
-                resources.getDrawable(R.drawable.monitoring_filter_item_color_click)
+                ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
             binding.minPlus.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -221,7 +215,7 @@ class MonitoringFilterFragment :
 //        if (list.isNotEmpty()){
 //            addFilterList("card",getString(R.string.card),false)
 //            binding.newCard.background =
-//                resources.getDrawable(R.drawable.monitoring_filter_item_color_click)
+//                ContextCompat.getDrawable(requireContext(),R.drawable.monitoring_filter_item_color_click)
 //            binding.newCard.setTextColor(
 //                ContextCompat.getColor(
 //                    requireContext(),
@@ -440,9 +434,9 @@ class MonitoringFilterFragment :
             }
 
             R.id.new_card -> {
-                cardDialog = MonitoringCardDialog(cardList) {
+                cardDialog = MonitoringCardDialog(cardList) { filterCards ->
                     cardDialog.dismiss()
-                    cardList = it
+                    cardList = filterCards
                     checkCard()
                     val firstOperation = allOperationFilter.filter { it.type == "card" }
                     if (firstOperation.isEmpty()) {
@@ -463,7 +457,7 @@ class MonitoringFilterFragment :
         val checkCard = cardList.filter { it.is_selected_monitoring }
         if (checkCard.isNotEmpty()) {
             binding.newCard.background =
-                resources.getDrawable(R.drawable.monitoring_filter_item_color_click)
+                ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
             binding.newCard.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -472,7 +466,7 @@ class MonitoringFilterFragment :
             )
         } else {
             binding.newCard.background =
-                resources.getDrawable(R.drawable.monitoring_filter_item_color)
+                ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
             binding.newCard.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -491,7 +485,7 @@ class MonitoringFilterFragment :
 
     private fun filterChooseSave() {
         saveViewModel.localFilter = true
-        var isServiceCurrent = false
+        val isServiceCurrent = false
         val carNumber = binding.etCardNumber.text.toString().replace(" ", "").replace("+", "")
         val filter = FilterSaveVh(
             startDate,
@@ -527,7 +521,7 @@ class MonitoringFilterFragment :
                 addFilterList("choose", choose, false)
                 chooseCurrent = true
                 binding.minPlus.background =
-                    resources.getDrawable(R.drawable.monitoring_filter_item_color_click)
+                    ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
                 binding.minPlus.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -543,7 +537,7 @@ class MonitoringFilterFragment :
             this.choose = ""
             chooseCurrent = false
             binding.minPlus.background =
-                resources.getDrawable(R.drawable.monitoring_filter_item_color)
+                ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
             binding.minPlus.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -562,7 +556,7 @@ class MonitoringFilterFragment :
                 maxAmount = max_amount
                 amountCurrent = true
                 binding.amount.background =
-                    resources.getDrawable(R.drawable.monitoring_filter_item_color_click)
+                    ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
                 binding.amount.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -581,7 +575,7 @@ class MonitoringFilterFragment :
             maxAmount = ""
             amountCurrent = false
             binding.amount.background =
-                resources.getDrawable(R.drawable.monitoring_filter_item_color)
+                ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
             binding.amount.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -594,13 +588,13 @@ class MonitoringFilterFragment :
 
     private fun showStartEndDate() {
         if (!dateCurrent) {
-            monitoringDateDialog = MonitoringDateDialog() { start, end ->
+            monitoringDateDialog = MonitoringDateDialog { start, end ->
                 startDate = start
                 endDate = end
                 addFilterList("date", "$start - $end", false)
                 dateCurrent = true
                 binding.time.background =
-                    resources.getDrawable(R.drawable.monitoring_filter_item_color_click)
+                    ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
                 binding.time.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -616,7 +610,7 @@ class MonitoringFilterFragment :
             startDate = ""
             endDate = ""
             dateCurrent = false
-            binding.time.background = resources.getDrawable(R.drawable.monitoring_filter_item_color)
+            binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
             binding.time.setTextColor(
                 ContextCompat.getColor(
                     requireContext(),
@@ -660,7 +654,7 @@ class MonitoringFilterFragment :
                 minAmount = ""
                 maxAmount = ""
                 binding.amount.background =
-                    resources.getDrawable(R.drawable.monitoring_filter_item_color)
+                    ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.amount.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -675,7 +669,7 @@ class MonitoringFilterFragment :
                 endDate = ""
                 dateCurrent = false
                 binding.time.background =
-                    resources.getDrawable(R.drawable.monitoring_filter_item_color)
+                    ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.time.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -690,7 +684,7 @@ class MonitoringFilterFragment :
                 choose = ""
                 chooseCurrent = false
                 binding.minPlus.background =
-                    resources.getDrawable(R.drawable.monitoring_filter_item_color)
+                    ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.minPlus.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -701,7 +695,7 @@ class MonitoringFilterFragment :
 
             "card" -> {
                 binding.newCard.background =
-                    resources.getDrawable(R.drawable.monitoring_filter_item_color)
+                    ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.newCard.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -719,10 +713,9 @@ class MonitoringFilterFragment :
                 val item = serviceList.filter { it.service_id.toString() == type }
                 val allServiceItem = allOperationFilter.filter { it.type == type }
                 if (allServiceItem.size == 1) {
-                    serviceList.filter { it.service_id.toString() == type }.first().list =
+                    serviceList.first { it.service_id.toString() == type }.list =
                         arrayListOf()
-                    serviceList.filter { it.service_id.toString() == type }
-                        .first().service_current = false
+                    serviceList.first { it.service_id.toString() == type }.service_current = false
                     serviceAdapter.setList(serviceList)
                 } else {
                     val localMonitoring =
@@ -756,9 +749,8 @@ class MonitoringFilterFragment :
                 userPayedService.service_id.toString(),
                 userPayedService
             ) { item ->
-                val localMonitoringList =
-                    allOperationFilter.filter { it.type == userPayedService.service_id.toString() }
-                allOperationFilter.removeAll(localMonitoringList)
+                val localMonitoringList = allOperationFilter.filter { it.type == userPayedService.service_id.toString() }
+                allOperationFilter.removeAll(localMonitoringList.toSet())
                 item.forEach {
                     allOperationFilter.add(
                         MonitoringFilter(
@@ -863,11 +855,11 @@ class MonitoringFilterFragment :
         if ((amountCurrent || chooseCurrent || dateCurrent || isCard.isNotEmpty() || isService.isNotEmpty()) && cardResponseError) {
             binding.btnEnter.isEnabled = true
             binding.btnEnter.backgroundTintList =
-                getResources().getColorStateList(R.color.brandRedColor)
+                ContextCompat.getColorStateList(requireContext(), R.color.brandRedColor)
         } else {
             binding.btnEnter.isEnabled = false
             binding.btnEnter.backgroundTintList =
-                getResources().getColorStateList(R.color.buttonEnabled)
+                ContextCompat.getColorStateList(requireContext(), R.color.buttonEnabled)
         }
     }
 

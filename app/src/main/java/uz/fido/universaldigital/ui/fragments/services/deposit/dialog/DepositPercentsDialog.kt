@@ -29,7 +29,7 @@ import java.util.Calendar
 import java.util.Locale
 
 @AndroidEntryPoint
-class DepositPercentsDialog(): BaseFragment<DialogDepositPercentBinding,ClientDepositViewModel>(
+class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding,ClientDepositViewModel>(
     DialogDepositPercentBinding::inflate,ClientDepositViewModel::class.java
 ){
 

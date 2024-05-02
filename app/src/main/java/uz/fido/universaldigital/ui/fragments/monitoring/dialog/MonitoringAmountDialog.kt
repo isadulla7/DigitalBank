@@ -1,8 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.dialog
 
-import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
-import android.database.Observable
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,13 +10,8 @@ import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.jakewharton.rxbinding4.widget.textChanges
 import io.reactivex.rxjava3.functions.BiFunction
-import kotlinx.android.synthetic.main.fragment_deposit_constructor.year_layout
-import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogMonitoringAmountBinding
-import uz.fido.universaldigital.databinding.DialogMonitoringDateBinding
 import java.math.BigDecimal
-import java.text.SimpleDateFormat
-import java.util.Calendar
 
 
 class MonitoringAmountDialog(private val onClick:(String,String)->Unit): BottomSheetDialogFragment(){
@@ -29,7 +21,7 @@ class MonitoringAmountDialog(private val onClick:(String,String)->Unit): BottomS
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, uz.fido.utils.R.style.DialogStyle);
+        setStyle(DialogFragment.STYLE_NORMAL, uz.fido.utils.R.style.DialogStyle)
 
     }
 
@@ -37,7 +29,7 @@ class MonitoringAmountDialog(private val onClick:(String,String)->Unit): BottomS
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding= DialogMonitoringAmountBinding.inflate(inflater,container,false)
         return binding.root
     }

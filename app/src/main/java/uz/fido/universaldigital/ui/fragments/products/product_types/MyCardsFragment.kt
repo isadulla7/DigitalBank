@@ -305,25 +305,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         }
     }
 
-    private fun deleteWallet() {
-        showProgress()
-        menuProductsViewModel.deleteCardRequest(
-            getClientToken(), DeleteCardRequest(selectedCard.object_id)
-        ).observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    clientAllCardList.remove(selectedCard)
-                    getCardList()
-                }
-
-                Status.ERROR -> {
-                    hideProgress()
-                    showSnackbar(it.message.toString())
-                }
-            }
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         cardsAdapter = null

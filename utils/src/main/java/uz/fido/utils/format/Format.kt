@@ -30,7 +30,7 @@ object Format {
     }
 
     fun firstLetterUpperCase(text: String): String {
-        return if (text.isNotEmpty()) text[0].toUpperCase().toString() + text.substring(
+        return if (text.isNotEmpty()) text[0].uppercaseChar().toString() + text.substring(
             0,
             text.length
         ) else ""
@@ -155,7 +155,7 @@ object Format {
             return field
         }
 
-    var formatSymbols: DecimalFormatSymbols? = null
+    private var formatSymbols: DecimalFormatSymbols? = null
         get() {
             field = DecimalFormatSymbols(locale)
             field?.decimalSeparator = '.'
@@ -163,9 +163,9 @@ object Format {
             return field
         }
 
-    var pattern = "#,###.##"
+    private var pattern = "#,###.##"
 
-    var decimalFormat: DecimalFormat? = null
+    private var decimalFormat: DecimalFormat? = null
         get() {
             field = DecimalFormat(pattern, formatSymbols)
             return field
@@ -213,40 +213,6 @@ object Format {
         val newFormat: Date = df.parse(date)
         return secondFormat.format(newFormat).toString()
 
-    }
-
-    fun listToStringMonitoringFilter(list: ArrayList<Int>): String {
-        var listString = ""
-        if (list.isNotEmpty() && list.size != 1) {
-            list.forEachIndexed { index, value ->
-                listString += "${value}${if (index == list.size - 1) "" else ","}"
-            }
-            return listString
-        } else if (list.size == 1) {
-            listString = list[0].toString()
-            return listString
-        } else {
-            return listString
-        }
-    }
-
-    fun listToStringParentObj(list: ArrayList<String>): String {
-        var listString = ""
-        if (list.isNotEmpty() && list.size != 1) {
-            list.forEachIndexed { index, value ->
-                Log.d("TAG", "listToStringParentObj:${value} ")
-
-                listString += "'${value}'${if (index == list.size - 1) "" else ","}"
-                Log.d("TAG", "listToStringParentObj:${listString} ")
-
-            }
-            return listString
-        } else if (list.size == 1) {
-            listString ="'${list[0]}'"
-            return listString
-        } else {
-            return listString
-        }
     }
 
 
@@ -353,7 +319,7 @@ object Format {
     }
 
     fun naiveRound(num: Float, decimalPlaces: Int): Double {
-        val p = 10.0.pow(decimalPlaces.toDouble());
+        val p = 10.0.pow(decimalPlaces.toDouble())
         return (num * p).roundToInt() / p
     }
 }

@@ -77,7 +77,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
     var paymentService: PaymentService? = null
     var operation: Int? = null
     var mobileNumber: String = ""
-    var paymentAmount = 0.0
+    private var paymentAmount = 0.0
     var minAmount = 0.0
     var maxAmount = 0.0
 

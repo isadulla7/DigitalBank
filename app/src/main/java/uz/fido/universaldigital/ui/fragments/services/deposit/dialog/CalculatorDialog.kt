@@ -40,17 +40,17 @@ class CalculatorDialog(val onClick: (String) -> Unit, val minAmount: String) :
 
     private fun textWatchers() {
         binding.etAmount.addTextChangedListener { text ->
-           try {
-               if (text!!.isEmpty()) {
-                   binding.btnContinue.isEnabled(false)
-               } else if (text.toString().replace(" ", "")
-                       .toDouble() >= Format.formatAmountFromTiynToInteger(minAmount).toDouble()
-               ) {
-                   binding.btnContinue.isEnabled(true)
-               } else binding.btnContinue.isEnabled(false)
-           }catch (e:Exception){
-               binding.btnContinue.isEnabled(false)
-           }
+            try {
+                if (text!!.isEmpty()) {
+                    binding.btnContinue.isEnabled(false)
+                } else if (text.toString().replace(" ", "")
+                        .toDouble() >= Format.formatAmountFromTiynToInteger(minAmount).toDouble()
+                ) {
+                    binding.btnContinue.isEnabled(true)
+                } else binding.btnContinue.isEnabled(false)
+            } catch (e: Exception) {
+                binding.btnContinue.isEnabled(false)
+            }
         }
     }
 
@@ -60,7 +60,7 @@ class CalculatorDialog(val onClick: (String) -> Unit, val minAmount: String) :
     }
 
 
-    fun closeKeyboard() {
+    private fun closeKeyboard() {
         val inputMethodManager: InputMethodManager =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)

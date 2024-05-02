@@ -110,16 +110,14 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
 
     private fun setTemplateOrder() {
         val ids = ArrayList<Int>()
-        templateList.forEach {
-            ids.add(it.template_id.toInt() ?: 0)
-        }
+        templateList.forEach { ids.add(it.template_id.toInt()) }
         viewModel.setTemplateOrder(
             getClientToken(), SetTemplateOrderRequest(
                 template_group_id = PaymentFragment.TemplateGroups.DEFAULT_TEMPLATES.groupId.toString(),
                 template_ids = ids
             )
         ).observe(viewLifecycleOwner) { resource ->
-            resource?.let { it ->
+            resource?.let {
                 when (it.status) {
                     Status.SUCCESS -> {
                     }
@@ -165,7 +163,7 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
                 templateId
             )
         ).observe(viewLifecycleOwner) { resource ->
-            resource?.let { it ->
+            resource?.let {
                 when (it.status) {
                     Status.SUCCESS -> {
                         if (addTemplate != null && addTemplate) {

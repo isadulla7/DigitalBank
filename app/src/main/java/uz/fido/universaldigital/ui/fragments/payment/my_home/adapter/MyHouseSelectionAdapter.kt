@@ -1,15 +1,11 @@
 package uz.fido.universaldigital.ui.fragments.payment.my_home.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemMyHouseSelectionBinding
 import uz.fido.utils.const.APIServiceConst
 

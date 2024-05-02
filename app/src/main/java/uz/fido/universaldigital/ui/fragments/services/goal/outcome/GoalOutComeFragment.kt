@@ -69,7 +69,7 @@ class GoalOutComeFragment : BaseFragment<FragmentGoalOutcomeBinding, GoalViewMod
         senderCardBalance = goalModel.amount.toDouble()
 
         binding.amount.text =
-            Format.formatAmount(Format.formatAmountFromTiynToInteger(goalModel!!.current_amount)) + " UZS"
+            Format.formatAmount(Format.formatAmountFromTiynToInteger(goalModel.current_amount)) + " UZS"
     }
 
     private fun initAmountTextChangeListener() {

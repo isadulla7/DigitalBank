@@ -86,7 +86,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
             operation = it.getString(CONFIRM_PAYMENT_OPERATION)
             paymentOperation = it.getInt(PAYMENT_OPERATION)
             paymentParamsArrayList =
-                (it.serializable<ArrayList<PaymentParams>>("list") as ArrayList<PaymentParams>?)!!
+                it.serializable<ArrayList<PaymentParams>>("list")!!
             paymentService = it.serializable<PaymentService>("paymentService") as PaymentService
             if (it.serializable<ArrayList<TemplateKeyValue>>("templateKeyValues") != null) templateKeyValues =
                 it.serializable<ArrayList<TemplateKeyValue>>("templateKeyValues") as ArrayList<TemplateKeyValue>

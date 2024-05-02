@@ -9,7 +9,7 @@ import androidx.core.widget.doAfterTextChanged
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.BaseTextInputLayoutBinding
 
-open class BaseTextInputLayout constructor(
+open class BaseTextInputLayout(
     context: Context, attrs: AttributeSet
 ) : LinearLayoutCompat(context, attrs) {
 
@@ -45,7 +45,7 @@ open class BaseTextInputLayout constructor(
         attributes.recycle()
     }
 
-    fun setHint(hintText: String?) {
+    private fun setHint(hintText: String?) {
         hintText?.let {
             binding.textInputLayout.hint = it
         }
@@ -61,16 +61,12 @@ open class BaseTextInputLayout constructor(
         binding.editText.setTextColor(color)
     }
 
-    fun setMaxLines(maxLines: Int) {
+    private fun setMaxLines(maxLines: Int) {
         binding.editText.maxLines = maxLines
     }
 
     fun setMaxLength(maxLength: Int) {
         binding.editText.filters = arrayOf(InputFilter.LengthFilter(maxLength))
-    }
-
-    fun setInputType() {
-
     }
 
     fun doAfterTextChanged(listener: (String) -> Unit) {

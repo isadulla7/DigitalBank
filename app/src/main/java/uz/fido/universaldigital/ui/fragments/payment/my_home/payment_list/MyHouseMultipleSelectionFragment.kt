@@ -6,7 +6,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.airbnb.lottie.utils.Logger
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -26,13 +25,11 @@ import uz.fido.universaldigital.ui.fragments.payment.my_home.adapter.MyHouseSele
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CurrencyConst
-import uz.fido.utils.format.FormatUtilsKt
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import java.math.BigDecimal
 import java.sql.SQLException
-import java.text.Format
 
 @AndroidEntryPoint
 class MyHouseMultipleSelectionFragment :
@@ -152,7 +149,7 @@ class MyHouseMultipleSelectionFragment :
             sampleParam.name = paymentParams.name
             sampleParam.hint = paymentParams.hint
             sampleParam.ref_code = paymentParams.ref_code
-            for (templateKeyValue in templateResponse?.template_details!!) {
+            for (templateKeyValue in templateResponse.template_details!!) {
                 if (paymentParams.code == templateKeyValue.code) {
                     sampleParam.def_value = templateKeyValue.value.toString()
                     sampleParam.code = templateKeyValue.code!!
@@ -167,7 +164,7 @@ class MyHouseMultipleSelectionFragment :
         val inputParams: ArrayList<PaymentParams>
         var paymentParamsArrayList = ArrayList<PaymentParams>()
         try {
-            inputParams = dbHelper.getPaymentDetails(paymentService.payment_detail_code!!)!!
+            inputParams = dbHelper.getPaymentDetails(paymentService.payment_detail_code!!)
             val hashSet = HashSet<PaymentParams>()
             hashSet.addAll(inputParams)
             inputParams.clear()

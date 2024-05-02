@@ -22,8 +22,8 @@ class AppSignatureHelper(context: Context) : ContextWrapper(context) {
                 val packageName = packageName
                 val packageManager = packageManager
                 val signatures = packageManager.getPackageInfo(
-                        packageName,
-                        PackageManager.GET_SIGNATURES
+                    packageName,
+                    PackageManager.GET_SIGNATURES
                 ).signatures
                 for (signature in signatures) {
                     val hash = hash(packageName, signature.toCharsString())
@@ -48,11 +48,11 @@ class AppSignatureHelper(context: Context) : ContextWrapper(context) {
         }
 
     companion object {
-        val TAG = AppSignatureHelper::class.java.simpleName
+        val TAG: String = AppSignatureHelper::class.java.simpleName
 
-        private val HASH_TYPE = "SHA-256"
-        val NUM_HASHED_BYTES = 9
-        val NUM_BASE64_CHAR = 11
+        private const val HASH_TYPE = "SHA-256"
+        private const val NUM_HASHED_BYTES = 9
+        private const val NUM_BASE64_CHAR = 11
 
         private fun hash(packageName: String, signature: String): String? {
             val appInfo = "$packageName $signature"

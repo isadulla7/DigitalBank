@@ -16,13 +16,6 @@ class PaymentsSecondStepViewModel @Inject constructor(
     private val paymentRepository: IPaymentRepository
 ) : AbstractViewModel(application) {
 
-    fun getOperationParams(token: String, getOperationParamRequest: GetOperationInfoRequest) =
-        liveData(
-            Dispatchers.IO
-        ) {
-            emit(paymentRepository.getOperationParams(token, getOperationParamRequest))
-        }
-
     fun preparePaymentRequest(token: String, preparePaymentRequest: PreparePaymentRequest) =
         liveData(
             Dispatchers.IO

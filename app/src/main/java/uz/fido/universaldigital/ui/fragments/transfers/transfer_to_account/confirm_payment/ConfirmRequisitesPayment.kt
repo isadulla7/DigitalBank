@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.conf
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +36,6 @@ import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import java.math.BigDecimal
-import java.util.HashMap
 
 @AndroidEntryPoint
 @SuppressLint("SetTextI18n")

@@ -91,7 +91,7 @@ class UzcardMonitoringFragment :
 
 
     private fun getFilterUzCardMonitoringList(page: Int, operationType: Int) {
-        saveViewModel.uzCardMonitoringFilter.observe(viewLifecycleOwner) {
+        saveViewModel.uzCardMonitoringFilter.observe(viewLifecycleOwner) { it ->
             val card = arrayListOf<String>()
             it.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_id.toString()) }
             val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())

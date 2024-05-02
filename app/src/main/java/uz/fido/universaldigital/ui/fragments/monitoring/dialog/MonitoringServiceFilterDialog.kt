@@ -26,7 +26,7 @@ import java.util.Locale
 
 @AndroidEntryPoint
 class MonitoringServiceFilterDialog(
-    private val serviceId: String, val userPayedService: UserPayedService,private val onClick: (ArrayList<LocalMonitoring>) -> Unit
+    private val serviceId: String, private val userPayedService: UserPayedService, private val onClick: (ArrayList<LocalMonitoring>) -> Unit
 ) : DialogFragment(), BaseInterface, (LocalMonitoring) -> Unit {
 
     private lateinit var binding: DialogMonitoringFilterBinding
@@ -44,26 +44,28 @@ class MonitoringServiceFilterDialog(
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DialogMonitoringFilterBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo);
+        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo)
 
     }
+
     private fun getSearchList() {
-        binding.search.addTextChangedListener {local->
-            if (local!!.length>1){
-                val arrayList= arrayListOf<LocalMonitoring>()
-                val list= localMonitoringList.filter { it.partner_obj.toLowerCase().startsWith(local.toString().toLowerCase()) }
-               arrayList.addAll(list)
+        binding.search.addTextChangedListener { local ->
+            if (local!!.length > 1) {
+                val arrayList = arrayListOf<LocalMonitoring>()
+                val list = localMonitoringList.filter { it.partner_obj.lowercase(Locale.getDefault()).startsWith(local.toString().lowercase(Locale.getDefault())) }
+                arrayList.addAll(list)
                 serviceAdapter.setList(arrayList)
-            }else serviceAdapter.setList(localMonitoringList)
+            } else serviceAdapter.setList(localMonitoringList)
         }
     }
+
     private fun init() {
         val calendarStart = Calendar.getInstance()
         val calendarEnd = Calendar.getInstance()
@@ -79,8 +81,8 @@ class MonitoringServiceFilterDialog(
         init()
         serviceRecyclerView()
         checkBox()
-        if (localMonitoringList.isEmpty()){
-        fetchLocalMonitoring(1)
+        if (localMonitoringList.isEmpty()) {
+            fetchLocalMonitoring(1)
         }
         onClickView()
         getSearchList()
@@ -88,14 +90,14 @@ class MonitoringServiceFilterDialog(
 
     private fun checkBox() {
         binding.checkBox.setOnClickListener {
-            if (binding.checkBox.isChecked){
+            if (binding.checkBox.isChecked) {
                 localMonitoringList.forEach {
-                    it.isChecked=true
+                    it.isChecked = true
                 }
                 serviceAdapter.setList(localMonitoringList)
-            }else{
+            } else {
                 localMonitoringList.forEach {
-                    it.isChecked=false
+                    it.isChecked = false
                 }
                 serviceAdapter.setList(localMonitoringList)
             }
@@ -125,26 +127,27 @@ class MonitoringServiceFilterDialog(
         val skeletonScreen =
             showSkeleton(binding.rec, serviceAdapter, R.layout.shimmer_item_monitoring, 1)
         localMonitoringViewModel.getLocalMonitoring(getClientToken(), model)
-            .observe(viewLifecycleOwner) {
+            .observe(viewLifecycleOwner) { resource ->
                 Handler().postDelayed({ skeletonScreen.hide() }, 500)
-                when (it.status) {
+                when (resource.status) {
                     Status.SUCCESS -> {
-                        val list=it.data?.local_transactions?: arrayListOf()
+                        val list = resource.data?.local_transactions ?: arrayListOf()
                         list.distinctBy { it.partner_obj }.forEach { localMonitoring ->
                             if (localMonitoring.tran_type == "debit") localMonitoringList.add(localMonitoring)
                         }
                         val keysOfB = userPayedService.list.map { it.request_id }
                         localMonitoringList.removeAll { it.request_id in keysOfB }
                         userPayedService.list.forEach {
-                            it.isChecked=true
+                            it.isChecked = true
                         }
-                        localMonitoringList.addAll(index = 0,userPayedService.list)
+                        localMonitoringList.addAll(index = 0, userPayedService.list)
 
                         if (localMonitoringList.size == 0) {
-                            Handler().postDelayed({ binding.layoutEmpty.visibility = View.VISIBLE }, 500) }
+                            Handler().postDelayed({ binding.layoutEmpty.visibility = View.VISIBLE }, 500)
+                        }
                         serviceAdapter.setList(localMonitoringList)
-                        if (localMonitoringList.isEmpty()){
-                            binding.checkBox.visibility=View.GONE
+                        if (localMonitoringList.isEmpty()) {
+                            binding.checkBox.visibility = View.GONE
                         }
 
                     }

@@ -21,9 +21,4 @@ class WalletViewModel @Inject constructor(
             emit(walletRepository.createWallet(token, createWalletRequest))
         }
 
-    fun deleteWallet(token: String, deleteWalletRequest: DeleteWalletRequest) =
-        liveData(Dispatchers.IO) {
-            emit(walletRepository.deleteWallet(token, deleteWalletRequest))
-        }
-
 }

@@ -5,14 +5,14 @@ import uz.fido.universaldigital.base.BaseDialogFragment
 import uz.fido.universaldigital.databinding.DialogNoIndetifiedBinding
 
 class IdentifyDialog(
-    var dialogTitle: String? = null,
-    var dialogDescription: String? = null,
-    var dialogPositiveButton: String? = null,
-    val identifyClickListener: () -> Unit
+    private var dialogTitle: String? = null,
+    private var dialogDescription: String? = null,
+    private var dialogPositiveButton: String? = null,
+    private val identifyClickListener: () -> Unit
 ) : BaseDialogFragment<DialogNoIndetifiedBinding>(DialogNoIndetifiedBinding::inflate) {
 
     companion object {
-        val TAG = "IdentifyDialog"
+        const val TAG = "IdentifyDialog"
     }
 
     override fun onInit(savedInstanceState: Bundle?) {

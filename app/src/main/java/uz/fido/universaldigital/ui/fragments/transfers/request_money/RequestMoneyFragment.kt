@@ -113,32 +113,4 @@ class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, Req
         binding.appBar.setOnBackButtonClickListener { pop() }
     }
 
-    private fun createRequestMoney() {
-        binding.btnContinue.setProgress(true)
-        viewModel.createRm(
-            getClientToken(), RmCreateRequest(
-                requested_sum = Format.formatAmountToTiyn(binding.etAmount.editableText.toString()),
-                name = binding.etAmount.editableText.toString(),
-                object_id = receiverCard?.object_id.toString(),
-                receiver_phone_number = ""
-            )
-        ).observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    binding.btnContinue.setProgress(false)
-                    goto(
-                        R.id.requestMoneySuccessFragment, bundleOf(
-                            "url" to it.data?.url.toString()
-                        )
-                    )
-                }
-
-                Status.ERROR -> {
-                    binding.btnContinue.setProgress(false)
-                    showSnackbar(it.message.toString())
-                }
-            }
-        }
-    }
-
 }

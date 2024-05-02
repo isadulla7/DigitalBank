@@ -9,10 +9,3 @@ data class GlLimitParamsResponse(
     val msg: String
 )
 
-data class GlLimitParam(
-    val id: Int,
-    val lable: String,
-    val condition: String,
-    val name: String,
-    val limit_type: String
-)

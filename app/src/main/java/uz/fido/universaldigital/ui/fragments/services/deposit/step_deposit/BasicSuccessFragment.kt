@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardInfoRequest
 import uz.fido.network.domain.model.cards.CardResponse
@@ -97,7 +96,7 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
                 }
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback);
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -316,7 +315,7 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
                             cardList[position].apply {
                                 balance = response[0].balance
                                 processing_server_status =
-                                    response[0].state.toString()
+                                    response[0].state
                                 stateName = response[0].state_name
                                 owerdraft_limit = response[0].overdraft_limit
                                 pin_counter = response[0].pin_counter

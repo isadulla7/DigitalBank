@@ -30,7 +30,7 @@ class TransferViewModel @Inject constructor(
     var popularTransfersLoader = LiveEvent<Boolean>()
     var historiesByPhoneNumber = LiveEvent<ArrayList<CardByPhone>>()
     var historiesByWalletNumber = LiveEvent<ArrayList<CardByPhone>>()
-    var setToPopularTransfer = LiveEvent<ArrayList<PopularTransfers>>()
+    private var setToPopularTransfer = LiveEvent<ArrayList<PopularTransfers>>()
 
     fun getPopularTransfers() {
         vmScope.launch {
@@ -81,14 +81,14 @@ class TransferViewModel @Inject constructor(
                     val result = useCase.getTransferInfo(
                         P2PInfoRequest(
                             service_id = getServiceIdInfo(
-                                receiverCardDto.card_number?:"",
+                                receiverCardDto.card_number ?: "",
                                 senderCard.object_value
                             ),
                             from_object_id = senderCard.object_id,
                             expire = senderCard.object_expiry,
-                            to_object_value = receiverCardDto.card_number?:"",
+                            to_object_value = receiverCardDto.card_number ?: "",
                             to_object_id = receiverCardDto.card_id,
-                            command = getInfoCommand(receiverCardDto.card_number?:"")
+                            command = getInfoCommand(receiverCardDto.card_number ?: "")
                         )
                     )
                     p2pInfo.postValue(result)
@@ -122,13 +122,6 @@ class TransferViewModel @Inject constructor(
                 }
             }
             historiesByWalletNumber.postValue(result)
-        }
-    }
-
-    fun setToPopularTransfer(objectValue: String) {
-        vmScope.launch {
-            val response = useCase.setToPopularTransfer(objectValue)
-            setToPopularTransfer.postValue(response)
         }
     }
 

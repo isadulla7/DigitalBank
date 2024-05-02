@@ -24,10 +24,6 @@ class PinCodeViewModel @Inject constructor(
         emit(userRepository.signInPin(getClientToken(), signInRequest))
     }
 
-    fun swapKeys(request: SwapKeysRequest) = liveData(Dispatchers.IO) {
-        emit(swapKeyRepository.swapKeys(request))
-    }
-
     fun swapKeysPin(request: SwapKeysRequest) = liveData(Dispatchers.IO) {
         emit(swapKeyRepository.swapKeysPin(request))
     }

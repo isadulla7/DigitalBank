@@ -33,19 +33,6 @@ object PinDotsAnimation {
             }.start()
     }
 
-    fun startPinDotsAnimation(view: LinearLayoutCompat, activity: FragmentActivity) {
-        timer = Timer()
-        timer?.scheduleAtFixedRate(0, (animationDuration - aheadTime).toLong()) {
-            activity.runOnUiThread {
-                currentViewIndex++
-                if (currentViewIndex >= 4) {
-                    currentViewIndex = 0
-                }
-                scaleAnimation(view)
-            }
-        }
-    }
-
     fun stopPinDotsAnimation() {
         if (timer != null) {
             timer?.cancel()

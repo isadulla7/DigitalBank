@@ -74,7 +74,7 @@ class SWIFTHistoryFragment : BaseFragment<FragmentSwiftHistoryBinding, SwiftTran
         val request = SwiftTransferListRequest(
             date_begin = dateBegin, date_end = currentDate
         )
-        viewModel.getTransferList(getClientToken(), request).observe(viewLifecycleOwner) {
+        viewModel.getTransferList(getClientToken(), request).observe(viewLifecycleOwner) { it ->
             hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {

@@ -480,7 +480,7 @@ class Format {
                 return field
             }
 
-        var formatSymbols: DecimalFormatSymbols? = null
+        private var formatSymbols: DecimalFormatSymbols? = null
             get() {
                 field = DecimalFormatSymbols(locale)
                 field?.decimalSeparator = '.'
@@ -488,9 +488,9 @@ class Format {
                 return field
             }
 
-        var pattern = "#,###.##"
+        private var pattern = "#,###.##"
 
-        var decimalFormat: DecimalFormat? = null
+        private var decimalFormat: DecimalFormat? = null
             get() {
                 field = DecimalFormat(pattern, formatSymbols)
                 return field
@@ -596,7 +596,7 @@ class Format {
     fun percentAmount(amount: String, percent: String?): String {
         var newAmount = "0.00"
         if (amount.isNotEmpty() && percent != null) {
-            val newPercent = (percent.toDouble() / 100);
+            val newPercent = (percent.toDouble() / 100)
             val summa = (amount.replace(" ", "").toDouble() * newPercent).toString()
                 .split(".0")[0].toDouble()
             val maxsum = amount.replace(" ", "").toDouble() + summa

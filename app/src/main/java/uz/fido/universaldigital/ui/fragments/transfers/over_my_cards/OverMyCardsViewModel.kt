@@ -20,8 +20,4 @@ class OverMyCardsViewModel @Inject constructor(
         emit(p2PRepository.p2pInfo(token, p2PInfoRequest))
     }
 
-    fun p2pRequest(token: String, p2PRequest: P2PRequest) = liveData(Dispatchers.IO) {
-        emit(p2PRepository.p2p(token, p2PRequest))
-    }
-
 }

@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.navigation.Navigation
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentCreditSuccessBinding
@@ -33,7 +32,7 @@ class CreditSuccessFragment : BaseSimpleFragment<FragmentCreditSuccessBinding>(
                 requireActivity().finish()
             }
         }
-        requireActivity().onBackPressedDispatcher.addCallback(this, callback);
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
     }
 
     private fun setOnClick() {

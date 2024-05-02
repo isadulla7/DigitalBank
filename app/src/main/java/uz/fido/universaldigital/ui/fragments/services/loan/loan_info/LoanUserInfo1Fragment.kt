@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.loan.loan_info
 
 import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
@@ -12,10 +11,10 @@ import uz.fido.network.domain.model.my_id.MyIdGetAccessTokenResponse
 import uz.fido.network.domain.model.my_id.Profile
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentLoanUserInfo1Binding
-import uz.fido.universaldigital.ui.activities.FaceIdActivity
 import uz.fido.universaldigital.ui.fragments.services.loan.LoanViewModel
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.pop
+
 @AndroidEntryPoint
 class LoanUserInfo1Fragment:BaseFragment<FragmentLoanUserInfo1Binding,LoanViewModel>(
     FragmentLoanUserInfo1Binding::inflate,LoanViewModel::class.java
@@ -42,14 +41,6 @@ class LoanUserInfo1Fragment:BaseFragment<FragmentLoanUserInfo1Binding,LoanViewMo
 
     private fun getArgumentsItem() {
         clientDetailedInfo=requireArguments().getSerializable(CLIENT_INFO) as ClientDetailedInfo
-    }
-
-    private fun myIdToPass() {
-        val intent = Intent(requireActivity(), FaceIdActivity::class.java)
-        intent.putExtra("mode", "strong")
-        intent.putExtra(FaceIdActivity.CLIENT_PASSPORT, (clientDetailedInfo.series ?: "") + clientDetailedInfo?.number)
-        intent.putExtra(FaceIdActivity.CLIENT_DATE_OF_BIRTH, clientDetailedInfo.birthDate ?: "")
-        faceIdActivityResult.launch(intent)
     }
 
     private val faceIdActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

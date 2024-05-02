@@ -3,7 +3,6 @@ package uz.fido.universaldigital.ui.fragments.products.cards.card_operations.add
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
@@ -65,9 +64,9 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.addCardBtn.setOnClickListener {
-            if (isValid(binding.cardNumber.editableText.toString().replace(" ", ""))){
-            checkCardRequest()
-            }else{
+            if (isValid(binding.cardNumber.editableText.toString().replace(" ", ""))) {
+                checkCardRequest()
+            } else {
                 showSnackbar("Karta raqam xato bo'lishi munkin")
             }
         }
@@ -237,7 +236,7 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
         binding.viewPager.setPageTransformer(true, AlphaAndScalePageTransformer())
     }
 
-    fun isValid(cardNumber: String): Boolean {
+    private fun isValid(cardNumber: String): Boolean {
         var s1 = 0
         var s2 = 0
         val reverse = StringBuffer(cardNumber).reverse().toString()

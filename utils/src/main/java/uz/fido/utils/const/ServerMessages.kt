@@ -6,13 +6,13 @@ import uz.fido.utils.R
 object ServerMessages {
 
     const val ERROR_CODE_VPN = "444"
-    const val ERROR_MESSAGE_BAD = "bad"
-    const val ERROR_MESSAGE_ORA = "ORA"
-    const val ERROR_MESSAGE_CERTIFICATE = "CertPathValidatorException"
-    const val ERROR_MESSAGE_RESOLVE_HOST = "Unable to resolve host"
-    const val ERROR_MESSAGE_FAILED_TO_CONNECT = "Failed to connect"
-    const val ERROR_MESSAGE_TOKEN_EXPIRED = "Token expired"
-    const val ERROR_MESSAGE_SESSION_EXPIRED = "Session timeout is expired"
+    private const val ERROR_MESSAGE_BAD = "bad"
+    private const val ERROR_MESSAGE_ORA = "ORA"
+    private const val ERROR_MESSAGE_CERTIFICATE = "CertPathValidatorException"
+    private const val ERROR_MESSAGE_RESOLVE_HOST = "Unable to resolve host"
+    private const val ERROR_MESSAGE_FAILED_TO_CONNECT = "Failed to connect"
+    private const val ERROR_MESSAGE_TOKEN_EXPIRED = "Token expired"
+    private const val ERROR_MESSAGE_SESSION_EXPIRED = "Session timeout is expired"
 
     fun Fragment.getMeaningFulMessage(message: String): String {
         var meaningFulMessage = message

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -61,7 +60,7 @@ class MibListAdapter(
 }
 
 
-class MibItemCallback() : DiffUtil.ItemCallback<Mib>() {
+class MibItemCallback : DiffUtil.ItemCallback<Mib>() {
     override fun areItemsTheSame(oldItem: Mib, newItem: Mib) = oldItem == newItem
 
     override fun areContentsTheSame(oldItem: Mib, newItem: Mib) =

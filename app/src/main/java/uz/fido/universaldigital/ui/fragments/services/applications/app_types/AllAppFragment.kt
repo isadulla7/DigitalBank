@@ -55,13 +55,13 @@ class AllAppFragment : BaseFragment<FragmentAllAppBinding, UtilsViewModel>(
         val skeletonScreen = showSkeleton(
             binding.recyclerView, applicationAdapter, R.layout.shimmer_item_applications, 5
         )
-        viewModel.getUserAppList(getClientToken()).observe(viewLifecycleOwner) {
-            when (it.status) {
+        viewModel.getUserAppList(getClientToken()).observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
                 Status.SUCCESS -> {
                     skeletonScreen.hide()
                     applicationList.clear()
-                    if (it.data?.product_list != null) {
-                        val response = it.data!!.product_list
+                    if (resource.data?.product_list != null) {
+                        val response = resource.data!!.product_list
                         response!!.sortByDescending { df.parse(it.create_date) }
                         response.forEach { item ->
                             if (operationType == Const.ORDER_CARD) {

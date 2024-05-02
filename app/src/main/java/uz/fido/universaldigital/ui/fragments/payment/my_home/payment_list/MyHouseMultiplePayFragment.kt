@@ -26,6 +26,7 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
+import java.util.Locale
 
 @AndroidEntryPoint
 class MyHouseMultiplePayFragment : BaseFragment<FragmentMyHouseMultiplePayBinding, MyHomeViewModel>(
@@ -41,7 +42,7 @@ class MyHouseMultiplePayFragment : BaseFragment<FragmentMyHouseMultiplePayBindin
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             list = it.serializable<ArrayList<Template>>("list") as ArrayList<Template>
-            selectedCard = it.serializable<CardResponse>("object") as CardResponse?
+            selectedCard = it.serializable<CardResponse>("object")
         }
 
         init()
@@ -104,7 +105,7 @@ class MyHouseMultiplePayFragment : BaseFragment<FragmentMyHouseMultiplePayBindin
         val request = PreparePaymentRequest(
             service_id = item.service_id.toString(),
             payment_detail_code = item.service_group_code.toString(),
-            command = item.payment_service!!.payment_type!!.toLowerCase().trim(),
+            command = item.payment_service!!.payment_type!!.lowercase(Locale.getDefault()).trim(),
             curr_level_position = levelPosition,
             params = params
         )
@@ -231,9 +232,9 @@ class MyHouseMultiplePayFragment : BaseFragment<FragmentMyHouseMultiplePayBindin
                             cardList[position].apply {
                                 balance = response[0].balance
                                 processing_server_status =
-                                    response[0].state.toString()
+                                    response[0].state
                                 stateName =
-                                    response[0].state_name.toString()
+                                    response[0].state_name
                                 owerdraft_limit = response[0].overdraft_limit
                                 pin_counter = response[0].pin_counter
                                 overdraft_limit = response[0].overdraft_limit
