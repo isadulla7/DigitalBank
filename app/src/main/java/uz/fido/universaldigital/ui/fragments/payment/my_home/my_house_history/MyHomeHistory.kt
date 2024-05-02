@@ -75,12 +75,12 @@ class MyHomeHistory : BaseFragment<FragmentMyHouseHistoryBinding, MyHomeViewMode
                 end_date = dateEnd,
                 receiver_acc = template.account.toString()
             )
-        ).observe(viewLifecycleOwner) {
+        ).observe(viewLifecycleOwner) { resource ->
             skeletonScreen.hide()
             binding.shimmerView.visibility = View.GONE
-            when (it.status) {
+            when (resource.status) {
                 Status.SUCCESS -> {
-                    val response = it.data!!.transactions
+                    val response = resource.data!!.transactions
                     list.addAll(response)
 
                     val groupedHashMap: HashMap<String, MutableList<ItemHomeHistory>> =
@@ -92,9 +92,13 @@ class MyHomeHistory : BaseFragment<FragmentMyHouseHistoryBinding, MyHomeViewMode
                         if (totalList.isEmpty()) {
                             totalList.add(dateItem)
                         } else {
-                            Log.d("TAG", "getItemHistoryList:${newDateFormat((totalList.last() as HomeGeneralItem).itemHomeHistory!!.create_date.toString()).substring(
-                                0, 10
-                            )} ")
+                            Log.d(
+                                "TAG", "getItemHistoryList:${
+                                    newDateFormat((totalList.last() as HomeGeneralItem).itemHomeHistory!!.create_date.toString()).substring(
+                                        0, 10
+                                    )
+                                } "
+                            )
                             Log.d("TAG", "getItemHistoryList:${dateItem.date} ")
                             if (dateItem.date != newDateFormat((totalList.last() as HomeGeneralItem).itemHomeHistory!!.create_date.toString()).substring(
                                     0, 10
@@ -115,7 +119,7 @@ class MyHomeHistory : BaseFragment<FragmentMyHouseHistoryBinding, MyHomeViewMode
 
                 Status.ERROR -> {
                     binding.layoutEmpty.visibility = View.VISIBLE
-                    showSnackbar(it.message.toString())
+                    showSnackbar(resource.message.toString())
                 }
             }
         }

@@ -1,7 +1,5 @@
 package uz.fido.network.domain.model.monitoring.humo
 
-import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
-
 data class HumoMonitoringResponse(
     val tranCount: String,
     val totalPages: String,

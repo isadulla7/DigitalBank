@@ -57,11 +57,7 @@ import javax.inject.Inject
 class P2PRepositoryImpl @Inject constructor(private val p2pService: P2PApiInterface) :
     IP2PRepository {
 
-    var histories: MutableLiveData<List<CardByPhone>> = MutableLiveData()
-
-    fun updateHistory(histories: List<CardByPhone>) {
-        this.histories.postValue(histories)
-    }
+    private var histories: MutableLiveData<List<CardByPhone>> = MutableLiveData()
 
     override suspend fun checkCardInfo(
         token: String,

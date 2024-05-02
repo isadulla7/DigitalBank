@@ -20,9 +20,6 @@ class NotificationService : FirebaseMessagingService() {
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         remoteMessage.notification.let { notification ->
-            /**
-             * SEND NOTIFICATION
-             */
             notification?.let {
                 sendNotification(notification.title, notification.body)
             }
@@ -33,11 +30,7 @@ class NotificationService : FirebaseMessagingService() {
         val intent = Intent(this, LoginActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
 
-        val pendingIntent =
-            PendingIntent.getActivity(
-                applicationContext, 0, intent,
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
-            )
+        val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
         val channelId = getString(R.string.push_channel_id)
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
@@ -52,14 +45,10 @@ class NotificationService : FirebaseMessagingService() {
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
 
-        val notificationManager =
-            getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId, getString(R.string.push_channel_name),
-                NotificationManager.IMPORTANCE_HIGH
-            )
+            val channel = NotificationChannel(channelId, getString(R.string.push_channel_name), NotificationManager.IMPORTANCE_HIGH)
             notificationManager.createNotificationChannel(channel)
         }
 

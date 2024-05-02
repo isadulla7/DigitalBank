@@ -12,7 +12,6 @@ import uz.fido.universaldigital.databinding.FragmentGoalListBinding
 import uz.fido.universaldigital.ui.fragments.services.goal.adapter.GoalListAdapter
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.adapter.showSkeleton
-import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken

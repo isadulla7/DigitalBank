@@ -3,11 +3,8 @@ package uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseSimpleFragment
-import uz.fido.universaldigital.databinding.FragmentMenuProfileBinding
 import uz.fido.universaldigital.databinding.FragmentTransferToAccountBinding
-import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 

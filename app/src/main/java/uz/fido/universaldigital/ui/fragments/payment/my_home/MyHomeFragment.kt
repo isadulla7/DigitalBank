@@ -73,11 +73,11 @@ class MyHomeFragment : DownloadPayment(), BaseInterface {
     private fun getMyHouseList() {
         val skeletonScreen =
             showSkeleton(binding.recyclerView, adapterGroup, R.layout.shimmer_item_my_home, 4)
-        viewModel.getTemplateGroups(getClientToken()).observe(viewLifecycleOwner) {
+        viewModel.getTemplateGroups(getClientToken()).observe(viewLifecycleOwner) { resource ->
             skeletonScreen.hide()
-            when (it.status) {
+            when (resource.status) {
                 Status.SUCCESS -> {
-                    val response = it.data?.template_groups as ArrayList<MyHouseGroup>
+                    val response = resource.data?.template_groups as ArrayList<MyHouseGroup>
                     response.sortBy { it.order }
                     list = response
                     setList(list)

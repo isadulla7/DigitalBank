@@ -139,38 +139,6 @@ fun Context.checkForExpireDate(
     } catch (e: NumberFormatException) {
         Log.e("Log", e.toString())
     }
-    fun View.takeScreenShot(activity: Activity, callback: (Bitmap?) -> Unit) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            activity.window?.let { window ->
-                val bitmap = Bitmap.createBitmap(this.width, this.height, Bitmap.Config.ARGB_8888)
-                val locationOfViewInWindow = IntArray(2)
-                this.getLocationInWindow(locationOfViewInWindow)
-                try {
-                    PixelCopy.request(
-                        window, Rect(
-                            locationOfViewInWindow[0],
-                            locationOfViewInWindow[1],
-                            locationOfViewInWindow[0] + this.width,
-                            locationOfViewInWindow[1] + this.height
-                        ), bitmap, { copyResult ->
-                            if (copyResult == PixelCopy.SUCCESS) {
-                                callback(bitmap)
-                            }
-                        }, Handler(Looper.myLooper()!!)
-                    )
-                } catch (e: IllegalArgumentException) {
-                    // PixelCopy may throw IllegalArgumentException, make sure to handle it
-                    e.printStackTrace()
-                    callback(null)
-                }
-            }
-        } else {
-            this.isDrawingCacheEnabled = true
-            val bitmap = Bitmap.createBitmap(this.drawingCache)
-            this.isDrawingCacheEnabled = false
-            callback(bitmap)
-        }
-    }
 
 
 }

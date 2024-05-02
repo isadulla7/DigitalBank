@@ -161,7 +161,7 @@ fun Context.getUserQwerty(): String {
 }
 
 fun getClientEncodedToken(token: String): String {
-    return Base64.encodeToString(token.toString().toByteArray(Charsets.UTF_8), Base64.DEFAULT)
+    return Base64.encodeToString(token.toByteArray(Charsets.UTF_8), Base64.DEFAULT)
 }
 
 @OptIn(DelicateCoroutinesApi::class)

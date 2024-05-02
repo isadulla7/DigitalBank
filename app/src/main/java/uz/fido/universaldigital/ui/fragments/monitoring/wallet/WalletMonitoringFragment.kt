@@ -79,7 +79,7 @@ class WalletMonitoringFragment :
     }
 
     private fun getFilterWalletList() {
-        menuMonitoringViewModel.walletMonitoringFilter.observe(viewLifecycleOwner) {
+        menuMonitoringViewModel.walletMonitoringFilter.observe(viewLifecycleOwner) { filterSaveVh ->
             showSkeleton(
                 binding.shimmerView,
                 MibDetailsAdapter(requireContext(), this),
@@ -87,15 +87,15 @@ class WalletMonitoringFragment :
                 1
             )
             val card = arrayListOf<String>()
-            it.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_value) }
+            filterSaveVh.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_value) }
             walletList = card
             totalList = arrayListOf()
-            val format = SimpleDateFormat("dd.MM.yyyy")
-            if (it.startDate != "") {
-                dateEnd = df.format(format.parse(it.endDate).time)
-                dateBegin = df.format(format.parse(it.startDate).time)
+            val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            if (filterSaveVh.startDate != "") {
+                dateEnd = df.format(format.parse(filterSaveVh.endDate).time)
+                dateBegin = df.format(format.parse(filterSaveVh.startDate).time)
             } else setTime()
-            val type = when (it.plusMinus) {
+            val type = when (filterSaveVh.plusMinus) {
                 getString(R.string.enrollments) -> 0
                 getString(R.string.write_offs) -> 1
                 else -> 2

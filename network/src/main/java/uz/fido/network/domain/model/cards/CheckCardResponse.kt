@@ -18,11 +18,11 @@ data class CheckCardResponse(
 ) : Serializable {
     fun mapToDto(): CardInfoDto {
         return CardInfoDto(
-            card_type = to_object_type ?: "",
-            card_number = to_object_value ?: "",
-            card_owner = empbossed_name ?: "",
-            card_expire = to_object_expire ?: "",
-            card_id = to_object_id ?: ""
+            card_type = to_object_type,
+            card_number = to_object_value,
+            card_owner = empbossed_name,
+            card_expire = to_object_expire,
+            card_id = to_object_id
         )
     }
 }

@@ -14,13 +14,15 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogAutoPaymentTypeBinding
 
 class ChoosePeriodType(
-private val onClickView:(Int)->Unit
-):BottomSheetDialogFragment() {
+    private val onClickView: (Int) -> Unit
+) : BottomSheetDialogFragment() {
 
-    private lateinit var binding:DialogAutoPaymentTypeBinding
-    var option1=false
-    var option2=false
-    var option3=false
+    private lateinit var binding: DialogAutoPaymentTypeBinding
+
+    private var option1 = false
+    private var option2 = false
+    private var option3 = false
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener {
@@ -36,62 +38,68 @@ private val onClickView:(Int)->Unit
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding= DialogAutoPaymentTypeBinding.inflate(inflater,container,false)
+    ): View {
+        binding = DialogAutoPaymentTypeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.month.setOnClickListener {
-            if (!option1){
+            if (!option1) {
                 binding.btnContinue.isEnabled(true)
-                option1=true
-                option2=false
-                option3=false
+                option1 = true
+                option2 = false
+                option3 = false
                 binding.option1.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_construktor))
                 binding.option2.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_box_color))
                 binding.option3.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_box_color))
-            }else{
+            } else {
                 binding.btnContinue.isEnabled(false)
-                option1=false
+                option1 = false
                 binding.option1.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_box_color))
             }
         }
         binding.day.setOnClickListener {
-            if (!option2){
+            if (!option2) {
                 binding.btnContinue.isEnabled(true)
-                option1=false
-                option2=true
-                option3=false
+                option1 = false
+                option2 = true
+                option3 = false
                 binding.option1.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_box_color))
                 binding.option2.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_construktor))
                 binding.option3.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_box_color))
-            }else{
+            } else {
                 binding.btnContinue.isEnabled(false)
-                option2=false
+                option2 = false
                 binding.option2.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_box_color))
             }
         }
         binding.createDate.setOnClickListener {
-            if (!option3){
-                option1=false
-                option2=false
-                option3=true
+            if (!option3) {
+                option1 = false
+                option2 = false
+                option3 = true
                 binding.btnContinue.isEnabled(true)
                 binding.option1.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_box_color))
                 binding.option2.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_box_color))
                 binding.option3.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_construktor))
-            }else{
+            } else {
                 binding.btnContinue.isEnabled(false)
-                option3=false
+                option3 = false
                 binding.option3.setBackgroundDrawable(ContextCompat.getDrawable(requireContext(), R.drawable.check_box_color))
             }
         }
         binding.btnContinue.setOnClickListener {
-            if (option1){onClickView.invoke(2)}
-            if (option2){onClickView.invoke(1)}
-            if (option3){onClickView.invoke(3)}
+            if (option1) {
+                onClickView.invoke(2)
+            }
+            if (option2) {
+                onClickView.invoke(1)
+            }
+            if (option3) {
+                onClickView.invoke(3)
+            }
         }
     }
 }

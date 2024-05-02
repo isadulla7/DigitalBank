@@ -6,15 +6,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.squareup.picasso.Picasso
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.databinding.FragmentMyHouseMutipleAmountBinding
 import uz.fido.universaldigital.databinding.ItemMyHouseAmountBinding
 import uz.fido.utils.const.APIServiceConst
 import uz.fido.utils.format.Format
-import uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountInterface
 
 class MyHouseAmountAdapter(private val context:Context,
                            private val list:ArrayList<Template>,
@@ -35,17 +32,17 @@ class MyHouseAmountAdapter(private val context:Context,
            binding.personText.text=template.account_text
            binding.person.text=template.account
 
-            if (template!!.icon_name != "") Picasso.get()
-                .load(APIServiceConst.PAYNET_PHOTO + template!!.icon_name)
+            if (template.icon_name != "") Picasso.get()
+                .load(APIServiceConst.PAYNET_PHOTO + template.icon_name)
                 .error(R.drawable.ic_payments_placeholder).into(binding.icon)
             else binding.icon.setImageResource(R.drawable.ic_payments_placeholder)
 
-            if (!template!!.balance.isNullOrEmpty() && !template!!.balance.toString()
+            if (!template.balance.isNullOrEmpty() && !template.balance.toString()
                     .startsWith("0")
             ) {
-                var balance = template!!.balance
+                var balance = template.balance
 
-                if (template!!.balance!!.startsWith("-")) {
+                if (template.balance!!.startsWith("-")) {
                     balance = balance!!.replace("-", "")
                     binding.amount.setTextColor(
                         ContextCompat.getColor(
@@ -64,7 +61,7 @@ class MyHouseAmountAdapter(private val context:Context,
                     binding.amount.text = "${Format.formatAmount(balance)} UZS"
                 }
             } else {
-                template!!.amount = "0"
+                template.amount = "0"
                 binding.amount.text = "----"
             }
 

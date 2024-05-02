@@ -15,7 +15,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.ViewModelProvider
 import com.google.gson.Gson
-import com.google.gson.JsonParser
 import com.google.gson.stream.JsonReader
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScannerOptions

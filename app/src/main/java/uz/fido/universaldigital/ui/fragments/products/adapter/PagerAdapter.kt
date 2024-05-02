@@ -20,10 +20,6 @@ class PagerAdapter(private var context: Context, fm: FragmentManager) :
         return mFragmentList[position]
     }
 
-    fun getFragmentsList(): ArrayList<Fragment> {
-        return mFragmentList
-    }
-
     override fun getCount(): Int {
         return mFragmentList.size
     }

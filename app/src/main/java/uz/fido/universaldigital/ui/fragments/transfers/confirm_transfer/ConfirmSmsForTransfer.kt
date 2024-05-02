@@ -44,13 +44,8 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
     private var operation: String = ""
 
     companion object {
-        const val TRANSFER_OVER_MY_CARDS = "over_my_cards"
         const val TRANSFER_REQUEST = "transfer_request"
-        const val TRANSFER_BY_WALLET = "by_wallet"
-        const val TRANSFER_BY_PHONE = "by_phone"
         const val STRING_LINE = "string_line"
-        const val SENDER_CARD = "sender_card"
-        const val RECEIVER_CARD = "receiver_card"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

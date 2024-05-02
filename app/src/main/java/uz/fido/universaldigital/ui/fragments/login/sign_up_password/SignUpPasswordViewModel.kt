@@ -20,24 +20,12 @@ class SignUpPasswordViewModel @Inject constructor(
     private val swapKeyRepository: ISwapKeyRepository
 ) : AbstractViewModel(application) {
 
-    fun swapKeys(request: SwapKeysRequest) = liveData(Dispatchers.IO) {
-        emit(swapKeyRepository.swapKeys(request))
-    }
-
     fun getUserDetailedInfo(fileUrl: String) = liveData(Dispatchers.IO) {
         emit(swapKeyRepository.getUserDetailedInfoAsync(fileUrl))
     }
 
-    fun signIn(signInRequest: SignInRequest) = liveData(Dispatchers.IO) {
-        emit(userRepository.signIn(signInRequest))
-    }
-
     fun finishReg(finishRegRequest: FinishRegRequest) = liveData(Dispatchers.IO) {
         emit(userRepository.finishReg(finishRegRequest))
-    }
-
-    fun checkSignUpRequest(signUpCheckRequest: SignUpCheckRequest) = liveData(Dispatchers.IO) {
-        emit(userRepository.signUpCheck(signUpCheckRequest))
     }
 
 }

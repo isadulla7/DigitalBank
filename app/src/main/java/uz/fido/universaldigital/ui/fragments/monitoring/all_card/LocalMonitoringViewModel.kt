@@ -54,11 +54,6 @@ class LocalMonitoringViewModel @Inject constructor(
             emit(monitoringRepository.getCurrencyCardMonitoring(token, monitoringRequest))
         }
 
-    fun filterLocalMonitoring(token: String, filerMonitoringRequest: NewMonitoringFilterRequest) =
-        liveData(Dispatchers.IO) {
-            emit(monitoringRepository.filterLocalMonitoring(token, filerMonitoringRequest))
-        }
-
     fun newFilterLocalMonitoring(
         token: String,
         filerMonitoringRequest: NewFilterMonitoringFilterRequest

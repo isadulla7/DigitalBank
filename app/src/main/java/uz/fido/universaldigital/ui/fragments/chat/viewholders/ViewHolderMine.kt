@@ -7,15 +7,13 @@ import android.transition.TransitionManager
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.chat.MessageHistory
-import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemMessageSenderBinding
 import uz.fido.universaldigital.ui.utils.extensions.setTextSpanned
 import uz.fido.utils.utility.format.Format
 import java.util.*
 
 class ViewHolderMine(
-    private val binding: ItemMessageSenderBinding,
-    private val baseInterface: BaseInterface
+    private val binding: ItemMessageSenderBinding
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(history: MessageHistory) {

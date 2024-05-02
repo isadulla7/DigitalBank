@@ -14,22 +14,23 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.maps.android.SphericalUtil
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.base_dialog_delete.*
-import kotlinx.android.synthetic.main.list_bottom_sheet.*
+import kotlinx.android.synthetic.main.base_dialog_delete.dismiss
 import uz.fido.network.data.utility.Status
-import uz.fido.network.domain.model.payment.location.*
+import uz.fido.network.domain.model.payment.location.LocalPayment
+import uz.fido.network.domain.model.payment.location.LocalPaymentType
+import uz.fido.network.domain.model.payment.location.PaymentByLocationRequest
+import uz.fido.network.domain.model.payment.location.PaymentByLocationResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentPaymentBranchBinding
-import uz.fido.universaldigital.ui.fragments.services.map_payment.dialog.LocalPaymentSearchDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringViewPagerAdapter
-import uz.fido.utils.*
+import uz.fido.universaldigital.ui.fragments.services.map_payment.dialog.LocalPaymentSearchDialog
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import java.text.SimpleDateFormat
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Calendar
+import java.util.Locale
 import kotlin.math.roundToInt
 
 @AndroidEntryPoint
@@ -70,8 +71,7 @@ class PaymentBranchFragment : BaseFragment<FragmentPaymentBranchBinding, Payment
         binding.appBar.setOnAdditionalBtnClickListener {
             var newLocalType = LocalPaymentType()
             val dialog = LocalPaymentSearchDialog(
-                viewModels.localPayment.value!!,
-                localPaymentType
+                viewModels.localPayment.value!!
             ) { local ->
                 localPaymentType.forEach {
                     if (it.id == local.type_id)

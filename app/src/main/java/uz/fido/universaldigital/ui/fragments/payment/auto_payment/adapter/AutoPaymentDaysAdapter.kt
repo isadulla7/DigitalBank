@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.payment.auto_payment.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.payment.AllServiceLists
 import uz.fido.universaldigital.R

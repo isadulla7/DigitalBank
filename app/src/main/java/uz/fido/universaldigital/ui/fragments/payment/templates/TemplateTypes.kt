@@ -16,6 +16,6 @@ enum class TemplateTypes(type: String) {
     }
 
     override fun toString(): String {
-        return templateType.toString()
+        return templateType
     }
 }

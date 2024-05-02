@@ -3,7 +3,7 @@ package uz.fido.universaldigital.widgets.currency_rates.retrofit
 import android.os.Handler
 import android.os.Looper
 
-class RatesRepository() : Repository {
+class RatesRepository : Repository {
 
     override fun getData(callback: (RepoResult) -> Unit) {
 

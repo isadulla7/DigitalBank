@@ -35,7 +35,7 @@ class NewPaymentListGroupFragment : DownloadPayment(), DownloadPaymentInterface 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentListGroupPaymentBinding.inflate(inflater, container, false)
         return binding.root
     }

@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.payment.Cheque

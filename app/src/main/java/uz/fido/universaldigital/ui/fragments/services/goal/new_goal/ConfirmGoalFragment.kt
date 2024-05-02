@@ -16,15 +16,12 @@ import uz.fido.universaldigital.databinding.FragmentConfirmGoalBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.fragments.services.goal.GoalViewModel
-import uz.fido.universaldigital.ui.utils.extensions.getCardBackgroundList
-import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import java.math.BigDecimal
-import java.text.DecimalFormat
 
 @AndroidEntryPoint
 class ConfirmGoalFragment : BaseFragment<FragmentConfirmGoalBinding, GoalViewModel>(
@@ -36,7 +33,7 @@ class ConfirmGoalFragment : BaseFragment<FragmentConfirmGoalBinding, GoalViewMod
     private lateinit var operation: String
 
     val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
-    val add_num: BigDecimal = BigDecimal("100.0")
+    private val add_num: BigDecimal = BigDecimal("100.0")
 
     private var isOfferta = false
     private var editGoalRequest: EditGoalRequest? = null
@@ -129,7 +126,7 @@ class ConfirmGoalFragment : BaseFragment<FragmentConfirmGoalBinding, GoalViewMod
                     goto(
                         R.id.basicSuccessFragment, bundleOf(
                             Const.OPERATION to BasicSuccessFragment.CREATE_GOAL,
-                            Const.OPERATION_AMOUNT to targetRequest.start_amount.toString()
+                            Const.OPERATION_AMOUNT to targetRequest.start_amount
                         )
                     )
                 }
@@ -143,7 +140,7 @@ class ConfirmGoalFragment : BaseFragment<FragmentConfirmGoalBinding, GoalViewMod
 
     private fun getCardList() {
         val array = arrayListOf<String>()
-        array.add(selectedCard.object_id.toString())
+        array.add(selectedCard.object_id)
         targetRequest.from_objects = array
     }
 

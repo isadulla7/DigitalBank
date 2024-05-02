@@ -5,7 +5,7 @@ import android.util.Log
 class Logger {
 
     companion object {
-        val isDebug = true
+        private const val isDebug = true
 
         @JvmStatic
         fun writeLogByKey(key: String, text: String) {

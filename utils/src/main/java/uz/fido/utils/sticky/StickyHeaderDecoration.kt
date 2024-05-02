@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class StickyHeaderDecoration(private val mListener: StickyHeaderInterface) : RecyclerView.ItemDecoration() {
-    var mStickyHeaderHeight: Int = 0
+    private var mStickyHeaderHeight: Int = 0
 
     override fun onDrawOver(c: Canvas, parent: RecyclerView, state: RecyclerView.State) {
         super.onDrawOver(c, parent, state)
@@ -52,7 +52,7 @@ class StickyHeaderDecoration(private val mListener: StickyHeaderInterface) : Rec
         c.save()
         c.translate(
             0f,
-            (nextHeader.getTop() - currentHeader.getHeight()).toFloat()
+            (nextHeader.top - currentHeader.height).toFloat()
         )
         currentHeader.draw(c)
         c.restore()
@@ -73,11 +73,10 @@ class StickyHeaderDecoration(private val mListener: StickyHeaderInterface) : Rec
             }
 
             //add heightTolerance if child top be in display area
-            val childBottomPosition: Int
-            if (child.top > 0) {
-                childBottomPosition = child.bottom + heightTolerance
+            val childBottomPosition: Int = if (child.top > 0) {
+                child.bottom + heightTolerance
             } else {
-                childBottomPosition = child.bottom
+                child.bottom
             }
 
             if (childBottomPosition > contactPoint) {

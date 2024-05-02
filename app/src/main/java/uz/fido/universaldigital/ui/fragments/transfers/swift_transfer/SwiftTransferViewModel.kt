@@ -1,12 +1,10 @@
 package uz.fido.universaldigital.ui.fragments.transfers.swift_transfer
 
 import android.app.Application
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import uz.fido.network.domain.datasource.interfaces.IPaymentRepository
-import uz.fido.network.domain.model.get_card_by_phone.CardByPhone
 import uz.fido.network.domain.model.swift.CreateSwiftAppRequest
 import uz.fido.network.domain.model.swift.GetSwiftCommissionRequest
 import uz.fido.network.domain.model.swift.SwiftRequest
@@ -19,12 +17,6 @@ class SwiftTransferViewModel @Inject constructor(
     application: Application,
     private val paymentRepository: IPaymentRepository
 ) : AbstractViewModel(application) {
-
-    var histories: MutableLiveData<List<CardByPhone>> = MutableLiveData()
-
-    fun updateHistory(histories: List<CardByPhone>) {
-        this.histories.postValue(histories)
-    }
 
     fun getSwiftCommission(token: String, getSwiftCommissionRequest: GetSwiftCommissionRequest) =
         liveData(Dispatchers.IO) {

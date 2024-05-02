@@ -49,7 +49,7 @@ class RestoreWithCardFragment :
             binding.btnContinue.setProgress(true)
             finishOperation()
         }
-        binding.cardNumber.setOnTouchListener(View.OnTouchListener { _, event ->
+        binding.cardNumber.setOnTouchListener({ _, event ->
             val DRAWABLE_RIGHT = 2
             if (event.action == MotionEvent.ACTION_UP) {
 //                if (event.rawX >= binding.cardNumber.right - binding.cardNumber.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {

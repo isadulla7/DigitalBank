@@ -5,12 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.money_transfer.list.MoneyTransferHistory
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemMoneyTransferHistoryBinding
 import uz.fido.utils.utility.format.Format
 
 class MoneyTransferHistoryAdapter(
-    private var list: ArrayList<MoneyTransferHistory>, private val baseInterface: BaseInterface
+    private var list: ArrayList<MoneyTransferHistory>
 ) : RecyclerView.Adapter<MoneyTransferHistoryAdapter.ViewHolder>() {
 
     class ViewHolder(private val binding: ItemMoneyTransferHistoryBinding) :

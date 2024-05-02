@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
 import uz.fido.universaldigital.databinding.DialogDepositOperationBinding
 
 class DepositOperationDialog(
-    private val clientDeposit: ClientDeposit,
     private val onClickView: (String) -> Unit
 ) : BottomSheetDialogFragment() {
 

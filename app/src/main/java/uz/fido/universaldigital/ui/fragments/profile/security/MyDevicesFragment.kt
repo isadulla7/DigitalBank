@@ -35,7 +35,6 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
     FragmentMyDevicesBinding::inflate, MyDevicesViewModel::class.java
 ), BaseInterface {
 
-    private lateinit var terminateSessionDialog: TerminateSessionDialog
     private var devicesAdapter: DevicesAdapter? = null
     private var userDevices: UserDevices? = null
     private var list = ArrayList<UserDevices>()
@@ -46,7 +45,7 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
         binding.appBar.setOnAdditionalBtnClickListener {
             if (list.isNotEmpty()) {
                 val first=list[0]
-                first?.my_device_code=requireActivity().getDeviceIds()
+                first.my_device_code =requireActivity().getDeviceIds()
                 terminateSessionRequest(first, "deleteAll")
             }
         }
@@ -126,10 +125,8 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
         viewModel.checkDevice(
             getClientToken(), CheckDeviceRequest(
                 device_type = item.device_type,
-                selected_device_code = item.device_code,
                 user_id = getClientId(),
                 app_key_hash = AppSignatureHelper(requireContext()).appKeyHash,
-                current_device_code = requireActivity().getDeviceIds(),
                 phone_number = getClientPhoneNumber()
             )
         ).observe(viewLifecycleOwner) {

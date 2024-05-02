@@ -1,8 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.loan
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
 import androidx.core.os.bundleOf
 import dagger.hilt.android.AndroidEntryPoint

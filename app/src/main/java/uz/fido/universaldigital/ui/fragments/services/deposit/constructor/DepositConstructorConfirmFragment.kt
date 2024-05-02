@@ -23,7 +23,6 @@ import uz.fido.universaldigital.databinding.FragmentDepositConstructorConfirmBin
 import uz.fido.universaldigital.databinding.ViewDepositCreateBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
-import uz.fido.universaldigital.ui.fragments.services.deposit.MainDepositViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
@@ -40,7 +39,6 @@ open class DepositConstructorConfirmFragment :
 
 
     val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
-    val depositViewModel by activityViewModels<MainDepositViewModel>()
     private lateinit var deposit: DepositConstructor
     private var smsCode = ""
     private lateinit var cardResponse: CardResponse
@@ -160,7 +158,7 @@ open class DepositConstructorConfirmFragment :
         val viewDepositCreateBinding =
             ViewDepositCreateBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)
     }
 
@@ -213,14 +211,13 @@ open class DepositConstructorConfirmFragment :
     }
 
     override fun invoke(sms_confirm: String, line_String: String) {
-        var lineString = line_String
 
         if (sms_confirm == "Y")
             goto(
                 R.id.confirmSmsFragment,
                 bundleOf(
                     Const.OPERATION to ConfirmSmsFragment.SMS_DEPOSIT_OPERATION,
-                    "string_line" to lineString
+                    "string_line" to line_String
                 )
             )
         else createDeposit()

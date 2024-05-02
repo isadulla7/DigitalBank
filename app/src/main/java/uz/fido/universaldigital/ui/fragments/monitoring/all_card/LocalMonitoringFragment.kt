@@ -146,34 +146,34 @@ class LocalMonitoringFragment :
     }
 
     private fun getFilterLocalMonitoringList(page: Int, operationType: Int) {
-        saveViewModel.localMonitoringFilter.observe(viewLifecycleOwner) {
-            if (it.startDate != "") {
-                dateEnd = it.endDate
-                dateBegin = it.startDate
+        saveViewModel.localMonitoringFilter.observe(viewLifecycleOwner) { resource ->
+            if (resource.startDate != "") {
+                dateEnd = resource.endDate
+                dateBegin = resource.startDate
             } else setTime()
-            val type = when (it.plusMinus) {
+            val type = when (resource.plusMinus) {
                 getString(R.string.enrollments) -> 0
                 getString(R.string.write_offs) -> 1
                 else -> 2
             }
             val cardList = arrayListOf<Int>()
-            val cardListCheck = it.cardList.filter { it.is_selected_monitoring }
+            val cardListCheck = resource.cardList.filter { it.is_selected_monitoring }
             if (cardListCheck.isNotEmpty()) {
-                it.cardList.forEach { if (!it.is_selected_monitoring) cardList.add(it.object_id) }
+                resource.cardList.forEach { if (!it.is_selected_monitoring) cardList.add(it.object_id) }
             } else {
-                it.cardList.forEach { cardList.add(it.object_id) }
+                resource.cardList.forEach { cardList.add(it.object_id) }
             }
             val serviceList = arrayListOf<Int>()
 
-            val serviceIdCheck = it.serviceList.filter { it.service_current }
+            val serviceIdCheck = resource.serviceList.filter { it.service_current }
             val listParentObj = arrayListOf<String>()
             if (serviceIdCheck.isEmpty()) {
-                it.serviceList.forEach { serviceList.add(it.service_id!!.toInt()) }
+                resource.serviceList.forEach { serviceList.add(it.service_id!!.toInt()) }
             } else {
-                it.serviceList.forEach {
-                    if (it.service_current) {
-                        serviceList.add(it.service_id!!.toInt())
-                        it.list.forEach {
+                resource.serviceList.forEach { userPayedService ->
+                    if (userPayedService.service_current) {
+                        serviceList.add(userPayedService.service_id!!.toInt())
+                        userPayedService.list.forEach {
                             listParentObj.add(it.partner_obj)
                         }
                     }
@@ -196,21 +196,21 @@ class LocalMonitoringFragment :
                 binding.progress.visibility = View.VISIBLE
             }
             val newFilter = NewFilterMonitoringFilterRequest(
-                start_date = if (it.startDate.isNotEmpty()) dateBegin else null,
-                end_date = if (it.endDate.isNotEmpty()) dateEnd else null,
+                start_date = if (resource.startDate.isNotEmpty()) dateBegin else null,
+                end_date = if (resource.endDate.isNotEmpty()) dateEnd else null,
                 page_number = page,
                 page_item_size = 20,
                 service_ids = serviceList,
                 object_ids = cardList,
                 to_object_value = listParentObj,
-                max_amount = if (it.maxAmount.isNotEmpty()) "${
-                    it.maxAmount.replace(
+                max_amount = if (resource.maxAmount.isNotEmpty()) "${
+                    resource.maxAmount.replace(
                         " ",
                         ""
                     )
                 }00" else null,
-                min_amount = if (it.minAmount.isNotEmpty()) "${
-                    it.minAmount.replace(
+                min_amount = if (resource.minAmount.isNotEmpty()) "${
+                    resource.minAmount.replace(
                         " ",
                         ""
                     )
@@ -444,7 +444,6 @@ class LocalMonitoringFragment :
                 when (it.status) {
                     Status.SUCCESS -> {
                         dialogInfo = InfoMonitoringDialog(
-                            requireContext(),
                             localMonitoring,
                             it.data,
                             object : BaseInterface {
@@ -471,7 +470,6 @@ class LocalMonitoringFragment :
 
                     Status.ERROR -> {
                         dialogInfo = InfoMonitoringDialog(
-                            requireContext(),
                             localMonitoring,
                             null,
                             object : BaseInterface {

@@ -74,7 +74,7 @@ class DeleteGoalFragment : BaseFragment<FragmentDeleteGoalBinding, GoalViewModel
                     goto(
                         R.id.basicSuccessFragment, bundleOf(
                             Const.OPERATION to BasicSuccessFragment.CREATE_GOAL,
-                            Const.OPERATION_AMOUNT to goalModel.current_amount.toString()
+                            Const.OPERATION_AMOUNT to goalModel.current_amount
                         )
                     )
                 }

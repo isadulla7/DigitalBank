@@ -124,11 +124,6 @@ class DatabaseHelper(
         )
     }
 
-    fun recreateTables() {
-        dropTables()
-        createTables()
-    }
-
     fun clearAll() {
         clearGroupListTable()
         clearServiceListTable()
@@ -167,10 +162,6 @@ class DatabaseHelper(
 
     private fun clearCashbackTable() {
         this.writableDatabase!!.execSQL("DELETE from " + PaymentCashback.TABLE_NAME)
-    }
-
-    fun clearSearchTable() {
-        this.writableDatabase!!.execSQL("DELETE from search_list")
     }
 
     fun insertServiceGroups(groupList: List<PaymentGroup>) {
@@ -373,40 +364,10 @@ class DatabaseHelper(
         return categoriesResult
     }
 
-    fun getServiceCashback(serviceId: String): PaymentCashback? {
-        val query =
-            "select * from " + PaymentCashback.TABLE_NAME + " where service_id= " + serviceId + " "
-        val cursor = this.readableDatabase.rawQuery(query, null)
-        var paymentCashback: PaymentCashback? = null
-        if (cursor != null && cursor.count > 0) {
-            if (cursor.moveToFirst()) {
-                val serviceId = cursor.getColumnIndex(PaymentCashback.COLUMN_SERVICE_ID)
-                val glPercent = cursor.getColumnIndex(PaymentCashback.COLUMN_GL_PERCENT)
-                val svPercent = cursor.getColumnIndex(PaymentCashback.COLUMN_SV_PERCENT)
-                val tetPercent = cursor.getColumnIndex(PaymentCashback.COLUMN_TET_PERCENT)
-                val klPercent = cursor.getColumnIndex(PaymentCashback.COLUMN_KL_PERCENT)
-                val state = cursor.getColumnIndex(PaymentCashback.COLUMN_STATE)
-
-                do {
-                    paymentCashback = PaymentCashback().PaymentCashback(
-                        gl_percent = cursor.getString(glPercent),
-                        service_id = cursor.getString(serviceId),
-                        state = cursor.getString(state),
-                        sv_percent = cursor.getString(svPercent),
-                        tet_percent = cursor.getString(tetPercent),
-                        kl_percent = cursor.getString(klPercent)
-                    )
-                } while (cursor.moveToNext())
-            }
-        }
-        cursor?.close()
-        return paymentCashback
-    }
-
     @Throws(SQLException::class)
     fun getServiceList(serviceGroupCode: String): ArrayList<PaymentService> {
         val query =
-            "select * from " + PaymentService.TABLE_NAME.toString() + " where ${PaymentService.SERVICE_GROUP_CODE} = '" + serviceGroupCode + "' "
+            "select * from " + PaymentService.TABLE_NAME + " where ${PaymentService.SERVICE_GROUP_CODE} = '" + serviceGroupCode + "' "
         val cursor = this.readableDatabase.rawQuery(query, null)
         val services = ArrayList<PaymentService>()
         val nls = LocaleHelper.getSelectedLang(context)

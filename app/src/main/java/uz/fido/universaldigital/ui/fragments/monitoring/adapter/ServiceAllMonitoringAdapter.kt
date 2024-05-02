@@ -6,12 +6,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.fragment_qr_payment.view.back
 import uz.fido.network.domain.model.monitoring.filter.UserPayedService
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemServiceMonitoringFilterBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringFilterFragment
 import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
 
 class ServiceAllMonitoringAdapter(
@@ -24,12 +22,12 @@ class ServiceAllMonitoringAdapter(
         fun onBind(item: UserPayedService) {
             binding.tipName.text = item.service_name
 
-            if (item.service_current){
-                binding.tipName.setTextColor(ContextCompat.getColor(context,R.color.whiteColor))
-                binding.father.background=context.resources.getDrawable(R.drawable.monitoring_filter_item_color_click)
-            }else{
-                binding.tipName.setTextColor(ContextCompat.getColor(context,R.color.mainTextColor))
-                binding.father.background=context.resources.getDrawable(R.drawable.monitoring_filter_item_color)
+            if (item.service_current) {
+                binding.tipName.setTextColor(ContextCompat.getColor(context, R.color.whiteColor))
+                binding.father.background = ContextCompat.getDrawable(context, R.drawable.monitoring_filter_item_color_click)
+            } else {
+                binding.tipName.setTextColor(ContextCompat.getColor(context, R.color.mainTextColor))
+                binding.father.background = ContextCompat.getDrawable(context, R.drawable.monitoring_filter_item_color)
 
             }
             if (item.icon_name != "")

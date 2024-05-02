@@ -27,7 +27,3 @@ allprojects {
         maven { url "https://artifactory.aigroup.uz:443/artifactory/myid" }
     }
 }
-
-task clean(type: Delete) {
-    delete rootProject.buildDir
-}

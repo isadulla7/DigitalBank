@@ -23,19 +23,19 @@ import uz.fido.utils.utility.fragment.pop
 import java.math.BigDecimal
 
 @AndroidEntryPoint
-class MyHouseMultipleAmountFragment:BaseFragment<FragmentMyHouseMutipleAmountBinding, MyHomeViewModel>(
-    FragmentMyHouseMutipleAmountBinding::inflate,MyHomeViewModel::class.java
+class MyHouseMultipleAmountFragment : BaseFragment<FragmentMyHouseMutipleAmountBinding, MyHomeViewModel>(
+    FragmentMyHouseMutipleAmountBinding::inflate, MyHomeViewModel::class.java
 ) {
 
     private var list = ArrayList<Template>()
-    private lateinit var dbHelper:DatabaseHelper
-    private var count=0
+    private lateinit var dbHelper: DatabaseHelper
+    private var count = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             list = it.serializable<ArrayList<Template>>("list") as ArrayList<Template>
         }
-        dbHelper= DatabaseHelper(requireContext())
+        dbHelper = DatabaseHelper(requireContext())
         initView()
         onClick()
     }
@@ -49,9 +49,9 @@ class MyHouseMultipleAmountFragment:BaseFragment<FragmentMyHouseMutipleAmountBin
                     newList.add(item)
                 }
             }
-         if(newList.size!=0){
-               goto(R.id.myHouseMultipleSelectionFragment, bundleOf("list" to newList))
-         }
+            if (newList.size != 0) {
+                goto(R.id.myHouseMultipleSelectionFragment, bundleOf("list" to newList))
+            }
         }
     }
 
@@ -71,30 +71,29 @@ class MyHouseMultipleAmountFragment:BaseFragment<FragmentMyHouseMutipleAmountBin
             }
 
             withContext(Dispatchers.Main) {
-                binding.rec.adapter = MyHouseAmountAdapter(requireContext(),list){it,postion->
+                binding.rec.adapter = MyHouseAmountAdapter(requireContext(), list) { it, postion ->
                     try {
-                        list[postion].check_amount = it.toBigDecimal()>BigDecimal("499")
+                        list[postion].check_amount = it.toBigDecimal() > BigDecimal("499")
                         checkBottom()
-                    }catch (e:Exception){
-
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
-
                 }
             }
         }
     }
 
     private fun checkBottom() {
-        count=0
+        count = 0
         list.forEach {
-            if (it.check_amount){
+            if (it.check_amount) {
                 count += 1
             }
         }
         Log.d("TAG", "checkBottom:${count} ")
         Log.d("TAG", "checkBottom:${list.size} ")
-        if (count==list.size){
+        if (count == list.size) {
             binding.btnPaymentList.isEnabled(true)
-        }else binding.btnPaymentList.isEnabled(false)
+        } else binding.btnPaymentList.isEnabled(false)
     }
 }

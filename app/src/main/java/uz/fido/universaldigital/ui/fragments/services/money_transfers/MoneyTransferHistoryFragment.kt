@@ -26,7 +26,7 @@ class MoneyTransferHistoryFragment :
         binding.recyclerView.apply {
             list = ArrayList()
             moneyTransferHistoryAdapter =
-                MoneyTransferHistoryAdapter(list, this@MoneyTransferHistoryFragment)
+                MoneyTransferHistoryAdapter(list)
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = moneyTransferHistoryAdapter

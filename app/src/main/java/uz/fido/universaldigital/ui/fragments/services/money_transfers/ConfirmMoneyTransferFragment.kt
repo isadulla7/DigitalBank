@@ -118,10 +118,7 @@ class ConfirmMoneyTransferFragment :
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
-            senderCard.let {
-//                getParams()
-                sendRequest()
-            }
+            sendRequest()
         }
     }
 

@@ -26,7 +26,7 @@ class CreditRequisitesFragment(private val clientProduct: CreditProduct) : Dialo
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo);
+        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

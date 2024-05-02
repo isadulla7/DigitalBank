@@ -83,10 +83,6 @@ class ConfirmOrderCardFragment : BaseFragment<FragmentConfirmOrderCardBinding, O
         }
     }
 
-    private fun getTotalAmount(): String {
-        return (amount + amount * percent).toString()
-    }
-
     private fun orderCard() {
         binding.orderCard.setProgress(true)
         request.sms_code = smsCode

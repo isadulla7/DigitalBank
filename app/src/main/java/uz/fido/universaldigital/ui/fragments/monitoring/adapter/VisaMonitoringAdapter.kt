@@ -20,7 +20,7 @@ import uz.fido.utils.sticky.StickyHeaderInterface
 class VisaMonitoringAdapter(
     private var context: Context,
     private var consolidatedList: ArrayList<ListItem>,
-    private var onCLickView:(CurrencyCardMonitoringItem)->Unit
+    private var onCLickView: (CurrencyCardMonitoringItem) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHeaderInterface {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -70,19 +70,18 @@ class VisaMonitoringAdapter(
             else binding.tvTime.text = "-"
 
             binding.tvType.text =
-                if (monitoringItem.card_num.length == 16) Format.formatCardNumberAllMonitoring(context,monitoringItem.card_num) else monitoringItem.card_num
+                if (monitoringItem.card_num.length == 16) Format.formatCardNumberAllMonitoring(context, monitoringItem.card_num) else monitoringItem.card_num
 
-                if (monitoringItem.tran_type=="credit"){
-                    binding.icon.setImageResource(R.drawable.ic_monitoring_plus)
-                    binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.monitoring_amount))
-                    binding.tvAmount.text= "+ " + Format.formatAmount((monitoringItem.tran_amount.toDouble() / 100).toString()) + " " + context.getString(R.string.usd)
-                }
-                else{
-                    binding.icon.setImageResource(R.drawable.icon_monitoring)
-                    binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.mainTextColor))
-                    binding.tvAmount.text="- " + Format.formatAmount((monitoringItem.tran_amount.toDouble() / 100).toString()) + " " + context.getString(R.string.usd)
+            if (monitoringItem.tran_type == "credit") {
+                binding.icon.setImageResource(R.drawable.ic_monitoring_plus)
+                binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.monitoring_amount))
+                binding.tvAmount.text = "+ " + Format.formatAmount((monitoringItem.tran_amount.toDouble() / 100).toString()) + " " + context.getString(R.string.usd)
+            } else {
+                binding.icon.setImageResource(R.drawable.icon_monitoring)
+                binding.tvAmount.setTextColor(ContextCompat.getColor(context, R.color.mainTextColor))
+                binding.tvAmount.text = "- " + Format.formatAmount((monitoringItem.tran_amount.toDouble() / 100).toString()) + " " + context.getString(R.string.usd)
 
-                }
+            }
 
             binding.father.setOnClickListener {
                 onCLickView.invoke(monitoringItem)

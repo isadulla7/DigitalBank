@@ -10,7 +10,6 @@ import android.text.SpannedString
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.view.View
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
@@ -18,7 +17,6 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.item_my_house_group.text
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.loans.CheckHasLoanRequest
@@ -56,7 +54,6 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
     private var days = ArrayList<AllServiceLists>()
     private var creditReplenishmentTypes = ArrayList<AllServiceLists>()
     private var percent = ""
-    private var isSeekbarCurrent = false
     private var monthlyAmount = BigDecimal(0)
     private var selectedDate: Int = 0
     private var selectedCard: CardResponse? = null
@@ -138,7 +135,7 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
                 }
             }
             binding.chooseCardLayout.initCards(
-                listnew as ArrayList<CardResponse>, "0"
+                listnew, "0"
             ) { cardResponse ->
                 cardResponse?.let { card ->
                     selectedCard = card
@@ -150,25 +147,6 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
         }
     }
 
-
-    private fun getClientAsia() {
-        viewModel.checkLoanByCrm(
-            getClientToken(),
-            CheckHasLoanRequest(pfProductId = creditGroup.productId.toString())
-        ).observe(viewLifecycleOwner) {
-            binding.btnContinue.setProgress(false)
-            when (it.status) {
-                Status.SUCCESS -> {
-                    getUserInfo()
-                }
-
-                Status.ERROR -> {
-                    getUserInfo()
-                    //showSnackbar(it.message.toString())
-                }
-            }
-        }
-    }
 
     private fun getUserInfo() {
         binding.btnContinue.setProgress(true)
@@ -249,14 +227,6 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
         }
     }
 
-    private fun lifeTime() {
-        binding.etTime.setOnClickListener {
-            loanMonthDialog =
-                LoanMonthDialog(this, creditGroup.time_max, "month", selectedDate, requireContext())
-            loanMonthDialog.show(childFragmentManager, "")
-        }
-    }
-
     private fun seekBarAmount() {
         binding.etAmountMinMax.setText("0")
         binding.seekBar.max = maxAmount.toInt()
@@ -330,7 +300,7 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
 
     override fun invoke(p1: Int, type: String) {
         if (type == "month") {
-            binding.etTime.setText("${p1} ${getString(uz.fido.utils.R.string.month)}")
+            binding.etTime.setText("$p1 ${getString(uz.fido.utils.R.string.month)}")
             selectedDate = p1
             binding.btnContinue.isEnabled(true)
             calculateMonthlyAmount(
@@ -343,12 +313,12 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
         loanMonthDialog.dismiss()
     }
 
-    fun isUniversalSumCard(cardResponse: CardResponse): Boolean =
+    private fun isUniversalSumCard(cardResponse: CardResponse): Boolean =
         cardResponse.object_value.startsWith("860048") ||
                 cardResponse.object_value.startsWith("626283") ||
                 cardResponse.object_value.startsWith("986023")
 
-    fun hasAsiaCard(cardList: List<CardResponse>): Boolean {
+    private fun hasAsiaCard(cardList: List<CardResponse>): Boolean {
         var response = false
         cardList.forEach {
             response = response || isUniversalSumCard(it)
@@ -356,7 +326,7 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
         return response
     }
 
-    fun hasCardUniversalFirst(): Boolean {
+    private fun hasCardUniversalFirst(): Boolean {
         if (selectedCard == null) return false
         return selectedCard!!.object_value.startsWith("860055") ||
                 selectedCard!!.object_value.startsWith("626283") ||

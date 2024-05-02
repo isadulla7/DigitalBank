@@ -8,15 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
 import uz.fido.network.domain.model.monitoring.AccountHistory
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.base.BaseInterface
-import uz.fido.universaldigital.databinding.ItemAccountHistoryBinding
 import uz.fido.universaldigital.databinding.ItemDepositHistoryBinding
 import uz.fido.universaldigital.databinding.ItemHistoriesHeaderBinding
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.format.Format
 import java.text.SimpleDateFormat
-import java.util.Date
 import java.util.Locale
 
 

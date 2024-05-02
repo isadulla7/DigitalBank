@@ -80,9 +80,9 @@ class HumoMonitoringFragment :
     }
 
     private fun getFilterHumoMonitoring() {
-        saveViewModel.humoMonitoringFilter.observe(viewLifecycleOwner) {
+        saveViewModel.humoMonitoringFilter.observe(viewLifecycleOwner) { filterSaveVh ->
             val card = arrayListOf<String>()
-            it.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_id.toString()) }
+            filterSaveVh.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_id.toString()) }
             totalList = arrayListOf()
             val skeletonScreen = showSkeleton(
                 binding.shimmerView,
@@ -91,11 +91,11 @@ class HumoMonitoringFragment :
                 1
             )
             val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-            if (it.startDate != "") {
-                dateEnd = dateFormat.format(format.parse(it.endDate).time)
-                dateBegin = dateFormat.format(format.parse(it.startDate).time)
+            if (filterSaveVh.startDate != "") {
+                dateEnd = dateFormat.format(format.parse(filterSaveVh.endDate).time)
+                dateBegin = dateFormat.format(format.parse(filterSaveVh.startDate).time)
             } else setTime()
-            val type = when (it.plusMinus) {
+            val type = when (filterSaveVh.plusMinus) {
                 getString(R.string.enrollments) -> 0
                 getString(R.string.write_offs) -> 1
                 else -> 2

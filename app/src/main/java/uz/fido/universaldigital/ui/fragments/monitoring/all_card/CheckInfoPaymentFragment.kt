@@ -1,31 +1,22 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.all_card
 
 import android.content.Intent
-import android.graphics.Typeface
 import android.os.Bundle
-import android.os.FileUtils
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import kotlinx.android.synthetic.main.fragment_check_info.save
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringItem
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
 import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
 import uz.fido.network.domain.model.payment.PrintChequeResponse
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.base.BaseFragment
-import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentCheckInfoBinding
 import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
 import uz.fido.utils.format.Format
 import uz.fido.utils.format.Format.takeScreenShot
-import uz.fido.utils.format.FormatUtil
 import uz.fido.utils.format.FormatUtilsKt
 import uz.fido.utils.utility.fragment.pop
 import java.io.File
@@ -40,7 +31,6 @@ class CheckInfoPaymentFragment:BaseSimpleFragment<FragmentCheckInfoBinding>(
     private lateinit var svMonitoringItem: SVMonitoringItem
     private lateinit var humoMonitoringItem: HumoMonitoringItem
     private lateinit var visaMonitoringItem: CurrencyCardMonitoringItem
-    private var localMonitoring:LocalMonitoring?=null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,7 +68,7 @@ class CheckInfoPaymentFragment:BaseSimpleFragment<FragmentCheckInfoBinding>(
         )
         addView(
             getString(R.string.amount),
-            Format.formatAmount(Format.convertFromTiynDivide(svMonitoringItem.tran_amount.toString())) + " UZS", true
+            Format.formatAmount(Format.convertFromTiynDivide(svMonitoringItem.tran_amount)) + " UZS", true
         )
     }
 

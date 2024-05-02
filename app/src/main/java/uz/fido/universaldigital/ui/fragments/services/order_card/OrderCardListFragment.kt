@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
-import kotlinx.android.synthetic.main.fragment_order_card_list.uzcard
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.OrderCardTypeRequest
 import uz.fido.network.domain.model.cards.OrderCardTypeResponse
@@ -18,7 +16,6 @@ import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentOrderCardListBinding
-import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.order_card.adapters.ChooseOperationAdapter
 import uz.fido.universaldigital.ui.fragments.services.order_card.dialogs.IdentifyDialog
 import uz.fido.utils.const.Const

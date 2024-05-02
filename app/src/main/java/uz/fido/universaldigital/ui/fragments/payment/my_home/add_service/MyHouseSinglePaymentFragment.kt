@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.payment.my_home.add_service
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -33,12 +32,12 @@ import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
-import uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountInterface
 import java.math.BigDecimal
 import java.sql.SQLException
+import java.util.Locale
 
 @AndroidEntryPoint
-class MyHouseSinglePaymentFragment() :
+class MyHouseSinglePaymentFragment :
     BaseFragment<FragmentMyHouseSinglePaymentBinding, MyHomeViewModel>(
         FragmentMyHouseSinglePaymentBinding::inflate,
         MyHomeViewModel::class.java
@@ -88,15 +87,15 @@ class MyHouseSinglePaymentFragment() :
 
     private fun checkAmount(it: String) {
         try {
-            amount = it.replace(" ","").toBigDecimal()
-            var amount = it.replace(" ", "").toBigDecimal()
+            amount = it.replace(" ", "").toBigDecimal()
+            val amount = it.replace(" ", "").toBigDecimal()
             if ((amount * BigDecimal("100")) < selectedCard?.balance.toString()
                     .toBigDecimal() && selectedCard?.state == "0" &&
                 amount >= minAmount.toBigDecimal() && amount <= maxAmount.toBigDecimal()
             ) {
                 binding.btnContinue.isEnabled(true)
             } else binding.btnContinue.isEnabled(false)
-        }catch (e:Exception){
+        } catch (e: Exception) {
             binding.btnContinue.isEnabled(false)
         }
 
@@ -136,7 +135,7 @@ class MyHouseSinglePaymentFragment() :
         val request = PreparePaymentRequest(
             service_id = templateItem?.service_id.toString(),
             payment_detail_code = templateItem?.service_group_code.toString(),
-            command = paymentService!!.payment_type!!.toLowerCase().trim(),
+            command = paymentService!!.payment_type!!.lowercase(Locale.getDefault()).trim(),
             curr_level_position = levelPosition,
             params = params
         )
@@ -168,7 +167,7 @@ class MyHouseSinglePaymentFragment() :
                 params[it.code] = it.def_value
             }
         }
-        val paymentType = paymentService!!.payment_type!!.toLowerCase().trim()
+        val paymentType = paymentService!!.payment_type!!.lowercase(Locale.getDefault()).trim()
         val model = CreatePaymentRequest(
             service_id = paymentService!!.service_id.toString(),
             params,
@@ -304,7 +303,7 @@ class MyHouseSinglePaymentFragment() :
         var inputParams = ArrayList<PaymentParams>()
         paymentParamsArrayList = ArrayList()
         try {
-            inputParams = databaseHelper.getPaymentDetails(paymentService!!.payment_detail_code!!)!!
+            inputParams = databaseHelper.getPaymentDetails(paymentService!!.payment_detail_code!!)
             val hashSet = HashSet<PaymentParams>()
             hashSet.addAll(inputParams)
             inputParams.clear()

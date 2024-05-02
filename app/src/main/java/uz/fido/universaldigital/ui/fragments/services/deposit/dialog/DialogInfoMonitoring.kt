@@ -19,7 +19,6 @@ import java.util.Locale
 import java.util.concurrent.TimeUnit
 
 class DialogInfoMonitoring(
-    private val context: Context,
     private val item: AccountHistory?,
     private val clientDeposit: ClientDeposit,
     private val type: String
@@ -28,14 +27,14 @@ class DialogInfoMonitoring(
     private lateinit var binding: DialogInfoDepositMonitoringBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo);
+        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DialogInfoDepositMonitoringBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -113,7 +112,7 @@ class DialogInfoMonitoring(
 
     }
 
-    fun String?.formatTiynAmount(currency: String? = null): String {
+    private fun String?.formatTiynAmount(currency: String? = null): String {
         this?.let {
             var amount = Format.formatAmount(Format.convertFromTiynDivide(it))
             if (currency != null) {
@@ -148,8 +147,8 @@ class DialogInfoMonitoring(
                 item!!.lnType
             ) else item!!.purpose).toString()
         )
-        addView(getString(R.string.transaction_number), item!!.NumberTrans)
-        addView(getString(R.string.date_time), item!!.dateExecute.toString())
+        addView(getString(R.string.transaction_number), item.NumberTrans)
+        addView(getString(R.string.date_time), item.dateExecute.toString())
         addView(
             getString(R.string.amount),
             if (item.debit == "0") Format.formatAmount((item.credit!!.toDouble() / 100).toString()) + " UZS" else Format.formatAmount(
@@ -162,11 +161,11 @@ class DialogInfoMonitoring(
         val viewDepositCreateBinding =
             ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)
     }
 
-    fun setCreditPurpose(context: Context, lnType: String): String {
+    private fun setCreditPurpose(context: Context, lnType: String): String {
         return when (lnType) {
             "1" -> context.getString(R.string.purpose_1)
             "2", "" -> context.getString(R.string.top_up_account_for_loan)

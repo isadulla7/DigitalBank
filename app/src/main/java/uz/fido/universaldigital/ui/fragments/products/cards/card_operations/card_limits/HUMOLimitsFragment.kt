@@ -3,7 +3,6 @@ package uz.fido.universaldigital.ui.fragments.products.cards.card_operations.car
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.limits.gl.GlLimitDeleteRequest

@@ -10,7 +10,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.DialogUzcardInfoMonitoringBinding
@@ -18,11 +17,11 @@ import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
 import uz.fido.utils.format.Format
 
 class HumoMonitoringDetailsDialog(
-    private val item :HumoMonitoringItem,
-    private val baseInterface: BaseInterface)
-    : BottomSheetDialogFragment() {
+    private val item: HumoMonitoringItem,
+    private val baseInterface: BaseInterface
+) : BottomSheetDialogFragment() {
 
-      private lateinit var binding:DialogUzcardInfoMonitoringBinding
+    private lateinit var binding: DialogUzcardInfoMonitoringBinding
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener {
@@ -38,8 +37,8 @@ class HumoMonitoringDetailsDialog(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding= DialogUzcardInfoMonitoringBinding.inflate(inflater,container,false)
+    ): View {
+        binding = DialogUzcardInfoMonitoringBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -70,7 +69,7 @@ class HumoMonitoringDetailsDialog(
         val viewDepositCreateBinding =
             ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)
     }
 }

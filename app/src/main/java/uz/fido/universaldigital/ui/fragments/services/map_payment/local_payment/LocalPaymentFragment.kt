@@ -11,10 +11,14 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.*
-import com.google.android.gms.maps.model.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapsInitializer
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import dagger.hilt.android.AndroidEntryPoint
-import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.payment.location.LocalPayment
 import uz.fido.network.domain.model.payment.location.LocalPaymentType
 import uz.fido.universaldigital.R
@@ -25,7 +29,6 @@ import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
-import java.math.BigDecimal
 
 @AndroidEntryPoint
 class LocalPaymentFragment : BaseFragment<FragmentLocalPaymentBinding, PaymentBranchViewModel>
@@ -47,11 +50,11 @@ class LocalPaymentFragment : BaseFragment<FragmentLocalPaymentBinding, PaymentBr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        MapsInitializer.initialize(requireContext());
+        MapsInitializer.initialize(requireContext())
         clientPosition = viewmodels.clientPosition.value
         arguments?.let {
-            localPayment = it.serializable<LocalPayment>("local_payment") as LocalPayment?
-            type = it.serializable<LocalPaymentType>("type") as LocalPaymentType?
+            localPayment = it.serializable<LocalPayment>("local_payment")
+            type = it.serializable<LocalPaymentType>("type")
         }
 
         setTextView()
@@ -84,7 +87,7 @@ class LocalPaymentFragment : BaseFragment<FragmentLocalPaymentBinding, PaymentBr
         binding.appBar.setTitle(localPayment?.sv_merchant_name ?: "")
         binding.tvAddress.text = localPayment?.address ?: ""
         if (localPayment!!.phone.length > 8)
-            binding.tvPhone.text = "${Format.toPhoneFormatUZ(localPayment?.phone.toString())}"
+            binding.tvPhone.text = Format.toPhoneFormatUZ(localPayment?.phone.toString())
         binding.etAmount.addTextChangedListener { amount ->
             binding.btnContinue.isEnabled(amount.toString().length >= 3)
         }
@@ -134,12 +137,12 @@ class LocalPaymentFragment : BaseFragment<FragmentLocalPaymentBinding, PaymentBr
     private fun currLocationMarker(zoom: Float, isMove: Boolean, addMarker: Boolean) {
         if (ActivityCompat.checkSelfPermission(
                 requireContext(),
-                android.Manifest.permission.ACCESS_FINE_LOCATION
+                Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 requireActivity(),
-                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
                 1
             )
             return
@@ -152,7 +155,7 @@ class LocalPaymentFragment : BaseFragment<FragmentLocalPaymentBinding, PaymentBr
                     val currentLatLng = LatLng(location.latitude, location.longitude)
                     if (addMarker) {
                         mMap!!.addMarker(
-                            MarkerOptions().position(currentLatLng!!)
+                            MarkerOptions().position(currentLatLng)
                                 .title("Current Location")
                         )
                     }

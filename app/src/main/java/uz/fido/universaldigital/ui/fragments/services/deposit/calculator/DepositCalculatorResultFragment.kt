@@ -16,19 +16,19 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class DepositCalculatorResultFragment:BaseFragment<FragmentCalculatorResultDepositBinding,MainDepositViewModel>(
-    FragmentCalculatorResultDepositBinding::inflate,MainDepositViewModel::class.java
+class DepositCalculatorResultFragment : BaseFragment<FragmentCalculatorResultDepositBinding, MainDepositViewModel>(
+    FragmentCalculatorResultDepositBinding::inflate, MainDepositViewModel::class.java
 ) {
 
-    private lateinit var depositCalculateAdapter:DepositCalculateAdapter
-    private var depId=0
-    private var amount=""
+    private lateinit var depositCalculateAdapter: DepositCalculateAdapter
+    private var depId = 0
+    private var amount = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            depId=it.getInt("dep_id",0)
-            amount=it.getString("amount").toString()
+            depId = it.getInt("dep_id", 0)
+            amount = it.getString("amount").toString()
         }
         onClickView()
         recyclerView()
@@ -41,31 +41,33 @@ class DepositCalculatorResultFragment:BaseFragment<FragmentCalculatorResultDepos
     }
 
     private fun getListCalculator() {
-        val skeleton=showSkeleton(binding.recCalculator,depositCalculateAdapter,R.layout.shimmer_item_history,5)
+        val skeleton = showSkeleton(binding.recCalculator, depositCalculateAdapter, R.layout.shimmer_item_history, 5)
         viewModel.calculateDepositAuto(
             getClientToken(),
-            CalculateDepositAuto(depId.toString(),amount)).observe(viewLifecycleOwner){
-           Handler().postDelayed({ skeleton.hide() },500)
-            when(it.status){
-                Status.SUCCESS->{
-                    var count=0
-                    it.data?.data?.forEach {
+            CalculateDepositAuto(depId.toString(), amount)
+        ).observe(viewLifecycleOwner) { resource ->
+            Handler().postDelayed({ skeleton.hide() }, 500)
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    var count = 0
+                    resource.data?.data?.forEach {
                         count++
-                        it.count=count
+                        it.count = count
                     }
-                    depositCalculateAdapter.submitList(it.data?.data)
+                    depositCalculateAdapter.submitList(resource.data?.data)
                 }
-                Status.ERROR->{
-                    showSnackbar(it.message.toString())
+
+                Status.ERROR -> {
+                    showSnackbar(resource.message.toString())
                 }
             }
         }
     }
 
     private fun creteRecyclerView() {
-        depositCalculateAdapter= DepositCalculateAdapter(arrayListOf())
+        depositCalculateAdapter = DepositCalculateAdapter()
         binding.recCalculator.apply {
-             adapter=depositCalculateAdapter
+            adapter = depositCalculateAdapter
         }
     }
 
@@ -73,8 +75,6 @@ class DepositCalculatorResultFragment:BaseFragment<FragmentCalculatorResultDepos
         binding.appBar.setOnBackButtonClickListener { pop() }
 
     }
-
-
 
 
 }

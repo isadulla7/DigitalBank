@@ -250,7 +250,6 @@ class FirstCardLocalMonitoringFragment :
                 when (it.status) {
                     Status.SUCCESS -> {
                         dialogInfo = InfoMonitoringDialog(
-                            requireContext(),
                             localMonitoring,
                             it.data,
                             object : BaseInterface {
@@ -277,7 +276,6 @@ class FirstCardLocalMonitoringFragment :
 
                     Status.ERROR -> {
                         dialogInfo = InfoMonitoringDialog(
-                            requireContext(),
                             localMonitoring,
                             null,
                             object : BaseInterface {

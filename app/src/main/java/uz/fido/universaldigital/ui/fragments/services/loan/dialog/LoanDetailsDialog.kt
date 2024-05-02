@@ -18,9 +18,8 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format
 
 class LoanDetailsDialog(
-    private val context: Context,
-    private val item:AccountHistory,
-    private val type:String
+    private val item: AccountHistory,
+    private val type: String
 ) : BottomSheetDialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -41,7 +40,7 @@ class LoanDetailsDialog(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding= DialogInfoMonitoringBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -71,11 +70,11 @@ class LoanDetailsDialog(
         val viewDepositCreateBinding =
             ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)
     }
 
-    fun setCreditPurpose(context: Context, lnType: String): String {
+    private fun setCreditPurpose(context: Context, lnType: String): String {
         return when (lnType) {
             "1" -> context.getString(R.string.purpose_1)
             "2", "" -> context.getString(R.string.top_up_account_for_loan)

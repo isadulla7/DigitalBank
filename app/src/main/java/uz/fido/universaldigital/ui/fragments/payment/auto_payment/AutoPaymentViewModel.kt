@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AutoPaymentViewModel @Inject constructor(
-    private val application: Application,
+    application: Application,
     private val paymentRepository: IPaymentRepository
 ) : AbstractViewModel(application) {
 

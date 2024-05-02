@@ -3,7 +3,6 @@ package uz.fido.universaldigital.ui.utils.choose_card
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
@@ -145,45 +144,6 @@ class ChooseCardLayout(context: Context, attr: AttributeSet) : ConstraintLayout(
             }
         }
         return sortedList
-    }
-
-    fun initCardsWithType(
-        cards: ArrayList<CardResponse>,
-        minAmount: String? = null,
-        scrollListener: (CardResponse?) -> Unit
-    ) {
-        if (cards.isNotEmpty()) {
-            binding.noCards.visibility = View.GONE
-            val snapHelper: SnapHelper = PagerSnapHelper()
-            val linearLayoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            binding.cards.apply {
-                adapter = ChooseCardAdapter(cards, minAmount)
-                layoutManager = linearLayoutManager
-                snapHelper.attachToRecyclerView(this)
-
-                addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                        super.onScrollStateChanged(recyclerView, newState)
-                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                            try {
-                                snapHelper.findSnapView(linearLayoutManager)?.let { view ->
-                                    linearLayoutManager.getPosition(view).let { position ->
-                                        vibrateTick(context)
-                                        scrollListener.invoke(cards[position])
-                                    }
-                                }
-                            } catch (e: Exception) {
-                                e.printStackTrace()
-                            }
-                        }
-                    }
-                })
-            }
-        } else {
-            binding.noCards.visibility = View.VISIBLE
-            scrollListener.invoke(null)
-        }
     }
 
 }

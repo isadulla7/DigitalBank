@@ -11,7 +11,6 @@ import androidx.fragment.app.activityViewModels
 import com.jakewharton.rxbinding4.widget.textChanges
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxjava3.functions.Function5
-import kotlinx.android.synthetic.main.fragment_deposit_constructor.*
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.deposits.constructor.DepositConstPercent
@@ -33,7 +32,8 @@ import uz.fido.utils.utility.user.getClientToken
 import java.math.BigDecimal
 import java.text.DateFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 @AndroidEntryPoint
 class DepositConstructFragment :
@@ -48,7 +48,6 @@ class DepositConstructFragment :
 
     val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
     private lateinit var loanMonthDialog: LoanMonthDialog
-    private var dialog: DepositConstructorTimeDialog? = null
     private var type = "000"
     private var year: Int = 0
     private var month: Int = 0
@@ -116,16 +115,14 @@ class DepositConstructFragment :
     ): Boolean {
 
         binding.percentAmount.text = Format().percentAmount(amount.toString(), percent)
-        var amountCurrent =
-            if (amount.isNullOrEmpty()) false
-            else amount.toString().replace(" ", "").toBigDecimal() >= minAmount
+        val amountCurrent = if (amount.isEmpty()) false
+        else amount.toString().replace(" ", "").toBigDecimal() >= minAmount
 
-        var nameCurrent = !name.isEmpty()
+        val nameCurrent = name.isNotEmpty()
 
-        var timeCurrent =
-            if (!month.isNullOrEmpty() || !day.isNullOrEmpty() || !year.isNullOrEmpty())
-                month.toString() != "0" || day.toString() != "0" || year.toString() != "0"
-            else false
+        val timeCurrent = if (month.isNotEmpty() || day.isNotEmpty() || year.isNotEmpty())
+            month.toString() != "0" || day.toString() != "0" || year.toString() != "0"
+        else false
         return amountCurrent && nameCurrent && timeCurrent && percentCheck
     }
 
@@ -403,7 +400,7 @@ class DepositConstructFragment :
         when (p2) {
             "month" -> {
                 month = p1
-                binding.edMonth.setText("${p1}")
+                binding.edMonth.setText("$p1")
             }
 
             "day" -> {

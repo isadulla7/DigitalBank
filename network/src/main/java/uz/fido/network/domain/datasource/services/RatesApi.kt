@@ -6,7 +6,4 @@ import uz.fido.network.domain.model.rates.CurrencyRatesResponse
 
 interface RatesApi {
 
-    @GET("GET_CURRENCY_RATES_OUT")
-    fun getCurrencyRates(): Call<CurrencyRatesResponse>
-
 }

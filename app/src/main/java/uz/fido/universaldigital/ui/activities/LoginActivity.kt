@@ -54,26 +54,22 @@ class LoginActivity : BaseActivity() {
 
     private fun checkForDeepLink() {
         if (intent.data != null) {
-            FirebaseDynamicLinks.getInstance()
-                .getDynamicLink(intent)
-                .addOnSuccessListener(this) { pendingDynamicLinkData ->
-                    pendingDynamicLinkData?.link?.let {
-                        val objectValue = it.getQueryParameter("cardNumber")
-                        val objectId = it.getQueryParameter("objectId")
-                        val amount = it.getQueryParameter("amount")
-                        val comment = it.getQueryParameter("comment")
-                        setStartDestination(
-                            bundleOf(
-                                PassCodeFragment.DEEP_LINK_OBJECT_VALUE to objectValue,
-                                PassCodeFragment.DEEP_LINK_OBJECT_ID to objectId,
-                                PassCodeFragment.DEEP_LINK_AMOUNT to amount,
-                                PassCodeFragment.DEEP_LINK_COMMENT to comment
-                            )
+            FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnSuccessListener(this) { pendingDynamicLinkData ->
+                pendingDynamicLinkData?.link?.let {
+                    val objectValue = it.getQueryParameter("cardNumber")
+                    val objectId = it.getQueryParameter("objectId")
+                    val amount = it.getQueryParameter("amount")
+                    val comment = it.getQueryParameter("comment")
+                    setStartDestination(
+                        bundleOf(
+                            PassCodeFragment.DEEP_LINK_OBJECT_VALUE to objectValue,
+                            PassCodeFragment.DEEP_LINK_OBJECT_ID to objectId,
+                            PassCodeFragment.DEEP_LINK_AMOUNT to amount,
+                            PassCodeFragment.DEEP_LINK_COMMENT to comment
                         )
-                    }
-                }.addOnFailureListener(this) { e ->
-                    setStartDestination()
+                    )
                 }
+            }.addOnFailureListener(this) { setStartDestination() }
         } else {
             setStartDestination()
         }
@@ -98,18 +94,6 @@ class LoginActivity : BaseActivity() {
         finish()
     }
 
-    private fun updateRatesWidget() {
-        RatesWidgetProvider().doUpdate(this, RatesRepository(), WidgetView())
-    }
-
-    private fun setWidgetUpdateInterval() {
-        val constraints =
-            Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build()
-        val workRequest =
-            PeriodicWorkRequestBuilder<Worker>(3, TimeUnit.HOURS).setConstraints(constraints)
-                .build()
-        WorkManager.getInstance(this).enqueue(workRequest)
-    }
     override fun onPause() {
         super.onPause()
         if (CurrentActivityHolder.currentActivity == this) {

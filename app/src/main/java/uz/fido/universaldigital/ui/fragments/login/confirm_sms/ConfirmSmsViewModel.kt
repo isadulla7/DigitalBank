@@ -75,7 +75,4 @@ class ConfirmSmsViewModel @Inject constructor(
         emit(utilsRepository.terminateSession(token, deleteUserDeviceRequest))
     }
 
-    fun loanRepayment(token: String, createPaymentRequest: CreatePaymentRequest) = liveData(Dispatchers.IO) {
-        emit(paymentRepository.loanRepayment(token, createPaymentRequest))
-    }
 }

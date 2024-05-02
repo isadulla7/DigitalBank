@@ -73,7 +73,7 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
         binding.linearIncome.setOnClickListener(this)
         binding.linearOut.setOnClickListener(this)
         binding.appBar.setOnAdditionalBtnClickListener {
-            dialog = DepositOperationDialog(clientDeposit) {
+            dialog = DepositOperationDialog {
                 dialog.dismiss()
                 when (it) {
                     "edit" -> {
@@ -95,8 +95,8 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
 
                     "info" -> {
                         val loanDetailsDialog = DialogInfoMonitoring(
-                            requireContext(),
-                            null, clientDeposit, "info"
+                            null,
+                            clientDeposit, "info"
                         )
                         loanDetailsDialog.show(childFragmentManager, "")
                     }
@@ -134,7 +134,7 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
                 clientDeposit
             ) { AccountHistory, type ->
                 val loanDetailsDialog =
-                    DialogInfoMonitoring(requireContext(), AccountHistory, clientDeposit, type)
+                    DialogInfoMonitoring(AccountHistory, clientDeposit, type)
                 loanDetailsDialog.show(childFragmentManager, "")
             }
             layoutManager = linearLayoutManager

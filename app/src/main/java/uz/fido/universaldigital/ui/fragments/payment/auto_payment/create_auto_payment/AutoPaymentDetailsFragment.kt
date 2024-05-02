@@ -2,14 +2,10 @@ package uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_p
 
 import android.os.Bundle
 import android.text.TextUtils
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.widget.TextViewCompat.AutoSizeTextType
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.subscriptions.AutoPayment
 import uz.fido.network.domain.model.subscriptions.ChangeAutoPaymentStateRequest
@@ -24,8 +20,8 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class AutoPaymentDetailsFragment:BaseFragment<FragmentAutoPaymentDetailBinding,AutoPaymentViewModel>
-    (FragmentAutoPaymentDetailBinding::inflate,AutoPaymentViewModel::class.java){
+class AutoPaymentDetailsFragment : BaseFragment<FragmentAutoPaymentDetailBinding, AutoPaymentViewModel>
+    (FragmentAutoPaymentDetailBinding::inflate, AutoPaymentViewModel::class.java) {
 
     private var autoPayment: AutoPayment? = null
     private var days = ArrayList<String>()
@@ -45,20 +41,19 @@ class AutoPaymentDetailsFragment:BaseFragment<FragmentAutoPaymentDetailBinding,A
 
     private fun setTextItem() {
 
-       binding.appBar.setTitle(autoPayment?.name.toString())
+        binding.appBar.setTitle(autoPayment?.name.toString())
         binding.textAmountValue.text = Format.formatAmount(Format.convertFromTiynDivide(autoPayment?.amount.toString())) + " UZS"
         binding.textNameValue.text = autoPayment?.name.toString()
         binding.textDateValue.text = autoPayment?.modified_on.toString()
         binding.textServiceTypeValue.text = if (autoPayment?.type == "D") getString(R.string.daily) else getString(R.string.monthly_2)
-        if (autoPayment?.state == STATE_ACTIVE){
-            binding.statusValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.color_auto_activ))
+        if (autoPayment?.state == STATE_ACTIVE) {
+            binding.statusValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_auto_activ))
             binding.statusValue.text = getString(R.string.active)
-            binding.statusValue.isChecked=true
-        }
-        else {
-            binding.statusValue.isChecked=false
-            binding.statusValue.text =getString(R.string.ne_active)
-            binding.statusValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.color_auto_no_activ))
+            binding.statusValue.isChecked = true
+        } else {
+            binding.statusValue.isChecked = false
+            binding.statusValue.text = getString(R.string.ne_active)
+            binding.statusValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_auto_no_activ))
         }
 
         if (autoPayment?.type == "D") {
@@ -103,25 +98,26 @@ class AutoPaymentDetailsFragment:BaseFragment<FragmentAutoPaymentDetailBinding,A
     private fun onClick() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.statusValue.setOnCheckedChangeListener { compoundButton, checked ->
-            if (checked){
-                binding.statusValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.color_auto_activ))
+            if (checked) {
+                binding.statusValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_auto_activ))
                 binding.statusValue.text = getString(R.string.active)
-            }else{
-                binding.statusValue.text =getString(R.string.ne_active)
-                binding.statusValue.setTextColor(ContextCompat.getColor(requireContext(),R.color.color_auto_no_activ))
+            } else {
+                binding.statusValue.text = getString(R.string.ne_active)
+                binding.statusValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_auto_no_activ))
             }
         }
 
         binding.btnEnter.setOnClickListener {
             showProgress()
             val state = if (!binding.statusValue.isChecked) STATE_PASSIVE else STATE_ACTIVE
-            viewModel.changeAutoPaymentState(getClientToken(), ChangeAutoPaymentStateRequest(state, autoPayment?.id.toString())).observe(viewLifecycleOwner){
+            viewModel.changeAutoPaymentState(getClientToken(), ChangeAutoPaymentStateRequest(state, autoPayment?.id.toString())).observe(viewLifecycleOwner) {
                 hideProgress()
-                when(it.status){
-                    Status.SUCCESS->{
-                        Toast.makeText(requireContext(), "${getString(R.string.successfully)}", Toast.LENGTH_SHORT).show()
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        Toast.makeText(requireContext(), getString(R.string.successfully), Toast.LENGTH_SHORT).show()
                     }
-                    Status.ERROR->{
+
+                    Status.ERROR -> {
                         showSnackbar(it.message.toString())
                     }
                 }

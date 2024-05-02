@@ -1,14 +1,11 @@
 package uz.fido.universaldigital.ui.fragments.payment.my_home.add_service
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.add_card_dialog.father_bottom_sheet
-import kotlinx.android.synthetic.main.fragment_add_service.btn_payment_list
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.my_house.MyHouseGroup
 import uz.fido.network.domain.model.template.DeleteTemplateRequest
@@ -61,7 +58,7 @@ class ServiceFragment : BaseFragment<FragmentAddServiceBinding, MyHomeViewModel>
         binding.btnPaymentList.setOnClickListener {
             val newList = arrayListOf<Template>()
             templateList.forEach {
-                if (it.isCurrent && it.service_state == "A"){
+                if (it.isCurrent && it.service_state == "A") {
                     newList.add(it)
                 }
             }
@@ -128,7 +125,7 @@ class ServiceFragment : BaseFragment<FragmentAddServiceBinding, MyHomeViewModel>
 
     override fun listOperation(position: Int) {
         super.listOperation(position)
-        myHouseServiceOperationDialog = MyHouseServiceOperationDialog(templateList[position]) {
+        myHouseServiceOperationDialog = MyHouseServiceOperationDialog(templateList[position]) { it ->
             myHouseServiceOperationDialog.dismiss()
             when (it) {
                 "payment" -> {

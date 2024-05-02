@@ -11,7 +11,6 @@ import uz.fido.universaldigital.databinding.ItemMenuServiceBankProductsBinding
 import uz.fido.universaldigital.databinding.ItemMenuServiceBinding
 import uz.fido.universaldigital.databinding.ItemMenuServiceHeaderBinding
 import uz.fido.universaldigital.ui.utils.recyclerview.MenuServiceItem
-import uz.fido.utils.view.bottom_menu_anim.isVisible
 
 class MenuServicesAdapter(
     var onItemClickListener: (Int) -> Unit

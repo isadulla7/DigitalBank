@@ -34,7 +34,7 @@ fun Activity.tintSystemBars(toColor: Int, fromColor: Int? = null) {
     anim.setDuration(10).start()
 }
 
-fun Activity.blendColors(from: Int, to: Int, ratio: Float): Int {
+fun blendColors(from: Int, to: Int, ratio: Float): Int {
     val inverseRatio = 1f - ratio
     val r: Float = Color.red(to) * ratio + Color.red(from) * inverseRatio
     val g: Float = Color.green(to) * ratio + Color.green(from) * inverseRatio

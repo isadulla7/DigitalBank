@@ -59,11 +59,6 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
     private var amount = "0"
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        menuProductsViewModel.updateCards()
-    }
-
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         setFragmentResult()

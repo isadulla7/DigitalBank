@@ -50,7 +50,6 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
 
     private var referenceDialog: ReferenceDialog? = null
     private var buttonOperation = "save"
-    private lateinit var loanMonthDialog: LoanMonthDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

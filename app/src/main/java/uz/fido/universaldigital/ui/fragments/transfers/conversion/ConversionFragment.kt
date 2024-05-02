@@ -342,9 +342,9 @@ class ConversionFragment : BaseFragment<FragmentConversionBinding, ConversionVie
     private fun setCardsFromBundle() {
         arguments?.let {
             val senderCard =
-                requireArguments().serializable<CardResponse>(Const.SENDER_CARD) as CardResponse?
+                requireArguments().serializable<CardResponse>(Const.SENDER_CARD)
             val receiverCard =
-                requireArguments().serializable<CardResponse>(Const.RECEIVER_CARD) as CardResponse?
+                requireArguments().serializable<CardResponse>(Const.RECEIVER_CARD)
             if (senderCard != null && receiverCard != null) {
                 setSenderCardDetails(senderCard)
                 setReceiverCardDetails(receiverCard)

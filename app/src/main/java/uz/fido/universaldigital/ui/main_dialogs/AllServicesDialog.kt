@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.network.domain.model.payment.AllServiceLists
-import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ListBottomSheetBinding
 import uz.fido.universaldigital.ui.main_dialogs.adapters.ServicesAdapter
@@ -27,11 +25,6 @@ class AllServicesDialog(
     private var adapter: ServicesAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
     private var layoutManager2: GridLayoutManager? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-//        setStyle(DialogFragment.STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

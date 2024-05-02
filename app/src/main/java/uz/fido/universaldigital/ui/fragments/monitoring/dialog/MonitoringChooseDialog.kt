@@ -1,7 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.dialog
 
-import android.app.DatePickerDialog
-import android.app.DatePickerDialog.OnDateSetListener
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,12 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.fragment_deposit_constructor.year_layout
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogMonitoringChooseBinding
-import uz.fido.universaldigital.databinding.DialogMonitoringDateBinding
-import java.text.SimpleDateFormat
-import java.util.Calendar
 
 
 class MonitoringChooseDialog(private val onClick:(String)->Unit): BottomSheetDialogFragment(){
@@ -26,7 +20,7 @@ class MonitoringChooseDialog(private val onClick:(String)->Unit): BottomSheetDia
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding= DialogMonitoringChooseBinding.inflate(inflater,container,false)
         return binding.root
     }

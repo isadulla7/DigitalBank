@@ -74,7 +74,7 @@ class MyHomeHistoryDialog(
         val viewDepositCreateBinding =
             ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)
     }
 }

@@ -16,9 +16,6 @@ import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_RUB
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_USD
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_UZS
 import uz.fido.utils.format.Format
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class WidgetView : View {
 

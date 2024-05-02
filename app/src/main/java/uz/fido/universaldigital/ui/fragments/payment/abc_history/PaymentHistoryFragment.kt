@@ -242,7 +242,6 @@ class PaymentHistoryFragment :
                 when (it.status) {
                     Status.SUCCESS -> {
                         dialogInfo = InfoMonitoringDialog(
-                            requireContext(),
                             localMonitoring,
                             it.data,
                             object : BaseInterface {
@@ -269,7 +268,6 @@ class PaymentHistoryFragment :
 
                     Status.ERROR -> {
                         dialogInfo = InfoMonitoringDialog(
-                            requireContext(),
                             localMonitoring,
                             null,
                             object : BaseInterface {

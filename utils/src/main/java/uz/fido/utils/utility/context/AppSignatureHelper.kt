@@ -3,14 +3,14 @@ package uz.fido.utils.utility.context
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.pm.PackageManager
-import android.util.Base64.*
+import android.util.Base64.NO_PADDING
+import android.util.Base64.NO_WRAP
+import android.util.Base64.encodeToString
 import android.util.Log
 import java.nio.charset.Charset
-import java.nio.charset.StandardCharsets
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Arrays
 
 class AppSignatureHelper(context: Context) : ContextWrapper(context) {
 
@@ -30,8 +30,8 @@ class AppSignatureHelper(context: Context) : ContextWrapper(context) {
 //                For API level 28 use PackageManager.GET_SIGNING_CERTIFICATES
 //                For API level less than 27 use PackageManager.GET_SIGNATURES
                 val signatures = packageManager.getPackageInfo(
-                        packageName,
-                        PackageManager.GET_SIGNATURES
+                    packageName,
+                    PackageManager.GET_SIGNATURES
                 ).signatures
                 for (signature in signatures) {
                     val hash = hash(packageName, signature.toCharsString())
@@ -56,11 +56,11 @@ class AppSignatureHelper(context: Context) : ContextWrapper(context) {
         }
 
     companion object {
-        val TAG = AppSignatureHelper::class.java.simpleName
+        val TAG: String = AppSignatureHelper::class.java.simpleName
 
-        private val HASH_TYPE = "SHA-256"
-        val NUM_HASHED_BYTES = 9
-        val NUM_BASE64_CHAR = 11
+        private const val HASH_TYPE = "SHA-256"
+        private const val NUM_HASHED_BYTES = 9
+        private const val NUM_BASE64_CHAR = 11
 
         private fun hash(packageName: String, signature: String): String? {
             val appInfo = "$packageName $signature"

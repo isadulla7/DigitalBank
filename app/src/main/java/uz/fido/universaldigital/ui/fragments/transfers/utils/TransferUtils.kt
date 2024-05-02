@@ -31,15 +31,6 @@ fun getInfoCommand(receiverCard: String): String {
     ) "info&purse" else "info&card"
 }
 
-fun setCommand(senderCard: CardResponse, receiverCard: CardResponse): String {
-    return when {
-        senderCard.object_type == WALLET && receiverCard.object_type == WALLET -> "purse&purse"
-        senderCard.object_type == WALLET && receiverCard.object_type != WALLET -> "purse&card"
-        senderCard.object_type != WALLET && receiverCard.object_type == WALLET -> "card&purse"
-        else -> "card&card"
-    }
-}
-
 fun setCommand(senderCardType: String, receiverCardType: String): String {
     return when {
         senderCardType == WALLET && receiverCardType == WALLET -> "purse&purse"
@@ -56,10 +47,6 @@ fun getServiceIdInfo(receiverCard: CardResponse, senderCard: CardResponse): Stri
 fun getServiceIdInfo(receiverCard: String, senderCard: String): String {
     return if (receiverCard.startsWith("AUZ") || receiverCard.startsWith("DV") || senderCard == "KL") "-12" else "-1"
 }
-
-fun capitalizeWords(name: String): String =
-    if (name.length > 1) name[0].uppercaseChar().toString() + name.substring(1)
-        .lowercase(Locale.getDefault()) else ""
 
 fun String.capitalizeWord(): String =
     if (this.length > 1) this[0].uppercaseChar().toString() + this.substring(1)

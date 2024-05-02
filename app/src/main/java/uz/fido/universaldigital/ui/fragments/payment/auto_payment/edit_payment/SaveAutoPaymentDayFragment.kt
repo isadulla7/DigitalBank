@@ -10,7 +10,6 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.dialog_auto_payment_type.day
 import uz.fido.network.domain.model.payment.AllServiceLists
 import uz.fido.network.domain.model.subscriptions.AutoPayment
 import uz.fido.network.domain.model.subscriptions.SaveAutoPaymentModel
@@ -19,7 +18,6 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSaveAutoPaymentDayBinding
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.adapter.AutoPaymentDaysAdapter
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment.SaveAutoPaymentFinalFragment
-import uz.fido.universaldigital.ui.main_dialogs.AllServicesDialog
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -258,7 +256,7 @@ class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,
                 )
                 timePicker.setTitle(getString(R.string.choose_hour))
                 timePicker.show()
-                timePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.RED);
+                timePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.RED)
 
 
             }

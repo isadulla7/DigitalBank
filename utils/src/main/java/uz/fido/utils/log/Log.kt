@@ -56,17 +56,9 @@ object Log {
         e("Error: ${this.javaClass.simpleName}-", message)
     }
 
-    fun wtf(message: String) {
-        wtf("Warning: ", message)
-    }
-
-    fun wtf(tag: String, message: String) {
+    private fun wtf(tag: String, message: String) {
         Log.w(tag, message)
         crashlyticsLog(tag,message)
-    }
-
-    fun Context.wtf(message: String) {
-        wtf("Warning: ${this.javaClass.simpleName}-", message)
     }
 
     fun d(message: String, throwable: Throwable) {
@@ -96,5 +88,5 @@ object Log {
         }
     }
 
-    val debugMode: Boolean get() = BuildConfig.DEBUG
+    private val debugMode: Boolean get() = BuildConfig.DEBUG
 }

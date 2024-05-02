@@ -32,9 +32,3 @@ data class Deposit(
     var group_id: Int=0
 ) : Serializable
 
-data class DepositGroups(
-    var depositList: ArrayList<Deposit>,
-    var groupId: Int,
-    var groupName: String,
-    var selectedDeposit: Deposit
-)

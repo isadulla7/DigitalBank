@@ -1,6 +1,5 @@
 package uz.fido.network.domain.model.payment
 
-import uz.fido.network.domain.model.payment.PaymentParams
 import java.io.Serializable
 
 data class PreparePaymentResponse(

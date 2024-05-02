@@ -20,7 +20,7 @@ class TotalBalanceWidget : AppWidgetProvider() {
         }
     }
 
-    internal fun updateAppWidget(
+    private fun updateAppWidget(
         context: Context, appWidgetManager: AppWidgetManager, appWidgetId: Int
     ) {
         val views = RemoteViews(context.packageName, R.layout.total_balance_widget_layout)

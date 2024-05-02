@@ -13,7 +13,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.LinearLayout
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,7 +20,6 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import okhttp3.Headers.Companion.toHeaders
 import org.apache.commons.lang3.math.NumberUtils
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.payment.AllServiceLists
@@ -67,7 +65,7 @@ import uz.fido.utils.view.custom_text_view.TextViewRegular
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.sql.SQLException
-import java.util.*
+import java.util.Locale
 
 class PaymentSecondStepFragment :
     BaseSimpleFragment<FragmentPaymentSecondStepBinding>(FragmentPaymentSecondStepBinding::inflate),
@@ -357,7 +355,7 @@ class PaymentSecondStepFragment :
         if (paymentParams.def_value.isNotEmpty()) {
             editText.setText(paymentParams.def_value)
             if (paymentParams.payment_detail_code == "LOAN_REPAYMENT") {
-                if (org.apache.commons.lang3.math.NumberUtils.isParsable(paymentParams.def_value)) {
+                if (NumberUtils.isParsable(paymentParams.def_value)) {
                     editText.setText(
                         Format.formatAmount(
                             Format.formatAmountFromTiynToInteger(
@@ -430,7 +428,7 @@ class PaymentSecondStepFragment :
                 try {
                     val defValue = paymentParams.def_value
                     refParamList =
-                        mobileDBHelper!!.getRefParamList(paymentParams.ref_code.toString(), null)!!
+                        mobileDBHelper!!.getRefParamList(paymentParams.ref_code.toString(), null)
                     paymentHashMap[paymentCode] = defValue
                     for (i in refParamList.indices) {
                         if (defValue == refParamList[i].code!!) {
@@ -462,7 +460,7 @@ class PaymentSecondStepFragment :
                 } else {
                     try {
                         refParamList =
-                            mobileDBHelper!!.getRefParamList(paymentParams.ref_code!!, null)!!
+                            mobileDBHelper!!.getRefParamList(paymentParams.ref_code!!, null)
                         navigationList = ArrayList()
                         for (i in refParamList.indices) {
                             val allServiceLists = AllServiceLists()
@@ -481,7 +479,7 @@ class PaymentSecondStepFragment :
             if (paymentCode == "TARIF_TYPE") {
                 editTextTag = "TARIF_TYPE"
                 refParamList =
-                    mobileDBHelper!!.getRefParamList(paymentParams.ref_code.toString(), null)!!
+                    mobileDBHelper!!.getRefParamList(paymentParams.ref_code.toString(), null)
                 navigationList = ArrayList()
                 for (i in refParamList.indices) {
                     val allServiceLists = AllServiceLists()
@@ -504,7 +502,7 @@ class PaymentSecondStepFragment :
             if (paymentCode == "EARLY_CLOSURE") {
                 editTextTag = "EARLY_CLOSURE"
                 refParamList =
-                    mobileDBHelper!!.getRefParamList(paymentParams.ref_code.toString(), null)!!
+                    mobileDBHelper!!.getRefParamList(paymentParams.ref_code.toString(), null)
                 navigationList = ArrayList()
                 for (i in refParamList.indices) {
                     val allServiceLists = AllServiceLists()
@@ -544,10 +542,10 @@ class PaymentSecondStepFragment :
             Log.d("===P", regionCode!!)
             try {
                 refParamList = when (editTextTag) {
-                    "CODE_GP" -> mobileDBHelper!!.getRefParamList("318", regionCode)!!
-                    "GNI" -> mobileDBHelper!!.getRefParamList("319", regionCode)!!
-                    "SOATO" -> mobileDBHelper!!.getRefParamList("317", regionCode)!!
-                    else -> mobileDBHelper!!.getRefParamList("D0001", regionCode)!!
+                    "CODE_GP" -> mobileDBHelper!!.getRefParamList("318", regionCode)
+                    "GNI" -> mobileDBHelper!!.getRefParamList("319", regionCode)
+                    "SOATO" -> mobileDBHelper!!.getRefParamList("317", regionCode)
+                    else -> mobileDBHelper!!.getRefParamList("D0001", regionCode)
                 }
                 navigationList = ArrayList()
                 for (i in refParamList.indices) {
@@ -637,7 +635,7 @@ class PaymentSecondStepFragment :
         if (paymentParams.param_type == "S") {
             if (paymentParams.code == "DIVISIONS" || paymentParams.code == "CODE_GP" || paymentParams.code == "GNI" || paymentParams.code == "SOATO") {
                 val refParamList = mobileDBHelper!!.getRefParamList("317", null)
-                refParamList?.forEach {
+                refParamList.forEach {
                     Log.d(
                         "==",
                         "${it.name.toString()} ${it.code.toString()} ${it.ref_code.toString()}"
@@ -732,7 +730,7 @@ class PaymentSecondStepFragment :
     }
 
     private fun checkForButton(): Boolean {
-        Log.d("TAG", "checkForButton: ${homeId}")
+        Log.d("TAG", "checkForButton: $homeId")
         for (maskEditText in editTextList) {
             if (maskEditText.visibility == View.VISIBLE) {
                 if (maskEditText.rawText.isEmpty()) {

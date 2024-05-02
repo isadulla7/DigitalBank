@@ -20,7 +20,7 @@ class CreditDetailsFragment(private val clientProduct: CreditProduct) : DialogFr
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo);
+        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo)
     }
 
     override fun onCreateView(
@@ -79,15 +79,15 @@ class CreditDetailsFragment(private val clientProduct: CreditProduct) : DialogFr
         val viewDepositCreateBinding =
             ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.addLin.addView(viewDepositCreateBinding.root)
     }
 
-    fun isOverdraft(creditId: String): Boolean {
+    private fun isOverdraft(creditId: String): Boolean {
         return creditId == "54"
     }
 
-    fun getLoanType(context: Context, loanId: String): String {
+    private fun getLoanType(context: Context, loanId: String): String {
         return when (loanId) {
             "24" -> context.getString(R.string.loan_type_1)
             "30" -> context.getString(R.string.loan_type_2)

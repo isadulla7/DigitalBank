@@ -6,14 +6,12 @@ import android.location.LocationListener
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -22,7 +20,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.Tab
 import com.google.maps.android.SphericalUtil
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.branches.Branches
 import uz.fido.network.domain.model.branches.GetBranchListRequest
@@ -33,7 +30,6 @@ import uz.fido.universaldigital.databinding.FragmentBranchesBinding
 import uz.fido.universaldigital.ui.fragments.profile.MenuProfileViewModel
 import uz.fido.universaldigital.ui.utils.extensions.bitmapDescriptorFromVector
 import uz.fido.utils.app.PermissionInterface
-import uz.fido.utils.const.Const
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop

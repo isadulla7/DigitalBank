@@ -10,16 +10,15 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import uz.fido.network.domain.model.payment.location.LocalPayment
-import uz.fido.network.domain.model.payment.location.LocalPaymentType
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentDialogSearchBinding
 import uz.fido.universaldigital.ui.fragments.services.map_payment.adapter.LocalPaymentAdapter
+import java.util.Locale
 
 
 class LocalPaymentSearchDialog(
     private val localPayment: ArrayList<LocalPayment>,
-    private val localPaymentTypeList: ArrayList<LocalPaymentType>,
     private var setOnClick: (LocalPayment) -> Unit
 ) : DialogFragment(), BaseInterface {
 
@@ -33,7 +32,7 @@ class LocalPaymentSearchDialog(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo);
+        setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo)
     }
 
     private lateinit var binding: FragmentDialogSearchBinding
@@ -75,7 +74,7 @@ class LocalPaymentSearchDialog(
         binding.search.addTextChangedListener { local ->
             if (local!!.length > 1) {
                 val list = localPayment.filter {
-                    it.sv_merchant_name.toLowerCase().startsWith(local.toString().toLowerCase())
+                    it.sv_merchant_name.lowercase(Locale.getDefault()).startsWith(local.toString().lowercase(Locale.getDefault()))
                 }
                 setAdapter(list)
             } else setAdapter(listOf())
@@ -96,7 +95,7 @@ class LocalPaymentSearchDialog(
         }
     }
 
-    fun showKeyboard() {
+    private fun showKeyboard() {
         binding.search.requestFocus()
         val inputMethodManager: InputMethodManager =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -104,7 +103,7 @@ class LocalPaymentSearchDialog(
         inputMethodManager.showSoftInput(binding.search, 0)
     }
 
-    fun closeKeyboard() {
+    private fun closeKeyboard() {
         val inputMethodManager: InputMethodManager =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)

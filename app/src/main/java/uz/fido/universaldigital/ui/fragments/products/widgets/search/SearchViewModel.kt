@@ -16,8 +16,4 @@ class SearchViewModel @Inject constructor(
 ) : AbstractViewModel(application) {
 
 
-    fun searchRequest(token: String, searchRequest: SearchRequest) = liveData(Dispatchers.IO) {
-        emit(utilsRepository.searchRequest(token, searchRequest))
-    }
-
 }

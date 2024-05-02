@@ -16,7 +16,7 @@ class WeekGoalDialog(private val onclick:(String,Int)->Unit): BottomSheetDialogF
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding= GoalWeekBottomSheetBinding.inflate(inflater,container,false)
         return binding.root
     }

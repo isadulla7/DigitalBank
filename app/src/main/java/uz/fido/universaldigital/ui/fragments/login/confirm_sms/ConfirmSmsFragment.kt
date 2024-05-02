@@ -9,7 +9,6 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
@@ -133,7 +132,9 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     }
 
     private fun initTextChangeListener() {
-        val smsLength = if (arguments != null) { arguments?.getInt(SMS_MAX_LENGTH) ?: 8 } else 8
+        val smsLength = if (arguments != null) {
+            arguments?.getInt(SMS_MAX_LENGTH) ?: 8
+        } else 8
         val newSmsLength = if (smsLength == 0) 8 else smsLength
         binding.etSms.addTextChangedListener {
             binding.btnContinue.isEnabled(it.toString().length == newSmsLength)
@@ -726,36 +727,6 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             task.addOnFailureListener {}
         } catch (e: Exception) {
             e.printStackTrace()
-        }
-    }
-
-    private fun sendEmailCode(phoneNumber: String, email: String?) {
-        if (phoneNumber != "") {
-            viewModel.sendEmailCode(
-                SendEmailCode(
-                    email = email!!,
-                    phone_number = phoneNumber,
-                    device_id = requireContext().getDeviceIds()
-                )
-            ).observe(viewLifecycleOwner) {
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        val response = it.data
-                        val stringLine = response?.string_line.toString()
-                        gotoWithSlide(
-                            R.id.restoreWithEmailFragment, bundleOf(
-                                PHONE_NUMBER to phoneNumber,
-                                EMAIL to email,
-                                STRING_LINE to stringLine
-                            )
-                        )
-                    }
-
-                    Status.ERROR -> {
-                        showSnackbar(it.message.toString())
-                    }
-                }
-            }
         }
     }
 

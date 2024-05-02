@@ -37,10 +37,10 @@ class AmountTextWatcher internal constructor(
         for (k in dataToSpace.length - 1 downTo 0) {
             if (counter == 3) {
                 str.insert(0, dataToSpace[k] + " ")
-                if (dot) {
-                    counter = 1
+                counter = if (dot) {
+                    1
                 } else {
-                    counter = 0
+                    0
                 }
             } else {
                 str.insert(0, dataToSpace[k])
@@ -88,6 +88,5 @@ class AmountTextWatcher internal constructor(
     }
 
     companion object {
-        const val MAX_LENGTH = 16
     }
 }

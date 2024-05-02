@@ -14,7 +14,6 @@ import android.view.WindowInsets
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
-import androidx.annotation.NonNull
 import androidx.core.content.FileProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -27,15 +26,15 @@ import java.io.File
 class BottomReceiptsDialog(private var html: String, private var name: String) : BottomSheetDialogFragment(),
     View.OnClickListener {
 
-       private lateinit var binding:DialogBottomReceiptsBinding
+    private lateinit var binding: DialogBottomReceiptsBinding
 
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding= DialogBottomReceiptsBinding.inflate(inflater,container,false)
+    ): View {
+        binding = DialogBottomReceiptsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -43,7 +42,7 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
         super.onViewCreated(view, savedInstanceState)
         loadView()
 
-     setOnClickListeners()
+        setOnClickListeners()
     }
 
     private fun setOnClickListeners() {
@@ -51,6 +50,7 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
         binding.shareQrCode.setOnClickListener(this)
         binding.printQrCode.setOnClickListener(this)
     }
+
     private fun loadView() {
         val displayWidth = getScreenWidth(requireActivity())
         binding.webView.settings.javaScriptEnabled = true
@@ -65,7 +65,7 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
         }
     }
 
-    fun getScreenWidth(@NonNull activity: Activity): Int {
+    private fun getScreenWidth(activity: Activity): Int {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val windowMetrics = activity.windowManager.currentWindowMetrics
             val insets: Insets = windowMetrics.windowInsets
@@ -155,10 +155,12 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
                 save(binding.webView, 1)
                 dismiss()
             }
+
             R.id.share_qr_code -> {
                 save(binding.webView, 2)
                 dismiss()
             }
+
             R.id.print_qr_code -> {
                 startPrintImage(binding.webView)
                 dismiss()

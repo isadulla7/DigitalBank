@@ -10,8 +10,6 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringItem
-import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.DialogUzcardInfoMonitoringBinding
@@ -39,7 +37,7 @@ class VisaMonitoringDetailsDialog(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding= DialogUzcardInfoMonitoringBinding.inflate(inflater,container,false)
         return binding.root
     }
@@ -72,7 +70,7 @@ class VisaMonitoringDetailsDialog(
         val viewDepositCreateBinding =
             ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
-        viewDepositCreateBinding.value.setText(value)
+        viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)
     }
 }

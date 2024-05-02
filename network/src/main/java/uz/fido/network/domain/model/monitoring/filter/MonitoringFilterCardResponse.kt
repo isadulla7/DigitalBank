@@ -1,7 +1,6 @@
 package uz.fido.network.domain.model.monitoring.filter
 
 
-import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class MonitoringFilterCardResponse(

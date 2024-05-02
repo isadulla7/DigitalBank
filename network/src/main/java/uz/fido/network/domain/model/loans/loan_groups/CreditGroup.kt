@@ -5,7 +5,7 @@ import java.io.Serializable
 data class CreditGroup(
     val activeDate: String="",
     val creditType: String="",
-    val currencyСode: String="",
+    val currencyCode: String="",
     val deactivDate: String="",
     val description: String="",
     val formDelivery: String="",

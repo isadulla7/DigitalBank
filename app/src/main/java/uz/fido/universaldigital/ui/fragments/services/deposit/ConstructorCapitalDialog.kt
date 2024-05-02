@@ -14,10 +14,10 @@ class ConstructorCapitalDialog(private val onClickView: (Boolean, Boolean, Boole
 
     private lateinit var binding: DialogCapitalConstructorBinding
 
-    var option1 = false
-    var option2 = false
-    var option3 = false
-    var option4 = false
+    private var option1 = false
+    private var option2 = false
+    private var option3 = false
+    private var option4 = false
 
     override fun onCreateView(
         inflater: LayoutInflater,

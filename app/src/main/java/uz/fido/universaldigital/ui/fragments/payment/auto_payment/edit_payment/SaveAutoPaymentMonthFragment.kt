@@ -27,7 +27,7 @@ import uz.fido.utils.utility.user.getClientPhoneNumber
 import java.util.Calendar
 
 @AndroidEntryPoint
-class SaveAutoPaymentMonthFragment:SimpleAbstractFragment<FragmentSavePaymentMonthBinding>(
+class SaveAutoPaymentMonthFragment : SimpleAbstractFragment<FragmentSavePaymentMonthBinding>(
     FragmentSavePaymentMonthBinding::inflate
 ), BaseInterface, View.OnClickListener, (Int, String) -> Unit {
 
@@ -48,7 +48,7 @@ class SaveAutoPaymentMonthFragment:SimpleAbstractFragment<FragmentSavePaymentMon
         }
 
         if (monthsList.isEmpty())
-        getMonthsList()
+            getMonthsList()
 
         onClickView()
         recylerView()
@@ -96,19 +96,19 @@ class SaveAutoPaymentMonthFragment:SimpleAbstractFragment<FragmentSavePaymentMon
                 listOfMonths.add(autoPaymentDates)
             }
             monthsList = ArrayList()
-            listOfMonths.forEach { it.isSelected=false }
-            monthsList=listOfMonths
+            listOfMonths.forEach { it.isSelected = false }
+            monthsList = listOfMonths
 
             listOfMonths.forEach { dayWithName ->
                 currentMonths!!.forEach {
                     if (it == dayWithName.code!!.toInt()) {
-                    monthsList[it-1].isSelected=true
-                    //monthsList.add(dayWithName)
+                        monthsList[it - 1].isSelected = true
+                        //monthsList.add(dayWithName)
                     }
                 }
             }
             monthsAdapter?.setList(monthsList)
-          //  binding.btnContinue.isEnabled(true)
+            //  binding.btnContinue.isEnabled(true)
             checkForButton()
         } else {
             val amount = saveAutoPaymentModel?.payment_details?.get("AMOUNT")
@@ -130,6 +130,7 @@ class SaveAutoPaymentMonthFragment:SimpleAbstractFragment<FragmentSavePaymentMon
         }
         monthsAdapter?.setList(monthsList)
     }
+
     private fun onClickView() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.editTextName.addTextChangedListener(textWatcher)
@@ -186,12 +187,13 @@ class SaveAutoPaymentMonthFragment:SimpleAbstractFragment<FragmentSavePaymentMon
                 monthsArrayList.add(it.code!!.toInt())
                 monthNameBuilder.append(" ").append(it.name?.replace("'", " ")).append(" ")
                 monthNameBuilder.deleteCharAt(monthNameBuilder.length - 1)
-            } }
+            }
+        }
         val daysArrayList = ArrayList<Int>()
         daysArrayList.add(binding.editTextDayOfPayment.text.toString().toInt())
         saveAutoPaymentModel?.days = daysArrayList
         saveAutoPaymentModel?.months = monthsArrayList
-        saveAutoPaymentModel?.selected_days= arrayListOf()
+        saveAutoPaymentModel?.selected_days = arrayListOf()
         saveAutoPaymentModel?.hours = selectedTime
         saveAutoPaymentModel?.amount = Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", ""))
         saveAutoPaymentModel?.monthsName = monthNameBuilder.toString()
@@ -199,14 +201,15 @@ class SaveAutoPaymentMonthFragment:SimpleAbstractFragment<FragmentSavePaymentMon
         saveAutoPaymentModel?.type = "M"
         saveAutoPaymentModel?.auto_payment_id = autoPayment?.id.toString()
         if (monthsArrayList.isNotEmpty())
-        gotoWithSlide(
-            R.id.saveAutoPaymentFinalFragment,
-            bundleOf(
-                SaveAutoPaymentFinalFragment.SAVE_AUTO_PAYMENT_MODEL to saveAutoPaymentModel,
-                "operation" to "edit"
+            gotoWithSlide(
+                R.id.saveAutoPaymentFinalFragment,
+                bundleOf(
+                    SaveAutoPaymentFinalFragment.SAVE_AUTO_PAYMENT_MODEL to saveAutoPaymentModel,
+                    "operation" to "edit"
+                )
             )
-        )
     }
+
     private fun getMonthsList() {
         months = arrayListOf(
             getString(R.string.month_jan),
@@ -237,7 +240,7 @@ class SaveAutoPaymentMonthFragment:SimpleAbstractFragment<FragmentSavePaymentMon
         }
     }
 
-    private fun checkForButton():Boolean {
+    private fun checkForButton(): Boolean {
         if (binding.editTextName.text.toString().isEmpty()) {
             return false
         }
@@ -268,34 +271,37 @@ class SaveAutoPaymentMonthFragment:SimpleAbstractFragment<FragmentSavePaymentMon
     }
 
     override fun onClick(p0: View?) {
-        when(p0!!.id){
-            R.id.edit_text_day_of_payment,R.id.icon_text_day_of_payment->{
-                loanMonthDialog= LoanMonthDialog(this,"","day",0,requireContext())
-                loanMonthDialog.show(childFragmentManager,"")
+        when (p0!!.id) {
+            R.id.edit_text_day_of_payment, R.id.icon_text_day_of_payment -> {
+                loanMonthDialog = LoanMonthDialog(this, "", "day", 0, requireContext())
+                loanMonthDialog.show(childFragmentManager, "")
             }
-            R.id.edit_text_time,R.id.icon_text_time->{
+
+            R.id.edit_text_time, R.id.icon_text_time -> {
                 val cal = Calendar.getInstance()
 
-                val timePicker = TimePickerDialog(activity,R.style.my_dialog_theme,
+                val timePicker = TimePickerDialog(
+                    activity, R.style.my_dialog_theme,
                     { _, selectedHour, selectedMinute ->
-                        selectedTime=selectedHour.toString()
-                        binding.editTextTime.setText("$selectedHour:$selectedMinute") },
+                        selectedTime = selectedHour.toString()
+                        binding.editTextTime.setText("$selectedHour:$selectedMinute")
+                    },
                     cal.get(Calendar.HOUR_OF_DAY),
                     cal.get(Calendar.HOUR_OF_DAY),
                     true
                 )
                 timePicker.setTitle(getString(R.string.choose_hour))
                 timePicker.show()
-                timePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.RED);
+                timePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.RED)
 
             }
         }
     }
 
     override fun invoke(count: Int, name: String) {
-        if (count==31 || count==30){
+        if (count == 31 || count == 30) {
             binding.infoView.visibility = View.VISIBLE
-        }else binding.infoView.visibility = View.GONE
+        } else binding.infoView.visibility = View.GONE
         binding.editTextDayOfPayment.setText(count.toString())
         loanMonthDialog.dismiss()
     }

@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.target.GoalHistory
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.databinding.ItemAccountHistoryBinding
 import uz.fido.universaldigital.databinding.ItemGoalHistoryBinding
 import uz.fido.utils.utility.format.Format
 
@@ -20,7 +19,7 @@ class GoalHistoryAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(item: GoalHistory) {
             binding.amount.text = Format.formatAmount(Format.formatAmountFromTiynToInteger(item.amount)) + " UZS"
-            binding.time.text =if (item.create_date.length>16) item.create_date.substring(0,16) else item.create_date
+            binding.time.text = if (item.create_date.length > 16) item.create_date.substring(0, 16) else item.create_date
             if (item.amount.startsWith("-")) {
                 binding.icon.setImageResource(R.drawable.outcome)
                 binding.name.text = itemView.context.getString(R.string.withdrawal)

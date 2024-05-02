@@ -29,18 +29,6 @@ object BaseCardUtils {
         return (menuProductsViewModel.cards.value?.size ?: 0) != 0
     }
 
-    fun Fragment.hasUserCard(cardType: String): Boolean {
-        val menuProductsViewModel =
-            ViewModelProvider(requireActivity())[MenuProductsViewModel::class.java]
-        val cardList = menuProductsViewModel.cards.value as ArrayList<CardResponse>
-        cardList.forEach {
-            if (it.object_type == cardType) {
-                return true
-            }
-        }
-        return false
-    }
-
     @SuppressLint("SetTextI18n")
     fun TextView.setCardNameAndNumber(card: CardResponse) {
         this.text =
@@ -54,13 +42,6 @@ object BaseCardUtils {
             card.object_value
         )
         else Format.formatWalletNumber(card.object_value)
-    }
-
-    fun TextView.setCardNumberFormatted(card: CardInfoDto) {
-        this.text = if (card.card_type != WALLET) Format.formatCardNumberNew(
-            card.card_number!!
-        )
-        else Format.formatWalletNumber(card.card_number!!)
     }
 
     fun TextView.setCardBalance(cardResponse: CardResponse) {
@@ -175,15 +156,6 @@ object BaseCardUtils {
         }
     }
 
-    private fun setObjectState(context: Context, walletState: String): String {
-        return when (walletState) {
-            "009" -> context.getString(R.string.special_bank_restrictions)
-            "010" -> context.getString(R.string.account_closed_temporarily)
-            "011" -> context.getString(R.string.account_permanently_closed)
-            else -> ""
-        }
-    }
-
     fun isBankCard(card: CardResponse): Boolean {
         return card.object_value.startsWith("860048") || card.object_value.startsWith("626272") || card.object_value.startsWith(
             "986023"
@@ -215,13 +187,6 @@ object BaseCardUtils {
         } else this.visibility = View.GONE
     }
 
-    fun ImageView.setBankLogoForHumoPay(object_value: String) {
-        if (getBankLogo(object_value) != 0) {
-            this.visibility = View.VISIBLE
-            this.load(getBankLogo(object_value))
-        } else this.visibility = View.GONE
-    }
-
     fun setCardState(
         card: CardResponse, context: Context, textView: TextView
     ) {
@@ -249,10 +214,6 @@ object BaseCardUtils {
         }
     }
 
-
-    fun CardResponse.isActive(): Boolean {
-        return state == "0"
-    }
 
     fun CardResponse.isNotActive(): Boolean {
         return state != "0" && state != "A"
