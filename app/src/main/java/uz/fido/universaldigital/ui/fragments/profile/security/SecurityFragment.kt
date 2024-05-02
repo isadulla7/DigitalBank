@@ -1,6 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.profile.security
 
-import DeleteAccountDialog
+import uz.fido.universaldigital.ui.dialogs.DeleteAccountDialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper

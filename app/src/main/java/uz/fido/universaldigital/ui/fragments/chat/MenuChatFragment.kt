@@ -147,7 +147,7 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
             addOnScrollListener(scrollListener)
 
             list = ArrayList()
-            chatAdapter = ChatAdapter(this@MenuChatFragment, list)
+            chatAdapter = ChatAdapter(list)
             adapter = chatAdapter
         }
         binding.editMessage.addTextChangedListener {

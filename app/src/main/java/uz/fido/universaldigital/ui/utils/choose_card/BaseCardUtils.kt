@@ -10,7 +10,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import coil.load
 import io.paperdb.Paper
-import uz.fido.network.domain.model.cards.CardInfoDto
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.app.UniversalApplication

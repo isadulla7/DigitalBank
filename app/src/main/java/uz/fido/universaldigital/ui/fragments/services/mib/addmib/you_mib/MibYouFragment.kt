@@ -1,6 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.mib.addmib.you_mib
 
-import BaseInfoDialog
+import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
 import android.os.Bundle
 import android.view.View
 import androidx.core.widget.addTextChangedListener

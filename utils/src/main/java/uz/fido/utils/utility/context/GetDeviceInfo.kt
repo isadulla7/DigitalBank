@@ -1,23 +1,24 @@
 package uz.fido.utils.utility.context
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
 import android.os.Build
-import android.provider.Settings
 import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
 import uz.fido.utils.log.Logger
 import java.math.BigInteger
-import java.net.*
+import java.net.Inet4Address
+import java.net.InetAddress
+import java.net.NetworkInterface
+import java.net.SocketException
+import java.net.UnknownHostException
 import java.nio.ByteOrder
-import java.util.*
 
 class GetDeviceInfo(var context: Context) {
 

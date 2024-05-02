@@ -9,7 +9,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import uz.fido.network.domain.model.chat.MessageHistory
-import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemMessageHeaderBinding
 import uz.fido.universaldigital.databinding.ItemMessageReceiverBinding
 import uz.fido.universaldigital.databinding.ItemMessageSenderBinding
@@ -19,7 +18,6 @@ import uz.fido.universaldigital.ui.fragments.chat.viewholders.ViewHolderMine
 import uz.fido.universaldigital.ui.fragments.chat.viewholders.ViewHolderReceiver
 
 class ChatAdapter(
-    private val baseInterface: BaseInterface,
     private val list: ArrayList<MessageHistory>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

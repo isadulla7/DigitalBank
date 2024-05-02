@@ -34,7 +34,6 @@ class ViewHolderReceiver(
             history.animate = false
         }
         itemView.setOnLongClickListener {
-//            baseInterface.showMessageOperations(absoluteAdapterPosition)
             return@setOnLongClickListener true
         }
     }

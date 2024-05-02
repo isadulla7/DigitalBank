@@ -11,8 +11,6 @@ import com.google.firebase.dynamiclinks.ktx.shortLinkAsync
 import com.google.firebase.dynamiclinks.ktx.socialMetaTagParameters
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
-import uz.fido.network.data.utility.Status
-import uz.fido.network.domain.model.amount_requests.RmCreateRequest
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
@@ -22,7 +20,6 @@ import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
-import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.view.amount.AmountSuggestionView
 
 

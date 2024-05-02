@@ -14,12 +14,10 @@ import uz.fido.network.domain.model.cards.AddCardRequest
 import uz.fido.network.domain.model.cards.ResetPinCount
 import uz.fido.network.domain.model.home.GlSMSActivateRequest
 import uz.fido.network.domain.model.p2p.P2PRequest
-import uz.fido.network.domain.model.payment.CreatePaymentRequest
 import uz.fido.network.domain.model.sessions.DeleteUserDeviceRequest
 import uz.fido.network.domain.model.sign_up.CheckUserSms
 import uz.fido.network.domain.model.sign_up.FinishRegRequest
 import uz.fido.network.domain.model.sms.CheckSmsForPayment
-import uz.fido.network.domain.model.sms.SendEmailCode
 import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject
 
@@ -53,10 +51,6 @@ class ConfirmSmsViewModel @Inject constructor(
 
     fun checkForSmsPaymentRequest(token: String, checkSmsForPayment: CheckSmsForPayment) = liveData(Dispatchers.IO) {
         emit(paymentRepository.checkSmsForPayment(token, checkSmsForPayment))
-    }
-
-    fun sendEmailCode(sendEmailCode: SendEmailCode) = liveData(Dispatchers.IO) {
-        emit(userRepository.sendEmailCode(sendEmailCode))
     }
 
     fun p2pRequest(token: String, p2PRequest: P2PRequest) = liveData(Dispatchers.IO) {

@@ -5,8 +5,6 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.MotionEvent
-import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,28 +47,6 @@ class RestoreWithCardFragment :
             binding.btnContinue.setProgress(true)
             finishOperation()
         }
-        binding.cardNumber.setOnTouchListener({ _, event ->
-            val DRAWABLE_RIGHT = 2
-            if (event.action == MotionEvent.ACTION_UP) {
-//                if (event.rawX >= binding.cardNumber.right - binding.cardNumber.compoundDrawables[DRAWABLE_RIGHT].bounds.width()) {
-//                    val dialog = ChooseCardScanDialog(object : BaseInterface {
-//                        override fun scanViaCamera() {
-//                            if (checkForCameraPermission(this@RestoreViaCardFragment)) {
-//                                openCameraForCardRead()
-//                            }
-//                        }
-//
-//                        override fun scanViaNFC() {
-//                            val intent = Intent(requireActivity(), ScanNfcCardActivity::class.java)
-//                            activityNfcLauncher.launch(intent)
-//                        }
-//                    })
-//                    dialog.show(childFragmentManager, "")
-//                    return@OnTouchListener true
-            }
-//            }
-            false
-        })
     }
 
     private fun initFieldsListener() {
@@ -84,21 +60,14 @@ class RestoreWithCardFragment :
         )
         for (editText in editTexts) {
             editText.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?, start: Int, count: Int, after: Int
-                ) {
-                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     var isTrueCard = true
                     val et1 = binding.cardNumber.text.toString().trim().replace(" ", "")
                     val et2 = binding.cardExpire.text.toString().trim().replace("/", "")
                     if (et2.length > 1) {
-                        requireContext().checkForExpireDate(
-                            binding.cardExpire.text.toString(),
-                            binding.cardExpire,
-                            binding.cardExpireLayout
-                        )
+                        requireContext().checkForExpireDate(binding.cardExpire.text.toString(), binding.cardExpire, binding.cardExpireLayout)
                     }
                     if (binding.cardExpire.text.toString().isEmpty()) {
                         isTrueCard = false
@@ -139,9 +108,7 @@ class RestoreWithCardFragment :
             network_state = device.network_state,
             imei_data = device.imei_data,
             card_number = binding.cardNumber.rawText,
-            expire_date = Format.sentExpireDate(
-                binding.cardExpire.editableText.toString().replace("/", "")
-            ),
+            expire_date = Format.sentExpireDate(binding.cardExpire.editableText.toString().replace("/", "")),
             flag = SignUpFlagsEnum.CardNumber.flag,
             app_version_code = BuildConfig.VERSION_CODE.toString(),
             app_version = BuildConfig.VERSION_NAME,
@@ -158,7 +125,7 @@ class RestoreWithCardFragment :
                     gotoWithSlide(
                         R.id.changePasswordFragment2, bundleOf(
                             ChangePasswordFragment.CHANGE_PASSWORD_OPERATION to ChangePasswordFragment.CHANGE_PASSWORD_SIGNUP,
-                            ChangePasswordFragment.PHONE_NUMBER to phoneNumber,
+                            ChangePasswordFragment.PHONE_NUMBER to phoneNumber
                         )
                     )
                 }

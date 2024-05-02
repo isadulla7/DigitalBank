@@ -1,7 +1,7 @@
 package uz.fido.universaldigital.base
 
-import BaseInfoDialog
-import OpenSettingsDialog
+import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
+import uz.fido.universaldigital.ui.dialogs.OpenSettingsDialog
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Context

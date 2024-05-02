@@ -140,9 +140,7 @@ class CheckInfoPaymentFragment :
         binding.amount.text = requireArguments().getString("amount")
         when (operation) {
             OPERATION_P2P -> {
-                binding.commission.text = requireArguments().getString("commission") + " UZS" + "(${
-                    requireArguments().getString("percent")
-                } %)"
+                binding.commission.text = requireArguments().getString("commission") + " UZS" + "(${requireArguments().getString("percent")} %)"
                 binding.paymentName.text = getString(R.string.transfer)
                 binding.buttonReceipt.visibility = View.GONE
             }

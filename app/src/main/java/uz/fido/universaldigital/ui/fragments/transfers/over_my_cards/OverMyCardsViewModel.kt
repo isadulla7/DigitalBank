@@ -6,7 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import uz.fido.network.domain.datasource.interfaces.IP2PRepository
 import uz.fido.network.domain.model.p2p.P2PInfoRequest
-import uz.fido.network.domain.model.p2p.P2PRequest
 import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject
 

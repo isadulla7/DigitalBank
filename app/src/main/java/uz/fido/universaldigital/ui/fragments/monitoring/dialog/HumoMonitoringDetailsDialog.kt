@@ -66,8 +66,7 @@ class HumoMonitoringDetailsDialog(
     }
 
     private fun addView(name: String, value: String) {
-        val viewDepositCreateBinding =
-            ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
+        val viewDepositCreateBinding = ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
         viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)

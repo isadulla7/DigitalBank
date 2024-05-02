@@ -26,10 +26,9 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.Utility.getDeviceName
 
 @AndroidEntryPoint
-class RestoreWithEmailFragment :
-    BaseFragment<FragmentRestoreWithEmailBinding, RestoreProfileViewModel>(
-        FragmentRestoreWithEmailBinding::inflate, RestoreProfileViewModel::class.java
-    ) {
+class RestoreWithEmailFragment : BaseFragment<FragmentRestoreWithEmailBinding, RestoreProfileViewModel>(
+    FragmentRestoreWithEmailBinding::inflate, RestoreProfileViewModel::class.java
+) {
 
     private var phoneNumber: String? = null
     private var stringLine: String? = null
@@ -69,13 +68,7 @@ class RestoreWithEmailFragment :
 
     private fun sendEmailCode() {
         if (phoneNumber != null) {
-            viewModel.sendEmailCode(
-                SendEmailCode(
-                    email = email!!,
-                    phone_number = phoneNumber!!,
-                    device_id = requireContext().getDeviceIds()
-                )
-            ).observe(viewLifecycleOwner) {
+            viewModel.sendEmailCode(SendEmailCode(email = email!!, phone_number = phoneNumber!!, device_id = requireContext().getDeviceIds())).observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.SUCCESS -> {
                         val response = it.data
@@ -96,9 +89,7 @@ class RestoreWithEmailFragment :
             val device = GetDeviceInfo(requireContext()).deviceInfo
             val model = FinishRegRequest(
                 phone_number = phoneNumber!!,
-                string_line = CryptoUtil.encryptWithoutSalt(
-                    stringLine.toString(), binding.etSms.text.toString().trim()
-                ),
+                string_line = CryptoUtil.encryptWithoutSalt(stringLine.toString(), binding.etSms.text.toString().trim()),
                 device_type = "A",
                 device_code = requireContext().getDeviceIds(),
                 device_name = getDeviceName(),
@@ -135,7 +126,7 @@ class RestoreWithEmailFragment :
                         }
 
                         Status.ERROR -> {
-
+                            showSnackbar(it.data?.msg.toString())
                         }
                     }
                 }

@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import uz.fido.network.domain.datasource.interfaces.ICardRepository
 import uz.fido.network.domain.model.cards.CheckCardRequestP2p
 import uz.fido.network.domain.model.home.CheckSMSActivateRequest
-import uz.fido.network.domain.model.home.GlSMSActivateRequest
 import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject
 

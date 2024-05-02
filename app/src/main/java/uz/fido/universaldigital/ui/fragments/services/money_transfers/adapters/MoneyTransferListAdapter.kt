@@ -46,9 +46,9 @@ class MoneyTransferListAdapter(
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val name: TextViewMedium = view.findViewById<TextViewMedium>(R.id.name)
-        val image: ImageView = view.findViewById<ImageView>(R.id.image)
-        val father: LinearLayoutCompat = view.findViewById<LinearLayoutCompat>(R.id.father)
+        val name: TextViewMedium = view.findViewById(R.id.name)
+        val image: ImageView = view.findViewById(R.id.image)
+        val father: LinearLayoutCompat = view.findViewById(R.id.father)
     }
 
 }

@@ -1,3 +1,5 @@
+package uz.fido.universaldigital.ui.dialogs
+
 import android.os.Bundle
 import uz.fido.universaldigital.base.BaseDialogFragment
 import uz.fido.universaldigital.databinding.LogOutDialogBinding

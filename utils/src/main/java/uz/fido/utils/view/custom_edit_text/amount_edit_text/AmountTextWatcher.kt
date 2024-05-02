@@ -87,6 +87,4 @@ class AmountTextWatcher internal constructor(
         }
     }
 
-    companion object {
-    }
 }

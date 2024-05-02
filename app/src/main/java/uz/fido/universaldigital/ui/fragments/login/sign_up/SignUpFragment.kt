@@ -60,9 +60,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
     private fun setPhonePrefix() {
         binding.etPhoneNumber.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus && binding.etPhoneNumber.text.toString()
-                    .isEmpty()
-            ) binding.etPhoneNumber.setText(getString(R.string.phone_number_prefix))
+            if (hasFocus && binding.etPhoneNumber.text.toString().isEmpty()) binding.etPhoneNumber.setText(getString(R.string.phone_number_prefix))
         }
         binding.etPhoneNumber.setOnKeyListener { _, _, event ->
             event.keyCode == KeyEvent.KEYCODE_DEL && binding.etPhoneNumber.text.toString().length == 4

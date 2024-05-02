@@ -1,6 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.payment.init_payment
 
-import OpenSettingsDialog
+import uz.fido.universaldigital.ui.dialogs.OpenSettingsDialog
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity

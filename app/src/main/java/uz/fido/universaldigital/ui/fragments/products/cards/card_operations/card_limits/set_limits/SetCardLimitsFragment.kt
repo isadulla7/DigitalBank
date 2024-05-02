@@ -22,7 +22,6 @@ import uz.fido.universaldigital.databinding.FragmentSetCardLimitsBinding
 import uz.fido.universaldigital.ui.dialogs.ReferenceDialog
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
-import uz.fido.universaldigital.ui.fragments.services.loan.dialog.LoanMonthDialog
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format

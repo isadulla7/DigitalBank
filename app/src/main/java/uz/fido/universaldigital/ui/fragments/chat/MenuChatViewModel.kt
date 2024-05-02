@@ -5,22 +5,16 @@ import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import uz.fido.network.domain.datasource.interfaces.IChatRepository
-import uz.fido.network.domain.datasource.interfaces.ISocketRepository
 import uz.fido.network.domain.model.chat.EditMessageRequest
-import uz.fido.network.domain.model.chat.ForwardMessageRequest
-import uz.fido.network.domain.model.chat.GetUserFromContactRequest
-import uz.fido.network.domain.model.chat.MessageOperationRequest
 import uz.fido.network.domain.model.chat.ReceiveMessagesRequest
 import uz.fido.network.domain.model.chat.SendMessageRequest
-import uz.fido.network.domain.model.chat.create_room.CreateRoomRequest
 import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class MenuChatViewModel @Inject constructor(
     application: Application,
-    private val chatRepository: IChatRepository,
-    private val socketRepository: ISocketRepository
+    private val chatRepository: IChatRepository
 ) : AbstractViewModel(application) {
 
     fun fetchRoomList(token: String) = liveData(Dispatchers.IO) {

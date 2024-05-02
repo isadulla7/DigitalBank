@@ -6,7 +6,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import uz.fido.network.domain.datasource.interfaces.IPaymentRepository
 import uz.fido.network.domain.model.payment.PreparePaymentRequest
-import uz.fido.network.domain.model.search.GetOperationInfoRequest
 import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject
 
