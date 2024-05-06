@@ -9,7 +9,7 @@ import uz.fido.network.domain.model.monitoring.filter.UserPayedService
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemServiceChooseFilterBinding
-import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
+import uz.fido.universaldigital.ui.utils.keys.Keys
 
 class ServiceAllChooseAdapter(
     private val context: Context,
@@ -24,7 +24,7 @@ class ServiceAllChooseAdapter(
 
             if (item.icon_name != "")
                 Picasso.get()
-                    .load(PAYNET_PHOTO + item.icon_name)
+                    .load(Keys.paynetPhotoUrl() + item.icon_name)
                     .error(R.drawable.ic_payments_placeholder)
                     .into(binding.image)
             else binding.image.setImageResource(R.drawable.ic_payments_placeholder)

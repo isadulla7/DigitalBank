@@ -12,35 +12,36 @@ import uz.fido.network.domain.model.my_id.Profile
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentLoanUserInfo1Binding
 import uz.fido.universaldigital.ui.fragments.services.loan.LoanViewModel
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.pop
 
 @AndroidEntryPoint
-class LoanUserInfo1Fragment:BaseFragment<FragmentLoanUserInfo1Binding,LoanViewModel>(
-    FragmentLoanUserInfo1Binding::inflate,LoanViewModel::class.java
+class LoanUserInfo1Fragment : BaseFragment<FragmentLoanUserInfo1Binding, LoanViewModel>(
+    FragmentLoanUserInfo1Binding::inflate, LoanViewModel::class.java
 ) {
 
-    private lateinit var clientDetailedInfo:ClientDetailedInfo
+    private lateinit var clientDetailedInfo: ClientDetailedInfo
     private var profile: Profile? = null
 
-    companion object{
-           const val CREDIT_ITEM="credit_group"
-           const val CLIENT_INFO="client_info"
-           const val CREDIT_PROGRESS_STEP="credit_progress_step"
-           const val  CLIENT_MY_ID_INFO="credit_my_id_info"
-           const val  RESULT_USER_INFO="result_user_info"
+    companion object {
+        const val CREDIT_ITEM = "credit_group"
+        const val CLIENT_INFO = "client_info"
+        const val CREDIT_PROGRESS_STEP = "credit_progress_step"
+        const val CLIENT_MY_ID_INFO = "credit_my_id_info"
+        const val RESULT_USER_INFO = "result_user_info"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         getArgumentsItem()
-       // myIdToPass()
+        // myIdToPass()
 
 
     }
 
     private fun getArgumentsItem() {
-        clientDetailedInfo=requireArguments().getSerializable(CLIENT_INFO) as ClientDetailedInfo
+        clientDetailedInfo = requireArguments().getSerializable(CLIENT_INFO) as ClientDetailedInfo
     }
 
     private val faceIdActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -50,45 +51,47 @@ class LoanUserInfo1Fragment:BaseFragment<FragmentLoanUserInfo1Binding,LoanViewMo
     }
 
     private fun getAccessToken(code: String) {
-            showProgress()
+        showProgress()
         viewModel.getAccessToken(
             grant_type = "authorization_code",
             code = code,
-            client_id = Const.MY_ID_CLIENT_ID,
-            client_secret = "64riG3bHuGAFc7O79tGQx0cz46SSkgNGukHFL14yKs9XnOZPBfBcMZDGmkZkwbE7shSwQD6I4jrjQXwtcmvKmQsFYbvZTOI92Dxd",
-            redirect_url = "https://aab.uz/uz"
-        ).observe(viewLifecycleOwner){
+            client_id = Keys.getMyIdClientId(),
+            client_secret = Keys.getClientSecret(),
+            redirect_url = "https://universalbank.uz/"
+        ).observe(viewLifecycleOwner) {
             hideProgress()
-           when(it.status){
-               Status.SUCCESS->{
-                   getMeRequest(it.data!!)
-               }
-               Status.ERROR->{
-                   showSnackbar(it.message.toString())
-               }
+            when (it.status) {
+                Status.SUCCESS -> {
+                    getMeRequest(it.data!!)
+                }
 
-           }
+                Status.ERROR -> {
+                    showSnackbar(it.message.toString())
+                }
+
+            }
         }
 
     }
 
     private fun getMeRequest(data: MyIdGetAccessTokenResponse) {
-            showProgress()
-           viewModel.getMe("Bearer " + data.access_token).observe(viewLifecycleOwner){
+        showProgress()
+        viewModel.getMe("Bearer " + data.access_token).observe(viewLifecycleOwner) {
             hideProgress()
-            when(it.status){
-                Status.SUCCESS->{
+            when (it.status) {
+                Status.SUCCESS -> {
                     profile = it.data?.profile
                     if (profile != null) {
-                      //  init()
+                        //  init()
                     } else {
                         pop()
                     }
                 }
-                Status.ERROR->{
+
+                Status.ERROR -> {
                     showSnackbar(it.message.toString())
                 }
             }
-           }
+        }
     }
 }

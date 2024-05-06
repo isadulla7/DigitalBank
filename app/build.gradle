@@ -10,16 +10,21 @@ plugins {
 
 android {
     defaultConfig {
-        applicationId ConfigData.applicationId
-        minSdkVersion ConfigData.minSdkVersion
-        compileSdk ConfigData.compileSdkVersion
-        targetSdkVersion ConfigData.targetSdkVersion
-        versionCode ConfigData.versionCode
-        versionName ConfigData.releaseVersionName
-        archivesBaseName = ConfigData.archivesBaseName
+        applicationId ConfigData.APPLICATION_ID
+        minSdkVersion ConfigData.MIN_SDK_VERSION
+        compileSdk ConfigData.COMPILE_SDK_VERSION
+        targetSdkVersion ConfigData.TARGET_SDK_VERSION
+        versionCode ConfigData.VERSION_CODE
+        versionName ConfigData.RELEASE_VERSION_NAME
+        archivesBaseName = ConfigData.ARCHIVES_BASE_NAME
 
         vectorDrawables.useSupportLibrary = true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags("")
+            }
+        }
     }
     buildFeatures {
         viewBinding true
@@ -31,6 +36,12 @@ android {
             ndk {
                 abiFilters "arm64-v8a", "armeabi-v7a"
             }
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path = "src/main/cpp/CMakeLists.txt"
+            version = "3.22.1"
         }
     }
     bundle {
@@ -45,6 +56,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    ndkVersion '25.0.8775105'
 }
 
 dependencies {

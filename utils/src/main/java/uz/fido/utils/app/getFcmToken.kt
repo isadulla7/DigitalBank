@@ -10,7 +10,6 @@ fun getFCMToken(){
 
     if ((Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "").isEmpty()) {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
-            Log.d("TAG", "getFCMToken:==${task.isSuccessful} ")
             if (task.isSuccessful) {
                 val token = task.result
                 Logger.writeLog("=====FCM TOKEN1${token}")

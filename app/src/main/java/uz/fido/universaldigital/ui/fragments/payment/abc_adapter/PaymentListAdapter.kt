@@ -10,7 +10,7 @@ import uz.fido.network.domain.model.payment.PaymentService
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemPaymentListBinding
 import uz.fido.universaldigital.ui.utils.extensions.setHtmlText
-import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
+import uz.fido.universaldigital.ui.utils.keys.Keys
 
 class PaymentListAdapter(
     private var itemClickListener: (PaymentService) -> Unit
@@ -34,7 +34,7 @@ class PaymentListAdapter(
             binding.apply {
                 itemName.setHtmlText(item.nameIndex.toString())
                 Picasso.get()
-                    .load(PAYNET_PHOTO + item.icon_name)
+                    .load(Keys.paynetPhotoUrl() + item.icon_name)
                     .error(R.drawable.ic_payments_placeholder).into(icon)
                 father.setOnClickListener {
                     itemClickListener.invoke(item)

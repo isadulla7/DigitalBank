@@ -92,14 +92,6 @@ class MyHomeHistory : BaseFragment<FragmentMyHouseHistoryBinding, MyHomeViewMode
                         if (totalList.isEmpty()) {
                             totalList.add(dateItem)
                         } else {
-                            Log.d(
-                                "TAG", "getItemHistoryList:${
-                                    newDateFormat((totalList.last() as HomeGeneralItem).itemHomeHistory!!.create_date.toString()).substring(
-                                        0, 10
-                                    )
-                                } "
-                            )
-                            Log.d("TAG", "getItemHistoryList:${dateItem.date} ")
                             if (dateItem.date != newDateFormat((totalList.last() as HomeGeneralItem).itemHomeHistory!!.create_date.toString()).substring(
                                     0, 10
                                 )

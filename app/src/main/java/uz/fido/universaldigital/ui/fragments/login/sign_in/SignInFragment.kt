@@ -20,10 +20,9 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignInBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.app.getFCMToken
-import uz.fido.utils.const.APIServiceConst
-import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 import uz.fido.utils.const.Const
 import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.security.CryptoUtil
@@ -107,7 +106,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun getUserInfo() {
-        viewModel.getUserDetailedInfo(APIServiceConst.USER_INFO_URL + requireContext().getIpAddress()).observe(viewLifecycleOwner) {
+        viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + requireContext().getIpAddress()).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> it.data?.let { data ->
                     checkUserSignInRequest(data)
@@ -147,7 +146,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             sim_iccd = device.simCcd.toString(),
             os_system_version_api = "A",
             network_state = device.networkState.toString(),
-            client_id = USER_CLIENT_ID,
+            client_id = Keys.getClientId(),
             ip = requireContext().getIpAddress(),
             imei_data = device.imeiData.toString()
         )

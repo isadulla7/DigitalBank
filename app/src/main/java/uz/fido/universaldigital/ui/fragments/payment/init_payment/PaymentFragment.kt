@@ -47,7 +47,7 @@ import uz.fido.universaldigital.ui.utils.extensions.isInternetConnected
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.universaldigital.ui.utils.extensions.showProgress
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
-import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.context.getDeviceIds
@@ -200,7 +200,7 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
         }
         binding.appBar.setTitle(paymentService?.nameIndex.toString())
         if (paymentService?.icon_name != "") Picasso.get()
-            .load(PAYNET_PHOTO + paymentService?.icon_name)
+            .load(Keys.paynetPhotoUrl() + paymentService?.icon_name)
             .error(R.drawable.ic_payments_placeholder)
             .into(binding.imageViewAvatar)
         else binding.imageViewAvatar.setImageResource(R.drawable.ic_payments_placeholder)
@@ -466,36 +466,36 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
             payment_details = keyValueList,
             template_id = if (isEdit) templateItem!!.template_id else null
         )
-        if (templateName!=""){
-        menuPaymentsViewModel.createTemplate(getClientToken(), model).observe(viewLifecycleOwner) {
-            binding.btnContinue.setProgress(false)
-            when (it.status) {
-                Status.SUCCESS -> {
-                    if (homeId != null) {
-                        gotoWithSlide(
-                            R.id.basicSuccessFragment,
-                            bundleOf(
-                                Const.OPERATION to BasicSuccessFragment.SAVE_MY_HOME,
-                                BasicSuccessFragment.HOME_ID to homeId,
-                                BasicSuccessFragment.HOME_NAME to homeName
+        if (templateName != "") {
+            menuPaymentsViewModel.createTemplate(getClientToken(), model).observe(viewLifecycleOwner) {
+                binding.btnContinue.setProgress(false)
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        if (homeId != null) {
+                            gotoWithSlide(
+                                R.id.basicSuccessFragment,
+                                bundleOf(
+                                    Const.OPERATION to BasicSuccessFragment.SAVE_MY_HOME,
+                                    BasicSuccessFragment.HOME_ID to homeId,
+                                    BasicSuccessFragment.HOME_NAME to homeName
+                                )
                             )
-                        )
-                    } else {
-                        gotoWithSlide(
-                            R.id.basicSuccessFragment, bundleOf(
-                                Const.OPERATION to BasicSuccessFragment.SAVE_TEMPLATE,
+                        } else {
+                            gotoWithSlide(
+                                R.id.basicSuccessFragment, bundleOf(
+                                    Const.OPERATION to BasicSuccessFragment.SAVE_TEMPLATE,
+                                )
                             )
-                        )
+                        }
+                    }
+
+                    Status.ERROR -> {
+                        //clearAmount()
+                        showSnackbar(it.message.toString())
                     }
                 }
-
-                Status.ERROR -> {
-                    //clearAmount()
-                    showSnackbar(it.message.toString())
-                }
             }
-        }
-        }else{
+        } else {
             binding.btnContinue.setProgress(false)
             showSnackbar("Имя шаблона пусто")
         }

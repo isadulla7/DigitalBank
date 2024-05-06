@@ -208,8 +208,6 @@ class PaymentSecondStepFragment :
             if (paymentService?.payment_detail_code == "PAYNET_ELECTR" || paymentService?.payment_detail_code == "PAYNET_GAZ" ||
                 paymentService?.payment_detail_code == "PAYNET_SUV" || paymentService?.payment_detail_code == "MUNIS_0102"
             ) {
-                Log.d("TAG", "drawCalculatorView:$operation ")
-                Log.d("TAG", "drawCalculatorView:${paymentService?.payment_detail_code} ")
                 calculatorView = ViewElectricityCalculator(requireContext())
                 calculatorView?.tag = paymentService?.payment_detail_code
                 calculatorView?.setValues(childFragmentManager, object : BaseInterface {
@@ -328,7 +326,6 @@ class PaymentSecondStepFragment :
                 .isNotEmpty()
         ) paymentParams.hint else paymentParams.name
         mainBlockBinding.textInputLayout.hint = hint
-        Log.d("drawEditText", ": $hint")
         val editText = mainBlockBinding.editTextMainBlock
         editTextList.add(editText)
         editText.imeOptions =
@@ -539,7 +536,6 @@ class PaymentSecondStepFragment :
             refParamList = ArrayList()
             editTextTag = v!!.tag.toString()
             divisionTag = editTextTag
-            Log.d("===P", regionCode!!)
             try {
                 refParamList = when (editTextTag) {
                     "CODE_GP" -> mobileDBHelper!!.getRefParamList("318", regionCode)
@@ -593,9 +589,6 @@ class PaymentSecondStepFragment :
                     } else {
                         calculateRange()
                     }
-                    Log.d("TAG", "setToEditText: ${paymentService?.payment_detail_code}")
-                    Log.d("TAG", "setToEditText: ${allServiceLists.addition}")
-
                     if (binding.mainLayout.findViewWithTag<ViewElectricityCalculator>(paymentService?.payment_detail_code) != null && homeId == null)
                         binding.mainLayout.findViewWithTag<ViewElectricityCalculator>(
                             paymentService?.payment_detail_code
@@ -635,12 +628,6 @@ class PaymentSecondStepFragment :
         if (paymentParams.param_type == "S") {
             if (paymentParams.code == "DIVISIONS" || paymentParams.code == "CODE_GP" || paymentParams.code == "GNI" || paymentParams.code == "SOATO") {
                 val refParamList = mobileDBHelper!!.getRefParamList("317", null)
-                refParamList.forEach {
-                    Log.d(
-                        "==",
-                        "${it.name.toString()} ${it.code.toString()} ${it.ref_code.toString()}"
-                    )
-                }
             }
         }
         if (paymentParams.payment_detail_code == "LOAN_REPAYMENT") {
@@ -730,7 +717,6 @@ class PaymentSecondStepFragment :
     }
 
     private fun checkForButton(): Boolean {
-        Log.d("TAG", "checkForButton: $homeId")
         for (maskEditText in editTextList) {
             if (maskEditText.visibility == View.VISIBLE) {
                 if (maskEditText.rawText.isEmpty()) {

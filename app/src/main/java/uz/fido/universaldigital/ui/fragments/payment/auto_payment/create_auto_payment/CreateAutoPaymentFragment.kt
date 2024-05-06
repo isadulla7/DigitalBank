@@ -102,7 +102,6 @@ class CreateAutoPaymentFragment : BaseFragment<FragmentCreateAutoPaymentBinding,
 
 
     private fun editAutoPayment() {
-        Log.d("TAG", "editAutoPayment:${selectedTime} ")
         saveAutoPaymentModel = SaveAutoPaymentModel()
         saveAutoPaymentModel?.phone_number = getClientPhoneNumber()
         saveAutoPaymentModel?.name = binding.editTextName.text.toString()
@@ -119,7 +118,6 @@ class CreateAutoPaymentFragment : BaseFragment<FragmentCreateAutoPaymentBinding,
                 val dayName = TextUtils.join(", ", days)
                 saveAutoPaymentModel?.months = java.util.ArrayList()
                 saveAutoPaymentModel?.days = daysArrayList
-                Log.d("TAG", "editAutoPayment: $selectedTime")
                 saveAutoPaymentModel?.hours = selectedTime
                 saveAutoPaymentModel?.selected_days = java.util.ArrayList()
                 saveAutoPaymentModel?.amount = Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", ""))
@@ -149,7 +147,6 @@ class CreateAutoPaymentFragment : BaseFragment<FragmentCreateAutoPaymentBinding,
                 daysArrayList.add(binding.editTextDayOfPayment.text.toString().toInt())
                 saveAutoPaymentModel?.days = daysArrayList
                 saveAutoPaymentModel?.months = monthsArrayList
-                Log.d("TAG", "editAutoPayment: $selectedTime")
                 saveAutoPaymentModel?.hours = selectedTime
                 saveAutoPaymentModel?.selected_days = java.util.ArrayList()
                 saveAutoPaymentModel?.amount = Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", ""))

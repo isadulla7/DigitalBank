@@ -447,7 +447,6 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
                             refParamList = ArrayList()
                             editTextTag = v!!.tag.toString()
                             divisionTag = editTextTag
-                            Log.d("===P", regionCode!!)
                             try {
                                 refParamList = when (editTextTag) {
                                     "CODE_GP" -> databaseHelper!!.getRefParamList(

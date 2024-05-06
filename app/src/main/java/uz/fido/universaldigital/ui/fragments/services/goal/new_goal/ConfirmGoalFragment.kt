@@ -185,8 +185,6 @@ class ConfirmGoalFragment : BaseFragment<FragmentConfirmGoalBinding, GoalViewMod
             ) { cardResponse ->
                 cardResponse?.let { card ->
                     selectedCard = card
-                    Log.d("TAG", "initCards:${card.balance.toBigDecimal()} ")
-                    Log.d("TAG", "initCards:${targetRequest.start_amount.toBigDecimal()} ")
                     if (card.balance.toBigDecimal() >= targetRequest.start_amount.toBigDecimal()
                     ) {
                         binding.btnContinue.isEnabled(true)

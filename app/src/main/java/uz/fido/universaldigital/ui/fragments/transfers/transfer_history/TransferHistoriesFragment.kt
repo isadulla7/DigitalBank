@@ -14,7 +14,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentTransferHistoryBinding
 import uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferToCardViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
-import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Command
 import uz.fido.utils.const.Const
@@ -79,7 +79,7 @@ class TransferHistoriesFragment :
             )
         viewModel.getP2PHistory(
             getClientToken(),
-            P2PHistoryRequest(getClientId(), USER_CLIENT_ID, Command.INFO, "A")
+            P2PHistoryRequest(getClientId(), Keys.getClientId(), Command.INFO, "A")
         ).observe(
             viewLifecycleOwner
         ) { resource ->

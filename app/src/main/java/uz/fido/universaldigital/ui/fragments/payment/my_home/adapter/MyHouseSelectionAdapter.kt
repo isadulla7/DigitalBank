@@ -7,7 +7,7 @@ import com.squareup.picasso.Picasso
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemMyHouseSelectionBinding
-import uz.fido.utils.const.APIServiceConst
+import uz.fido.universaldigital.ui.utils.keys.Keys
 
 
 class MyHouseSelectionAdapter(
@@ -18,7 +18,7 @@ class MyHouseSelectionAdapter(
 
         fun bind(templateItem: Template) {
             if (templateItem.icon_name != "")
-                Picasso.get().load(APIServiceConst.PAYNET_PHOTO + templateItem.icon_name).error(R.drawable.ic_payments_placeholder).into(binding.icon)
+                Picasso.get().load(Keys.paynetPhotoUrl() + templateItem.icon_name).error(R.drawable.ic_payments_placeholder).into(binding.icon)
             else binding.icon.setImageResource(R.drawable.ic_payments_placeholder)
             binding.text.text = templateItem.name
             binding.person.text = templateItem.account

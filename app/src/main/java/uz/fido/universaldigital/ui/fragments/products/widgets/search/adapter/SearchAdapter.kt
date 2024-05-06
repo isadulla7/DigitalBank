@@ -18,7 +18,7 @@ import uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchList.
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchList.GROUP_NAME_PAYMENT_GROUP
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.model.SearchItem
 import uz.fido.universaldigital.ui.utils.extensions.loadPaymentIcon
-import uz.fido.utils.const.APIServiceConst
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.utility.view.recycler_view_drag.ItemTouchHelperAdapter
 
 class SearchAdapter(
@@ -34,7 +34,7 @@ class SearchAdapter(
             when (item.groupName) {
                 GROUP_NAME_PAYMENT -> {
                     Picasso.get()
-                        .load(APIServiceConst.PAYNET_PHOTO + item.paymentService?.icon_name)
+                        .load(Keys.paynetPhotoUrl() + item.paymentService?.icon_name)
                         .error(R.drawable.ic_payments_placeholder).into(binding.icon)
                 }
 

@@ -81,18 +81,5 @@ object Const {
 
     var request_id = ""
 
-    //offer
-    const val DEPOSIT_BAXTLI_BOLALIK =
-        "http://87.237.237.230:8181/tel/mobile/depozit_baxtliBolalik.pdf"
-
-    //my id
-    const val MY_ID_CLIENT_ID =
-        "universal_mobile-m2D6uFzCBlj3vw9KnXSiyvBj1ofNO6Q3fdZZ96HL"
-
-    const val MY_ID_CLIENT_HASH =
-        "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmvWRa3C/jFqQHfs1kbVSysOBFRKiEAfw1iPD16Rh2h3fq3dkLcgOrYs9DcQOrJSknftkMSSkO2gGLlf8fnqnAjxAYml1vnGC5rYJTUUQTBKvpgchcPlLfUu/MDKUK3PSZFrYNIcYSWFfkGHgUNRk8pYPUH7OIF6uboERqSeG4M74zogAEP4Zkk76NTuH+F6exB+jih88cIicXIvSiodb99OE2LmBwPAUvw8MXVutzrJg+oeqCGUfbBnxCXbksmdxpoSVsRDz8TBPI0IMLrOx3F6dW1L+Pde9m+jhblybHazaY7WEufwWQJ4EajvMZfF3IBgQgrP4MwaY+HFtFYbVMwIDAQAB"
-
-    const val MY_ID_CLIENT_HASH_ID = "4cc848bb-49ee-4db4-bf3b-119f141f52e4"
-
     const val PLAY_MARKET = "https://play.google.com/store/apps/details?id=uz.fido.universaldigital"
 }

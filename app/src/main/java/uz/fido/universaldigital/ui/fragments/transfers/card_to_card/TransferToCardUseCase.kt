@@ -10,7 +10,7 @@ import uz.fido.network.domain.model.p2p.P2PInfoDto
 import uz.fido.network.domain.model.p2p.P2PInfoRequest
 import uz.fido.network.domain.model.p2p.SetPopularityRequest
 import uz.fido.network.domain.model.popular_transfers.PopularTransfers
-import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Command
 import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientToken
@@ -55,7 +55,7 @@ class TransferToCardUseCaseImpl @Inject constructor(
     override suspend fun getTransferHistories(): ArrayList<CardByPhone> {
         val response = p2PRepository.getP2pHistory(
             getClientToken(), P2PHistoryRequest(
-                getClientId(), USER_CLIENT_ID, Command.INFO, "A"
+                getClientId(), Keys.getClientId(), Command.INFO, "A"
             )
         )
         return if (response.status == Status.SUCCESS) {

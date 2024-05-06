@@ -44,7 +44,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideBaseUrl(): String = APIServiceConst.BASE_URL
+    fun provideBaseUrl(): String = Keys.getBaseUrl()
 
     @Provides
     @Singleton
@@ -175,12 +175,12 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideSocketRetrofit(@BaseOkhttpClient okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder().client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create()).baseUrl(APIServiceConst.SOCKET_URL).build()
+        .addConverterFactory(GsonConverterFactory.create()).baseUrl(Keys.getSocketUrl()).build()
 
     @SimpleClientRetrofit
     @Provides
     fun provideSimpleRetrofit(@SimpleClientRetrofit okHttpClient: OkHttpClient): Retrofit = Retrofit.Builder().client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create()).baseUrl(APIServiceConst.BASE_URL).build()
+        .addConverterFactory(GsonConverterFactory.create()).baseUrl(Keys.getBaseUrl()).build()
 
     /*
     *   SWAP KEY RETROFIT CLIENT

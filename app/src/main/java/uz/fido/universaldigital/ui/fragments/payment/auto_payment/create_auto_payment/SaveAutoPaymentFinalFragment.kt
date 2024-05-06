@@ -149,9 +149,7 @@ class SaveAutoPaymentFinalFragment :
                 it as ArrayList<CardResponse>, "0", CurrencyConst.CURRENCY_CHAR_UZS
             ) { cardResponse ->
                 senderCard = cardResponse
-                Log.d("TAG", "initCards:${cardResponse!!.state} ")
-                if (cardResponse.state == "0") {
-                    Log.d("TAG", "initCards:${true} ")
+                if (cardResponse?.state == "0") {
                     binding.btnContinue.isEnabled(true)
                 } else binding.btnContinue.isEnabled(false)
             }

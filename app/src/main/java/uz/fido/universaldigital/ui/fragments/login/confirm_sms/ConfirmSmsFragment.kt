@@ -50,6 +50,7 @@ import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpViewModel
 import uz.fido.universaldigital.ui.fragments.login.sign_up_password.SignUpPasswordFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.main_dialogs.AllServicesDialog
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.app.getFCMToken
 import uz.fido.utils.const.APIServiceConst
@@ -273,7 +274,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     private fun getUserInfo() {
         binding.btnContinue.setProgress(true)
-        viewModel.getUserDetailedInfo(APIServiceConst.USER_INFO_URL + requireContext().getIpAddress())
+        viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + requireContext().getIpAddress())
             .observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.SUCCESS -> it.data?.let { data ->
@@ -325,7 +326,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                             val signInResponse = it.data
                             if (signInResponse?.token != null) {
                                 Paper.book().write(Const.STRING_LINE, stringLineEnc)
-                                Paper.book().write("ENC_PASS", data.password)
+                                Paper.book().write(Const.PASSWORD_ENC, data.password)
                                 signInResponse.password = encryptPassword(data.password)
                                 requireContext().saveSignInResponse(signInResponse)
                                 requireContext().saveUserSms(smsCode)
@@ -359,13 +360,13 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
             .insertStringBetween("&^%", 6)
         val newKey = CryptoUtil.encrypt(
-            Paper.book().read("ENC_PASS"),
+            Paper.book().read(Const.PASSWORD_ENC),
             key1
-        ) + Paper.book().read("KEY_K") + CryptoUtil.encrypt(
+        ) + Paper.book().read(Const.KEY_K) + CryptoUtil.encrypt(
             Paper.book().read(Const.STRING_LINE),
             key2
         )
-        Paper.book().write("KEY_K", newKey)
+        Paper.book().write(Const.KEY_K, newKey)
     }
 
     private fun showWrongSmsCodeDialog() {

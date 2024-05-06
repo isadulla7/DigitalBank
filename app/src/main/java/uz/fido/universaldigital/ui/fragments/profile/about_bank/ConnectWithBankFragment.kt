@@ -45,7 +45,7 @@ class ConnectWithBankFragment : BaseFragment<FragmentConnectWithBankBinding, Men
     }
 
     private fun openMail() {
-        val email = "info@aab.uz"
+        val email = "universaldigitalbank@gmail.com"
         val emailIntent = Intent(Intent.ACTION_SENDTO)
         emailIntent.type = "message/rfc822"
         emailIntent.putExtra(Intent.EXTRA_EMAIL, email)

@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.login.pin
 
 import android.annotation.SuppressLint
-import uz.fido.universaldigital.ui.dialogs.LogOutDialog
 import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.net.Uri
@@ -9,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.biometric.BiometricPrompt
@@ -36,13 +34,13 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentPassCodeBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.activities.MainActivity
+import uz.fido.universaldigital.ui.dialogs.LogOutDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInPinResponse
 import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAndOutAnim
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
-import uz.fido.utils.const.APIServiceConst
-import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.device.GetDeviceInfo
@@ -310,7 +308,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun getUserInfo() {
-        viewModel.getUserDetailedInfo(APIServiceConst.USER_INFO_URL + requireContext().getIpAddress())
+        viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + requireContext().getIpAddress())
             .observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.SUCCESS -> it.data?.let { data ->
@@ -328,12 +326,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun signInRequest(userInfo: UserInfo) {
-        Log.d("====KEY_K pass", Paper.book().read("KEY_K") ?: "no key k")
         val device = GetDeviceInfo(requireContext()).deviceInfo
-//        val password = requireContext().getUserQwerty()
-//        if (password == "404") {
-//            showSnackbar(getString(R.string.error_password))
-//        } else {
         val signInRequest = SignInRequestNew(
             phone_number = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).replace("", ""),
             device_type = "A",
@@ -341,9 +334,9 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             device_name = getDeviceName(),
             version = "1",
             ip = requireContext().getIpAddress(),
-            client_id = USER_CLIENT_ID,
+            client_id = Keys.getClientId(),
             fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
-            password = Paper.book().read("ENC_PASS"),
+            password = Paper.book().read(Const.PASSWORD_ENC),
             is_pin = 1,
             sim_iccd = device.simCcd.toString(),
             network_state = device.networkState.toString(),
@@ -388,7 +381,6 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                     removeUnregisteredDevice(it.message.toString())
                 }
             }
-//            }
         }
     }
 
@@ -398,13 +390,13 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
             .insertStringBetween("&^%", 6)
         val newKey = CryptoUtil.encrypt(
-            Paper.book().read("ENC_PASS"),
+            Paper.book().read(Const.PASSWORD_ENC),
             key1
         ) + keyK + CryptoUtil.encrypt(
             Paper.book().read(Const.STRING_LINE),
             key2
         )
-        Paper.book().write("KEY_K", newKey)
+        Paper.book().write(Const.KEY_K, newKey)
     }
 
     private fun saveSignInResponse(signInResponse: SignInResponse) {

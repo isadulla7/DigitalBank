@@ -7,11 +7,10 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemMyHousePayBinding
-import uz.fido.utils.const.APIServiceConst
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.format.Format
 
 class MyHousePayAdapter(
@@ -23,7 +22,7 @@ class MyHousePayAdapter(
 
         fun bind(templateItem: Template) {
             if (templateItem.icon_name != "")
-                Picasso.get().load(APIServiceConst.PAYNET_PHOTO + templateItem.icon_name).error(R.drawable.ic_payments_placeholder).into(binding.icon)
+                Picasso.get().load(Keys.paynetPhotoUrl() + templateItem.icon_name).error(R.drawable.ic_payments_placeholder).into(binding.icon)
             else binding.icon.setImageResource(R.drawable.ic_payments_placeholder)
             binding.text.text = templateItem.name
             binding.amount.text = Format.formatAmount(templateItem.amount) + " UZS"
@@ -37,8 +36,8 @@ class MyHousePayAdapter(
                     binding.progress.visibility = View.GONE
                     binding.image.visibility = View.VISIBLE
                     binding.amountText.text = context.getString(R.string.error_occured)
-                    binding.amountText.setTextColor(ContextCompat.getColor(context,R.color.brandRedColor))
-                    binding.amount.setTextColor(ContextCompat.getColor(context,R.color.brandRedColor))
+                    binding.amountText.setTextColor(ContextCompat.getColor(context, R.color.brandRedColor))
+                    binding.amount.setTextColor(ContextCompat.getColor(context, R.color.brandRedColor))
                     binding.image.setImageResource(R.drawable.ic_payment_error_icon)
 
                 } else {

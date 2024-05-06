@@ -90,8 +90,6 @@ class MyHouseMultipleAmountFragment : BaseFragment<FragmentMyHouseMutipleAmountB
                 count += 1
             }
         }
-        Log.d("TAG", "checkBottom:${count} ")
-        Log.d("TAG", "checkBottom:${list.size} ")
         if (count == list.size) {
             binding.btnPaymentList.isEnabled(true)
         } else binding.btnPaymentList.isEnabled(false)
