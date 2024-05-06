@@ -33,6 +33,7 @@ interface UserApiInterface {
 
     @POST("GET_ACCESS_TOKEN")
     suspend fun getAccessTokenMyId(
+        @Header("Authorization") token: String,
         @Body myIdGetAccessTokenRequest: MyIdGetAccessTokenRequest
     ): MyIdMeResponse
 

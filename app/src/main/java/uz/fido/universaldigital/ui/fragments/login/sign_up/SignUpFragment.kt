@@ -23,6 +23,7 @@ import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.APIServiceConst.USER_INFO_URL
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
@@ -74,6 +75,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun swapKeysRequest() {
+        Paper.book().write("VERSION_CODE", BuildConfig.VERSION_CODE.toString())
+        Paper.book().write("VERSION_NAME", BuildConfig.VERSION_NAME)
         viewModel.swapKeys(
             SwapKeysRequest(
                 device_code = requireContext().getDeviceIds(),
@@ -121,9 +124,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             device_id = requireContext().getDeviceIds(),
             app_version_code = BuildConfig.VERSION_CODE.toString(),
         )
-        viewModel.checkSignUpRequest(
-            model
-        ).observe(viewLifecycleOwner) {
+        viewModel.checkSignUpRequest(model).observe(viewLifecycleOwner) {
             it?.let {
                 when (it.status) {
                     Status.SUCCESS -> {
@@ -162,7 +163,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun setKeyBForDiffieHellman(response: SwapKeysResponse) {
-        DiffieHellman.getDiffieHellman().SetKeyB(response.ecnryptData)
+        val additionalText = CryptoUtil.encrypt(requireContext().getDeviceIds(), requireContext().getDeviceIds())
+        DiffieHellman.getDiffieHellman().setKeyBSwapKey(response.ecnryptData, additionalText)
     }
 
     private fun isValidPhoneNumber(): Boolean {

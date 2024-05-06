@@ -145,7 +145,6 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/cornered_bg_12dp"
-                android:foreground="?selectableItemBackground"
                 android:gravity="center"
                 android:paddingHorizontal="12dp">
 

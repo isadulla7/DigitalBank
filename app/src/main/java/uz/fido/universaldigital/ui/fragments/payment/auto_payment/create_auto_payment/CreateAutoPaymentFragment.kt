@@ -421,7 +421,7 @@ class CreateAutoPaymentFragment : BaseFragment<FragmentCreateAutoPaymentBinding,
                     binding.customDateLayout.visibility = View.GONE
                 }
 
-                3 -> {
+                else -> {
                     binding.customDateLayout.visibility = View.VISIBLE
                     binding.daily.visibility = View.GONE
                     binding.monthly.visibility = View.GONE

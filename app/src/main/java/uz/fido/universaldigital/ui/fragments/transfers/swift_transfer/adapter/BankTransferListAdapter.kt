@@ -1,4 +1,4 @@
-package fido.aab_mobile.ui.ib.fragments.menu.menu_services.bank_transfers.adapter
+package uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

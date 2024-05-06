@@ -69,7 +69,7 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
     private lateinit var dateSortList: ArrayList<AccountHistory>
     private lateinit var linerLayoutManager: LinearLayoutManager
     private val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss",Locale.getDefault())
-    private val newDateFormat = SimpleDateFormat("dd.MM.yyyy")
+    private val newDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
 
     companion object {
         const val CLIENT_CREDIT_MODEL = "model"

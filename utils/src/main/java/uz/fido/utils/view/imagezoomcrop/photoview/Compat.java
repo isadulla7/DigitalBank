@@ -16,8 +16,6 @@
 package uz.fido.utils.view.imagezoomcrop.photoview;
 
 import android.annotation.TargetApi;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 import android.view.MotionEvent;
 import android.view.View;
 

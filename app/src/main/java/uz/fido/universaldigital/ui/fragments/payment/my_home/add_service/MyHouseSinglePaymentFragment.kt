@@ -328,7 +328,7 @@ class MyHouseSinglePaymentFragment :
                 cardResponse?.let { card ->
                     selectedCard = card
                     val amount = binding.etAmount.text.toString().replace(" ", "")
-                    if (!amount.isNullOrEmpty()) {
+                    if (amount.isNotEmpty()) {
                         checkAmount(amount)
                     }
                 }

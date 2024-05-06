@@ -1202,7 +1202,7 @@ class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
             final int startX = Math.round(-rect.left);
             final int minX, maxX, minY, maxY;
 
-            if (false && viewWidth < rect.width()) {
+            if (false) {
                 minX = 0;
                 maxX = Math.round(rect.width() - viewWidth);
             } else {
@@ -1210,7 +1210,7 @@ class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
             }
 
             final int startY = Math.round(-rect.top);
-            if (false && viewHeight < rect.height()) {
+            if (false) {
                 minY = 0;
                 maxY = Math.round(rect.height() - viewHeight);
             } else {

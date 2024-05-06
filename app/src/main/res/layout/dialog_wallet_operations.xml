@@ -164,7 +164,8 @@
                 android:layout_height="16dp"
                 android:layout_marginEnd="16dp"
                 android:src="@drawable/ic_arrow_left_ios"
-                android:visibility="gone" />
+                android:visibility="gone"
+                tools:ignore="ContentDescription" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

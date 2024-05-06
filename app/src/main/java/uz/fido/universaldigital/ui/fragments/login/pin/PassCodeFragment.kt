@@ -1,7 +1,9 @@
 package uz.fido.universaldigital.ui.fragments.login.pin
 
+import android.annotation.SuppressLint
 import uz.fido.universaldigital.ui.dialogs.LogOutDialog
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,6 +14,10 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.biometric.BiometricPrompt
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import kotlinx.coroutines.CoroutineScope
@@ -41,6 +47,7 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.device.vibrateTick
+import uz.fido.utils.log.Logger
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.security.getDecodedString
@@ -535,10 +542,10 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun initAvatar() {
         loadProfileImage()
-        if (Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotEmpty() && Paper.book().read(Const.FIRST_NAME, "").isNotEmpty() && Paper.book().read(Const.LAST_NAME, "").isNotEmpty()
-        ) {
+        if (Paper.book().read(Const.FIRST_NAME, "").isNotEmpty() && Paper.book().read(Const.LAST_NAME, "").isNotEmpty()) {
             binding.tvShortName.text = (Paper.book().read(Const.FIRST_NAME, "").first().toString() + Paper.book().read(Const.LAST_NAME, "").first().toString())
         } else {
             binding.userAvatar.setImageResource(R.drawable.ic_profile_image_empty)
@@ -580,11 +587,22 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun loadProfileImage() {
+        Logger.writeLog("profile_photo" + Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
         if (Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNotEmpty()) {
             Glide.with(requireContext())
                 .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH) ?: "")
-                .error(R.drawable.ic_profile_image_empty)
-                .into(binding.userAvatar)
+                .error(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        if (Paper.book().read(Const.FIRST_NAME, "").isEmpty() && Paper.book().read(Const.LAST_NAME, "").isEmpty()) {
+                            binding.userAvatar.setImageResource(R.drawable.ic_profile_image_empty)
+                        }
+                        return false
+                    }
+
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        return true
+                    }
+                }).into(binding.userAvatar)
         }
     }
 }

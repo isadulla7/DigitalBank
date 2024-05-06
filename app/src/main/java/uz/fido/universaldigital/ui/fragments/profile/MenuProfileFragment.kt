@@ -1,32 +1,25 @@
 package uz.fido.universaldigital.ui.fragments.profile
 
-import uz.fido.universaldigital.ui.dialogs.LogOutDialog
-import android.Manifest
 import android.annotation.SuppressLint
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
-import android.os.Build
+import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.View
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
-import uz.fido.network.data.utility.Status
-import uz.fido.network.domain.model.edit_user.EditUserInfo
 import uz.fido.network.domain.model.profile.LogOutRequest
 import uz.fido.universaldigital.BuildConfig
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMenuProfileBinding
+import uz.fido.universaldigital.ui.dialogs.LogOutDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
-import uz.fido.universaldigital.ui.fragments.profile.edit_photo.EditPhotoActivity
 import uz.fido.universaldigital.ui.utils.extensions.isUserIdentified
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.Const
@@ -37,7 +30,6 @@ import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientToken
-import java.util.Random
 
 @AndroidEntryPoint
 @SuppressLint("SetTextI18n")
@@ -69,7 +61,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             Paper.book().read(Const.FIRST_NAME, "").isNotEmpty() &&
             Paper.book().read(Const.LAST_NAME, "").isNotEmpty()
         ) {
-            binding.userName.text = Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "")
+            binding.userName.text = Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, getString(R.string.your_phone_number))
             binding.tvShortName.text = (Paper.book().read(Const.FIRST_NAME, "").first().toString() + Paper.book().read(Const.LAST_NAME, "").first().toString())
         } else {
             binding.userName.text = getString(R.string.your_phone_number)
@@ -102,13 +94,24 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             aboutBank.setOnClickListener { gotoWithSlide(R.id.aboutBankFragment) }
             logOut.setOnClickListener { showLogOutDialog() }
             profile.setOnClickListener { gotoWithSlide(R.id.myDetailsFragment) }
-            profileImage.setOnClickListener { requestPermissionForImages() }
         }
     }
 
     private fun loadProfileImage() {
         if (Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNotEmpty()) {
-            Glide.with(requireContext()).load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH) ?: "").error(R.drawable.ic_profile_image_empty).into(binding.profileImage)
+            Glide.with(requireContext()).load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH) ?: "")
+                .error(object : RequestListener<Drawable> {
+                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                        if (Paper.book().read(Const.FIRST_NAME, "").isEmpty() && Paper.book().read(Const.LAST_NAME, "").isEmpty()) {
+                            binding.profileImage.setImageResource(R.drawable.ic_profile_image_empty)
+                        }
+                        return false
+                    }
+
+                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                        return true
+                    }
+                }).into(binding.profileImage)
         }
     }
 
@@ -136,75 +139,6 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
 
     private fun showLogOutDialog() {
         LogOutDialog { logOutRequest() }.show(childFragmentManager, "")
-    }
-
-    private fun openEditPhotoActivity(path: String) {
-        val intent = Intent(requireActivity(), EditPhotoActivity::class.java)
-        intent.putExtra("uri", path)
-        editPhotoIntent.launch(intent)
-    }
-
-    private fun requestPermissionForImages() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-        }
-    }
-
-    private fun pickImage() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply { type = "image/*" }
-        openGalleryIntent.launch(intent)
-    }
-
-    private fun uploadImageToFirebase(filePath: Uri) {
-        val photoId = "profile_photo_${getClientId()}_${(Random().nextInt(99999 - 10000) + 10000)}"
-        binding.progressBar.visibility = View.VISIBLE
-        binding.profileImage.alpha = 0.8f
-        val ref = storageReference!!.child("images/$photoId")
-        ref.putFile(filePath).addOnSuccessListener {
-            setProfilePhotoId(photoId)
-            binding.progressBar.visibility = View.GONE
-            binding.profileImage.alpha = 1f
-        }.addOnFailureListener { e ->
-            binding.progressBar.visibility = View.GONE
-            binding.profileImage.alpha = 1f
-            showSnackbar(e.localizedMessage.toString())
-        }
-    }
-
-    private fun setProfilePhotoId(id: String) {
-        if (view != null) {
-            showProgress()
-            viewModel.editUserInfo(getClientToken(), EditUserInfo(user_avatar = id)).observe(viewLifecycleOwner) {
-                hideProgress()
-                if (it.status == Status.ERROR) {
-                    showSnackbar(it.message.toString())
-                }
-            }
-        }
-    }
-
-    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { approved ->
-        if (approved) {
-            pickImage()
-        }
-    }
-
-    private val editPhotoIntent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK && it.data != null) {
-            val path = it.data?.getStringExtra(EditPhotoActivity.RESULT_IMAGE)
-            Paper.book().write(Const.PAPER_USER_PHOTO_PATH, path)
-            Picasso.get().load(path).into(binding.profileImage)
-            uploadImageToFirebase(path!!.toUri())
-        }
-    }
-
-    private val openGalleryIntent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK && it.data?.data != null) {
-            val path = it.data?.data.toString()
-            openEditPhotoActivity(path)
-        }
     }
 
 }

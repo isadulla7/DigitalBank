@@ -34,7 +34,8 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/ellipse_49"
                 android:padding="12dp"
-                android:src="@drawable/logo_zolotaya_korona" />
+                android:src="@drawable/logo_zolotaya_korona"
+                tools:ignore="ContentDescription" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -69,7 +70,8 @@
                     android:src="@drawable/ic_arrow_down_ios"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:ignore="ContentDescription" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
             <com.google.android.material.textfield.TextInputLayout

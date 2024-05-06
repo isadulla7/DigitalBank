@@ -128,7 +128,7 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
             addView(getString(R.string.terminal_id), item.terminal_id)
         addView(getString(R.string.transaction_number), item.request_id)
         if (item.partner_obj.isNotEmpty()) {
-            if (!item.to_obj_name.isNullOrEmpty()) {
+            if (item.to_obj_name.isNotEmpty()) {
                 if (item.partner_obj.startsWith("AUZ")) {
                     addView(
                         getString(R.string.wallet_number),
@@ -139,10 +139,12 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
                         item.to_obj_name, if (item.object_value.length == 16) Format.formatCardNumber(item.partner_obj) else item.partner_obj
                     )
                 }
-            } else addView(
-                getString(R.string.personal_account),
-                if (item.object_value.length == 16) Format.formatCardNumber(item.partner_obj) else item.partner_obj
-            )
+            } else {
+                addView(
+                    getString(R.string.personal_account),
+                    if (item.object_value.length == 16) Format.formatCardNumber(item.partner_obj) else item.partner_obj
+                )
+            }
         }
         if (item.object_value.isNotEmpty() && item.partner_obj.length != 16 && !item.partner_obj.startsWith("AUZ")) {
             addView(
@@ -158,7 +160,7 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
         } else {
             getString(R.string.waiting)
         }
-        if (!item.fee_amount.isNullOrEmpty() && !item.fee_percent.isNullOrEmpty()) {
+        if (item.fee_amount.isNotEmpty() && item.fee_percent.isNotEmpty()) {
             addView(getString(R.string.commission), "${item.fee_amount.toDouble() / 100.toDouble()} UZS (${item.fee_percent}%)")
         }
         addView(getString(R.string.status), state)

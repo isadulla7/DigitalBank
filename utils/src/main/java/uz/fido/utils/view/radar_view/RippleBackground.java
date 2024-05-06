@@ -88,19 +88,19 @@ public class RippleBackground extends RelativeLayout {
             final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(rippleView, "ScaleX", 1.0f, rippleScale);
             scaleXAnimator.setRepeatCount(ObjectAnimator.INFINITE);
             scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
-            scaleXAnimator.setStartDelay(i * rippleDelay);
+            scaleXAnimator.setStartDelay((long) i * rippleDelay);
             scaleXAnimator.setDuration(rippleDurationTime);
             animatorList.add(scaleXAnimator);
             final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(rippleView, "ScaleY", 1.0f, rippleScale);
             scaleYAnimator.setRepeatCount(ObjectAnimator.INFINITE);
             scaleYAnimator.setRepeatMode(ObjectAnimator.RESTART);
-            scaleYAnimator.setStartDelay(i * rippleDelay);
+            scaleYAnimator.setStartDelay((long) i * rippleDelay);
             scaleYAnimator.setDuration(rippleDurationTime);
             animatorList.add(scaleYAnimator);
             final ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(rippleView, "Alpha", 1.0f, 0f);
             alphaAnimator.setRepeatCount(ObjectAnimator.INFINITE);
             alphaAnimator.setRepeatMode(ObjectAnimator.RESTART);
-            alphaAnimator.setStartDelay(i * rippleDelay);
+            alphaAnimator.setStartDelay((long) i * rippleDelay);
             alphaAnimator.setDuration(rippleDurationTime);
             animatorList.add(alphaAnimator);
         }

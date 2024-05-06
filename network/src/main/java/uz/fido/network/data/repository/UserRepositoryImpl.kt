@@ -125,7 +125,7 @@ class UserRepositoryImpl @Inject constructor(private val userApiService: UserApi
     override suspend fun getAccessToken(
         myIdGetAccessTokenRequest: MyIdGetAccessTokenRequest
     ): Resource<MyIdMeResponse> = getResult {
-        userApiService.getAccessTokenMyId(myIdGetAccessTokenRequest)
+        userApiService.getAccessTokenMyId(getClientToken(), myIdGetAccessTokenRequest)
     }
 
     override suspend fun editUserInfo(

@@ -44,7 +44,8 @@
             android:layout_height="20dp"
             android:background="@drawable/check_box_color"
             android:button="@drawable/check_box_color"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:layout_width="0dp"
@@ -73,7 +74,8 @@
             android:layout_height="20dp"
             android:background="@drawable/check_box_color"
             android:button="@drawable/check_box_color"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:layout_width="0dp"
@@ -102,7 +104,8 @@
             android:layout_height="20dp"
             android:background="@drawable/check_box_color"
             android:button="@drawable/check_box_color"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:layout_width="0dp"
@@ -131,7 +134,8 @@
             android:layout_height="20dp"
             android:background="@drawable/check_box_color"
             android:button="@drawable/check_box_color"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            tools:ignore="ContentDescription" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:layout_width="0dp"

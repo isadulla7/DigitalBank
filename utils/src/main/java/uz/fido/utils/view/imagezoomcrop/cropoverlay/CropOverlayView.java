@@ -24,14 +24,14 @@ import uz.fido.utils.view.imagezoomcrop.photoview.IGetImageBounds;
 public class CropOverlayView extends View implements IGetImageBounds {
 
     //Defaults
-    private boolean DEFAULT_GUIDELINES = true;
-    private int DEFAULT_MARGINTOP = 100;
-    private int DEFAULT_MARGINSIDE = 50;
-    private int DEFAULT_MIN_WIDTH = 500;
-    private int DEFAULT_MAX_WIDTH = 700;
+    private final boolean DEFAULT_GUIDELINES = true;
+    private final int DEFAULT_MARGINTOP = 100;
+    private final int DEFAULT_MARGINSIDE = 50;
+    private final int DEFAULT_MIN_WIDTH = 500;
+    private final int DEFAULT_MAX_WIDTH = 700;
 
     // we are cropping square image so width and height will always be equal
-    private int DEFAULT_CROPWIDTH = 600;
+    private final int DEFAULT_CROPWIDTH = 600;
     private static final int DEFAULT_CORNER_RADIUS = 6;
     private static final int DEFAULT_OVERLAY_COLOR = Color.argb(204, 41, 48, 63);
 
@@ -60,7 +60,7 @@ public class CropOverlayView extends View implements IGetImageBounds {
     private int mMaxWidth;
     private int mCornerRadius;
     private int mOverlayColor;
-    private Context mContext;
+    private final Context mContext;
 
     public CropOverlayView(Context context) {
         super(context);

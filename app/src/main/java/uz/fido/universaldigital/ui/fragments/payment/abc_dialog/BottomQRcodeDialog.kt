@@ -42,8 +42,8 @@ class BottomQRcodeDialog(private var qrcode: String) : BottomSheetDialogFragment
     }
 
     private fun bottomSheetInfoQr(check_qr: String) {
-        if (check_qr.length > 8){
-            if (check_qr.startsWith("https://")){
+        if (check_qr.length > 8) {
+            if (check_qr.startsWith("https://")) {
                 binding.webView.webViewClient = object : WebViewClient() {
                     override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                         view.loadUrl(request.url.toString())
@@ -58,14 +58,13 @@ class BottomQRcodeDialog(private var qrcode: String) : BottomSheetDialogFragment
                 }
                 binding.webView.settings.javaScriptEnabled = true
                 binding.webView.loadUrl(check_qr)
-            }else{
+            } else {
 
 //                 binding.tvItem.text = check_qr
 //                 binding.progress.visibility = View.INVISIBLE
 //                dialog.setContentView(binding.root)
 //                dialog.show()
-            }}else{
-
+            }
         }
     }
 }

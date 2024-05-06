@@ -83,7 +83,7 @@ class VisaMonitoringFragment :
             it.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_value) }
             currencyList = card
             totalList = arrayListOf()
-            val format = SimpleDateFormat("dd.MM.yyyy")
+            val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             if (it.startDate != "") {
                 dateEnd = df.format(format.parse(it.endDate).time)
                 dateBegin = df.format(format.parse(it.startDate).time)

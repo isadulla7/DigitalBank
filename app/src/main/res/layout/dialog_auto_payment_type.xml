@@ -47,7 +47,7 @@
                 android:layout_width="20dp"
                 android:scaleType="centerCrop"
                 android:layout_height="20dp"
-              />
+                tools:ignore="ContentDescription" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="0dp"
@@ -77,7 +77,7 @@
                 android:layout_width="20dp"
                 android:scaleType="centerCrop"
                 android:layout_height="20dp"
-                />
+                tools:ignore="ContentDescription" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="0dp"
@@ -107,7 +107,7 @@
                 android:layout_width="20dp"
                 android:scaleType="centerCrop"
                 android:layout_height="20dp"
-                />
+                tools:ignore="ContentDescription" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="0dp"

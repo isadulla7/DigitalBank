@@ -126,7 +126,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/income_red" />
+                    android:src="@drawable/income_red"
+                    tools:ignore="ContentDescription" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:layout_width="match_parent"
@@ -154,7 +155,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/outcome_red" />
+                    android:src="@drawable/outcome_red"
+                    tools:ignore="ContentDescription" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:layout_width="match_parent"

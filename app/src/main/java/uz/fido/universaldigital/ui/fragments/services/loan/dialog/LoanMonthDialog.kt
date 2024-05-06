@@ -14,6 +14,7 @@ import uz.fido.universaldigital.ui.fragments.services.loan.adapter.LoanMonthAdap
 import uz.fido.universaldigital.ui.fragments.services.loan.modul.LoanMonth
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 class LoanMonthDialog(
     private var onClick: (Int, String) -> Unit,
@@ -49,7 +50,7 @@ class LoanMonthDialog(
 
     private fun yearList(): java.util.ArrayList<LoanMonth> {
         val monthList = arrayListOf<LoanMonth>()
-        val month_date = SimpleDateFormat("yyyy")
+        val month_date = SimpleDateFormat("yyyy", Locale.getDefault())
 
         for (i in 1 until 6) {
             val calendar = Calendar.getInstance()
@@ -99,7 +100,7 @@ class LoanMonthDialog(
 
     private fun loanTimeList(timeMax: String): ArrayList<LoanMonth> {
         val monthList = arrayListOf<LoanMonth>()
-        val month_date = SimpleDateFormat("MMMM yyyy")
+        val month_date = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
         for (i in 3 until timeMax.toInt() + 1) {
             val cal: Calendar = Calendar.getInstance()
             cal.add(Calendar.MONTH, i)

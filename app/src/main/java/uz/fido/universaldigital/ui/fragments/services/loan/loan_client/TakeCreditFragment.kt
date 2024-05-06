@@ -94,7 +94,7 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
     private fun isCurrent() {
         Log.d("TAG", "isCurrent: $minAmount")
         Log.d("TAG", "isCurrent: $maxAmount")
-        if (!amount.isNullOrEmpty()) {
+        if (amount.isNotEmpty()) {
             if (minAmount.toDouble() < amount.toDouble() && maxAmount.toDouble() > amount.toDouble() && selectedCard != null) {
                 binding.btnContinue.isEnabled(true)
             } else binding.btnContinue.isEnabled(false)
@@ -115,7 +115,7 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
                 cardResponse?.let { card ->
                     selectedCard = card
                     val amount = binding.etAmountMinMax.text.toString()
-                    if (!amount.isNullOrEmpty())
+                    if (amount.isNotEmpty())
                         isCurrent()
                 }
             }

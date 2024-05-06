@@ -1,5 +1,6 @@
 package uz.fido.network.domain.model.payment
 
+import android.annotation.SuppressLint
 import java.io.Serializable
 import java.util.ArrayList
 
@@ -32,6 +33,7 @@ class PaymentGroup : Serializable {
         const val PAYMENT_DETAIL_CODE = "payment_detail_code"
     }
 
+    @SuppressLint("NotConstructor")
     fun PaymentGroup(group_code: String, name: String, icon_name: String, order: Int, parent_service_group_code: String) {
         this.group_code = group_code
         this.name = name
