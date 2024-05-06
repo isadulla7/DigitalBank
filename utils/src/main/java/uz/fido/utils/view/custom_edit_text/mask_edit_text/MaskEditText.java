@@ -297,8 +297,8 @@ public class MaskEditText extends TextInputEditText {
 
                 if (!bounds.contains(actionX, actionY)) {
                     /** Gives the +20 area for tapping. */
-                    x = (int) (actionX - extraTapArea);
-                    y = (int) (actionY - extraTapArea);
+                    x = actionX - extraTapArea;
+                    y = actionY - extraTapArea;
 
                     if (x <= 0)
                         x = actionX;
@@ -326,8 +326,8 @@ public class MaskEditText extends TextInputEditText {
                 int x, y;
                 int extraTapArea = 13;
 
-                x = (int) (actionX + extraTapArea);
-                y = (int) (actionY - extraTapArea);
+                x = actionX + extraTapArea;
+                y = actionY - extraTapArea;
                 x = getWidth() - x;
                 if (x <= 0) {
                     x += extraTapArea;

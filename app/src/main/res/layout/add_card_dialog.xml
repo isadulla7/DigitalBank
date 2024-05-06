@@ -45,7 +45,8 @@
                 style="@style/FloatingButtonStyle"
                 android:layout_margin="12dp"
                 android:clickable="false"
-                android:src="@drawable/card_delivery" />
+                android:src="@drawable/card_delivery"
+                tools:ignore="ContentDescription" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:layout_width="wrap_content"
@@ -69,7 +70,8 @@
                 style="@style/FloatingButtonStyle"
                 android:layout_margin="12dp"
                 android:clickable="false"
-                android:src="@drawable/add_card" />
+                android:src="@drawable/add_card"
+                tools:ignore="ContentDescription" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:layout_width="wrap_content"

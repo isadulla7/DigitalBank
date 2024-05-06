@@ -3,10 +3,15 @@ package uz.fido.universaldigital.ui.utils.home_utils
 import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.graphics.drawable.Drawable
 import android.view.View
 import androidx.core.content.res.ResourcesCompat
 import coil.load
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DataSource
+import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.request.RequestListener
+import com.bumptech.glide.request.target.Target
 import com.robinhood.ticker.TickerUtils
 import com.scwang.smartrefresh.header.BezierCircleHeader
 import io.paperdb.Paper
@@ -24,8 +29,18 @@ fun MenuHomeFragment.loadProfileImage() {
     if (Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNotEmpty()) {
         Glide.with(requireContext())
             .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
-            .error(R.drawable.ic_profile_image_empty)
-            .into(binding.userAvatar)
+            .error(object : RequestListener<Drawable> {
+                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
+                    if (Paper.book().read(Const.FIRST_NAME, "").isEmpty() && Paper.book().read(Const.LAST_NAME, "").isEmpty()) {
+                        binding.userAvatar.setImageResource(R.drawable.ic_profile_image_empty)
+                    }
+                    return false
+                }
+
+                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
+                    return true
+                }
+            }).into(binding.userAvatar)
     }
 }
 

@@ -144,7 +144,7 @@ class InfoMonitoringDialog(
         } else {
             getString(R.string.waiting)
         }
-        if (!localMonitoring.fee_amount.isNullOrEmpty() && !localMonitoring.fee_percent.isNullOrEmpty())
+        if (localMonitoring.fee_amount.isNotEmpty() && localMonitoring.fee_percent.isNotEmpty())
             addView(getString(R.string.commission), "${localMonitoring.fee_amount.toDouble() / 100.toDouble()} UZS (${localMonitoring.fee_percent}%)")
 
         addView(getString(R.string.status), state)

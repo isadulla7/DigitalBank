@@ -20,7 +20,8 @@
             android:layout_gravity="center"
             android:src="@drawable/credit_procced"
             app:lottie_autoPlay="true"
-            app:lottie_loop="false" />
+            app:lottie_loop="false"
+            tools:ignore="ContentDescription" />
 
         <uz.fido.utils.view.custom_text_view.TextViewSemiBold
             android:id="@+id/success_title"

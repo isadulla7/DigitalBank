@@ -117,7 +117,8 @@
             android:id="@+id/deposit_replenishment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/close_x_icon" />
+            android:src="@drawable/close_x_icon"
+            tools:ignore="ContentDescription" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -150,7 +151,8 @@
             android:id="@+id/deposit_check_okay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/check_okay_deposit" />
+            android:src="@drawable/check_okay_deposit"
+            tools:ignore="ContentDescription" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

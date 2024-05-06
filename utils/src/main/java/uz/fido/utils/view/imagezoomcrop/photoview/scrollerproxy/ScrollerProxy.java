@@ -16,8 +16,6 @@
 package uz.fido.utils.view.imagezoomcrop.photoview.scrollerproxy;
 
 import android.content.Context;
-import android.os.Build.VERSION;
-import android.os.Build.VERSION_CODES;
 
 public abstract class ScrollerProxy {
 

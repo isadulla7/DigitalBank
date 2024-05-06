@@ -67,6 +67,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/illustration_1"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_product_desc" />
+        app:layout_constraintTop_toBottomOf="@id/tv_product_desc"
+        tools:ignore="ContentDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

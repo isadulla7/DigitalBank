@@ -40,14 +40,14 @@ public class FormatUtil {
     public static String toString(Date date) {
         if (date == null)
             return "";
-        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault());
         return sdf.format(date);
     }
 
     public static String toString(Date date, String pattern) {
         if (date == null || pattern == null)
             return "";
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.getDefault());
         return sdf.format(date);
     }
 
@@ -99,7 +99,7 @@ public class FormatUtil {
             suffix = months[date.getMonth()];
         }
 
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern, Locale.getDefault());
         return prefix + " " + sdf.format(date) + " " + suffix;
     }
 

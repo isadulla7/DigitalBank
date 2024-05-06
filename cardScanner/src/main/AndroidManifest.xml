@@ -20,7 +20,6 @@
         <activity
             android:name="uz.scan_card.cardscan.base.ScanActivityImpl"
             android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.NoActionBar.FullScreen" />
     </application>
 </manifest>

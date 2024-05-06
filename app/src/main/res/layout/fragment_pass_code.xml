@@ -30,41 +30,29 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="ContentDescription" />
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/profile"
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_short_name"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginTop="56dp"
-        app:cardBackgroundColor="#F9EAEA"
-        app:cardCornerRadius="36dp"
-        app:cardElevation="0dp"
+        android:background="@drawable/short_name_bg"
+        android:gravity="center"
+        android:textColor="@color/brandRedColor"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="HM" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <uz.fido.utils.view.custom_text_view.TextViewMedium
-                android:id="@+id/tv_short_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:textColor="@color/brandRedColor"
-                android:textSize="24sp"
-                tools:text="HM" />
-
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/user_avatar"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:ignore="ContentDescription" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_avatar"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:layout_constraintBottom_toBottomOf="@id/tv_short_name"
+        app:layout_constraintEnd_toEndOf="@id/tv_short_name"
+        app:layout_constraintStart_toStartOf="@id/tv_short_name"
+        app:layout_constraintTop_toTopOf="@id/tv_short_name"
+        tools:ignore="ContentDescription" />
 
     <uz.fido.utils.view.custom_text_view.TextViewSemiBold
         android:id="@+id/welcome_text"
@@ -75,7 +63,7 @@
         android:gravity="center"
         android:textColor="@color/mainTextColor"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@id/profile"
+        app:layout_constraintTop_toBottomOf="@id/tv_short_name"
         tools:text="Good evening, Husniddin" />
 
     <androidx.appcompat.widget.LinearLayoutCompat

@@ -814,7 +814,7 @@ class MonitoringFilterFragment :
     }
 
     private fun phoneNumber(number: String) {
-        if (!number.isNullOrEmpty()) {
+        if (number.isNotEmpty()) {
             if (number.length == 17)
                 buttonClickVisibility()
         }

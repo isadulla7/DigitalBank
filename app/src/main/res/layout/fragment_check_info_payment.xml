@@ -229,7 +229,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_btn_share" />
+                android:src="@drawable/ic_btn_share"
+                tools:ignore="ContentDescription" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:layout_width="wrap_content"
@@ -254,7 +255,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_fiscal_check" />
+                android:src="@drawable/ic_fiscal_check"
+                tools:ignore="ContentDescription" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:layout_width="wrap_content"
@@ -279,7 +281,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_info_monitoring" />
+                android:src="@drawable/ic_info_monitoring"
+                tools:ignore="ContentDescription" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:layout_width="wrap_content"

@@ -1006,4 +1006,7 @@
     <string name="reset_pin_title">После подтверждения сброса пин кода количество неправильных попыток будет ноль</string>
     <string name="sign_up_success">Вы успешно завершили регистрацию, пожалуйста, войдите снова</string>
     <string name="logging_out">Выйти</string>
+    <string name="other_devices">Другие устройства</string>
+    <string name="my_device">Мое устройство</string>
+    <string name="no_other_devices_found">No other devices found</string>
 </resources>

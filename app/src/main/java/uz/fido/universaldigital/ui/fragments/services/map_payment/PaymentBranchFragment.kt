@@ -140,7 +140,7 @@ class PaymentBranchFragment : BaseFragment<FragmentPaymentBranchBinding, Payment
 
     private fun listFragment(newList: ArrayList<LocalPaymentType>): ArrayList<Fragment> {
         val listFragment = ArrayList<Fragment>()
-        newList.forEach {
+        repeat(newList.size) {
             listFragment.add(PaymentByLocationListFragment())
         }
         return listFragment

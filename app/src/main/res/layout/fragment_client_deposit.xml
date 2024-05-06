@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.motion.widget.MotionLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
@@ -194,7 +195,8 @@
                     android:layout_height="24dp"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/income_red" />
+                    android:src="@drawable/income_red"
+                    tools:ignore="ContentDescription" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:layout_width="match_parent"
@@ -220,7 +222,8 @@
                     android:layout_height="24dp"
                     android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/outcome" />
+                    android:src="@drawable/outcome"
+                    tools:ignore="ContentDescription" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:layout_width="match_parent"

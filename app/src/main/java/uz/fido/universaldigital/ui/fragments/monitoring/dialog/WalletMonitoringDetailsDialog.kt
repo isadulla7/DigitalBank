@@ -61,12 +61,12 @@ class WalletMonitoringDetailsDialog(
         addView(getString(R.string.name), if (item.debit == "0") item.coAccName else item.dtAccName)
         addView(getString(R.string.purpose), item.purpose.toString())
         addView(getString(R.string.date_time), item.dateExecute.toString())
-        addView(getString(R.string.account), (if (item!!.debit == "0") item!!.coAcc else item!!.dtAcc).toString())
-        addView(getString(R.string.operation_type), if (item!!.debit == "0") getString(R.string.income) else getString(R.string.outcome))
+        addView(getString(R.string.account), (if (item.debit == "0") item.coAcc else item.dtAcc).toString())
+        addView(getString(R.string.operation_type), if (item.debit == "0") getString(R.string.income) else getString(R.string.outcome))
         val amount =
-            if (item!!.debit == "0") {
-                "${Format.formatAmount(item!!.credit.toString())} ${
-                    when (item!!.coAcc.substring(5, 8)) {
+            if (item.debit == "0") {
+                "${Format.formatAmount(item.credit.toString())} ${
+                    when (item.coAcc.substring(5, 8)) {
                         "000" -> {
                             "UZS"
                         }
@@ -80,8 +80,8 @@ class WalletMonitoringDetailsDialog(
                 }"
 
             } else {
-                "${Format.formatAmount(item!!.debit)} ${
-                    when (item!!.coAcc.substring(5, 8)) {
+                "${Format.formatAmount(item.debit)} ${
+                    when (item.coAcc.substring(5, 8)) {
                         "000" -> {
                             "UZS"
                         }

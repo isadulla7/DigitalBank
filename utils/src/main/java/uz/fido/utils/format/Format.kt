@@ -310,8 +310,8 @@ object Format {
     }
 
     fun formatDepositDate(date: String, firstFormatStr: String, secondFormatStr: String): String {
-        val df = SimpleDateFormat(firstFormatStr)
-        val secondFormat = SimpleDateFormat(secondFormatStr)
+        val df = SimpleDateFormat(firstFormatStr, Locale.getDefault())
+        val secondFormat = SimpleDateFormat(secondFormatStr, Locale.getDefault())
         val newdate = df.parse(date)
         return secondFormat.format(newdate.time)
 

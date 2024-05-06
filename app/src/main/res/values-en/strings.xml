@@ -998,15 +998,18 @@
     <string name="add_favorite_receivers">Add frequently used recipients to favorites</string>
     <string name="delete_account">Delete account</string>
     <string name="log_out">Log out</string>
-    <string name="delete_account_q">Удалить аккаунт?</string>
+    <string name="delete_account_q">Delete account?</string>
     <string name="delete_account_description">Вы уверены, что хотите удалить свою учетную запись? Эту операцию нельзя отменить</string>
     <string name="successfully_deleted">Hisobingiz muvaffaqiyatli o\'chirildi</string>
     <string name="pass_check">Пароль должен содержать хотя бы одну букву или одну цифру и один символ.</string>
-    <string name="delete_all">Удалить все</string>
-    <string name="nameless">Безымянный</string>
+    <string name="delete_all">Delete all</string>
+    <string name="nameless">No name</string>
     <string name="error_password">Пожалуйста, очистите память и попробуйте войти снова.</string>
-    <string name="select_card">Выберите карту</string>
+    <string name="select_card">Choose card</string>
     <string name="reset_pin_title">После подтверждения сброса пин кода количество неправильных попыток будет ноль</string>
     <string name="sign_up_success">Вы успешно завершили регистрацию, пожалуйста, войдите снова</string>
-    <string name="logging_out">Выйти</string>
+    <string name="logging_out">Log out</string>
+    <string name="other_devices">Other devices</string>
+    <string name="my_device">My devices</string>
+    <string name="no_other_devices_found">No other devices found</string>
 </resources>

@@ -149,7 +149,7 @@ class MyHouseMultipleSelectionFragment :
             sampleParam.name = paymentParams.name
             sampleParam.hint = paymentParams.hint
             sampleParam.ref_code = paymentParams.ref_code
-            for (templateKeyValue in templateResponse.template_details!!) {
+            for (templateKeyValue in templateResponse.template_details) {
                 if (paymentParams.code == templateKeyValue.code) {
                     sampleParam.def_value = templateKeyValue.value.toString()
                     sampleParam.code = templateKeyValue.code!!

@@ -139,7 +139,7 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
                 cardResponse?.let { card ->
                     selectedCard = card
                     val amount = binding.etAmountMinMax.text.toString()
-                    if (!amount.isNullOrEmpty())
+                    if (amount.isNotEmpty())
                         isCheckAmount(amount.replace(" ", "").toInt())
                 }
             }

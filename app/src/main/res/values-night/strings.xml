@@ -8,4 +8,7 @@
     <string name="pass_check">Пароль должен содержать хотя бы одну букву или одну цифру и один символ.</string>
     <string name="delete_all">Удалить все</string>
     <string name="logging_out">Выйти</string>
+    <string name="other_devices">Другие устройства</string>
+    <string name="my_device">Мое устройство</string>
+    <string name="no_other_devices_found">No other devices found</string>
 </resources>

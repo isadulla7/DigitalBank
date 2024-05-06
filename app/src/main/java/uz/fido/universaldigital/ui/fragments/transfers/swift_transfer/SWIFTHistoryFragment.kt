@@ -5,7 +5,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.datepicker.MaterialDatePicker
 import dagger.hilt.android.AndroidEntryPoint
-import fido.aab_mobile.ui.ib.fragments.menu.menu_services.bank_transfers.adapter.BankTransferListAdapter
+import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.adapter.BankTransferListAdapter
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.swift.SWIFTList
 import uz.fido.network.domain.model.swift.SwiftTransferListRequest

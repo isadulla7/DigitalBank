@@ -97,7 +97,7 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
     }
 
     private fun takeScreenshot(view: View) {
-        val path = FileUtils.saveImageToGallery(requireContext(), FileUtils.takeScreenShot(view)!!, "Card QR")
+        val path = FileUtils.saveImageToGallery(requireContext(), FileUtils.takeScreenShot(view), "Card QR")
         val intent: Intent = Intent().apply {
             val uriPath = FileProvider.getUriForFile(
                 requireActivity(),
@@ -113,7 +113,7 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
     }
 
     private fun share(view: View) {
-        val path = FileUtils.saveImageToGallery(requireContext(), FileUtils.takeScreenShot(view)!!, "${getString(R.string.receipt)} (${name})")
+        val path = FileUtils.saveImageToGallery(requireContext(), FileUtils.takeScreenShot(view), "${getString(R.string.receipt)} (${name})")
         val shareIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
             val uri =
