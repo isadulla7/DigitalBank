@@ -1,6 +1,5 @@
 package uz.fido.universaldigital.ui.utils.extensions
 
-import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -49,8 +48,9 @@ import uz.fido.network.domain.model.payment.PaymentParams
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
+import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.universaldigital.ui.utils.validator.RangeValidator
-import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.const.ServerMessages.getMeaningFulMessage
@@ -133,7 +133,7 @@ inline fun <reified T : Serializable> Intent.serializable(key: String): T? = whe
 }
 
 fun ImageView.loadTemplateImage(iconName: String) {
-    val url = "$PAYNET_PHOTO$iconName"
+    val url = "${Keys.paynetPhotoUrl()}$iconName"
     this.load(url) {
         crossfade(true)
         transformations(RoundedCornersTransformation(convertDpToPixel(12f, context)))

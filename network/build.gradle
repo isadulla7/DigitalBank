@@ -9,16 +9,27 @@ android {
     namespace 'uz.fido.network'
 
     defaultConfig {
-        minSdkVersion ConfigData.minSdkVersion
-        compileSdk ConfigData.compileSdkVersion
-        targetSdkVersion ConfigData.targetSdkVersion
+        minSdkVersion ConfigData.MIN_SDK_VERSION
+        compileSdk ConfigData.COMPILE_SDK_VERSION
+        targetSdkVersion ConfigData.TARGET_SDK_VERSION
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+
+        externalNativeBuild {
+            cmake {
+                cppFlags("")
+            }
+        }
     }
     buildFeatures {
         buildConfig true
     }
-
+    externalNativeBuild {
+        cmake {
+            path = "src/main/cpp/CMakeLists.txt"
+            version = "3.22.1"
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false

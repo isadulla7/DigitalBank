@@ -10,7 +10,7 @@ import com.squareup.picasso.Picasso
 import uz.fido.network.domain.model.subscriptions.AutoPayment
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemMySubscriptionBinding
-import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.CardConst.STATE_ACTIVE
 import uz.fido.utils.format.Format
 
@@ -55,7 +55,7 @@ class AutoPaymentsAdapter(
 
             binding.paymentName.text = item.name
             if (item.icon_name != "") Picasso.get()
-                .load(PAYNET_PHOTO + item.icon_name)
+                .load(Keys.paynetPhotoUrl() + item.icon_name)
                 .error(R.drawable.ic_payments_placeholder).into(binding.icon)
             else binding.icon.setImageResource(R.drawable.ic_payments_placeholder)
             binding.imageMore.setOnClickListener {

@@ -8,7 +8,7 @@ import com.squareup.picasso.Picasso
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemServiceChooseFilterBinding
-import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.format.Format
 
 class ServiceFilterAdapter(
@@ -26,7 +26,7 @@ class ServiceFilterAdapter(
 
             if (item.icon_name != "")
                 Picasso.get()
-                    .load(PAYNET_PHOTO + item.icon_name)
+                    .load(Keys.paynetPhotoUrl() + item.icon_name)
                     .error(R.drawable.ic_payments_placeholder)
                     .into(binding.image)
             else binding.image.setImageResource(R.drawable.ic_payments_placeholder)

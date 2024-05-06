@@ -16,7 +16,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpPasswordBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
-import uz.fido.utils.const.APIServiceConst.USER_INFO_URL
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.encryptPassword
 import uz.fido.utils.utility.context.GetDeviceInfo
@@ -76,7 +76,7 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
     }
 
     private fun getUserInfo() {
-        viewModel.getUserDetailedInfo(USER_INFO_URL + requireContext().getIpAddress()).observe(viewLifecycleOwner) {
+        viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + requireContext().getIpAddress()).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> it.data?.let { data ->
                     finishRegistration(data)

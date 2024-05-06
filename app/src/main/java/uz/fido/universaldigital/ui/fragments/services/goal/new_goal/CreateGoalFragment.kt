@@ -157,15 +157,10 @@ class CreateGoalFragment : BaseFragment<FragmentCreateGoalBinding, GoalViewModel
         val targetAmount = binding.etMaxAmount.editableText.toString().trim().replace(" ", "")
         val firstPayment = binding.anInitialFree.editableText.toString().trim().replace(" ", "")
         if (targetTerm != 0 && targetAmount.isNotEmpty()) {
-            Log.d("TAG", "openConfirm:${targetAmount.toBigDecimal()} ")
-            Log.d("TAG", "openConfirm:${targetTerm} ")
             val amount = (targetAmount.toBigDecimal()
                 .minus(firstPayment.toBigDecimal())).divide(targetTerm.toBigDecimal(), 2, RoundingMode.HALF_UP).toString()
             binding.autopaymentAmount.setText(amount.dropLast(3))
-            Log.d("TAG", "openConfirm:${amount.dropLast(3)} ")
-
         }
-        Log.d("TAG", "openConfirm:${binding.autopaymentAmount.editableText} ")
         val bundle = Bundle()
         bundle.putString(Const.OPERATION, "create")
         bundle.putSerializable("target", getTargetRequest())

@@ -7,16 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-
-import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.DateItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.home.HomeGeneralItem
 import uz.fido.network.domain.model.monitoring.home.ItemHomeHistory
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemHistoriesHeaderBinding
 import uz.fido.universaldigital.databinding.ItemMonitoringBinding
-import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.format.Format
 import uz.fido.utils.sticky.StickyHeaderInterface
 import uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -39,7 +38,7 @@ class HouseHistoryAdapter(
             binding.tvTime.text = monitoringItem?.create_date?.substring(10, 16)
             binding.icon.setPadding(0, 0, 0, 0)
             if (template.icon_name != "")
-                Picasso.get().load(PAYNET_PHOTO + template.icon_name).error(
+                Picasso.get().load(Keys.paynetPhotoUrl() + template.icon_name).error(
                     R.drawable.ic_payments_placeholder
                 )
                     .into(binding.icon)

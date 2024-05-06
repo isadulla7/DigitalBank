@@ -15,7 +15,7 @@ import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.getUserQwerty
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveUserQwerty
-import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.security.encryptPassword
 import uz.fido.utils.utility.context.startActivityWithClearTask
 import uz.fido.utils.utility.fragment.pop
@@ -125,7 +125,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
             phone_number = phoneNumber,
             sms_code = smsCode,
             password = binding.etPassword.text.toString(),
-            client_id = USER_CLIENT_ID
+            client_id = Keys.getClientId()
         )
         viewModel.changePasswordWithSMS(changePasswordRequest).observe(viewLifecycleOwner) {
             when (it.status) {

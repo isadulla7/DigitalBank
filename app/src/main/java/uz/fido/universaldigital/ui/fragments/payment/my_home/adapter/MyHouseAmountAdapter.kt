@@ -10,30 +10,33 @@ import com.squareup.picasso.Picasso
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemMyHouseAmountBinding
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.APIServiceConst
 import uz.fido.utils.format.Format
 
-class MyHouseAmountAdapter(private val context:Context,
-                           private val list:ArrayList<Template>,
-                           private val onCLick:(String,Int)->Unit):RecyclerView.Adapter<MyHouseAmountAdapter.VhMyHouse>() {
+class MyHouseAmountAdapter(
+    private val context: Context,
+    private val list: ArrayList<Template>,
+    private val onCLick: (String, Int) -> Unit
+) : RecyclerView.Adapter<MyHouseAmountAdapter.VhMyHouse>() {
 
 
-    inner class VhMyHouse(val binding: ItemMyHouseAmountBinding):RecyclerView.ViewHolder(binding.root){
+    inner class VhMyHouse(val binding: ItemMyHouseAmountBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(template: Template) {
             binding.etAmount.addTextChangedListener {
                 template.amount = it.toString().replace(" ", "")
-                if (!it.isNullOrEmpty()){
-                    onCLick.invoke(it.toString().replace(" ",""),adapterPosition)
+                if (!it.isNullOrEmpty()) {
+                    onCLick.invoke(it.toString().replace(" ", ""), adapterPosition)
                 }
             }
 
-           binding.text.text=template.name.toString()
-           binding.personText.text=template.account_text
-           binding.person.text=template.account
+            binding.text.text = template.name.toString()
+            binding.personText.text = template.account_text
+            binding.person.text = template.account
 
             if (template.icon_name != "") Picasso.get()
-                .load(APIServiceConst.PAYNET_PHOTO + template.icon_name)
+                .load(Keys.paynetPhotoUrl() + template.icon_name)
                 .error(R.drawable.ic_payments_placeholder).into(binding.icon)
             else binding.icon.setImageResource(R.drawable.ic_payments_placeholder)
 
@@ -73,11 +76,11 @@ class MyHouseAmountAdapter(private val context:Context,
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VhMyHouse {
-        val view=ItemMyHouseAmountBinding.inflate(LayoutInflater.from(parent.context),parent,false)
+        val view = ItemMyHouseAmountBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return VhMyHouse(view)
     }
 
-    override fun getItemCount(): Int =list.size
+    override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: VhMyHouse, position: Int) {
 

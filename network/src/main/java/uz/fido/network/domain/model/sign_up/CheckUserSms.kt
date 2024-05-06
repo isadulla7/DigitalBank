@@ -1,11 +1,11 @@
 package uz.fido.network.domain.model.sign_up
 
+import uz.fido.network.di.Keys
 import uz.fido.network.domain.model.abc_base.UserInfo
-import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 
 data class CheckUserSms(
     val phone_number: String,
-    val client_id: String = USER_CLIENT_ID,
+    val client_id: String = Keys.getClientId(),
     val sms_code: String? = null,
     val device_id: String? = null,
     val sms_type: Int? = null,

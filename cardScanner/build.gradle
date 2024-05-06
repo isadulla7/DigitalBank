@@ -6,15 +6,18 @@ apply plugin: 'maven-publish'
 android {
 
     defaultConfig {
-        minSdkVersion ConfigData.minSdkVersion
-        compileSdk ConfigData.compileSdkVersion
-        targetSdkVersion ConfigData.targetSdkVersion
+        minSdkVersion ConfigData.MIN_SDK_VERSION
+        compileSdk ConfigData.COMPILE_SDK_VERSION
+        targetSdkVersion ConfigData.TARGET_SDK_VERSION
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'proguard-rules-keep-lib.pro'
     }
 
     externalNativeBuild {
-        cmake { path "src/main/cpp/CMakeLists.txt" }
+        cmake {
+            path = "src/main/cpp/CMakeLists.txt"
+            version = "3.22.1"
+        }
     }
 
     buildTypes {
@@ -28,7 +31,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    ndkVersion '25.0.8775105'
+//    ndkVersion '25.0.8775105'
 }
 
 

@@ -9,6 +9,7 @@ import okhttp3.Request
 import okhttp3.Response
 import org.json.JSONObject
 import uz.fido.network.data.utility.CurrentActivityHolder
+import uz.fido.network.di.Keys
 import uz.fido.network.domain.datasource.services.SwapKeyApiInterface
 import uz.fido.network.domain.datasource.services.UserApiInterface
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
@@ -17,7 +18,6 @@ import uz.fido.network.domain.model.abc_base.UserInfo
 import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.utils.const.APIServiceConst
-import uz.fido.utils.const.APIServiceConst.USER_CLIENT_ID
 import uz.fido.utils.const.APIServiceConst.profileImageUrl
 import uz.fido.utils.const.Const
 import uz.fido.utils.device.GetDeviceInfo
@@ -120,7 +120,7 @@ class AuthInterceptor @Inject constructor(
     }
 
     private fun getIpResponse(): retrofit2.Response<UserInfo> {
-        return swapKeyService.getUserDetailedInfo(APIServiceConst.USER_INFO_URL + context.getIpAddress())
+        return swapKeyService.getUserDetailedInfo(Keys.getUserInfoUrl() + context.getIpAddress())
             .execute()
     }
 
@@ -133,7 +133,7 @@ class AuthInterceptor @Inject constructor(
             device_name = getDeviceName(),
             version = "1",
             ip = context.getIpAddress(),
-            client_id = USER_CLIENT_ID,
+            client_id = Keys.getClientId(),
             fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
             password = context.getUserQwerty(),
             is_pin = 1,
@@ -162,13 +162,13 @@ class AuthInterceptor @Inject constructor(
         val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
             .insertStringBetween("&^%", 6)
         val newKey = CryptoUtil.encrypt(
-            Paper.book().read("ENC_PASS"),
+            Paper.book().read(Const.PASSWORD_ENC),
             key1
         ) + keyK + CryptoUtil.encrypt(
             Paper.book().read(Const.STRING_LINE),
             key2
         )
-        Paper.book().write("KEY_K", newKey)
+        Paper.book().write(Const.KEY_K, newKey)
     }
 
     private fun isNeedToCallSwapKey(): Boolean {

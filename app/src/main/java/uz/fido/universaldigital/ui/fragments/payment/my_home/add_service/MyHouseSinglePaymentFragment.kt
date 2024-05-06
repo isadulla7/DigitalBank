@@ -25,7 +25,7 @@ import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.D
 import uz.fido.universaldigital.ui.fragments.payment.my_home.MyHomeViewModel
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
-import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CHAR_UZS
 import uz.fido.utils.format.Format
@@ -210,7 +210,7 @@ class MyHouseSinglePaymentFragment :
     private fun setTemplateData() {
         binding.text.text = templateItem!!.name
         if (templateItem!!.icon_name != "") Picasso.get()
-            .load(PAYNET_PHOTO + templateItem!!.icon_name)
+            .load(Keys.paynetPhotoUrl() + templateItem!!.icon_name)
             .error(R.drawable.ic_payments_placeholder).into(binding.icon)
         else binding.icon.setImageResource(R.drawable.ic_payments_placeholder)
 

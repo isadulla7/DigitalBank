@@ -24,6 +24,7 @@ import uz.fido.universaldigital.databinding.ViewDepositCreateBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
@@ -188,7 +189,7 @@ open class DepositConstructorConfirmFragment :
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
 
-                val website = Const.DEPOSIT_BAXTLI_BOLALIK
+                val website = Keys.getDepositOfferBaxtliBolalik()
                 val webIntent = Intent(Intent.ACTION_VIEW)
                 webIntent.data = Uri.parse(website)
                 requireActivity().startActivity(webIntent)

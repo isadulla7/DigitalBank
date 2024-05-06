@@ -5,9 +5,8 @@ import android.os.Bundle
 import android.widget.Toast
 import io.paperdb.Paper
 import uz.fido.universaldigital.base.BaseActivity
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
-import uz.fido.utils.const.Const.MY_ID_CLIENT_HASH
-import uz.fido.utils.const.Const.MY_ID_CLIENT_HASH_ID
 import uz.myid.android.sdk.capture.MyIdClient
 import uz.myid.android.sdk.capture.MyIdConfig
 import uz.myid.android.sdk.capture.MyIdException
@@ -47,8 +46,8 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
      */
 
     private fun startMyId() {
-        val myIdConfig = MyIdConfig.builder(clientId = Const.MY_ID_CLIENT_ID)
-            .withClientHash(MY_ID_CLIENT_HASH, MY_ID_CLIENT_HASH_ID)
+        val myIdConfig = MyIdConfig.builder(clientId = Keys.getMyIdClientId())
+            .withClientHash(Keys.getMyIdClientHash(), Keys.getMyIdClientHashId())
             .withPassportData(clientPassport).withBirthDate(clientBirthday)
             .withBuildMode(MyIdBuildMode.PRODUCTION).withEntryType(MyIdEntryType.AUTH)
             .withResidency(MyIdResidentType.USER_DEFINED).withLocale(Locale(initLanguage()))

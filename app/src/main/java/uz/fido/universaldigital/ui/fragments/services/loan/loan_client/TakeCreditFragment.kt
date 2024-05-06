@@ -92,8 +92,6 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
     }
 
     private fun isCurrent() {
-        Log.d("TAG", "isCurrent: $minAmount")
-        Log.d("TAG", "isCurrent: $maxAmount")
         if (amount.isNotEmpty()) {
             if (minAmount.toDouble() < amount.toDouble() && maxAmount.toDouble() > amount.toDouble() && selectedCard != null) {
                 binding.btnContinue.isEnabled(true)

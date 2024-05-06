@@ -160,7 +160,6 @@ class OrderCardStep2Fragment : BaseFragment<FragmentOrderCardStep2Binding, Order
                     pin_code = pinCode,
                     secretWord = binding.etSecretWord.editableText.toString()
                 )
-                Log.d("===", request.toString())
                 val bundle = Bundle()
                 bundle.putSerializable("deliveryType", orderType)
                 bundle.putSerializable("request", request)

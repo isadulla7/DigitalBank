@@ -11,7 +11,7 @@ import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemMyHomeServiceBinding
-import uz.fido.utils.const.APIServiceConst.PAYNET_PHOTO
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.format.Format
 
 class ServiceAdapter(
@@ -30,7 +30,7 @@ class ServiceAdapter(
             } else ContextCompat.getDrawable(context, R.drawable.ic_my_home_service)
 
             if (template.icon_name != "")
-                Picasso.get().load(PAYNET_PHOTO + template.icon_name).error(R.drawable.ic_payments_placeholder).into(binding.icon)
+                Picasso.get().load(Keys.paynetPhotoUrl() + template.icon_name).error(R.drawable.ic_payments_placeholder).into(binding.icon)
             else binding.icon.setImageResource(R.drawable.ic_payments_placeholder)
 
             if (!template.balance.isNullOrEmpty() &&

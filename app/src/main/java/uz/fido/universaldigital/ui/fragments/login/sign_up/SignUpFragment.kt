@@ -20,8 +20,8 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
-import uz.fido.utils.const.APIServiceConst.USER_INFO_URL
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
@@ -100,7 +100,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun getUserInfo() {
-        viewModel.getUserDetailedInfo(USER_INFO_URL + requireContext().getIpAddress())
+        viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + requireContext().getIpAddress())
             .observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.SUCCESS -> it.data?.let { data ->

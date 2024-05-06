@@ -172,8 +172,6 @@ class PaymentListFragment :
                 Paper.book().read(Const.PAPER_CLIENT_PHONE, "")
             )
             bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, paymentService)
-
-            Log.d("TAG", "gotoMobilePayments:__${operation} ")
             bundle.putInt(
                 PaymentFragment.PAYMENT_OPERATION,
                 PaymentFragment.PAYMENT_OPERATION_PAYMENT
