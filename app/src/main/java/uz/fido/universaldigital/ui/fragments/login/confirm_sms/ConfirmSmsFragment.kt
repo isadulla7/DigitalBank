@@ -164,8 +164,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             }
 
             SMS_OPERATION_TERMINATE_SESSION -> {
-                val userDevice =
-                    requireArguments().serializable<UserDevices>("user_device") as UserDevices
+                val userDevice = requireArguments().serializable<UserDevices>("user_device") as UserDevices
                 terminateSessionRequest(userDevice, requireArguments().getString("type").toString())
             }
 

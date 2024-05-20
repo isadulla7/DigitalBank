@@ -55,6 +55,7 @@ import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.Command
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 import java.text.DecimalFormat
 
@@ -299,14 +300,24 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
             LayoutInflater.from(requireContext()), container, false
         )
         val snapHelper: SnapHelper = PagerSnapHelper()
-        val homeDepositsAdapter = DepositAdapter {
-            goto(
-                R.id.openDepositStepFirst, bundleOf(
-                    "deposit" to it,
-                    "operation" to "deposit",
-                    "isSum" to true
+        val homeDepositsAdapter = DepositAdapter { deposit ->
+            if (deposit.dep_id != 853) {
+                gotoWithSlide(
+                    R.id.openDepositOferta, bundleOf(
+                        "deposit" to deposit,
+                        "operation" to "deposit",
+                        "isSum" to true
+                    )
                 )
-            )
+            } else {
+                gotoWithSlide(
+                    R.id.openDepositStepFirst, bundleOf(
+                        "deposit" to deposit,
+                        "operation" to "deposit",
+                        "isSum" to true
+                    )
+                )
+            }
         }
         layoutBinding.rvDeposits.apply {
             layoutManager =

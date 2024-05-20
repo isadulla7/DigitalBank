@@ -28,7 +28,6 @@
     <integer-array name="main_widget_visible">
         <item>100</item>
         <item>200</item>
-        <item>400</item>
         <item>500</item>
     </integer-array>
 

@@ -389,14 +389,19 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             .insertStringBetween("@$#", 3)
         val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
             .insertStringBetween("&^%", 6)
-        val newKey = CryptoUtil.encrypt(
-            Paper.book().read(Const.PASSWORD_ENC),
-            key1
-        ) + keyK + CryptoUtil.encrypt(
-            Paper.book().read(Const.STRING_LINE),
-            key2
-        )
-        Paper.book().write(Const.KEY_K, newKey)
+        if (Paper.book().read<String>(Const.PASSWORD_ENC) == null || Paper.book().read(Const.STRING_LINE)) {
+            requireActivity().logOut()
+        } else {
+            val newKey = CryptoUtil.encrypt(
+                Paper.book().read(Const.PASSWORD_ENC),
+                key1
+            ) + keyK + CryptoUtil.encrypt(
+                Paper.book().read(Const.STRING_LINE),
+                key2
+            )
+            Paper.book().write(Const.KEY_K, newKey)
+        }
+
     }
 
     private fun saveSignInResponse(signInResponse: SignInResponse) {
