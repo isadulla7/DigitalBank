@@ -120,6 +120,7 @@
                 android:id="@+id/goto_main_page"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
+                android:textColor="@color/frozenWhite"
                 android:layout_margin="16dp"
                 android:text="@string/repeat"
                 android:textSize="16sp"

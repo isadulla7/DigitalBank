@@ -102,6 +102,7 @@
         android:layout_height="60dp"
         android:layout_margin="16dp"
         android:text="@string/save"
+        android:textColor="@color/frozenWhite"
         android:textSize="16sp"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent" />

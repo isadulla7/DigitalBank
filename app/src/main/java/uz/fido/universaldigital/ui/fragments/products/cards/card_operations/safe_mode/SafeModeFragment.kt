@@ -33,6 +33,7 @@ class SafeModeFragment : BaseFragment<FragmentSafeModeBinding, MenuProductsViewM
     }
 
     private fun init() {
+        binding.appBar.setOnBackButtonClickListener { pop() }
         binding.switchSafeMode.isChecked = card.safe_mode == "Y"
         binding.switchSafeMode.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) card.safe_mode = "Y" else card.safe_mode = "N"

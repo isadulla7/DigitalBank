@@ -55,6 +55,7 @@
         android:layout_weight="1"
         android:enabled="true"
         android:text="@string/add_card"
+        android:textColor="@color/frozenWhite"
         android:textSize="16sp"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent" />

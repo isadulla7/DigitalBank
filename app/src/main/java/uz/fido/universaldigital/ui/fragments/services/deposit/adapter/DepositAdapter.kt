@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.deposits.Deposit
+import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemDepositProductBinding
 import uz.fido.utils.utility.format.Format
 
@@ -23,10 +24,11 @@ class DepositAdapter(
                     Format().formattedDepositExpire(itemView.context, item.keeping_time)
                 depositAmount.text =
                     Format().formattedDepositAmount(itemView.context, item.min_sum.toString())
-                depositDescription.text=item.description
+                depositDescription.text = item.description
                 itemView.setOnClickListener {
                     onClickDeposit.invoke(item)
                 }
+                depositImage.setImageResource(loadDepositImage(item.dep_id))
             }
 
         }
@@ -46,6 +48,17 @@ class DepositAdapter(
         holder.onBind(getItem(position))
     }
 
+}
+
+private fun loadDepositImage(depId: Int): Int {
+    return when (depId) {
+        853 -> R.drawable.ic_bank_product_illustration_3
+        1674 -> R.drawable.ic_bank_product_illustration_4
+        1694 -> R.drawable.ic_bank_product_illustration_1
+        1753 -> R.drawable.ic_bank_product_illustration_2
+        1874 -> R.drawable.ic_bank_product_illustration_5
+        else -> R.drawable.ic_bank_product_illustration_5
+    }
 }
 
 class CallBackDeposit : DiffUtil.ItemCallback<Deposit>() {

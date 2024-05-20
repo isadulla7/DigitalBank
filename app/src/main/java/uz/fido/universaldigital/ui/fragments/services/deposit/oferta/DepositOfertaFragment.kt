@@ -8,17 +8,20 @@ import uz.fido.network.domain.model.deposits.Deposit
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentDepositOfertaBinding
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 
 @AndroidEntryPoint
-class DepositOfertaFragment:BaseSimpleFragment<FragmentDepositOfertaBinding>
-    (FragmentDepositOfertaBinding::inflate){
+class DepositOfertaFragment : BaseSimpleFragment<FragmentDepositOfertaBinding>
+    (FragmentDepositOfertaBinding::inflate) {
+
     private lateinit var deposit: Deposit
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let{
-          deposit=it.getSerializable("deposit") as Deposit
+        arguments?.let {
+            deposit = it.serializable<Deposit>("deposit") as Deposit
         }
         init()
         onClickView()
@@ -27,7 +30,6 @@ class DepositOfertaFragment:BaseSimpleFragment<FragmentDepositOfertaBinding>
 
     private fun onClickView() {
         binding.appBar.setOnBackButtonClickListener { pop() }
-        binding.btnContinue.isEnabled(true)
         binding.btnContinue.setOnClickListener {
             gotoWithSlide(
                 R.id.openDepositStepFirst, bundleOf(
@@ -37,21 +39,22 @@ class DepositOfertaFragment:BaseSimpleFragment<FragmentDepositOfertaBinding>
                 )
             )
         }
+        binding.offerCheckbox.setOnCheckedChangeListener { _, isChecked ->
+            binding.btnContinue.isEnabled(isChecked)
+        }
     }
 
-    private fun init(){
+    private fun init() {
         val website = when (deposit.dep_id) {
             1874 -> "https://ibank.ubank.uz/cib/sarmoya-25.html"
             1674 -> "https://ibank.ubank.uz/cib/qulay_daromad.html"
             1694 -> "https://ibank.ubank.uz/cib/yubiley.html"
-            1753 -> "https://ibank.ubank.uz/cib/qulay_daromad.html"
+            1753 -> "https://ibank.ubank.uz/cib/yuksalish.html"
             else -> "https://universalbank.uz/juristic"
         }
-
-
         binding.webView.loadUrl(website)
     }
-    }
+}
 
 
 

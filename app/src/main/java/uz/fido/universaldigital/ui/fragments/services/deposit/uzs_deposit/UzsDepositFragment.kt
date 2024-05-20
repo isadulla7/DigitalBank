@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.services.deposit.uzs_deposit
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
@@ -59,7 +60,7 @@ class UzsDepositFragment : BaseFragment<FragmentUzsDepositBinding, MainDepositVi
             getClientToken(),
             GetDepositListRequest("dep")
         ).observe(viewLifecycleOwner) { resource ->
-            Handler().postDelayed({ skeletonScreen.hide() }, 500)
+            Handler(Looper.getMainLooper()).postDelayed({ skeletonScreen.hide() }, 500)
             when (resource.status) {
                 Status.SUCCESS -> {
                     val list = resource.data as DepositListResponse
@@ -84,13 +85,23 @@ class UzsDepositFragment : BaseFragment<FragmentUzsDepositBinding, MainDepositVi
     }
 
     override fun invoke(deposit: Deposit) {
-        gotoWithSlide(
-            R.id.openDepositOferta, bundleOf(
-                "deposit" to deposit,
-                "operation" to "deposit",
-                "isSum" to true
+        if (deposit.dep_id != 853) {
+            gotoWithSlide(
+                R.id.openDepositOferta, bundleOf(
+                    "deposit" to deposit,
+                    "operation" to "deposit",
+                    "isSum" to true
+                )
             )
-        )
+        } else {
+            gotoWithSlide(
+                R.id.openDepositStepFirst, bundleOf(
+                    "deposit" to deposit,
+                    "operation" to "deposit",
+                    "isSum" to true
+                )
+            )
+        }
     }
 
 
