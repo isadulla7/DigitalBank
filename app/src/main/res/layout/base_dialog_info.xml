@@ -2,12 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/father"
-    android:layout_width="330dp"
+    android:layout_width="340dp"
     android:layout_height="wrap_content"
     android:background="@drawable/cornered_bg_12dp"
     android:elevation="2dp"
-    android:minWidth="330dp"
-    android:minHeight="160dp">
+    android:minWidth="330dp">
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/title"
@@ -23,13 +22,13 @@
     <uz.fido.utils.view.custom_text_view.TextViewRegular
         android:id="@+id/subtitle"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:gravity="start"
-        android:maxLines="4"
+        android:maxLines="8"
         android:paddingBottom="4dp"
         android:textColor="@color/brandBlueColor_60"
         android:textSize="15sp"
@@ -48,6 +47,7 @@
         android:textColor="@color/dialogButtonColor"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/subtitle" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

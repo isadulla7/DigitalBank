@@ -13,8 +13,11 @@ object ErrorUtils {
                 val jsonObject = JSONObject(response.errorBody()!!.string())
                 val code = jsonObject.getInt("code")
                 var message: String? = jsonObject.getString("msg")
-                if (message == null || (message.contains("502 Bad"))) {
-                    message = "Неизвестная ошибка"
+                if (message == null) {
+                    message = "Unknown error&"
+                }
+                if ((message.contains("502 Bad"))) {
+                    message = "$message Unknown error* ${response.errorBody()!!.string()}"
                 }
                 APIError(
                     code,
@@ -30,7 +33,7 @@ object ErrorUtils {
                 } else {
                     APIError(
                         ServerCode.BAD_REQUEST.code,
-                        "Неизвестная ошибка"
+                        "Unknown error# ${response.errorBody()!!.string()}"
                     )
                 }
             }
@@ -43,7 +46,7 @@ object ErrorUtils {
         } else {
             APIError(
                 ServerCode.BAD_REQUEST.code,
-                "Неизвестная ошибка"
+                "Unknown error$"
             )
         }
     }
