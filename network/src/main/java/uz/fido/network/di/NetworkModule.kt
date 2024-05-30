@@ -29,11 +29,13 @@ import java.security.GeneralSecurityException
 import java.security.KeyStore
 import java.security.SecureRandom
 import java.security.cert.CertificateFactory
+import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
+import javax.net.ssl.TrustManager
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
@@ -92,14 +94,13 @@ object NetworkModule {
 
     private fun systemDefaultTrustManager(): X509TrustManager? {
         return try {
-            val trustManagerFactory =
-                TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+            val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
             trustManagerFactory.init(null as KeyStore?)
             val trustManagers = trustManagerFactory.trustManagers
-            check(!(trustManagers.size != 1 || trustManagers[0] !is X509TrustManager)) {
+            check(!(trustManagers.size != 1 || trustManagers.first() !is X509TrustManager)) {
                 "Unexpected default trust managers:" + trustManagers.contentToString()
             }
-            trustManagers[0] as X509TrustManager
+            trustManagers.first() as X509TrustManager
         } catch (e: GeneralSecurityException) {
             throw AssertionError()
         }
@@ -204,5 +205,44 @@ object NetworkModule {
     fun swapKeyRetrofit(
         baseUrl: String, @SwapKeyRetrofit okHttpClient: OkHttpClient, gsonBuilder: Gson
     ): Retrofit = Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create(gsonBuilder)).baseUrl(baseUrl).build()
+
+
+    private fun unSafeOkHttpClient(): OkHttpClient.Builder {
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(Interceptor {
+                val request: Request = it.request().newBuilder().build()
+                return@Interceptor it.proceed(request)
+            })
+            .addInterceptor(loggingInterceptor())
+            .readTimeout(180, TimeUnit.SECONDS)
+            .connectTimeout(180, TimeUnit.SECONDS).writeTimeout(180, TimeUnit.SECONDS)
+        try {
+            val trustAllCerts: Array<TrustManager> = arrayOf(object : X509TrustManager {
+                override fun checkClientTrusted(
+                    chain: Array<out X509Certificate>?, authType: String?
+                ) {
+                }
+
+                override fun checkServerTrusted(
+                    chain: Array<out X509Certificate>?, authType: String?
+                ) {
+                }
+
+                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
+            })
+            val sslContext = SSLContext.getInstance("SSL")
+            sslContext.init(null, trustAllCerts, SecureRandom())
+            val sslSocketFactory = sslContext.socketFactory
+            if (trustAllCerts.isNotEmpty() && trustAllCerts.first() is X509TrustManager) {
+                okHttpClient.sslSocketFactory(
+                    sslSocketFactory, trustAllCerts.first() as X509TrustManager
+                )
+                okHttpClient.hostnameVerifier { _, _ -> true }
+            }
+            return okHttpClient
+        } catch (e: Exception) {
+            return okHttpClient
+        }
+    }
 
 }

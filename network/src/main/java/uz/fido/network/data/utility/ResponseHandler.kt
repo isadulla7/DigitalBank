@@ -30,11 +30,10 @@ fun <T : Any> handleException(e: Exception): Resource<T> {
     val errorResource: Resource<T>
     when (e) {
         is HttpException -> {
-            val error = ErrorUtils.parseError(e.response()!!)
+            val error = ErrorUtils.parseError(e .response()!!)
             errorResource = Resource.error(
                 message = error.message, data = null, errorBody = error
             )
-
         }
 
         is SocketTimeoutException -> {

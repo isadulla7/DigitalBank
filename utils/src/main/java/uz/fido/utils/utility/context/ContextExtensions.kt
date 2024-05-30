@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
+import android.net.LinkProperties
+import android.net.Network
+import android.net.NetworkCapabilities
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.provider.Settings
@@ -14,6 +17,7 @@ import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.language.Utility.getLocalIpAddress
 import uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
 import java.math.BigInteger
+import java.net.Inet4Address
 import java.net.InetAddress
 import java.net.UnknownHostException
 import java.nio.ByteOrder
@@ -31,18 +35,22 @@ fun Context.getDeviceIds(): String {
 }
 
 fun Context.checkNetworkStatus(): String {
-    var networkStatus = ""
+    val networkStatus = "noNetwork"
     try {
         val connMgr = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val wifi = connMgr.getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-        val mobile = connMgr.getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
-        networkStatus = if (wifi!!.isConnectedOrConnecting) {
-            "wifi"
-        } else if (mobile!!.isConnectedOrConnecting) {
-            "mobileData"
-        } else {
-            "noNetwork"
-        }
+        val nw = connMgr.activeNetwork
+        val activeNetwork = connMgr.getNetworkCapabilities(nw)
+        return if (activeNetwork != null) {
+            when {
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> "wifi"
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> "mobileData"
+                //for other device how are able to connect with Ethernet
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> "ethernet"
+                //for check internet over Bluetooth
+                activeNetwork.hasTransport(NetworkCapabilities.TRANSPORT_BLUETOOTH) -> "bluetooth"
+                else -> "noNetwork"
+            }
+        } else "noNetwork"
     } catch (ex: Exception) {
         Log.e("INFO_ERROR", "NetworkStatus")
     }
@@ -50,40 +58,41 @@ fun Context.checkNetworkStatus(): String {
 }
 
 fun Context.wifiIpAddress(): String {
-    val wifiManager = applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-    var ipAddress = wifiManager.connectionInfo.ipAddress
-
-    if (ByteOrder.nativeOrder() == ByteOrder.LITTLE_ENDIAN) {
-        ipAddress = Integer.reverseBytes(ipAddress)
+    val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val activeNetwork: Network? = connectivityManager.activeNetwork
+    val networkCapabilities: NetworkCapabilities? = connectivityManager.getNetworkCapabilities(activeNetwork)
+    if (networkCapabilities != null && networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+        val linkProperties: LinkProperties? = connectivityManager.getLinkProperties(activeNetwork)
+        linkProperties?.let {
+            for (address in it.linkAddresses) {
+                val inetAddress = address.address
+                if (inetAddress is Inet4Address) {
+                    return inetAddress.hostAddress ?: "1.1.1.1"
+                }
+            }
+        }
     }
-    val ipByteArray = BigInteger.valueOf(ipAddress.toLong()).toByteArray()
-    val ipAddressString: String = try {
-        InetAddress.getByAddress(ipByteArray).hostAddress ?: ""
-    } catch (ex: UnknownHostException) {
-        Log.e("INFO_ERROR", "Unable to get host address.")
-        ""
-    }
-    return ipAddressString
+    return "1.1.1.1"
 }
 
 fun Context.getIpAddress(): String {
-    var ipAddress = ""
+    var ipAddress = "1.1.1.1"
     try {
-        when {
+        ipAddress = when {
             checkNetworkStatus().equals("wifi", ignoreCase = true) -> {
-                ipAddress = wifiIpAddress()
+                wifiIpAddress()
             }
 
             checkNetworkStatus().equals("mobileData", ignoreCase = true) -> {
-                ipAddress = getLocalIpAddress()
+                getLocalIpAddress()
             }
 
-            checkNetworkStatus().equals("noNetwork", ignoreCase = true) -> {
-                ipAddress = ""
+            else -> {
+                "1.1.1.1"
             }
         }
     } catch (ex: Exception) {
-        Log.e("INFO_ERROR: ", "IP_Adress" + ex.localizedMessage)
+        Log.e("INFO ERROR: ", "IP-address" + ex.localizedMessage)
     }
     return ipAddress
 }
