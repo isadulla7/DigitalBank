@@ -9,7 +9,7 @@ import java.util.regex.Pattern
 object Utility {
 
     fun getDeviceName(): String {
-        return Build.MODEL?:""
+        return Build.MODEL ?: ""
     }
 
     fun getLocalIpAddress(): String {
@@ -21,20 +21,20 @@ object Utility {
                 while (enumIpAddr.hasMoreElements()) {
                     val inetAddress = enumIpAddr.nextElement()
                     if (!inetAddress.isLoopbackAddress && inetAddress is Inet4Address) {
-                        return inetAddress.hostAddress!!
+                        return inetAddress.hostAddress ?: "1.1.1.1"
                     }
                 }
             }
         } catch (ex: SocketException) {
             ex.printStackTrace()
         }
-        return ""
+        return "1.1.1.1"
     }
 
     fun isValidPasswordFormat(password: String): Boolean {
-      //  return password.length >= 8
-    val passwordREGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+*/!()_=-])(?=\\S+\$).{4,}\$")
-    return passwordREGEX.matcher(password).matches()
+        //  return password.length >= 8
+        val passwordREGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+*/!()_=-])(?=\\S+\$).{4,}\$")
+        return passwordREGEX.matcher(password).matches()
     }
 
 

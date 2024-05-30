@@ -33,7 +33,7 @@ object ErrorUtils {
                 } else {
                     APIError(
                         ServerCode.BAD_REQUEST.code,
-                        "Unknown error# ${response.errorBody()!!.string()}"
+                        "Unknown error# resp:(${response}) exc(${e})"
                     )
                 }
             }
