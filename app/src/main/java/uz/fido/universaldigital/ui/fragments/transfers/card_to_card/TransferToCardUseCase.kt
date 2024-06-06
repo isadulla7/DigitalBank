@@ -48,7 +48,7 @@ class TransferToCardUseCaseImpl @Inject constructor(
         return if (response.status == Status.SUCCESS) {
             response.data?.mapToDto() ?: P2PInfoDto(isSuccess = false)
         } else {
-            P2PInfoDto(isSuccess = false)
+            P2PInfoDto(isSuccess = false, errorMessage = response.message)
         }
     }
 

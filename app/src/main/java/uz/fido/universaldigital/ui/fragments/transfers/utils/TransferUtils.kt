@@ -133,8 +133,7 @@ fun TextView.setMinMaxAmount(
     val etAmount = currentAmount.text.toString().replace(" ", "").ifEmpty { "0" }
     val formattedAmount = etAmount.toBigDecimal()
     if (p2PInfoDto != null && selectedCard != null && receiverCard != null) {
-        val minAmount = p2PInfoDto.minAmount?.toBigDecimal()?.divide(100.toBigDecimal())
-            ?: 1000.0.toBigDecimal()
+        val minAmount = p2PInfoDto.minAmount?.toBigDecimal()?.divide(100.toBigDecimal()) ?: 1000.0.toBigDecimal()
         val maxAmount = p2PInfoDto.maxAmount?.toBigDecimal() ?: 50000000.0.toBigDecimal()
         val percent = p2PInfoDto.percent?.toDouble()?.toBigDecimal() ?: 0.0.toBigDecimal()
         val totalAmount = formattedAmount + (formattedAmount.divide(100.toBigDecimal())) * percent
