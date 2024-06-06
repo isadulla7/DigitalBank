@@ -19,9 +19,7 @@ import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
-class HUMOLimitsFragment : BaseFragment<FragmentHumoLimitsBinding, MenuProductsViewModel>(
-    FragmentHumoLimitsBinding::inflate, MenuProductsViewModel::class.java
-) {
+class HUMOLimitsFragment : BaseFragment<FragmentHumoLimitsBinding, MenuProductsViewModel>(FragmentHumoLimitsBinding::inflate, MenuProductsViewModel::class.java) {
 
     private lateinit var card: CardResponse
     private lateinit var limitType: String
@@ -57,7 +55,7 @@ class HUMOLimitsFragment : BaseFragment<FragmentHumoLimitsBinding, MenuProductsV
     private fun getGlLimitList() {
         showProgress()
         menuProductsViewModel.getGlCardLimitList(
-            getClientToken(), GlLimitListRequest(object_value = card.object_value)
+            getClientToken(), GlLimitListRequest(object_id = card.object_id)
         ).observe(viewLifecycleOwner) {
             hideProgress()
             when (it.status) {
@@ -75,8 +73,7 @@ class HUMOLimitsFragment : BaseFragment<FragmentHumoLimitsBinding, MenuProductsV
     private fun initLimit(response: GlLimitResponse) {
         binding.emptyView.isVisible = response.limit_type.isEmpty()
         binding.deleteButton.isVisible = response.limit_type.isNotEmpty()
-        binding.limitAmount.text =
-            Format.formatAmount(Format.formatAmountFromTiynToInteger(response.limit_value)) + " UZS"
+        binding.limitAmount.text = Format.formatAmount(Format.formatAmountFromTiynToInteger(response.limit_value)) + " UZS"
         binding.limitStartDate.text = response.limit_date_from
         binding.limitEndDate.text = response.limit_date_to
         binding.limitType.text = response.limit_type
@@ -85,13 +82,11 @@ class HUMOLimitsFragment : BaseFragment<FragmentHumoLimitsBinding, MenuProductsV
 
     private fun deleteSvCardLimit(limitId: String) {
         showProgress()
-        val request = GlLimitDeleteRequest(
-            limit_type = limitId, object_value = card.object_value
-        )
+        val request = GlLimitDeleteRequest(limit_type = limitId, object_id = card.object_id)
         menuProductsViewModel.deleteGlCardLimit(getClientToken(), request).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    showSnackbar(getString(R.string.limit_deletec))
+                    showSnackbar(title = getString(R.string.successfully), snackbarText = getString(R.string.limit_deletec))
                     getGlLimitList()
                 }
 

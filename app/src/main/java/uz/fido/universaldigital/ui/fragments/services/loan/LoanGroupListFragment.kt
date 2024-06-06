@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.services.loan
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.loans.loan_groups.CreditGroup
@@ -29,10 +30,9 @@ class LoanGroupListFragment : BaseFragment<FragmentLoanGroupListBinding, LoanVie
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-
         recyclerView()
         onClickView()
+        emptyListCheck()
     }
 
     private fun onClickView() {
@@ -42,9 +42,8 @@ class LoanGroupListFragment : BaseFragment<FragmentLoanGroupListBinding, LoanVie
     }
 
     private fun emptyListCheck() {
-        if (loanList.isEmpty()) {
-            binding.layoutEmpty.visibility = View.VISIBLE
-        } else binding.layoutEmpty.visibility = View.GONE
+        binding.layoutEmpty.isVisible = loanList.isEmpty()
+
     }
 
     private fun recyclerView() {
@@ -54,7 +53,7 @@ class LoanGroupListFragment : BaseFragment<FragmentLoanGroupListBinding, LoanVie
 
     private fun isCheckSaveCreditGroupList() {
         if (loanList.isEmpty())
-            getLoanGroupList()
+//            getLoanGroupList()
         else setAdapter(loanList)
     }
 

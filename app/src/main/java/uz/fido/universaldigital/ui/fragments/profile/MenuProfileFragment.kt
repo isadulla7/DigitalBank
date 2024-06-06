@@ -1,16 +1,11 @@
 package uz.fido.universaldigital.ui.fragments.profile
 
 import android.annotation.SuppressLint
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.View
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import uz.fido.network.domain.model.profile.LogOutRequest
@@ -57,12 +52,8 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
 
     private fun initDetails() {
         loadProfileImage()
-        if (Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotEmpty() &&
-            Paper.book().read(Const.FIRST_NAME, "").isNotEmpty() &&
-            Paper.book().read(Const.LAST_NAME, "").isNotEmpty()
-        ) {
+        if (Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotEmpty()) {
             binding.userName.text = Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, getString(R.string.your_phone_number))
-            binding.tvShortName.text = (Paper.book().read(Const.FIRST_NAME, "").first().toString() + Paper.book().read(Const.LAST_NAME, "").first().toString())
         } else {
             binding.userName.text = getString(R.string.your_phone_number)
         }
@@ -98,21 +89,11 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
     }
 
     private fun loadProfileImage() {
-        if (Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNotEmpty()) {
-            Glide.with(requireContext()).load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH) ?: "")
-                .error(object : RequestListener<Drawable> {
-                    override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                        if (Paper.book().read(Const.FIRST_NAME, "").isEmpty() && Paper.book().read(Const.LAST_NAME, "").isEmpty()) {
-                            binding.profileImage.setImageResource(R.drawable.ic_profile_image_empty)
-                        }
-                        return false
-                    }
-
-                    override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                        return true
-                    }
-                }).into(binding.profileImage)
-        }
+        Picasso.get()
+            .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
+            .placeholder(R.drawable.ic_profile_image_empty)
+            .error(R.drawable.ic_profile_image_empty)
+            .into(binding.profileImage)
     }
 
     private fun logOutRequest() {

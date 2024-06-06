@@ -24,7 +24,7 @@
     <string name="main_card">Основная карта</string>
     <string name="sum">сум</string>
     <string name="no_card">На карту</string>
-    <string name="unkknown_error">Неизвестная ошибка</string>
+    <string name="unkknown_error">Unknown error</string>
     <string name="empty_list">Ничего не нашлось</string>
     <string name="accured_interest">Текущие проценты</string>
     <string name="accured_interest_deposit">Начисленный проценты</string>

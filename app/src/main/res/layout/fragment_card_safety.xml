@@ -30,6 +30,7 @@
             android:layout_marginTop="18dp"
             android:background="@drawable/cornered_bg_12dp_stroke"
             android:gravity="center|start"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/appBar">
 
             <ImageView

@@ -17,6 +17,7 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMainLimitsBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.cards.card_operations.card_limits.adapters.LimitAdapter
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
@@ -34,7 +35,7 @@ class MainLimitsFragment : BaseFragment<FragmentMainLimitsBinding, MenuProductsV
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        card = requireArguments().getSerializable(Const.CARD) as CardResponse
+        card = requireArguments().serializable<CardResponse>(Const.CARD) as CardResponse
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -81,7 +82,7 @@ class MainLimitsFragment : BaseFragment<FragmentMainLimitsBinding, MenuProductsV
         val skeletonView = Skeleton.bind(binding.limitList).adapter(svLimitAdapter)
             .load(R.layout.shimmer_item_device).color(R.color.shimmer_color).show()
         viewModel.getSvCardLimitList(
-            getClientToken(), CardLimitRequest(object_value = card.object_value)
+            getClientToken(), CardLimitRequest(object_id = card.object_id)
         ).observe(viewLifecycleOwner) {
             skeletonView.hide()
             when (it.status) {
@@ -103,7 +104,7 @@ class MainLimitsFragment : BaseFragment<FragmentMainLimitsBinding, MenuProductsV
         val skeletonView = Skeleton.bind(binding.limitList).adapter(svLimitAdapter)
             .load(R.layout.shimmer_item_device).color(R.color.shimmer_color).show()
         viewModel.getGlCardLimitList(
-            getClientToken(), GlLimitListRequest(object_value = card.object_value)
+            getClientToken(), GlLimitListRequest(object_id = card.object_value)
         ).observe(viewLifecycleOwner) {
             skeletonView.hide()
             when (it.status) {

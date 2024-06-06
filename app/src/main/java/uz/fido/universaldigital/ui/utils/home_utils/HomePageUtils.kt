@@ -1,19 +1,11 @@
 package uz.fido.universaldigital.ui.utils.home_utils
 
-import android.annotation.SuppressLint
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
-import android.graphics.drawable.Drawable
-import android.view.View
 import androidx.core.content.res.ResourcesCompat
-import coil.load
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.robinhood.ticker.TickerUtils
 import com.scwang.smartrefresh.header.BezierCircleHeader
+import com.squareup.picasso.Picasso
 import io.paperdb.Paper
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
@@ -26,40 +18,17 @@ import java.util.Date
 import java.util.Locale
 
 fun MenuHomeFragment.loadProfileImage() {
-    if (Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNotEmpty()) {
-        Glide.with(requireContext())
-            .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
-            .error(object : RequestListener<Drawable> {
-                override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
-                    if (Paper.book().read(Const.FIRST_NAME, "").isEmpty() && Paper.book().read(Const.LAST_NAME, "").isEmpty()) {
-                        binding.userAvatar.setImageResource(R.drawable.ic_profile_image_empty)
-                    }
-                    return false
-                }
-
-                override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
-                    return true
-                }
-            }).into(binding.userAvatar)
-    }
+    Picasso.get()
+        .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
+        .placeholder(R.drawable.ic_profile_image_empty)
+        .error(R.drawable.ic_profile_image_empty)
+        .into(binding.userAvatar)
 }
 
-@SuppressLint("SetTextI18n")
 fun MenuHomeFragment.setUserDetails() {
     val fullName = Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "")
-    val clientName = Paper.book().read(Const.FIRST_NAME, "")
-    val clientSurname = Paper.book().read(Const.LAST_NAME, "")
     val clientPhone = Format.phoneFormat(Paper.book().read(Const.PAPER_CLIENT_PHONE, ""))
-    val clientPhotoPath = Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "")
     binding.userName.text = fullName.trim().ifEmpty { clientPhone }
-    if (clientName.trim().isNotEmpty() && clientSurname.trim().isNotEmpty()) {
-        binding.tvShortName.visibility = View.VISIBLE
-        binding.tvShortName.text = clientName.first().toString() + clientSurname.first().toString()
-    } else if (clientPhotoPath.isEmpty()) {
-        binding.tvShortName.visibility = View.INVISIBLE
-        binding.userAvatar.visibility = View.VISIBLE
-        binding.userAvatar.load(R.drawable.ic_profile_image_empty)
-    }
 }
 
 
