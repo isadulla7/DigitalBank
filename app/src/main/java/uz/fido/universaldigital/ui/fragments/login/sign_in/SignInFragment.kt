@@ -106,10 +106,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun getUserInfo() {
-        var ip: String = ""
-        ip = if (!requireContext().getIpAddress().isNullOrEmpty()) {
-            requireContext().getIpAddress()
-        } else "1.1.1.1"
+        val ip: String = requireContext().getIpAddress().ifEmpty { "1.1.1.1" }
         viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + ip).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> it.data?.let { data ->

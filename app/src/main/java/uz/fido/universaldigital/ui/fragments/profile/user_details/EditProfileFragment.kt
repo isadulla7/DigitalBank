@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
+import coil.load
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -88,11 +89,15 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
     }
 
     private fun loadProfileImage() {
-        Picasso.get()
-            .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
-            .placeholder(R.drawable.ic_profile_image_empty)
-            .error(R.drawable.ic_profile_image_empty)
-            .into(binding.profileImage)
+        if (!Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNullOrEmpty()) {
+            Picasso.get()
+                .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
+                .placeholder(R.drawable.ic_profile_image_empty)
+                .error(R.drawable.ic_profile_image_empty)
+                .into(binding.profileImage)
+        } else {
+            binding.profileImage.load(R.drawable.ic_profile_image_empty)
+        }
     }
 
     private fun openEditPhotoActivity(path: String) {

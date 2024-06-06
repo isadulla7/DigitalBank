@@ -77,6 +77,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     private fun swapKeysRequest() {
         Paper.book().write("VERSION_CODE", BuildConfig.VERSION_CODE.toString())
         Paper.book().write("VERSION_NAME", BuildConfig.VERSION_NAME)
+        Paper.book().write(Const.DEVICE_CODE, requireContext().getDeviceIds())
         viewModel.swapKeys(
             SwapKeysRequest(
                 device_code = requireContext().getDeviceIds(),

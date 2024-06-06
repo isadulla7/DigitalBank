@@ -16,6 +16,7 @@ import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.utils.const.APIServiceConst.profileImageUrl
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_QWERTY_KEY
+import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.utility.context.startActivityWithClearTask
 import java.io.ByteArrayOutputStream
 import java.io.File
@@ -168,5 +169,6 @@ fun getClientEncodedToken(token: String): String {
 fun Activity.logOut() {
     GlobalScope.launch { FirebaseMessaging.getInstance().deleteToken() }
     Paper.book().destroy()
+    DiffieHellman.clearDiffieHellman()
     startActivityWithClearTask(LoginActivity::class.java)
 }

@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.utils.home_utils
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import androidx.core.content.res.ResourcesCompat
+import coil.load
 import com.robinhood.ticker.TickerUtils
 import com.scwang.smartrefresh.header.BezierCircleHeader
 import com.squareup.picasso.Picasso
@@ -18,11 +19,15 @@ import java.util.Date
 import java.util.Locale
 
 fun MenuHomeFragment.loadProfileImage() {
-    Picasso.get()
-        .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
-        .placeholder(R.drawable.ic_profile_image_empty)
-        .error(R.drawable.ic_profile_image_empty)
-        .into(binding.userAvatar)
+    if (!Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNullOrEmpty()) {
+        Picasso.get()
+            .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
+            .placeholder(R.drawable.ic_profile_image_empty)
+            .error(R.drawable.ic_profile_image_empty)
+            .into(binding.userAvatar)
+    } else {
+        binding.userAvatar.load(R.drawable.ic_profile_image_empty)
+    }
 }
 
 fun MenuHomeFragment.setUserDetails() {

@@ -9,6 +9,7 @@ import android.os.Looper
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.biometric.BiometricPrompt
+import coil.load
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
@@ -570,10 +571,14 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun loadProfileImage() {
-        Picasso.get()
-            .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
-            .placeholder(R.drawable.ic_profile_image_empty)
-            .error(R.drawable.ic_profile_image_empty)
-            .into(binding.userAvatar)
+        if (!Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNullOrEmpty()) {
+            Picasso.get()
+                .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
+                .placeholder(R.drawable.ic_profile_image_empty)
+                .error(R.drawable.ic_profile_image_empty)
+                .into(binding.userAvatar)
+        } else {
+            binding.userAvatar.load(R.drawable.ic_profile_image_empty)
+        }
     }
 }
