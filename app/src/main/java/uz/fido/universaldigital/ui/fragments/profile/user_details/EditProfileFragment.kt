@@ -80,6 +80,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
             } else {
                 Paper.book().write(Const.FIRST_NAME, binding.userName.text.toString().uppercase())
                 Paper.book().write(Const.LAST_NAME, binding.surname.text.toString().uppercase())
+                Paper.book().write(Const.PAPER_CLIENT_FULL_NAME, binding.userName.text.toString().uppercase() + " " + binding.surname.text.toString().uppercase())
                 Paper.book().write(Const.EMAIL, binding.mail.text.toString().lowercase())
                 pop()
             }
@@ -87,9 +88,11 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
     }
 
     private fun loadProfileImage() {
-        if (Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNotEmpty()) {
-            Glide.with(requireContext()).load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH) ?: "").error(R.drawable.ic_profile_image_empty).into(binding.profileImage)
-        }
+        Picasso.get()
+            .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
+            .placeholder(R.drawable.ic_profile_image_empty)
+            .error(R.drawable.ic_profile_image_empty)
+            .into(binding.profileImage)
     }
 
     private fun openEditPhotoActivity(path: String) {

@@ -9,6 +9,7 @@ import java.util.Locale;
 import io.paperdb.Paper;
 
 public class LocaleHelper {
+
     public static String getLanguage(Context context) {
         if (getPersistedData(Locale.getDefault().getLanguage()) != null && !getPersistedData(Locale.getDefault().getLanguage()).isEmpty()) {
             return getPersistedData(Locale.getDefault().getLanguage());

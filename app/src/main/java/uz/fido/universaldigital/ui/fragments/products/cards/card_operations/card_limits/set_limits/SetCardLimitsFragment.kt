@@ -159,9 +159,8 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                 binding.etAmount.text.toString().replace(" ", "")
             ),
             limit_id = limitId!!,
-            object_value = card.object_value,
-            date_from = binding.startDate.text.toString().replace(" ", "").replace("-", "")
-                .replace(":", ""),
+            object_id = card.object_id,
+            date_from = binding.startDate.text.toString().replace(" ", "").replace("-", "").replace(":", ""),
             limit_name = binding.limitType.text.toString()
         )
         viewModel.setGlCardLimit(getClientToken(), request).observe(viewLifecycleOwner) {
@@ -214,8 +213,8 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                 binding.etAmount.text.toString().replace(" ", "")
             ),
             limit_id = limitId!!,
-            main_object_value = card.object_value,
-            object_value = card.object_value
+            main_object_value = card.object_id,
+            object_id = card.object_id
         )
         viewModel.setSvCardLimit(getClientToken(), request).observe(viewLifecycleOwner) {
             when (it.status) {
@@ -235,8 +234,8 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     private fun deleteSvCardLimit() {
         val request = LimitDeleteRequest(
             limit_id = limitId!!,
-            main_object_value = card.object_value,
-            object_value = card.object_value
+            main_object_id = card.object_id,
+            object_id = card.object_id
         )
         viewModel.deleteSvCardLimit(getClientToken(), request).observe(viewLifecycleOwner) {
             when (it.status) {

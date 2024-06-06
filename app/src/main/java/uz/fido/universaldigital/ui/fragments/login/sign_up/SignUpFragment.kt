@@ -163,8 +163,12 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun setKeyBForDiffieHellman(response: SwapKeysResponse) {
-        val additionalText = CryptoUtil.encrypt(requireContext().getDeviceIds(), requireContext().getDeviceIds())
-        DiffieHellman.getDiffieHellman().setKeyBSwapKey(response.ecnryptData, additionalText)
+        try {
+            val additionalText = CryptoUtil.encrypt(requireContext().getDeviceIds(), requireContext().getDeviceIds())
+            DiffieHellman.getDiffieHellman().setKeyBSwapKey(response.ecnryptData, additionalText)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun isValidPhoneNumber(): Boolean {

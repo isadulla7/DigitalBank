@@ -6,5 +6,5 @@ data class GlSetCardLimitRequest(
     val limit_amount: String,
     val limit_id: String,
     val limit_name: String,
-    val object_value: String
+    val object_id: String
 )

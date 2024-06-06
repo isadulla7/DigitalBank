@@ -17,7 +17,6 @@ import uz.fido.network.domain.model.abc_base.SwapKeysResponse
 import uz.fido.network.domain.model.abc_base.UserInfo
 import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.network.domain.model.sign_in.SignInResponse
-import uz.fido.utils.const.APIServiceConst
 import uz.fido.utils.const.APIServiceConst.profileImageUrl
 import uz.fido.utils.const.Const
 import uz.fido.utils.device.GetDeviceInfo
@@ -157,18 +156,22 @@ class AuthInterceptor @Inject constructor(
     }
 
     private fun changeKey(keyK: String) {
-        val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-            .insertStringBetween("@$#", 3)
-        val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-            .insertStringBetween("&^%", 6)
-        val newKey = CryptoUtil.encrypt(
-            Paper.book().read(Const.PASSWORD_ENC),
-            key1
-        ) + keyK + CryptoUtil.encrypt(
-            Paper.book().read(Const.STRING_LINE),
-            key2
-        )
-        Paper.book().write(Const.KEY_K, newKey)
+        try {
+            val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+                .insertStringBetween("@$#", 3)
+            val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
+                .insertStringBetween("&^%", 6)
+            val newKey = CryptoUtil.encrypt(
+                Paper.book().read(Const.PASSWORD_ENC),
+                key1
+            ) + keyK + CryptoUtil.encrypt(
+                Paper.book().read(Const.STRING_LINE),
+                key2
+            )
+            Paper.book().write(Const.KEY_K, newKey)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun isNeedToCallSwapKey(): Boolean {

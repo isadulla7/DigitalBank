@@ -66,7 +66,7 @@ class MenuServicesFragment :
     private fun initServiceItemClickEvent(serviceId: Int) {
         when (serviceId) {
             2 -> goto(R.id.orderCardListFragment)
-            3 -> /*checkIdentificationAndGoto(R.id.loanGroupListFragment)*/ functionInProgress()
+            3 -> goto(R.id.loanGroupListFragment) /*functionInProgress()*/
             4 -> checkIdentificationAndGoto(R.id.uzsDepositFragment)
             5 -> goto(R.id.openWalletFragment)
             100 -> goto(R.id.conversionFragment)

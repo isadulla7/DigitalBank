@@ -67,6 +67,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/period_type_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16sp"
@@ -74,7 +75,6 @@
                 android:layout_marginEnd="16sp">
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/period_type_layout"
                     style="@style/EditTextInputLayoutStyle"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -201,6 +201,7 @@
                     android:layout_height="match_parent"
                     android:imeOptions="actionDone"
                     android:inputType="numberDecimal"
+                    android:maxLength="10"
                     android:textColor="@color/mainTextColor"
                     android:theme="@style/DefaultEditTextTheme" />
             </com.google.android.material.textfield.TextInputLayout>

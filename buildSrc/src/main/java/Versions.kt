@@ -37,7 +37,7 @@ object Versions {
     const val navigationKtx = "1.6.1"
 
     const val coil = "2.4.0"
-    const val picasso = "2.71828"
+    const val picasso = "2.8"
     const val videoCache = "2.7.1"
 
     const val glide = "4.15.1"

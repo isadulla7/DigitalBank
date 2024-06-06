@@ -82,20 +82,20 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
             600
         )
     )
-    serviceList.add(
-        MenuServiceItem(
-            R.drawable.ic_service_debts,
-            getString(R.string.check_debts),
-            700
-        )
-    )
-    serviceList.add(
-        MenuServiceItem(
-            R.drawable.ic_goal_image,
-            getString(R.string.goal),
-            201
-        )
-    )
+//    serviceList.add(
+//        MenuServiceItem(
+//            R.drawable.ic_service_debts,
+//            getString(R.string.check_debts),
+//            700
+//        )
+//    )
+//    serviceList.add(
+//        MenuServiceItem(
+//            R.drawable.ic_goal_image,
+//            getString(R.string.goal),
+//            201
+//        )
+//    )
     serviceList.add(
         MenuServiceItem(
             R.drawable.ic_atm_filial,
@@ -117,13 +117,13 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
             800
         )
     )
-    serviceList.add(
-        MenuServiceItem(
-            R.drawable.ic_service_payment_in_places,
-            getString(R.string.payment_in_places),
-            200
-        )
-    )
+//    serviceList.add(
+//        MenuServiceItem(
+//            R.drawable.ic_service_payment_in_places,
+//            getString(R.string.payment_in_places),
+//            200
+//        )
+//    )
     return serviceList
 }
 
@@ -169,14 +169,14 @@ fun Fragment.getTransferTypes(): ArrayList<MenuServiceItem> {
             getString(R.string.request_money_desc)
         )
     )
-    transferTypes.add(
-        MenuServiceItem(
-            R.drawable.ic_conversion_24dp,
-            getString(R.string.currency_exchange),
-            500,
-            getString(R.string.currency_exchange)
-        )
-    )
+//    transferTypes.add(
+//        MenuServiceItem(
+//            R.drawable.ic_conversion_24dp,
+//            getString(R.string.currency_exchange),
+//            500,
+//            getString(R.string.currency_exchange)
+//        )
+//    )
     return transferTypes
 }
 

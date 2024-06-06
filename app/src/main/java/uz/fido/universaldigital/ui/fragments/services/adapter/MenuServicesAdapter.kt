@@ -79,13 +79,12 @@ class MenuServicesAdapter(
         fun bind(item: MenuServiceItem) {
             binding.apply {
                 tvProductName.text = item.serviceName
-//                tvProductDescription.text = item.serviceDescription
                 icProductIcon.setImageResource(item.icon!!)
                 itemBankProduct.setOnClickListener {
                     onItemClickListener.invoke(item.serviceId)
                 }
-                binding.tvSoon.isVisible = item.serviceId == 3
-                binding.disableBg.isVisible = item.serviceId == 3
+//                binding.tvSoon.isVisible = item.serviceId == 3
+//                binding.disableBg.isVisible = item.serviceId == 3
             }
         }
     }

@@ -32,25 +32,12 @@
                 android:layout_height="wrap_content"
                 android:paddingHorizontal="16dp">
 
-                <uz.fido.utils.view.custom_text_view.TextViewSemiBold
-                    android:id="@+id/tv_short_name"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/bg_short_name"
-                    android:gravity="center"
-                    android:textColor="@color/brandBlueColor_40"
-                    android:textSize="20sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription"
-                    tools:text="AB" />
-
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_profile_image_empty"
                     android:visibility="visible"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"

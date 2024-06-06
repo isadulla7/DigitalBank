@@ -106,7 +106,11 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun getUserInfo() {
-        viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + requireContext().getIpAddress()).observe(viewLifecycleOwner) {
+        var ip: String = ""
+        ip = if (!requireContext().getIpAddress().isNullOrEmpty()) {
+            requireContext().getIpAddress()
+        } else "1.1.1.1"
+        viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + ip).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> it.data?.let { data ->
                     checkUserSignInRequest(data)
@@ -121,8 +125,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun setKeyBForDiffieHellman(response: SwapKeysResponse) {
-        val additionalText = CryptoUtil.encrypt(requireContext().getDeviceIds(), requireContext().getDeviceIds())
-        DiffieHellman.getDiffieHellman().setKeyBSwapKey(response.ecnryptData, additionalText)
+        try {
+            val additionalText = CryptoUtil.encrypt(requireContext().getDeviceIds(), requireContext().getDeviceIds())
+            DiffieHellman.getDiffieHellman().setKeyBSwapKey(response.ecnryptData, additionalText)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun checkUserSignInRequest(data: UserInfo) {
