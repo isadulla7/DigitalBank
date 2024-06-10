@@ -17,7 +17,7 @@ object ErrorUtils {
                     message = "Unknown error&"
                 }
                 if ((message.contains("502 Bad"))) {
-                    message = "$message Unknown error* resp:(${response})"
+                    message = "$message Unknown error*"
                 }
                 APIError(
                     code,
@@ -33,7 +33,7 @@ object ErrorUtils {
                 } else {
                     APIError(
                         ServerCode.BAD_REQUEST.code,
-                        "Unknown error# resp:(${response}) exc(${e})"
+                        "Unknown error#"
                     )
                 }
             }
@@ -46,7 +46,7 @@ object ErrorUtils {
         } else {
             APIError(
                 ServerCode.BAD_REQUEST.code,
-                "Unknown error$ resp:(${response})"
+                "Unknown error$"
             )
         }
     }

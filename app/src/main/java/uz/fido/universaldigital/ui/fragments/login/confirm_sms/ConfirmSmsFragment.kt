@@ -1,6 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.login.confirm_sms
 
-import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
@@ -41,6 +40,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentConfirmSmsBinding
 import uz.fido.universaldigital.services.SMSBroadcastReceiver
 import uz.fido.universaldigital.ui.activities.FaceIdActivity
+import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInResponse
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveUserSms
 import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
@@ -53,7 +53,6 @@ import uz.fido.universaldigital.ui.main_dialogs.AllServicesDialog
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.app.getFCMToken
-import uz.fido.utils.const.APIServiceConst
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.EMAIL
 import uz.fido.utils.const.Const.PHONE_NUMBER

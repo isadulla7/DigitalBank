@@ -29,7 +29,8 @@ object ProjectDependencies {
     const val smsRetrieve =
         "com.google.android.gms:play-services-auth-api-phone:${Versions.smsRetrieve}"
 
-    const val inAppUpdate = "com.google.android.play:core-ktx:${Versions.inAppUpdate}"
+    const val inAppUpdate = "com.google.android.play:app-update:${Versions.inAppUpdate}"
+    const val inAppUpdateKtx = "com.google.android.play:app-update-ktx:${Versions.inAppUpdate}"
     const val paper = "io.paperdb:paperdb:${Versions.paper}"
     const val coroutinesCore =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutinesCore}"

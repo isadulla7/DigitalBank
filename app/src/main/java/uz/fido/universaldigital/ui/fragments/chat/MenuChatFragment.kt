@@ -169,11 +169,7 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
         )
         viewModel.receiveMessages(getClientToken(), request).observe(viewLifecycleOwner) {
             stopAnimation()
-            if (isVisible) {
-                Handler(Looper.getMainLooper()).postDelayed({
-                    binding.shimmerView.visibility = View.GONE
-                }, 500)
-            }
+            binding.shimmerView.visibility = View.GONE
             if (it.status == Status.SUCCESS) {
                 val response = it.data as MessageHistoryResponse
                 response.msg_list?.let { messageHistory ->
@@ -290,7 +286,6 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
 
     private fun clearEditTextMessage() {
         binding.imageSend.isEnabled = true
-//        binding.editMessage.hideKeyboard()
         binding.editMessage.setText("")
         operation = OPERATION_SEND_MSG
     }
@@ -414,7 +409,6 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
                     roomId = roomModel.room_id.toString()
                     roomName = roomModel.room_name.toString()
                     roomImgName = roomModel.default_img_name.toString()
-//                    binding.textUserName.text = roomName
                     receiveMessagesRequest(roomId.toString())
                 }
 
