@@ -118,11 +118,11 @@ class ConfirmTransferFragment :
                     from_object_id = transferDto.senderCard!!.object_id,
                     from_object_expire = transferDto.senderCard!!.object_expiry,
                     service_id = getServiceIdInfo(
-                        transferDto.receiverCard?.card_number!!,
+                        transferDto.receiverCard?.card_number ?: "",
                         transferDto.senderCard!!.object_value
                     ),
-                    to_object_value = transferDto.receiverCard?.card_number!!,
-                    to_object_expire = transferDto.receiverCard?.card_expire!!,
+                    to_object_value = transferDto.receiverCard?.card_number ?: "",
+                    to_object_expire = transferDto.receiverCard?.card_expire ?: "",
                     to_object_id = transferDto.receiverCard?.card_id,
                     request_id = transferDto.requestId ?: ""
                 )

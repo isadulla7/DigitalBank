@@ -25,7 +25,7 @@
         android:label="SignUpFragment" />
 
     <fragment
-        android:id="@+id/confirmSmsFragment"
+        android:id="@+id/confirmSmsFragmentLogin"
         android:name="uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment"
         android:label="ConfirmSmsFragment">
         <action

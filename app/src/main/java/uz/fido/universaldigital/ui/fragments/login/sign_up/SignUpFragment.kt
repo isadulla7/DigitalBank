@@ -160,7 +160,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
         )
         bundle.putSerializable("data", model)
         bundle.putString(Const.RANDOM_TEXT, response.data?.string_line.toString())
-        gotoWithSlide(R.id.confirmSmsFragment, bundle)
+        gotoWithSlide(R.id.confirmSmsFragmentLogin, bundle)
     }
 
     private fun setKeyBForDiffieHellman(response: SwapKeysResponse) {

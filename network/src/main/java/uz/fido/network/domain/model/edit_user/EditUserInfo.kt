@@ -1,5 +1,7 @@
 package uz.fido.network.domain.model.edit_user
 
+import java.io.Serializable
+
 data class EditUserInfo(
     val email: String? = null,
     val name: String? = null,
@@ -10,4 +12,4 @@ data class EditUserInfo(
     val date_of_birth: String? = null,
     val gender: String? = null,
     val user_avatar: String? = null
-)
+):Serializable

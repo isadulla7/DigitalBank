@@ -29,7 +29,9 @@ fun Fragment.gotoWithSlide(id: Int) {
 
 fun Fragment.gotoWithSlide(id: Int, bundle: Bundle) {
     if (view == null) return
-    findNavController().navigate(id, bundle, getNavOptions())
+    if (findNavController().currentDestination?.id != id) {
+        findNavController().navigate(id, bundle, getNavOptions())
+    }
 }
 
 fun Fragment.pop() {

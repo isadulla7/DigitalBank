@@ -273,6 +273,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun swapKeys() {
+        Paper.book().write(Const.DEVICE_CODE, requireContext().getDeviceIds())
         viewModel.swapKeysPin(
             SwapKeysRequest(
                 device_code = requireContext().getDeviceIds(),
@@ -380,10 +381,8 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     private fun changeKey(keyK: String) {
         try {
-            val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-                .insertStringBetween("@$#", 3)
-            val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE)
-                .insertStringBetween("&^%", 6)
+            val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).insertStringBetween("@$#", 3)
+            val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).insertStringBetween("&^%", 6)
             if (Paper.book().read<String>(Const.PASSWORD_ENC) == null || Paper.book().read<String>(Const.STRING_LINE) == null) {
                 requireActivity().logOut()
             } else {

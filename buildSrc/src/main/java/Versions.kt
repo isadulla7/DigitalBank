@@ -17,7 +17,7 @@ object Versions {
     const val playServicesMapsUtils = "2.3.0"
     const val barcode = "17.2.0"
     const val smsRetrieve = "18.0.1"
-    const val inAppUpdate = "1.8.1"
+    const val inAppUpdate = "2.1.0"
     const val paper = "2.7.1"
     const val coroutinesCore = "1.7.1"
     const val coroutinesAndroid = "1.7.1"
@@ -32,8 +32,8 @@ object Versions {
     const val roomKtx = "2.6.0-rc01"
     const val roomCompiler = "2.6.0-rc01"
 
-    const val navigationFragment = "2.7.4"
-    const val navigationUi = "2.7.4"
+    const val navigationFragment = "2.7.7"
+    const val navigationUi = "2.7.7"
     const val navigationKtx = "1.6.1"
 
     const val coil = "2.4.0"

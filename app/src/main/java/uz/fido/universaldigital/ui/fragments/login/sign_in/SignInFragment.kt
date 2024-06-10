@@ -7,6 +7,7 @@ import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
@@ -187,7 +188,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             putSerializable("data", model)
         }
         Paper.book().write(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
-        gotoWithSlide(R.id.confirmSmsFragment, bundle)
+        gotoWithSlide(R.id.confirmSmsFragmentLogin, bundle)
     }
 
     private fun phoneNumberFormatted(): String {

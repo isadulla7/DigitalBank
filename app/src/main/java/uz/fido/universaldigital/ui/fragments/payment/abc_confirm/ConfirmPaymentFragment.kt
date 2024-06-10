@@ -14,6 +14,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import org.apache.commons.lang3.math.NumberUtils
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.payment.AllServiceLists
@@ -209,7 +210,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
                 }
             }
             if (paymentParams.payment_detail_code == "LOAN_REPAYMENT") {
-                if (paymentParams.def_value.isNotEmpty() /*&& NumberUtils.isParsable(paymentParams.def_value)*/) {
+                if (paymentParams.def_value.isNotEmpty() && NumberUtils.isParsable(paymentParams.def_value)) {
                     valueView.text =
                         formatAmount(Format.formatAmountFromTiynToInteger(paymentParams.def_value)) + " UZS"
                 }
