@@ -65,10 +65,14 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
      * You can go back now
      */
     override fun onSuccess(result: MyIdResult) {
-        val resultIntent = Intent()
-        resultIntent.putExtra("code", result.code.toString())
-        setResult(RESULT_OK, resultIntent)
-        onBackPressed()
+        try {
+            val resultIntent = Intent()
+            resultIntent.putExtra("code", result.code.toString())
+            setResult(RESULT_OK, resultIntent)
+            onBackPressed()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onError(e: MyIdException) {
