@@ -231,16 +231,22 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
 
     private fun p2pInfoLoaded(p2PInfo: P2PInfoDto) {
         p2PInfoDto = p2PInfo
-        binding.tvMinAmount.visibility = View.VISIBLE
-        binding.btnContinue.isEnabled(
-            binding.tvMinAmount.setMinMaxAmount(
-                senderCard,
-                cardInfoDto?.card_number,
-                binding.etAmount,
-                p2PInfoDto,
-                requireContext()
+        if (p2PInfoDto?.isSuccess == true) {
+            binding.tvMinAmount.visibility = View.VISIBLE
+            binding.btnContinue.isEnabled(
+                binding.tvMinAmount.setMinMaxAmount(
+                    senderCard,
+                    cardInfoDto?.card_number,
+                    binding.etAmount,
+                    p2PInfoDto,
+                    requireContext()
+                )
             )
-        )
+        } else {
+            binding.tvMinAmount.visibility = View.VISIBLE
+            binding.tvMinAmount.text = p2PInfoDto?.errorMessage.orEmpty()
+            binding.btnContinue.isEnabled(false)
+        }
     }
 
     private fun setCardNumberError() {
