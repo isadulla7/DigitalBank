@@ -53,7 +53,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
 
     private fun initDetails() {
         loadProfileImage()
-        if (Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotEmpty()) {
+        if (Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotEmpty() && Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotBlank()) {
             binding.userName.text = Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, getString(R.string.your_phone_number))
         } else {
             binding.userName.text = getString(R.string.your_phone_number)
