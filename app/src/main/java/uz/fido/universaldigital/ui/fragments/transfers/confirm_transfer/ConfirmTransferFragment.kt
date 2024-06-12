@@ -108,23 +108,23 @@ class ConfirmTransferFragment :
             findNavController().navigateUp()
         }
         binding.btnContinue.setOnClickListener {
-            transferDto.senderCard?.let {
+            transferDto.senderCard?.let { senderCard ->
                 p2pRequest = P2PRequest(
                     command = setCommand(
-                        transferDto.senderCard!!.object_type,
-                        transferDto.receiverCard?.card_number!!
+                        senderCard.object_type,
+                        transferDto.receiverCard?.card_number.orEmpty()
                     ),
                     amount = transferDto.transferAmount.toString(),
-                    from_object_id = transferDto.senderCard!!.object_id,
-                    from_object_expire = transferDto.senderCard!!.object_expiry,
+                    from_object_id = senderCard.object_id,
+                    from_object_expire = senderCard.object_expiry,
                     service_id = getServiceIdInfo(
-                        transferDto.receiverCard?.card_number ?: "",
-                        transferDto.senderCard!!.object_value
+                        transferDto.receiverCard?.card_number.orEmpty(),
+                        senderCard.object_value
                     ),
-                    to_object_value = transferDto.receiverCard?.card_number ?: "",
-                    to_object_expire = transferDto.receiverCard?.card_expire ?: "",
+                    to_object_value = transferDto.receiverCard?.card_number.orEmpty(),
+                    to_object_expire = transferDto.receiverCard?.card_expire.orEmpty(),
                     to_object_id = transferDto.receiverCard?.card_id,
-                    request_id = transferDto.requestId ?: ""
+                    request_id = transferDto.requestId.orEmpty()
                 )
                 checkForSmsConfirmation()
             }
