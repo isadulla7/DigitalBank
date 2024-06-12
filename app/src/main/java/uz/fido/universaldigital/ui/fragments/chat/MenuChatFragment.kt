@@ -182,32 +182,29 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
         }
     }
 
-    private fun sendMessageRequest(
-        msg: String? = null, sendMessageRequest: SendMessageRequest? = null
-    ) {
-        animateRefreshButton()
-        var request = SendMessageRequest(
-            msg_text = msg ?: "",
-            msg_object = "",
-            msg_type_id = MessageTypes.TYPE_MESSAGE.typeId.toString(),
-            ref_msg_id = "",
-            ref_user_id = "",
-            room_id = roomId!!
-        )
-        if (sendMessageRequest != null) {
-            request = sendMessageRequest
-        }
-        viewModel.sendMessage(getClientToken(), request).observe(viewLifecycleOwner) {
-            stopAnimation()
-            when (it.status) {
-                Status.SUCCESS -> {
-                    val sendMessageResponse = it.data as SendMessageResponse
-                    checkForList(sendMessageResponse)
-                    clearEditTextMessage()
-                }
+    private fun sendMessageRequest(msg: String? = null) {
+        roomId?.let {
+            animateRefreshButton()
+            val request = SendMessageRequest(
+                msg_text = msg ?: "",
+                msg_object = "",
+                msg_type_id = MessageTypes.TYPE_MESSAGE.typeId.toString(),
+                ref_msg_id = "",
+                ref_user_id = "",
+                room_id = roomId!!
+            )
+            viewModel.sendMessage(getClientToken(), request).observe(viewLifecycleOwner) {
+                stopAnimation()
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        val sendMessageResponse = it.data as SendMessageResponse
+                        checkForList(sendMessageResponse)
+                        clearEditTextMessage()
+                    }
 
-                Status.ERROR -> {
-                    showSnackbar(it.message.toString())
+                    Status.ERROR -> {
+                        showSnackbar(it.message.toString())
+                    }
                 }
             }
         }

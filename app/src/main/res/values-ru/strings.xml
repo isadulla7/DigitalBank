@@ -997,7 +997,7 @@
     <string name="delete_account_q">Удалить аккаунт?</string>
     <string name="delete_account_description">Вы уверены, что хотите удалить свою учетную запись? Эту операцию нельзя отменить</string>
     <string name="successfully_deleted">Hisobingiz muvaffaqiyatli o\'chirildi</string>
-    <string name="pass_check">Пароль должен содержать хотя бы одну букву или одну цифру и один символ.</string>
+    <string name="pass_check">Пароль должен содержать хотя бы одну строчную букву, прописную букву, специальный символ и цифру и иметь длину не менее 8</string>
     <string name="delete_all">Удалить все</string>
     <string name="nameless">Безымянный</string>
     <string name="error_password">Пожалуйста, очистите память и попробуйте войти снова.</string>
@@ -1007,5 +1007,5 @@
     <string name="logging_out">Выйти</string>
     <string name="other_devices">Другие устройства</string>
     <string name="my_device">Мое устройство</string>
-    <string name="no_other_devices_found">No other devices found</string>
+    <string name="no_other_devices_found">Другие устройства не найдены</string>
 </resources>

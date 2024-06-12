@@ -20,6 +20,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.contains
 import androidx.core.widget.addTextChangedListener
 import com.google.android.material.textfield.TextInputLayout
 import uz.fido.network.domain.model.payment.AllServiceLists
@@ -401,7 +402,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
                     root.tag = tag + "_layout"
                 }
             }
-            binding.mainLayout.addView(root)
+            addViewToMainLayout(root)
         }
     }
 
@@ -513,7 +514,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
             } else {
                 editTextList.add(editTextNavigation)
             }
-            binding.mainLayout.addView(root)
+            addViewToMainLayout(root)
         }
     }
 
@@ -561,7 +562,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
             if (operation == PaymentFragment.PAYMENT_OPERATION_MOBILE_WIDGET) {
                 editTextAmount.setText(arguments?.getString(PaymentFragment.PAYMENT_ARGUMENT_2))
             }
-            binding.mainLayout.addView(root)
+            addViewToMainLayout(root)
         }
     }
 
@@ -625,7 +626,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
                 }
             }
             if (mobileNumber.isNotEmpty()) editTextPhone.setText(mobileNumber)
-            binding.mainLayout.addView(root)
+            addViewToMainLayout(root)
         }
     }
 
@@ -722,7 +723,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
                             mainBlockBinding.root.visibility = View.GONE
                         }
                     }
-                    binding.mainLayout.addView(mainBlockBinding.root)
+                    addViewToMainLayout(mainBlockBinding.root)
                 }
             }
         }
@@ -778,7 +779,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
                     setText(templateItem?.name)
                 }
                 editTextList.add(this)
-                binding.mainLayout.addView(mainBlockBinding.root)
+                addViewToMainLayout(mainBlockBinding.root)
             }
         }
     }
@@ -827,5 +828,11 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
     * arrayga split(",") qilinib tanlangan to'lov turini SETTLEMENTi shu arrayda bor bo'lsa ko'rsatiladi aks holda ko'rastilmaydi
     *
     * */
+
+    private fun addViewToMainLayout(view: View) {
+        if (!binding.mainLayout.contains(view)) {
+            binding.mainLayout.addView(view)
+        }
+    }
 
 }
