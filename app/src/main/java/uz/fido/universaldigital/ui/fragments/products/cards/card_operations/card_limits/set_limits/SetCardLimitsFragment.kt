@@ -37,16 +37,13 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     FragmentSetCardLimitsBinding::inflate, MenuProductsViewModel::class.java
 ), View.OnClickListener {
 
+    private lateinit var operationType: String
     private lateinit var myCalendar: Calendar
     private lateinit var card: CardResponse
-    private lateinit var operationType: String
 
-    private var svLimit: SvLimit? = null
     private var limitTypes = ArrayList<AllServiceLists>()
-    private var limitCycleTypes = ArrayList<AllServiceLists>()
+    private var svLimit: SvLimit? = null
     private var limitId: String? = null
-    private var limitCycleId: String? = null
-
     private var referenceDialog: ReferenceDialog? = null
     private var buttonOperation = "save"
 
@@ -71,7 +68,6 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         }
         binding.continueButton.setOnClickListener { addLimitRequest() }
         binding.limitType.setOnClickListener(this)
-        binding.periodType.setOnClickListener(this)
         binding.endDate.setOnClickListener(this)
         binding.startDate.setOnClickListener(this)
         myCalendar = Calendar.getInstance()
@@ -88,9 +84,8 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         if (card.object_type == "SV") {
             getSvLimitParams()
             binding.startDateLayout.visibility = View.GONE
-            binding.periodTypeLayout.visibility = View.VISIBLE
+            binding.endDateLayout.visibility = View.GONE
         } else {
-            binding.periodTypeLayout.visibility = View.GONE
             binding.startDateLayout.visibility = View.VISIBLE
             getGlLimitParams()
         }
@@ -98,7 +93,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
 
     private fun checkEditTexts() {
         val editTexts = listOf(
-            binding.limitType, binding.periodType, binding.endDate, binding.etAmount
+            binding.limitType, binding.endDate, binding.etAmount
         )
         for (editText in editTexts) {
             editText.addTextChangedListener(object : TextWatcher {
@@ -109,12 +104,14 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
 
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
                     val et1 = binding.limitType.text.toString()
-                    val et2 = binding.periodType.text.toString()
                     val et3 = binding.endDate.text.toString()
+                    val et2 = binding.startDate.text.toString()
                     val et4 = binding.etAmount.text.toString()
-                    binding.continueButton.isEnabled(
-                        et1.isNotEmpty() && et3.isNotEmpty() && et4.isNotEmpty() && if (card.object_type == "SV") et2.isNotEmpty() else true
-                    )
+                    if (card.object_type == "GL") {
+                        binding.continueButton.isEnabled(et1.isNotEmpty() && et3.isNotEmpty() && et4.isNotEmpty() && et2.isNotEmpty())
+                    } else {
+                        binding.continueButton.isEnabled(et1.isNotEmpty() && et4.isNotEmpty())
+                    }
                 }
 
                 override fun afterTextChanged(s: Editable?) {}
@@ -149,9 +146,6 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
 
     private fun setGlCardLimit() {
         myCalendar = Calendar.getInstance()
-        val myFormat = "yyyy-MM-dd HH:mm:ss"
-        val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
-        val dateFrom = sdf.format(myCalendar.time)
         val request = GlSetCardLimitRequest(
             date_to = binding.endDate.text.toString().replace(" ", "").replace("-", "")
                 .replace(":", ""),
@@ -184,7 +178,6 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                 Status.SUCCESS -> {
                     val response = it.data!!
                     limitTypes = response.limit_id
-                    limitCycleTypes = response.cycle_type
                     if (operationType == "edit") {
                         limitTypes.forEach { type ->
                             if (type.code == svLimit?.lmt_id) {
@@ -206,14 +199,10 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
 
     private fun setSvCardLimit() {
         val request = SvSetCardLimitRequest(
-            cycle_length = "1",
-            cycle_type = limitCycleId!!,
-            end_date = binding.endDate.text.toString(),
             limit_amount = Format.formatAmountToTiyn(
                 binding.etAmount.text.toString().replace(" ", "")
             ),
             limit_id = limitId!!,
-            main_object_value = card.object_id,
             object_id = card.object_id
         )
         viewModel.setSvCardLimit(getClientToken(), request).observe(viewLifecycleOwner) {
@@ -276,15 +265,14 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         binding.endDate.setText(sdf.format(myCalendar.time))
     }
 
-    private val startDatePicker =
-        DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-            myCalendar.set(Calendar.YEAR, year)
-            myCalendar.set(Calendar.MONTH, monthOfYear)
-            myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
-            val myFormat = "yyyy-MM-dd HH:mm:ss"
-            val sdf = SimpleDateFormat(myFormat, Locale.US)
-            binding.startDate.setText(sdf.format(myCalendar.time))
-        }
+    private val startDatePicker = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
+        myCalendar.set(Calendar.YEAR, year)
+        myCalendar.set(Calendar.MONTH, monthOfYear)
+        myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+        val myFormat = "yyyy-MM-dd HH:mm:ss"
+        val sdf = SimpleDateFormat(myFormat, Locale.US)
+        binding.startDate.setText(sdf.format(myCalendar.time))
+    }
 
     private fun continueButtonClicked() {
         if (card.object_type == "SV") {
@@ -305,15 +293,9 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         if (limitId == null) {
             return
         }
-        if (card.object_type == "SV") if (limitCycleId == null) {
-            return
-        }
         if (binding.etAmount.text.toString().isEmpty() || binding.etAmount.text.toString()
                 .startsWith("0")
         ) {
-            return
-        }
-        if (binding.endDate.text.toString().isEmpty()) {
             return
         }
         continueButtonClicked()
@@ -321,7 +303,6 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
-
             R.id.limit_type -> {
                 referenceDialog = ReferenceDialog(object : BaseInterface {
                     override fun setToEditText(allServiceLists: AllServiceLists, tag: String) {
@@ -333,17 +314,6 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                 referenceDialog?.show(childFragmentManager, "")
             }
 
-            R.id.period_type -> {
-                referenceDialog = ReferenceDialog(object : BaseInterface {
-                    override fun setToEditText(allServiceLists: AllServiceLists, tag: String) {
-                        binding.periodType.setText(allServiceLists.name)
-                        limitCycleId = allServiceLists.code
-                        referenceDialog?.dismiss()
-                    }
-                }, limitCycleTypes, "")
-                referenceDialog?.show(childFragmentManager, "")
-            }
-
             R.id.end_date -> {
                 datePicker(false)
             }
@@ -351,7 +321,6 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
             R.id.start_date -> {
                 datePicker(true)
             }
-
         }
     }
 
