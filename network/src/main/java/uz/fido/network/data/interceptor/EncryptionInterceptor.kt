@@ -21,26 +21,29 @@ class EncryptionInterceptor : Interceptor {
         var request: Request = chain.request()
         val rawBody = request.body
         var encryptedBody = ""
-
-        try {
-            val rawBodyString = CryptoUtil.requestBodyToString(rawBody)
-            encryptedBody = CryptoUtil.encrypt(rawBodyString, Paper.book().read(Const.KEY_K))
-        } catch (e: Exception) {
-            e.printStackTrace()
+        if (rawBody != null) {
+            try {
+                val rawBodyString = CryptoUtil.requestBodyToString(rawBody)
+                encryptedBody = CryptoUtil.encrypt(rawBodyString, Paper.book().read(Const.KEY_K))
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            val body = encryptedBody.toRequestBody(mediaType)
+            request = getRequest(request, body)
+        } else {
+            request = getRequest(request)
         }
-        val body = encryptedBody.toRequestBody(mediaType)
-        request = getRequest(request, body)
         return chain.proceed(request)
     }
 
-    private fun getRequest(request: Request, requestBody: RequestBody): Request {
+    private fun getRequest(request: Request, requestBody: RequestBody? = null): Request {
         return if (request.method == "GET") {
-            request.newBuilder().header(HEADER_CONTENT_TYPE, requestBody.contentType().toString())
-                .header(HEADER_CONTENT_LENGTH, requestBody.contentLength().toString())
+            request.newBuilder()/*.header(HEADER_CONTENT_TYPE, requestBody.contentType().toString())
+                .header(HEADER_CONTENT_LENGTH, requestBody.contentLength().toString())*/
                 .header(HEADER_APP_LANGUAGE, language).build()
         } else {
-            request.newBuilder().header(HEADER_CONTENT_TYPE, requestBody.contentType().toString())
-                .header(HEADER_CONTENT_LENGTH, requestBody.contentLength().toString())
+            request.newBuilder().header(HEADER_CONTENT_TYPE, requestBody?.contentType().toString())
+                .header(HEADER_CONTENT_LENGTH, requestBody?.contentLength().toString())
                 .header(HEADER_APP_LANGUAGE, language).method(request.method, requestBody).build()
         }
     }
