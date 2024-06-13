@@ -64,7 +64,7 @@ class MainLimitsFragment : BaseFragment<FragmentMainLimitsBinding, MenuProductsV
 
     private fun fetchLimit() {
         if (card.object_type == "SV") {
-            svSetMainCard()
+            getSvLimitList()
         } else {
             getGlLimitList()
         }

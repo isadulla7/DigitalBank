@@ -42,7 +42,7 @@ class CardSafetyFragment : BaseFragment<FragmentCardSafetyBinding, UtilsViewMode
             binding.safeModeLayout.visibility = View.GONE
             binding.limitLayout.visibility = View.GONE
         }
-        if (card.object_type == "GL") {
+        if (card.object_type == "GL" || card.object_type == "SV") {
             binding.limitLayout.visibility = View.VISIBLE
         }
 //        binding.changePinLayout.isVisible = card.object_value.startsWith("860055") || card.object_value.startsWith("986023")
