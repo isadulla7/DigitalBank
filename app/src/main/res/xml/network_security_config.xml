@@ -23,6 +23,7 @@
         <domain includeSubdomains="true">https://requestid.universalbank.uz/api/request/identify</domain>
         <domain includeSubdomains="true">https://requestid.universalbank.uz/api/request/identify/192.168.20.148</domain>
         <domain includeSubdomains="true">universaldigitalbank.uz</domain>
+        <domain includeSubdomains="true">my.fido.uz</domain>
         <domain includeSubdomains="true">universaldigitalbank</domain>
         <domain includeSubdomains="true">universaldigitalbank.page</domain>
         <domain includeSubdomains="true">universaldigitalbank.page.link</domain>

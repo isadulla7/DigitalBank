@@ -92,10 +92,10 @@ class AuthInterceptor @Inject constructor(
                             }
                         }
                     } else {
-                        Toast.makeText(context, ipResponse.message(), Toast.LENGTH_SHORT).show()
+                        tryMakeToast(ipResponse.message(), context)
                     }
                 } else {
-                    Toast.makeText(context, swapKeysResponse.message(), Toast.LENGTH_SHORT).show()
+                    tryMakeToast(swapKeysResponse.message(), context)
                 }
             } else {
                 modifiedRequest =
@@ -193,6 +193,14 @@ class AuthInterceptor @Inject constructor(
         const val DEVICE_DELETE = 66
     }
 
+}
+
+fun tryMakeToast(message: String, context: Context) {
+    try {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }
 
 fun saveSignInPinResponse(signInResponse: SignInResponse) {
