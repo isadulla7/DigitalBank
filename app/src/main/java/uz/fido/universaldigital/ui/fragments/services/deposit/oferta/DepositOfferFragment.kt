@@ -13,7 +13,7 @@ import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 
 @AndroidEntryPoint
-class DepositOfertaFragment : BaseSimpleFragment<FragmentDepositOfertaBinding>
+class DepositOfferFragment : BaseSimpleFragment<FragmentDepositOfertaBinding>
     (FragmentDepositOfertaBinding::inflate) {
 
     private lateinit var deposit: Deposit
@@ -45,6 +45,7 @@ class DepositOfertaFragment : BaseSimpleFragment<FragmentDepositOfertaBinding>
     }
 
     private fun init() {
+        binding.webView.settings.builtInZoomControls = true
         val website = when (deposit.dep_id) {
             1874 -> "https://ibank.ubank.uz/cib/sarmoya-25.html"
             1674 -> "https://ibank.ubank.uz/cib/qulay_daromad.html"
