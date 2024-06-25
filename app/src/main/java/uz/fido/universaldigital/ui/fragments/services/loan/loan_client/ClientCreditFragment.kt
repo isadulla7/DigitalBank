@@ -68,7 +68,7 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
     private var list = ArrayList<AccountHistory>()
     private lateinit var dateSortList: ArrayList<AccountHistory>
     private lateinit var linerLayoutManager: LinearLayoutManager
-    private val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss",Locale.getDefault())
+    private val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
     private val newDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
 
     companion object {
@@ -83,7 +83,7 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
         }
         dateSortList = ArrayList()
         setDate()
-        fetchGraph(clientProduct.loanId)
+        fetchGraph(clientProduct.loanId.orEmpty())
         setMonitoring()
         setonCLickListener()
 
@@ -252,7 +252,7 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
     private fun statusSuccess(response: CreditActualGraphResponse) {
         response.data.forEach {
             val c: Calendar = Calendar.getInstance()
-            val sdf = SimpleDateFormat("dd.MM.yyyy",Locale.getDefault())
+            val sdf = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             val getCurrentDate: String = sdf.format(c.time)
             if (sdf.parse(getCurrentDate) > sdf.parse(it.redempDate)) {
                 overdueDate.add(it.redempDate)
@@ -276,12 +276,12 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
                 )
             } UZS"
             binding.nearestPayment.text =
-                if (!isOverdraft(clientProduct.creditType)) getString(R.string.nearest_payment) else getString(R.string.nearest_limit_decrease)
+                if (!isOverdraft(clientProduct.creditType.orEmpty())) getString(R.string.nearest_payment) else getString(R.string.nearest_limit_decrease)
         }
 
         binding.date.text = creditActualGraph.nextPaymentDate
 
-        if (!isOverdraft(clientProduct.creditType)) {
+        if (!isOverdraft(clientProduct.creditType.orEmpty())) {
         } else {
             binding.nextMonthPaymentDetails.isClickable = false
         }
@@ -291,14 +291,14 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
 
     private fun setDate() {
         binding.appBar.setOnBackButtonClickListener { pop() }
-        binding.textCreditName.text = getLoanType(context = requireContext(), clientProduct.creditType)
-        binding.textBalance.text = Format.formatAmount(Format.convertFromTiynDivide(clientProduct.amount)) + " UZS"
-        binding.totalAmount.text = getString(R.string.the_rest) + " " + Format.formatAmount(Format.convertFromTiynDivide(clientProduct.totalDebt)) + " UZS"
+        binding.textCreditName.text = getLoanType(context = requireContext(), clientProduct.creditType.orEmpty())
+        binding.textBalance.text = Format.formatAmount(Format.convertFromTiynDivide(clientProduct.amount.orEmpty())) + " UZS"
+        binding.totalAmount.text = getString(R.string.the_rest) + " " + Format.formatAmount(Format.convertFromTiynDivide(clientProduct.totalDebt.orEmpty())) + " UZS"
         binding.date.text = clientProduct.arrearDate
         val perc = calculatePercentage()
 
         binding.progressIndicator.max = 100
-        if (!isOverdraft(clientProduct.creditType)) {
+        if (!isOverdraft(clientProduct.creditType.orEmpty())) {
             binding.progressIndicator.progress = if (perc > 0) 100 - perc else 1
         } else calculateOverdraftPercent()
 
@@ -323,7 +323,7 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
 
     private fun calculatePercentage(): Int {
         return (clientProduct.saldo1!!.toBigDecimal().multiply(100.toBigDecimal())
-            .divide(clientProduct.amount.toBigDecimal(), 2, RoundingMode.HALF_UP)).toInt()
+            .divide((clientProduct.amount ?: "0").toBigDecimal(), 2, RoundingMode.HALF_UP)).toInt()
     }
 
     private fun getLoanType(context: Context, loanId: String): String {
@@ -339,7 +339,7 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
     }
 
     private fun calculateOverdraftPercent() {
-        var perc = clientProduct.overdraftLimit.toDouble() / clientProduct.amount.toDouble()
+        var perc = (clientProduct.overdraftLimit ?: "0").toDouble() / (clientProduct.amount ?: "0").toDouble()
         perc *= 100
         binding.progressIndicator.progress = if (perc.toInt() > 0) 100 - perc.toInt() else 1
 

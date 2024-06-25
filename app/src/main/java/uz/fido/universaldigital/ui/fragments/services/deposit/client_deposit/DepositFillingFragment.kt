@@ -35,7 +35,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
 
     val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
 
-    private lateinit var selectedCard: CardResponse
+    private lateinit var choosenCard: CardResponse
     private lateinit var deposit: ClientDeposit
 
     private var depositType: String = ""
@@ -73,13 +73,13 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         viewModel.partialWithDraw(
             getClientToken(),
             PartialWithdrawMoneyDepositRequest(
-                command = if (selectedCard.object_type == WALLET) "dep&purse" else "dep&card",
-                savDepId = deposit.savDepId,
+                command = if (choosenCard.object_type == WALLET) "dep&purse" else "dep&card",
+                savDepId = deposit.savDepId.orEmpty(),
                 amount = Format.formatAmountToTiyn(amount),
-                to_object_value = selectedCard.object_value,
-                to_object_id = selectedCard.object_id,
+                to_object_value = choosenCard.object_value,
+                to_object_id = choosenCard.object_id,
                 service_id = "-7",
-                to_object_expire = selectedCard.object_expiry
+                to_object_expire = choosenCard.object_expiry
             )
         ).observe(viewLifecycleOwner) {
             binding.btnContinue.setProgress(false)
@@ -102,16 +102,16 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         viewModel.closeDeposit(
             getClientToken(),
             EarlyClosureRequest(
-                command = if (selectedCard.object_type == WALLET) "dep&purse" else "dep&card",
-                to_object_value = selectedCard.object_value,
-                to_object_id = selectedCard.object_id,
-                to_object_expire = selectedCard.object_expiry,
-                savDepId = deposit.savDepId,
-                credit_amount = amount.replace(",", "."),
+                command = if (choosenCard.object_type == WALLET) "dep&purse" else "dep&card",
+                to_object_value = choosenCard.object_value,
+                to_object_id = choosenCard.object_id,
+                to_object_expire = choosenCard.object_expiry,
+                savDepId = deposit.savDepId.orEmpty(),
+                credit_amount = (amount ?: "0").replace(",", "."),
                 client_id = getClientId(),
                 service_id = "-8",
-                status = deposit.status,
-                closing_date = deposit.closingDate
+                status = deposit.status.orEmpty(),
+                closing_date = deposit.closingDate.orEmpty()
             )
         ).observe(viewLifecycleOwner) {
             binding.btnContinue.setProgress(false)
@@ -129,11 +129,11 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
 
     private fun smsCheck() {
         binding.btnContinue.setProgress(true)
-        if (!checkForPaymentSms(selectedCard, "-1", Format.formatAmountToTiyn(deposit.amount))) {
+        if (!checkForPaymentSms(choosenCard, "-1", Format.formatAmountToTiyn(deposit.amount))) {
             investMoney()
         } else {
             checkForSms(
-                selectedCard,
+                choosenCard,
                 Format.formatAmountToTiyn(deposit.amount),
                 "-6"
             ) { sms_yes, string_line ->
@@ -149,10 +149,10 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     private fun investMoney() {
         val amount = binding.etAmount.editableText.toString().replace(" ", "")
         val model = InvestMoneyToDepositRequest(
-            command = if (selectedCard.object_type == WALLET) "purse&dep" else "card&dep",
-            savDepId = deposit.savDepId,
+            command = if (choosenCard.object_type == WALLET) "purse&dep" else "card&dep",
+            savDepId = deposit.savDepId.orEmpty(),
             amount = Format.formatAmountToTiyn(amount),
-            from_object_id = selectedCard.object_id,
+            from_object_id = choosenCard.object_id,
             service_id = "-6",
         )
         viewModel.investMoney(
@@ -185,7 +185,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     private fun withDraw() {
         binding.appBar.setTitle(getString(R.string.take_off))
         binding.etAmount.addTextChangedListener { s ->
-            val balanceTiyn = deposit.sumDep.replace(" ", "").toBigDecimal()
+            val balanceTiyn = (deposit.sumDep ?: "0").replace(" ", "").toBigDecimal()
             val amountTiyn = Format.formatAmountToTiyn(s.toString().replace(" ", "")).toBigDecimal()
             binding.btnContinue.isEnabled(balanceTiyn >= amountTiyn)
         }
@@ -207,7 +207,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         binding.appBar.setTitle(getString(R.string.close_deposit))
         binding.etAmount.isLongClickable = false
         binding.etAmount.isFocusable = false
-        binding.etAmount.setText(Format.formatAmount((deposit.sumDep.toDouble() / 100).toString()))
+        binding.etAmount.setText(Format.formatAmount(((deposit.sumDep ?: "0").toDouble() / 100).toString()))
         binding.btnContinue.isEnabled(true)
     }
 
@@ -220,8 +220,8 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     }
 
     private fun checkItem(amount: String) {
-        if (amount != "") {
-            if (selectedCard.balance.toBigDecimal() > amount.toBigDecimal()
+        if (amount != "" && this::choosenCard.isInitialized) {
+            if (choosenCard.balance.toBigDecimal() > amount.toBigDecimal()
             ) {
                 binding.btnContinue.isEnabled(true)
             } else {
@@ -255,7 +255,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                 it as ArrayList<CardResponse>, min_amount, type
             ) { cardResponse ->
                 cardResponse?.let { card ->
-                    selectedCard = cardResponse
+                    choosenCard = cardResponse
                     textWatchers()
                 }
             }
