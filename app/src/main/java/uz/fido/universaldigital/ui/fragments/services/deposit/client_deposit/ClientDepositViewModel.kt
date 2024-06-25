@@ -12,7 +12,6 @@ import uz.fido.network.domain.model.deposits.operations.InvestMoneyToDepositRequ
 import uz.fido.network.domain.model.deposits.operations.PartialWithdrawMoneyDepositRequest
 import uz.fido.network.domain.model.monitoring.AccountHistoriesRequest
 import uz.fido.universaldigital.base.AbstractViewModel
-import uz.fido.utils.utility.user.getClientToken
 import javax.inject.Inject
 
 @HiltViewModel
