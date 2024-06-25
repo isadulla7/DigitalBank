@@ -5,6 +5,7 @@ import uz.fido.network.domain.model.applications.OrderCardApp
 import uz.fido.network.domain.model.branches.Branches
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.cards.ProductType
+import uz.fido.network.domain.model.deposits.constructor.BxmCodeAndName
 import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
 import uz.fido.network.domain.model.limits.SvLimit
 import uz.fido.network.domain.model.loans.loan_products.CreditProduct
@@ -30,6 +31,7 @@ import uz.fido.universaldigital.ui.fragments.profile.about_bank.branches.Branche
 
 interface BaseInterface {
     fun setToEditText(allServiceLists: AllServiceLists, tag: String) {}
+    fun setToEditText(allServiceLists: BxmCodeAndName) {}
     fun openMibInfo(mib: Mib, position: Int) {}
     fun openMibInfoLongClick(mib: Mib, position: Int) {}
     fun openInfoMib(mibDetail: MibDetail) {}
@@ -96,12 +98,12 @@ interface BaseInterface {
     fun templateOperation(position: Int, item: Template) {}
     fun selectTemplateType(templateType: String) {}
     fun addTemplateName(toString: String) {}
-    fun humoOperationRemove(){}
-    fun humoOperationPay(){}
+    fun humoOperationRemove() {}
+    fun humoOperationPay() {}
     fun openSearchItem(searchItem: SearchItem) {}
     fun confirmTakeLoan(item: CreditProduct) {}
-    fun deviceDelete(){}
-    fun deviceState(){}
-    fun deviceDeleteAll(){}
+    fun deviceDelete() {}
+    fun deviceState() {}
+    fun deviceDeleteAll() {}
 
 }

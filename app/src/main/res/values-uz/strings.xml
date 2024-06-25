@@ -1006,4 +1006,5 @@
     <string name="other_devices">Boshqa qurilmalar</string>
     <string name="my_device">Mening qurilmalarim</string>
     <string name="no_other_devices_found">Boshqa qurilmalar topilmadi</string>
+    <string name="choose_near_branch">O\'zingizga yaqin filialni tanlang</string>
 </resources>

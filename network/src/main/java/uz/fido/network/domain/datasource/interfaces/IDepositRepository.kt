@@ -8,6 +8,7 @@ import uz.fido.network.domain.model.deposits.DepositCalculatorResponse
 import uz.fido.network.domain.model.deposits.DepositListResponse
 import uz.fido.network.domain.model.deposits.GetDepositListRequest
 import uz.fido.network.domain.model.deposits.RenameDepositRequest
+import uz.fido.network.domain.model.deposits.constructor.BxmListResponse
 import uz.fido.network.domain.model.deposits.constructor.DepositConstParamsResponse
 import uz.fido.network.domain.model.deposits.constructor.DepositConstPercent
 import uz.fido.network.domain.model.deposits.constructor.DepositConstPercentRequest
@@ -61,13 +62,15 @@ interface IDepositRepository {
     ): Resource<BaseResponse>
 
     suspend fun calculateDepositAuto(
-        token: String,
-        calculateDepositAuto: CalculateDepositAuto
+        token: String, calculateDepositAuto: CalculateDepositAuto
     ): Resource<DepositCalculatorResponse>
 
     suspend fun closeDeposit(
-        token: String,
-        earlyClosureRequest: EarlyClosureRequest
+        token: String, earlyClosureRequest: EarlyClosureRequest
     ): Resource<EarlyClosureResponse>
+
+    suspend fun getBxmList(
+        token: String
+    ): Resource<BxmListResponse>
 
 }

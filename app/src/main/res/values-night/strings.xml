@@ -11,4 +11,5 @@
     <string name="other_devices">Другие устройства</string>
     <string name="my_device">Мое устройство</string>
     <string name="no_other_devices_found">No other devices found</string>
+    <string name="choose_near_branch">O\'zingizga yaqin filialni tanlang</string>
 </resources>

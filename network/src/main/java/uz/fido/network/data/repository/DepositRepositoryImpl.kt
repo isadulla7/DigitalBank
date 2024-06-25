@@ -11,6 +11,7 @@ import uz.fido.network.domain.model.deposits.DepositCalculatorResponse
 import uz.fido.network.domain.model.deposits.DepositListResponse
 import uz.fido.network.domain.model.deposits.GetDepositListRequest
 import uz.fido.network.domain.model.deposits.RenameDepositRequest
+import uz.fido.network.domain.model.deposits.constructor.BxmListResponse
 import uz.fido.network.domain.model.deposits.constructor.DepositConstParamsResponse
 import uz.fido.network.domain.model.deposits.constructor.DepositConstPercent
 import uz.fido.network.domain.model.deposits.constructor.DepositConstPercentRequest
@@ -112,4 +113,6 @@ class DepositRepositoryImpl @Inject constructor(private val depositService: Depo
         earlyClosureRequest: EarlyClosureRequest
     ): Resource<EarlyClosureResponse> =
         getResult { depositService.closeDeposit(token, earlyClosureRequest) }
+
+    override suspend fun getBxmList(token: String): Resource<BxmListResponse> = getResult { depositService.getBxmList(token) }
 }

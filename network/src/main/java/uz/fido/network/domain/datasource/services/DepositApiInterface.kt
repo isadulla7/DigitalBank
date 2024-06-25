@@ -11,6 +11,7 @@ import uz.fido.network.domain.model.deposits.DepositCalculatorResponse
 import uz.fido.network.domain.model.deposits.DepositListResponse
 import uz.fido.network.domain.model.deposits.GetDepositListRequest
 import uz.fido.network.domain.model.deposits.RenameDepositRequest
+import uz.fido.network.domain.model.deposits.constructor.BxmListResponse
 import uz.fido.network.domain.model.deposits.constructor.DepositConstParamsResponse
 import uz.fido.network.domain.model.deposits.constructor.DepositConstPercent
 import uz.fido.network.domain.model.deposits.constructor.DepositConstPercentRequest
@@ -88,4 +89,9 @@ interface DepositApiInterface {
     suspend fun closeDeposit(
         @Header("Authorization") token: String, @Body earlyClosureRequest: EarlyClosureRequest
     ): EarlyClosureResponse
+
+    @GET("BXM_LIST")
+    suspend fun getBxmList(
+        @Header("Authorization") token: String
+    ): BxmListResponse
 }
