@@ -269,7 +269,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         ).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    clientAllCardList.remove(selectedCard)
                     getCardList()
                 }
 

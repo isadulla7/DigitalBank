@@ -76,11 +76,8 @@ class CardsListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val binding = ItemMyCardsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        val bindingMiniCard =
-            ItemMyCardGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return if (viewType == ViewType.DETAILED.ordinal) ViewHolder(binding) else SimpleViewHolder(
-            bindingMiniCard
-        )
+        val bindingMiniCard = ItemMyCardGridBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return if (viewType == ViewType.DETAILED.ordinal) ViewHolder(binding) else SimpleViewHolder(bindingMiniCard)
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

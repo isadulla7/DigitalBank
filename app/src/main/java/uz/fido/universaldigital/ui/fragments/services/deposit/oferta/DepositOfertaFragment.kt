@@ -34,7 +34,7 @@ class DepositOfertaFragment : BaseSimpleFragment<FragmentDepositOfertaBinding>
             gotoWithSlide(
                 R.id.openDepositStepFirst, bundleOf(
                     "deposit" to deposit,
-                    "operation" to arguments?.getString("deposit"),
+                    "operation" to arguments?.getString("operation"),
                     "isSum" to arguments?.getBoolean("isSum")
                 )
             )

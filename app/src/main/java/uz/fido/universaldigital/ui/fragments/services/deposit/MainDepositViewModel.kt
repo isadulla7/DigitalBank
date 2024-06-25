@@ -9,6 +9,7 @@ import uz.fido.network.domain.model.deposits.CalculateDepositAuto
 import uz.fido.network.domain.model.deposits.CreateCreditRequest
 import uz.fido.network.domain.model.deposits.GetDepositListRequest
 import uz.fido.universaldigital.base.AbstractViewModel
+import uz.fido.utils.utility.user.getClientToken
 import javax.inject.Inject
 
 @HiltViewModel
@@ -34,4 +35,7 @@ class MainDepositViewModel @Inject constructor(
         liveData(Dispatchers.IO) {
             emit(depositRepository.calculateDepositAuto(token, calculateDepositAuto))
         }
+
+    fun getBxmList() = liveData(Dispatchers.IO) { emit(depositRepository.getBxmList(getClientToken())) }
+
 }

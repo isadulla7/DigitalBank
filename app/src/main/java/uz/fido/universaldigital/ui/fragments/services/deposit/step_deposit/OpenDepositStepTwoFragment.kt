@@ -24,6 +24,7 @@ import uz.fido.universaldigital.databinding.ViewDepositCreateBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.MainDepositViewModel
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.utility.format.Format
@@ -39,7 +40,6 @@ class OpenDepositStepTwoFragment :
         (FragmentOpenDepositTwoStepBinding::inflate, MainDepositViewModel::class.java),
         (String, String) -> Unit {
 
-
     private lateinit var deposit: Deposit
     private var amount = ""
     private var card: CardResponse? = null
@@ -52,10 +52,9 @@ class OpenDepositStepTwoFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            deposit = it.getSerializable("deposit") as Deposit
+            deposit = it.serializable<Deposit>("deposit") as Deposit
             amount = it.getString("amount", "")
             isSum = it.getBoolean("isSum")
-
         }
         init()
         cardListTip()
@@ -91,9 +90,9 @@ class OpenDepositStepTwoFragment :
     private fun onClickView() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
-        //    if (binding.checkBox.isChecked) {
-                forSmsCheck()
-         //   } else showSnackbar(getString(R.string.please_accept_privacy))
+            //    if (binding.checkBox.isChecked) {
+            forSmsCheck()
+            //   } else showSnackbar(getString(R.string.please_accept_privacy))
         }
     }
 
@@ -127,7 +126,8 @@ class OpenDepositStepTwoFragment :
             depType = deposit.dep_type.toString(),
             pay_to_card = deposit.pay_to_card,
             pay_to_card_number = deposit.pay_to_card_number,
-            sms_code = smsCode
+            sms_code = smsCode,
+            bxm_code = requireArguments().getString("bxm_code")
         )
         binding.btnContinue.setProgress(true)
         viewModel.createDeposit(getClientToken(), createCreditRequest)
