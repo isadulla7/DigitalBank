@@ -675,10 +675,6 @@
         android:name="uz.fido.universaldigital.ui.fragments.services.deposit.uzs_deposit.UzsDepositFragment"
         android:label="UzsDepositFragment" />
     <fragment
-        android:id="@+id/transferViaBluetoothFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.transfers.via_bluetooh.TransferViaBluetoothFragment"
-        android:label="TransferViaBluetoothFragment" />
-    <fragment
         android:id="@+id/requestMoneyPaymentFragment"
         android:name="uz.fido.universaldigital.ui.fragments.transfers.request_money.RequestMoneyPaymentFragment"
         android:label="RequestMoneyPaymentFragment" />

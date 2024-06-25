@@ -67,11 +67,13 @@ class CheckInfoPaymentFragment :
             share()
         }
         binding.buttonReceipt.setOnClickListener {
-            dialogReceipt = BottomReceiptsDialog(
-                printChequeResponse.html.toString(),
-                printChequeResponse.monitoring_info?.name.toString()
-            )
-            dialogReceipt.show(childFragmentManager, "TAG")
+            if (this::printChequeResponse.isInitialized) {
+                dialogReceipt = BottomReceiptsDialog(
+                    printChequeResponse.html.toString(),
+                    printChequeResponse.monitoring_info?.name.toString()
+                )
+                dialogReceipt.show(childFragmentManager, "TAG")
+            }
         }
 
         binding.fiscalCheck.setOnClickListener {

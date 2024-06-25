@@ -341,9 +341,7 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
 
     private fun scrollRecycler() {
         try {
-            Handler(Looper.getMainLooper()).postDelayed(
-                { binding.recyclerView.scrollToPosition(0) }, 10
-            )
+            binding.recyclerView.scrollToPosition(0)
         } catch (e: Exception) {
             e.printStackTrace()
         }

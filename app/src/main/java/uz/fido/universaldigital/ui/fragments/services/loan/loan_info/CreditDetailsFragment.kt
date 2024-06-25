@@ -42,37 +42,37 @@ class CreditDetailsFragment(private val clientProduct: CreditProduct) : DialogFr
     private fun initView() {
         addView(
             getString(R.string.credit_type),
-            getLoanType(context = requireContext(), clientProduct.creditType)
+            getLoanType(context = requireContext(), clientProduct.creditType.orEmpty())
         )
         addView(
-            if (isOverdraft(clientProduct.creditType)) getString(R.string.limit_amount) else getString(
+            if (isOverdraft(clientProduct.creditType.orEmpty())) getString(R.string.limit_amount) else getString(
                 R.string.credit_amount
             ),
-            Format.formatAmount(Format.convertFromTiynDivide(clientProduct.amount)) + " UZS"
+            Format.formatAmount(Format.convertFromTiynDivide(clientProduct.amount.orEmpty())) + " UZS"
         )
         addView(getString(R.string.main_credit_percent), clientProduct.perc + "%")
         addView(getString(R.string.perc_dlo), clientProduct.percDLO + " %")
 
-        if (clientProduct.percDLP.isNotEmpty())
+        if (clientProduct.percDLP.orEmpty().isNotEmpty())
             addView(
                 getString(R.string.perc_dlp),
-                clientProduct.percDLP.toBigDecimal().divide(365.toBigDecimal()).toString() + " %"
+                clientProduct.percDLP.orEmpty().toBigDecimal().divide(365.toBigDecimal()).toString() + " %"
             )
-        if (!isOverdraft(clientProduct.creditType)) addView(
+        if (!isOverdraft(clientProduct.creditType.orEmpty())) addView(
             getString(R.string.repayment_type),
             if (clientProduct.repaymentType == "1") getString(R.string.annuity) else getString(R.string.differencial)
         )
 
 
-        addView(getString(R.string.start_contract_date), clientProduct.contractDate)
-        addView(getString(R.string.contract_number), clientProduct.contractCode)
-        addView(getString(R.string.end_contract_date), clientProduct.closeDate)
+        addView(getString(R.string.start_contract_date), clientProduct.contractDate.orEmpty())
+        addView(getString(R.string.contract_number), clientProduct.contractCode.orEmpty())
+        addView(getString(R.string.end_contract_date), clientProduct.closeDate.orEmpty())
 
-        if (!isOverdraft(clientProduct.creditType)) addView(
+        if (!isOverdraft(clientProduct.creditType.orEmpty())) addView(
             getString(R.string.loan_id_for_payment),
-            clientProduct.loanContractId
+            clientProduct.loanContractId.orEmpty()
         )
-        addView(getString(R.string.filial_name), clientProduct.filialName)
+        addView(getString(R.string.filial_name), clientProduct.filialName.orEmpty())
     }
 
     private fun addView(name: String, value: String) {

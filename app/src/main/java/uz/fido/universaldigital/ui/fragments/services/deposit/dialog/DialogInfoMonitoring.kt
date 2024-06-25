@@ -55,16 +55,16 @@ class DialogInfoMonitoring(
     private fun infoDeposit() {
         addView(
             getString(R.string.name),
-            clientDeposit.depName
+            clientDeposit.depName.orEmpty()
         )
         addView(
             getString(R.string.initial_amount),
-            clientDeposit.amount
+            clientDeposit.amount.orEmpty()
         )
 
         addView(
             getString(R.string.whole_amount),
-            clientDeposit.sumDep
+            clientDeposit.sumDep.orEmpty()
         )
 
         addView(
@@ -73,7 +73,7 @@ class DialogInfoMonitoring(
         )
         addView(
             getString(R.string.date_time),
-            clientDeposit.openDate
+            clientDeposit.openDate.orEmpty()
         )
 
 
@@ -91,10 +91,10 @@ class DialogInfoMonitoring(
             clientDeposit.persSum.formatTiynAmount(clientDeposit.currencyChar)
         )
 
-        addView(getString(R.string.deposit_deadline_until), clientDeposit.closingDate)
+        addView(getString(R.string.deposit_deadline_until), clientDeposit.closingDate.orEmpty())
         addView(
             getString(R.string.deposit_left_day),
-            calculateDays(clientDeposit.closingDate).toString() + ""
+            calculateDays(clientDeposit.closingDate.orEmpty()).toString() + ""
         )
 
         addView(

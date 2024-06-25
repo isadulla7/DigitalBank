@@ -59,18 +59,18 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
 
     private fun initDetails() {
         binding.loanAmount.text =
-            Format.formatAmount(Format.formatAmountFromTiynToInteger(creditProduct.amount)) + " UZS"
+            Format.formatAmount(Format.formatAmountFromTiynToInteger(creditProduct.amount ?: "0")) + " UZS"
         binding.tvCreditTerm.text =
             creditProduct.lnMonth.toString() + " " + getString(R.string.month_12)
         binding.tvPaymentDay.text = creditProduct.redemptionDay
         binding.tvMonthlyPayment.text =
-            Format.formatAmount(Format.formatAmountFromTiynToInteger(creditProduct.followPaySum)) + " UZS"
+            Format.formatAmount(Format.formatAmountFromTiynToInteger(creditProduct.followPaySum ?: "0")) + " UZS"
         binding.tvTotalPayment.text =
-            Format.formatAmount(Format.formatAmountFromTiynToInteger(creditProduct.tRedempTotal)) + " UZS"
+            Format.formatAmount(Format.formatAmountFromTiynToInteger(creditProduct.tRedempTotal ?: "0")) + " UZS"
         binding.tvExceessPayment.text =
-            Format.formatAmount(Format.formatAmountFromTiynToInteger(creditProduct.tRedempPerc)) + " UZS"
+            Format.formatAmount(Format.formatAmountFromTiynToInteger(creditProduct.tRedempPerc ?: "0")) + " UZS"
         binding.tvPercOverPayment.text =
-            Format.naiveRound(creditProduct.percOverLoanAmount.toFloat(), 2).toString() + " %"
+            Format.naiveRound((creditProduct.percOverLoanAmount ?: "0").toFloat(), 2).toString() + " %"
         binding.tvTotalPerc.text = creditProduct.perc + " %"
         binding.tvDeadlineConfirmation.text = creditProduct.deadlineConfirmation
 
@@ -78,7 +78,7 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
             minAmount =
                 Format.formatAmount(Format.convertFromTiynDivide(minAmount)).replace(" ", "")
         }
-        maxAmount = creditProduct.amount
+        maxAmount = creditProduct.amount ?: "0"
         if (NumberUtils.isParsable(maxAmount)) {
             maxAmount = Format.formatAmount(Format.convertFromTiynDivide(maxAmount))
                 .replace(" ", "")
@@ -123,7 +123,7 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
     private fun confirmTakeCredit() {
         val getLoanRequest = GetLoanRequest(
             command = "abs&card",
-            loanId = creditProduct.loanId,
+            loanId = creditProduct.loanId ?: "0",
             amount = amount,
             to_object_value = selectedCard?.object_value.toString(),
             service_id = "-3",

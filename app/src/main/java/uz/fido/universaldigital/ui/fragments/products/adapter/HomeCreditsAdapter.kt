@@ -44,8 +44,8 @@ class HomeCreditsAdapter(
                 tvCreditBalance.text = Format.formatAmountWithAppend(
                     item.amount, "UZS"
                 )
-                val paidAmount = item.amount.toBigDecimal() - item.totalDebt.toBigDecimal()
-                val percent = (paidAmount * 100.toBigDecimal() / item.amount.toBigDecimal()).toInt()
+                val paidAmount = (item.amount ?: "0").toBigDecimal() - (item.totalDebt ?: "0").toBigDecimal()
+                val percent = (paidAmount * 100.toBigDecimal() / (item.amount ?: "0").toBigDecimal()).toInt()
                 progressView.progress = percent
                 tvCreditLeftAmount.text = itemView.context.getString(R.string.paid) + " " +
                         Format.formatAmountWithAppend(

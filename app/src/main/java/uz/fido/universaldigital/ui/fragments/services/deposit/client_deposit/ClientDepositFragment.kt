@@ -120,7 +120,7 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
     }
 
     private fun recyclerView() {
-        dateSortList= arrayListOf()
+        dateSortList = arrayListOf()
         binding.rec.apply {
             setHasFixedSize(true)
             scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
@@ -246,18 +246,18 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
         binding.linearOut.visibility = if (clientDeposit.partialWrite == "Y") View.VISIBLE
         else View.INVISIBLE
 
-        serviceId = clientDeposit.status
-        binding.depositNumber.text = if (clientDeposit.savDepId.length > 4) "•• ${
-            clientDeposit.savDepId.substring(
-                clientDeposit.savDepId.length - 4,
-                clientDeposit.savDepId.length
+        serviceId = clientDeposit.status.orEmpty()
+        binding.depositNumber.text = if (clientDeposit.savDepId.orEmpty().length > 4) "•• ${
+            clientDeposit.savDepId.orEmpty().substring(
+                clientDeposit.savDepId.orEmpty().length - 4,
+                clientDeposit.savDepId.orEmpty().length
             )
         }"
         else "•• ${clientDeposit.savDepId}"
         binding.depositName.text = clientDeposit.depName
-        binding.appBar.setTitle(clientDeposit.depName)
+        binding.appBar.setTitle(clientDeposit.depName.orEmpty())
         binding.amount.text =
-            Format.formatAmount((clientDeposit.sumDep.toDouble() / 100).toString()) + " ${clientDeposit.currencyChar}"
+            Format.formatAmount(((clientDeposit.sumDep ?: "0").toDouble() / 100).toString()) + " ${clientDeposit.currencyChar}"
         binding.depositPercent.text =
             "${getString(R.string.profit_per_year)} " + clientDeposit.percent + " %"
         binding.depositMonth.text = clientDeposit.depTemp
@@ -272,9 +272,9 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
     }
 
     private fun calculatePercentage(): Double {
-        return (1 - (calculateDays(clientDeposit.closingDate).toDouble() / (totalDays(
-            clientDeposit.openDate,
-            clientDeposit.closingDate
+        return (1 - (calculateDays(clientDeposit.closingDate.orEmpty()).toDouble() / (totalDays(
+            clientDeposit.openDate.orEmpty(),
+            clientDeposit.closingDate.orEmpty()
         )))) * 100
     }
 

@@ -14,6 +14,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentCheckInfoBinding
 import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
+import uz.fido.universaldigital.ui.fragments.payment.abc_dialog.BottomReceiptsDialog
 import uz.fido.utils.format.Format
 import uz.fido.utils.format.Format.takeScreenShot
 import uz.fido.utils.format.FormatUtilsKt
@@ -29,6 +30,8 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
     private lateinit var svMonitoringItem: SVMonitoringItem
     private lateinit var humoMonitoringItem: HumoMonitoringItem
     private lateinit var visaMonitoringItem: CurrencyCardMonitoringItem
+    private lateinit var dialogReceipt: BottomReceiptsDialog
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,6 +56,15 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
             Toast.makeText(requireContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show()
             save(binding.linAdd)
         }
+
+        binding.buttonReceipt.setOnClickListener {
+            dialogReceipt = BottomReceiptsDialog(
+                printChequeResponse.html.toString(), printChequeResponse.monitoring_info?.name.toString()
+            )
+            dialogReceipt.show(childFragmentManager, "TAG")
+        }
+
+
     }
 
     private fun initUzCard() {
@@ -62,12 +74,10 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
         addView(getString(R.string.card_number), svMonitoringItem.card_num)
         if (svMonitoringItem.address.isNotEmpty() && svMonitoringItem.address != "0") addView(getString(R.string.address), svMonitoringItem.address)
         addView(
-            getString(R.string.operation_type),
-            if (svMonitoringItem.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome)
+            getString(R.string.operation_type), if (svMonitoringItem.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome)
         )
         addView(
-            getString(R.string.amount),
-            Format.formatAmount(Format.convertFromTiynDivide(svMonitoringItem.tran_amount)) + " UZS"
+            getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(svMonitoringItem.tran_amount)) + " UZS"
         )
     }
 
@@ -81,11 +91,9 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
                 val path = FormatUtilsKt.saveImageToGallery(requireContext(), it, "Monitoring cheque")
                 val shareIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    val uri =
-                        FileProvider.getUriForFile(
-                            requireActivity(),
-                            requireActivity().applicationContext.packageName.toString() + ".my.package.name.provider", File(path)
-                        )
+                    val uri = FileProvider.getUriForFile(
+                        requireActivity(), requireActivity().applicationContext.packageName.toString() + ".my.package.name.provider", File(path)
+                    )
                     putExtra(Intent.EXTRA_STREAM, uri)
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     type = "image/*"
@@ -111,12 +119,10 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
         addView(getString(R.string.card_number), Format.formatCardNumber(visaMonitoringItem.card_num))
         if (visaMonitoringItem.address.isNotEmpty()) addView(getString(R.string.address), visaMonitoringItem.address)
         addView(
-            getString(R.string.operation_type),
-            if (visaMonitoringItem.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome)
+            getString(R.string.operation_type), if (visaMonitoringItem.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome)
         )
         addView(
-            getString(R.string.amount),
-            Format.formatAmount(Format.convertFromTiynDivide(visaMonitoringItem.tran_amount)) + " " + visaMonitoringItem.currency
+            getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(visaMonitoringItem.tran_amount)) + " " + visaMonitoringItem.currency
         )
     }
 
@@ -124,15 +130,13 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
         val item = printChequeResponse.monitoring_info!!
         transactId = item.request_id
         addView(getString(R.string.date_time), item.created_date)
-        if (item.terminal_id.isNotEmpty())
-            addView(getString(R.string.terminal_id), item.terminal_id)
+        if (item.terminal_id.isNotEmpty()) addView(getString(R.string.terminal_id), item.terminal_id)
         addView(getString(R.string.transaction_number), item.request_id)
         if (item.partner_obj.isNotEmpty()) {
             if (item.to_obj_name.isNotEmpty()) {
                 if (item.partner_obj.startsWith("AUZ")) {
                     addView(
-                        getString(R.string.wallet_number),
-                        if (item.object_value.length == 16) Format.formatCardNumber(item.partner_obj) else item.partner_obj
+                        getString(R.string.wallet_number), if (item.object_value.length == 16) Format.formatCardNumber(item.partner_obj) else item.partner_obj
                     )
                 } else {
                     addView(
@@ -141,15 +145,13 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
                 }
             } else {
                 addView(
-                    getString(R.string.personal_account),
-                    if (item.object_value.length == 16) Format.formatCardNumber(item.partner_obj) else item.partner_obj
+                    getString(R.string.personal_account), if (item.object_value.length == 16) Format.formatCardNumber(item.partner_obj) else item.partner_obj
                 )
             }
         }
         if (item.object_value.isNotEmpty() && item.partner_obj.length != 16 && !item.partner_obj.startsWith("AUZ")) {
             addView(
-                getString(R.string.choose_card_text),
-                if (item.object_value.length == 16) Format.formatCardNumber(item.object_value) else Format.formatWalletNumber(
+                getString(R.string.choose_card_text), if (item.object_value.length == 16) Format.formatCardNumber(item.object_value) else Format.formatWalletNumber(
                     item.object_value
                 )
             )
@@ -165,14 +167,17 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
         }
         addView(getString(R.string.status), state)
         addView(
-            getString(R.string.amount),
-            Format.formatAmount(Format.convertFromTiynDivide(item.amount)) + when (item.currency_code) {
+            getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(item.amount)) + when (item.currency_code) {
                 "000" -> " UZS"
                 "840" -> " $"
                 "978" -> " EUR"
                 else -> " RUB"
             }
         )
+
+        if (printChequeResponse.html != null && printChequeResponse.html!!.isNotEmpty()) {
+            binding.buttonReceipt.visibility = View.VISIBLE
+        }
     }
 
     private fun initHumo() {
@@ -183,8 +188,7 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
         addView(getString(R.string.card_number), Format.formatCardNumber(humoMonitoringItem.card_num))
         if (humoMonitoringItem.address.isNotEmpty()) addView(getString(R.string.address), humoMonitoringItem.address)
         addView(
-            getString(R.string.operation_type),
-            if (humoMonitoringItem.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome)
+            getString(R.string.operation_type), if (humoMonitoringItem.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome)
         )
         addView(getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(humoMonitoringItem.tran_amount)) + " UZS")
     }

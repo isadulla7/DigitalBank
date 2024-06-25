@@ -84,7 +84,7 @@ class ConfirmCreditPaymentFragment :
 
     private fun getModel(): CreatePaymentRequest {
         val hashMap = HashMap<String, String>()
-        hashMap["LOANS_ID"] = clientProduct.loanContractId
+        hashMap["LOANS_ID"] = clientProduct.loanContractId.orEmpty()
         hashMap["AMOUNT"] = Format.formatAmountToTiyn(clientProduct.paymentAmount!!)
         hashMap["EARLY_CLOSURE"] = clientProduct.earlyClosure!!
         return CreatePaymentRequest(
@@ -99,7 +99,7 @@ class ConfirmCreditPaymentFragment :
 
     private fun createPayment() {
         val hashMap = HashMap<String, String>()
-        hashMap["LOANS_ID"] = clientProduct.loanContractId
+        hashMap["LOANS_ID"] = clientProduct.loanContractId.orEmpty()
         hashMap["AMOUNT"] = Format.formatAmountToTiyn(clientProduct.paymentAmount!!)
         hashMap["EARLY_CLOSURE"] = clientProduct.earlyClosure!!
         val createPayment = CreatePaymentRequest(
@@ -132,11 +132,11 @@ class ConfirmCreditPaymentFragment :
     }
 
     private fun setData() {
-        binding.textCreditName.text = getLoanType(requireContext(), clientProduct.creditType)
+        binding.textCreditName.text = getLoanType(requireContext(), clientProduct.creditType.orEmpty())
         binding.textContractNumber.text = clientProduct.contractCode
         binding.textContractDate.text = clientProduct.contractDate
         binding.loanAmount.text =
-            "${Format.formatAmount(Format.formatAmountFromTiynToInteger(clientProduct.amount))} UZS"
+            "${Format.formatAmount(Format.formatAmountFromTiynToInteger(clientProduct.amount.orEmpty()))} UZS"
         binding.accountNumberForRepayment.text = clientProduct.loan2
         binding.repaymentAmount.text =
             "${Format.formatAmount(clientProduct.paymentAmount.toString())} UZS"

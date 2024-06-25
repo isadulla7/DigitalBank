@@ -29,7 +29,8 @@ Java_uz_fido_universaldigital_ui_utils_keys_Keys_getUserInfoUrl(JNIEnv *env, job
 
 JNIEXPORT jstring
 Java_uz_fido_universaldigital_ui_utils_keys_Keys_getClientId(JNIEnv *env, jobject thiz) {
-    char *clientId = "-2";
+    char *clientId = "-3";
+//    char *clientId = "-2";
     return env->NewStringUTF(clientId);
 }
 

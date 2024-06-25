@@ -68,9 +68,9 @@ class HomeDepositsAdapter(
     }
 
     private fun calculatePercentage(clientDeposit: ClientDeposit): Double {
-        return (1 - (calculateDays(clientDeposit.closingDate).toDouble() / (totalDays(
-            clientDeposit.openDate,
-            clientDeposit.closingDate
+        return (1 - (calculateDays(clientDeposit.closingDate.orEmpty()).toDouble() / (totalDays(
+            clientDeposit.openDate.orEmpty(),
+            clientDeposit.closingDate.orEmpty()
         )))) * 100
     }
 

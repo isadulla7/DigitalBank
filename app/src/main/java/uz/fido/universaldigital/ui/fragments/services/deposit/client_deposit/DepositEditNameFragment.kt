@@ -39,7 +39,7 @@ class DepositEditNameFragment : BaseFragment<DialogClientDepositEditNameBinding,
             val name = binding.etName.editableText.toString()
 
             showProgress()
-            viewModel.renameDeposit(getClientToken(), RenameDepositRequest(name, deposit.savDepId)).observe(viewLifecycleOwner) {
+            viewModel.renameDeposit(getClientToken(), RenameDepositRequest(name, deposit.savDepId.orEmpty())).observe(viewLifecycleOwner) {
                 when (it.status) {
                     Status.SUCCESS -> {
                         getDeposits()

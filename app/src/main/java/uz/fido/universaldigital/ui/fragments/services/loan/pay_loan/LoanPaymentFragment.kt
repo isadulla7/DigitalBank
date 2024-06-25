@@ -21,8 +21,8 @@ import uz.fido.utils.utility.fragment.pop
 import java.math.BigDecimal
 
 @AndroidEntryPoint
-class LoanPaymentFragment:BaseFragment<FragmentLoanPaymentBinding,ClientLoanViewModel>(
-    FragmentLoanPaymentBinding::inflate,ClientLoanViewModel::class.java
+class LoanPaymentFragment : BaseFragment<FragmentLoanPaymentBinding, ClientLoanViewModel>(
+    FragmentLoanPaymentBinding::inflate, ClientLoanViewModel::class.java
 ) {
 
     private lateinit var clientProduct: CreditProduct
@@ -33,9 +33,9 @@ class LoanPaymentFragment:BaseFragment<FragmentLoanPaymentBinding,ClientLoanView
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             clientProduct = it.serializable<CreditProduct>(ClientCreditFragment.CLIENT_CREDIT_MODEL) as CreditProduct
-          clientActualGraph = it.serializable<CreditActualGraph>("actualGraph") as CreditActualGraph
+            clientActualGraph = it.serializable<CreditActualGraph>("actualGraph") as CreditActualGraph
         }
-        binding.linearSwitch.visibility=View.GONE
+        binding.linearSwitch.visibility = View.GONE
         initView()
         textWatchers()
         setonClick()
@@ -43,18 +43,20 @@ class LoanPaymentFragment:BaseFragment<FragmentLoanPaymentBinding,ClientLoanView
 
     private fun textWatchers() {
         binding.etAmount.addTextChangedListener {
-            if (!it.isNullOrEmpty()){
+            if (!it.isNullOrEmpty()) {
                 binding.btnContinue.isEnabled(true)
-            }else{binding.btnContinue.isEnabled(false)}
+            } else {
+                binding.btnContinue.isEnabled(false)
+            }
         }
     }
 
     private fun setonClick() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
-            if (binding.etAmount.text.toString().isNotEmpty()){
+            if (binding.etAmount.text.toString().isNotEmpty()) {
                 clientProduct.paymentAmount = binding.etAmount.text.toString().replace(" ", "")
-                clientProduct.earlyClosure = arguments?.getString("earlyClosure")?:"1" /*if (binding.switchId.isChecked) "2" else "1"*/
+                clientProduct.earlyClosure = arguments?.getString("earlyClosure") ?: "1" /*if (binding.switchId.isChecked) "2" else "1"*/
             }
             gotoWithSlide(R.id.confirmCreditPaymentFragment, bundleOf(ClientCreditFragment.CLIENT_CREDIT_MODEL to clientProduct))
 
@@ -62,12 +64,11 @@ class LoanPaymentFragment:BaseFragment<FragmentLoanPaymentBinding,ClientLoanView
     }
 
     private fun setText() {
-        val recommendedAmount = (totalAmount - clientProduct.mainAccBalance.toBigDecimal()).divide(100.toBigDecimal()).toString()
-       // binding.textMaxAmount.text = Format.formatAmount(Format.convertFromTiynDivide(clientProduct.totalDebt))
-        binding.maxAmount.text= if (recommendedAmount.startsWith("-")) "0" else Format.formatAmount(
+        val recommendedAmount = (totalAmount - (clientProduct.mainAccBalance ?: "0").toBigDecimal()).divide(100.toBigDecimal()).toString()
+        // binding.textMaxAmount.text = Format.formatAmount(Format.convertFromTiynDivide(clientProduct.totalDebt))
+        binding.maxAmount.text = if (recommendedAmount.startsWith("-")) "0" else Format.formatAmount(
             recommendedAmount
-        )+" сум"
-
+        ) + " сум"
     }
 
     private fun initView() {

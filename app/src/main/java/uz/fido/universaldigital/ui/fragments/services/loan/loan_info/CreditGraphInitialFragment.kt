@@ -42,7 +42,7 @@ class CreditGraphInitialFragment : BaseFragment<FragmentCreditGraphBinding, Clie
     private fun fetchGraph() {
         val skeletonView =
             showSkeleton(binding.rec, creditGraphAdapter, R.layout.shimmer_item_credit_graph, 5)
-        viewModel.getCreditGraph(getClientToken(), CreditGraphRequest(clientProduct.loanId))
+        viewModel.getCreditGraph(getClientToken(), CreditGraphRequest(clientProduct.loanId.orEmpty()))
             .observe(viewLifecycleOwner) {
                 skeletonView.hide()
                 when (it.status) {
