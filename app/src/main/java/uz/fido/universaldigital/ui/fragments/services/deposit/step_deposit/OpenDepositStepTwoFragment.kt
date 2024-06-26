@@ -25,6 +25,7 @@ import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragmen
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.MainDepositViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.utility.format.Format
@@ -117,7 +118,7 @@ class OpenDepositStepTwoFragment :
     private fun createDeposit() {
         val createCreditRequest = CreateCreditRequest(
             command = if (deposit.percent != "0") {
-                if (card!!.object_type == "KL") "purse&dep" else "card&dep"
+                if (card!!.object_type == WALLET) "purse&dep" else "card&dep"
             } else "dep",
             amount = Format.formatAmountToTiyn(amount),
             from_object_id = if (deposit.percent != "0") card!!.object_id else null,

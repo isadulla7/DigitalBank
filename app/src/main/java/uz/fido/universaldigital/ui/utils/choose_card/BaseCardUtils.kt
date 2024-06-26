@@ -14,6 +14,7 @@ import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.app.UniversalApplication
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
+import uz.fido.utils.const.CardConst.CURRENCY_CARD
 import uz.fido.utils.const.CardConst.HUMO_CARD
 import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.CardConst.WALLET
@@ -88,7 +89,7 @@ object BaseCardUtils {
         when (cardType) {
             1 -> {
                 cardList.forEach {
-                    if (it.object_type == "SV") {
+                    if (it.object_type == UZCARD) {
                         if (it.object_value.startsWith("860055")) {
                             userCardList.add(it)
                         }
@@ -98,7 +99,7 @@ object BaseCardUtils {
 
             2 -> {
                 cardList.forEach {
-                    if (it.object_type == "GL") {
+                    if (it.object_type == HUMO_CARD) {
                         if (it.object_value.startsWith("986009")) {
                             userCardList.add(it)
                         }
@@ -108,7 +109,7 @@ object BaseCardUtils {
 
             3 -> {
                 cardList.forEach {
-                    if (it.object_type == "TET") {
+                    if (it.object_type == CURRENCY_CARD) {
                         userCardList.add(it)
                     }
                 }
@@ -123,26 +124,26 @@ object BaseCardUtils {
                 "860055", "986009", "626272" -> R.drawable.ic_bank_aab
                 "860002", "986012" -> R.drawable.ic_bank_nbu
                 "860006", "626291" -> R.drawable.ic_bank_xalq
-                "860013","986004" -> R.drawable.ic_bank_asaka
-                "860033","986001" -> R.drawable.ic_bank_ipoteka
-                "860003","986002" -> R.drawable.ic_bank_sqb
-                "860004","986003" -> R.drawable.ic_bank_agrobank
-                "860009","986006" -> R.drawable.ic_bank_qqb
+                "860013", "986004" -> R.drawable.ic_bank_asaka
+                "860033", "986001" -> R.drawable.ic_bank_ipoteka
+                "860003", "986002" -> R.drawable.ic_bank_sqb
+                "860004", "986003" -> R.drawable.ic_bank_agrobank
+                "860009", "986006" -> R.drawable.ic_bank_qqb
                 "860011", "986015" -> R.drawable.ic_bank_turon
-                "860005" ,"986013"-> R.drawable.ic_bank_mikrokredit
+                "860005", "986013" -> R.drawable.ic_bank_mikrokredit
                 "860031", "626247", "986019" -> R.drawable.ic_bank_aloqa
-                "860014" ,"986017"-> R.drawable.ic_bank_ipakyoli
-                "860049","986010" -> R.drawable.ic_bank_kapital
-                "860053","986026" -> R.drawable.ic_bank_infin
-                "860030","986018" -> R.drawable.ic_bank_trast
+                "860014", "986017" -> R.drawable.ic_bank_ipakyoli
+                "860049", "986010" -> R.drawable.ic_bank_kapital
+                "860053", "986026" -> R.drawable.ic_bank_infin
+                "860030", "986018" -> R.drawable.ic_bank_trast
                 "860038" -> R.drawable.ic_bank_turkiston
-                "860051","986025" -> R.drawable.ic_bank_davr
+                "860051", "986025" -> R.drawable.ic_bank_davr
                 "860048", "986023" -> R.drawable.ic_bank_universal
-                "860050","986024" -> R.drawable.ic_bank_ravnaq
-                "860057","986027" -> R.drawable.ic_bank_ofb
-                "860008","986014" -> R.drawable.ic_bank_savdogar
-                "860012" ,"986016"-> R.drawable.ic_bank_hamkor
-                "860034" ,"986020"-> R.drawable.ic_bank_kdb
+                "860050", "986024" -> R.drawable.ic_bank_ravnaq
+                "860057", "986027" -> R.drawable.ic_bank_ofb
+                "860008", "986014" -> R.drawable.ic_bank_savdogar
+                "860012", "986016" -> R.drawable.ic_bank_hamkor
+                "860034", "986020" -> R.drawable.ic_bank_kdb
                 "986060" -> R.drawable.ic_bank_anor
                 "986035" -> R.drawable.ic_bank_tbc
 
@@ -165,9 +166,9 @@ object BaseCardUtils {
 
     fun getCommand(senderCard: CardResponse, receiverCard: CardResponse): String {
         return when {
-            senderCard.object_type == "KL" && receiverCard.object_type != "KL" -> "purse&card"
-            senderCard.object_type != "KL" && receiverCard.object_type == "KL" -> "card&purse"
-            senderCard.object_type == "KL" && receiverCard.object_type == "KL" -> "purse&purse"
+            senderCard.object_type == WALLET && receiverCard.object_type != WALLET -> "purse&card"
+            senderCard.object_type != WALLET && receiverCard.object_type == WALLET -> "card&purse"
+            senderCard.object_type == WALLET && receiverCard.object_type == WALLET -> "purse&purse"
             else -> "card&card"
         }
     }
@@ -175,7 +176,7 @@ object BaseCardUtils {
     fun isMainCard(card: CardResponse): Boolean = card.is_main == "Y"
 
     fun TextView.setCardNumber(card: CardResponse) {
-        this.text = if (card.object_type != "KL") Format.formatCardNumberNew(card.object_value)
+        this.text = if (card.object_type != WALLET) Format.formatCardNumberNew(card.object_value)
         else Format.formatWalletNumber(card.object_value)
     }
 
@@ -224,10 +225,10 @@ object BaseCardUtils {
                 this.object_value.startsWith("986023")
 
     fun CardResponse.isValidSumCard(): Boolean =
-        currency_code == "000" && balance_visibility && object_type != "TET" && state == "0" && processing_server_status != "-100"
+        currency_code == "000" && balance_visibility && object_type != CURRENCY_CARD && state == "0" && processing_server_status != "-100"
 
     fun CardResponse.isValidVisaCard(): Boolean =
-        currency_code == "840" && balance_visibility && object_type == "TET" && state == "0" && processing_server_status != "-100"
+        currency_code == "840" && balance_visibility && object_type == CURRENCY_CARD && state == "0" && processing_server_status != "-100"
 
     fun getLayoutManager(): GridLayoutManager {
         return try {

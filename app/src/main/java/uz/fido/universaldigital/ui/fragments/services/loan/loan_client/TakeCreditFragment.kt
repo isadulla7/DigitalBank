@@ -18,6 +18,9 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentTakeCreditBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.utils.const.CardConst
+import uz.fido.utils.const.CardConst.HUMO_CARD
+import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.goto
@@ -103,7 +106,7 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {
             val listnew = arrayListOf<CardResponse>()
             it.forEach { card ->
-                if ((card.object_type == "SV" || card.object_type == "GL") && card.state == "0") {
+                if ((card.object_type == UZCARD || card.object_type == HUMO_CARD) && card.state == "0") {
                     listnew.add(card)
                 }
             }

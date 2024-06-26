@@ -19,6 +19,7 @@ import uz.fido.universaldigital.ui.fragments.services.goal.dialog.DialogGoalTerm
 import uz.fido.universaldigital.ui.fragments.services.goal.dialog.WeekGoalDialog
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.LoanMonthDialog
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.format.Format.Companion.sendFormat
@@ -173,7 +174,7 @@ class CreateGoalFragment : BaseFragment<FragmentCreateGoalBinding, GoalViewModel
         depType = "",
         depId = "",
         fund_object_value = "",
-        fund_object_type = "KL",
+        fund_object_type = WALLET,
         aim_desc = binding.etName.text.toString(),
         duration = targetTerm.toString(),
         target_amount = Format.formatAmountToTiyn(binding.etMaxAmount.editableText.toString().replace(" ", "").trim()),

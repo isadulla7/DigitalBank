@@ -16,6 +16,8 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentAboutCardBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.utils.const.CardConst.CURRENCY_CARD
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
@@ -50,7 +52,7 @@ class AboutCardFragment : BaseFragment<FragmentAboutCardBinding, MenuProductsVie
             bankCodeLayout.isVisible = card.account_code.isNotEmpty()
             bankNameLayout.isVisible = card.bank_name.isNotEmpty()
             cardRequisitesLayout.isVisible = card.account_code.isNotEmpty()
-            expireDateLayout.isVisible = card.object_type != "KL"
+            expireDateLayout.isVisible = card.object_type != WALLET
 
             cardNumber.text = Format.formatCardNumberVisible(card.object_value)
             holderName.text = card.embossed_name
@@ -82,7 +84,7 @@ class AboutCardFragment : BaseFragment<FragmentAboutCardBinding, MenuProductsVie
     }
 
     private fun getSecurityCode() {
-        if (card.object_type == "TET") {
+        if (card.object_type == CURRENCY_CARD) {
             viewModel.getCVV(getClientToken(), GetCVVRequest(cardNumber = card.object_value))
                 .observe(viewLifecycleOwner) {
                     it?.let {

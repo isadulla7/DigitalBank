@@ -9,6 +9,7 @@ import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.DialogShareCardNumberBinding
+import uz.fido.utils.const.CardConst.WALLET
 
 class ShareCardNumberDialog(
     private var item: CardResponse, private val baseInterface: BaseInterface
@@ -25,7 +26,7 @@ class ShareCardNumberDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (item.object_type == "KL") {
+        if (item.object_type == WALLET) {
             binding.tvCopy.text = getString(R.string.copy_wallet_number)
         }
         binding.layoutCopyCardNumber.setOnClickListener {

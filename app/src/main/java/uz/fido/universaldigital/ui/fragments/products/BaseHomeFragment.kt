@@ -52,6 +52,7 @@ import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransf
 import uz.fido.universaldigital.ui.utils.extensions.getBankProducts
 import uz.fido.universaldigital.ui.utils.extensions.getFastAccessOperationList
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Command
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.goto
@@ -477,7 +478,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
 
     override fun openTransferList(item: PopularTransfers) {
         goto(
-            if (item.object_type == "KL") R.id.transferByWalletFragment else R.id.transferToCardFragment,
+            if (item.object_type == WALLET) R.id.transferByWalletFragment else R.id.transferToCardFragment,
             bundleOf(
                 Const.CARD_NUMBER to item.card_number
             )

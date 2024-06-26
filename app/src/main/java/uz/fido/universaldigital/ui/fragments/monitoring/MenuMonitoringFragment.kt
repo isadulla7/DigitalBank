@@ -16,6 +16,11 @@ import uz.fido.universaldigital.ui.fragments.monitoring.visa.VisaMonitoringFragm
 import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.utils.const.CardConst
+import uz.fido.utils.const.CardConst.CURRENCY_CARD
+import uz.fido.utils.const.CardConst.HUMO_CARD
+import uz.fido.utils.const.CardConst.UZCARD
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
 
@@ -82,19 +87,19 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
             isFilter = card.isNotEmpty()
             card.forEach {
                 when (it.object_type) {
-                    "SV" -> {
+                    UZCARD -> {
                         cardUzCardList.add(it.object_id)
                     }
 
-                    "GL" -> {
+                    HUMO_CARD -> {
                         cardHumoList.add(it.object_id)
                     }
 
-                    "TET", "TET_SUM" -> {
+                    CURRENCY_CARD, "TET_SUM" -> {
                         cardCurrencyList.add(it.object_value)
                     }
 
-                    "KL" -> {
+                    WALLET -> {
                         cardWalledList.add(it.account_code)
                     }
                 }

@@ -25,6 +25,7 @@ import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragmen
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.keys.Keys
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
@@ -87,7 +88,7 @@ open class DepositConstructorConfirmFragment :
     private fun createDeposit() {
         binding.btnContinue.setProgress(true)
         val createCreditRequest = CreateCreditRequest(
-            command = if (cardResponse.object_type == "KL") "purse&dep" else "card&dep",
+            command = if (cardResponse.object_type == WALLET) "purse&dep" else "card&dep",
             amount = Format.formatAmountToTiyn(deposit.amount),
             from_object_id = cardResponse.object_id,
             depId = deposit.dep_id,

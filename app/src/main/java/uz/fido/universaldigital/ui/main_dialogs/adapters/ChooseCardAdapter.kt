@@ -12,6 +12,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemChooseCardDialogBinding
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardBalance
 import uz.fido.universaldigital.ui.utils.extensions.cardLogoByType
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.utility.format.Format
 
 @SuppressLint("SetTextI18n")
@@ -68,7 +69,7 @@ class ChooseCardAdapter(
     }
 
     private fun getCardName(card: CardResponse): String {
-        return Format.formatCardName(card.object_name) + " " + if (card.object_type != "KL") Format.formatCardNumberNew(
+        return Format.formatCardName(card.object_name) + " " + if (card.object_type != WALLET) Format.formatCardNumberNew(
             card.object_value
         ) else Format.formatWalletNumber(card.object_value)
     }

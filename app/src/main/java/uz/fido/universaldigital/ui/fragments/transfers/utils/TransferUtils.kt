@@ -41,11 +41,11 @@ fun setCommand(senderCardType: String, receiverCardType: String): String {
 }
 
 fun getServiceIdInfo(receiverCard: CardResponse, senderCard: CardResponse): String {
-    return if (receiverCard.object_value.startsWith("AUZ") || receiverCard.object_value.startsWith("DV") || senderCard.object_type == "KL") "-12" else "-1"
+    return if (receiverCard.object_value.startsWith("AUZ") || receiverCard.object_value.startsWith("DV") || senderCard.object_type == WALLET) "-12" else "-1"
 }
 
 fun getServiceIdInfo(receiverCard: String, senderCard: String): String {
-    return if (receiverCard.startsWith("AUZ") || receiverCard.startsWith("DV") || senderCard == "KL") "-12" else "-1"
+    return if (receiverCard.startsWith("AUZ") || receiverCard.startsWith("DV") || senderCard == WALLET) "-12" else "-1"
 }
 
 fun String.capitalizeWord(): String =

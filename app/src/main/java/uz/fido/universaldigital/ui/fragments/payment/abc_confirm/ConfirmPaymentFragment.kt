@@ -37,6 +37,7 @@ import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils
 import uz.fido.universaldigital.ui.utils.extensions.checkForFingerPrintConfirmation
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.format.Format.formatAmount
@@ -322,7 +323,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
             params = params,
             from_object_id = senderCard?.object_id.toString(),
             amount = params["AMOUNT"].toString(),
-            if (senderCard!!.object_type == "KL") "purse&${
+            if (senderCard!!.object_type == WALLET) "purse&${
                 paymentService?.payment_type.toString().lowercase(Locale.getDefault()).trim()
             }" else "card&${
                 paymentService?.payment_type.toString().lowercase(Locale.getDefault()).trim()
