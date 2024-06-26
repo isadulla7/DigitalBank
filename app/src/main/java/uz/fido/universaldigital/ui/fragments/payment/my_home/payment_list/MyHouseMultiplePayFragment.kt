@@ -22,6 +22,7 @@ import uz.fido.universaldigital.ui.fragments.payment.my_home.adapter.MyHousePayA
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.goto
@@ -157,7 +158,7 @@ class MyHouseMultiplePayFragment : BaseFragment<FragmentMyHouseMultiplePayBindin
             params = params,
             from_object_id = selectedCard?.object_id.toString(),
             amount = params["AMOUNT"].toString(),
-            command = if (selectedCard!!.object_type == "KL") "purse&${paymentType}" else "card&${paymentType}",
+            command = if (selectedCard!!.object_type == WALLET) "purse&${paymentType}" else "card&${paymentType}",
             i_request_id = Const.request_id
         )
         val path =

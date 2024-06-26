@@ -23,6 +23,8 @@ import uz.fido.universaldigital.ui.dialogs.ReferenceDialog
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.utils.const.CardConst
+import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -81,7 +83,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     }
 
     private fun fetchLimitParams() {
-        if (card.object_type == "SV") {
+        if (card.object_type == UZCARD) {
             getSvLimitParams()
             binding.startDateLayout.visibility = View.GONE
             binding.endDateLayout.visibility = View.GONE
@@ -107,7 +109,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                     val et3 = binding.endDate.text.toString()
                     val et2 = binding.startDate.text.toString()
                     val et4 = binding.etAmount.text.toString()
-                    if (card.object_type == "GL") {
+                    if (card.object_type == CardConst.HUMO_CARD) {
                         binding.continueButton.isEnabled(et1.isNotEmpty() && et3.isNotEmpty() && et4.isNotEmpty() && et2.isNotEmpty())
                     } else {
                         binding.continueButton.isEnabled(et1.isNotEmpty() && et4.isNotEmpty())
@@ -275,7 +277,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     }
 
     private fun continueButtonClicked() {
-        if (card.object_type == "SV") {
+        if (card.object_type == UZCARD) {
             if (buttonOperation == "edit") {
                 deleteSvCardLimit()
             } else {

@@ -20,6 +20,8 @@ import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringFilter
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAmountDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringChooseDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringDateDialog
+import uz.fido.utils.const.CardConst
+import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
@@ -125,7 +127,7 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
                 Status.SUCCESS -> {
                     val response = resource.data?.user_objects ?: ArrayList()
                     val newList = arrayListOf<FilterCard>()
-                    response.forEach { if (it.object_type == "SV") newList.add(it) }
+                    response.forEach { if (it.object_type == UZCARD) newList.add(it) }
                     cardList = newList
                     successCardList(cardList)
                 }

@@ -16,6 +16,8 @@ import uz.fido.universaldigital.databinding.FragmentConfirmLocalPaymentBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.fragments.services.map_payment.PaymentBranchViewModel
+import uz.fido.utils.const.CardConst.CURRENCY_CARD
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -56,7 +58,7 @@ class ConfirmLocalPaymentFragment :
                 pay_onspot_id = localPayment?.id.toString(),
                 receiver_phone = localPayment?.phone.toString(),
                 service_id = "-19",
-                command = if (cardResponse!!.object_type == "KL") "purse&onspot" else "card&onspot"
+                command = if (cardResponse!!.object_type == WALLET) "purse&onspot" else "card&onspot"
             )
             viewModel.getLocalPayment(getClientToken(), model).observe(viewLifecycleOwner) {
                 binding.btnContinue.setProgress(false)
@@ -94,7 +96,7 @@ class ConfirmLocalPaymentFragment :
                     this.cardResponse = card
                     if (card.balance.toBigDecimal().divide(100.toBigDecimal())
                             .compareTo(amount.toBigDecimal()) == -1
-                        || card.currency_code == "TET"
+                        || card.currency_code == CURRENCY_CARD
                     ) {
                         binding.btnContinue.isEnabled(false)
                     } else {

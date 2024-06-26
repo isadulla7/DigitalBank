@@ -9,6 +9,10 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemFilterMonitoringCardBinding
 import uz.fido.universaldigital.databinding.ItemMonitoringFilterCardBinding
+import uz.fido.utils.const.CardConst
+import uz.fido.utils.const.CardConst.CURRENCY_CARD
+import uz.fido.utils.const.CardConst.HUMO_CARD
+import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.format.Format
 
 class FilterLocalCardMonitoringAdapter(
@@ -59,9 +63,9 @@ class FilterLocalCardMonitoringAdapter(
                 if (itemId.state == "A") "${context.getString(R.string.status)}: ${context.getString(R.string.activ)}" else "${context.getString(R.string.status)}: ${context.getString(R.string.no_activ)}"
 
             when (itemId.object_type) {
-                "SV" -> binding.icon.setImageResource(R.drawable.uzcard_monitoring)
-                "GL" -> binding.icon.setImageResource(R.drawable.humo_monitoring)
-                "TET" -> binding.icon.setImageResource(R.drawable.master_card)
+                UZCARD -> binding.icon.setImageResource(R.drawable.uzcard_monitoring)
+                HUMO_CARD -> binding.icon.setImageResource(R.drawable.humo_monitoring)
+                CURRENCY_CARD -> binding.icon.setImageResource(R.drawable.master_card)
             }
 
             if (!itemId.is_selected_monitoring) {

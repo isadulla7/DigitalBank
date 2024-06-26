@@ -24,6 +24,7 @@ import uz.fido.universaldigital.ui.fragments.services.goal.GoalViewModel
 import uz.fido.universaldigital.ui.fragments.transfers.over_my_cards.OverMyCardsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.device.vibrateTick
@@ -77,7 +78,7 @@ class GoalIncomeFragment : BaseFragment<FragmentGoalIncomeBinding, GoalViewModel
             if (binding.etAmount.editableText.toString() != "") {
                 binding.btnContinue.setProgress(true)
                 val p2pRequest = P2PRequest(
-                    command = if (senderCard?.object_type == "KL") "purse&purse" else "card&purse",
+                    command = if (senderCard?.object_type == WALLET) "purse&purse" else "card&purse",
                     amount = sendFormat(etAmount),
                     from_object_id = senderCard!!.object_id,
                     from_object_expire = senderCard!!.object_expiry,
@@ -135,7 +136,7 @@ class GoalIncomeFragment : BaseFragment<FragmentGoalIncomeBinding, GoalViewModel
             command = if (receiverCardNumber.startsWith("AUZ") || receiverCardNumber.startsWith("DV")) "info&purse" else "info&card",
             from_object_id = senderCard!!.object_id,
             expire = senderCard!!.object_expiry,
-            service_id = if (receiverCardNumber.startsWith("AUZ") || receiverCardNumber.startsWith("DV") || senderCard!!.object_type == "KL") "-12" else "-1",
+            service_id = if (receiverCardNumber.startsWith("AUZ") || receiverCardNumber.startsWith("DV") || senderCard!!.object_type == WALLET) "-12" else "-1",
             to_object_value = receiverCardNumber
         )
         viewModel.p2pInfoRequest(getClientToken(), p2pINfoRequest).observe(viewLifecycleOwner) {

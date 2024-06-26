@@ -26,6 +26,7 @@ import uz.fido.universaldigital.ui.fragments.payment.my_home.MyHomeViewModel
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.universaldigital.ui.utils.keys.Keys
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CHAR_UZS
 import uz.fido.utils.format.Format
@@ -173,7 +174,7 @@ class MyHouseSinglePaymentFragment :
             params,
             from_object_id = selectedCard?.object_id.toString(),
             params["AMOUNT"].toString(),
-            if (selectedCard!!.object_type == "KL") "purse&${paymentType}" else "card&${paymentType}",
+            if (selectedCard!!.object_type == WALLET) "purse&${paymentType}" else "card&${paymentType}",
             i_request_id = Const.request_id
         )
         val path =

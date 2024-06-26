@@ -18,6 +18,7 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardNumber
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardState
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardTypeImage
 import uz.fido.universaldigital.ui.utils.extensions.loadCardBackgroundImage
+import uz.fido.utils.const.CardConst.WALLET
 
 class CardsListAdapter(
     private var baseInterface: BaseInterface,
@@ -37,7 +38,7 @@ class CardsListAdapter(
                 bankLogo.setBankLogo(item)
                 setCardState(item, itemView.context, status)
                 father.setOnClickListener {
-                    if (item.object_type == "KL") baseInterface.selectedWallet(item) else baseInterface.selectedCard(
+                    if (item.object_type == WALLET) baseInterface.selectedWallet(item) else baseInterface.selectedCard(
                         item
                     )
                 }
@@ -62,7 +63,7 @@ class CardsListAdapter(
                 bankLogo.setBankLogo(item)
                 setCardState(item, itemView.context, status)
                 father.setOnClickListener {
-                    if (item.object_type == "KL") baseInterface.selectedWallet(item) else baseInterface.selectedCard(
+                    if (item.object_type == WALLET) baseInterface.selectedWallet(item) else baseInterface.selectedCard(
                         item
                     )
                 }

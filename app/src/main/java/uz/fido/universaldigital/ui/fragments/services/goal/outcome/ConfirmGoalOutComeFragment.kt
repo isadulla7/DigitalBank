@@ -18,6 +18,7 @@ import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.fragments.services.goal.GoalViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.utility.format.Format.Companion.sendFormat
@@ -50,7 +51,7 @@ class ConfirmGoalOutComeFragment : BaseFragment<FragmentOutcomeCofirmBinding, Go
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
             val p2PRequest = P2PRequest(
-                command = if (selectedCard.object_type == "KL") "purse&purse" else "purse&card",
+                command = if (selectedCard.object_type == WALLET) "purse&purse" else "purse&card",
                 amount = sendFormat(amount),
                 from_object_value = goalModel.fund_object_value,
                 from_object_id = "",
@@ -118,7 +119,7 @@ class ConfirmGoalOutComeFragment : BaseFragment<FragmentOutcomeCofirmBinding, Go
             ) "info&purse" else "info&card",
             from_object_id = selectedCard.object_id,
             expire = selectedCard.object_expiry,
-            service_id = if (goalModel.fund_object_value.startsWith("AUZ") || selectedCard.object_type == "KL") "-12" else "-1",
+            service_id = if (goalModel.fund_object_value.startsWith("AUZ") || selectedCard.object_type == WALLET) "-12" else "-1",
             to_object_value = goalModel.fund_object_value
         )
 

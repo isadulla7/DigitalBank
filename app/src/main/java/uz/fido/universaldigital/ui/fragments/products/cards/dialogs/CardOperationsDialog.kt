@@ -11,6 +11,7 @@ import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogCardOperationBinding
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isBankCard
+import uz.fido.utils.const.CardConst.CURRENCY_CARD
 
 class CardOperationsDialog(
     private var card: CardResponse,
@@ -34,9 +35,7 @@ class CardOperationsDialog(
     }
 
     private fun init() {
-//        binding.safeMode.isVisible = card.object_type != "TET"
-//        binding.setLimits.isVisible = card.object_type != "TET"
-        binding.transferToCard.isVisible = card.object_type != "TET"
+        binding.transferToCard.isVisible = card.object_type != CURRENCY_CARD
         binding.blockCard.isVisible = isBankCard(card)
         if (card.state == "P") {
             binding.transferToCard.visibility = View.GONE

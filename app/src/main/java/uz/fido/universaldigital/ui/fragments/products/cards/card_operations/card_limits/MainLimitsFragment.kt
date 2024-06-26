@@ -18,6 +18,8 @@ import uz.fido.universaldigital.databinding.FragmentMainLimitsBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.cards.card_operations.card_limits.adapters.LimitAdapter
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.utils.const.CardConst
+import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
@@ -63,7 +65,7 @@ class MainLimitsFragment : BaseFragment<FragmentMainLimitsBinding, MenuProductsV
     }
 
     private fun fetchLimit() {
-        if (card.object_type == "SV") {
+        if (card.object_type == UZCARD) {
             getSvLimitList()
         } else {
             getGlLimitList()

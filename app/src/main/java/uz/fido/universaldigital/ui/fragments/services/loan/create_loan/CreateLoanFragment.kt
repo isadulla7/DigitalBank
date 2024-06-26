@@ -32,6 +32,9 @@ import uz.fido.universaldigital.ui.fragments.services.loan.LoanViewModel
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.LoanMonthDialog
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_info.LoanUserInfo1Fragment
 import uz.fido.universaldigital.ui.utils.keys.Keys
+import uz.fido.utils.const.CardConst
+import uz.fido.utils.const.CardConst.HUMO_CARD
+import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
@@ -130,7 +133,7 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
             this.cardResponse = it
             val listnew = arrayListOf<CardResponse>()
             it.forEach { card ->
-                if ((card.object_type == "SV" || card.object_type == "GL") && card.state == "0") {
+                if ((card.object_type == UZCARD || card.object_type == HUMO_CARD) && card.state == "0") {
                     listnew.add(card)
                 }
             }
