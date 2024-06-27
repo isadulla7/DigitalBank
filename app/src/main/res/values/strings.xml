@@ -1009,5 +1009,6 @@
     <string name="my_device">Мое устройство</string>
     <string name="no_other_devices_found">Другие устройства не найдены</string>
     <string name="choose_near_branch">Выберите филиал рядом с вами</string>
-    <string name="used_amount">Used amount</string>
+    <string name="used_amount">Использованная сумма</string>
+    <string name="input_ref_code">Код сотрудника (необязательно)</string>
 </resources>

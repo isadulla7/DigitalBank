@@ -44,6 +44,7 @@ object Const {
     const val CARD_NUMBER = "card_number"
     const val EMAIL = "email"
     const val OPERATION = "operation_main"
+    const val REF_CODE = "reference_code"
     const val ADD_CARD_OPERATION = "add_card_operation"
     const val OPERATION_AMOUNT = "operation_amount"
     const val OPERATION_CURRENCY = "SUCCESS_CURRENCY"

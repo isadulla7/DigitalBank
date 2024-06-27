@@ -1007,5 +1007,6 @@
     <string name="my_device">Mening qurilmalarim</string>
     <string name="no_other_devices_found">Boshqa qurilmalar topilmadi</string>
     <string name="choose_near_branch">O\'zingizga yaqin filialni tanlang</string>
-    <string name="used_amount">Used amount</string>
+    <string name="used_amount">Ishlatilgan summa</string>
+    <string name="input_ref_code">Xodim kodi (ixtiyoriy)</string>
 </resources>

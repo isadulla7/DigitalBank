@@ -639,7 +639,8 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             gotoWithSlide(
                 R.id.signUpPasswordFragment, bundleOf(
                     SignUpPasswordFragment.SIGN_UP_PHONE_NUMBER to phoneNumber,
-                    SignUpPasswordFragment.SIGN_UP_SMS_CODE to smsCode
+                    SignUpPasswordFragment.SIGN_UP_SMS_CODE to smsCode,
+                    SignUpPasswordFragment.SIGN_UP_REF_CODE to requireArguments().getString(Const.REF_CODE),
                 )
             )
         } else {
