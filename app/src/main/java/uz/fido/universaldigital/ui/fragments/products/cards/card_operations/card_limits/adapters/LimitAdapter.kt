@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.limits.SvLimit
+import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemLimitBinding
 import uz.fido.utils.utility.format.Format
@@ -18,10 +19,8 @@ class LimitAdapter(
 
         fun bind(item: SvLimit) {
             binding.limitType.text = item.dsc
-            binding.limitAmount.text = Format.formatAmount(
-                item.lmt.toBigDecimal().divide(100.toBigDecimal()).toString()
-            ) + " UZS"
-            binding.limitDate.text = item.end_date
+            binding.limitAmount.text = Format.formatAmount(item.limitAmount.toBigDecimal().divide(100.toBigDecimal()).toString()) + " UZS"
+            binding.limitDate.text = itemView.context.getString(R.string.used_amount) + " : " + item.usedAmount + " UZS"
             binding.father.setOnClickListener {
                 baseInterface.openLimitItem(item)
             }

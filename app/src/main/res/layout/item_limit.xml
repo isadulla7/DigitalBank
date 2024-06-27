@@ -63,37 +63,6 @@
             app:layout_constraintStart_toStartOf="@id/limit_amount"
             app:layout_constraintTop_toBottomOf="@id/limit_amount" />
 
-        <com.mckrpk.animatedprogressbar.AnimatedProgressBar
-            android:id="@+id/animatedProgressBar"
-            android:layout_width="match_parent"
-            android:layout_height="8dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="gone"
-            app:animationDurationInMs="1000"
-            app:animationStyle="line"
-            app:layout_constraintTop_toBottomOf="@id/limit_amount"
-            app:lineWidth="8dp"
-            app:max="1000"
-            app:progress="750"
-            app:progressColor="@color/brandRedColor"
-            app:progressTipColor="#4DA542"
-            app:progressTipEnabled="true"
-            app:trackColor="@color/hintColor" />
-
-        <uz.fido.utils.view.custom_text_view.TextViewMedium
-            android:id="@+id/current_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:paddingBottom="16dp"
-            android:text="Осталось 456 000 сум из 2 000 000 сум"
-            android:textColor="@color/mainTextColor"
-            android:textSize="12sp"
-            android:visibility="gone"
-            app:layout_constraintStart_toStartOf="@id/limit_type"
-            app:layout_constraintTop_toBottomOf="@id/animatedProgressBar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

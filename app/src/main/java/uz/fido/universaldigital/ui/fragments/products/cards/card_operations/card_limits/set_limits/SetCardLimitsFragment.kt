@@ -129,13 +129,13 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                     limitTypes = response.humo_limit_types
                     if (operationType == "edit") {
                         limitTypes.forEach { type ->
-                            if (type.code == svLimit?.lmt_id) {
+                            if (type.code == svLimit?.limitId) {
                                 binding.limitType.setText(type.name)
                             }
                         }
-                        limitId = svLimit?.lmt_id.toString()
-                        binding.etAmount.setText(Format.formatAmountFromTiynToInteger(svLimit?.lmt.toString()))
-                        binding.endDate.setText(svLimit?.end_date)
+                        limitId = svLimit?.limitId.toString()
+                        binding.etAmount.setText(Format.formatAmountFromTiynToInteger(svLimit?.limitAmount.toString()))
+                        binding.endDate.setText(requireContext().getString(R.string.used_amount) + " : " + svLimit?.usedAmount + " UZS")
                     }
                 }
 
@@ -182,13 +182,13 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                     limitTypes = response.limit_id
                     if (operationType == "edit") {
                         limitTypes.forEach { type ->
-                            if (type.code == svLimit?.lmt_id) {
+                            if (type.code == svLimit?.limitId) {
                                 binding.limitType.setText(type.name)
                             }
                         }
-                        limitId = svLimit?.lmt_id.toString()
-                        binding.etAmount.setText(Format.formatAmountFromTiynToInteger(svLimit?.lmt.toString()))
-                        binding.endDate.setText(svLimit?.end_date)
+                        limitId = svLimit?.limitId.toString()
+                        binding.etAmount.setText(Format.formatAmountFromTiynToInteger(svLimit?.limitAmount.toString()))
+                        binding.endDate.setText(requireContext().getString(R.string.used_amount) + " : " + svLimit?.usedAmount + " UZS")
                     }
                 }
 
@@ -225,7 +225,6 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     private fun deleteSvCardLimit() {
         val request = LimitDeleteRequest(
             limit_id = limitId!!,
-            main_object_id = card.object_id,
             object_id = card.object_id
         )
         viewModel.deleteSvCardLimit(getClientToken(), request).observe(viewLifecycleOwner) {
@@ -234,7 +233,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                     if (buttonOperation == "edit") {
                         setSvCardLimit()
                     } else {
-                        showSnackbar(getString(R.string.limit_deletec))
+                        showSnackbar(getString(R.string.limit_deletec), getString(R.string.successfully))
                         Handler(Looper.myLooper()!!).postDelayed({
                             pop()
                         }, 500)

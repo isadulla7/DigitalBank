@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.products.cards.card_operations.car
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ethanhua.skeleton.Skeleton
 import dagger.hilt.android.AndroidEntryPoint
@@ -122,15 +123,8 @@ class MainLimitsFragment : BaseFragment<FragmentMainLimitsBinding, MenuProductsV
     }
 
     private fun initLimitList() {
-        if (limitList.isEmpty()) {
-            binding.emptyView.visibility = View.VISIBLE
-            binding.addButton.visibility = View.VISIBLE
-            binding.limitList.visibility = View.GONE
-        } else {
-            binding.limitList.visibility = View.VISIBLE
-            binding.emptyView.visibility = View.GONE
-            binding.addButton.visibility = View.GONE
-        }
+        binding.emptyView.isVisible = limitList.isEmpty()
+        binding.limitList.isVisible = limitList.isNotEmpty()
     }
 
     override fun onClick(v: View?) {

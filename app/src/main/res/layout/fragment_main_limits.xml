@@ -24,6 +24,8 @@
             android:id="@+id/limit_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:paddingBottom="72dp"
             tools:listitem="@layout/item_limit" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
