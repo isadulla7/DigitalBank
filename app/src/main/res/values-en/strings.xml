@@ -1012,4 +1012,5 @@
     <string name="my_device">My devices</string>
     <string name="no_other_devices_found">No other devices found</string>
     <string name="choose_near_branch">Choose a branch near you</string>
+    <string name="used_amount">Used amount</string>
 </resources>
