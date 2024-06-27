@@ -35,6 +35,7 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
     companion object {
         const val SIGN_UP_PHONE_NUMBER = "phone_number"
         const val SIGN_UP_SMS_CODE = "sms_code"
+        const val SIGN_UP_REF_CODE = "ref_code"
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -52,7 +53,6 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
             binding.passCheck.visibility = View.GONE
             checkForButton()
         }
-
     }
 
     private fun checkForButton() {
@@ -116,7 +116,8 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
             surname = "test",
             password = encryptPassword(binding.etPassword.text.toString()),
             userInfo = data,
-            string_line = ""
+            string_line = "",
+            emp_ref_code = requireArguments().getString(SIGN_UP_REF_CODE).orEmpty()
         )
         viewModel.finishReg(finishRegRequest).observe(viewLifecycleOwner) {
             binding.btnContinue.setProgress(false)

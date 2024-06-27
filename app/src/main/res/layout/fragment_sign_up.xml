@@ -35,19 +35,50 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <uz.fido.utils.view.custom_text_view.TextViewMedium
-        android:id="@+id/tv_goto_sign_in"
-        android:layout_width="wrap_content"
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/tv_employee_code"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="24dp"
+        android:drawableEnd="@drawable/ic_arrow_down_ios"
+        android:drawableTint="@color/brandBlueColor_30"
+        android:gravity="center_vertical"
         android:includeFontPadding="false"
         android:paddingVertical="8dp"
-        android:text="@string/already_have_account"
-        android:textColor="@color/brandRedColor"
+        android:text="@string/input_ref_code"
+        android:textColor="@color/brandBlueColor_50"
         android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/phone_number_layout" />
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:el_duration="300"
+        app:el_expanded="false"
+        app:layout_constraintTop_toBottomOf="@id/tv_employee_code">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emp_ref_code_layout"
+            style="@style/EditTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/input_ref_code">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_ref_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number"
+                android:maxLength="25"
+                android:theme="@style/DefaultEditTextTheme" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
 
     <uz.fido.utils.view.custom_text_view.TextViewRegular
         android:id="@+id/text_sing_up_terms"

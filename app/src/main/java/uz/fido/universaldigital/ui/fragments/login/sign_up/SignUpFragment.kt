@@ -19,6 +19,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
+import uz.fido.universaldigital.ui.utils.extensions.getDrawable
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
@@ -44,9 +45,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun initSetOnClickListeners() {
-        binding.tvGotoSignIn.setOnClickListener {
-            pop()
-        }
         binding.btnContinue.setOnClickListener {
             if (isValidPhoneNumber()) {
                 if (isInternetConnected(requireContext())) {
@@ -57,6 +55,15 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             }
         }
         binding.appBar.setOnBackButtonClickListener { pop() }
+        binding.tvEmployeeCode.setOnClickListener {
+            if (binding.expandableLayout.isExpanded) {
+                binding.expandableLayout.collapse(true)
+                binding.tvEmployeeCode.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_down_ios), null)
+            } else {
+                binding.expandableLayout.expand(true)
+                binding.tvEmployeeCode.setCompoundDrawablesWithIntrinsicBounds(null, null, ContextCompat.getDrawable(requireContext(), R.drawable.arrow_up_24dp), null)
+            }
+        }
     }
 
     private fun setPhonePrefix() {
@@ -101,19 +108,18 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun getUserInfo() {
-        viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + requireContext().getIpAddress())
-            .observe(viewLifecycleOwner) {
-                when (it.status) {
-                    Status.SUCCESS -> it.data?.let { data ->
-                        signUpRequest(data)
-                    }
+        viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + requireContext().getIpAddress()).observe(viewLifecycleOwner) {
+            when (it.status) {
+                Status.SUCCESS -> it.data?.let { data ->
+                    signUpRequest(data)
+                }
 
-                    Status.ERROR -> {
-                        binding.btnContinue.setProgress(false)
-                        showSnackbar(it.message.toString())
-                    }
+                Status.ERROR -> {
+                    binding.btnContinue.setProgress(false)
+                    showSnackbar(it.message.toString())
                 }
             }
+        }
     }
 
     private fun signUpRequest(userInfo: UserInfo) {
@@ -149,17 +155,16 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun gotoSmsConfirmFragment(
-        response: Resource<BaseResponse>,
-        model: SignUpCheckRequest
+        response: Resource<BaseResponse>, model: SignUpCheckRequest
     ) {
         val bundle = Bundle()
         bundle.putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_UP)
         bundle.putString(
-            Const.PHONE_NUMBER,
-            binding.etPhoneNumber.editableText.toString()
+            Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString()
         )
         bundle.putSerializable("data", model)
         bundle.putString(Const.RANDOM_TEXT, response.data?.string_line.toString())
+        bundle.putString(Const.REF_CODE, binding.etRefCode.editableText.toString())
         gotoWithSlide(R.id.confirmSmsFragmentLogin, bundle)
     }
 
@@ -178,9 +183,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun phoneNumberFormatted(): String {
-        return binding.etPhoneNumber.editableText.toString()
-            .replace(" ", "")
-            .replace("+", "")
+        return binding.etPhoneNumber.editableText.toString().replace(" ", "").replace("+", "")
     }
 
     private fun setTermsOfUseColor() {

@@ -31,5 +31,6 @@ data class FinishRegRequest(
     var userInfo: UserInfo? = null,
     val card_number: String? = null,
     var expire_date: String? = null,
-    val version: String? = null
+    val version: String? = null,
+    val emp_ref_code: String? = null
 ) : java.io.Serializable
