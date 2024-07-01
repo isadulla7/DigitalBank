@@ -145,7 +145,6 @@ class ConfirmCreditPaymentFragment :
             "${Format.formatAmount(clientProduct.paymentAmount.toString())} UZS"
     }
 
-
     private fun initCards() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {
             binding.chooseCardLayout.initCards(

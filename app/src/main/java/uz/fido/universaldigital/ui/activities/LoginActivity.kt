@@ -35,12 +35,12 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkForDeviceLock() {
-//        if (SecurityCheck.isFromEmulator()) {
-//            openLockActivity()
-//            return
-//        } else {
+        if (SecurityCheck.isFromEmulator()) {
+            openLockActivity()
+            return
+        } else {
             checkForDeepLink()
-//        }
+        }
     }
 
     private fun checkForDeepLink() {
