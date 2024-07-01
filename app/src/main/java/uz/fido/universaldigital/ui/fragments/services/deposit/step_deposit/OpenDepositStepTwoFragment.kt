@@ -36,9 +36,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 @AndroidEntryPoint
-class OpenDepositStepTwoFragment :
-    BaseFragment<FragmentOpenDepositTwoStepBinding, MainDepositViewModel>
-        (FragmentOpenDepositTwoStepBinding::inflate, MainDepositViewModel::class.java),
+class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBinding, MainDepositViewModel>(FragmentOpenDepositTwoStepBinding::inflate, MainDepositViewModel::class.java),
         (String, String) -> Unit {
 
     private lateinit var deposit: Deposit
@@ -102,9 +100,7 @@ class OpenDepositStepTwoFragment :
             createDeposit()
         } else if (isCard) {
             if (!checkForPaymentSms(
-                    card = card!!,
-                    smsControlLimit = "-1",
-                    amount = Format.formatAmountToTiyn(amount)
+                    card = card!!, smsControlLimit = "-1", amount = Format.formatAmountToTiyn(amount)
                 )
             ) {
                 createDeposit()
@@ -131,16 +127,13 @@ class OpenDepositStepTwoFragment :
             bxm_code = requireArguments().getString("bxm_code")
         )
         binding.btnContinue.setProgress(true)
-        viewModel.createDeposit(getClientToken(), createCreditRequest)
-            .observe(viewLifecycleOwner) { resources ->
+        viewModel.createDeposit(getClientToken(), createCreditRequest).observe(viewLifecycleOwner) { resources ->
                 binding.btnContinue.setProgress(false)
                 when (resources.status) {
                     Status.SUCCESS -> {
                         goto(
-                            R.id.basicSuccessFragment,
-                            bundleOf(
-                                Const.OPERATION to BasicSuccessFragment.DEPOSIT_OPEN,
-                                "amount" to amount
+                            R.id.basicSuccessFragment, bundleOf(
+                                Const.OPERATION to BasicSuccessFragment.DEPOSIT_OPEN, "amount" to amount
                             )
                         )
                     }
@@ -173,21 +166,17 @@ class OpenDepositStepTwoFragment :
         binding.appBar.setTitle(getString(R.string.confirming))
         addView(getString(R.string.name_depoist), deposit.dep_name)
         addView(
-            getString(R.string.deposit_amount),
-            amount + " " + Format().getCurrencyChar(deposit.currency_code)
+            getString(R.string.deposit_amount), amount + " " + Format().getCurrencyChar(deposit.currency_code)
         )
         addView(getString(R.string.deposit_percent), deposit.percent + " %")
         addView(
-            getString(R.string.rate),
-            Format().formattedDepositExpire(requireContext(), deposit.keeping_time)
+            getString(R.string.rate), Format().formattedDepositExpire(requireContext(), deposit.keeping_time)
         )
         addView(
-            getString(R.string.shelf_life),
-            Format().formattedDepositExpire(requireContext(), deposit.keeping_time)
+            getString(R.string.shelf_life), Format().formattedDepositExpire(requireContext(), deposit.keeping_time)
         )
         addView(
-            getString(R.string.maybe_deposit),
-            if (deposit.replenishment == "Y") getString(R.string.maybe_dep) else getString(R.string.possible)
+            getString(R.string.maybe_deposit), if (deposit.replenishment == "Y") getString(R.string.maybe_dep) else getString(R.string.possible)
         )
         addView(getString(R.string.interest_rate_type), deposit.type_percent)
         addView(getString(R.string.with_drawal), deposit.type_dep)
@@ -196,8 +185,7 @@ class OpenDepositStepTwoFragment :
 
 
     private fun addView(name: String, value: String) {
-        val viewDepositCreateBinding =
-            ViewDepositCreateBinding.inflate(LayoutInflater.from(requireContext()), null, false)
+        val viewDepositCreateBinding = ViewDepositCreateBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
         viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)
@@ -209,9 +197,7 @@ class OpenDepositStepTwoFragment :
                 it as ArrayList<CardResponse>, amount, type
             ) { cardResponse ->
                 cardResponse?.let { card ->
-                    if (card.balance.toBigDecimal().divide(100.toBigDecimal())
-                            .compareTo(amount.toBigDecimal()) == -1
-                    ) {
+                    if (card.balance.toBigDecimal().divide(100.toBigDecimal()).compareTo(amount.toBigDecimal()) == -1) {
                         isCard = false
                         binding.btnContinue.isEnabled(false)
                     } else {
@@ -259,16 +245,14 @@ class OpenDepositStepTwoFragment :
         }
     }
 
-    override fun invoke(sms_cofirm: String, line_string: String) {
-        if (sms_cofirm == "Y")
+    override fun invoke(smsCofirm: String, lineString: String) {
+        if (smsCofirm == "Y") {
             goto(
-                R.id.confirmSmsFragment,
-                bundleOf(
-                    Const.OPERATION to ConfirmSmsFragment.SMS_DEPOSIT_OPERATION,
-                    "string_line" to line_string
+                R.id.confirmSmsFragment, bundleOf(
+                    Const.OPERATION to ConfirmSmsFragment.SMS_DEPOSIT_OPERATION, ConfirmSmsFragment.STRING_LINE to lineString
                 )
             )
-        else createDeposit()
+        } else createDeposit()
     }
 
 }
