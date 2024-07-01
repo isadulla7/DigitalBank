@@ -118,6 +118,13 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         registerSMSReceiver()
         initTextChangeListener()
         initSetOnClickListeners()
+        requestPaymentSms()
+    }
+
+    private fun requestPaymentSms() {
+        if (operation == SMS_OPERATION_PAYMENT_KEY || operation == SMS_DEPOSIT_OPERATION) {
+            checkForSmsPaymentRequest()
+        }
     }
 
     private fun initSetOnClickListeners() {
@@ -155,7 +162,10 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             }
 
             SMS_DEPOSIT_OPERATION, SMS_OPERATION_PAYMENT_KEY -> {
-                checkForSmsPaymentRequest()
+                setFragmentResult(
+                    SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode)
+                )
+                findNavController().navigateUp()
             }
 
             ADD_CARD -> {
@@ -241,7 +251,6 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     }
 
     private fun checkForSmsPaymentRequest() {
-        val smsCode = binding.etSms.editableText.toString()
         showProgress()
         val model = CheckSmsForPayment(
             app_key_hash = AppSignatureHelper(requireContext()).appKeyHash,
