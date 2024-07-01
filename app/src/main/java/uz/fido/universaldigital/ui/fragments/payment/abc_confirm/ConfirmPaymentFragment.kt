@@ -49,6 +49,7 @@ import uz.fido.utils.view.custom_text_view.TextViewMedium
 import uz.fido.utils.view.custom_text_view.TextViewRegular
 import java.util.*
 import java.util.concurrent.Executors
+import kotlin.collections.HashMap
 import kotlin.math.roundToInt
 
 @SuppressLint("SetTextI18n")
@@ -121,8 +122,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
             for (i in paymentParamsArrayList.indices) {
                 params[paymentParamsArrayList[i].code] = paymentParamsArrayList[i].def_value
             }
-            val keyValue =
-                requireArguments().getSerializable(PaymentSecondStepFragment.PAYMENT_KEY_VALUES) as HashMap<String, String>
+            val keyValue = requireArguments().serializable<HashMap<String, String>>(PaymentSecondStepFragment.PAYMENT_KEY_VALUES) as HashMap<String, String>
             keyValue.forEach {
                 if (it.key == "REGIONS") {
                     params[it.key] = it.value
