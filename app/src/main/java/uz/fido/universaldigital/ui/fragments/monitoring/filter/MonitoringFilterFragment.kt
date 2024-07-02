@@ -35,10 +35,9 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class MonitoringFilterFragment :
-    BaseFragment<FragmentMonitoringFilterBinding, MonitoringFilterViewModel>(
-        FragmentMonitoringFilterBinding::inflate, MonitoringFilterViewModel::class.java
-    ), View.OnClickListener, (MonitoringFilter) -> Unit {
+class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, MonitoringFilterViewModel>(
+    FragmentMonitoringFilterBinding::inflate, MonitoringFilterViewModel::class.java
+), View.OnClickListener, (MonitoringFilter) -> Unit {
 
     private val cardAdapter by lazy {
         FilterLocalCardMonitoringAdapter(
@@ -86,7 +85,7 @@ class MonitoringFilterFragment :
         cardRecyclerView()
         doneFilter()
         filterRecyclerView()
-        serviceRecylerView()
+        serviceRecyclerView()
         onCLickView()
         editTextView()
     }
@@ -227,7 +226,6 @@ class MonitoringFilterFragment :
 
     }
 
-
     override fun monitoringFilterCard(filterCard: FilterCard) {
         super.monitoringFilterCard(filterCard)
         cardList.first { it.object_id == filterCard.object_id }.is_selected_monitoring =
@@ -253,7 +251,7 @@ class MonitoringFilterFragment :
         }
     }
 
-    private fun serviceRecylerView() {
+    private fun serviceRecyclerView() {
         val layoutFlexBox = FlexboxLayoutManager(context).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW
@@ -267,7 +265,6 @@ class MonitoringFilterFragment :
             getServices()
         }
     }
-
 
     private fun getServices() {
         viewModel.getLocalMonitoringServiceList(getClientToken())
@@ -310,66 +307,64 @@ class MonitoringFilterFragment :
     }
 
     private fun getCardList() {
-        val skeletonScreen =
-            showSkeleton(binding.shimmerView, cardAdapter, R.layout.shimmer_item_card, 1)
-        viewModel.getLocalMonitoringCardList(getClientToken())
-            .observe(viewLifecycleOwner) { resource ->
-                skeletonScreen.hide()
-                binding.shimmerView.visibility = View.GONE
-
-                when (resource.status) {
-                    Status.SUCCESS -> {
-                        cardResponseError = true
-                        val activList = arrayListOf<FilterCard>()
-                        val passivList = arrayListOf<FilterCard>()
-                        val response = resource.data?.user_objects ?: ArrayList()
-                        response.forEach { item ->
-                            if (item.state == "0") {
-                                activList.add(item)
-                            } else {
-                                passivList.add(item)
+        val skeletonScreen = showSkeleton(binding.shimmerView, cardAdapter, R.layout.shimmer_item_card, 1)
+        viewModel.getLocalMonitoringCardList(getClientToken()).observe(viewLifecycleOwner) { resource ->
+            skeletonScreen.hide()
+            binding.shimmerView.visibility = View.GONE
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    cardResponseError = true
+                    val activeList = arrayListOf<FilterCard>()
+                    val passiveList = arrayListOf<FilterCard>()
+                    val response = resource.data?.user_objects ?: ArrayList()
+                    response.forEach { item ->
+                        if (item.state == "0") {
+                            if (!activeList.map { it.object_value }.contains(item.object_value)) {
+                                activeList.add(item)
+                            }
+                        } else {
+                            if (!passiveList.map { it.object_value }.contains(item.object_value)) {
+                                passiveList.add(item)
                             }
                         }
-                        if (cardList.isEmpty()) {
-                            cardList.add(
-                                FilterCard(
-                                    0,
-                                    getString(R.string.activ),
-                                    "",
-                                    "",
-                                    "",
-                                    false,
-                                    1
-                                )
-                            )
-                            cardList.addAll(activList)
-                            cardList.add(
-                                FilterCard(
-                                    0,
-                                    getString(R.string.no_activ),
-                                    "",
-                                    "",
-                                    "",
-                                    false,
-                                    1
-                                )
-                            )
-                            cardList.addAll(passivList)
-
-                        }
-                        successCardList(cardList)
                     }
+                    if (cardList.isEmpty()) {
+                        cardList.add(
+                            FilterCard(
+                                0,
+                                getString(R.string.activ),
+                                "",
+                                "",
+                                "",
+                                false,
+                                1
+                            )
+                        )
+                        cardList.addAll(activeList)
+                        cardList.add(
+                            FilterCard(
+                                0,
+                                getString(R.string.no_activ),
+                                "",
+                                "",
+                                "",
+                                false,
+                                1
+                            )
+                        )
+                        cardList.addAll(passiveList)
 
-                    Status.ERROR -> {
-                        cardResponseError = false
-                        showSnackbar(resource.message.toString())
                     }
+                    successCardList(cardList)
+                }
+
+                Status.ERROR -> {
+                    cardResponseError = false
+                    showSnackbar(resource.message.toString())
                 }
             }
-
-
+        }
     }
-
 
     private fun successCardList(response: ArrayList<FilterCard>) {
         cardAdapter.setListItem(response)
@@ -481,7 +476,6 @@ class MonitoringFilterFragment :
 
     }
 
-
     private fun filterChooseSave() {
         saveViewModel.localFilter = true
         val isServiceCurrent = false
@@ -500,7 +494,6 @@ class MonitoringFilterFragment :
         saveViewModel.setLocalMonitoringFilter(filter)
         pop()
     }
-
 
     private fun filterVisibility() {
         if (allOperationFilter.isNotEmpty()) {
@@ -546,7 +539,6 @@ class MonitoringFilterFragment :
             removeList("choose")
         }
     }
-
 
     private fun showAmountFilter() {
         if (!amountCurrent) {

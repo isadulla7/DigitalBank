@@ -15,7 +15,6 @@ import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import uz.fido.network.data.utility.CurrentActivityHolder
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityMainBinding
@@ -41,11 +40,9 @@ import uz.fido.utils.internet_checker.NoConnectionDialog
 import uz.fido.utils.update_checker.UpdateChecker
 import uz.fido.utils.utility.activity.tintSystemBars
 import uz.fido.utils.utility.context.startActivityWithClearTask
-import uz.fido.utils.utility.fragment.getNavOptions
 import uz.fido.utils.view.bottom_menu_anim.hideAnimWithSlideDown
 import uz.fido.utils.view.bottom_menu_anim.showAnimWithSlideUp
 import java.util.Calendar
-
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
@@ -69,7 +66,6 @@ class MainActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        CurrentActivityHolder.currentActivity = this
         internetListener()
         isStop = false
         if (!showPinCode) {
@@ -112,10 +108,10 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun openPage(id: Int, bundle: Bundle? = null, isSlide: Boolean? = null) {
+    private fun openPage(id: Int, bundle: Bundle) {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        navController.navigate(id, bundle, if (isSlide == true) getNavOptions() else null)
+        navController.navigate(id, bundle, null)
     }
 
     override fun onStop() {
@@ -127,13 +123,6 @@ class MainActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         pausedMillis = 0
-    }
-
-    override fun onPause() {
-        super.onPause()
-        if (CurrentActivityHolder.currentActivity == this) {
-            CurrentActivityHolder.currentActivity = null
-        }
     }
 
     private fun checkUpdate() {

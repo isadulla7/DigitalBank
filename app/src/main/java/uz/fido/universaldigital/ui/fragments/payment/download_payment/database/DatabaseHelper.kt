@@ -34,7 +34,11 @@ class DatabaseHelper(
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {}
 
     init {
-        createTables()
+        try {
+            createTables()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun createTables() {
