@@ -55,10 +55,12 @@ open class UpdateChecker(private var activity: AppCompatActivity) {
     }
 
     private fun popupSnackbarForCompleteUpdate() {
-        if (!activity.supportFragmentManager.isDestroyed && !activity.isDestroyed) {
+        try {
             UpdateDownloadedDialog {
                 appUpdateManager.completeUpdate()
             }.show(activity.supportFragmentManager, "")
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

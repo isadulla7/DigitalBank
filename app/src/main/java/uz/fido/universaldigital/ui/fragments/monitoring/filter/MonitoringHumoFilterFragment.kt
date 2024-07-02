@@ -126,7 +126,13 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
                 Status.SUCCESS -> {
                     val response = resource.data?.user_objects ?: ArrayList()
                     val newList = arrayListOf<FilterCard>()
-                    response.forEach { if (it.object_type == CardConst.HUMO_CARD) newList.add(it) }
+                    response.forEach {
+                        if (it.object_type == CardConst.HUMO_CARD) {
+                            if (!newList.map { it.object_value }.contains(it.object_value)) {
+                                newList.add(it)
+                            }
+                        }
+                    }
                     if (newList.isNotEmpty()) newList.forEachIndexed { index, card ->
                         if (index != 0) card.is_selected_monitoring = true
                     }

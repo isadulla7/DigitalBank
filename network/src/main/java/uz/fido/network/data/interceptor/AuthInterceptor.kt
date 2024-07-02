@@ -7,8 +7,6 @@ import io.paperdb.Paper
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
-import org.json.JSONObject
-import uz.fido.network.data.utility.CurrentActivityHolder
 import uz.fido.network.di.Keys
 import uz.fido.network.domain.datasource.services.SwapKeyApiInterface
 import uz.fido.network.domain.datasource.services.UserApiInterface
@@ -29,12 +27,10 @@ import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
 import uz.fido.utils.utility.language.Utility.getDeviceName
 import uz.fido.utils.utility.user.getClientToken
-import uz.fido.utils.utility.user.getUserQwerty
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
 import kotlin.math.abs
-import kotlin.system.exitProcess
 
 /**
  * Created by Husniddin Muhammad Amin on 02.05.2023
@@ -53,24 +49,10 @@ class AuthInterceptor @Inject constructor(
         var modifiedRequest: Request? = null
         val originalRequest = chain.request()
         val originalResponse = chain.proceed(originalRequest)
-        val activity = CurrentActivityHolder.currentActivity
 
         if (originalResponse.code != TOKEN_EXPIRED && originalResponse.code != UNAUTHORIZED) {
             return originalResponse
         }
-
-//        if (originalResponse.code == UNAUTHORIZED) {
-//            try {
-//                val jsonObject = JSONObject(originalResponse.body?.string() ?: "")
-//                val code = jsonObject.getInt("code")
-//                if (code == DEVICE_DELETE) {
-//                    activity?.finishAffinity()
-//                    exitProcess(0)
-//                }
-//            } catch (e: Exception) {
-//                Toast.makeText(context, "error code", Toast.LENGTH_SHORT).show()
-//            }
-//        }
 
         synchronized(this) {
             if (isNeedToCallSwapKey()) {
@@ -126,7 +108,7 @@ class AuthInterceptor @Inject constructor(
     private fun getSignInResponse(userInfo: UserInfo): retrofit2.Response<SignInResponse> {
         val device = GetDeviceInfo(context).deviceInfo
         val signInRequest = SignInRequestNew(
-            phone_number = Paper.book().read(Const.PAPER_CLIENT_PHONE),
+            phone_number = Paper.book().read(Const.PAPER_CLIENT_PHONE) ?: "",
             device_type = "A",
             device_code = context.getDeviceIds(),
             device_name = getDeviceName(),
@@ -134,7 +116,7 @@ class AuthInterceptor @Inject constructor(
             ip = context.getIpAddress(),
             client_id = Keys.getClientId(),
             fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
-            password = Paper.book().read(Const.PASSWORD_ENC),
+            password = Paper.book().read(Const.PASSWORD_ENC) ?: "",
             is_pin = 1,
             sim_iccd = device.simCcd.toString(),
             network_state = device.networkState.toString(),

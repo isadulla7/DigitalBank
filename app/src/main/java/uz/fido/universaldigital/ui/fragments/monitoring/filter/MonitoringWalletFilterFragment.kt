@@ -126,7 +126,13 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
                 Status.SUCCESS -> {
                     val response = resource.data?.user_objects ?: ArrayList()
                     val newList = arrayListOf<FilterCard>()
-                    response.forEach { if (it.object_type == WALLET) newList.add(it) }
+                    response.forEach {
+                        if (it.object_type == WALLET) {
+                            if (!newList.map { it.object_value }.contains(it.object_value)) {
+                                newList.add(it)
+                            }
+                        }
+                    }
                     if (newList.isNotEmpty()) newList.forEachIndexed { index, card ->
                         if (index != 0) card.is_selected_monitoring = true
                     }
@@ -139,8 +145,6 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
                 }
             }
         }
-
-
     }
 
     private fun successCardList(response: java.util.ArrayList<FilterCard>) {
