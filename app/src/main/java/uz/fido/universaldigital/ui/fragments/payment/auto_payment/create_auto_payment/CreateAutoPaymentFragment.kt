@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.widget.TimePicker
 import androidx.core.os.bundleOf
@@ -523,7 +522,7 @@ class CreateAutoPaymentFragment : BaseFragment<FragmentCreateAutoPaymentBinding,
 
             R.id.edit_text_day_of_payment, R.id.icon_text_day_of_payment -> {
 
-                loanMonthDialog = LoanMonthDialog(this, "", "day", 0, requireContext())
+                loanMonthDialog = LoanMonthDialog(this, "", "day", 0, R.string.add)
                 loanMonthDialog.show(childFragmentManager, "")
 
             }
@@ -602,7 +601,6 @@ class CreateAutoPaymentFragment : BaseFragment<FragmentCreateAutoPaymentBinding,
                 timePicker.setTitle(getString(R.string.choose_hour))
                 timePicker.show()
                 timePicker.getButton(DatePickerDialog.BUTTON_POSITIVE).setTextColor(Color.RED)
-
             }
 
             R.id.custom_date, R.id.icon_custom_date -> {

@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.goal.new_goal
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import com.jakewharton.rxbinding4.widget.textChanges
@@ -286,7 +285,7 @@ class CreateGoalFragment : BaseFragment<FragmentCreateGoalBinding, GoalViewModel
     }
 
     private fun monthOpenDialog() {
-        loanMonthDialog = LoanMonthDialog(this, "", "day", 0, requireContext())
+        loanMonthDialog = LoanMonthDialog(this, "", "day", 0)
         loanMonthDialog.show(childFragmentManager, "")
     }
 

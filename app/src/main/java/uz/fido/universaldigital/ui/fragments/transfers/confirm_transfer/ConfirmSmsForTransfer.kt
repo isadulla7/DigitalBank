@@ -50,8 +50,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        transferDto =
-            requireArguments().serializable<TransferDto>(SuccessTransferFragment.TRANSFER_DTO) as TransferDto
+        transferDto = requireArguments().serializable<TransferDto>(SuccessTransferFragment.TRANSFER_DTO) as TransferDto
         operation = transferDto.operation.toString()
         p2pRequest = requireArguments().serializable<P2PRequest>(TRANSFER_REQUEST) as P2PRequest
     }

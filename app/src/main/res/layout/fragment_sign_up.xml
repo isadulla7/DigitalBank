@@ -27,7 +27,7 @@
             android:id="@+id/et_phone_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:digits="+1234567890 "
+            android:digits="1234567890 "
             android:imeOptions="actionDone"
             android:inputType="phone"
             android:theme="@style/DefaultEditTextTheme"

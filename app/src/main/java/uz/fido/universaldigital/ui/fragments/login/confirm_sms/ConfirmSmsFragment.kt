@@ -709,9 +709,13 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     private val smsBroadcastReceiver: SMSBroadcastReceiver = object : SMSBroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
-            val otpCode = intent.getStringExtra("otp")
-            if (!otpCode.isNullOrEmpty()) {
-                binding.etSms.setText(otpCode)
+            try {
+                val otpCode = intent.getStringExtra("otp")
+                if (!otpCode.isNullOrEmpty()) {
+                    binding.etSms.setText(otpCode)
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
         }
     }

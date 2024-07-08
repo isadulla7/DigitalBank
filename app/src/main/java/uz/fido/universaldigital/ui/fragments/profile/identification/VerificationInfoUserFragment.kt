@@ -122,7 +122,7 @@ class VerificationInfoUserFragment : BaseFragment<FragmentVerificationInfoUserBi
                 getString(R.string.birth_date) to commonData.birth_date,
                 getString(R.string.citizenship) to commonData.citizenship,
                 getString(R.string.passport_no) to docData.pass_data,
-                getString(R.string.date_of_expire) to docData.expiry_date
+                getString(R.string.date_of_expire) to (docData.expiry_date ?: "")
             )
             saveUserDetails(it)
             binding.recyclerView.apply {
@@ -149,7 +149,7 @@ class VerificationInfoUserFragment : BaseFragment<FragmentVerificationInfoUserBi
                 write(Const.USER_CITIZENSHIP, commonData.citizenship)
                 write(Const.USER_PASSWORD_DATA, docData.pass_data)
                 write(Const.USER_PASS_GIVEN_DATE, docData.issued_date)
-                write(Const.USER_PASS_EXPIRE_DATE, docData.expiry_date)
+                write(Const.USER_PASS_EXPIRE_DATE, docData.expiry_date ?: "")
                 write(Const.USER_PINFL, commonData.pinfl)
             }
         }

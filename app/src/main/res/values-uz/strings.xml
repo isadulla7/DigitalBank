@@ -1009,4 +1009,5 @@
     <string name="choose_near_branch">O\'zingizga yaqin filialni tanlang</string>
     <string name="used_amount">Ishlatilgan summa</string>
     <string name="input_ref_code">Xodim kodi (ixtiyoriy)</string>
+    <string name="new_password">Yangi parol</string>
 </resources>

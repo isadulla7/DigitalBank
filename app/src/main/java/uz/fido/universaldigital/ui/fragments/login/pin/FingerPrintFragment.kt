@@ -60,9 +60,13 @@ class FingerPrintFragment : BaseSimpleFragment<FragmentFingerPrintBinding>(Fragm
     }
 
     private fun openMainActivity() {
-        Paper.book().write(USER_LOGGED, true)
-        startActivity(Intent(requireContext(), MainActivity::class.java))
-        requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
-        requireActivity().finish()
+        try {
+            Paper.book().write(USER_LOGGED, true)
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+            requireActivity().overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            requireActivity().finish()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 }

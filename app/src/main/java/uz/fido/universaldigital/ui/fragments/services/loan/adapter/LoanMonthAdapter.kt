@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.loan.adapter
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +11,6 @@ import uz.fido.universaldigital.ui.fragments.services.loan.modul.LoanMonth
 class LoanMonthAdapter(
     private val onClickView: (Int, String) -> Unit,
     private val list: ArrayList<LoanMonth>,
-    private val context: Context,
     private val type: String,
 ) : RecyclerView.Adapter<LoanMonthAdapter.ViewHolder>() {
 
@@ -35,7 +33,7 @@ class LoanMonthAdapter(
         fun onBind(loanMonth: LoanMonth) {
             when (type) {
                 "month" -> {
-                    view.month.text = "${loanMonth.count} ${context.getString(uz.fido.utils.R.string.month)}"
+                    view.month.text = "${loanMonth.count} ${itemView.context.getString(uz.fido.utils.R.string.month)}"
                     view.time.text = loanMonth.term
                 }
 

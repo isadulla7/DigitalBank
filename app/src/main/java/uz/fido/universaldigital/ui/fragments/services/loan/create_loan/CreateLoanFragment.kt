@@ -32,10 +32,8 @@ import uz.fido.universaldigital.ui.fragments.services.loan.LoanViewModel
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.LoanMonthDialog
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_info.LoanUserInfo1Fragment
 import uz.fido.universaldigital.ui.utils.keys.Keys
-import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.CardConst.HUMO_CARD
 import uz.fido.utils.const.CardConst.UZCARD
-import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -61,7 +59,7 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
     private var selectedDate: Int = 0
     private var selectedCard: CardResponse? = null
     private var cardResponse: List<CardResponse> = listOf()
-    val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
+    private val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -127,7 +125,6 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
         )
     }
 
-
     private fun initCards() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {
             this.cardResponse = it
@@ -149,7 +146,6 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
             }
         }
     }
-
 
     private fun getUserInfo() {
         binding.btnContinue.setProgress(true)
@@ -224,7 +220,7 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
             }
         }
         binding.etPaymentTime.setOnClickListener {
-            loanMonthDialog = LoanMonthDialog(this, "", "day", selectedDate, requireContext())
+            loanMonthDialog = LoanMonthDialog(this, "", "day", selectedDate)
             loanMonthDialog.show(childFragmentManager, "")
 
         }
@@ -270,7 +266,6 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
             "${getString(R.string.loan_time)} ${creditGroup.time_max} ${getString(uz.fido.utils.R.string.month)}"
         binding.etTime.setText(selectedDate.toString())
     }
-
 
     private fun initOffer() {
         val fullText = getText(R.string.accept_deposit_privacy) as SpannedString

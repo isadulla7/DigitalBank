@@ -239,7 +239,7 @@ class DepositConstructFragment :
             }
 
             R.id.year_layout, R.id.ed_year -> {
-                yaerCheckList()
+                yearCheckList()
             }
 
             R.id.month_layout, R.id.ed_month -> {
@@ -290,17 +290,17 @@ class DepositConstructFragment :
     }
 
     private fun dayCheckList() {
-        loanMonthDialog = LoanMonthDialog(this, "", "day", 0, requireContext())
+        loanMonthDialog = LoanMonthDialog(this, "", "day", 0, R.string.select)
         loanMonthDialog.show(childFragmentManager, "")
     }
 
     private fun monthCheckList() {
-        loanMonthDialog = LoanMonthDialog(this, "13", "month", 0, requireContext())
+        loanMonthDialog = LoanMonthDialog(this, "13", "month", 0, R.string.select)
         loanMonthDialog.show(childFragmentManager, "")
     }
 
-    private fun yaerCheckList() {
-        loanMonthDialog = LoanMonthDialog(this, "", "year", 0, requireContext())
+    private fun yearCheckList() {
+        loanMonthDialog = LoanMonthDialog(this, "", "year", 0, R.string.select)
         loanMonthDialog.show(childFragmentManager, "")
 
     }

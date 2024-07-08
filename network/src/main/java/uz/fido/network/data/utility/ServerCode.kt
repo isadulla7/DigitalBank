@@ -1,6 +1,7 @@
 package uz.fido.network.data.utility
 
 enum class ServerCode(val code: Int) {
+    SERVICE_UNAVAILABLE(503),
     TECHNICAL_WORKS(502),
     SERVER_ERROR(500),
     TOKEN_EXPIRED(406),

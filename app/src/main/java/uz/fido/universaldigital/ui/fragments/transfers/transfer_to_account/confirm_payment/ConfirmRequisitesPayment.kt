@@ -158,7 +158,7 @@ class ConfirmRequisitesPayment :
             i_request_id = ""
         )
 
-        viewModel.createPaymentRequest(getClientToken(), model, "ONE_TIME_PAY/")
+        viewModel.createPaymentRequest(getClientToken(), model, "ONE_TIME_PAY")
             .observe(viewLifecycleOwner) {
                 it?.let {
                     binding.btnContinue.setProgress(false)
