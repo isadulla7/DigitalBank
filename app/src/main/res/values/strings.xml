@@ -61,7 +61,7 @@
     <string name="please_accept_privacy">Пожалуйста, примите все условия договора</string>
     <string name="verification_privacy">Я соглашаюсь с <a href="https://universalbank.uz/">условиями</a> Universal Bank </string>
     <string name="create_password">Создайте пароль</string>
-    <string name="create_password_description">Создайте надежный и запоминяющийся пароль для вас</string>
+    <string name="create_password_description">Создайте надежный и запоминающийся пароль для вас</string>
     <string name="repeat_password">Повторите пароль</string>
     <string name="error_no_internet_connection">Проблема с подключением к интернету, проверьте соединение</string>
     <string name="create_pin_code">Создайте PIN-код</string>
@@ -1011,4 +1011,5 @@
     <string name="choose_near_branch">Выберите филиал рядом с вами</string>
     <string name="used_amount">Использованная сумма</string>
     <string name="input_ref_code">Код сотрудника (необязательно)</string>
+    <string name="new_password">Новый пароль</string>
 </resources>

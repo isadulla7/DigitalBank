@@ -1,5 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.loan.pay_loan
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.view.View
@@ -29,10 +30,9 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class ConfirmCreditPaymentFragment :
-    BaseFragment<FragmentCreditConfirmBinding, ClientLoanViewModel>(
-        FragmentCreditConfirmBinding::inflate, ClientLoanViewModel::class.java
-    ) {
+class ConfirmCreditPaymentFragment : BaseFragment<FragmentCreditConfirmBinding, ClientLoanViewModel>(
+    FragmentCreditConfirmBinding::inflate, ClientLoanViewModel::class.java
+) {
     private lateinit var clientProduct: CreditProduct
     private lateinit var selectedCard: CardResponse
 
@@ -40,11 +40,7 @@ class ConfirmCreditPaymentFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {
-            clientProduct =
-                it.serializable<CreditProduct>(ClientCreditFragment.CLIENT_CREDIT_MODEL) as CreditProduct
-        }
-
+        arguments?.let { clientProduct = it.serializable<CreditProduct>(ClientCreditFragment.CLIENT_CREDIT_MODEL) as CreditProduct }
         setData()
         initCards()
         setOnClickView()
@@ -55,16 +51,13 @@ class ConfirmCreditPaymentFragment :
         binding.btnContinue.setOnClickListener {
             if (checkForPaymentSms(selectedCard, "-1", clientProduct.paymentAmount.toString())) {
                 checkForSms(
-                    selectedCard,
-                    clientProduct.paymentAmount.toString(),
-                    "-2"
-                ) { is_sms_confirm, string_line ->
-                    if (is_sms_confirm == "Y") {
+                    selectedCard, clientProduct.paymentAmount.toString(), "-2"
+                ) { isSmsConfirm, stringLine ->
+                    if (isSmsConfirm == "Y") {
                         val model = getModel()
                         gotoWithSlide(
-                            R.id.confirmSmsForTransfer,
-                            bundleOf(
-                                ConfirmSmsForTransfer.STRING_LINE to string_line,
+                            R.id.confirmSmsForTransfer, bundleOf(
+                                ConfirmSmsForTransfer.STRING_LINE to stringLine,
 //                                ConfirmSmsForTransfer.SMS_OPERATION to ConfirmSmsForTransfer.CREDIT_PAYMENT,
                                 "model" to model
                             )
@@ -72,13 +65,10 @@ class ConfirmCreditPaymentFragment :
                     } else {
                         createPayment()
                     }
-
                 }
             } else {
                 createPayment()
             }
-
-
         }
     }
 
@@ -117,9 +107,7 @@ class ConfirmCreditPaymentFragment :
                 Status.SUCCESS -> {
                     goto(
                         R.id.successPaymentFragment, bundleOf(
-                            Const.OPERATION to SuccessPaymentFragment.CREDIT_PAYMENT,
-                            Const.OPERATION_AMOUNT to createPayment.amount,
-                            "transactId" to it.data?.request_id!!
+                            Const.OPERATION to SuccessPaymentFragment.CREDIT_PAYMENT, Const.OPERATION_AMOUNT to createPayment.amount, "transactId" to it.data?.request_id!!
                         )
                     )
                 }
@@ -131,31 +119,25 @@ class ConfirmCreditPaymentFragment :
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setData() {
-        binding.textCreditName.text = getLoanType(requireContext(), clientProduct.creditType.orEmpty())
-        binding.textContractNumber.text = clientProduct.contractCode
-        binding.textContractDate.text = clientProduct.contractDate
-        binding.loanAmount.text =
-            "${Format.formatAmount(Format.formatAmountFromTiynToInteger(clientProduct.amount.orEmpty()))} UZS"
-        binding.accountNumberForRepayment.text = clientProduct.loan2
-        binding.repaymentAmount.text =
-            "${Format.formatAmount(clientProduct.paymentAmount.toString())} UZS"
-        binding.commission.text = "0 UZS (0%)"
-        binding.textTotalAmount.text =
-            "${Format.formatAmount(clientProduct.paymentAmount.toString())} UZS"
+        binding.apply {
+            textCreditName.text = getLoanType(requireContext(), clientProduct.creditType.orEmpty())
+            textContractNumber.text = clientProduct.contractCode
+            textContractDate.text = clientProduct.contractDate
+            loanAmount.text = "${Format.formatAmount(Format.formatAmountFromTiynToInteger(clientProduct.amount.orEmpty()))} UZS"
+            accountNumberForRepayment.text = clientProduct.loan2
+            repaymentAmount.text = "${Format.formatAmount(clientProduct.paymentAmount.toString())} UZS"
+            commission.text = "0 UZS (0%)"
+            textTotalAmount.text = "${Format.formatAmount(clientProduct.paymentAmount.toString())} UZS"
+        }
     }
 
     private fun initCards() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {
-            binding.chooseCardLayout.initCards(
-                it as ArrayList<CardResponse>,
-                clientProduct.paymentAmount,
-                CurrencyConst.CURRENCY_CHAR_UZS
-            ) { cardResponse ->
+            binding.chooseCardLayout.initCards(it as ArrayList<CardResponse>, clientProduct.paymentAmount, CurrencyConst.CURRENCY_CHAR_UZS) { cardResponse ->
                 cardResponse?.let { card ->
-                    if (card.balance.toBigDecimal().divide(100.toBigDecimal())
-                            .compareTo(clientProduct.paymentAmount!!.toBigDecimal()) == -1
-                    ) {
+                    if (card.balance.toBigDecimal().divide(100.toBigDecimal()).compareTo(clientProduct.paymentAmount!!.toBigDecimal()) == -1) {
                         binding.btnContinue.isEnabled(false)
                     } else {
                         selectedCard = cardResponse

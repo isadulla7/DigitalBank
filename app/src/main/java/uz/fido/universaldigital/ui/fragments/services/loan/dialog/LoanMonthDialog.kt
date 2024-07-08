@@ -1,6 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.services.loan.dialog
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,7 +20,7 @@ class LoanMonthDialog(
     private val size: String,
     private val type: String,
     private val selectDate: Int,
-    private val context: Context
+    private val title: Int? = null
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: LoanMonthBottomSheetBinding
@@ -32,8 +31,9 @@ class LoanMonthDialog(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = LoanMonthBottomSheetBinding.inflate(inflater, container, false)
+        binding.title.setText(title ?: R.string.loan_time)
         val list = currentTime()
-        adapter = LoanMonthAdapter(onClick, list = list, context, type)
+        adapter = LoanMonthAdapter(onClick, list = list, type)
         layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
 
         binding.list.adapter = adapter
@@ -50,7 +50,7 @@ class LoanMonthDialog(
 
     private fun yearList(): java.util.ArrayList<LoanMonth> {
         val monthList = arrayListOf<LoanMonth>()
-        val month_date = SimpleDateFormat("yyyy", Locale.getDefault())
+        val monthDate = SimpleDateFormat("yyyy", Locale.getDefault())
 
         for (i in 1 until 6) {
             val calendar = Calendar.getInstance()
@@ -58,8 +58,8 @@ class LoanMonthDialog(
             monthList.add(
                 LoanMonth(
                     i,
-                    "${context.getString(R.string.until)} ${month_date.format(calendar.time)} ${
-                        context.getString(uz.fido.utils.R.string.year)
+                    "${requireContext().getString(R.string.until)} ${monthDate.format(calendar.time)} ${
+                        requireContext().getString(uz.fido.utils.R.string.year)
                     }"
                 )
             )
@@ -100,11 +100,11 @@ class LoanMonthDialog(
 
     private fun loanTimeList(timeMax: String): ArrayList<LoanMonth> {
         val monthList = arrayListOf<LoanMonth>()
-        val month_date = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
+        val monthDate = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
         for (i in 3 until timeMax.toInt() + 1) {
             val cal: Calendar = Calendar.getInstance()
             cal.add(Calendar.MONTH, i)
-            monthList.add(LoanMonth(i, month_date.format(cal.time)))
+            monthList.add(LoanMonth(i, monthDate.format(cal.time)))
         }
         return monthList
     }

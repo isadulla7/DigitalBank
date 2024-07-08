@@ -273,7 +273,7 @@ class SaveAutoPaymentMonthFragment : SimpleAbstractFragment<FragmentSavePaymentM
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.edit_text_day_of_payment, R.id.icon_text_day_of_payment -> {
-                loanMonthDialog = LoanMonthDialog(this, "", "day", 0, requireContext())
+                loanMonthDialog = LoanMonthDialog(this, "", "day", 0, R.string.add)
                 loanMonthDialog.show(childFragmentManager, "")
             }
 

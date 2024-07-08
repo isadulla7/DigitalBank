@@ -33,6 +33,7 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     private val cardAdapter by lazy { FilterCardMonitoringAdapter(requireContext(), this) }
     private val monitoringFilterAdapter by lazy { MonitoringFilterAdapter(arrayListOf(), this) }
     private var filterSaveVh: FilterSaveVh? = null
+
     private lateinit var monitoringDateDialog: MonitoringDateDialog
     private lateinit var monitoringAmountDialog: MonitoringAmountDialog
     private lateinit var monitoringChooseDialog: MonitoringChooseDialog
@@ -40,7 +41,6 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var allOperationFilter = arrayListOf<MonitoringFilter>()
     private var cardList = arrayListOf<FilterCard>()
-
 
     private var startDate = ""
     private var endDate = ""
@@ -50,9 +50,9 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     private var dateCurrent = false
     private var chooseCurrent = false
     private var amountCurrent = false
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         checkFilter()
         filterRecyclerView()
         onCLickView()

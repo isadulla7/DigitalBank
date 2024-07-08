@@ -30,7 +30,7 @@ fun <T : Any> handleException(e: Exception): Resource<T> {
     val errorResource: Resource<T>
     when (e) {
         is HttpException -> {
-            val error = ErrorUtils.parseError(e .response()!!)
+            val error = ErrorUtils.parseError(e.response()!!)
             errorResource = Resource.error(
                 message = error.message, data = null, errorBody = error
             )
@@ -67,6 +67,7 @@ private fun getErrorMessage(code: Int, message: String?): String {
         ServerCode.TOKEN_EXPIRED.code -> "Срок действия токена истек"
         ServerCode.SERVER_ERROR.code -> "Ошибка в сервере"
         ServerCode.TECHNICAL_WORKS.code -> "Технические неполадки"
+        ServerCode.SERVICE_UNAVAILABLE.code -> "Технические неполадки"
         else -> "Code: $code;\nMessage: $message"
     }
 }
