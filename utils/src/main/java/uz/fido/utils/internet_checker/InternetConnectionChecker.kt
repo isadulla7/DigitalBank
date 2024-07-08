@@ -19,10 +19,14 @@ class InternetConnectionChecker(context: Context) : LiveData<Boolean>() {
 
     override fun onActive() {
         super.onActive()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            connectivityManager.registerDefaultNetworkCallback(getNetworkCallback())
-        } else {
-            connectivityManager.registerNetworkCallback(getNetworkRequest(), getNetworkCallback())
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                connectivityManager.registerDefaultNetworkCallback(getNetworkCallback())
+            } else {
+                connectivityManager.registerNetworkCallback(getNetworkRequest(), getNetworkCallback())
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 
