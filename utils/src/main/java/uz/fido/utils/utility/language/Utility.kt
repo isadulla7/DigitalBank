@@ -32,10 +32,30 @@ object Utility {
     }
 
     fun isValidPasswordFormat(password: String): Boolean {
-        //  return password.length >= 8
         val passwordREGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+*/!()_=-])(?=\\S+\$).{4,}\$")
         return passwordREGEX.matcher(password).matches()
     }
 
+    private fun String.containsNumber(): Boolean {
+        val regex = "\\d+".toRegex()
+        return regex.containsMatchIn(this)
+    }
+
+    fun passwordIsValid(password: String): Boolean {
+        return password.containsNumber() && password.length in 8..15 && password.hasLetter() && password.hasSpecialSymbol()
+    }
+
+    private fun String.hasLetter(): Boolean {
+        val uppercaseRegex = Regex("[A-Z]")
+        val lowercaseRegex = Regex("[a-z]")
+        val hasUpperCase = uppercaseRegex.containsMatchIn(this)
+        val hasLowerCase = lowercaseRegex.containsMatchIn(this)
+        return hasUpperCase && hasLowerCase
+    }
+
+    private fun String.hasSpecialSymbol(): Boolean {
+        val regex = Regex("[^A-Za-z0-9 ]")
+        return regex.containsMatchIn(this)
+    }
 
 }

@@ -7,7 +7,6 @@ import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
-import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
@@ -20,6 +19,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignInBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
+import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpFragment
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
@@ -61,7 +61,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.tvGotoSignUp.setOnClickListener { goto(R.id.signUpFragment) }
-        binding.tvResetPassword.setOnClickListener { goto(R.id.signUpFragment, bundleOf()) }
+        binding.tvResetPassword.setOnClickListener { goto(R.id.signUpFragment, bundleOf(SignUpFragment.OPERATION to SignUpFragment.OPERATION_RECOVER_PASSWORD)) }
         binding.btnContinue.setOnClickListener {
             binding.btnContinue.setProgress(true)
             swapKeysRequest()
@@ -78,8 +78,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun setTermsOfUseColor() {
-        binding.textSingUpTerms.movementMethod = LinkMovementMethod.getInstance()
-        binding.textSingUpTerms.setLinkTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+        binding.textSingUpTerms.apply {
+            movementMethod = LinkMovementMethod.getInstance()
+            setLinkTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+        }
     }
 
     private fun swapKeysRequest() {
@@ -107,7 +109,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun getUserInfo() {
-        val ip: String = requireContext().getIpAddress().ifEmpty { "1.1.1.1" }
+        val ip: String = requireContext().getIpAddress()
         viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + ip).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> it.data?.let { data ->
@@ -185,7 +187,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         val bundle = Bundle().apply {
             putString(Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString())
             putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_IN)
-            putSerializable("data", model)
+            putSerializable(ConfirmSmsFragment.SIGN_IN_REQUEST, model)
         }
         Paper.book().write(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
         gotoWithSlide(R.id.confirmSmsFragmentLogin, bundle)

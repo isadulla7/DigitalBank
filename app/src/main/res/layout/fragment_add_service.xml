@@ -31,7 +31,7 @@
         android:layout_height="0dp"
         android:visibility="gone"
         app:ev_desc="@string/pay_your_utility_bills"
-        app:ev_title="@string/add_your_home_sevice"
+        app:ev_title="@string/add_your_home_service"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_bar" />
 

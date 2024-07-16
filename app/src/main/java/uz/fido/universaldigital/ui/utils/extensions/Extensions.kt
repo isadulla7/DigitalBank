@@ -386,3 +386,22 @@ fun Activity.openPlayMarket() {
 }
 
 fun String.fixQuestionMarks() = this.replace("?", "'")
+
+fun String.containsNumber(): Boolean {
+    val regex = "\\d+".toRegex()
+    return regex.containsMatchIn(this)
+}
+
+fun String.hasLetter(): Boolean {
+    val uppercaseRegex = Regex("[A-Z]")
+    val lowercaseRegex = Regex("[a-z]")
+    val hasUpperCase = uppercaseRegex.containsMatchIn(this)
+    val hasLowerCase = lowercaseRegex.containsMatchIn(this)
+    return hasUpperCase && hasLowerCase
+}
+
+fun String.hasSpecialSymbol(): Boolean {
+    val regex = Regex("[^A-Za-z0-9 ]")
+    return regex.containsMatchIn(this)
+}
+

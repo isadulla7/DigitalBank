@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.login.sign_up
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.view.KeyEvent
+import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +20,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
-import uz.fido.universaldigital.ui.utils.extensions.getDrawable
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
@@ -36,12 +36,18 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     FragmentSignUpBinding::inflate, SignUpViewModel::class.java
 ) {
 
+    companion object {
+        const val OPERATION = "operation"
+        const val OPERATION_RECOVER_PASSWORD = "recover_password"
+    }
+
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         setTermsOfUseColor()
         initSetOnClickListeners()
         initTextChangeListener()
         setPhonePrefix()
+        initRecoverPasswordDescription()
     }
 
     private fun initSetOnClickListeners() {
@@ -192,6 +198,19 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             setLinkTextColor(
                 ContextCompat.getColor(requireContext(), R.color.brandRedColor)
             )
+        }
+    }
+
+    private fun initRecoverPasswordDescription() {
+        arguments?.let {
+            if (it.getString(OPERATION) == OPERATION_RECOVER_PASSWORD) {
+                binding.appBar.apply {
+                    setTitle(getString(R.string.reset_password))
+                    setSubtitle(getString(R.string.reset_password_description))
+                }
+                binding.tvEmployeeCode.visibility = View.GONE
+                binding.expandableLayout.visibility = View.GONE
+            }
         }
     }
 }

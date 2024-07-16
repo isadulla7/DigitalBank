@@ -341,7 +341,7 @@
         android:layout_marginTop="20dp"
         android:textSize="16sp"
         android:textColor="@color/mainTextColor"
-        android:text="@string/constructor_precent"
+        android:text="@string/constructor_percent"
         android:layout_marginHorizontal="16dp"/>
 
     <RadioGroup

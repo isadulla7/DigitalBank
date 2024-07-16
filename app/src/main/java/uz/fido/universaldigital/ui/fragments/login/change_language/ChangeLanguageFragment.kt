@@ -2,7 +2,7 @@ package uz.fido.universaldigital.ui.fragments.login.change_language
 
 import android.content.res.Configuration
 import android.os.Bundle
-import android.view.View
+import androidx.core.view.isVisible
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentChangeLanguageBinding
@@ -43,35 +43,23 @@ class ChangeLanguageFragment : BaseSimpleFragment<FragmentChangeLanguageBinding>
     private fun getSelectedLang() {
         when (LocaleHelper.getSelectedLang(requireContext())) {
             0 -> {
-                selectRussian()
+                selectLanguage(Languages.RUSSIAN)
             }
 
             1, 2 -> {
-                selectUzbek()
+                selectLanguage(Languages.UZBEK)
             }
 
             3 -> {
-                selectEnglish()
+                selectLanguage(Languages.ENGLISH)
             }
         }
     }
 
-    private fun selectUzbek() {
-        binding.selectedUz.visibility = View.VISIBLE
-        binding.selectedRus.visibility = View.GONE
-        binding.selectedEng.visibility = View.GONE
-    }
-
-    private fun selectRussian() {
-        binding.selectedRus.visibility = View.VISIBLE
-        binding.selectedEng.visibility = View.GONE
-        binding.selectedUz.visibility = View.GONE
-    }
-
-    private fun selectEnglish() {
-        binding.selectedEng.visibility = View.VISIBLE
-        binding.selectedRus.visibility = View.GONE
-        binding.selectedUz.visibility = View.GONE
+    private fun selectLanguage(languages: Languages) {
+        binding.selectedUz.isVisible = languages == Languages.UZBEK
+        binding.selectedRus.isVisible = languages == Languages.RUSSIAN
+        binding.selectedEng.isVisible = languages == Languages.ENGLISH
     }
 
     private fun setLocale(lang: String) {
@@ -91,4 +79,8 @@ class ChangeLanguageFragment : BaseSimpleFragment<FragmentChangeLanguageBinding>
         requireActivity().tintSystemBars(R.color.whiteColor, R.color.brandRedColor)
     }
 
+}
+
+enum class Languages {
+    UZBEK, RUSSIAN, ENGLISH
 }

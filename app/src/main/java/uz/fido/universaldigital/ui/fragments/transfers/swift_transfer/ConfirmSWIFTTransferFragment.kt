@@ -81,7 +81,7 @@ class ConfirmSWIFTTransferFragment :
         )
 
         addViews(
-            getString(R.string.document_seria), requestModel!!.nameandaddress_50k!![1]
+            getString(R.string.document_serial), requestModel!!.nameandaddress_50k!![1]
         )
 
 //        addViews(
