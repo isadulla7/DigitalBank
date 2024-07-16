@@ -26,7 +26,7 @@ class MyDetailsFragment : BaseSimpleFragment<FragmentMyDetailsBinding>(FragmentM
         val details = mapOf(
             getString(R.string.name) to Paper.book().read(Const.FIRST_NAME, getString(R.string.unknown)).fixQuestionMarks(),
             getString(R.string.surname) to Paper.book().read(Const.LAST_NAME, getString(R.string.unknown)).fixQuestionMarks(),
-            getString(R.string.patronic) to Paper.book().read(Const.PATRONYMIC, getString(R.string.unknown)).fixQuestionMarks(),
+            getString(R.string.patronymic) to Paper.book().read(Const.PATRONYMIC, getString(R.string.unknown)).fixQuestionMarks(),
             getString(R.string.birth_date) to Paper.book().read(Const.USER_BIRTHDAY, getString(R.string.unknown)),
             getString(R.string.passport_no) to Paper.book().read(Const.USER_PASSWORD_DATA, getString(R.string.unknown)),
             getString(R.string.given_date) to Paper.book().read(Const.USER_PASS_GIVEN_DATE, getString(R.string.unknown)),

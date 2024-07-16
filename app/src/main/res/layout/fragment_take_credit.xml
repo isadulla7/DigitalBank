@@ -122,7 +122,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/dmonthly_payment"
+                    android:text="@string/monthly_payment"
                     android:textColor="@color/hintColor"
                     android:textSize="14sp" />
 
@@ -178,7 +178,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/exceess_on_credit_payment"
+                    android:text="@string/excess_on_credit_payment"
                     android:textColor="@color/hintColor"
                     android:textSize="14sp" />
 

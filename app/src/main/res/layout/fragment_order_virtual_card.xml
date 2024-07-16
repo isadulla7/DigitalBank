@@ -125,7 +125,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/transact_proccess_system"
+                    android:text="@string/transact_process_system"
                     android:textColor="@color/hintColor"
                     android:textSize="14sp" />
 

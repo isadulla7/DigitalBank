@@ -55,9 +55,9 @@
     <string name="russian">Русский</string>
     <string name="sign_in">Login</string>
     <string name="sign_in_description">Enter your phone number and password to login the application</string>
-    <string name="sign_up_privacy">By clicking the \"Continue\" button, you confirm your acceptance of the terms of <a href="https://universalbank.uz/private">user agreement</a></string>
+    <string name="sign_up_privacy">By clicking the \"Continue\" button, you confirm your acceptance of the terms of <a href="https://ibank.ubank.uz/cib/default.htm">user agreement</a></string>
     <string name="please_accept_privacy">Please accept all terms of the agreement</string>
-    <string name="verification_privacy">I agree with <a href="https://universalbank.uz/private">terms</a> Universal Bank </string>
+    <string name="verification_privacy">I agree with <a href="https://ibank.ubank.uz/cib/default.htm">terms</a> Universal Bank </string>
     <string name="create_password">Create a password</string>
     <string name="create_password_description">Create a strong and memorable password for you</string>
     <string name="repeat_password">Repeat password</string>
@@ -78,7 +78,7 @@
     <string name="pass_dont_match">Passwords do not match</string>
     <string name="number_and_password">Using phone number and password</string>
     <string name="recover_with_mail">Using email</string>
-    <string name="recover_with_indentification">With authentication</string>
+    <string name="recover_with_identification">With authentication</string>
     <string name="recover_with_card_number">Using a card</string>
     <string name="continue_registration">Continue registration</string>
     <string name="you_already_have_account">You already have an account, would you like to restore it?</string>
@@ -110,7 +110,7 @@
     <string name="old_password">Old password</string>
     <string name="success_change_password">Password changed successfully</string>
     <string name="skip">Skip</string>
-    <string name="identificate">Pass</string>
+    <string name="identify">Pass</string>
     <string name="online_identification">Online identification</string>
     <string name="identification_desc">You can become a bank client without visiting an office</string>
     <string name="uzs_account">Usual account</string>
@@ -150,7 +150,7 @@
     <string name="successfully_verified">Your identity has been successfully verified!</string>
     <string name="birth_date">Birthdate</string>
     <string name="fio">Full name</string>
-    <string name="error_occured">An error occurred</string>
+    <string name="error_occurred">An error occurred</string>
     <string name="congratulation">Congratulations!</string>
     <string name="successful_verified">Your identity has been successfully verified</string>
     <string name="money_transfer_history">Transfer history</string>
@@ -165,7 +165,6 @@
     <string name="choose_country">Choose country</string>
     <string name="search">Search</string>
     <string name="necessary_area">Required field</string>
-
     <string name="transfer_histories">Transfer history</string>
     <string name="you_have_no_cards">You have no cards</string>
     <string name="not_enough_money">There are not enough funds on the card</string>
@@ -182,7 +181,7 @@
     <string name="passport_serial">Passport series</string>
     <string name="passport_number">Passport number</string>
     <string name="mib_debts">Debts</string>
-    <string name="invalit_data">Invalid data entered</string>
+    <string name="invalid_data">Invalid data entered</string>
     <string name="make_sure_all">Make sure all data is entered correctly</string>
     <string name="inn_mib">INN</string>
     <string name="mib_type">Type</string>
@@ -191,7 +190,7 @@
     <string name="text_empty_list">Add a person to view the debt</string>
     <string name="purpose_type">Purpose</string>
     <string name="address_mib">Address</string>
-    <string name="fillial_mib">Branch</string>
+    <string name="branch_mib">Branch</string>
     <string name="personal_account">Personal account</string>
     <string name="cansel">Cancel</string>
     <string name="delete">Delete</string>
@@ -244,13 +243,12 @@
     <string name="permission">Permission</string>
     <string name="enter_settings">Enter settings</string>
     <string name="detail_transfer">Transfer details</string>
-
     <string name="payment_on_the_spot">Payment on the spot</string>
     <string name="all">All</string>
     <string name="maps_no_location">For more correct operation of this service, you must enable geolocation</string>
     <string name="empty_local_payment">Please note</string>
     <string name="text_empty_local_payment">Payments are empty</string>
-    <string name="summ">Summies</string>
+    <string name="summ">Summ</string>
     <string name="currency">Currency</string>
     <string name="deposit_percent">Annual rate</string>
     <string name="deposit_term">Deposit term</string>
@@ -261,7 +259,7 @@
     <string name="time_deposit">"Deposit period"</string>
     <string name="min_summa">Minimum amount</string>
     <string name="max_summ_deposit">Maximum deposit amount up to 50,000,000 sum</string>
-    <string name="name_depoist">Title</string>
+    <string name="name_deposit">Title</string>
     <string name="confirming">Confirmation</string>
     <string name="deposit_amount">Deposit amount</string>
     <string name="rate">Rate</string>
@@ -275,7 +273,6 @@
     <string name="accept_deposit_privacy">I agree to the <annotation type="help_link">User Agreement</annotation> Universal Bank</string>
     <string name="open_deposit_success">The deposit was successfully opened</string>
     <string name="text_empty_deposit">Deposit not available yet</string>
-
     <string name="insufficient_amount">Insufficient funds in the account</string>
     <string name="choose_card">Choose card</string>
     <string name="sender">Sender</string>
@@ -289,7 +286,7 @@
     <string name="receiver_card">Receiver card</string>
     <string name="currency_rate">Rate</string>
     <string name="to_payment">Total payment</string>
-    <string name="todays_rate">Today\'s rate:</string>
+    <string name="today_rate">Today\'s rate:</string>
     <string name="min_amount_conversion">Minimum conversion amount:</string>
     <string name="customize_your_investment">Customize your investment</string>
     <string name="conditions_for_your_parameters">The most favorable conditions according to your parameters</string>
@@ -299,11 +296,11 @@
     <string name="deposit_percent_text">Annual interest rate</string>
     <string name="amount_term">Amount at the end of the term:</string>
     <string name="currency_receive">Currency in which you want to receive</string>
-    <string name="constructor_precent">Where to transfer interest</string>
+    <string name="constructor_percent">Where to transfer interest</string>
     <string name="add_to_deposit">Leave on deposit</string>
     <string name="to_card">To card</string>
     <string name="good_morning">Good Morning</string>
-    <string name="good_afteroon">Good Afternoon</string>
+    <string name="good_afternoon">Good Afternoon</string>
     <string name="good_evening">Good Evening</string>
     <string name="use_touch_id">Use</string>
     <string name="no_thanks">No, thanks</string>
@@ -363,7 +360,7 @@
     <string name="swift_eur_transfer">Bank transfer in EUR</string>
     <string name="date_value">Value date</string>
     <string name="address_sender">Sender address</string>
-    <string name="document_seria">Identity document series</string>
+    <string name="document_serial">Identity document series</string>
     <string name="document_number">Identity document number</string>
     <string name="passport_get_date">Document issue date</string>
     <string name="beneficiary_customer">Beneficiary customer</string>
@@ -428,8 +425,6 @@
     <string name="close_wallet">Close wallet</string>
     <string name="wallet_operation_title">Wallet management</string>
     <string name="operation_with_card">Operations with card</string>
-
-
     <string name="open_calculator">Calculator</string>
     <string name="monday">Monday</string>
     <string name="tuesday">Tuesday</string>
@@ -450,7 +445,7 @@
     <string name="make_main_card">Make this card the main one</string>
     <string name="add_card_successfully">Card added successfully</string>
     <string name="payment_system">Payment system</string>
-    <string name="transact_proccess_system">Transaction processing fee</string>
+    <string name="transact_process_system">Transaction processing fee</string>
     <string name="open_card">Open card</string>
     <string name="you_are_not_identified_user">You cannot order a card. To order a card you need to go through identification.</string>
     <string name="save_qr">Save QR</string>
@@ -944,13 +939,11 @@
     <string name="your_phone_number">Your phone number</string>
     <string name="been_processed">Your request has been processed</string>
     <string name="application_approved">Application approved</string>
-    <string name="formats">Formats</string>
     <string name="take_credit">Take a loan</string>
     <string name="loan_expire">Loan term:</string>
     <string name="day_of_payment">Payment day</string>
-    <string name="dmonthly_payment">Monthly payment</string>
     <string name="total_payment">Total payment</string>
-    <string name="exceess_on_credit_payment">Excess on credit payment</string>
+    <string name="excess_on_credit_payment">Excess on credit payment</string>
     <string name="percentage_of_overpayment_loan">Overpayment percentage of the loan amount</string>
     <string name="full_cost_of_loan">Full cost of loan</string>
     <string name="approval_period">"Approval period: "</string>
@@ -974,12 +967,12 @@
     <string name="service_under_development">Service under development</string>
     <string name="info">Info</string>
     <string name="soon">Soon!</string>
-    <string name="add_your_home_sevice">Add payment</string>
+    <string name="add_your_home_service">Add payment</string>
     <string name="loan_repayment">Loan repayment</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="user_name">Name</string>
     <string name="surname">Surname</string>
-    <string name="patronic">Middle name</string>
+    <string name="patronymic">Middle name</string>
     <string name="for_you_p2p">Card-to-card transfers</string>
     <string name="for_you_online_conversion">Online conversion</string>
     <string name="for_you_target">Saving money</string>
@@ -1015,4 +1008,9 @@
     <string name="used_amount">Used amount</string>
     <string name="input_ref_code">Employee code(optional)</string>
     <string name="new_password">New password</string>
+    <string name="reset_password_description">If you have previously added a card to the application or entered an email, you can reset your password</string>
+    <string name="password_length_requirement">8 to 15 characters</string>
+    <string name="password_letter_requirement">At least one lowercase and uppercase letter</string>
+    <string name="password_number_requirement">At least one number</string>
+    <string name="password_symbol_requirement">At least one special symbol</string>
 </resources>

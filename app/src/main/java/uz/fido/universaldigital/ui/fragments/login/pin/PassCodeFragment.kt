@@ -526,7 +526,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         val calendar = Calendar.getInstance()
         val partOfDay = when (calendar.get(Calendar.HOUR_OF_DAY)) {
             in 5..11 -> getString(R.string.good_morning)
-            in 12..16 -> getString(R.string.good_afteroon)
+            in 12..16 -> getString(R.string.good_afternoon)
             else -> getString(R.string.good_evening)
         }
         val name = Paper.book().read(Const.FIRST_NAME, "")

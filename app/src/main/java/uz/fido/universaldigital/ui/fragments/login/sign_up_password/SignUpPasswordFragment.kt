@@ -2,9 +2,9 @@ package uz.fido.universaldigital.ui.fragments.login.sign_up_password
 
 import android.os.Build
 import android.os.Bundle
-import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
@@ -16,6 +16,9 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpPasswordBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
+import uz.fido.universaldigital.ui.utils.extensions.containsNumber
+import uz.fido.universaldigital.ui.utils.extensions.hasLetter
+import uz.fido.universaldigital.ui.utils.extensions.hasSpecialSymbol
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.encryptPassword
@@ -25,7 +28,8 @@ import uz.fido.utils.utility.context.getIpAddress
 import uz.fido.utils.utility.context.startActivityWithClearTask
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.Utility.getDeviceName
-import uz.fido.utils.utility.language.Utility.isValidPasswordFormat
+import uz.fido.utils.utility.language.Utility.passwordIsValid
+import uz.fido.utils.view.custom_text_view.TextViewRegular
 
 @AndroidEntryPoint
 class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignUpPasswordViewModel>(
@@ -45,12 +49,15 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
     }
 
     private fun initFieldsListener() {
-        binding.etPassword.addTextChangedListener {
-            binding.passCheck.visibility = View.GONE
+        binding.etPassword.doAfterTextChanged {
+            binding.repeatPasswordLayout.isVisible = passwordIsValid(it.toString())
+            checkPassword(it.toString())
             checkForButton()
         }
-        binding.etRepeatPassword.addTextChangedListener {
-            binding.passCheck.visibility = View.GONE
+        binding.etRepeatPassword.doAfterTextChanged {
+            val pass = binding.etPassword.text.toString()
+            val repeatedPass = binding.etRepeatPassword.text.toString()
+            binding.passDontMatch.isVisible = pass != repeatedPass
             checkForButton()
         }
     }
@@ -58,18 +65,15 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
     private fun checkForButton() {
         val pass = binding.etPassword.text.toString()
         val repeatedPass = binding.etRepeatPassword.text.toString()
-        val isEnable = pass.length > 7 && pass == repeatedPass
+        val isEnable = passwordIsValid(pass) && pass == repeatedPass
         binding.btnContinue.isEnabled(isEnable)
-        binding.passDontMatch.isVisible = !isEnable
     }
 
     private fun initSetOnClickListeners() {
         binding.btnContinue.setOnClickListener {
-            if (isValidPasswordFormat(binding.etPassword.text.toString())) {
+            if (passwordIsValid(binding.etPassword.text.toString())) {
                 binding.btnContinue.setProgress(true)
                 getUserInfo()
-            } else {
-                binding.passCheck.visibility = View.VISIBLE
             }
         }
         binding.appBar.setOnBackButtonClickListener { pop() }
@@ -103,17 +107,17 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
             imei_data = device.imei_data.toString(),
             invited_user_id = "",
             ip = requireContext().getIpAddress(),
-            name = "test",
+            name = "",
             network_state = device.network_state.toString(),
-            nick_name = "test",
+            nick_name = "",
             os_system_version_api = device.os_system_version_api.toString(),
             os_version = Build.VERSION.SDK_INT.toString(),
-            patronymic = "test",
+            patronymic = "",
             phone_number = requireArguments().getString(SIGN_UP_PHONE_NUMBER)?.replace("+", "")?.replace(" ", ""),
             sms_code = requireArguments().getString(SIGN_UP_SMS_CODE),
             sim_iccd = device.sim_iccd.toString(),
             version = "0",
-            surname = "test",
+            surname = "",
             password = encryptPassword(binding.etPassword.text.toString()),
             userInfo = data,
             string_line = "",
@@ -130,6 +134,23 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
                     showSnackbar(it.message.toString())
                 }
             }
+        }
+    }
+
+    private fun checkPassword(password: String) {
+        setRequirementState(binding.tvPasswordNumber, password.containsNumber())
+        setRequirementState(binding.tvPasswordLength, password.length in 8..15)
+        setRequirementState(binding.tvPasswordLetter, password.hasLetter())
+        setRequirementState(binding.tvPasswordSpecialSymbol, password.hasSpecialSymbol())
+    }
+
+    private fun setRequirementState(textView: TextViewRegular, isEnable: Boolean) {
+        if (isEnable) {
+            textView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(requireContext(), R.drawable.pin_dot_success_12dp), null, null, null)
+            textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.monitoring_amount))
+        } else {
+            textView.setCompoundDrawablesWithIntrinsicBounds(ContextCompat.getDrawable(requireContext(), R.drawable.pin_dot_disable), null, null, null)
+            textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
         }
     }
 

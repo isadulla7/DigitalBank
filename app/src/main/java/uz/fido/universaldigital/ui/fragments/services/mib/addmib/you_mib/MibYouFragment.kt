@@ -67,7 +67,7 @@ class MibYouFragment : BaseFragment<FragmentMibYouBinding, MibViewModel>
 
     private fun showErrorDialog() {
         baseInfoDialog =
-            BaseInfoDialog(getString(R.string.invalit_data), getString(R.string.make_sure_all))
+            BaseInfoDialog(getString(R.string.invalid_data), getString(R.string.make_sure_all))
         baseInfoDialog.show(childFragmentManager, "")
     }
 }

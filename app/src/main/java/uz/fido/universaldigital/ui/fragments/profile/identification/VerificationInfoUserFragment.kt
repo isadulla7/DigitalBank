@@ -97,7 +97,7 @@ class VerificationInfoUserFragment : BaseFragment<FragmentVerificationInfoUserBi
                             myIdMe = myIdMeResponse
                             initList()
                         } else {
-                            Toast.makeText(requireContext(), getString(R.string.error_occured), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), getString(R.string.error_occurred), Toast.LENGTH_SHORT).show()
                             pop()
                         }
                     }

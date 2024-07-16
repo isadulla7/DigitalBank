@@ -52,7 +52,7 @@ class MibInfoFragment : BaseFragment<FragmentMibInfoBinding, MibViewModel>
                 }
 
                 "mib_branch" -> {
-                    name = getString(R.string.fillial_mib)
+                    name = getString(R.string.branch_mib)
                 }
 
                 "customer_code", "licshet" -> {

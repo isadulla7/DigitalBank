@@ -64,10 +64,7 @@ class GetDeviceInfo(var context: Context) {
         get() {
             val imeiList = ArrayList<String>()
             try {
-                if (ActivityCompat.checkSelfPermission(
-                        context,
-                        Manifest.permission.READ_PHONE_STATE
-                    ) == PackageManager.PERMISSION_GRANTED
+                if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED
                 ) {
                     val tm = context.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
                     if (null != tm) {

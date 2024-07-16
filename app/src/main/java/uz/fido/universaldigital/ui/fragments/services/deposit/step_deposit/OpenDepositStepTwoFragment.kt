@@ -164,7 +164,7 @@ class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBindin
             }
         }
         binding.appBar.setTitle(getString(R.string.confirming))
-        addView(getString(R.string.name_depoist), deposit.dep_name)
+        addView(getString(R.string.name_deposit), deposit.dep_name)
         addView(
             getString(R.string.deposit_amount), amount + " " + Format().getCurrencyChar(deposit.currency_code)
         )

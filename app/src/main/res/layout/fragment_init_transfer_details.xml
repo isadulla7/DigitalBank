@@ -94,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
-                android:hint="@string/document_seria"
+                android:hint="@string/document_serial"
                 app:layout_constraintTop_toBottomOf="@id/ti_customer_country">
 
                 <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText

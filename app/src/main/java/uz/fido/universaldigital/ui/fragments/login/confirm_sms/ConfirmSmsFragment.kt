@@ -104,6 +104,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         const val SMS_FROM_OBJECT_VALUE = "from_object_value"
         const val SMS_MAX_LENGTH = "SMS_MAX_LENGTH"
         const val SMS_RESET_PIN = "sms_reset_pin"
+        const val SIGN_IN_REQUEST = "data"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -472,7 +473,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private fun addCard() {
         if (binding.etSms.editableText.toString() != "") {
             binding.btnContinue.setProgress(true)
-            val data = requireArguments().serializable<AddCardRequest>("data") as AddCardRequest
+            val data = requireArguments().serializable<AddCardRequest>(SIGN_IN_REQUEST) as AddCardRequest
             viewModel.addCard(
                 getClientToken(), AddCardRequest(
                     data.object_value,
@@ -527,7 +528,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         }
         if (checkSmsResponse.is_authenticate == "Y") {
             model = AllServiceLists()
-            model.name = getString(R.string.recover_with_indentification)
+            model.name = getString(R.string.recover_with_identification)
             model.code = SignInTypes.IDENTIFY.toString()
             list.add(
                 model

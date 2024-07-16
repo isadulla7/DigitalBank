@@ -57,9 +57,9 @@
     <string name="sign_up_description">Введите номер телефона что-бы зарегистрироваться, если у вас уже есть аккаунт то сделайте Вход</string>
     <string name="sign_in">Вход</string>
     <string name="sign_in_description">Введите номер телефона и пароль для входа в приложение</string>
-    <string name="sign_up_privacy">Нажимая кнопку \"Продолжить\", Вы подтверждаете свое согласие с условиями <a href="https://universalbank.uz/">пользовательского соглашения</a></string>
+    <string name="sign_up_privacy">Нажимая кнопку \"Продолжить\", Вы подтверждаете свое согласие с условиями <a href="https://ibank.ubank.uz/cib/default.htm">пользовательского соглашения</a></string>
     <string name="please_accept_privacy">Пожалуйста, примите все условия договора</string>
-    <string name="verification_privacy">Я соглашаюсь с <a href="https://universalbank.uz/">условиями</a> Universal Bank </string>
+    <string name="verification_privacy">Я соглашаюсь с <a href="https://ibank.ubank.uz/cib/default.htm">условиями</a> Universal Bank </string>
     <string name="create_password">Создайте пароль</string>
     <string name="create_password_description">Создайте надежный и запоминающийся пароль для вас</string>
     <string name="repeat_password">Повторите пароль</string>
@@ -80,7 +80,7 @@
     <string name="pass_dont_match">Пароли не совпадают</string>
     <string name="number_and_password">С помощью номера телефона и пароля</string>
     <string name="recover_with_mail">С помощью email</string>
-    <string name="recover_with_indentification">С помощью аутентификации</string>
+    <string name="recover_with_identification">С помощью аутентификации</string>
     <string name="recover_with_card_number">С помощью карты</string>
     <string name="continue_registration">Продолжить регистрацию</string>
     <string name="you_already_have_account">У вас уже имеется аккаунт, хотите ли вы восстановить?</string>
@@ -112,7 +112,7 @@
     <string name="old_password">Старый пароль</string>
     <string name="success_change_password">Пароль успешно изменён</string>
     <string name="skip">Пропустить</string>
-    <string name="identificate">Пройти</string>
+    <string name="identify">Пройти</string>
     <string name="online_identification">Онлайн идентификация</string>
     <string name="identification_desc">Вы можете стать клиентом банка без посещения офиса</string>
     <string name="uzs_account">Сумовой счет</string>
@@ -152,7 +152,7 @@
     <string name="successfully_verified">Ваша личность успешно подтверждена!</string>
     <string name="birth_date">Дата рождения</string>
     <string name="fio">Ф.И.О.</string>
-    <string name="error_occured">Произошла ошибка</string>
+    <string name="error_occurred">Произошла ошибка</string>
     <string name="congratulation">Поздравляем!</string>
     <string name="successful_verified">Ваша личность успешно подтверждена</string>
     <string name="money_transfer_history">История переводов</string>
@@ -182,7 +182,7 @@
     <string name="passport_serial">Серия паспорта</string>
     <string name="passport_number">Номер паспорта</string>
     <string name="mib_debts">Задолженности</string>
-    <string name="invalit_data">Введены не верные данные</string>
+    <string name="invalid_data">Введены не верные данные</string>
     <string name="make_sure_all">Убедитесь что все данные ввели правильно</string>
     <string name="inn_mib">ИНН</string>
     <string name="mib_type">Тип</string>
@@ -191,7 +191,7 @@
     <string name="text_empty_list">Добавьте лицо для просмотра задолженности</string>
     <string name="purpose_type">Назначение</string>
     <string name="address_mib">Адрес</string>
-    <string name="fillial_mib">Филиал</string>
+    <string name="branch_mib">Филиал</string>
     <string name="personal_account">Лицевой счёт</string>
     <string name="cansel">Отменить</string>
     <string name="delete">Удалить</string>
@@ -260,7 +260,7 @@
     <string name="time_deposit">Срок вклад </string>
     <string name="min_summa">Минимальная сумма</string>
     <string name="max_summ_deposit">Максимальная сумма вклада до 50 000 000 сум</string>
-    <string name="name_depoist">Название</string>
+    <string name="name_deposit">Название</string>
     <string name="confirming">Подтверждение</string>
     <string name="deposit_amount">Сумма вклада</string>
     <string name="rate">Ставка</string>
@@ -288,7 +288,7 @@
     <string name="receiver_card">Карта получения</string>
     <string name="currency_rate">Курс</string>
     <string name="to_payment">Итого к оплате</string>
-    <string name="todays_rate">Сегодняшний курс:</string>
+    <string name="today_rate">Сегодняшний курс:</string>
     <string name="min_amount_conversion">Минимальная сумма конверсии:</string>
     <string name="customize_your_investment">Настройте вклад под себя</string>
     <string name="conditions_for_your_parameters">Самые выгодные условия по вашим параметрам</string>
@@ -298,11 +298,11 @@
     <string name="deposit_percent_text">Годовая процентная ставка</string>
     <string name="amount_term">Сумма в конце срока:</string>
     <string name="currency_receive">Валюту в которой хотите получить</string>
-    <string name="constructor_precent">Куда перечислять проценты</string>
+    <string name="constructor_percent">Куда перечислять проценты</string>
     <string name="add_to_deposit">Оставить на вкладе</string>
     <string name="to_card">На карту</string>
     <string name="good_morning">Доброе утро</string>
-    <string name="good_afteroon">Добрый день</string>
+    <string name="good_afternoon">Добрый день</string>
     <string name="good_evening">Добрый вечер</string>
     <string name="use_touch_id">Использовать</string>
     <string name="no_thanks">Нет, спасибо</string>
@@ -362,7 +362,7 @@
     <string name="swift_eur_transfer">Банковский перевод в EUR</string>
     <string name="date_value">Дата валютирования</string>
     <string name="address_sender">Адрес отправителя</string>
-    <string name="document_seria">Серия  документа удостоверяющего личност</string>
+    <string name="document_serial">Серия  документа удостоверяющего личност</string>
     <string name="document_number">Номер  документа удостоверяющего личности</string>
     <string name="passport_get_date">Дата выдачи документа</string>
     <string name="beneficiary_customer">Бенефициар клиент</string>
@@ -448,7 +448,7 @@
     <string name="make_main_card">Сделать эту карту основной</string>
     <string name="add_card_successfully">Карта добавлена успешно</string>
     <string name="payment_system">Платёжная система</string>
-    <string name="transact_proccess_system">Комиссия по обработке транзакций</string>
+    <string name="transact_process_system">Комиссия по обработке транзакций</string>
     <string name="open_card">Открыть карту</string>
     <string name="you_are_not_identified_user">Вы не можете заказать карту. Для заказа карты нужно пройти идентификацию.</string>
     <string name="save_qr">Сохранить QR</string>
@@ -941,13 +941,11 @@
     <string name="your_phone_number">Ваш номер телефона</string>
     <string name="been_processed">Ваш запрос принят в обработку</string>
     <string name="application_approved">Заявка одобрена</string>
-    <string name="formats">"Оформеты "</string>
     <string name="take_credit">Оформить кредит</string>
     <string name="loan_expire">Срок кредита:</string>
     <string name="day_of_payment">День оплаты</string>
-    <string name="dmonthly_payment">Ежемесячный платёж</string>
     <string name="total_payment">Всего к оплате</string>
-    <string name="exceess_on_credit_payment">Превышение по кредиту оплата</string>
+    <string name="excess_on_credit_payment">Превышение по кредиту оплата</string>
     <string name="percentage_of_overpayment_loan">Процент переплаты от суммы кредита</string>
     <string name="full_cost_of_loan">Полная стоимость кредита</string>
     <string name="approval_period">"Период утверждения: "</string>
@@ -971,12 +969,12 @@
     <string name="service_under_development">Сервис в разработке</string>
     <string name="info">Инфо</string>
     <string name="soon">Скоро!</string>
-    <string name="add_your_home_sevice">Добавить платеж</string>
+    <string name="add_your_home_service">Добавить платеж</string>
     <string name="loan_repayment">Кредит погашения</string>
     <string name="edit_profile">Редактировать профиль</string>
     <string name="user_name">Имя</string>
     <string name="surname">Фамилия</string>
-    <string name="patronic">Отчество</string>
+    <string name="patronymic">Отчество</string>
     <string name="for_you_p2p">Переводы с карты на карту</string>
     <string name="for_you_online_conversion">Онлайн конверсия</string>
     <string name="for_you_target">Накопить деньги</string>
@@ -1012,4 +1010,9 @@
     <string name="used_amount">Использованная сумма</string>
     <string name="input_ref_code">Код сотрудника (необязательно)</string>
     <string name="new_password">Новый пароль</string>
+    <string name="reset_password_description">Если вы ранее добавляли карту в приложение или вводили электронную почту, вы можете сбросить пароль</string>
+    <string name="password_length_requirement">от 8 до 15 символов</string>
+    <string name="password_letter_requirement">Хотя одна строчная и прописная буква</string>
+    <string name="password_number_requirement">Хотя один номер</string>
+    <string name="password_symbol_requirement">Хотя один специальный символ</string>
 </resources>
