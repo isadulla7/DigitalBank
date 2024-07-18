@@ -9,6 +9,7 @@ data class CreatePaymentRequest(
     val amount: String,
     val command: String,
     val sms_code: String? = null,
+    val string_line: String? = null,
     val keep_future_percents: String? = null,
     val loan_repayment: String? = null,
     val i_request_id: String? = null

@@ -3,8 +3,10 @@ package uz.fido.universaldigital.ui.fragments.services.deposit.constructor
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.*
 import android.text.Annotation
+import android.text.SpannableString
+import android.text.SpannedString
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.LayoutInflater
@@ -24,6 +26,7 @@ import uz.fido.universaldigital.databinding.ViewDepositCreateBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
@@ -40,14 +43,16 @@ open class DepositConstructorConfirmFragment :
         (String, String) -> Unit {
 
 
-    val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
+    private val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
     private lateinit var deposit: DepositConstructor
-    private var smsCode = ""
     private lateinit var cardResponse: CardResponse
+    private var stringLine = ""
+    private var smsCode = ""
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            deposit = it.getSerializable("model") as DepositConstructor
+            deposit = it.serializable<DepositConstructor>("model") as DepositConstructor
         }
 
         initCards()
@@ -60,6 +65,7 @@ open class DepositConstructorConfirmFragment :
     private fun getSmsKey() {
         setFragmentResultListener(ConfirmSmsFragment.SMS_OPERATION_PAYMENT_KEY) { _, bundle ->
             smsCode = bundle.getString("sms_code").toString()
+            stringLine = bundle.getString("string_line").toString()
             createDeposit()
         }
     }
@@ -108,6 +114,7 @@ open class DepositConstructorConfirmFragment :
             dcParam203 = "Y",
             dcParam204 = deposit.partial_withdrawal,
             dep_name = deposit.dep_name,
+            string_line = stringLine,
             sms_code = smsCode
         )
 

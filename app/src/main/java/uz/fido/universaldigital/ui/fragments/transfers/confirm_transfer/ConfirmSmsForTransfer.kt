@@ -94,7 +94,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
     private fun transferRequest() {
         binding.btnContinue.setProgress(true)
         val stringLine = requireArguments().getString(STRING_LINE).toString()
-        p2pRequest.string_line = CryptoUtil.encryptWithoutSalt(
+        p2pRequest.string_line = CryptoUtil.encrypt(
             stringLine,
             binding.etSms.editableText.toString()
         )

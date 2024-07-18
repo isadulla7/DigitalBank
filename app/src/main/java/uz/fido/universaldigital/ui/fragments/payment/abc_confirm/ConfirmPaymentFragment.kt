@@ -47,9 +47,8 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.view.custom_text_view.TextViewMedium
 import uz.fido.utils.view.custom_text_view.TextViewRegular
-import java.util.*
+import java.util.Locale
 import java.util.concurrent.Executors
-import kotlin.collections.HashMap
 import kotlin.math.roundToInt
 
 @SuppressLint("SetTextI18n")
@@ -74,6 +73,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
     private var percentForAsia = 0.00
     private var totalAmount = 0.00
     private var amount = 0.00
+    private var stringLine = ""
 
     companion object {
         const val CONFIRM_PAYMENT_OPERATION = "operation"
@@ -100,9 +100,10 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
         super.onInit(savedInstanceState)
         initDetails()
         setFragmentResultListener(ConfirmSmsFragment.SMS_OPERATION_PAYMENT_KEY) { _, bundle ->
-            createPayment(bundle.getString("sms_code")!!)
+            stringLine = bundle.getString("string_line").orEmpty()
+            createPayment(bundle.getString("sms_code").orEmpty())
         }
-        setFragmentResultListener(PinCodeFragment.PIN_OPERATION_PAYMENT) { _, bundle ->
+        setFragmentResultListener(PinCodeFragment.PIN_OPERATION_PAYMENT) { _, _ ->
             checkForSmsBeforePayment()
         }
     }
@@ -193,9 +194,6 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
                 "AMOUNT", "RESULT_AMOUNT" -> {
                     if (paymentParams.def_value.isNotEmpty()) {
                         amount = when (paymentParams.payment_detail_code) {
-//                            "PAYNET_8016" -> {
-//                                paymentParams.def_value.replace(" ", "").toDouble() / 10000
-//                            }
                             else -> paymentParams.def_value.replace(" ", "").toDouble() / 100
                         }
                     }
@@ -287,11 +285,6 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
             binding.commission.text = "${formatAmount(percentForAsia.toString())} %"
             totalAmount = amount * percentForAsia / 100 + amount
         } else {
-//            if (senderCard?.object_value!!.startsWith("860055") || senderCard?.object_value!!.startsWith("98609")) {
-//                binding.commission.text = "${formatAmount(percentForAsia.toString())} ${getString(R.string.sum)}"
-//            } else {
-//                binding.commission.text = "${formatAmount(percentForOthers.toString())} ${getString(R.string.sum)}"
-//            }
             binding.commission.text = "${formatAmount(percentForAsia.toString())} %"
             totalAmount = amount * percentForAsia / 100 + amount
         }
@@ -318,21 +311,20 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
 
     private fun createPayment(smsCode: String? = null) {
         binding.continueButton.setProgress(true)
+        val command = if (senderCard!!.object_type == WALLET) "purse&${paymentService?.payment_type.toString().lowercase(Locale.getDefault()).trim()}" else "card&${
+            paymentService?.payment_type.toString().lowercase(Locale.getDefault()).trim()
+        }"
         val model = CreatePaymentRequest(
             service_id = paymentService?.service_id.toString(),
             params = params,
             from_object_id = senderCard?.object_id.toString(),
             amount = params["AMOUNT"].toString(),
-            if (senderCard!!.object_type == WALLET) "purse&${
-                paymentService?.payment_type.toString().lowercase(Locale.getDefault()).trim()
-            }" else "card&${
-                paymentService?.payment_type.toString().lowercase(Locale.getDefault()).trim()
-            }",
+            command = command,
             sms_code = smsCode,
+            string_line = stringLine,
             i_request_id = Const.request_id
         )
-        val path =
-            if (paymentService?.pay_request_method.isNullOrEmpty()) "CREATE_PAYMENT" else paymentService?.pay_request_method.toString()
+        val path = if (paymentService?.pay_request_method.isNullOrEmpty()) "CREATE_PAYMENT" else paymentService?.pay_request_method.toString()
 
         paymentViewModel.createPaymentRequest(getClientToken(), model, path)
             .observe(viewLifecycleOwner) {

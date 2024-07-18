@@ -89,7 +89,7 @@ class RestoreWithEmailFragment : BaseFragment<FragmentRestoreWithEmailBinding, R
             val device = GetDeviceInfo(requireContext()).deviceInfo
             val model = FinishRegRequest(
                 phone_number = phoneNumber!!,
-                string_line = CryptoUtil.encryptWithoutSalt(stringLine.toString(), binding.etSms.text.toString().trim()),
+                string_line = CryptoUtil.encrypt(stringLine.toString(), binding.etSms.text.toString().trim()),
                 device_type = "A",
                 device_code = requireContext().getDeviceIds(),
                 device_name = getDeviceName(),
