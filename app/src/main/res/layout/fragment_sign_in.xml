@@ -27,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:digits="0123456789 "
+            android:imeOptions="actionNext"
             android:inputType="phone"
             android:theme="@style/DefaultEditTextTheme"
             app:met_mask="+998 ## ### ## ##" />

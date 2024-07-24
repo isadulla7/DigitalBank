@@ -45,6 +45,15 @@ public class CryptoUtil {
         return new String(decrypted, StandardCharsets.UTF_8);
     }
 
+    public static String encryptWithoutSalt(String data, String plainText) throws Exception {
+        String sha2 = SHA2(plainText);
+        SecretKeySpec keySpec = new SecretKeySpec(sha2.getBytes(), "AES");
+        Cipher cipher = Cipher.getInstance(cypherInstance);
+        cipher.init(Cipher.ENCRYPT_MODE, keySpec, new IvParameterSpec(initializationVector.getBytes()));
+        byte[] encrypted = cipher.doFinal(data.getBytes());
+        return Base64.encodeToString(encrypted, Base64.DEFAULT).replaceAll("\\r\\n|\\r|\\n", "");
+    }
+
     private static byte[] getRaw(String plainText) {
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance(secretKeyInstance);
