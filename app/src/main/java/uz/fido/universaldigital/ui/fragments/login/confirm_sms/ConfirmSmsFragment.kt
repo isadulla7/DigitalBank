@@ -190,7 +190,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         val objectValue = requireArguments().getString(Const.CARD_NUMBER).toString()
         val objectExp = requireArguments().getString("object_data").toString()
         val stringLine = requireArguments().getString(STRING_LINE).toString()
-        val stringLineEnc = CryptoUtil.encrypt(
+        val stringLineEnc = CryptoUtil.encryptWithoutSalt(
             stringLine, smsCode
         )
         val item = ResetPinCount(
@@ -217,7 +217,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private fun terminateSessionRequest(item: UserDevices, terminateType: String) {
         smsCode = binding.etSms.text.toString().replace(" ", "")
         val stringLine = requireArguments().getString(STRING_LINE).toString()
-        val stringLineEnc = CryptoUtil.encrypt(
+        val stringLineEnc = CryptoUtil.encryptWithoutSalt(
             stringLine, smsCode
         )
         showProgress()
@@ -296,7 +296,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             val smsCode = binding.etSms.editableText.toString()
             val data = requireArguments().serializable<SignInRequestNew>("data") as SignInRequestNew
             val device = GetDeviceInfo(requireContext()).deviceInfo
-            val stringLineEnc = CryptoUtil.encrypt(
+            val stringLineEnc = CryptoUtil.encryptWithoutSalt(
                 data.string_line.toString().replace(" ", ""), smsCode
             )
             val signInRequest = CheckUserSms(
@@ -306,7 +306,6 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                 device_code = requireContext().getDeviceIds(),
                 device_name = getDeviceName(),
                 device_type = "A",
-                sms_code = null,
                 os_version = Build.VERSION.SDK_INT.toString(),
                 app_version_code = BuildConfig.VERSION_CODE.toString(),
                 app_version = BuildConfig.VERSION_NAME,
@@ -377,7 +376,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         val smsCode = binding.etSms.editableText.toString()
         val smsType = if (operation == SMS_OPERATION_SIGN_UP || operation == SMS_OPERATION_FORGOT_PASSWORD) 1 else 5
         if (binding.etSms.text.toString().isNotEmpty()) {
-            val stringLineEnc = CryptoUtil.encrypt(
+            val stringLineEnc = CryptoUtil.encryptWithoutSalt(
                 requireArguments().getString("random_text") ?: "", smsCode
             )
             binding.btnContinue.setProgress(true)
@@ -420,7 +419,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         binding.btnContinue.setProgress(true)
         val objectValue = requireArguments().getString(Const.CARD_NUMBER).toString()
         val stringLine = requireArguments().getString(STRING_LINE).toString()
-        val stringLineEnc = CryptoUtil.encrypt(stringLine, smsCode)
+        val stringLineEnc = CryptoUtil.encryptWithoutSalt(stringLine, smsCode)
         viewModel.glSMSActivate(
             getClientToken(), GlSMSActivateRequest(
                 object_value = objectValue, string_line = stringLineEnc
@@ -448,7 +447,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private fun addCard() {
         if (binding.etSms.editableText.toString() != "") {
             val stringLine = requireArguments().getString(STRING_LINE).toString()
-            val stringLineEnc = CryptoUtil.encrypt(
+            val stringLineEnc = CryptoUtil.encryptWithoutSalt(
                 stringLine, smsCode
             )
             binding.btnContinue.setProgress(true)
@@ -459,7 +458,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                     object_expiry = data.object_expiry,
                     phone_number = Paper.book().read("client_phone"),
                     object_name = data.object_name,
-                    sms_code = "",
+                    sms_code = binding.etSms.editableText.toString(),
                     string_line = stringLineEnc,
                     is_main = data.is_main,
                     bg_icon_name = data.bg_icon_name,
