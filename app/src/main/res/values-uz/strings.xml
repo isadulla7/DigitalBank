@@ -1013,5 +1013,6 @@
     <string name="password_letter_requirement">Kamida bitta kichik va katta harf</string>
     <string name="password_number_requirement">Kamida bitta raqam</string>
     <string name="password_symbol_requirement">Kamida bitta maxsus simvol</string>
+    <string name="no_transaction_or_payment_selected_period">Вы не делали никаких платежей или переводов через приложение в выбранном месяце</string>
 
 </resources>

@@ -179,6 +179,9 @@ dependencies {
     //magnifier
     implementation ProjectDependencies.magnifier
 
+    //pie chart
+    implementation ProjectDependencies.PieChart
+
     //card scanner project
     implementation project(':cardScanner')
 

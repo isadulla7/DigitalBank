@@ -140,6 +140,8 @@ object ProjectDependencies {
     const val tensorFlow = "org.tensorflow:tensorflow-lite:${Versions.tensorFlow}"
     const val xenione = "com.xenione.widgets:loupe:${Versions.xenione}"
     const val flexbox = "com.google.android.flexbox:flexbox:${Versions.flexbox}"
+    const val PieChart = "com.github.PhilJay:MPAndroidChart:${Versions.PieChart}"
+
 
     const val myId = "uz.myid.sdk.capture:myid-capture-sdk:2.2.5"
     const val humoPay1 = "aars/d8-hce-sdk-494-cbp-logs-release.aar"

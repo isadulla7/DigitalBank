@@ -1013,4 +1013,5 @@
     <string name="password_letter_requirement">At least one lowercase and uppercase letter</string>
     <string name="password_number_requirement">At least one number</string>
     <string name="password_symbol_requirement">At least one special symbol</string>
+    <string name="no_transaction_or_payment_selected_period">Вы не делали никаких платежей или переводов через приложение в выбранном месяце</string>
 </resources>
