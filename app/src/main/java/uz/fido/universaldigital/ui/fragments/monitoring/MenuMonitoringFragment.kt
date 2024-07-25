@@ -10,13 +10,13 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMenuMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringPagerAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
+import uz.fido.universaldigital.ui.fragments.monitoring.chart.MonitoringChartFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.visa.VisaMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
-import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.CardConst.CURRENCY_CARD
 import uz.fido.utils.const.CardConst.HUMO_CARD
 import uz.fido.utils.const.CardConst.UZCARD
@@ -80,6 +80,10 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
                 else -> if (isFilter) gotoWithSlide(R.id.monitoringFilterFragment)
             }
         }
+        binding.chart.setOnClickListener {
+            val dialog = MonitoringChartFragment()
+            dialog.show(childFragmentManager, "")
+        }
     }
 
     private fun getCardList() {
@@ -142,6 +146,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
                 override fun onPageSelected(position: Int) {
                     this@MenuMonitoringFragment.position = position
                     filterIconCheck(position)
+//                    binding.chart.isVisible = position == 0
                 }
 
                 override fun onPageScrollStateChanged(state: Int) {}

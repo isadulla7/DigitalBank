@@ -1,8 +1,11 @@
 package uz.fido.network.domain.model.payment.local_history
 
 import uz.fido.network.domain.model.payment.Cheque
+import uz.fido.network.domain.model.payment.PaymentGroup
+import uz.fido.network.domain.model.payment.PaymentService
 import uz.fido.network.domain.model.search.SearchDataResponse
 import java.io.Serializable
+import java.math.BigDecimal
 
 data class LocalMonitoring(
     var icon_name: String="",
@@ -25,3 +28,11 @@ data class LocalMonitoring(
     var isChecked: Boolean = false,
     var searchData: SearchDataResponse? = null
 ) : Serializable
+
+
+data class ChartData(
+    val paymentGroup: PaymentGroup? = null,
+    val paymentService: PaymentService? = null,
+    val serviceId: String,
+    val amount: BigDecimal
+)

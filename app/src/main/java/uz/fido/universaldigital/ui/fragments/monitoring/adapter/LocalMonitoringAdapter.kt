@@ -7,37 +7,33 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import uz.fido.network.domain.model.monitoring.ListItem
+import com.squareup.picasso.Picasso
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.GeneralItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemHistoriesHeaderBinding
 import uz.fido.universaldigital.databinding.ItemMonitoringBinding
+import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.format.Format
 import uz.fido.utils.sticky.StickyHeaderInterface
 import java.math.BigDecimal
 
 class LocalMonitoringAdapter(
-    private var context: Context,
-    private var consolidatedList: ArrayList<ListItem>,
-    private val onClick: (LocalMonitoring) -> Unit
+    private var context: Context, private var consolidatedList: ArrayList<ListItem>, private val onClick: (LocalMonitoring) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHeaderInterface {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == ListItem.TYPE_DATE) {
             DateViewHolder(
                 ItemHistoriesHeaderBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+                    LayoutInflater.from(parent.context), parent, false
                 )
             )
         } else {
             GeneralItemViewHolder(
                 ItemMonitoringBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
+                    LayoutInflater.from(parent.context), parent, false
                 )
             )
         }
@@ -54,8 +50,7 @@ class LocalMonitoringAdapter(
         }
     }
 
-    inner class GeneralItemViewHolder(private val binding: ItemMonitoringBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class GeneralItemViewHolder(private val binding: ItemMonitoringBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: ListItem) {
             val svMonitoringItem: GeneralItem = item as GeneralItem
@@ -64,52 +59,45 @@ class LocalMonitoringAdapter(
             binding.father.setOnClickListener {
                 onClick.invoke(monitoringItem!!)
             }
-
+            if (!monitoringItem?.icon_name.isNullOrEmpty()) {
+                Picasso.get().load(Keys.paynetPhotoUrl() + monitoringItem?.icon_name).error(R.drawable.icon_monitoring).into(binding.icon)
+            } else binding.icon.setImageResource(R.drawable.icon_monitoring)
             val name = Format.firstLetterUpperCase(monitoringItem!!.name)
             val newName = if (name.isNotEmpty()) name.substring(0, 1) + name.substring(2) else context.getString(R.string.no_name)
             binding.tvName.text = newName
-            binding.tvTime.text = if (monitoringItem.created_date.length == 19)
-                monitoringItem.created_date.substring(10, 16)
+            binding.tvTime.text = if (monitoringItem.created_date.length == 19) monitoringItem.created_date.substring(10, 16)
             else monitoringItem.created_date
 
             val symbol = if (monitoringItem.tran_type == "credit") {
                 binding.tvAmount.setTextColor(
                     ContextCompat.getColor(
-                        context,
-                        R.color.monitoring_amount
+                        context, R.color.monitoring_amount
                     )
                 )
                 "+"
             } else {
                 binding.tvAmount.setTextColor(
                     ContextCompat.getColor(
-                        context,
-                        R.color.mainTextColor
+                        context, R.color.mainTextColor
                     )
                 )
                 "-"
             }
 
-            if (monitoringItem.service_id == "-1")
-                if (monitoringItem.tran_type == "credit") {
-                    binding.tvType.text =
-                        if (monitoringItem.partner_obj.length == 16) Format.formatCardNumberMonitoring(
-                            context,
-                            monitoringItem.partner_obj
-                        ) else monitoringItem.partner_obj
-                } else {
-                    binding.tvType.text =
-                        if (monitoringItem.object_value.length == 16) Format.formatCardNumberObjectMonitoring(
-                            context,
-                            monitoringItem.object_value
-                        ) else monitoringItem.object_value
-                }
+            if (monitoringItem.service_id == "-1") if (monitoringItem.tran_type == "credit") {
+                binding.tvType.text = if (monitoringItem.partner_obj.length == 16) Format.formatCardNumberMonitoring(
+                    context, monitoringItem.partner_obj
+                ) else monitoringItem.partner_obj
+            } else {
+                binding.tvType.text = if (monitoringItem.object_value.length == 16) Format.formatCardNumberObjectMonitoring(
+                    context, monitoringItem.object_value
+                ) else monitoringItem.object_value
+            }
             else binding.tvType.text = context.getText(R.string.payment)
 
             val sum = BigDecimal(100)
             binding.tvAmount.text = "$symbol ${
-                Format.formatAmount((monitoringItem.amount.toBigDecimal() / sum).toString())
-                    .replace(".0", "")
+                Format.formatAmount((monitoringItem.amount.toBigDecimal() / sum).toString()).replace(".0", "")
             } ${Format.currencyCode(monitoringItem.currency_code)}"
         }
     }
@@ -150,8 +138,7 @@ class LocalMonitoringAdapter(
         date.text = Format.monitoringDate(dateItem.date.toString())
     }
 
-    override fun isHeader(itemPosition: Int): Boolean =
-        getItemViewType(itemPosition) == ListItem.TYPE_DATE
+    override fun isHeader(itemPosition: Int): Boolean = getItemViewType(itemPosition) == ListItem.TYPE_DATE
 
     fun removeList() {
         consolidatedList.clear()

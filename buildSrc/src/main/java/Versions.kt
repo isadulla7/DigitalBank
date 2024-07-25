@@ -98,4 +98,5 @@ object Versions {
     const val tensorFlow = "2.9.0"
     const val xenione = "1.0.0"
     const val flexbox = "3.0.0"
+    const val PieChart = "v3.1.0"
 }

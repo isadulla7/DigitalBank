@@ -67,10 +67,15 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
     private fun initUserIdentifyStatus() {
         if (isUserIdentified() || isUserIdentified) {
             binding.tvIdentifiedClient.visibility = View.VISIBLE
+            binding.verifiedIcon.visibility = View.VISIBLE
             binding.gotoIdentification.visibility = View.GONE
             binding.noIdentificationDesc.visibility = View.GONE
         } else {
+            binding.motionLayout.definedTransitions.forEach {
+                it.isEnabled = false
+            }
             binding.tvIdentifiedClient.visibility = View.GONE
+            binding.verifiedIcon.visibility = View.GONE
             binding.gotoIdentification.visibility = View.VISIBLE
             binding.noIdentificationDesc.visibility = View.VISIBLE
         }
