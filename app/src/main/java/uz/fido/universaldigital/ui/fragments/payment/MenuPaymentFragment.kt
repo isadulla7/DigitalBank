@@ -1,9 +1,15 @@
 package uz.fido.universaldigital.ui.fragments.payment
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -112,7 +118,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
             goto(R.id.searchEveryWhereFragment)
         }
         binding.autopayments.setOnClickListener { goto(R.id.autoPaymentFragment) }
-        binding.paymentByQr.setOnClickListener { goto(R.id.qrPaymentFragment) }
+        binding.paymentByQr.setOnClickListener { handleCameraPermission() }
         binding.myHome.setOnClickListener {
             goto(R.id.myHomeFragment)
         }
@@ -322,5 +328,33 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         bundle.putInt(PaymentFragment.PAYMENT_OPERATION, PaymentFragment.PAYMENT_OPERATION_PAYMENT)
         goto(R.id.paymentFragment, bundle)
     }
+
+    private fun handleCameraPermission() {
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                goto(R.id.qrPaymentFragment)
+            }
+
+            else -> {
+                cameraPermissionRequestLauncher.launch(Manifest.permission.CAMERA)
+            }
+        }
+    }
+
+    private val cameraPermissionRequestLauncher: ActivityResultLauncher<String> =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+            if (isGranted) {
+                goto(R.id.qrPaymentFragment)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Go to settings and enable camera permission to use this feature",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
 
 }

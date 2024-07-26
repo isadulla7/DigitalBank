@@ -12,7 +12,6 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
 import coil.load
-import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
@@ -166,6 +165,8 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
         if (it.resultCode == Activity.RESULT_OK && it.data?.data != null) {
             val path = it.data?.data.toString()
             openEditPhotoActivity(path)
+        } else {
+            toast(it.toString())
         }
     }
 
