@@ -88,6 +88,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private val signUpViewModel: SignUpViewModel by viewModels()
     private var operation: String = ""
     private var smsCode = ""
+    private var stringLine = ""
 
     companion object {
         const val SMS_OPERATION_FORGOT_PASSWORD = "forgot_password"
@@ -164,7 +165,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
             SMS_DEPOSIT_OPERATION, SMS_OPERATION_PAYMENT_KEY -> {
                 setFragmentResult(
-                    SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode)
+                    SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode, "string_line" to stringLine)
                 )
                 findNavController().navigateUp()
             }
@@ -259,6 +260,9 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {
+                    stringLine = CryptoUtil.encryptWithoutSalt(
+                        it?.data?.string_line.orEmpty(), smsCode
+                    )
                     if (it.data?.msg == "100") {
                         setFragmentResult(
                             SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode, "string_line" to it.data?.string_line.orEmpty())

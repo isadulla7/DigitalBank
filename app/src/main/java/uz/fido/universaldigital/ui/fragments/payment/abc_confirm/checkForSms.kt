@@ -21,7 +21,7 @@ fun Fragment.checkForPaymentSms(
         goToSms = true
     } else if (
         paymentService?.sms_control_limit.toString() != "-1" &&
-        Format.convertFromStringToBigDecimal(convertFromTiynDivide(amount)) >
+        Format.convertFromStringToBigDecimal(convertFromTiynDivide(amount)) >=
         Format.convertFromStringToBigDecimal(paymentService?.sms_control_limit.toString())
     ) {
         goToSms = true
