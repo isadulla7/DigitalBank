@@ -1,8 +1,11 @@
 package uz.fido.universaldigital.ui.fragments.transfers.card_to_card
 
 import android.app.Application
+import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import uz.fido.network.data.repository.P2PRepositoryImpl
 import uz.fido.network.domain.model.cards.CardInfoDto
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.cards.CheckCardRequestP2p
@@ -16,12 +19,14 @@ import uz.fido.universaldigital.ui.fragments.transfers.utils.getServiceIdInfo
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Command
 import uz.fido.utils.utility.activity.LiveEvent
+import uz.fido.utils.utility.user.getClientToken
 import javax.inject.Inject
 
 @HiltViewModel
 class TransferViewModel @Inject constructor(
     application: Application,
-    private val useCase: TransferToCardUseCase
+    private val useCase: TransferToCardUseCase,
+    private val useCaseP2P: P2PRepositoryImpl
 ) : AbstractViewModel(application) {
 
     var popularTransfers = LiveEvent<ArrayList<PopularTransfers>>()
@@ -123,6 +128,10 @@ class TransferViewModel @Inject constructor(
             }
             historiesByWalletNumber.postValue(result)
         }
+    }
+
+    fun getHomePopularTransfers() = liveData(Dispatchers.IO) {
+        emit(useCaseP2P.getPopularTransferList(getClientToken()))
     }
 
 }

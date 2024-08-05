@@ -1,17 +1,41 @@
 package uz.fido.universaldigital.ui.fragments.products
 
+import android.Manifest
+import android.app.Activity
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.provider.ContactsContract
+import android.provider.Settings
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.GestureDetector
+import android.view.KeyEvent
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
+import com.redmadrobot.inputmask.MaskedTextChangedListener
 import io.paperdb.Paper
+import kotlinx.android.synthetic.main.fragment_pin_code.view.clear
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.deposits.Deposit
 import uz.fido.network.domain.model.deposits.GetDepositListRequest
@@ -33,7 +57,9 @@ import uz.fido.universaldigital.databinding.LayoutHomeDepositsBinding
 import uz.fido.universaldigital.databinding.LayoutHomeFastAccessBinding
 import uz.fido.universaldigital.databinding.LayoutHomeTemplatesBinding
 import uz.fido.universaldigital.databinding.LayoutHomeTransfersBinding
+import uz.fido.universaldigital.databinding.LayoutPhoneCardBinding
 import uz.fido.universaldigital.databinding.ViewHomeWidgetSettingsBinding
+import uz.fido.universaldigital.ui.dialogs.OpenSettingsDialog
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.payment.templates.TemplateTypes
@@ -44,6 +70,7 @@ import uz.fido.universaldigital.ui.fragments.products.adapter.HomeRatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeTemplatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
 import uz.fido.universaldigital.ui.fragments.products.widgets.bank_products.ForYouOnBoarding
+import uz.fido.universaldigital.ui.fragments.products.widgets.card_phone.CardNumberDialog
 import uz.fido.universaldigital.ui.fragments.products.widgets.settings.MainWidgetSettingsDialog
 import uz.fido.universaldigital.ui.fragments.services.deposit.adapter.DepositAdapter
 import uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.ClientDepositFragment
@@ -51,7 +78,12 @@ import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCre
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.universaldigital.ui.utils.extensions.getBankProducts
 import uz.fido.universaldigital.ui.utils.extensions.getFastAccessOperationList
+import uz.fido.universaldigital.ui.utils.extensions.getFormattedContact
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
+import uz.fido.universaldigital.ui.utils.home_utils.DoAfterTextWatcher
+import uz.fido.universaldigital.ui.utils.home_utils.applyMask
+import uz.fido.universaldigital.ui.utils.home_utils.mobileServiceId
+import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Command
 import uz.fido.utils.const.Const
@@ -60,14 +92,18 @@ import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 import java.text.DecimalFormat
 
-abstract class BaseHomeFragment : Fragment(), BaseInterface {
+abstract class BaseHomeFragment : Fragment(), BaseInterface,PermissionInterface {
 
     val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
     private val utilsViewModel: UtilsViewModel by activityViewModels()
-
+    private lateinit var dialogCard:CardNumberDialog
+    var mask = "#### #### #### ####"
+    private lateinit var databaseHelper: DatabaseHelper
+    var typeCurrent = true
     lateinit var binding: FragmentMenuHomeBinding
 
     var mainWidgetsList = ArrayList<MainWidget>()
+    private var nextPage=false
 
     var container: ViewGroup? = null
 
@@ -119,11 +155,152 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface {
                     400 -> initHomeTemplates()
                     500 -> initCurrencyRates()
                     700 -> initHomeDeposits()
+                    800 -> cardAndPhoneLayout()
                 }
             }
         }
         initWidgetSettingsButton()
     }
+
+    private fun cardAndPhoneLayout() {
+        val layoutBinding = LayoutPhoneCardBinding.inflate(
+            LayoutInflater.from(requireContext()), container, false
+        )
+        layoutBinding.btnContact.setOnClickListener {
+            if (typeCurrent){
+                 dialogCard= CardNumberDialog(onClick = {
+                     goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to it.replace(" ","")))
+                     dialogCard.dismiss()
+                 })
+                dialogCard.show(childFragmentManager,"")
+            }else{
+                goto(R.id.transferByPhoneFragment, bundleOf("contact" to "open",Const.CARD_NUMBER to ""))
+            }
+        }
+
+        if (typeCurrent){
+            layoutBinding.imageType.setImageResource(R.drawable.ic_phone_28)
+            layoutBinding.btnContact.setImageResource(R.drawable.ic_star_unselected)
+            layoutBinding.title.setText(R.string.payments)
+            layoutBinding.phoneNumberLayout.setHint(R.string.card_or_phone_number)
+
+        }else{
+            layoutBinding.btnContact.setImageResource(R.drawable.ic_contact)
+            layoutBinding.imageType.setImageResource(R.drawable.all_cards)
+            layoutBinding.title.setText(R.string.mobile_network)
+            layoutBinding.phoneNumberLayout.setHint(R.string.phone_number)
+        }
+        layoutBinding.phoneCard.setOnClickListener {
+            if (typeCurrent) {
+                typeCurrent = false
+                layoutBinding.btnContact.setImageResource(R.drawable.ic_contact)
+                layoutBinding.imageType.setImageResource(R.drawable.all_cards)
+                layoutBinding.etPhoneNumber.setText("")
+                layoutBinding.title.setText(R.string.mobile_network)
+                layoutBinding.phoneNumberLayout.setHint(R.string.phone_number)
+            } else {
+                typeCurrent = true
+                layoutBinding.title.setText(R.string.payments)
+                layoutBinding.imageType.setImageResource(R.drawable.ic_phone_28)
+                layoutBinding.etPhoneNumber.setText("")
+                layoutBinding.btnContact.setImageResource(R.drawable.ic_star_unselected)
+                layoutBinding.phoneNumberLayout.setHint(R.string.card_or_phone_number)
+            }
+
+        }
+
+        val maskTextWatcher = object : DoAfterTextWatcher() {
+            private var isUpdating = false
+            override fun afterTextChanged(s: Editable?) {
+                if (isUpdating) return
+                s?.let {
+                    var text = it.toString()
+                    if (typeCurrent) {
+                        if (text.length == 3 && text.isNotEmpty()) {
+                            if (text.startsWith("998") || text.startsWith("+99")) {
+                                mask = "#### ## ### ## ##"
+                                if (text.startsWith("998"))
+                                text = "+$text"
+                            } else {
+                                mask = "#### #### #### ####"
+                            }
+                        }
+                    } else {
+                        mask = "#### ## ### ## ##"
+                        if (text.length == 3 && !text.contains("+"))
+                            text = "+$text"
+                    }
+                    val cleanText = text.replace(Regex("[^+\\d]"), "")
+                    val masked = applyMask(mask, cleanText)
+                    isUpdating = true
+                    layoutBinding.etPhoneNumber.removeTextChangedListener(this)
+                    layoutBinding.etPhoneNumber.setText(masked)
+                    val selectionIndex = if (masked.length > text.length) text.length else masked.length
+                    layoutBinding.etPhoneNumber.setSelection(selectionIndex)
+                    layoutBinding.etPhoneNumber.addTextChangedListener(this)
+                    isUpdating = false
+
+                    if (typeCurrent){
+                        if (text.startsWith("+998") && text.length==17){
+                            goto(R.id.transferByPhoneFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ","")))
+                            layoutBinding.etPhoneNumber.setText("")
+                        }else if (text.length==19){
+                           goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ","")))
+                            layoutBinding.etPhoneNumber.setText("")
+                        }
+                    }else if (text.length==17){
+                        val serviceCode= mobileServiceId(text.replace("+","").replace(" ",""))
+                        if (serviceCode=="error"){
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.wrong_format),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }else{
+                            gotoMobilePayments(serviceCode,text,layoutBinding.etPhoneNumber)
+
+                        }
+
+
+                    }
+                }
+            }
+        }
+
+        layoutBinding.etPhoneNumber.addTextChangedListener(maskTextWatcher)
+        binding.widgetsLayout.addView(layoutBinding.root)
+    }
+
+    private fun gotoMobilePayments(
+        paymentServiceId: String,
+        phoneNumber:String,
+        editText:EditText
+    ) {
+        databaseHelper=DatabaseHelper(requireContext())
+        val paymentService = databaseHelper.getServiceByContractId(paymentServiceId)
+        val bundle = Bundle()
+        if (paymentService != null) {
+            bundle.putString(
+                PaymentFragment.MOBILE_NUMBER,
+                phoneNumber.replace(" ","")
+            )
+            bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, paymentService)
+            bundle.putInt(
+                PaymentFragment.PAYMENT_OPERATION,
+                PaymentFragment.PAYMENT_OPERATION_PAYMENT
+            )
+            bundle.putString("back_type", "payment")
+            gotoWithSlide(R.id.paymentFragment, bundle)
+            editText.setText("")
+        }else{
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.wrong_format),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
 
     private fun initFastAccessLayout() {
         val layoutBinding = LayoutHomeFastAccessBinding.inflate(

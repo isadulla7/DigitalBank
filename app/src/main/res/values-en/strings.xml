@@ -7,6 +7,7 @@
         <item>@string/widget_4</item>
         <item>@string/widget_5</item>
         <item>@string/widget_7</item>
+        <item>@string/widget_8</item>
     </string-array>
 
     <string name="widget_1">Fast access</string>
@@ -15,6 +16,7 @@
     <string name="widget_4">Saved payments</string>
     <string name="widget_5">Currency rates</string>
     <string name="widget_7">Deposit</string>
+    <string name="widget_8">Transfers</string>
 
     <integer-array name="main_widgets_ids">
         <item>100</item>
@@ -23,6 +25,7 @@
         <item>400</item>
         <item>500</item>
         <item>700</item>
+        <item>800</item>
     </integer-array>
 
     <integer-array name="main_widget_visible">
@@ -1014,4 +1017,6 @@
     <string name="password_number_requirement">At least one number</string>
     <string name="password_symbol_requirement">At least one special symbol</string>
     <string name="no_transaction_or_payment_selected_period">Вы не делали никаких платежей или переводов через приложение в выбранном месяце</string>
+    <string name="card_or_phone_number">Card or phone number</string>
+
 </resources>

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -58,6 +59,10 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     private var currency = "UZS"
     private var balanceUpdateCounter = 0
 
+    override fun onResume() {
+        super.onResume()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -438,6 +443,11 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     override fun onDestroyView() {
         super.onDestroyView()
         homeCardsAdapter = null
+    }
+
+    override fun onPause() {
+        super.onPause()
+        requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 
     companion object {

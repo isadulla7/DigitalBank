@@ -158,6 +158,11 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
             if (it.getString("amount") != null) {
                 binding.etAmount.setText(it.getString("amount").toString())
             }
+            if (it.getString("contact")!=null){
+                if (checkForContactsPermission(this)) {
+                    fetchPhoneNumber()
+                }
+            }
         }
     }
 
