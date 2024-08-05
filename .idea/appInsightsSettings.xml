@@ -9,7 +9,7 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="fido.mkbank" />
+                  <option name="appId" value="uz.fido.universaldigital" />
                 </ConnectionSetting>
               </option>
               <option name="failureTypes">

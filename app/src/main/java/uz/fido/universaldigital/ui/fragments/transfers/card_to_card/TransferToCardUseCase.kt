@@ -1,14 +1,18 @@
 package uz.fido.universaldigital.ui.fragments.transfers.card_to_card
 
+import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
+import uz.fido.network.data.utility.getResult
 import uz.fido.network.domain.datasource.interfaces.IP2PRepository
 import uz.fido.network.domain.model.cards.CardInfoDto
 import uz.fido.network.domain.model.cards.CheckCardRequestP2p
 import uz.fido.network.domain.model.get_card_by_phone.CardByPhone
+import uz.fido.network.domain.model.monitoring.filter.MonitoringFilterCardResponse
 import uz.fido.network.domain.model.p2p.P2PHistoryRequest
 import uz.fido.network.domain.model.p2p.P2PInfoDto
 import uz.fido.network.domain.model.p2p.P2PInfoRequest
 import uz.fido.network.domain.model.p2p.SetPopularityRequest
+import uz.fido.network.domain.model.popular_transfers.PopularTransferResponse
 import uz.fido.network.domain.model.popular_transfers.PopularTransfers
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Command
@@ -35,6 +39,8 @@ class TransferToCardUseCaseImpl @Inject constructor(
             response.data?.popular_transfers ?: ArrayList()
         } else ArrayList()
     }
+
+
 
     override suspend fun getCardInfo(checkCardRequestP2p: CheckCardRequestP2p): CardInfoDto {
         val response = p2PRepository.checkCardInfo(getClientToken(), checkCardRequestP2p)
@@ -82,5 +88,8 @@ class TransferToCardUseCaseImpl @Inject constructor(
             response.data?.popular_transfers ?: ArrayList()
         } else ArrayList()
     }
+
+
+
 
 }

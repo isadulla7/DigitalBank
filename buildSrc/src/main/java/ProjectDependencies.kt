@@ -148,5 +148,6 @@ object ProjectDependencies {
     const val humoPay2 = "aars/d8-hce-sec-465-dasho-release.aar"
     const val nfcCardReader = "aars/nfccardreaderlib-release.aar"
     const val magnifier = "com.xenione.widgets:loupe:1.0.0"
+    const val maskCardPhone="com.redmadrobot:input-mask-android:7.2.4"
 
 }

@@ -7,8 +7,12 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
@@ -62,6 +66,17 @@ class MainActivity : BaseActivity() {
         askNotificationPermission()
         initSearchList()
         checkForDeepLink()
+        bottomNavSheet()
+    }
+
+    private fun bottomNavSheet() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigation) { view, insets ->
+            val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
+            view.updateLayoutParams<CoordinatorLayout.LayoutParams> {
+                bottomMargin = imeInsets.bottom
+            }
+            insets
+        }
     }
 
     override fun onResume() {
