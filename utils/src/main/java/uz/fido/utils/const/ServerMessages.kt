@@ -6,6 +6,7 @@ import uz.fido.utils.R
 object ServerMessages {
 
     const val ERROR_CODE_VPN = "444"
+    const val NEED_IDENTIFIED = "NEED_IDENTIFIED"
     private const val ERROR_MESSAGE_BAD = "bad"
     private const val ERROR_MESSAGE_ORA = "ORA"
     private const val ERROR_MESSAGE_CERTIFICATE = "CertPathValidatorException"

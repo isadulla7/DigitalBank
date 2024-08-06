@@ -31,9 +31,15 @@ fun <T : Any> handleException(e: Exception): Resource<T> {
     when (e) {
         is HttpException -> {
             val error = ErrorUtils.parseError(e.response()!!)
-            errorResource = Resource.error(
-                message = error.message, data = null, errorBody = error
-            )
+            errorResource = if (error.code == 700) {
+                Resource.error(
+                    message = "NEED_IDENTIFIED", data = null, errorBody = error
+                )
+            } else {
+                Resource.error(
+                    message = error.message, data = null, errorBody = error
+                )
+            }
         }
 
         is SocketTimeoutException -> {
@@ -45,8 +51,7 @@ fun <T : Any> handleException(e: Exception): Resource<T> {
         }
 
         else -> {
-            errorResource =
-                Resource.error(message = getErrorMessage(Int.MAX_VALUE, e.message), data = null)
+            errorResource = Resource.error(message = getErrorMessage(Int.MAX_VALUE, e.message), data = null)
         }
     }
     return errorResource
