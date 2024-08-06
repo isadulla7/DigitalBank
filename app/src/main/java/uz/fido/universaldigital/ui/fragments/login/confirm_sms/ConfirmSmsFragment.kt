@@ -151,6 +151,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     private fun continueButtonClickEvent() {
         when (operation) {
+
             SMS_OPERATION_SIGN_UP -> {
                 checkRegUser()
             }
@@ -164,8 +165,12 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             }
 
             SMS_DEPOSIT_OPERATION, SMS_OPERATION_PAYMENT_KEY -> {
+                smsCode = binding.etSms.text.toString().replace(" ", "")
+                val encryptedStringLine = CryptoUtil.encryptWithoutSalt(
+                    stringLine, smsCode
+                )
                 setFragmentResult(
-                    SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode, "string_line" to stringLine)
+                    SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode, "string_line" to encryptedStringLine)
                 )
                 findNavController().navigateUp()
             }
@@ -260,12 +265,10 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {
-                    stringLine = CryptoUtil.encryptWithoutSalt(
-                        it?.data?.string_line.orEmpty(), smsCode
-                    )
+                    stringLine = it.data?.string_line.toString()
                     if (it.data?.msg == "100") {
                         setFragmentResult(
-                            SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode, "string_line" to it.data?.string_line.orEmpty())
+                            SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode, "string_line" to stringLine)
                         )
                         findNavController().navigateUp()
                     }

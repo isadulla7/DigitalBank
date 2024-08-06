@@ -90,6 +90,10 @@
             app:destination="@id/menuProfileFragment"
             app:popUpTo="@id/productsFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_successVerificationFragment2_to_productsFragment"
+            app:destination="@id/productsFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/moneyTransfersListFragment"

@@ -1,7 +1,5 @@
 package uz.fido.universaldigital.base
 
-import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
-import uz.fido.universaldigital.ui.dialogs.OpenSettingsDialog
 import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
@@ -23,6 +21,7 @@ import android.text.style.UnderlineSpan
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
 import io.paperdb.Paper
@@ -34,20 +33,23 @@ import uz.fido.network.domain.model.my_id.Profile
 import uz.fido.network.domain.model.sms.CheckSmsForPayment
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.ui.activities.VpnErrorActivity
+import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
+import uz.fido.universaldigital.ui.dialogs.OpenSettingsDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsViewModel
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_info.LoanUserInfo1Fragment
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.ServerMessages.ERROR_CODE_VPN
+import uz.fido.utils.const.ServerMessages.NEED_IDENTIFIED
 import uz.fido.utils.const.ServerMessages.getMeaningFulMessage
 import uz.fido.utils.log.Log.d
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.format.Format
+import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 
 abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
-    inflate: Inflate<VB>,
-    viewModelClass: Class<VM>
+    inflate: Inflate<VB>, viewModelClass: Class<VM>
 ) : AbstractFragment<VB, VM>(inflate, viewModelClass) {
 
     protected val viewModel: VM get() = abstractViewModel
@@ -59,13 +61,11 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
 
     fun functionInProgress() {
         showSnackbar(
-            getString(R.string.service_under_development),
-            title = getString(R.string.info)
+            getString(R.string.service_under_development), title = getString(R.string.info)
         )
     }
 
-    fun showProgress(progressText: String? = null) =
-        (activity as BaseActivity).showProgress(progressText)
+    fun showProgress(progressText: String? = null) = (activity as BaseActivity).showProgress(progressText)
 
     fun hideProgress() = (activity as BaseActivity).hideProgress()
 
@@ -76,8 +76,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
     fun isInternetConnected(context: Context): Boolean {
         var result: Boolean
 
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         val networkCapabilities = if (connectivityManager.activeNetwork != null) {
             connectivityManager.activeNetwork
@@ -112,6 +111,9 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
         var message = snackbarText
         if (message == ERROR_CODE_VPN) {
             openVpnErrorActivity()
+        } else if (message == NEED_IDENTIFIED) {
+            //open identify fragment
+            openIdentifyFragment(snackbarText, title, buttonText, onClickListener)
         } else {
             message = getMeaningFulMessage(message)
             if (message.isNotEmpty() && view != null) {
@@ -120,14 +122,23 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
         }
     }
 
-    private fun showBaseInfoDialog(
-        title: String?,
-        buttonText: String?,
-        message: String,
-        onClickListener: (() -> Unit)? = null
+    private fun openIdentifyFragment(
+        snackbarText: String,
+        title: String? = null,
+        buttonText: String? = null,
+        onClickListener: (() -> Unit)? = null,
     ) {
-        val dialog =
-            BaseInfoDialog(title ?: getString(R.string.error), message, buttonText, onClickListener)
+        try {
+            gotoWithSlide(R.id.mainIdentificationFragment2, bundleOf("need_identification" to true))
+        } catch (e: Exception) {
+            showBaseInfoDialog(title, buttonText, snackbarText, onClickListener)
+        }
+    }
+
+    private fun showBaseInfoDialog(
+        title: String?, buttonText: String?, message: String, onClickListener: (() -> Unit)? = null
+    ) {
+        val dialog = BaseInfoDialog(title ?: getString(R.string.error), message, buttonText, onClickListener)
         dialog.show(childFragmentManager, "")
     }
 
@@ -166,50 +177,44 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
         }.show(childFragmentManager, "")
     }
 
-    private val locationPermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            permissions.entries.forEach {
-                if (!it.value) {
-                    openSettingsPage(getString(R.string.location_permission_description))
-                    return@registerForActivityResult
-                }
-            }
-            permissionInterface?.locationPermissionGranted()
-        }
-
-    private val cameraPermission =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-            if (!it) {
-                openSettingsPage(getString(R.string.camera_permission_description))
+    private val locationPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        permissions.entries.forEach {
+            if (!it.value) {
+                openSettingsPage(getString(R.string.location_permission_description))
                 return@registerForActivityResult
             }
-            permissionInterface?.cameraPermissionGranted()
         }
+        permissionInterface?.locationPermissionGranted()
+    }
 
-    private val contactsPermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            permissions.entries.forEach {
-                if (!it.value) {
-                    openSettingsPage(getString(R.string.contact_permission_description))
-                    return@registerForActivityResult
-                }
-            }
-            permissionInterface?.contactsPermissionGranted()
+    private val cameraPermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+        if (!it) {
+            openSettingsPage(getString(R.string.camera_permission_description))
+            return@registerForActivityResult
         }
+        permissionInterface?.cameraPermissionGranted()
+    }
+
+    private val contactsPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        permissions.entries.forEach {
+            if (!it.value) {
+                openSettingsPage(getString(R.string.contact_permission_description))
+                return@registerForActivityResult
+            }
+        }
+        permissionInterface?.contactsPermissionGranted()
+    }
 
     fun checkForLocationPermissions(
-        permissionInterface: PermissionInterface,
-        isSignIn: Boolean? = false
+        permissionInterface: PermissionInterface, isSignIn: Boolean? = false
     ): Boolean {
         if (context != null) {
             val listPermissionsNeeded = ArrayList<String>()
             val fineLocation = ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_FINE_LOCATION
+                requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
             )
             val coarseLocation = ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.ACCESS_COARSE_LOCATION
+                requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
             )
             if (fineLocation != PackageManager.PERMISSION_GRANTED) {
                 listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION)
@@ -228,8 +233,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
 
     fun checkForCameraPermission(permissionInterface: PermissionInterface): Boolean {
         val listPermissionsNeeded = ArrayList<String>()
-        val cameraStorage =
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+        val cameraStorage = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
         if (cameraStorage != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.CAMERA)
         }
@@ -243,10 +247,8 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
 
     fun checkForContactsPermission(permissionInterface: PermissionInterface?): Boolean {
         val listPermissionsNeeded = ArrayList<String>()
-        val writeContact =
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_CONTACTS)
-        val readContact =
-            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS)
+        val writeContact = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_CONTACTS)
+        val readContact = ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS)
         if (writeContact != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.WRITE_CONTACTS)
         }
@@ -262,34 +264,25 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
     }
 
     protected fun checkForSms(
-        card: CardResponse,
-        amount: String,
-        serviceId: String,
-        listener: (String, String) -> Unit
+        card: CardResponse, amount: String, serviceId: String, listener: (String, String) -> Unit
     ) {
         val model = CheckSmsForPayment(
-            app_key_hash = AppSignatureHelper(requireContext()).appKeyHash,
-            from_object_id = card.object_id,
-            amount = amount,
-            service_id = serviceId,
-            device_code = requireContext().getDeviceIds()
+            app_key_hash = AppSignatureHelper(requireContext()).appKeyHash, from_object_id = card.object_id, amount = amount, service_id = serviceId, device_code = requireContext().getDeviceIds()
         )
-        smsViewModel.checkForSmsPaymentRequest(getClientToken(), model)
-            .observe(viewLifecycleOwner) {
-                hideProgress()
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        listener.invoke(
-                            it.data?.is_sms_confirm.toString(),
-                            it.data?.string_line.toString()
-                        )
-                    }
+        smsViewModel.checkForSmsPaymentRequest(getClientToken(), model).observe(viewLifecycleOwner) {
+            hideProgress()
+            when (it.status) {
+                Status.SUCCESS -> {
+                    listener.invoke(
+                        it.data?.is_sms_confirm.toString(), it.data?.string_line.toString()
+                    )
+                }
 
-                    Status.ERROR -> {
-                        showSnackbar(it.message.toString())
-                    }
+                Status.ERROR -> {
+                    showSnackbar(it.message.toString())
                 }
             }
+        }
     }
 
     companion object {
@@ -307,17 +300,11 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
     }
 
     fun SpannableString.setSpans(
-        it: Annotation,
-        clickableSpan: ClickableSpan,
-        fullText: SpannedString,
-        context: Context
+        it: Annotation, clickableSpan: ClickableSpan, fullText: SpannedString, context: Context
     ) {
         this.apply {
             setSpan(
-                clickableSpan,
-                fullText.getSpanStart(it),
-                fullText.getSpanEnd(it),
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                clickableSpan, fullText.getSpanStart(it), fullText.getSpanEnd(it), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             setSpan(
                 ForegroundColorSpan(
@@ -325,18 +312,14 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
                 ), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0
             )
             setSpan(
-                BackgroundColorSpan(ContextCompat.getColor(context, uz.fido.utils.R.color.white)),
-                fullText.getSpanStart(it),
-                fullText.getSpanEnd(it),
-                0
+                BackgroundColorSpan(ContextCompat.getColor(context, uz.fido.utils.R.color.white)), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0
             )
             setSpan(UnderlineSpan(), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0)
         }
     }
 
     fun saveCreditProgress(
-        creditGroup: CreditGroup, clientDetailedInfo: ClientDetailedInfo, profile: Profile? = null,
-        step: Int, finalHashMap: HashMap<String, String>? = null
+        creditGroup: CreditGroup, clientDetailedInfo: ClientDetailedInfo, profile: Profile? = null, step: Int, finalHashMap: HashMap<String, String>? = null
     ) {
         Paper.book().write(LoanUserInfo1Fragment.CREDIT_ITEM, creditGroup)
         Paper.book().write(LoanUserInfo1Fragment.CLIENT_INFO, clientDetailedInfo)

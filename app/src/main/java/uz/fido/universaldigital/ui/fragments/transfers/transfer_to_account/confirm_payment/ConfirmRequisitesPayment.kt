@@ -154,7 +154,6 @@ class ConfirmRequisitesPayment :
             from_object_id = senderCard?.object_id.toString(),
             amount = params["AMOUNT"].toString(),
             command = if (senderCard!!.object_type == WALLET) "$PURSE&$ABS" else "$CARD&$ABS",
-            sms_code = "",
             i_request_id = ""
         )
 
