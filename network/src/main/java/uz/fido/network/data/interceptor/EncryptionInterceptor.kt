@@ -38,8 +38,7 @@ class EncryptionInterceptor : Interceptor {
 
     private fun getRequest(request: Request, requestBody: RequestBody? = null): Request {
         return if (request.method == "GET") {
-            request.newBuilder()/*.header(HEADER_CONTENT_TYPE, requestBody.contentType().toString())
-                .header(HEADER_CONTENT_LENGTH, requestBody.contentLength().toString())*/
+            request.newBuilder()
                 .header(HEADER_APP_LANGUAGE, language).build()
         } else {
             request.newBuilder().header(HEADER_CONTENT_TYPE, requestBody?.contentType().toString())
