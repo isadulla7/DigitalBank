@@ -69,9 +69,7 @@ class OpenDepositStepFirst : BaseFragment<FragmentDepositStepFirstBinding, MainD
             val type = requireArguments().getBoolean("isSum")
             goto(
                 R.id.openDepositStepTwoFragment, bundleOf(
-                    "deposit" to deposit,
-                    "amount" to amount, "isSum" to type,
-                    "bxm_code" to selectedBranch?.bxm_code
+                    "deposit" to deposit, "amount" to amount, "isSum" to type, "bxm_code" to selectedBranch?.bxm_code
                 )
             )
         }
@@ -92,11 +90,7 @@ class OpenDepositStepFirst : BaseFragment<FragmentDepositStepFirstBinding, MainD
         binding.etAmount.addTextChangedListener { text ->
             if (deposit.percent != "0") {
                 try {
-                    if (text!!.isEmpty()) {
-                        binding.btnContinue.isEnabled(false)
-                    } else if (text.toString().replace(" ", "").toDouble() >= Format.formatAmountFromTiynToInteger(deposit.min_sum.toString()).toDouble()) {
-                        binding.btnContinue.isEnabled(true)
-                    } else binding.btnContinue.isEnabled(false)
+                    binding.btnContinue.isEnabled(text.toString().replace(" ", "").toDouble() >= Format.formatAmountFromTiynToInteger(deposit.min_sum.toString()).toDouble() && selectedBranch != null)
                 } catch (e: Exception) {
                     binding.btnContinue.isEnabled(false)
                 }
@@ -118,10 +112,8 @@ class OpenDepositStepFirst : BaseFragment<FragmentDepositStepFirstBinding, MainD
 
     override fun invoke(amount: String) {
         gotoWithSlide(
-            R.id.depositCalculatorResultFragment,
-            bundleOf(
-                "dep_id" to deposit.dep_id,
-                "amount" to amount
+            R.id.depositCalculatorResultFragment, bundleOf(
+                "dep_id" to deposit.dep_id, "amount" to amount
             )
         )
         dialog.dismiss()
@@ -133,12 +125,6 @@ class OpenDepositStepFirst : BaseFragment<FragmentDepositStepFirstBinding, MainD
                 Status.SUCCESS -> {
                     bxmList.clear()
                     bxmList = (resources.data?.list ?: arrayListOf()) as ArrayList<BxmCodeAndName>
-                    if (bxmList.isNotEmpty()) {
-                        binding.etBranch.setText(bxmList.first().name)
-                        selectedBranch = bxmList.first()
-                    } else {
-                        selectedBranch = BxmCodeAndName(bxm_code = "00973", name = "Оперу ЦОБ")
-                    }
                 }
 
                 Status.ERROR -> {
@@ -157,6 +143,12 @@ class OpenDepositStepFirst : BaseFragment<FragmentDepositStepFirstBinding, MainD
         super<BaseFragment>.setToEditText(allServiceLists)
         selectedBranch = allServiceLists
         binding.etBranch.setText(allServiceLists.name)
+        if (binding.etAmount.text.isNullOrEmpty()) {
+            binding.btnContinue.isEnabled(false)
+        } else
+            binding.btnContinue.isEnabled(
+                binding.etAmount.text.toString().replace(" ", "").toDouble() >= Format.formatAmountFromTiynToInteger(deposit.min_sum.toString()).toDouble() && selectedBranch != null
+            )
     }
 
 }
