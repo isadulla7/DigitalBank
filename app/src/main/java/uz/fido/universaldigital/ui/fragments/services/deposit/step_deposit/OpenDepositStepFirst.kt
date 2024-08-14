@@ -145,10 +145,9 @@ class OpenDepositStepFirst : BaseFragment<FragmentDepositStepFirstBinding, MainD
         binding.etBranch.setText(allServiceLists.name)
         if (binding.etAmount.text.isNullOrEmpty()) {
             binding.btnContinue.isEnabled(false)
-        } else
-            binding.btnContinue.isEnabled(
-                binding.etAmount.text.toString().replace(" ", "").toDouble() >= Format.formatAmountFromTiynToInteger(deposit.min_sum.toString()).toDouble() && selectedBranch != null
-            )
+        } else binding.btnContinue.isEnabled(
+            binding.etAmount.text.toString().replace(" ", "").toDouble() >= Format.formatAmountFromTiynToInteger(deposit.min_sum.toString()).toDouble() && selectedBranch != null
+        )
     }
 
 }
