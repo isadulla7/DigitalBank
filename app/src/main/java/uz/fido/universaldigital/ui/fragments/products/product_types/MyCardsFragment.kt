@@ -285,6 +285,7 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
             getClientToken(), BlockCardRequest(
                 from_object_id = selectedCard.object_id,
                 status_id = selectedCard.state,
+                text = "block",
                 command = "card"
             )
         ).observe(viewLifecycleOwner) {

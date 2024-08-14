@@ -106,6 +106,7 @@
                             android:textColor="@color/mainTextColor"
                             android:textSize="14sp"
                             android:visibility="gone" />
+
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </net.cachapa.expandablelayout.ExpandableLayout>
