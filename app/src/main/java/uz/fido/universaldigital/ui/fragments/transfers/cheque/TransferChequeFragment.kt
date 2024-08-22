@@ -32,8 +32,7 @@ class TransferChequeFragment : BaseFragment<FragmentTransferChequeBinding, Trans
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        transferDto =
-            requireArguments().serializable<TransferDto>(SuccessTransferFragment.TRANSFER_DTO) as TransferDto
+        transferDto = requireArguments().serializable<TransferDto>(SuccessTransferFragment.TRANSFER_DTO) as TransferDto
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -55,16 +54,12 @@ class TransferChequeFragment : BaseFragment<FragmentTransferChequeBinding, Trans
             receiverCard.text = Format.formatCardNumber(transferDto.receiverCard?.card_number ?: "")
             receiverName.text = transferDto.receiverCard?.card_owner
             operationTime.text = requireArguments().getString(OPERATION_DATE)
-            commission.text =
-                "$percent % (" + Format.formatAmount(commissionAmount.toString()) + " " + getString(
-                    R.string.sum_text
-                ) + ")"
-            totalAmount.text =
-                Format.formatAmount(
-                    (transferDto.transferAmount?.toDouble()?.div(100)).toString()
-                ) + " " + getString(
-                    R.string.sum_text
-                )
+            commission.text = "$percent % (" + Format.formatAmount(commissionAmount.toString()) + " " + getString(
+                R.string.sum_text
+            ) + ")"
+            totalAmount.text = Format.formatAmount((transferDto.transferAmount?.toDouble()?.div(100)).toString()) + " " + getString(
+                R.string.sum_text
+            )
         }
     }
 
@@ -84,12 +79,7 @@ class TransferChequeFragment : BaseFragment<FragmentTransferChequeBinding, Trans
                 val path = FileUtils.saveImageToGallery(requireContext(), it, "Universal Digital")
                 val shareIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    val uri =
-                        FileProvider.getUriForFile(
-                            requireActivity(),
-                            requireActivity().applicationContext.packageName.toString() + ".my.package.name.provider",
-                            File(path)
-                        )
+                    val uri = FileProvider.getUriForFile(requireActivity(), requireActivity().applicationContext.packageName.toString() + ".my.package.name.provider", File(path))
                     putExtra(Intent.EXTRA_STREAM, uri)
                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                     type = "image/*"
