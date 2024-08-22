@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -10,13 +10,17 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
         app:s_title="@string/open_card" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:layout_weight="1"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@id/check_box"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -26,8 +30,8 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/card_image_layout"
-                android:layout_width="270dp"
-                android:layout_height="176dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:cardCornerRadius="12dp"
                 app:cardElevation="1dp"
@@ -39,10 +43,9 @@
                 <ImageView
                     android:id="@+id/card_image"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="138dp"
                     android:scaleType="centerCrop"
-                    tools:ignore="ContentDescription"
-                    tools:src="@drawable/ic_card_type_humo" />
+                    tools:ignore="ContentDescription" />
             </androidx.cardview.widget.CardView>
 
             <uz.fido.utils.view.custom_text_view.TextViewSemiBold
@@ -196,33 +199,58 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
-                android:id="@+id/secret_word_desc"
+                android:id="@+id/security_code_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/secret_word_description"
+                android:layout_marginTop="8dp"
+                android:text="@string/secret_word_instruction"
                 android:textColor="@color/brandRedColor"
                 android:textSize="12sp"
                 app:layout_constraintTop_toBottomOf="@id/secret_word_layout" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:id="@+id/secret_word_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/secret_word_description"
+                android:textColor="@color/brandRedColor"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@id/security_code_txt" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <CheckBox
-        android:id="@+id/agreement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
-        android:text="@string/accept_deposit_privacy"
-        app:layout_constraintTop_toBottomOf="@id/secret_word_desc" />
+        android:id="@+id/check_box"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:button="@drawable/custom_check_box"
+        android:textColor="@color/hintColor"
+        app:layout_constraintBottom_toTopOf="@id/btn_continue"
+        app:layout_constraintStart_toStartOf="parent" />
 
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/text_sing_up_terms"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_weight="1"
+        android:gravity="center|start"
+        android:text="@string/verification_privacy"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="@id/check_box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/check_box"
+        app:layout_constraintTop_toTopOf="@id/check_box" />
 
     <uz.fido.utils.view.custom_circle_button.CustomFAButton
-        android:id="@+id/continue_button"
+        android:id="@+id/btn_continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
-</androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

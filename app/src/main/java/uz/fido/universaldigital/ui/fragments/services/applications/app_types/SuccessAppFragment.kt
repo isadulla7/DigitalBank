@@ -44,8 +44,7 @@ class SuccessAppFragment : BaseFragment<FragmentAllAppBinding, UtilsViewModel>(
         binding.recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
-            applicationAdapter =
-                AppListAdapter(applicationList, this@SuccessAppFragment, requireContext())
+            applicationAdapter = AppListAdapter(applicationList, this@SuccessAppFragment, requireContext())
             adapter = applicationAdapter
         }
         applicationAdapter.notifyDataSetChanged()
@@ -63,13 +62,12 @@ class SuccessAppFragment : BaseFragment<FragmentAllAppBinding, UtilsViewModel>(
                     val response = resource.data!!.product_list
                     response?.sortByDescending { df.parse(it.create_date) }
                     response?.forEach { item ->
-                        if (operationType == Const.ORDER_CARD) {
+                        if (item.state_id == 5) if (operationType == Const.ORDER_CARD) {
                             if (item.product == "CARD") {
                                 applicationList.add(item)
                             }
                         } else {
-                            if (item.state_id == 5)
-                                applicationList.add(item)
+                            applicationList.add(item)
                         }
 
                     }
@@ -87,8 +85,7 @@ class SuccessAppFragment : BaseFragment<FragmentAllAppBinding, UtilsViewModel>(
                         }
                     }
                     initList()
-                    binding.emptyView.visibility =
-                        if (applicationList.isEmpty()) View.VISIBLE else View.GONE
+                    binding.emptyView.visibility = if (applicationList.isEmpty()) View.VISIBLE else View.GONE
                 }
 
                 Status.ERROR -> {
