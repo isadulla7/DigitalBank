@@ -82,6 +82,8 @@ dependencies {
     implementation ProjectDependencies.liveDataKtx
 
     implementation ProjectDependencies.lifeCycleExtension
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.7.7'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.7.7'
     compileOnly ProjectDependencies.wearable
     kapt ProjectDependencies.lifeCycleCompiler
 
@@ -179,7 +181,7 @@ dependencies {
     implementation files(ProjectDependencies.nfcCardReader)
 
     //magnifier
-    implementation ProjectDependencies.magnifier
+//    implementation ProjectDependencies.magnifier
 
     //pie chart
     implementation ProjectDependencies.PieChart

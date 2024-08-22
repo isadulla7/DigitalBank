@@ -181,7 +181,7 @@ class OrderCardListFragment : BaseFragment<FragmentOrderCardListBinding, OrderCa
                 Constants.RESPONSE.text to Gson().toJson(response),
                 Constants.TYPE.text to operation.toInt()
             )
-            if (priceItem.code == Constants.VISA_VIRTUAL_CARD.text || priceItem.code == Constants.HUMO_VIRTUAL_CARD.text || priceItem.code == Constants.MASTER_VIRTUAL_CARD.text) {
+            if (priceItem.code == Constants.VISA_VIRTUAL_CARD.text || priceItem.code == Constants.HUMO_VIRTUAL_CARD.text || priceItem.code == Constants.SV_DUO_VIRTUAL_CARD.text || priceItem.code == Constants.MASTER_VIRTUAL_CARD.text) {
                 gotoWithSlide(R.id.orderVirtualCard, bundle)
             } else {
                 gotoWithSlide(R.id.orderCardStep2Fragment, bundle)
@@ -303,7 +303,7 @@ enum class Constants(var text: String) {
     _UZS(" UZS"), UZS("UZS"), VISA("VISA"), MASTER_VIRTUAL_CARD("TET_VIRTUAL_CARD"), VISA_VIRTUAL_CARD(
         "VISA_VIRTUAL_CARD"
     ),
-    HUMO_VIRTUAL_CARD("GL_VIRTUAL_CARD"), HUMO_NEW_CARD("GL_NEW_PHIS_CARD"), CODE("code"), TYPE("type"), RESPONSE(
+    HUMO_VIRTUAL_CARD("GL_VIRTUAL_CARD"), SV_DUO_VIRTUAL_CARD("SV_DUO_VIRTUAL_CARD"), HUMO_NEW_CARD("GL_NEW_PHIS_CARD"), CODE("code"), TYPE("type"), RESPONSE(
         "response"
     ),
     PRICE_ITEM("priceItem"),

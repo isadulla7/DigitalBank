@@ -9,6 +9,7 @@ import android.text.Annotation
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import com.google.gson.Gson
@@ -48,8 +49,8 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
     }
 
     private fun gettingDetails() {
-        binding.continueButton.setOnClickListener {
-            if (!binding.agreement.isChecked) {
+        binding.btnContinue.setOnClickListener {
+            if (!binding.checkBox.isChecked) {
                 showSnackbar(getString(R.string.please_accept_privacy))
             } else if (binding.etSecretWord.editableText.toString().isNotEmpty()) {
                 orderVirtualCard(binding.etSecretWord.editableText.toString())
@@ -83,44 +84,54 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
         binding.cardImage.setImageResource(
             when (priceItem.code) {
                 "GL_VIRTUAL_CARD" -> {
-                    0
+                    R.drawable.virtual_vard_bg
                 }
 
                 "TET_VIRTUAL_CARD" -> {
-                    0
+                    R.drawable.virtual_vard_bg
                 }
 
                 else -> {
-                    0
+                    R.drawable.virtual_vard_bg
                 }
             }
         )
 
-        binding.issueCost.text =
-            Format.formatAmount((priceItem.price.toDouble() / 100).toString()) + " UZS"
-        if (priceItem.code == "GL_VIRTUAL_CARD") {
-            binding.layoutP2pPercent.visibility = View.GONE
-            binding.etSecretWord.visibility = View.GONE
-            binding.secretWordDesc.visibility = View.GONE
-            binding.p2pPercent.text = priceItem.transact_process_perc + " %"
-        } else if (priceItem.code == "VISA_VIRTUAL_CARD") {
-            binding.etSecretWord.addTextChangedListener {
-                binding.continueButton.isEnabled(
-                    it.toString().isNotEmpty() && binding.agreement.isChecked
-                )
+        binding.issueCost.text = Format.formatAmount((priceItem.price.toDouble() / 100).toString()) + " UZS"
+        when (priceItem.code) {
+            "GL_VIRTUAL_CARD" -> {
+                binding.layoutP2pPercent.visibility = View.GONE
+                binding.etSecretWord.visibility = View.GONE
+                binding.secretWordDesc.visibility = View.GONE
+                binding.securityCodeTxt.visibility = View.GONE
+                binding.p2pPercent.text = priceItem.transact_process_perc + " %"
             }
-            binding.p2pPercent.text = priceItem.transact_process_perc + " %"
+            "VISA_VIRTUAL_CARD" -> {
+                binding.etSecretWord.addTextChangedListener {
+                    binding.btnContinue.isEnabled(
+                        it.toString().isNotEmpty() && binding.checkBox.isChecked
+                    )
+                }
+                binding.p2pPercent.text = priceItem.transact_process_perc + " %"
+            }
+            "SV_DUO_VIRTUAL_CARD" -> {
+                binding.etSecretWord.addTextChangedListener {
+                    binding.btnContinue.isEnabled(
+                        it.toString().length in 5..10 && binding.checkBox.isChecked
+                    )
+                }
+                binding.layoutP2pPercent.visibility = View.GONE
+            }
         }
-        binding.agreement.setOnCheckedChangeListener { compoundButton, b ->
-            binding.continueButton.isEnabled(b)
-        }
-        binding.expire.text =
-            priceItem.card_validity_period + " ${requireContext().getString(R.string.let)}"
+//        binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
+//            binding.btnContinue.isEnabled(b)
+//        }
+        binding.expire.text = priceItem.card_validity_period + " ${requireContext().getString(R.string.let)}"
         binding.orderCardType.text = priceItem.name
     }
 
     private fun orderVirtualCard(secretWord: String) {
-        binding.continueButton.setProgress(true)
+        binding.btnContinue.setProgress(true)
         viewModel.orderVirtualCard(
             getClientToken(), OrderVirtualCardRequest(
                 orderType = productCode,
@@ -132,12 +143,11 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
                 secretWord = secretWord
             )
         ).observe(viewLifecycleOwner) {
-            binding.continueButton.setProgress(false)
+            binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
                     gotoWithSlide(
-                        R.id.basicSuccessFragment,
-                        bundleOf(Const.OPERATION to BasicSuccessFragment.ORDER_VIRTUAL_CARD)
+                        R.id.basicSuccessFragment, bundleOf(Const.OPERATION to BasicSuccessFragment.ORDER_VIRTUAL_CARD)
                     )
                 }
 
@@ -172,9 +182,9 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
             spannableString.setSpans(it, clickableSpan, fullText, requireContext())
         }
 
-        binding.agreement.apply {
-            text = spannableString
+        binding.textSingUpTerms.apply {
             movementMethod = LinkMovementMethod.getInstance()
+            setLinkTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
         }
     }
 }
