@@ -22,20 +22,17 @@ import uz.fido.network.data.interceptor.EncryptionInterceptor
 import uz.fido.network.data.interceptor.HeaderInterceptor
 import uz.fido.network.domain.datasource.services.SwapKeyApiInterface
 import uz.fido.network.domain.datasource.services.UserApiInterface
-import uz.fido.utils.const.APIServiceConst
 import uz.fido.utils.const.MyIdServiceConst
 import java.io.InputStream
 import java.security.GeneralSecurityException
 import java.security.KeyStore
 import java.security.SecureRandom
 import java.security.cert.CertificateFactory
-import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
-import javax.net.ssl.TrustManager
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
 
@@ -115,6 +112,12 @@ object NetworkModule {
         return httpLoggingInterceptor
     }
 
+    @Provides
+    @Singleton
+    fun headerInterceptor(): HeaderInterceptor {
+        return HeaderInterceptor()
+    }
+
     @BaseOkhttpClient
     @Provides
     fun provideOkhttpClient(
@@ -122,10 +125,11 @@ object NetworkModule {
         sslSocketFactory: SSLSocketFactory,
         loggingInterceptor: HttpLoggingInterceptor,
         swapKeyService: SwapKeyApiInterface,
-        apiInterface: dagger.Lazy<UserApiInterface>
+        apiInterface: dagger.Lazy<UserApiInterface>,
+        headerInterceptor: HeaderInterceptor
     ): OkHttpClient = OkHttpClient.Builder()
         .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
-        .addInterceptor(HeaderInterceptor())
+        .addInterceptor(headerInterceptor)
         .addInterceptor(loggingInterceptor)
         .addInterceptor(
             AuthInterceptor(
@@ -140,7 +144,8 @@ object NetworkModule {
     @SimpleClientRetrofit
     @Provides
     fun provideSimpleOkhttpClient(): OkHttpClient = OkHttpClient.Builder()
-        .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
+        .readTimeout(180, TimeUnit.SECONDS)
+        .connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS).build()
 
     @BaseRetrofit
@@ -205,44 +210,5 @@ object NetworkModule {
     fun swapKeyRetrofit(
         baseUrl: String, @SwapKeyRetrofit okHttpClient: OkHttpClient, gsonBuilder: Gson
     ): Retrofit = Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create(gsonBuilder)).baseUrl(baseUrl).build()
-
-
-    private fun unSafeOkHttpClient(): OkHttpClient.Builder {
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(Interceptor {
-                val request: Request = it.request().newBuilder().build()
-                return@Interceptor it.proceed(request)
-            })
-            .addInterceptor(loggingInterceptor())
-            .readTimeout(180, TimeUnit.SECONDS)
-            .connectTimeout(180, TimeUnit.SECONDS).writeTimeout(180, TimeUnit.SECONDS)
-        try {
-            val trustAllCerts: Array<TrustManager> = arrayOf(object : X509TrustManager {
-                override fun checkClientTrusted(
-                    chain: Array<out X509Certificate>?, authType: String?
-                ) {
-                }
-
-                override fun checkServerTrusted(
-                    chain: Array<out X509Certificate>?, authType: String?
-                ) {
-                }
-
-                override fun getAcceptedIssuers(): Array<X509Certificate> = arrayOf()
-            })
-            val sslContext = SSLContext.getInstance("SSL")
-            sslContext.init(null, trustAllCerts, SecureRandom())
-            val sslSocketFactory = sslContext.socketFactory
-            if (trustAllCerts.isNotEmpty() && trustAllCerts.first() is X509TrustManager) {
-                okHttpClient.sslSocketFactory(
-                    sslSocketFactory, trustAllCerts.first() as X509TrustManager
-                )
-                okHttpClient.hostnameVerifier { _, _ -> true }
-            }
-            return okHttpClient
-        } catch (e: Exception) {
-            return okHttpClient
-        }
-    }
 
 }

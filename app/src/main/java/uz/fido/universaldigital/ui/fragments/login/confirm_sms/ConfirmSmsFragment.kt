@@ -88,6 +88,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private val signUpViewModel: SignUpViewModel by viewModels()
     private var operation: String = ""
     private var smsCode = ""
+    private var stringLine = ""
 
     companion object {
         const val SMS_OPERATION_FORGOT_PASSWORD = "forgot_password"
@@ -150,6 +151,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     private fun continueButtonClickEvent() {
         when (operation) {
+
             SMS_OPERATION_SIGN_UP -> {
                 checkRegUser()
             }
@@ -163,8 +165,12 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             }
 
             SMS_DEPOSIT_OPERATION, SMS_OPERATION_PAYMENT_KEY -> {
+                smsCode = binding.etSms.text.toString().replace(" ", "")
+                val encryptedStringLine = CryptoUtil.encryptWithoutSalt(
+                    stringLine, smsCode
+                )
                 setFragmentResult(
-                    SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode)
+                    SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode, "string_line" to encryptedStringLine)
                 )
                 findNavController().navigateUp()
             }
@@ -259,9 +265,10 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {
+                    stringLine = it.data?.string_line.toString()
                     if (it.data?.msg == "100") {
                         setFragmentResult(
-                            SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode, "string_line" to it.data?.string_line.orEmpty())
+                            SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode, "string_line" to stringLine)
                         )
                         findNavController().navigateUp()
                     }
@@ -382,7 +389,11 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             binding.btnContinue.setProgress(true)
             val phoneNumber = requireArguments().getString("phone_number")!!.replace("+", "").replace(" ", "")
             val model = CheckUserSms(
-                phone_number = phoneNumber, string_line = stringLineEnc, device_id = requireContext().getDeviceIds(), sms_type = smsType, device_code = requireContext().getDeviceIds()
+                phone_number = phoneNumber,
+                string_line = stringLineEnc,
+                device_id = requireContext().getDeviceIds(),
+                sms_type = smsType,
+                device_code = requireContext().getDeviceIds()
             )
             viewModel.checkUserSms(model).observe(viewLifecycleOwner) {
                 it.let {
@@ -417,12 +428,14 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     private fun humoSmsActivate() {
         binding.btnContinue.setProgress(true)
+        val smsCode = binding.etSms.editableText.toString().replace(" ", "")
         val objectValue = requireArguments().getString(Const.CARD_NUMBER).toString()
         val stringLine = requireArguments().getString(STRING_LINE).toString()
         val stringLineEnc = CryptoUtil.encryptWithoutSalt(stringLine, smsCode)
         viewModel.glSMSActivate(
             getClientToken(), GlSMSActivateRequest(
-                object_value = objectValue, string_line = stringLineEnc
+                object_value = objectValue,
+                string_line = stringLineEnc
             )
         ).observe(viewLifecycleOwner) {
             hideProgress()
@@ -446,6 +459,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     private fun addCard() {
         if (binding.etSms.editableText.toString() != "") {
+            val smsCode = binding.etSms.editableText.toString().replace(" ", "")
             val stringLine = requireArguments().getString(STRING_LINE).toString()
             val stringLineEnc = CryptoUtil.encryptWithoutSalt(
                 stringLine, smsCode

@@ -314,7 +314,8 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
     private fun isUniversalSumCard(cardResponse: CardResponse): Boolean =
         cardResponse.object_value.startsWith("860048") ||
                 cardResponse.object_value.startsWith("626283") ||
-                cardResponse.object_value.startsWith("986023")
+                cardResponse.object_value.startsWith("986023") ||
+                cardResponse.object_value.startsWith("561468")
 
     private fun hasAsiaCard(cardList: List<CardResponse>): Boolean {
         var response = false
@@ -328,6 +329,7 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
         if (selectedCard == null) return false
         return selectedCard!!.object_value.startsWith("860055") ||
                 selectedCard!!.object_value.startsWith("626283") ||
-                selectedCard!!.object_value.startsWith("986009")
+                selectedCard!!.object_value.startsWith("986009") ||
+                selectedCard!!.object_value.startsWith("561468")
     }
 }
