@@ -9,13 +9,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
-import uz.fido.network.domain.model.monitoring.ListItem
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.InParamsResponse
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.GeneralItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.filter.NewFilterMonitoringFilterRequest
 import uz.fido.network.domain.model.payment.PrintChequeRequest
 import uz.fido.network.domain.model.payment.TemplateKeyValue
@@ -488,7 +488,8 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                             bundleOf(
                                 "details" to response,
                                 "operation" to "local",
-                                "command" to resource.data?.command
+                                "command" to resource.data?.command,
+                                "data" to resource.data
                             )
                         )
                     }
