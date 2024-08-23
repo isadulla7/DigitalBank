@@ -7,7 +7,6 @@
         <item>@string/widget_4</item>
         <item>@string/widget_5</item>
         <item>@string/widget_7</item>
-        <item>@string/widget_8</item>
     </string-array>
 
     <string name="widget_1">Saqlangan xizmatlar</string>
@@ -25,7 +24,6 @@
         <item>400</item>
         <item>500</item>
         <item>700</item>
-        <item>800</item>
     </integer-array>
 
     <integer-array name="main_widget_visible">
