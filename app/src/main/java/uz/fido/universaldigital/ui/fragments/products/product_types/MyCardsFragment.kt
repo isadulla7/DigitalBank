@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -29,9 +30,11 @@ import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.CloseWalletD
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.DeleteCardDialog
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.ShareCardNumberDialog
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.WalletOperationsDialog
+import uz.fido.universaldigital.ui.fragments.services.order_card.CardType
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getLayoutManager
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getSpanCount
 import uz.fido.utils.const.CardConst
+import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
@@ -177,7 +180,14 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
 
             R.id.monitoring -> {
                 cardOperationsDialog.dismiss()
-                goto(R.id.firstCardLocalMonitoringFragment, bundleOf(Const.CARD to selectedCard))
+                Log.d("TAG", "onClick:${selectedCard.object_id} ")
+                when (selectedCard.object_type){
+                    CardConst.UZCARD ->goto(R.id.uzCardMonitoringFragment, bundleOf(Const.CARD to selectedCard))
+                    CardConst.HUMO_CARD -> goto(R.id.humoMonitoringFragment, bundleOf(Const.CARD to selectedCard))
+                    CardConst.WALLET -> goto(R.id.walletMonitoringFragment, bundleOf(Const.CARD to selectedCard))
+                    //else->goto(R.id.visaMonitoringFragment, bundleOf(Const.CARD to selectedCard))
+
+                }
             }
 
             R.id.safety -> {
@@ -214,7 +224,7 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
 
             R.id.wallet_monitoring -> {
                 walletOperationsDialog.dismiss()
-                goto(R.id.menuMonitoringFragment, bundleOf(Const.CARD to selectedCard))
+                goto(R.id.walletMonitoringFragment, bundleOf(Const.CARD to selectedCard))
             }
         }
     }
