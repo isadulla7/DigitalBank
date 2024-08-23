@@ -110,7 +110,7 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
     private fun getFilterUzCardMonitoringList(page: Int, operationType: Int) {
         var skeletonScreen: SkeletonScreen? = null
         if (page == 1) {
-            setAdapter(totalList)
+            binding.rec.visibility=View.GONE
             binding.shimmerView.visibility=View.VISIBLE
             totalList = arrayListOf()
             skeletonScreen = showSkeleton(
@@ -123,9 +123,6 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
         } else {
             binding.progress.visibility = View.VISIBLE
         }
-        Log.d("TAG", "getFilterUzCardMonitoringList:${choose} ")
-        Log.d("TAG", "getFilterUzCardMonitoringList:${dateBegin} ")
-        Log.d("TAG", "getFilterUzCardMonitoringList:${dateEnd} ")
         val type = choose
         val model = SVMonitoringRequest(
             start_date = dateBegin,
@@ -167,7 +164,6 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
                     dateEnd=endDate
                     timeType=type
                     filter=true
-                    totalList.clear()
                     getFilterUzCardMonitoringList(1, operationType)
                     binding.appBar.setAdditionalIcon(R.drawable.ic_filter_yes)
                     filterDialog.dismiss()
