@@ -517,6 +517,25 @@
         android:name="uz.fido.universaldigital.ui.fragments.monitoring.first_card.FirstCardLocalMonitoringFragment"
         android:label="FirstCardLocalMonitoringFragment" />
     <fragment
+        android:id="@+id/uzCardMonitoringFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.first_card.FirstUzCardMonitoringFragment"
+        android:label="UzcardMonitoringFragment" />
+    <fragment
+        android:id="@+id/humoMonitoringFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.first_card.FirstHumoMonitoringFragment"
+        android:label="UzcardMonitoringFragment" />
+
+    <fragment
+        android:id="@+id/visaMonitoringFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.first_card.FirstVisaMonitoringFragment"
+        android:label="FirstVisaMonitoringFragment" />
+
+    <fragment
+        android:id="@+id/walletMonitoringFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.first_card.WalletFirstMonitoringFragment"
+        android:label="FirstVisaMonitoringFragment" />
+
+    <fragment
         android:id="@+id/clientCreditFragment"
         android:name="uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCreditFragment"
         android:label="ClientCreditFragment" />

@@ -114,6 +114,8 @@ dependencies {
     implementation ProjectDependencies.firebaseFireStore
 
     implementation ProjectDependencies.viewModelKoin
+    implementation ProjectDependencies.maskCardPhone
+
 
     //smart refresh layout
     implementation ProjectDependencies.libMaterialProgress
