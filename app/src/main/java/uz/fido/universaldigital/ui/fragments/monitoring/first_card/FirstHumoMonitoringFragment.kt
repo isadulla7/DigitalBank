@@ -153,7 +153,6 @@ class FirstHumoMonitoringFragment:
                     dateBegin=startDate
                     dateEnd=endDate
                     timeType=type
-                    totalList.clear()
                     filter=true
                     binding.appBar.setAdditionalIcon(R.drawable.ic_filter_yes)
                     getFilterHumoMonitoring()
