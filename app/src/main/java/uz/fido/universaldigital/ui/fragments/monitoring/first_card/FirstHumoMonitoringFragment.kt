@@ -95,6 +95,8 @@ class FirstHumoMonitoringFragment:
 
     private fun getFilterHumoMonitoring() {
         totalList = arrayListOf()
+        binding.shimmerView.visibility=View.VISIBLE
+        binding.rec.visibility=View.GONE
         val skeletonScreen = showSkeleton(
             binding.shimmerView,
             MibDetailsAdapter(requireContext(), this),
@@ -118,6 +120,7 @@ class FirstHumoMonitoringFragment:
         ).observe(viewLifecycleOwner) {
             skeletonScreen.hide()
             binding.shimmerView.visibility = View.GONE
+            binding.rec.visibility=View.VISIBLE
             when (it.status) {
                 Status.SUCCESS -> {
                     val response = it.data?.transactions ?: arrayListOf()
@@ -153,7 +156,6 @@ class FirstHumoMonitoringFragment:
                     dateBegin=startDate
                     dateEnd=endDate
                     timeType=type
-                    totalList.clear()
                     filter=true
                     binding.appBar.setAdditionalIcon(R.drawable.ic_filter_yes)
                     getFilterHumoMonitoring()
