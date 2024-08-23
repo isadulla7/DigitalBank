@@ -198,7 +198,6 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
 
             R.id.btn_cansel -> {
                 filterBackType()
-                pop()
             }
         }
     }
