@@ -313,6 +313,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
     }
 
     private fun continueButtonClickEvent() {
+        println(senderCard.toString())
         val amount = binding.etAmount.editableText.toString()
         if (p2PInfoDto?.isSuccess == true) {
             gotoWithSlide(

@@ -10,11 +10,13 @@ import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitor
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
 import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
 import uz.fido.network.domain.model.payment.PrintChequeResponse
+import uz.fido.network.domain.model.search.SearchDataResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentCheckInfoBinding
 import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.payment.abc_dialog.BottomReceiptsDialog
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
 import uz.fido.utils.format.Format.takeScreenShot
 import uz.fido.utils.format.FormatUtilsKt
@@ -31,7 +33,7 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
     private lateinit var humoMonitoringItem: HumoMonitoringItem
     private lateinit var visaMonitoringItem: CurrencyCardMonitoringItem
     private lateinit var dialogReceipt: BottomReceiptsDialog
-
+    private var searchDataResponse: SearchDataResponse? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -39,10 +41,14 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
             operation = it.getString("operation").toString()
             command = it.getString("command").toString()
             when (operation) {
-                "local" -> printChequeResponse = it.getSerializable("details") as PrintChequeResponse
-                "uzcard" -> svMonitoringItem = it.getSerializable("uzcard") as SVMonitoringItem
-                "humo" -> humoMonitoringItem = it.getSerializable("humo") as HumoMonitoringItem
-                "visa" -> visaMonitoringItem = it.getSerializable("visa") as CurrencyCardMonitoringItem
+                "local" -> {
+                    printChequeResponse = it.serializable<PrintChequeResponse>("details") as PrintChequeResponse
+                    searchDataResponse = it.serializable<SearchDataResponse>("data") as SearchDataResponse
+                }
+
+                "uzcard" -> svMonitoringItem = it.serializable<SVMonitoringItem>("uzcard") as SVMonitoringItem
+                "humo" -> humoMonitoringItem = it.serializable<HumoMonitoringItem>("humo") as HumoMonitoringItem
+                "visa" -> visaMonitoringItem = it.serializable<CurrencyCardMonitoringItem>("visa") as CurrencyCardMonitoringItem
                 else -> return
             }
         }
@@ -51,20 +57,19 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
     }
 
     private fun setOnClickView() {
-        binding.appBar.setOnBackButtonClickListener { pop() }
-        binding.save.setOnClickListener {
-            Toast.makeText(requireContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show()
-            save(binding.linAdd)
+        binding.apply {
+            appBar.setOnBackButtonClickListener { pop() }
+            save.setOnClickListener {
+                Toast.makeText(requireContext(), R.string.successfully_saved, Toast.LENGTH_SHORT).show()
+                save(linAdd)
+            }
+            buttonReceipt.setOnClickListener {
+                dialogReceipt = BottomReceiptsDialog(
+                    printChequeResponse.html.toString(), printChequeResponse.monitoring_info?.name.toString()
+                )
+                dialogReceipt.show(childFragmentManager, "TAG")
+            }
         }
-
-        binding.buttonReceipt.setOnClickListener {
-            dialogReceipt = BottomReceiptsDialog(
-                printChequeResponse.html.toString(), printChequeResponse.monitoring_info?.name.toString()
-            )
-            dialogReceipt.show(childFragmentManager, "TAG")
-        }
-
-
     }
 
     private fun initUzCard() {
@@ -156,7 +161,13 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
                 )
             )
         }
-
+        if (searchDataResponse != null) {
+            if (searchDataResponse?.operation_code.orEmpty().startsWith("P2P")) {
+                if (!searchDataResponse?.to_embossed_name.isNullOrEmpty()) {
+                    addView(getString(R.string.receiver_name), searchDataResponse?.to_embossed_name.orEmpty())
+                }
+            }
+        }
         val state = if (item.state_id == "1") {
             getString(R.string.successfully)
         } else {

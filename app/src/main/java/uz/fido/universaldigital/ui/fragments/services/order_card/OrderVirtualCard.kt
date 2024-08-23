@@ -1,11 +1,11 @@
 package uz.fido.universaldigital.ui.fragments.services.order_card
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.text.*
 import android.text.Annotation
+import android.text.SpannableString
+import android.text.SpannedString
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
@@ -70,7 +70,6 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
             productCode = requireArguments().getString("code", "")
             cardType = requireArguments().getInt("type", 0)
         }
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -96,7 +95,6 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
                 }
             }
         )
-
         binding.issueCost.text = Format.formatAmount((priceItem.price.toDouble() / 100).toString()) + " UZS"
         when (priceItem.code) {
             "GL_VIRTUAL_CARD" -> {
@@ -105,7 +103,11 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
                 binding.secretWordDesc.visibility = View.GONE
                 binding.securityCodeTxt.visibility = View.GONE
                 binding.p2pPercent.text = priceItem.transact_process_perc + " %"
+                binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
+                    binding.btnContinue.isEnabled(b)
+                }
             }
+
             "VISA_VIRTUAL_CARD" -> {
                 binding.etSecretWord.addTextChangedListener {
                     binding.btnContinue.isEnabled(
@@ -114,6 +116,7 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
                 }
                 binding.p2pPercent.text = priceItem.transact_process_perc + " %"
             }
+
             "SV_DUO_VIRTUAL_CARD" -> {
                 binding.etSecretWord.addTextChangedListener {
                     binding.btnContinue.isEnabled(
@@ -123,9 +126,6 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
                 binding.layoutP2pPercent.visibility = View.GONE
             }
         }
-//        binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
-//            binding.btnContinue.isEnabled(b)
-//        }
         binding.expire.text = priceItem.card_validity_period + " ${requireContext().getString(R.string.let)}"
         binding.orderCardType.text = priceItem.name
     }
