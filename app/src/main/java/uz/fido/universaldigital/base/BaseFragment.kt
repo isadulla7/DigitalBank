@@ -318,6 +318,26 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
         }
     }
 
+
+    fun SpannableString.setSpansForPrivacy(
+        it: Annotation, clickableSpan: ClickableSpan, fullText: SpannedString, context: Context
+    ) {
+        this.apply {
+            setSpan(
+                clickableSpan, fullText.getSpanStart(it), fullText.getSpanEnd(it), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(context, uz.fido.utils.R.color.brandRedColor)
+                ), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0
+            )
+            setSpan(
+                BackgroundColorSpan(ContextCompat.getColor(context, uz.fido.utils.R.color.white)), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0
+            )
+            setSpan(UnderlineSpan(), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0)
+        }
+    }
+
     fun saveCreditProgress(
         creditGroup: CreditGroup, clientDetailedInfo: ClientDetailedInfo, profile: Profile? = null, step: Int, finalHashMap: HashMap<String, String>? = null
     ) {

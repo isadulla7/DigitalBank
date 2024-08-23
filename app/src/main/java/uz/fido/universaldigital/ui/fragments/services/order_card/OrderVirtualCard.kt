@@ -1,6 +1,8 @@
 package uz.fido.universaldigital.ui.fragments.services.order_card
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.text.Annotation
 import android.text.SpannableString
@@ -164,12 +166,12 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
         val annotations = fullText.getSpans(0, fullText.length, Annotation::class.java)
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-//                val website = if (priceItem.code == "TET_VIRTUAL_CARD") {
-//                    "https://aab.uz/download.php?f=101ccbefc15f322d168a7e6bdeb04ca7.pdf&i=40425"
-//                } else "https://aab.uz/upload/iblock/01d/3shax3op5pzox646d243uuv2hywnfb82.pdf"
-//                val webIntent = Intent(Intent.ACTION_VIEW)
-//                webIntent.data = Uri.parse(website)
-//                requireActivity().startActivity(webIntent)
+                val website = "https://ibank.ubank.uz/cib/offertaCard.html"/*if (priceItem.code == "TET_VIRTUAL_CARD") {
+                    "https://aab.uz/download.php?f=101ccbefc15f322d168a7e6bdeb04ca7.pdf&i=40425"
+                } else "https://aab.uz/upload/iblock/01d/3shax3op5pzox646d243uuv2hywnfb82.pdf"*/
+                val webIntent = Intent(Intent.ACTION_VIEW)
+                webIntent.data = Uri.parse(website)
+                requireActivity().startActivity(webIntent)
             }
 
             override fun updateDrawState(ds: TextPaint) {
@@ -179,10 +181,11 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
         annotations?.find {
             it.value == "help_link"
         }?.let {
-            spannableString.setSpans(it, clickableSpan, fullText, requireContext())
+            spannableString.setSpansForPrivacy(it, clickableSpan, fullText, requireContext())
         }
 
         binding.textSingUpTerms.apply {
+            text = spannableString
             movementMethod = LinkMovementMethod.getInstance()
             setLinkTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
         }
