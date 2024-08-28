@@ -23,6 +23,8 @@ class InfoMonitoringDialog(
     private val baseInterface: BaseInterface
 ) : BottomSheetDialogFragment() {
 
+    private lateinit var binding: DialogInfoMonitoringBinding
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener {
@@ -33,8 +35,6 @@ class InfoMonitoringDialog(
         return bottomSheetDialog
     }
 
-    private lateinit var binding: DialogInfoMonitoringBinding
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -43,7 +43,6 @@ class InfoMonitoringDialog(
         binding = DialogInfoMonitoringBinding.inflate(inflater, container, false)
         return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -86,13 +85,13 @@ class InfoMonitoringDialog(
     }
 
     private fun init() {
-        if (searchDateResponse != null)
+        if (searchDateResponse != null) {
             when (searchDateResponse.request_code) {
                 "P2P", "CONVERSION" -> {
                     if (searchDateResponse.from_object_value != null) {
                         addView(getString(R.string.sender_card), Format.formatCardNumber(searchDateResponse.from_object_value!!))
-                        if (!searchDateResponse.to_embossed_name.isNullOrEmpty()) {
-                            addView(getString(R.string.sender_name), searchDateResponse.to_embossed_name.orEmpty())
+                        if (!searchDateResponse.from_embossed_name.isNullOrEmpty()) {
+                            addView(getString(R.string.sender_name), searchDateResponse.from_embossed_name.orEmpty())
                         }
                     }
                     if (searchDateResponse.to_object_value != null) {
@@ -109,7 +108,8 @@ class InfoMonitoringDialog(
                 }
 
                 else -> initViews(isRequired = true, isPayment = true)
-            } else initViews(isRequired = true, isPayment = true)
+            }
+        } else initViews(isRequired = true, isPayment = true)
     }
 
     private fun initViews(isRequired: Boolean, isPayment: Boolean) {
