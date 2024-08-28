@@ -31,6 +31,7 @@ class SearchDataResponse(
     var to_object_currency: String? = null,
     var to_object_expire: String? = null,
     var to_embossed_name: String? = null,
+    var from_embossed_name: String? = null,
     var get_info: String? = null,
     var token: String? = null,
     var to_object_id: String? = null,
