@@ -44,5 +44,6 @@
     <string name="capitalization_of_interest">Зачисление процентов</string>
     <string name="interest_withdrawal">Снятие процентов</string>
     <string name="re_calculate_percents">Пересчет процентов</string>
+    <string name="please_log_out">Из-за изменений в безопасности приложения просим вас войти в приложение заново для безопасности ваших данных. Просим прощение за неудобство</string>
 
 </resources>

@@ -44,4 +44,5 @@
     <string name="from_card">From card</string>
     <string name="card">Card</string>
     <string name="deposit_min_amount">from %s</string>
+    <string name="please_log_out">Due to changes in the app security, we kindly ask you to log in to the app again for the safety of your data. We apologize for the inconvenience.</string>
 </resources>
