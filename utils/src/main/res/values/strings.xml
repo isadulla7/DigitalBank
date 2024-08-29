@@ -44,4 +44,5 @@
     <string name="from_card">С карты</string>
     <string name="card">Карта</string>
     <string name="deposit_min_amount">от %s</string>
+    <string name="please_log_out">Из-за изменений в безопасности приложения просим вас войти в приложение заново для безопасности ваших данных. Просим прощение за неудобство</string>
 </resources>

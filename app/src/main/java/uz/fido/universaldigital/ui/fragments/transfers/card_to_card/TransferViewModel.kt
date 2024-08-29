@@ -35,7 +35,6 @@ class TransferViewModel @Inject constructor(
     var popularTransfersLoader = LiveEvent<Boolean>()
     var historiesByPhoneNumber = LiveEvent<ArrayList<CardByPhone>>()
     var historiesByWalletNumber = LiveEvent<ArrayList<CardByPhone>>()
-    private var setToPopularTransfer = LiveEvent<ArrayList<PopularTransfers>>()
 
     fun getPopularTransfers() {
         vmScope.launch {
