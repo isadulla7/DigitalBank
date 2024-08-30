@@ -80,20 +80,17 @@ class MenuProductsViewModel @Inject constructor(
         emit(cardRepository.getCardList(token))
     }
 
-    fun getCardInfoRequest(token: String, cardInfoRequest: CardInfoRequest) =
-        liveData(Dispatchers.IO) {
-            emit(cardRepository.getCardInfo(token, cardInfoRequest))
-        }
+    fun getCardInfoRequest(token: String, cardInfoRequest: CardInfoRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.getCardInfo(token, cardInfoRequest))
+    }
 
-    fun checkCardRequest(token: String, checkCardRequest: CheckCardRequest) =
-        liveData(Dispatchers.IO) {
-            emit(cardRepository.checkCard(token, checkCardRequest))
-        }
+    fun checkCardRequest(token: String, checkCardRequest: CheckCardRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.checkCard(token, checkCardRequest))
+    }
 
-    fun editCardRequest(token: String, editCardRequest: EditCardRequest) =
-        liveData(Dispatchers.IO) {
-            emit(cardRepository.editCard(token, editCardRequest))
-        }
+    fun editCardRequest(token: String, editCardRequest: EditCardRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.editCard(token, editCardRequest))
+    }
 
     fun secure3DAction(token: String, secure3DRequest: Secure3DRequest) = liveData(Dispatchers.IO) {
         emit(cardRepository.secure3DAction(token, secure3DRequest))
@@ -127,40 +124,33 @@ class MenuProductsViewModel @Inject constructor(
         emit(cardRepository.getSvLimitParams(clientToken))
     }
 
-    fun setGlCardLimit(clientToken: String, request: GlSetCardLimitRequest) =
-        liveData(Dispatchers.IO) {
-            emit(cardRepository.setGlCardLimit(clientToken, request))
-        }
+    fun setGlCardLimit(clientToken: String, request: GlSetCardLimitRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.setGlCardLimit(clientToken, request))
+    }
 
-    fun setSvCardLimit(clientToken: String, request: SvSetCardLimitRequest) =
-        liveData(Dispatchers.IO) {
-            emit(cardRepository.setSvCardLimit(clientToken, request))
-        }
+    fun setSvCardLimit(clientToken: String, request: SvSetCardLimitRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.setSvCardLimit(clientToken, request))
+    }
 
-    fun deleteSvCardLimit(clientToken: String, request: LimitDeleteRequest) =
-        liveData(Dispatchers.IO) {
-            emit(cardRepository.deleteSvCardLimit(clientToken, request))
-        }
+    fun deleteSvCardLimit(clientToken: String, request: LimitDeleteRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.deleteSvCardLimit(clientToken, request))
+    }
 
-    fun deleteGlCardLimit(clientToken: String, request: GlLimitDeleteRequest) =
-        liveData(Dispatchers.IO) {
-            emit(cardRepository.deleteGlCardLimit(clientToken, request))
-        }
+    fun deleteGlCardLimit(clientToken: String, request: GlLimitDeleteRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.deleteGlCardLimit(clientToken, request))
+    }
 
-    fun deleteCardRequest(token: String, deleteCardRequest: DeleteCardRequest) =
-        liveData(Dispatchers.IO) {
-            emit(cardRepository.deleteCard(token, deleteCardRequest))
-        }
+    fun deleteCardRequest(token: String, deleteCardRequest: DeleteCardRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.deleteCard(token, deleteCardRequest))
+    }
 
-    fun deleteWallet(token: String, deleteWalletRequest: DeleteWalletRequest) =
-        liveData(Dispatchers.IO) {
-            emit(walletRepository.deleteWallet(token, deleteWalletRequest))
-        }
+    fun deleteWallet(token: String, deleteWalletRequest: DeleteWalletRequest) = liveData(Dispatchers.IO) {
+        emit(walletRepository.deleteWallet(token, deleteWalletRequest))
+    }
 
-    fun blockCardRequest(token: String, blockCardRequest: BlockCardRequest) =
-        liveData(Dispatchers.IO) {
-            emit(cardRepository.blockCard(token, blockCardRequest))
-        }
+    fun blockCardRequest(token: String, blockCardRequest: BlockCardRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.blockCard(token, blockCardRequest))
+    }
 
     fun getClientDepositList(token: String) = liveData(Dispatchers.IO) {
         emit(depositRepository.getClientDepositList(token))
@@ -170,15 +160,12 @@ class MenuProductsViewModel @Inject constructor(
         emit(creditRepository.getCreditProducts(token))
     }
 
-    fun getDeposits(token: String, getDepositListRequest: GetDepositListRequest) = liveData(
-        Dispatchers.IO
-    ) {
+    fun getDeposits(token: String, getDepositListRequest: GetDepositListRequest) = liveData(Dispatchers.IO) {
         emit(depositRepository.getDeposits(token, getDepositListRequest))
     }
 
-    fun getNotifications(token: String, request: GetNotificationsRequest) =
-        liveData(Dispatchers.IO) {
-            emit(utilsRepository.getNotifications(token, request))
-        }
+    fun getNotifications(token: String, request: GetNotificationsRequest) = liveData(Dispatchers.IO) {
+        emit(utilsRepository.getNotifications(token, request))
+    }
 
 }
