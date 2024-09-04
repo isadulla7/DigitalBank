@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.payment.payment_list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
@@ -118,10 +117,13 @@ class PaymentListFragment :
 
         if (operation != null)
             when (operation) {
-                "template" -> bundle.putInt(
-                    PaymentFragment.PAYMENT_OPERATION,
-                    PaymentFragment.PAYMENT_OPERATION_SAVE_TEMPLATE
-                )
+                "template" -> {
+                    bundle.putInt(
+                        PaymentFragment.PAYMENT_OPERATION,
+                        PaymentFragment.PAYMENT_OPERATION_SAVE_TEMPLATE
+                    )
+                    bundle.putString("payment_group_name", paymentGroup.name.toString())
+                }
 
                 "auto_payment" -> bundle.putInt(
                     PaymentFragment.PAYMENT_OPERATION,
