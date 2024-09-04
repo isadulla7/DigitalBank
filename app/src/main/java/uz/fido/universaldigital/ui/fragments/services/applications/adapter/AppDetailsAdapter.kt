@@ -48,14 +48,13 @@ class AppDetailsAdapter(
             if (item.cardNumber != null && item.cardExpiry != null) if (item.cardNumber!!.isNotEmpty() && item.cardExpiry!!.isNotEmpty()) {
                 binding.cardNumberLayout.visibility = View.VISIBLE
                 binding.cardExpireLayout.visibility = View.VISIBLE
-                binding.cardNumber.text = Format.formatCardNumberVisible(item.cardNumber!!)
+                binding.cardNumber.text = Format.formatCardNumber(item.cardNumber!!)
                 binding.cardExpire.text = if (item.cardNumber!!.startsWith("5614")) Format.showExpireDate2(item.cardExpiry!!) else Format.expireDate(item.cardExpiry!!)
                 binding.addButton.isVisible = item.cardNumber!!.startsWith("5614")
                 binding.addButton.setOnClickListener {
                     addButton.invoke()
                 }
             }
-
             if (item.state_id == 100) {
                 binding.status.visibility = View.VISIBLE
                 binding.status.text = item.status
