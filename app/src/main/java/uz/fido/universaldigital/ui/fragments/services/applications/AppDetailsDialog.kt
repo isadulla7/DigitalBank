@@ -9,16 +9,26 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
+import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.applications.ApplicationStatus
 import uz.fido.network.domain.model.applications.GetProductDetailsRequest
 import uz.fido.network.domain.model.applications.OrderCardApp
 import uz.fido.network.domain.model.applications.ProductDetailsResponse
+import uz.fido.network.domain.model.cards.AddCardRequest
+import uz.fido.network.domain.model.cards.CheckCardRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogAppDetailsBinding
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.services.applications.adapter.AppDetailsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
+import uz.fido.utils.const.Const
+import uz.fido.utils.utility.context.AppSignatureHelper
+import uz.fido.utils.utility.context.getDeviceIds
+import uz.fido.utils.utility.format.Format
+import uz.fido.utils.utility.format.Format.Companion.formatCardNumberVisible
+import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
@@ -79,16 +89,12 @@ class AppDetailsDialog(
             1 -> {
                 statusList.add(
                     ApplicationStatus(
-                        state_name = getString(R.string.new_application),
-                        isEnable = true,
-                        create_date = application.create_date
+                        state_name = getString(R.string.new_application), isEnable = true, create_date = application.create_date
                     )
                 )
                 statusList.add(
                     ApplicationStatus(
-                        state_name = getString(R.string.application_received),
-                        isEnable = true,
-                        create_date = application.create_date
+                        state_name = getString(R.string.application_received), isEnable = true, create_date = application.create_date
                     )
                 )
                 statusList.add(
@@ -118,16 +124,12 @@ class AppDetailsDialog(
                 )
                 statusList.add(
                     ApplicationStatus(
-                        state_name = getString(R.string.application_received),
-                        create_date = application.create_date,
-                        isEnable = true
+                        state_name = getString(R.string.application_received), create_date = application.create_date, isEnable = true
                     )
                 )
                 statusList.add(
                     ApplicationStatus(
-                        state_name = getString(R.string.in_processing),
-                        create_date = statusDate2,
-                        isEnable = true
+                        state_name = getString(R.string.in_processing), create_date = statusDate2, isEnable = true
                     )
                 )
                 statusList.add(
@@ -149,9 +151,7 @@ class AppDetailsDialog(
                 }
                 statusList.add(
                     ApplicationStatus(
-                        state_name = getString(R.string.new_application),
-                        create_date = application.create_date,
-                        isEnable = true
+                        state_name = getString(R.string.new_application), create_date = application.create_date, isEnable = true
                     )
                 )
                 statusList.add(
@@ -166,12 +166,7 @@ class AppDetailsDialog(
                 )
                 statusList.add(
                     ApplicationStatus(
-                        state_name = getString(R.string.completed),
-                        create_date = application.create_date,
-                        isEnable = true,
-                        state_id = -100,
-                        err_msg = errorText,
-                        status = getString(R.string.cancelled)
+                        state_name = getString(R.string.completed), create_date = application.create_date, isEnable = true, state_id = -100, err_msg = errorText, status = getString(R.string.cancelled)
                     )
                 )
             }
@@ -188,23 +183,17 @@ class AppDetailsDialog(
                 }
                 statusList.add(
                     ApplicationStatus(
-                        state_name = getString(R.string.new_application),
-                        create_date = application.create_date,
-                        isEnable = true
+                        state_name = getString(R.string.new_application), create_date = application.create_date, isEnable = true
                     )
                 )
                 statusList.add(
                     ApplicationStatus(
-                        state_name = getString(R.string.application_received),
-                        create_date = application.create_date,
-                        isEnable = true
+                        state_name = getString(R.string.application_received), create_date = application.create_date, isEnable = true
                     )
                 )
                 statusList.add(
                     ApplicationStatus(
-                        state_name = getString(R.string.in_processing),
-                        create_date = statusDate2,
-                        isEnable = true
+                        state_name = getString(R.string.in_processing), create_date = statusDate2, isEnable = true
                     )
                 )
                 statusList.add(
@@ -221,12 +210,57 @@ class AppDetailsDialog(
             }
         }
 
-        applicationStatusAdapter = AppDetailsAdapter(statusList)
+        applicationStatusAdapter = AppDetailsAdapter(statusList) {
+            checkCardRequest()
+        }
         binding.statusList.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
             adapter = applicationStatusAdapter
         }
     }
+
+    private fun checkCardRequest() {
+        val expireDate = Format.sentExpireDate(expireDate.replace("/", ""))
+        val cardName = application.module_product
+        if (cardName.isEmpty()) return
+        utilsViewModel.checkCardRequest(
+            getClientToken(), CheckCardRequest(
+                expireDate, cardNumber, Paper.book().read("client_phone"), AppSignatureHelper(requireContext()).appKeyHash, requireContext().getDeviceIds()
+            )
+        ).observe(viewLifecycleOwner) {
+            it?.let {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        val addCardRequest = AddCardRequest(
+                            object_value = cardNumber,
+                            object_expiry = expireDate,
+                            phone_number = Paper.book().read("client_phone"),
+                            object_name = cardName,
+                            sms_code = "",
+                            is_main = "N",
+                            bg_icon_name = "bg_1",
+                            otp_id = it.data?.otp_id ?: "",
+                            string_line = ""
+                        )
+                        val bundle = Bundle()
+                        bundle.putString(Const.OPERATION, ConfirmSmsFragment.ADD_CARD)
+                        bundle.putString(Const.ADD_CARD_OPERATION, "")
+                        bundle.putSerializable("data", addCardRequest)
+                        bundle.putInt(
+                            ConfirmSmsFragment.SMS_MAX_LENGTH, it.data?.sms_length ?: 8
+                        )
+                        dismiss()
+                        gotoWithSlide(R.id.confirmSmsFragment, bundle)
+                    }
+
+                    Status.ERROR -> {
+                        showSnackbar(it.message.toString())
+                    }
+                }
+            }
+        }
+    }
+
 
 }

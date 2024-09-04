@@ -2,7 +2,9 @@ package uz.fido.utils.utility.format
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.text.*
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.SpannableStringBuilder
 import uz.fido.utils.R
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CHAR_EUR
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CHAR_RUB
@@ -19,7 +21,9 @@ import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
+import java.util.StringTokenizer
 
 class Format {
 
@@ -373,6 +377,14 @@ class Format {
         fun sentExpireDate(str: String): String {
             return if (str.isNotEmpty() && str.length > 3) {
                 str.substring(2, 4) + str.substring(0, 2)
+            } else {
+                ""
+            }
+        }
+
+        fun showExpireDate2(str: String): String {
+            return if (str.isNotEmpty() && str.length > 3) {
+                str.substring(0, 2) + "/" + str.substring(2, 4)
             } else {
                 ""
             }
