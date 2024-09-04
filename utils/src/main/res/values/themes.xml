@@ -34,7 +34,7 @@
     </style>
 
     <style name="GreenButtonThemeOverlay">
-        <item name="colorPrimary">@color/material_button_color</item>
+        <item name="colorPrimary">@color/brandRedColor</item>
     </style>
 
     <style name="FullScreenDialogStyle">
