@@ -100,9 +100,10 @@
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:id="@+id/card_number"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
+            android:layout_weight="1"
             android:gravity="center|end"
             android:textColor="@color/mainTextColor"
             android:textSize="14sp" />
