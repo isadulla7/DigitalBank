@@ -9,8 +9,8 @@ import uz.fido.network.domain.model.rates.CourseItem
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.base.BaseSimpleFragment
-import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.databinding.FragmentCurrencyRatesBinding
+import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeRatesAdapter
 import uz.fido.utils.utility.fragment.pop
 
@@ -35,8 +35,7 @@ class RatesFragment : BaseSimpleFragment<FragmentCurrencyRatesBinding>(
     private fun initRatesRv() {
         binding.rvCurrencyRates.apply {
             setHasFixedSize(true)
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
             currencyRatesAdapter = HomeRatesAdapter(ArrayList())
             adapter = currencyRatesAdapter
         }
@@ -46,8 +45,7 @@ class RatesFragment : BaseSimpleFragment<FragmentCurrencyRatesBinding>(
         utilsViewModel.currencyRates.observe(viewLifecycleOwner) {
             homeCurrencyRates = it as ArrayList<CourseItem>
             if (homeCurrencyRates.isNotEmpty()) {
-                binding.lastUpdateDate.text =
-                    getString(R.string.currency_rate_date) + " " + homeCurrencyRates[0].beginDate
+                binding.lastUpdateDate.text = getString(R.string.currency_rate_date) + " " + homeCurrencyRates[0].beginDate
                 for (i in 0 until homeCurrencyRates.size) {
                     when (homeCurrencyRates[i].currencyCode) {
                         "840" -> homeCurrencyRates[i].order = 1
