@@ -128,21 +128,21 @@ class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBindin
         )
         binding.btnContinue.setProgress(true)
         viewModel.createDeposit(getClientToken(), createCreditRequest).observe(viewLifecycleOwner) { resources ->
-                binding.btnContinue.setProgress(false)
-                when (resources.status) {
-                    Status.SUCCESS -> {
-                        goto(
-                            R.id.basicSuccessFragment, bundleOf(
-                                Const.OPERATION to BasicSuccessFragment.DEPOSIT_OPEN, "amount" to amount
-                            )
+            binding.btnContinue.setProgress(false)
+            when (resources.status) {
+                Status.SUCCESS -> {
+                    goto(
+                        R.id.basicSuccessFragment, bundleOf(
+                            Const.OPERATION to BasicSuccessFragment.DEPOSIT_OPEN, "amount" to amount
                         )
-                    }
+                    )
+                }
 
-                    Status.ERROR -> {
-                        showSnackbar(resources.message.toString())
-                    }
+                Status.ERROR -> {
+                    showSnackbar(resources.message.toString())
                 }
             }
+        }
     }
 
 
@@ -192,9 +192,10 @@ class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBindin
     }
 
     private fun initCards() {
-        menuProductsViewModel.cards.observe(viewLifecycleOwner) {
+        menuProductsViewModel.cards.observe(viewLifecycleOwner) { cardResponseList ->
+            val filteredCards = cardResponseList.filter { it.object_type != "KL" }
             binding.chooseCardLayout.initCards(
-                it as ArrayList<CardResponse>, amount, type
+                filteredCards as ArrayList<CardResponse>, amount, type
             ) { cardResponse ->
                 cardResponse?.let { card ->
                     if (card.balance.toBigDecimal().divide(100.toBigDecimal()).compareTo(amount.toBigDecimal()) == -1) {
