@@ -354,6 +354,43 @@ object SearchList {
         )
     }
 
+    // profile
+    // my details
+    // Settings
+    // Security
+    // About bank
+    // ATM and branches
+    // Connect with bank
+    // Public offer
+    // Change PIN
+    // Change Password
+    // Trusted devices
+    // Change Language
+    // App theme
+    // notifications
+    // chat
+    // to card
+    // between your accounts
+    // by phone number
+    // by wallet number
+    // request funds
+    // order card
+    // apply for a loan
+    // open deposit
+    // open wallet
+    // my applications
+    // transfer to account
+    // connect humo sms
+    // atms and branches
+    // swift transfers
+    // money transfers
+    // loan repayment
+    // auto payments
+    // my home
+    // templates
+    // qr payment
+    // history
+
     fun addList(list: ArrayList<SearchItem>) {
         searchList.addAll(list)
     }
@@ -376,6 +413,5 @@ object SearchList {
         editor.putString(Const.SEARCH_LIST, json)
         editor.apply()
     }
-
 
 }

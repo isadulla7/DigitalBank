@@ -1,8 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.chat
 
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Base64
 import android.view.View
 import android.view.WindowManager
@@ -21,7 +19,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import uz.fido.network.data.utility.Status
-import uz.fido.network.di.SocketClient
 import uz.fido.network.domain.datasource.services.SocketInterface
 import uz.fido.network.domain.model.chat.EditMessageRequest
 import uz.fido.network.domain.model.chat.MessageHistory
@@ -35,6 +32,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMenuChatBinding
 import uz.fido.universaldigital.ui.fragments.chat.adapter.ChatAdapter
+import uz.fido.universaldigital.ui.fragments.chat.socket_client.SocketClient
 import uz.fido.universaldigital.ui.fragments.payment.templates.adapter.PaymentTemplatesAdapter
 import uz.fido.universaldigital.ui.utils.extensions.formatStringToHtml
 import uz.fido.universaldigital.ui.utils.extensions.serializable
