@@ -405,3 +405,4 @@ fun String.hasSpecialSymbol(): Boolean {
     return regex.containsMatchIn(this)
 }
 
+fun String.removeSpace() = trim().replace("\\s+".toRegex(), replacement = "")

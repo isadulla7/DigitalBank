@@ -118,15 +118,21 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun initPinCodeOperation() {
-        if (isInternetConnected(requireContext())) {
-            if (operation == PASS_OPERATION_POP) {
-                pop()
-                return
+        if (pin == getDecodedString(Paper.book().read(Const.PAPER_CLIENT_PIN))) {
+            if (isInternetConnected(requireContext())) {
+                if (operation == PASS_OPERATION_POP) {
+                    pop()
+                    return
+                } else {
+                    operationSignIn()
+                }
             } else {
-                operationSignIn()
+                clearDots()
             }
         } else {
-            clearDots()
+            Handler(Looper.myLooper()!!).postDelayed({
+                errorPin()
+            }, 50)
         }
     }
 

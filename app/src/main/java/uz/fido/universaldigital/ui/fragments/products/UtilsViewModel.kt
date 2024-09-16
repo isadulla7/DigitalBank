@@ -6,12 +6,14 @@ import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import uz.fido.network.data.repository.CardRepositoryImpl
 import uz.fido.network.domain.datasource.interfaces.ICardRepository
 import uz.fido.network.domain.datasource.interfaces.IP2PRepository
 import uz.fido.network.domain.datasource.interfaces.IServiceRepository
 import uz.fido.network.domain.datasource.interfaces.ITemplateRepository
 import uz.fido.network.domain.datasource.interfaces.IUtilsRepository
 import uz.fido.network.domain.model.applications.GetProductDetailsRequest
+import uz.fido.network.domain.model.cards.CheckCardRequest
 import uz.fido.network.domain.model.cards.ResetPinCountCheck
 import uz.fido.network.domain.model.popular_transfers.PopularTransfers
 import uz.fido.network.domain.model.rates.CourseItem
@@ -33,8 +35,10 @@ class UtilsViewModel @Inject constructor(
     private val templatesRepository: ITemplateRepository,
     private val p2PRepository: IP2PRepository,
     private val cardsUseCase: CardsUseCase,
-    private val iCardRepository: ICardRepository
-) : AbstractViewModel(application) {
+    private val iCardRepository: ICardRepository,
+    private val cardRepository: CardRepositoryImpl,
+
+    ) : AbstractViewModel(application) {
 
     var shouldTemplateUpdate = true
 
@@ -61,52 +65,49 @@ class UtilsViewModel @Inject constructor(
         popularTransfers.postValue(transfers)
     }
 
-    fun getCurrencyRates(token: String, getCurrencyRatesRequest: GetCurrencyRatesRequest) =
-        liveData(Dispatchers.IO) {
-            emit(utilsRepository.getCurrencyRates(token, getCurrencyRatesRequest))
-        }
+    fun getCurrencyRates(token: String, getCurrencyRatesRequest: GetCurrencyRatesRequest) = liveData(Dispatchers.IO) {
+        emit(utilsRepository.getCurrencyRates(token, getCurrencyRatesRequest))
+    }
 
-    fun getTemplateList(token: String, getTemplateListRequest: GetTemplateListRequest) =
-        liveData(Dispatchers.IO) {
-            emit(templatesRepository.getTemplateList(token, getTemplateListRequest))
-        }
+    fun getTemplateList(token: String, getTemplateListRequest: GetTemplateListRequest) = liveData(Dispatchers.IO) {
+        emit(templatesRepository.getTemplateList(token, getTemplateListRequest))
+    }
 
     fun getUserAppList(token: String) = liveData(Dispatchers.IO) {
         emit(serviceRepository.getUserProductList(token))
     }
 
-    fun getProductDetails(token: String, getProductDetailsRequest: GetProductDetailsRequest) =
-        liveData(Dispatchers.IO) {
-            emit(serviceRepository.getProductDetails(token, getProductDetailsRequest))
-        }
+    fun getProductDetails(token: String, getProductDetailsRequest: GetProductDetailsRequest) = liveData(Dispatchers.IO) {
+        emit(serviceRepository.getProductDetails(token, getProductDetailsRequest))
+    }
 
     fun getPopularTransferList(token: String) = liveData(Dispatchers.IO) {
         emit(p2PRepository.getPopularTransferList(token))
     }
 
-    fun getTemplate(token: String, getTemplateRequest: GetTemplateRequest) =
-        liveData(Dispatchers.IO) {
-            emit(templatesRepository.getTemplate(token, getTemplateRequest))
-        }
+    fun getTemplate(token: String, getTemplateRequest: GetTemplateRequest) = liveData(Dispatchers.IO) {
+        emit(templatesRepository.getTemplate(token, getTemplateRequest))
+    }
 
-    fun deleteTemplate(token: String, deleteTemplateRequest: DeleteTemplateRequest) =
-        liveData(Dispatchers.IO) {
-            emit(templatesRepository.deleteTemplate(token, deleteTemplateRequest))
-        }
+    fun deleteTemplate(token: String, deleteTemplateRequest: DeleteTemplateRequest) = liveData(Dispatchers.IO) {
+        emit(templatesRepository.deleteTemplate(token, deleteTemplateRequest))
+    }
 
-    fun createTemplate(token: String, createTemplateRequest: CreateTemplateRequest) =
-        liveData(Dispatchers.IO) {
-            emit(templatesRepository.createTemplate(token, createTemplateRequest))
-        }
+    fun createTemplate(token: String, createTemplateRequest: CreateTemplateRequest) = liveData(Dispatchers.IO) {
+        emit(templatesRepository.createTemplate(token, createTemplateRequest))
+    }
 
-    fun setTemplateOrder(token: String, setTemplateOrderRequest: SetTemplateOrderRequest) =
-        liveData(Dispatchers.IO) {
-            emit(templatesRepository.setTemplateOrder(token, setTemplateOrderRequest))
-        }
+    fun setTemplateOrder(token: String, setTemplateOrderRequest: SetTemplateOrderRequest) = liveData(Dispatchers.IO) {
+        emit(templatesRepository.setTemplateOrder(token, setTemplateOrderRequest))
+    }
 
-    fun checkResetPinCount(token: String, resetPinCountCheck: ResetPinCountCheck) =
-        liveData(Dispatchers.IO) {
-            emit(iCardRepository.checkResetPinCount(token, resetPinCountCheck))
-        }
+    fun checkResetPinCount(token: String, resetPinCountCheck: ResetPinCountCheck) = liveData(Dispatchers.IO) {
+        emit(iCardRepository.checkResetPinCount(token, resetPinCountCheck))
+    }
+
+    fun checkCardRequest(token: String, checkCardRequest: CheckCardRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.checkCard(token, checkCardRequest))
+    }
+
 
 }

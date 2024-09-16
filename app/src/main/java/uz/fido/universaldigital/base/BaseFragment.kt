@@ -36,10 +36,12 @@ import uz.fido.universaldigital.ui.activities.VpnErrorActivity
 import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
 import uz.fido.universaldigital.ui.dialogs.OpenSettingsDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsViewModel
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_info.LoanUserInfo1Fragment
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.ServerMessages.ERROR_CODE_VPN
+import uz.fido.utils.const.ServerMessages.LOG_OUT
 import uz.fido.utils.const.ServerMessages.NEED_IDENTIFIED
 import uz.fido.utils.const.ServerMessages.getMeaningFulMessage
 import uz.fido.utils.log.Log.d
@@ -110,10 +112,19 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
         hideProgress()
         var message = snackbarText
         if (message == ERROR_CODE_VPN) {
+            //open vpn error activity
             openVpnErrorActivity()
         } else if (message == NEED_IDENTIFIED) {
             //open identify fragment
             openIdentifyFragment(snackbarText, title, buttonText, onClickListener)
+        } else if (message == LOG_OUT) {
+            //show dialog and log out from app
+            message = getMeaningFulMessage(message)
+            if (message.isNotEmpty() && view != null) {
+                showBaseInfoDialog(title, buttonText, message) {
+                    requireActivity().logOut()
+                }
+            }
         } else {
             message = getMeaningFulMessage(message)
             if (message.isNotEmpty() && view != null) {
@@ -309,6 +320,26 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
             setSpan(
                 ForegroundColorSpan(
                     ContextCompat.getColor(context, uz.fido.utils.R.color.brandRedColor_50)
+                ), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0
+            )
+            setSpan(
+                BackgroundColorSpan(ContextCompat.getColor(context, uz.fido.utils.R.color.white)), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0
+            )
+            setSpan(UnderlineSpan(), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0)
+        }
+    }
+
+
+    fun SpannableString.setSpansForPrivacy(
+        it: Annotation, clickableSpan: ClickableSpan, fullText: SpannedString, context: Context
+    ) {
+        this.apply {
+            setSpan(
+                clickableSpan, fullText.getSpanStart(it), fullText.getSpanEnd(it), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            setSpan(
+                ForegroundColorSpan(
+                    ContextCompat.getColor(context, uz.fido.utils.R.color.brandRedColor)
                 ), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0
             )
             setSpan(

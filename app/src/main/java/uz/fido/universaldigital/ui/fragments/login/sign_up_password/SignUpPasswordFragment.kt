@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.login.sign_up_password
 
 import android.os.Build
 import android.os.Bundle
+import android.text.InputFilter
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
@@ -19,6 +20,7 @@ import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.utils.extensions.containsNumber
 import uz.fido.universaldigital.ui.utils.extensions.hasLetter
 import uz.fido.universaldigital.ui.utils.extensions.hasSpecialSymbol
+import uz.fido.universaldigital.ui.utils.extensions.removeSpace
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.encryptPassword
@@ -49,6 +51,8 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
     }
 
     private fun initFieldsListener() {
+        val removeFilter = InputFilter { s, _, _, _, _, _ -> s.toString().removeSpace() }
+        binding.etPassword.apply { filters = filters.plus(removeFilter) }
         binding.etPassword.doAfterTextChanged {
             binding.repeatPasswordLayout.isVisible = passwordIsValid(it.toString())
             checkPassword(it.toString())

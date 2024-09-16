@@ -6,6 +6,7 @@ plugins {
 }
 
 android {
+
     namespace 'uz.fido.network'
 
     defaultConfig {
@@ -14,7 +15,6 @@ android {
         targetSdkVersion ConfigData.TARGET_SDK_VERSION
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
-
         externalNativeBuild {
             cmake {
                 cppFlags("")

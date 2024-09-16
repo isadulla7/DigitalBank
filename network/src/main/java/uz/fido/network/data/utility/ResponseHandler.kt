@@ -31,14 +31,24 @@ fun <T : Any> handleException(e: Exception): Resource<T> {
     when (e) {
         is HttpException -> {
             val error = ErrorUtils.parseError(e.response()!!)
-            errorResource = if (error.code == 700) {
-                Resource.error(
-                    message = "NEED_IDENTIFIED", data = null, errorBody = error
-                )
-            } else {
-                Resource.error(
-                    message = error.message, data = null, errorBody = error
-                )
+            errorResource = when (error.code) {
+                700 -> {
+                    Resource.error(
+                        message = "NEED_IDENTIFIED", data = null, errorBody = error
+                    )
+                }
+
+                1525 -> {
+                    Resource.error(
+                        message = "LOG_OUT", data = null, errorBody = error
+                    )
+                }
+
+                else -> {
+                    Resource.error(
+                        message = error.message, data = null, errorBody = error
+                    )
+                }
             }
         }
 

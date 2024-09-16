@@ -88,8 +88,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
         arguments?.let {
             operation = it.getString(CONFIRM_PAYMENT_OPERATION)
             paymentOperation = it.getInt(PAYMENT_OPERATION)
-            paymentParamsArrayList =
-                it.serializable<ArrayList<PaymentParams>>("list")!!
+            paymentParamsArrayList = it.serializable<ArrayList<PaymentParams>>("list")!!
             paymentService = it.serializable<PaymentService>("paymentService") as PaymentService
             if (it.serializable<ArrayList<TemplateKeyValue>>("templateKeyValues") != null) templateKeyValues =
                 it.serializable<ArrayList<TemplateKeyValue>>("templateKeyValues") as ArrayList<TemplateKeyValue>
@@ -146,16 +145,13 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
     private fun initCards() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {
             binding.chooseCardLayout.initCards(
-                it as ArrayList<CardResponse>,
-                (totalAmount).toString(),
-                if (currency == "000") CurrencyConst.CURRENCY_CHAR_UZS else CurrencyConst.CURRENCY_CHAR_USD
+                it as ArrayList<CardResponse>, (totalAmount).toString(), if (currency == "000") CurrencyConst.CURRENCY_CHAR_UZS else CurrencyConst.CURRENCY_CHAR_USD
             ) { cardResponse ->
                 cardResponse?.let { card ->
                     senderCard = card
                     binding.continueButton.isEnabled(
                         !BaseCardUtils.compareWithBalance(
-                            totalAmount.toString(),
-                            card
+                            totalAmount.toString(), card
                         )
                     )
                 }
@@ -210,13 +206,11 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
             }
             if (paymentParams.payment_detail_code == "LOAN_REPAYMENT") {
                 if (paymentParams.def_value.isNotEmpty() && NumberUtils.isParsable(paymentParams.def_value)) {
-                    valueView.text =
-                        formatAmount(Format.formatAmountFromTiynToInteger(paymentParams.def_value)) + " UZS"
+                    valueView.text = formatAmount(Format.formatAmountFromTiynToInteger(paymentParams.def_value)) + " UZS"
                 }
             }
             if (paymentParams.code == "SELECT") {
-                val reference =
-                    Gson().fromJson(paymentParams.hint, DefaultReferenceResponse::class.java)
+                val reference = Gson().fromJson(paymentParams.hint, DefaultReferenceResponse::class.java)
                 var defaultModel = AllServiceLists()
                 reference.options.forEach {
                     if (it.code == paymentParams.def_value) {
@@ -300,9 +294,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
 
     private fun checkForSmsBeforePayment() {
         if (!this.checkForPaymentSms(
-                card = senderCard!!,
-                paymentService = paymentService,
-                amount = params["AMOUNT"].toString()
+                card = senderCard!!, paymentService = paymentService, amount = params["AMOUNT"].toString()
             )
         ) {
             createPayment()
@@ -334,7 +326,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
 
                     Status.SUCCESS -> {
                         val bundle = bundleOf(
-                            SuccessPaymentFragment.CONFIRM_PAYMENT_OPERATION to "payment",
+                            SuccessPaymentFragment.CONFIRM_PAYMENT_OPERATION to SuccessPaymentFragment.PAYMENT,
                             CONFIRM_PAYMENT_OPERATION to operation,
                             Const.OPERATION_AMOUNT to Format.formatMoney(amount.toString()) + if (currency == "000") " ${
                                 getString(
@@ -345,9 +337,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
                             Const.SENDER_CARD to senderCard,
                             Const.PAYMENT_SERVICE to Gson().toJson(paymentService),
                             "EXTRA_PAYMENT_PARAMS" to Gson().toJson(paymentParamsArrayList),
-                            SuccessPaymentFragment.PAYMENT_KEY_VALUES to requireArguments().getSerializable(
-                                PaymentSecondStepFragment.PAYMENT_KEY_VALUES
-                            ),
+                            SuccessPaymentFragment.PAYMENT_KEY_VALUES to requireArguments().serializable<HashMap<String, String>>(PaymentSecondStepFragment.PAYMENT_KEY_VALUES)
                         )
                         bundle.putString("transactId", it.data?.request_id!!.toString())
                         if (operation != null) {
@@ -380,34 +370,29 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
     }
 
     private fun getBiometricPrompt(): BiometricPrompt {
-        return BiometricPrompt(
-            requireActivity(),
-            Executors.newSingleThreadExecutor(),
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationError(
-                    errorCode: Int, errString: CharSequence
-                ) {
-                    super.onAuthenticationError(errorCode, errString)
-                    if (errorCode != BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
-                        (activity as MainActivity).runOnUiThread {
-                            setFingerPrintState(false)
-                        }
-                    }
-                }
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
+        return BiometricPrompt(requireActivity(), Executors.newSingleThreadExecutor(), object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationError(
+                errorCode: Int, errString: CharSequence
+            ) {
+                super.onAuthenticationError(errorCode, errString)
+                if (errorCode != BiometricPrompt.ERROR_NEGATIVE_BUTTON) {
                     (activity as MainActivity).runOnUiThread {
-                        setFingerPrintState(true)
+                        setFingerPrintState(false)
                     }
                 }
-            })
+            }
+
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                (activity as MainActivity).runOnUiThread {
+                    setFingerPrintState(true)
+                }
+            }
+        })
     }
 
     private fun fingerPrintDialogBuilder(biometricPrompt: BiometricPrompt) {
-        val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle(getString(R.string.confirm_payment))
-            .setDescription(getString(R.string.for_confirm_payment_touch_sensor))
+        val promptInfo = BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.confirm_payment)).setDescription(getString(R.string.for_confirm_payment_touch_sensor))
             .setNegativeButtonText(getString(R.string.cancel)).build()
         biometricPrompt.authenticate(promptInfo)
     }
@@ -417,8 +402,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
     }
 
     private fun hasBiometrics(): Boolean {
-        return when (BiometricManager.from(requireContext())
-            .canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
+        return when (BiometricManager.from(requireContext()).canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
             BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE -> {
                 false
             }

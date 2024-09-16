@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.os.bundleOf
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
@@ -19,10 +20,12 @@ import uz.fido.universaldigital.ui.fragments.payment.abc_dialog.AddTemplateDialo
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.payment.templates.TemplateTypes
+import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import java.text.SimpleDateFormat
@@ -81,10 +84,10 @@ class SuccessPaymentFragment : BaseFragment<FragmentSuccessPaymentBinding, Succe
             PAYMENT -> {
                 arguments?.let {
                     paymentService = Gson().fromJson(
-                        it.getString(Const.PAYMENT_SERVICE), PaymentService::class.java
+                        it.getString(Const.PAYMENT_SERVICE),
+                        PaymentService::class.java
                     )
-                    params =
-                        it.serializable<HashMap<String, String>>(PAYMENT_KEY_VALUES) as HashMap<String, String>
+                    params = it.serializable<HashMap<String, String>>(PAYMENT_KEY_VALUES) as HashMap<String, String>
                 }
             }
 
@@ -95,8 +98,7 @@ class SuccessPaymentFragment : BaseFragment<FragmentSuccessPaymentBinding, Succe
             }
 
             OPERATION_HOME_PAYMENT -> {
-                params =
-                    arguments?.serializable<HashMap<String, String>>(PAYMENT_KEY_VALUES) as HashMap<String, String>
+                params = arguments?.serializable<HashMap<String, String>>(PAYMENT_KEY_VALUES) as HashMap<String, String>
                 binding.repeat.visibility = View.GONE
                 binding.addToTemplate.visibility = View.GONE
                 binding.amount.text = operationAmount
@@ -136,6 +138,11 @@ class SuccessPaymentFragment : BaseFragment<FragmentSuccessPaymentBinding, Succe
 
         addTemplateDialog = AddTemplateDialog(getString(R.string.templates)) {
             addTemplateDialog.dismiss()
+            paymentService = Gson().fromJson(
+                requireArguments().getString(Const.PAYMENT_SERVICE),
+                PaymentService::class.java
+            )
+            params = requireArguments().serializable<HashMap<String, String>>(PAYMENT_KEY_VALUES) as HashMap<String, String>
             if (params != null) {
                 val model = CreateTemplateRequest(
                     name = it,
@@ -151,11 +158,11 @@ class SuccessPaymentFragment : BaseFragment<FragmentSuccessPaymentBinding, Succe
                         hideProgress()
                         when (resources.status) {
                             Status.SUCCESS -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    getString(R.string.successfully),
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                gotoWithSlide(
+                                    R.id.basicSuccessFragment, bundleOf(
+                                        Const.OPERATION to BasicSuccessFragment.SAVE_TEMPLATE,
+                                    )
+                                )
                             }
 
                             Status.ERROR -> {
@@ -163,14 +170,13 @@ class SuccessPaymentFragment : BaseFragment<FragmentSuccessPaymentBinding, Succe
                             }
                         }
                     }
-
-                addTemplateDialog.show(childFragmentManager, "")
             } else Toast.makeText(
                 requireContext(),
                 getString(R.string.error),
                 Toast.LENGTH_SHORT
             ).show()
         }
+        addTemplateDialog.show(childFragmentManager, "")
     }
 
     private fun gotoMainPage() {

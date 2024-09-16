@@ -7,6 +7,7 @@ object ServerMessages {
 
     const val ERROR_CODE_VPN = "444"
     const val NEED_IDENTIFIED = "NEED_IDENTIFIED"
+    const val LOG_OUT = "LOG_OUT"
     private const val ERROR_MESSAGE_BAD = "bad"
     private const val ERROR_MESSAGE_ORA = "ORA"
     private const val ERROR_MESSAGE_CERTIFICATE = "CertPathValidatorException"
@@ -36,6 +37,10 @@ object ServerMessages {
 
             message.contains(ERROR_MESSAGE_FAILED_TO_CONNECT) -> {
                 meaningFulMessage = getString(R.string.tech_works)
+            }
+
+            message == LOG_OUT -> {
+                meaningFulMessage = getString(R.string.please_log_out)
             }
 
             message.isEmpty() -> {

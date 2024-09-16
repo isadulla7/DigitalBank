@@ -48,6 +48,8 @@ class TransferChequeFragment : BaseFragment<FragmentTransferChequeBinding, Trans
         val percent = transferDto.commission ?: 0.0
         val commissionAmount = percent * transferDto.transferAmount?.toDouble()!! / 10000
         binding.apply {
+            println(transferDto.senderCard.toString())
+            println(transferDto.senderCard?.embossed_name.toString())
             operationName.text = getOperationName()
             senderCard.text = Format.formatCardNumber(transferDto.senderCard?.object_value ?: "")
             senderName.text = transferDto.senderCard?.embossed_name

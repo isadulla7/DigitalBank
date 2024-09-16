@@ -64,11 +64,11 @@ class AllAppFragment : BaseFragment<FragmentAllAppBinding, UtilsViewModel>(
                         val response = resource.data!!.product_list
                         response!!.sortByDescending { df.parse(it.create_date) }
                         response.forEach { item ->
-                            if (operationType == Const.ORDER_CARD) {
+                            /*if (operationType == Const.ORDER_CARD) {
                                 if (item.product == "CARD") {
                                     applicationList.add(item)
                                 }
-                            } else applicationList.add(item)
+                            } else*/ applicationList.add(item)
 
                         }
                         applicationList.forEach { application ->

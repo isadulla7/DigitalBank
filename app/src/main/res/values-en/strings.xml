@@ -15,7 +15,6 @@
     <string name="widget_4">Saved payments</string>
     <string name="widget_5">Currency rates</string>
     <string name="widget_7">Deposit</string>
-    <string name="widget_8">Transfers</string>
 
     <integer-array name="main_widgets_ids">
         <item>100</item>
@@ -1015,6 +1014,7 @@
     <string name="password_number_requirement">At least one number</string>
     <string name="password_symbol_requirement">At least one special symbol</string>
     <string name="no_transaction_or_payment_selected_period">Вы не делали никаких платежей или переводов через приложение в выбранном месяце</string>
+    <string name="secret_word_instruction">Security code must be more than 5 and less than 10.</string>
     <string name="card_or_phone_number">Card or phone number</string>
 
 </resources>

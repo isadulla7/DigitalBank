@@ -32,7 +32,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/save"
             android:layout_width="wrap_content"
@@ -57,7 +56,6 @@
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/fiscal_check"
@@ -84,7 +82,6 @@
                 android:textColor="@color/mainTextColor"
                 android:textSize="16sp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
-
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/button_receipt"

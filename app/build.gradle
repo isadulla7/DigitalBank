@@ -82,6 +82,8 @@ dependencies {
     implementation ProjectDependencies.liveDataKtx
 
     implementation ProjectDependencies.lifeCycleExtension
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
     compileOnly ProjectDependencies.wearable
     kapt ProjectDependencies.lifeCycleCompiler
 
@@ -178,9 +180,6 @@ dependencies {
     //nfc card reader
     implementation files(ProjectDependencies.nfcCardReader)
 
-    //magnifier
-    implementation ProjectDependencies.magnifier
-
     //pie chart
     implementation ProjectDependencies.PieChart
 
@@ -193,4 +192,6 @@ dependencies {
     //utils module
     implementation project(':utils')
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.22"
+    implementation ProjectDependencies.okhttpLogging
+
 }

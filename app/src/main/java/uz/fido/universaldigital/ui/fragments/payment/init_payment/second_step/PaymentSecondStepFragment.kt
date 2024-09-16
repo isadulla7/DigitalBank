@@ -7,7 +7,6 @@ import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -786,7 +785,7 @@ class PaymentSecondStepFragment :
 
     private fun gotoNext() {
         keyValueList = HashMap()
-        templateKeyValues = requireArguments().getSerializable(PAYMENT_KEY_VALUES) as HashMap<String, String>
+        templateKeyValues = requireArguments().serializable<HashMap<String, String>>(PAYMENT_KEY_VALUES) as HashMap<String, String>
 
         var loanId = ""
         for (param in paymentParamsArrayList) {
@@ -839,7 +838,6 @@ class PaymentSecondStepFragment :
             vi = View(activity)
         }
         imm.hideSoftInputFromWindow(vi.windowToken, 0)
-//        if (checkForInternet()) {
         preparePayment(
             paymentService!!.service_id.toString(),
             levelPosition1,
@@ -847,7 +845,6 @@ class PaymentSecondStepFragment :
             keyValueList,
             paymentService!!.payment_type.toString()
         )
-//        }
     }
 
     private fun openConfirmPayment(serviceDetails: ArrayList<PaymentParams>) {
