@@ -192,4 +192,6 @@ dependencies {
     //utils module
     implementation project(':utils')
     implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.22"
+    implementation ProjectDependencies.okhttpLogging
+
 }
