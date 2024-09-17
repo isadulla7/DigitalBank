@@ -1,10 +1,12 @@
 package uz.fido.universaldigital.ui.fragments.payment.download_payment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import io.paperdb.Book
 import io.paperdb.Paper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -27,13 +29,32 @@ abstract class DownloadPayment : Fragment() {
 
     var databaseHelper: DatabaseHelper? = null
     var paymentGroupsList: ArrayList<PaymentGroup> = ArrayList()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         downloadPaymentViewModel =
             ViewModelProvider(requireActivity())[DownloadPaymentViewModel::class.java]
         databaseHelper = DatabaseHelper(requireContext())
     }
+
+    fun downloadCheckLang(){
+        databaseHelper = DatabaseHelper(requireContext())
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default){
+            databaseHelper?.let{databaseHelper ->
+                if (databaseHelper.getGroupList().size != 0) {
+                    Log.d("TAG", "downloadCheckLang:${databaseHelper.getGroupList()[0].name} ")
+                    paymentGroupsList = databaseHelper.getGroupList()
+                    paymentGroupsList.sortBy { it.order }
+                    withContext(Dispatchers.Main) {
+                        downloadPaymentInterface.fetchCompleteFromDB()
+                    }
+                }
+            }
+        }
+
+
+    }
+
 
     fun setPaymentStatusListener(listener: DownloadPaymentInterface) {
         this.downloadPaymentInterface = listener
@@ -54,7 +75,7 @@ abstract class DownloadPayment : Fragment() {
         }
     }
 
-    private fun getPaymentsFromLocal() {
+     private fun getPaymentsFromLocal() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
             databaseHelper?.let { databaseHelper ->
                 if (databaseHelper.getGroupList().size != 0) {
