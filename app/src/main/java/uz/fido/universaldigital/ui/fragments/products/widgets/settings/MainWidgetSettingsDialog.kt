@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -59,11 +60,15 @@ class MainWidgetSettingsDialog(private val baseInterface: BaseInterface) :
         super.onViewCreated(view, savedInstanceState)
         visibleList.clear()
         hiddenList.clear()
+        val langList=getAllWidgetList()
         val list: ArrayList<MainWidget> = Paper.book().read(Const.MAIN_WIDGETS)
         list.forEach {
+            val widget= langList.firstOrNull { item->item.id==it.id }
             if (it.is_visible) {
+                it.name=widget?.name?:it.name
                 visibleList.add(it)
             } else {
+                it.name=widget?.name?:it.name
                 hiddenList.add(it)
             }
         }
@@ -110,6 +115,20 @@ class MainWidgetSettingsDialog(private val baseInterface: BaseInterface) :
                 HomeWidgetsHiddenAdapter(hiddenList, this@MainWidgetSettingsDialog)
             adapter = mainWidgetsHiddenAdapter
         }
+    }
+
+    private fun getAllWidgetList():ArrayList<MainWidget> {
+        val newList= arrayListOf<MainWidget>()
+        val names = resources.getStringArray(R.array.main_widgets)
+        val ids = resources.getIntArray(R.array.main_widgets_ids)
+        for (i in names.indices) {
+            newList.add(
+                MainWidget(
+                    id = ids[i], name = names[i], false, order = i + 1
+                )
+            )
+        }
+        return newList
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {

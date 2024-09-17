@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import uz.fido.network.domain.model.payment.PaymentCashback
 import uz.fido.network.domain.model.payment.PaymentGroup
 import uz.fido.network.domain.model.payment.PaymentParams
@@ -339,6 +340,7 @@ class DatabaseHelper(
 
                         else -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_EN)
                     }
+                    Log.d("TAG", "getGroupList:${nameIndex} ")
                     do {
                         val cat = PaymentGroup()
                         cat.PaymentGroup(

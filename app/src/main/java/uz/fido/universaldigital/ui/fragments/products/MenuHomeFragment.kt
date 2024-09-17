@@ -14,10 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
+import okhttp3.internal.filterList
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardInfoRequest
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.news.GetNotificationsRequest
+import uz.fido.network.domain.model.news.Notification
+import uz.fido.network.domain.model.news.UpdateNotificationState
 import uz.fido.network.domain.model.widget.MainWidget
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
@@ -92,7 +95,28 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     }
 
     private fun getNotification() {
+        var notificationList = listOf<Notification>()
         binding.notificationHide.setOnClickListener {
+            if (notificationList.isNotEmpty()){
+                val list = ArrayList<String>()
+                val item=notificationList[0]
+                item.is_read="Y"
+                list.add(item.notification_id)
+                menuProductsViewModel.updateNotificationStatus(
+                    getClientToken(), UpdateNotificationState(list)
+                ).observe(viewLifecycleOwner) {
+                    when(it.status){
+                        Status.SUCCESS->{
+                         val newList = notificationList.filter { it.is_read=="N" }
+                            notificationList=newList
+                           checkNotification(newList)
+                        }
+                        Status.ERROR->{
+
+                        }
+                    }
+                }
+            }
             binding.consNotification.visibility = View.GONE
         }
         menuProductsViewModel.getNotifications(
@@ -102,21 +126,25 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         ).observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-                    val notificationList = resource.data?.notifications?.filter { it.is_read == "N" } ?: arrayListOf()
-                    if (notificationList.isNotEmpty()) {
-                        binding.notificationItem.visibility = View.VISIBLE
-                        binding.consNotification.visibility = View.VISIBLE
-                        binding.notificationItem.text = notificationList.size.toString()
-                        binding.notificationTitle.text = notificationList[0].title
-                        binding.notificationText.text = notificationList[0].text
-                    } else {
-                        binding.notificationItem.visibility = View.GONE
-                        binding.consNotification.visibility = View.GONE
-                    }
+                    notificationList = resource.data?.notifications?.filter { it.is_read == "N" } ?: emptyList()
+                    checkNotification(notificationList)
                 }
 
                 Status.ERROR -> {}
             }
+        }
+    }
+
+    private fun checkNotification(notificationList: List<Notification>) {
+        if (notificationList.isNotEmpty()) {
+            binding.notificationItem.visibility = View.VISIBLE
+            binding.consNotification.visibility = View.VISIBLE
+            binding.notificationItem.text = notificationList.size.toString()
+            binding.notificationTitle.text = notificationList[0].title
+            binding.notificationText.text = notificationList[0].text
+        } else {
+            binding.notificationItem.visibility = View.GONE
+            binding.consNotification.visibility = View.GONE
         }
     }
 

@@ -33,6 +33,7 @@ import uz.fido.network.domain.model.limits.gl.GlLimitListRequest
 import uz.fido.network.domain.model.limits.gl.GlSetCardLimitRequest
 import uz.fido.network.domain.model.loans.loan_products.CreditProduct
 import uz.fido.network.domain.model.news.GetNotificationsRequest
+import uz.fido.network.domain.model.news.UpdateNotificationState
 import uz.fido.network.domain.model.wallet.DeleteWalletRequest
 import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject
@@ -167,5 +168,9 @@ class MenuProductsViewModel @Inject constructor(
     fun getNotifications(token: String, request: GetNotificationsRequest) = liveData(Dispatchers.IO) {
         emit(utilsRepository.getNotifications(token, request))
     }
+    fun updateNotificationStatus(token: String, updateNewsStatusRequest: UpdateNotificationState) =
+        liveData(Dispatchers.IO) {
+            emit(utilsRepository.updateNotificationStatus(token, updateNewsStatusRequest))
+        }
 
 }

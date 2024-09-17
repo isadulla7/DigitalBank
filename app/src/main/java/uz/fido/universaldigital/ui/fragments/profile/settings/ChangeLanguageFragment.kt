@@ -67,7 +67,8 @@ class ChangeLanguageFragment :
     }
 
     private fun setLocale(lang: String) {
-        Paper.book().write(Const.UPDATE_MAIN_WIDGETS, true)
+       // Paper.book().write(Const.UPDATE_MAIN_WIDGETS, true)
+        Paper.book().write(Const.UPDATE_LANG,true)
         LocaleHelper.setLocale(requireContext(), lang)
         requireActivity().recreate()
         getSelectedLang()

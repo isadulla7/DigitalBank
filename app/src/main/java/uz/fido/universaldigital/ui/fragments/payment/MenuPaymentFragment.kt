@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.payment
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
+import io.paperdb.Paper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
@@ -38,6 +40,7 @@ import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchList
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
+import uz.fido.utils.const.Const
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
@@ -53,16 +56,34 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     private lateinit var binding: FragmentMenuPaymentsBinding
 
     private val utilsViewModel: UtilsViewModel by activityViewModels()
+    private var updateLang:Boolean=false
+
 
     private var templatesSkeleton: SkeletonScreen? = null
     private var skeletonScreen: SkeletonScreen? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         menuPaymentsAdapter = MainPaymentsAdapter {
             goto(R.id.paymentListFragment, bundleOf(PaymentListFragment.PAYMENT_GROUP to it))
         }
+
         paymentTemplatesAdapter = PaymentTemplatesAdapter(this)
+       //
+    }
+
+    private fun checkLang() {
+        try {
+            updateLang= Paper.book().read(Const.UPDATE_LANG)
+            if (updateLang){
+                paymentGroupsList= arrayListOf()
+                downloadPaymentStart()
+                downloadCheckLang()
+            }
+        }catch (e:Exception){
+            updateLang=false
+        }
     }
 
     override fun onCreateView(
@@ -71,11 +92,13 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         binding = FragmentMenuPaymentsBinding.inflate(layoutInflater)
         setPaymentStatusListener(this)
         initPaymentListRv()
+
         checkPaymentForDownload()
         initPaymentList()
         initPaymentTemplatesRv()
         initSetOnClickListeners()
         checkForPaymentTemplates()
+        checkLang()
         return binding.root
     }
 
@@ -83,8 +106,12 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         downloadPaymentViewModel.paymentGroupMutableList.observe(viewLifecycleOwner) {
             skeletonScreen?.hide()
             paymentGroupsList = ArrayList()
-            paymentGroupsList.addAll(it)
-            menuPaymentsAdapter.submitList(paymentGroupsList)
+            if (!updateLang){
+                paymentGroupsList.addAll(it)
+                menuPaymentsAdapter.submitList(paymentGroupsList)
+            }
+
+
         }
     }
 
@@ -133,6 +160,10 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     private fun drawViews() {
         paymentGroupsList.sortBy { it.order }
         downloadPaymentViewModel.paymentGroupMutableList.postValue(paymentGroupsList)
+        if (updateLang){
+            menuPaymentsAdapter.submitList(paymentGroupsList)
+            Paper.book().write(Const.UPDATE_LANG,false)
+        }
     }
 
     override fun fetchCompleteFromDB() {
