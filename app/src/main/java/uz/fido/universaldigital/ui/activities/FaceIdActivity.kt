@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import io.paperdb.Paper
 import uz.fido.universaldigital.base.BaseActivity
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.myid.android.sdk.capture.MyIdClient
@@ -85,7 +86,7 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
     }
 
     private fun initLanguage(): String {
-        return when (Paper.book().read(Const.APP_LANGUAGE, "ru").lowercase(Locale.getDefault())) {
+        return when (getFromPaper(Const.APP_LANGUAGE, "ru").lowercase(Locale.getDefault())) {
             LANG_UZ, LANG_UZL -> LANG_UZ
             LANG_RU -> LANG_RU
             else -> LANG_EN

@@ -12,7 +12,7 @@ import uz.fido.network.domain.model.payment.PaymentReference
 import uz.fido.network.domain.model.payment.PaymentService
 import uz.fido.utils.const.Const
 import uz.fido.utils.log.Logger
-import uz.fido.utils.utility.language.LocaleHelper
+import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
 import java.sql.SQLException
 import kotlin.collections.ArrayList
 

@@ -16,7 +16,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.edit_user.EditUserInfo
 import uz.fido.universaldigital.R
@@ -25,6 +24,8 @@ import uz.fido.universaldigital.databinding.FragmentEditProfileBinding
 import uz.fido.universaldigital.ui.fragments.profile.MenuProfileViewModel
 import uz.fido.universaldigital.ui.fragments.profile.edit_photo.EditPhotoActivity
 import uz.fido.universaldigital.ui.utils.extensions.fixQuestionMarks
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientId
@@ -49,9 +50,9 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
         storageReference = storage!!.reference
         loadProfileImage()
         binding.apply {
-            userName.setText(Paper.book().read(Const.FIRST_NAME, getString(R.string.unknown)).fixQuestionMarks())
-            surname.setText(Paper.book().read(Const.LAST_NAME, getString(R.string.unknown)).fixQuestionMarks())
-            mail.setText(Paper.book().read(Const.EMAIL, getString(R.string.unknown)))
+            userName.setText(getFromPaper(Const.FIRST_NAME, getString(R.string.unknown)).fixQuestionMarks())
+            surname.setText(getFromPaper(Const.LAST_NAME, getString(R.string.unknown)).fixQuestionMarks())
+            mail.setText(getFromPaper(Const.EMAIL, getString(R.string.unknown)))
         }
     }
 
@@ -78,19 +79,19 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
             if (it.status == Status.ERROR) {
                 showSnackbar(it.message.toString())
             } else {
-                Paper.book().write(Const.FIRST_NAME, binding.userName.text.toString().uppercase())
-                Paper.book().write(Const.LAST_NAME, binding.surname.text.toString().uppercase())
-                Paper.book().write(Const.PAPER_CLIENT_FULL_NAME, binding.userName.text.toString().uppercase() + " " + binding.surname.text.toString().uppercase())
-                Paper.book().write(Const.EMAIL, binding.mail.text.toString().lowercase())
+                saveToPaper(Const.FIRST_NAME, binding.userName.text.toString().uppercase())
+                saveToPaper(Const.LAST_NAME, binding.surname.text.toString().uppercase())
+                saveToPaper(Const.PAPER_CLIENT_FULL_NAME, binding.userName.text.toString().uppercase() + " " + binding.surname.text.toString().uppercase())
+                saveToPaper(Const.EMAIL, binding.mail.text.toString().lowercase())
                 pop()
             }
         }
     }
 
     private fun loadProfileImage() {
-        if (!Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNullOrEmpty()) {
+        if (getFromPaper(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
             Picasso.get()
-                .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
+                .load(getFromPaper(Const.PAPER_USER_PHOTO_PATH))
                 .placeholder(R.drawable.ic_profile_image_empty)
                 .error(R.drawable.ic_profile_image_empty)
                 .into(binding.profileImage)
@@ -155,7 +156,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
     private val editPhotoIntent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK && it.data != null) {
             val path = it.data?.getStringExtra(EditPhotoActivity.RESULT_IMAGE)
-            Paper.book().write(Const.PAPER_USER_PHOTO_PATH, path)
+            saveToPaper(Const.PAPER_USER_PHOTO_PATH, path)
             Picasso.get().load(path).into(binding.profileImage)
             uploadImageToFirebase(path!!.toUri())
         }

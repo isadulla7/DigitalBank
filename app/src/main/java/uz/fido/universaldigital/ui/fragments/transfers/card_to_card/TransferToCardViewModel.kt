@@ -29,7 +29,7 @@ class TransferToCardViewModel @Inject constructor(
     fun setToFavoriteTransfer(objectValue: String) = liveData(Dispatchers.IO) {
         emit(
             p2PRepository.setToPopularTransfer(
-                getClientToken(),
+                context.getClientToken(),
                 SetPopularityRequest(to_object_value = objectValue)
             )
         )
@@ -38,7 +38,7 @@ class TransferToCardViewModel @Inject constructor(
     fun setToNonFavoriteTransfer(objectValue: String) = liveData(Dispatchers.IO) {
         emit(
             p2PRepository.setToNonPopularTransfer(
-                getClientToken(),
+                context.getClientToken(),
                 SetPopularityRequest(to_object_value = objectValue)
             )
         )

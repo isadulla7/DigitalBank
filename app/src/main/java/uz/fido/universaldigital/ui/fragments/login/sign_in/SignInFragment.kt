@@ -8,7 +8,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
 import uz.fido.network.domain.model.abc_base.SwapKeysResponse
@@ -20,10 +19,12 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignInBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpFragment
+import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
-import uz.fido.utils.app.getFCMToken
 import uz.fido.utils.const.Const
 import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.security.CryptoUtil
@@ -85,7 +86,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun swapKeysRequest() {
-        Paper.book().write(Const.DEVICE_CODE, requireContext().getDeviceIds())
+        saveToPaper(Const.DEVICE_CODE, requireContext().getDeviceIds())
         viewModel.swapKeys(
             SwapKeysRequest(
                 device_code = requireContext().getDeviceIds(),
@@ -127,15 +128,15 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     private fun setKeyBForDiffieHellman(response: SwapKeysResponse) {
         try {
             val additionalText = CryptoUtil.encrypt(requireContext().getDeviceIds(), requireContext().getDeviceIds())
-            DiffieHellman.getDiffieHellman().setKeyBSwapKey(response.ecnryptData, additionalText)
+            DiffieHellman.getDiffieHellman().setKeyBSwapKey(response.ecnryptData, additionalText, requireContext())
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     private fun checkUserSignInRequest(data: UserInfo) {
-        Paper.book().write("VERSION_CODE", BuildConfig.VERSION_CODE.toString())
-        Paper.book().write("VERSION_NAME", BuildConfig.VERSION_NAME)
+        saveToPaper("VERSION_CODE", BuildConfig.VERSION_CODE.toString())
+        saveToPaper("VERSION_NAME", BuildConfig.VERSION_NAME)
         val device = GetDeviceInfo(requireContext()).deviceInfo
         val model = SignInRequestNew(
             phone_number = phoneNumberFormatted(),
@@ -149,7 +150,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             device_code = requireContext().getDeviceIds(),
             device_name = getDeviceName(),
             userInfo = data,
-            fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
+            fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
             version = "0",
             sim_iccd = device.simCcd.toString(),
             os_system_version_api = "A",
@@ -189,7 +190,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_IN)
             putSerializable(ConfirmSmsFragment.SIGN_IN_REQUEST, model)
         }
-        Paper.book().write(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
+        saveToPaper(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
         gotoWithSlide(R.id.confirmSmsFragmentLogin, bundle)
     }
 

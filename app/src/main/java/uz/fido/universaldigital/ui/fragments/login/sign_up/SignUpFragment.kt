@@ -7,7 +7,6 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.BaseResponse
@@ -21,6 +20,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.Const
@@ -55,7 +55,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             if (isValidPhoneNumber()) {
                 if (isInternetConnected(requireContext())) {
                     binding.btnContinue.setProgress(true)
-                    Paper.book().write(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
+                    saveToPaper(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
                     swapKeysRequest()
                 }
             }
@@ -88,9 +88,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun swapKeysRequest() {
-        Paper.book().write("VERSION_CODE", BuildConfig.VERSION_CODE.toString())
-        Paper.book().write("VERSION_NAME", BuildConfig.VERSION_NAME)
-        Paper.book().write(Const.DEVICE_CODE, requireContext().getDeviceIds())
+        saveToPaper("VERSION_CODE", BuildConfig.VERSION_CODE.toString())
+        saveToPaper("VERSION_NAME", BuildConfig.VERSION_NAME)
+        saveToPaper(Const.DEVICE_CODE, requireContext().getDeviceIds())
         viewModel.swapKeys(
             SwapKeysRequest(
                 device_code = requireContext().getDeviceIds(),
@@ -177,7 +177,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     private fun setKeyBForDiffieHellman(response: SwapKeysResponse) {
         try {
             val additionalText = CryptoUtil.encrypt(requireContext().getDeviceIds(), requireContext().getDeviceIds())
-            DiffieHellman.getDiffieHellman().setKeyBSwapKey(response.ecnryptData, additionalText)
+            DiffieHellman.getDiffieHellman().setKeyBSwapKey(response.ecnryptData, additionalText, requireContext())
         } catch (e: Exception) {
             e.printStackTrace()
         }

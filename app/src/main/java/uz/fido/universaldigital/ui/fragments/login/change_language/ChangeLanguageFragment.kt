@@ -10,7 +10,7 @@ import uz.fido.utils.const.LanguageConst
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.utility.activity.tintSystemBars
 import uz.fido.utils.utility.fragment.goto
-import uz.fido.utils.utility.language.LocaleHelper
+import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
 
 class ChangeLanguageFragment : BaseSimpleFragment<FragmentChangeLanguageBinding>(
     FragmentChangeLanguageBinding::inflate

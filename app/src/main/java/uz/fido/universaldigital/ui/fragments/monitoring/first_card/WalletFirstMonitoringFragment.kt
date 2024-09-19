@@ -38,6 +38,7 @@ import uz.fido.utils.utility.user.getClientToken
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+
 @AndroidEntryPoint
 class WalletFirstMonitoringFragment :
     BaseFragment<FragmentWalletFirstMonitoringBinding, LocalMonitoringViewModel>(
@@ -46,8 +47,8 @@ class WalletFirstMonitoringFragment :
     private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
     private var operationType = 2
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
-    private var choose:Int=2
-    private var timeType:String=""
+    private var choose: Int = 2
+    private var timeType: String = ""
 
     private var dateBegin: String = ""
     private var dateEnd: String = ""
@@ -94,10 +95,10 @@ class WalletFirstMonitoringFragment :
         totalList = arrayListOf()
         val inputFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
         val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        val formatStartDate=inputFormat.parse(dateBegin)
-        val formatEndDate=inputFormat.parse(dateEnd)
-        dateBegin=format.format(formatStartDate)
-        dateEnd=format.format(formatEndDate)
+        val formatStartDate = inputFormat.parse(dateBegin)
+        val formatEndDate = inputFormat.parse(dateEnd)
+        dateBegin = format.format(formatStartDate)
+        dateEnd = format.format(formatEndDate)
         val type = choose
         val info = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
         val model = AccountHistoriesRequest(
@@ -138,37 +139,37 @@ class WalletFirstMonitoringFragment :
 
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.appBar.setOnClickListener {
-            if (dateBegin!="" && dateBegin.contains(".")){
+            if (dateBegin != "" && dateBegin.contains(".")) {
                 val inputFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
                 val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-                val formatStartDate=format.parse(dateBegin)
-                val formatEndDate=format.parse(dateEnd)
-                dateBegin=inputFormat.format(formatStartDate)
-                dateEnd=inputFormat.format(formatEndDate)
+                val formatStartDate = format.parse(dateBegin)
+                val formatEndDate = format.parse(dateEnd)
+                dateBegin = inputFormat.format(formatStartDate)
+                dateEnd = inputFormat.format(formatEndDate)
             }
-            filterDialog= MonitoringAllCardDialog(choose,dateBegin,dateEnd,timeType,
-                onClickItem = { choose,startDate,endDate,type->
-                    this.choose=choose
-                    dateBegin=startDate
-                    dateEnd=endDate
-                    timeType=type
+            filterDialog = MonitoringAllCardDialog(choose, dateBegin, dateEnd, timeType,
+                onClickItem = { choose, startDate, endDate, type ->
+                    this.choose = choose
+                    dateBegin = startDate
+                    dateEnd = endDate
+                    timeType = type
                     totalList.clear()
                     binding.appBar.setAdditionalIcon(R.drawable.ic_filter_yes)
                     getFilterWalletList()
                     filterDialog.dismiss()
                 },
                 clear = {
-                    this.choose=2
-                    dateBegin=""
-                    dateEnd=""
-                    timeType=""
+                    this.choose = 2
+                    dateBegin = ""
+                    dateEnd = ""
+                    timeType = ""
                     totalList.clear()
                     setImageFirst()
                     setTime()
                     getWalletList(1, operationType)
                     filterDialog.dismiss()
                 })
-            filterDialog.show(childFragmentManager,"")
+            filterDialog.show(childFragmentManager, "")
 
         }
     }
@@ -203,10 +204,10 @@ class WalletFirstMonitoringFragment :
                 }
             }
         } else {
-            binding.shimmerView.visibility= View.GONE
-            binding.rec.visibility= View.GONE
-            binding.layoutEmpty.visibility= View.VISIBLE
-            binding.layoutEmpty.title.text=getString(R.string.card_list_no)
+            binding.shimmerView.visibility = View.GONE
+            binding.rec.visibility = View.GONE
+            binding.layoutEmpty.visibility = View.VISIBLE
+            binding.layoutEmpty.title.text = getString(R.string.card_list_no)
         }
     }
 
@@ -300,7 +301,7 @@ class WalletFirstMonitoringFragment :
     private fun getCardList() {
         val card = arguments?.serializable<CardResponse>(Const.CARD)
         walletList = arrayListOf()
-        walletList.add(card?.object_id?:"")
+        walletList.add(card?.object_id ?: "")
     }
 
     private fun emptyView() {

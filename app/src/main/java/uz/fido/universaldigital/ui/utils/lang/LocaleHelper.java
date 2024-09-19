@@ -1,4 +1,4 @@
-package uz.fido.utils.utility.language;
+package uz.fido.universaldigital.ui.utils.lang;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -6,20 +6,21 @@ import android.content.res.Resources;
 
 import java.util.Locale;
 
-import io.paperdb.Paper;
+import uz.fido.universaldigital.ui.utils.extensions.PaperExtensionKt;
 
 public class LocaleHelper {
 
     public static String getLanguage(Context context) {
-        if (getPersistedData(Locale.getDefault().getLanguage()) != null && !getPersistedData(Locale.getDefault().getLanguage()).isEmpty()) {
-            return getPersistedData(Locale.getDefault().getLanguage());
+        getPersistedData(Locale.getDefault().getLanguage(), context);
+        if (!getPersistedData(Locale.getDefault().getLanguage(), context).isEmpty()) {
+            return getPersistedData(Locale.getDefault().getLanguage(), context);
         } else {
             return "uz";
         }
     }
 
     public static Context setLocale(Context context, String language) {
-        persist(language);
+        persist(language, context);
         return updateResources(context, language);
     }
 
@@ -39,12 +40,12 @@ public class LocaleHelper {
         }
     }
 
-    private static String getPersistedData(String defaultLanguage) {
-        return Paper.book().read("lang", defaultLanguage);
+    private static String getPersistedData(String defaultLanguage, Context context) {
+        return PaperExtensionKt.getFromPaper(context, "lang", defaultLanguage);
     }
 
-    private static void persist(String language) {
-        Paper.book().write("lang", language);
+    private static void persist(String language, Context context) {
+        PaperExtensionKt.saveToPaper(context, "lang", language);
     }
 
     private static Context updateResources(Context context, String language) {

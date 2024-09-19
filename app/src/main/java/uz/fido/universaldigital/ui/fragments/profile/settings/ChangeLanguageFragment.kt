@@ -8,10 +8,10 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSettingsChangeLangBinding
 import uz.fido.universaldigital.ui.fragments.profile.MenuProfileViewModel
+import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.LanguageConst
 import uz.fido.utils.utility.fragment.pop
-import uz.fido.utils.utility.language.LocaleHelper
 
 @AndroidEntryPoint
 class ChangeLanguageFragment :
@@ -67,8 +67,7 @@ class ChangeLanguageFragment :
     }
 
     private fun setLocale(lang: String) {
-       // Paper.book().write(Const.UPDATE_MAIN_WIDGETS, true)
-        Paper.book().write(Const.UPDATE_LANG,true)
+        Paper.book().write(Const.UPDATE_LANG, true)
         LocaleHelper.setLocale(requireContext(), lang)
         requireActivity().recreate()
         getSelectedLang()
