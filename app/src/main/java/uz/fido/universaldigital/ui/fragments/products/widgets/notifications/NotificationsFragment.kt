@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.ethanhua.skeleton.SkeletonScreen
@@ -17,6 +18,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentNotificationsBinding
 import uz.fido.universaldigital.ui.fragments.payment.templates.adapter.PaymentTemplatesAdapter
+import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -30,6 +32,7 @@ class NotificationsFragment : BaseFragment<FragmentNotificationsBinding, Notific
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var shimmerAdapter: PaymentTemplatesAdapter
+    private val menuProductViewModel by activityViewModels<MenuProductsViewModel>()
 
     private var notificationsAdapter: NotificationsAdapter? = null
     private var skeletonScreen: SkeletonScreen? = null
@@ -110,6 +113,10 @@ class NotificationsFragment : BaseFragment<FragmentNotificationsBinding, Notific
         super<BaseFragment>.openNotification(item)
         item.is_read = "Y"
         notificationsAdapter!!.notifyItemChanged(news.indexOf(item))
+        val filter= news.filter { it.is_read=="N" }
+        val arraylist= arrayListOf<Notification>()
+        arraylist.addAll(filter)
+        menuProductViewModel.setNotificationList(arraylist)
         val list = ArrayList<String>()
         list.add(item.notification_id)
         viewModel.updateNotificationStatus(
