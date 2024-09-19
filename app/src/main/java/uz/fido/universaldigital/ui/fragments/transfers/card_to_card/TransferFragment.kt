@@ -84,7 +84,11 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
         observe(viewModel.popularTransfersLoader, ::showLoader)
         observe(viewModel.cardInfo, ::cardInfoLoaded)
         observe(viewModel.p2pInfo, ::p2pInfoLoaded)
-
+        if (arguments != null) {
+            if (requireArguments().getString(PopularTransfersFragment.DATA) != null) {
+                binding.etCardNumber.setText(requireArguments().getString(PopularTransfersFragment.DATA))
+            }
+        }
         setFragmentResultListener(PopularTransfersFragment.REQUEST_KEY) { _, bundle ->
             val cardNumber = bundle.getString(PopularTransfersFragment.DATA)
             binding.etCardNumber.setText(cardNumber)

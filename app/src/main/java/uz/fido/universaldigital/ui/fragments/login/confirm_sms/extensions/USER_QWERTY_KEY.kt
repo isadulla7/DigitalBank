@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.os.Build
 import android.util.Base64
+import androidx.fragment.app.Fragment
 import androidx.security.crypto.EncryptedFile
 import androidx.security.crypto.MasterKey
 import com.google.firebase.messaging.FirebaseMessaging
@@ -13,6 +14,8 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.ui.activities.LoginActivity
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.APIServiceConst.profileImageUrl
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_QWERTY_KEY
@@ -26,40 +29,38 @@ const val USER_SMS_KEY = "user_sms_key"
 
 fun Context.saveSignInResponse(signInResponse: SignInResponse) {
     Paper.book().write(Const.PAPER_CLIENT_INFO, signInResponse)
-    Paper.book().write(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
-    Paper.book().write(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
-    Paper.book().write(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
-    Paper.book().write(Const.PAPER_CLIENT_ID, signInResponse.user_id)
-    Paper.book().write(Const.FIRST_NAME, signInResponse.name)
-    Paper.book().write(Const.LAST_NAME, signInResponse.surname)
-    Paper.book().write(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
+    saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
+    saveToPaper(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
+    saveToPaper(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
+    saveToPaper(Const.PAPER_CLIENT_ID, signInResponse.user_id)
+    saveToPaper(Const.FIRST_NAME, signInResponse.name)
+    saveToPaper(Const.LAST_NAME, signInResponse.surname)
+    saveToPaper(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
     signInResponse.password?.let {
         saveUserQwerty(it)
     }
 }
 
-fun saveSignInPinResponse(signInResponse: SignInResponse) {
-    Paper.book().apply {
-        write(Const.PAPER_CLIENT_INFO, signInResponse)
-        write(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
-        write(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
-        write(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
-        write(Const.PAPER_CLIENT_ID, signInResponse.user_id)
-        write(Const.FIRST_NAME, signInResponse.name)
-        write(Const.LAST_NAME, signInResponse.surname)
-        write(Const.PATRONYMIC, signInResponse.patronymic)
-        write(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
-        write(Const.PAPER_CLIENT_POINTS, signInResponse.points ?: "0")
-        write(Const.PAPER_CLIENT_STATUS_NAME, signInResponse.user_status_name)
-        write(Const.PAPER_CLIENT_STATUS_ID, signInResponse.user_status_id)
-        write(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
-        write(Const.PAPER_CLIENT_APPLICATION_COUNT, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
-        write(Const.APPLICATION_COUNT, signInResponse.application_count.toString())
-        write(Const.USER_FULL_NAME, signInResponse.surname + " " + signInResponse.name + " " + signInResponse.patronymic)
-        write(Const.USER_BIRTHDAY, signInResponse.date_of_birth)
-        write(Const.USER_PASSWORD_DATA, signInResponse.passport_serial + " " + signInResponse.passport_number)
-        write(Const.USER_PASS_GIVEN_DATE, signInResponse.passport_registration_date)
-    }
+fun Fragment.saveSignInPinResponse(signInResponse: SignInResponse) {
+    Paper.book().write(Const.PAPER_CLIENT_INFO, signInResponse)
+    saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
+    saveToPaper(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
+    saveToPaper(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
+    saveToPaper(Const.PAPER_CLIENT_ID, signInResponse.user_id)
+    saveToPaper(Const.FIRST_NAME, signInResponse.name)
+    saveToPaper(Const.LAST_NAME, signInResponse.surname)
+    saveToPaper(Const.PATRONYMIC, signInResponse.patronymic)
+    saveToPaper(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
+    saveToPaper(Const.PAPER_CLIENT_POINTS, signInResponse.points ?: "0")
+    saveToPaper(Const.PAPER_CLIENT_STATUS_NAME, signInResponse.user_status_name)
+    saveToPaper(Const.PAPER_CLIENT_STATUS_ID, signInResponse.user_status_id)
+    saveToPaper(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
+    saveToPaper(Const.PAPER_CLIENT_APPLICATION_COUNT, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
+    saveToPaper(Const.APPLICATION_COUNT, signInResponse.application_count.toString())
+    saveToPaper(Const.USER_FULL_NAME, signInResponse.surname + " " + signInResponse.name + " " + signInResponse.patronymic)
+    saveToPaper(Const.USER_BIRTHDAY, signInResponse.date_of_birth)
+    saveToPaper(Const.USER_PASSWORD_DATA, signInResponse.passport_serial + " " + signInResponse.passport_number)
+    saveToPaper(Const.USER_PASS_GIVEN_DATE, signInResponse.passport_registration_date)
 }
 
 fun Context.saveUserQwerty(qwerty: String) {
@@ -90,7 +91,7 @@ fun Context.saveUserQwerty(qwerty: String) {
             e.stackTrace
         }
     } else {
-        Paper.book().write(USER_QWERTY_KEY, qwerty)
+        saveToPaper(USER_QWERTY_KEY, qwerty)
     }
 }
 
@@ -123,7 +124,7 @@ fun Context.saveUserSms(qwerty: String) {
             e.printStackTrace()
         }
     } else {
-        Paper.book().write(USER_SMS_KEY, qwerty)
+        saveToPaper(USER_SMS_KEY, qwerty)
     }
 }
 
@@ -157,7 +158,7 @@ fun Context.getUserQwerty(): String {
             "404"
         }
     } else {
-        return Paper.book().read(USER_QWERTY_KEY, "")
+        return getFromPaper(USER_QWERTY_KEY)
     }
 }
 

@@ -16,6 +16,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentAutoPaymentBinding
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.adapter.AutoPaymentsAdapter
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.dialog.AutoPaymentOperationDialog
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -110,7 +111,7 @@ class AutoPaymentFragment : BaseFragment<FragmentAutoPaymentBinding, AutoPayment
             showSkeleton(binding.recyclerView, autoPaymentAdapter, R.layout.shimmer_item_history)
         viewModel.getAutoPaymentList(
             getClientToken(),
-            AutoPaymentRequest(Paper.book().read(Const.PAPER_CLIENT_PHONE, ""))
+            AutoPaymentRequest(getFromPaper(Const.PAPER_CLIENT_PHONE, ""))
         ).observe(viewLifecycleOwner) {
             skeletonScreen.hide()
             when (it.status) {

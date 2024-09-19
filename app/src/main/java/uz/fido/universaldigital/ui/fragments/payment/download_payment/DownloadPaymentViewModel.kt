@@ -20,6 +20,6 @@ class DownloadPaymentViewModel @Inject constructor(
     var paymentGroupMutableList = MutableLiveData<ArrayList<PaymentGroup>>()
 
     fun downloadPayment() = liveData(Dispatchers.IO) {
-        emit(paymentRepository.getPaymentFile(getClientToken()))
+        emit(paymentRepository.getPaymentFile(context.getClientToken()))
     }
 }

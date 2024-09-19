@@ -69,18 +69,18 @@ import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 import java.text.DecimalFormat
 
-abstract class BaseHomeFragment : Fragment(), BaseInterface,PermissionInterface {
+abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface {
 
     val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
     private val utilsViewModel: UtilsViewModel by activityViewModels()
-    private lateinit var dialogCard:CardNumberDialog
+    private lateinit var dialogCard: CardNumberDialog
     var mask = "#### #### #### ####"
     private lateinit var databaseHelper: DatabaseHelper
     var typeCurrent = true
     lateinit var binding: FragmentMenuHomeBinding
 
     var mainWidgetsList = ArrayList<MainWidget>()
-    private var nextPage=false
+    private var nextPage = false
 
     var container: ViewGroup? = null
 
@@ -144,24 +144,24 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface,PermissionInterface 
             LayoutInflater.from(requireContext()), container, false
         )
         layoutBinding.btnContact.setOnClickListener {
-            if (typeCurrent){
-                 dialogCard= CardNumberDialog(onClick = {
-                     goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to it.replace(" ","")))
-                     dialogCard.dismiss()
-                 })
-                dialogCard.show(childFragmentManager,"")
-            }else{
-                goto(R.id.transferByPhoneFragment, bundleOf("contact" to "open",Const.CARD_NUMBER to ""))
+            if (typeCurrent) {
+                dialogCard = CardNumberDialog(onClick = {
+                    goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to it.replace(" ", "")))
+                    dialogCard.dismiss()
+                })
+                dialogCard.show(childFragmentManager, "")
+            } else {
+                goto(R.id.transferByPhoneFragment, bundleOf("contact" to "open", Const.CARD_NUMBER to ""))
             }
         }
 
-        if (typeCurrent){
+        if (typeCurrent) {
             layoutBinding.imageType.setImageResource(R.drawable.ic_phone_28)
             layoutBinding.btnContact.setImageResource(R.drawable.ic_star_unselected)
             layoutBinding.title.setText(R.string.payments)
             layoutBinding.phoneNumberLayout.setHint(R.string.card_or_phone_number)
 
-        }else{
+        } else {
             layoutBinding.btnContact.setImageResource(R.drawable.ic_contact)
             layoutBinding.imageType.setImageResource(R.drawable.all_cards)
             layoutBinding.title.setText(R.string.mobile_network)
@@ -197,7 +197,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface,PermissionInterface 
                             if (text.startsWith("998") || text.startsWith("+99")) {
                                 mask = "#### ## ### ## ##"
                                 if (text.startsWith("998"))
-                                text = "+$text"
+                                    text = "+$text"
                             } else {
                                 mask = "#### #### #### ####"
                             }
@@ -217,24 +217,24 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface,PermissionInterface 
                     layoutBinding.etPhoneNumber.addTextChangedListener(this)
                     isUpdating = false
 
-                    if (typeCurrent){
-                        if (text.startsWith("+998") && text.length==17){
-                            goto(R.id.transferByPhoneFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ","")))
+                    if (typeCurrent) {
+                        if (text.startsWith("+998") && text.length == 17) {
+                            goto(R.id.transferByPhoneFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ", "")))
                             layoutBinding.etPhoneNumber.setText("")
-                        }else if (text.length==19){
-                           goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ","")))
+                        } else if (text.length == 19) {
+                            goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ", "")))
                             layoutBinding.etPhoneNumber.setText("")
                         }
-                    }else if (text.length==17){
-                        val serviceCode= mobileServiceId(text.replace("+","").replace(" ",""))
-                        if (serviceCode=="error"){
+                    } else if (text.length == 17) {
+                        val serviceCode = mobileServiceId(text.replace("+", "").replace(" ", ""))
+                        if (serviceCode == "error") {
                             Toast.makeText(
                                 requireContext(),
                                 getString(R.string.wrong_format),
                                 Toast.LENGTH_SHORT
                             ).show()
-                        }else{
-                            gotoMobilePayments(serviceCode,text,layoutBinding.etPhoneNumber)
+                        } else {
+                            gotoMobilePayments(serviceCode, text, layoutBinding.etPhoneNumber)
 
                         }
 
@@ -250,16 +250,16 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface,PermissionInterface 
 
     private fun gotoMobilePayments(
         paymentServiceId: String,
-        phoneNumber:String,
-        editText:EditText
+        phoneNumber: String,
+        editText: EditText
     ) {
-        databaseHelper=DatabaseHelper(requireContext())
+        databaseHelper = DatabaseHelper(requireContext())
         val paymentService = databaseHelper.getServiceByContractId(paymentServiceId)
         val bundle = Bundle()
         if (paymentService != null) {
             bundle.putString(
                 PaymentFragment.MOBILE_NUMBER,
-                phoneNumber.replace(" ","")
+                phoneNumber.replace(" ", "")
             )
             bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, paymentService)
             bundle.putInt(
@@ -269,7 +269,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface,PermissionInterface 
             bundle.putString("back_type", "payment")
             gotoWithSlide(R.id.paymentFragment, bundle)
             editText.setText("")
-        }else{
+        } else {
             Toast.makeText(
                 requireContext(),
                 getString(R.string.wrong_format),
@@ -414,7 +414,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface,PermissionInterface 
         }
         binding.widgetsLayout.addView(layoutBinding.root)
         layoutBinding.allTransfers.setOnClickListener {
-            goto(R.id.fragmentPopularTransfers)
+            goto(R.id.fragmentPopularTransfers, bundleOf("path" to "home"))
         }
     }
 

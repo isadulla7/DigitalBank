@@ -25,6 +25,7 @@ import uz.fido.network.domain.model.template.GetTemplateRequest
 import uz.fido.network.domain.model.template.SetTemplateOrderRequest
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.base.AbstractViewModel
+import uz.fido.utils.utility.user.getClientToken
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,9 +37,8 @@ class UtilsViewModel @Inject constructor(
     private val p2PRepository: IP2PRepository,
     private val cardsUseCase: CardsUseCase,
     private val iCardRepository: ICardRepository,
-    private val cardRepository: CardRepositoryImpl,
-
-    ) : AbstractViewModel(application) {
+    private val cardRepository: CardRepositoryImpl
+) : AbstractViewModel(application) {
 
     var shouldTemplateUpdate = true
 
@@ -48,7 +48,7 @@ class UtilsViewModel @Inject constructor(
 
     fun updateRates() {
         vmScope.launch {
-            val rates = cardsUseCase.getRates()
+            val rates = cardsUseCase.getRates(context.getClientToken())
             currencyRates.postValue(rates)
         }
     }

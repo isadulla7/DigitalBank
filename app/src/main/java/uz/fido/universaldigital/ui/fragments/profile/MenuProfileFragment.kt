@@ -8,7 +8,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.domain.model.profile.LogOutRequest
 import uz.fido.universaldigital.BuildConfig
 import uz.fido.universaldigital.R
@@ -16,6 +15,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMenuProfileBinding
 import uz.fido.universaldigital.ui.dialogs.LogOutDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.isUserIdentified
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.Const
@@ -53,12 +53,12 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
 
     private fun initDetails() {
         loadProfileImage()
-        if (Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotEmpty() && Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "").isNotBlank()) {
-            binding.userName.text = Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, getString(R.string.your_phone_number))
+        if (getFromPaper(Const.PAPER_CLIENT_FULL_NAME).isNotEmpty() && getFromPaper(Const.PAPER_CLIENT_FULL_NAME).isNotBlank()) {
+            binding.userName.text = getFromPaper(Const.PAPER_CLIENT_FULL_NAME, getString(R.string.your_phone_number))
         } else {
             binding.userName.text = getString(R.string.your_phone_number)
         }
-        binding.userPhone.text = Format.phoneFormat(Paper.book().read(Const.PAPER_CLIENT_PHONE, ""))
+        binding.userPhone.text = Format.phoneFormat(getFromPaper(Const.PAPER_CLIENT_PHONE))
         binding.version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
         storage = FirebaseStorage.getInstance()
         storageReference = storage!!.reference
@@ -95,9 +95,9 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
     }
 
     private fun loadProfileImage() {
-        if (!Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNullOrEmpty()) {
+        if (getFromPaper(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
             Picasso.get()
-                .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
+                .load(getFromPaper(Const.PAPER_USER_PHOTO_PATH))
                 .placeholder(R.drawable.ic_profile_image_empty)
                 .error(R.drawable.ic_profile_image_empty)
                 .into(binding.profileImage)
@@ -114,8 +114,8 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             logOutRequest = LogOutRequest(
                 device_code = requireContext().getDeviceIds(),
                 device_type = "A",
-                fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
-                phone_number = Paper.book().read(Const.PAPER_CLIENT_PHONE),
+                fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
+                phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE),
                 sim_iccd = device.simCcd,
                 network_state = device.networkState,
                 imei_data = device.imeiData,

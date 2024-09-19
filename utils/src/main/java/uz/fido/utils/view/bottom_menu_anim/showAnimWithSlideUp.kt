@@ -5,7 +5,7 @@ import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
 import androidx.core.view.doOnPreDraw
 
-fun View.showAnimWithSlideUp(duration: Long = 300, endAction: () -> Unit = {}) {
+fun View.showAnimWithSlideUp(duration: Long = 0, endAction: () -> Unit = {}) {
     if (isNotVisible()) {
         show()
         this.doOnPreDraw {
@@ -24,7 +24,7 @@ fun View.showAnimWithSlideUp(duration: Long = 300, endAction: () -> Unit = {}) {
     }
 }
 
-fun View.hideAnimWithSlideDown(duration: Long = 300, endAction: () -> Unit = {}) {
+fun View.hideAnimWithSlideDown(duration: Long = 0, endAction: () -> Unit = {}) {
     if (isVisible()) {
         animate()
             .alpha(0.5f)

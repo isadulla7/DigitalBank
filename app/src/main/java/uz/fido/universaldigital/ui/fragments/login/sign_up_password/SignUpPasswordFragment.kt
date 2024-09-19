@@ -18,6 +18,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpPasswordBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.utils.extensions.containsNumber
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.hasLetter
 import uz.fido.universaldigital.ui.utils.extensions.hasSpecialSymbol
 import uz.fido.universaldigital.ui.utils.extensions.removeSpace
@@ -106,7 +107,7 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
             device_name = getDeviceName(),
             device_type = "A",
             email = "",
-            fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
+            fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
             flag = SignUpFlagsEnum.Continue.flag,
             imei_data = device.imei_data.toString(),
             invited_user_id = "",

@@ -1,22 +1,19 @@
-package uz.fido.utils.app
+package uz.fido.universaldigital.ui.utils.extensions
 
-import android.util.Log
+import androidx.fragment.app.Fragment
 import com.google.firebase.messaging.FirebaseMessaging
-import io.paperdb.Paper
 import uz.fido.utils.const.Const
 import uz.fido.utils.log.Logger
 
-fun getFCMToken(){
-
-    if ((Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "").isEmpty()) {
+fun Fragment.getFCMToken() {
+    if (getFromPaper(Const.PAPER_FCM_TOKEN).isEmpty()) {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 val token = task.result
-                Logger.writeLog("=====FCM TOKEN1${token}")
+                Logger.writeLog("===== FCM TOKEN ===== $token")
                 Logger.writeLogByKey(Const.PAPER_FCM_TOKEN, token)
-                Paper.book().write(Const.PAPER_FCM_TOKEN, token)
+                saveToPaper(Const.PAPER_FCM_TOKEN, token)
             }
         }
-
     }
 }

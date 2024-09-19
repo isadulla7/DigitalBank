@@ -6,8 +6,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Book
-import io.paperdb.Paper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,6 +17,8 @@ import uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchList
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchList.GROUP_NAME_PAYMENT
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchList.GROUP_NAME_PAYMENT_GROUP
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.model.SearchItem
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 
 @AndroidEntryPoint
@@ -37,10 +37,10 @@ abstract class DownloadPayment : Fragment() {
         databaseHelper = DatabaseHelper(requireContext())
     }
 
-    fun downloadCheckLang(){
+    fun downloadCheckLang() {
         databaseHelper = DatabaseHelper(requireContext())
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default){
-            databaseHelper?.let{databaseHelper ->
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
+            databaseHelper?.let { databaseHelper ->
                 if (databaseHelper.getGroupList().size != 0) {
                     Log.d("TAG", "downloadCheckLang:${databaseHelper.getGroupList()[0].name} ")
                     paymentGroupsList = databaseHelper.getGroupList()
@@ -61,8 +61,8 @@ abstract class DownloadPayment : Fragment() {
     }
 
     fun checkForPaymentDownload() {
-        val currentDatabaseVersion = Paper.book().read(Const.PAPER_PAYMENT_VERSION, "0")
-        val savedDatabaseVersion = Paper.book().read(Const.PAPER_PAYMENT_VERSION_DB, "0")
+        val currentDatabaseVersion = getFromPaper(Const.PAPER_PAYMENT_VERSION, "0")
+        val savedDatabaseVersion = getFromPaper(Const.PAPER_PAYMENT_VERSION_DB, "0")
         if (downloadPaymentViewModel.paymentGroupMutableList.value != null && downloadPaymentViewModel.paymentGroupMutableList.value!!.size != 0
         ) {
             downloadPaymentInterface.getMutablePaymentList()
@@ -75,7 +75,7 @@ abstract class DownloadPayment : Fragment() {
         }
     }
 
-     private fun getPaymentsFromLocal() {
+    private fun getPaymentsFromLocal() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
             databaseHelper?.let { databaseHelper ->
                 if (databaseHelper.getGroupList().size != 0) {
@@ -120,7 +120,7 @@ abstract class DownloadPayment : Fragment() {
                 databaseHelper.insertReferenceList(payment.references_list ?: ArrayList())
                 paymentGroupsList = databaseHelper.getGroupList()
                 downloadPaymentInterface.downloadPaymentSuccess()
-                Paper.book().write(Const.PAPER_PAYMENT_VERSION_DB, payment.curr_version ?: "0")
+                saveToPaper(Const.PAPER_PAYMENT_VERSION_DB, payment.curr_version ?: "0")
             }
         }
     }

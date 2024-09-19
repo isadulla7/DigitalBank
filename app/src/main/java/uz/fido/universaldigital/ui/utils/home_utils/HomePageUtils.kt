@@ -11,6 +11,8 @@ import io.paperdb.Paper
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.ui.fragments.products.MenuHomeFragment
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.widgets.total_balance.TotalBalanceWidget
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
@@ -19,9 +21,9 @@ import java.util.Date
 import java.util.Locale
 
 fun MenuHomeFragment.loadProfileImage() {
-    if (!Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "").isNullOrEmpty()) {
+    if (getFromPaper(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
         Picasso.get()
-            .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
+            .load(getFromPaper(Const.PAPER_USER_PHOTO_PATH))
             .placeholder(R.drawable.ic_profile_image_empty)
             .error(R.drawable.ic_profile_image_empty)
             .into(binding.userAvatar)
@@ -31,8 +33,8 @@ fun MenuHomeFragment.loadProfileImage() {
 }
 
 fun MenuHomeFragment.setUserDetails() {
-    val fullName = Paper.book().read(Const.PAPER_CLIENT_FULL_NAME, "")
-    val clientPhone = Format.phoneFormat(Paper.book().read(Const.PAPER_CLIENT_PHONE, ""))
+    val fullName = getFromPaper(Const.PAPER_CLIENT_FULL_NAME)
+    val clientPhone = Format.phoneFormat(getFromPaper(Const.PAPER_CLIENT_PHONE))
     binding.userName.text = fullName.trim().ifEmpty { clientPhone }
 }
 
@@ -86,7 +88,7 @@ fun MenuHomeFragment.initBalanceWidget(userBalance: String) {
     val dateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
     val updatedText =
         requireContext().getString(R.string.updated_at) + " " + dateFormat.format(Date())
-    Paper.book().write(Const.TOTAL_BALANCE_UPDATED_AT, updatedText)
-    Paper.book().write(Const.TOTAL_BALANCE, userBalance)
+    saveToPaper(Const.TOTAL_BALANCE_UPDATED_AT, updatedText)
+    saveToPaper(Const.TOTAL_BALANCE, userBalance)
 }
 

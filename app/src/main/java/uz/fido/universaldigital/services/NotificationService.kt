@@ -13,6 +13,7 @@ import com.google.firebase.messaging.RemoteMessage
 import io.paperdb.Paper
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.ui.activities.LoginActivity
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.log.Logger
 
@@ -60,7 +61,7 @@ class NotificationService : FirebaseMessagingService() {
 
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
-        Paper.book().write(Const.PAPER_FCM_TOKEN, p0)
+        saveToPaper(Const.PAPER_FCM_TOKEN, p0)
         Logger.writeLogByKey(Const.PAPER_FCM_TOKEN, p0)
     }
 

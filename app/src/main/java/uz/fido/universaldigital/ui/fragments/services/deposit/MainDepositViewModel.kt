@@ -36,6 +36,6 @@ class MainDepositViewModel @Inject constructor(
             emit(depositRepository.calculateDepositAuto(token, calculateDepositAuto))
         }
 
-    fun getBxmList() = liveData(Dispatchers.IO) { emit(depositRepository.getBxmList(getClientToken())) }
+    fun getBxmList() = liveData(Dispatchers.IO) { emit(depositRepository.getBxmList(context.getClientToken())) }
 
 }

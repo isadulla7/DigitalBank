@@ -1,13 +1,14 @@
 package uz.fido.network.data.interceptor
 
+import android.content.Context
 import android.text.TextUtils
-import io.paperdb.Paper
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.CryptoUtil
+import uz.fido.utils.utility.user.getFromPaper
 import java.io.IOException
 
 /**
@@ -21,7 +22,7 @@ import java.io.IOException
  */
 
 
-class DecryptionInterceptor : Interceptor {
+class DecryptionInterceptor(val context: Context) : Interceptor {
 
     @Throws(IOException::class)
     override fun intercept(chain: Interceptor.Chain): Response {
@@ -35,7 +36,7 @@ class DecryptionInterceptor : Interceptor {
             val responseString = response.peekBody(Long.MAX_VALUE).string()
             var decryptedString: String? = null
             try {
-                decryptedString = CryptoUtil.decrypt(responseString, Paper.book().read(Const.KEY_K))
+                decryptedString = CryptoUtil.decrypt(responseString, context.getFromPaper(Const.KEY_K))
             } catch (e: Exception) {
                 e.printStackTrace()
             }

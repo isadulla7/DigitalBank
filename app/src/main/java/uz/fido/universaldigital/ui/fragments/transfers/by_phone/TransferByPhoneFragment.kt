@@ -158,7 +158,7 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
             if (it.getString("amount") != null) {
                 binding.etAmount.setText(it.getString("amount").toString())
             }
-            if (it.getString("contact")!=null){
+            if (it.getString("contact") != null) {
                 if (checkForContactsPermission(this)) {
                     fetchPhoneNumber()
                 }
@@ -323,6 +323,7 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
                 bundleOf(Const.ADD_CARD_OPERATION to AddCardFragment.OPERATION_BY_PHONE)
             )
         }
+        binding.icAddButton.setOnClickListener { goto(R.id.favoriteTransfersFragment) }
     }
 
     private fun continueButtonClickEvent() {

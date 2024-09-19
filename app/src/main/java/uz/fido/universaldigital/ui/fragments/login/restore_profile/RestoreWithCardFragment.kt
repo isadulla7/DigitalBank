@@ -17,6 +17,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentRestoreWithCardBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInResponse
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.PHONE_NUMBER
 import uz.fido.utils.utility.context.GetDeviceInfo
@@ -103,7 +104,7 @@ class RestoreWithCardFragment :
             device_name = getDeviceName(),
             version = "0",
             ip = requireContext().getIpAddress(),
-            fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
+            fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
             sim_iccd = device.sim_iccd,
             network_state = device.network_state,
             imei_data = device.imei_data,

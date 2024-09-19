@@ -6,9 +6,9 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
+import uz.fido.universaldigital.ui.utils.lang.LocaleHelper.getLanguage
 import uz.fido.utils.utility.activity.adjustFontScale
-import uz.fido.utils.utility.language.LocaleHelper
-import uz.fido.utils.utility.language.LocaleHelper.getLanguage
 import uz.fido.utils.utility.theme.PreferencesImpl
 import uz.fido.utils.utility.theme.ThemeDarkEnum
 import uz.fido.utils.view.progress_bar.ProgressBarDialog
