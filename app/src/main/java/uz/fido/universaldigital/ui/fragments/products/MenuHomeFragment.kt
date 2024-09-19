@@ -7,14 +7,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
-import okhttp3.internal.filterList
+import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardInfoRequest
 import uz.fido.network.domain.model.cards.CardResponse
@@ -25,7 +27,13 @@ import uz.fido.network.domain.model.widget.MainWidget
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMenuHomeBinding
+import uz.fido.universaldigital.ui.fragments.products.adapter.CardStackAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeCardsAdapter
+import uz.fido.universaldigital.ui.utils.stack_notification.CardStackLayoutManager
+import uz.fido.universaldigital.ui.utils.stack_notification.CardStackListener
+import uz.fido.universaldigital.ui.utils.stack_notification.Direction
+import uz.fido.universaldigital.ui.utils.stack_notification.StackFrom
+import uz.fido.universaldigital.ui.utils.stack_notification.SwipeableMethod
 import uz.fido.universaldigital.ui.fragments.products.widgets.balance.MainBalanceDialog
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isValidSumCard
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isValidVisaCard
@@ -61,6 +69,8 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     private var totalBalance = 0.0
     private var currency = "UZS"
     private var balanceUpdateCounter = 0
+    private var notificationList = arrayListOf<Notification>()
+    private lateinit var notificationsAdapter:CardStackAdapter
 
     override fun onResume() {
         super.onResume()
@@ -91,60 +101,112 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     private fun initDefaultStates() {
         loadProfileImage()
         setUserDetails()
-        getNotification()
+        setNotification()
+
+
+    }
+
+    private fun setNotification() {
+        lifecycleScope.launch {
+            menuProductsViewModel.notification.collect{item->
+                if (item.isEmpty()){
+                    getNotification()
+                }else{
+                    notificationList=item
+                    checkNotification()
+                }
+            }
+        }
     }
 
     private fun getNotification() {
-        var notificationList = listOf<Notification>()
-        binding.notificationHide.setOnClickListener {
-            if (notificationList.isNotEmpty()){
-                val list = ArrayList<String>()
-                val item=notificationList[0]
-                item.is_read="Y"
-                list.add(item.notification_id)
-                menuProductsViewModel.updateNotificationStatus(
-                    getClientToken(), UpdateNotificationState(list)
-                ).observe(viewLifecycleOwner) {
-                    when(it.status){
-                        Status.SUCCESS->{
-                         val newList = notificationList.filter { it.is_read=="N" }
-                            notificationList=newList
-                           checkNotification(newList)
-                        }
-                        Status.ERROR->{
-
-                        }
-                    }
-                }
-            }
-            binding.consNotification.visibility = View.GONE
-        }
         menuProductsViewModel.getNotifications(
             getClientToken(), GetNotificationsRequest(
-                page_number = "0", page_item_size = "20"
+                page_number = "0",
+                page_item_size = "10"
             )
         ).observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-                    notificationList = resource.data?.notifications?.filter { it.is_read == "N" } ?: emptyList()
-                    checkNotification(notificationList)
+                    val list= resource.data?.notifications?.filter { it.is_read == "N" } ?: emptyList()
+                    val arraylist= arrayListOf<Notification>()
+                    arraylist.addAll(list)
+                    notificationList = arraylist
+                    menuProductsViewModel.setNotificationList(arraylist)
+                    checkNotification()
                 }
 
                 Status.ERROR -> {}
             }
         }
+
     }
 
-    private fun checkNotification(notificationList: List<Notification>) {
+    private fun checkNotification() {
         if (notificationList.isNotEmpty()) {
-            binding.notificationItem.visibility = View.VISIBLE
-            binding.consNotification.visibility = View.VISIBLE
-            binding.notificationItem.text = notificationList.size.toString()
-            binding.notificationTitle.text = notificationList[0].title
-            binding.notificationText.text = notificationList[0].text
+            setNotificationAdapter()
         } else {
             binding.notificationItem.visibility = View.GONE
             binding.consNotification.visibility = View.GONE
+        }
+    }
+
+    private fun setNotificationAdapter() {
+        notificationsAdapter= CardStackAdapter(requireContext(), notificationList){
+            removeNotificationItem(it)
+        }
+        val manager = CardStackLayoutManager(requireContext(), object : CardStackListener {
+            override fun onCardDragging(direction: Direction?, ratio: Float) {}
+            override fun onCardSwiped(direction: Direction?) {}
+            override fun onCardRewound() {}
+            override fun onCardCanceled() {}
+            override fun onCardAppeared(view: View?, position: Int) {}
+            override fun onCardDisappeared(view: View?, position: Int) {
+                removeNotificationItem(notificationList[position])
+            }
+        })
+        manager.setStackFrom(StackFrom.Top)
+        manager.setVisibleCount(2)
+        manager.setTranslationInterval(12.0f)
+        manager.setScaleInterval(0.90f)
+        manager.setSwipeThreshold(0.3f)
+        manager.setMaxDegree(20.0f)
+        manager.setDirections(Direction.HORIZONTAL)
+        manager.setCanScrollHorizontal(true)
+        manager.setCanScrollVertical(false)
+        manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
+        manager.setOverlayInterpolator(LinearInterpolator())
+        binding.consNotification.apply {
+            layoutManager=manager
+            adapter=notificationsAdapter
+        }
+        binding.notificationItem.visibility = View.VISIBLE
+        binding.consNotification.visibility = View.VISIBLE
+        binding.notificationItem.text = notificationList.size.toString()
+    }
+
+    private fun removeNotificationItem(notification: Notification) {
+        val list = ArrayList<String>()
+        list.add(notification.notification_id)
+        menuProductsViewModel.updateNotificationStatus(
+            getClientToken(), UpdateNotificationState(list)
+        ).observe(viewLifecycleOwner) {
+            when(it.status){
+                Status.SUCCESS->{
+                      notificationList.remove(notification)
+                      menuProductsViewModel.setNotificationList(notificationList)
+                    if (notificationList.isEmpty()){
+                        binding.notificationItem.visibility = View.INVISIBLE
+                        binding.consNotification.visibility = View.GONE
+                    }
+                    //setNotificationAdapter()
+                    binding.notificationItem.text = notificationList.size.toString()
+                      notificationsAdapter.setList(notification)
+                }
+                Status.ERROR->{
+
+                }
+            }
         }
     }
 

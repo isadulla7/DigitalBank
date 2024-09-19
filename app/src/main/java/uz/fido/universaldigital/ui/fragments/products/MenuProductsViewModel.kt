@@ -6,6 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import uz.fido.network.data.repository.CardRepositoryImpl
 import uz.fido.network.domain.datasource.interfaces.ICreditRepository
 import uz.fido.network.domain.datasource.interfaces.IDepositRepository
@@ -33,6 +35,7 @@ import uz.fido.network.domain.model.limits.gl.GlLimitListRequest
 import uz.fido.network.domain.model.limits.gl.GlSetCardLimitRequest
 import uz.fido.network.domain.model.loans.loan_products.CreditProduct
 import uz.fido.network.domain.model.news.GetNotificationsRequest
+import uz.fido.network.domain.model.news.Notification
 import uz.fido.network.domain.model.news.UpdateNotificationState
 import uz.fido.network.domain.model.wallet.DeleteWalletRequest
 import uz.fido.universaldigital.base.AbstractViewModel
@@ -51,6 +54,8 @@ class MenuProductsViewModel @Inject constructor(
 ) : AbstractViewModel(application) {
 
     var cards: LiveData<List<CardResponse>> = cardRepository.cardList
+    private val _notification = MutableStateFlow<ArrayList<Notification>>(arrayListOf())
+    val notification: StateFlow<ArrayList<Notification>> = _notification
     var updateCardState: MutableLiveData<Boolean> = MutableLiveData()
     var creditProduct: MutableLiveData<List<CreditProduct>> = MutableLiveData()
     var clientDeposit: MutableLiveData<ArrayList<ClientDeposit>> = MutableLiveData()
@@ -59,6 +64,10 @@ class MenuProductsViewModel @Inject constructor(
 
     init {
         updateCardState.postValue(false)
+    }
+
+    fun setNotificationList(list:ArrayList<Notification>){
+        _notification.value=list
     }
 
     fun updateClientDepositList(list: ArrayList<ClientDeposit>) {
