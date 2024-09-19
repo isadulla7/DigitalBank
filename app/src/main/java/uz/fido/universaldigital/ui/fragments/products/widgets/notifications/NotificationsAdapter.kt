@@ -52,6 +52,7 @@ class NotificationsAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(list[position])
+        holder.itemView.alpha = 0.7f
     }
 
     fun setList(news: ArrayList<Notification>) {
