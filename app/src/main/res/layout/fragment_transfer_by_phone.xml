@@ -223,6 +223,7 @@
                 android:layout_height="48dp"
                 android:padding="10dp"
                 android:src="@drawable/ic_add_btn"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/tv_saved_receivers"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/tv_saved_receivers"
