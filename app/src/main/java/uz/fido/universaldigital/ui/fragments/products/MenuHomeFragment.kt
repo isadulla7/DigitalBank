@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.products
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -157,13 +158,15 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
             removeNotificationItem(it)
         }
         val manager = CardStackLayoutManager(requireContext(), object : CardStackListener {
-            override fun onCardDragging(direction: Direction?, ratio: Float) {}
-            override fun onCardSwiped(direction: Direction?) {}
-            override fun onCardRewound() {}
-            override fun onCardCanceled() {}
-            override fun onCardAppeared(view: View?, position: Int) {}
             override fun onCardDisappeared(view: View?, position: Int) {
-                removeNotificationItem(notificationList[position])
+                try {
+                    if (notificationList.isNotEmpty()){
+                        removeNotificationItem(notificationList[0])
+                    }
+
+                }finally {
+
+                }
             }
         })
         manager.setStackFrom(StackFrom.Top)

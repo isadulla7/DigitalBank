@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import uz.fido.network.domain.model.payment.location.LocalPayment
 import uz.fido.network.room.LocalPaymentDatabase
+import uz.fido.network.room.migration_1_2
 import javax.inject.Singleton
 
 @Module
@@ -19,12 +20,16 @@ object DbModule {
     @Singleton
     fun provide(@ApplicationContext context: Context) = Room.databaseBuilder(
         context, LocalPaymentDatabase::class.java, "local.db"
-    )
+    ).addMigrations(migration_1_2)
         .build()
 
     @Provides
     @Singleton
     fun provideDao(db: LocalPaymentDatabase) = db.localPaymentDao()
+
+    @Provides
+    @Singleton
+    fun provideSearchDao(db: LocalPaymentDatabase) = db.localSearchDao()
 
     @Provides
     @Singleton
