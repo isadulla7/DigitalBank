@@ -235,10 +235,9 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
                         hideProgress()
                         it.data?.let { cardListResponse ->
                             cardListResponse.objects?.let { it1 ->
-//                                refreshCards()
-//                                cardsAdapter?.submitList(it1)
-//                                cardsAdapter?.notifyDataSetChanged()
+                                binding.cardList.itemAnimator = null
                                 menuProductsViewModel.updateCards(it1)
+                                initCardsRv(getLayoutManager())
                                 initCards()
                             }
                         }
