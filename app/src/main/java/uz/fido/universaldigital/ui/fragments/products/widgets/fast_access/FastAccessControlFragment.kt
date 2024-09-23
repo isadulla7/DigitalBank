@@ -3,8 +3,10 @@ package uz.fido.universaldigital.ui.fragments.products.widgets.fast_access
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import io.paperdb.Paper
+import kotlinx.coroutines.launch
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.base.BaseSimpleFragment
@@ -12,6 +14,7 @@ import uz.fido.universaldigital.databinding.FragmentFastAccessControlBinding
 import uz.fido.universaldigital.ui.fragments.products.adapter.FastAccessHiddenAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.FastAccessVisibleAdapter
 import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
+import uz.fido.universaldigital.ui.utils.extensions.getFastAccessOperationList
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.pop
 
@@ -31,10 +34,15 @@ class FastAccessControlFragment : BaseSimpleFragment<FragmentFastAccessControlBi
     }
 
     private fun initList() {
+        val checkList= getFastAccessOperationList(requireContext())
         visibleList.clear()
         hiddenList.clear()
         val list: ArrayList<FastAccessOperation> = Paper.book().read(Const.FAST_ACCESS)
         list.forEach {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val newItem=checkList.firstOrNull {item-> item.id==it.id }
+                it.name=newItem?.name?:it.name
+            }
             if (it.isVisible) {
                 visibleList.add(it)
             } else {
