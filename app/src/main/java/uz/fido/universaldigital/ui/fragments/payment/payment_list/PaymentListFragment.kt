@@ -18,6 +18,7 @@ import uz.fido.universaldigital.databinding.FragmentPaymentListBinding
 import uz.fido.universaldigital.ui.fragments.payment.abc_adapter.PaymentListAdapter
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
@@ -96,7 +97,7 @@ class PaymentListFragment :
     private fun initPhoneNumberLayout() {
         if (paymentGroup.group_code == "2") {
             binding.userPhoneNumber.text =
-                Format.toPhoneFormat(Paper.book().read(Const.PAPER_CLIENT_PHONE, ""))
+                Format.toPhoneFormat(getFromPaper(Const.PAPER_CLIENT_PHONE))
             binding.phoneNumberLayout.visibility = View.VISIBLE
         } else {
             binding.phoneNumberLayout.visibility = View.GONE
@@ -141,7 +142,7 @@ class PaymentListFragment :
 
     private fun initCellularPayment() {
         binding.phoneNumberLayout.setOnClickListener {
-            when (Paper.book().read(Const.PAPER_CLIENT_PHONE, "").substring(3, 5)) {
+            when (getFromPaper(Const.PAPER_CLIENT_PHONE).substring(3, 5)) {
                 "90", "91" -> {
                     gotoMobilePayments("51", databaseHelper)
                 }
@@ -171,7 +172,7 @@ class PaymentListFragment :
         if (paymentService != null) {
             bundle.putString(
                 PaymentFragment.MOBILE_NUMBER,
-                Paper.book().read(Const.PAPER_CLIENT_PHONE, "")
+                getFromPaper(Const.PAPER_CLIENT_PHONE)
             )
             bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, paymentService)
             bundle.putInt(

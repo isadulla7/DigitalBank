@@ -27,6 +27,8 @@ import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
 import uz.fido.utils.utility.language.Utility.getDeviceName
 import uz.fido.utils.utility.user.getClientToken
+import uz.fido.utils.utility.user.getFromPaper
+import uz.fido.utils.utility.user.saveToPaper
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
@@ -38,9 +40,7 @@ import kotlin.math.abs
  */
 
 class AuthInterceptor @Inject constructor(
-    private val swapKeyService: SwapKeyApiInterface,
-    private val context: Context,
-    private val apiInterface: dagger.Lazy<UserApiInterface>
+    private val swapKeyService: SwapKeyApiInterface, private val context: Context, private val apiInterface: dagger.Lazy<UserApiInterface>
 ) : Interceptor {
 
     private lateinit var lastSwapKeyCallTime: Date
@@ -66,9 +66,8 @@ class AuthInterceptor @Inject constructor(
                             val signInResponse = getSignInResponse(userInfo)
                             if (signInResponse.code() == 200) {
                                 signInResponse.body()?.let {
-                                    saveSignInPinResponse(it)
-                                    modifiedRequest = originalRequest.newBuilder()
-                                        .header("Authorization", getClientToken()).build()
+                                    saveSignInPinResponse(context, it)
+                                    modifiedRequest = originalRequest.newBuilder().header("Authorization", context.getClientToken()).build()
                                     return chain.proceed(modifiedRequest!!)
                                 }
                             }
@@ -80,8 +79,7 @@ class AuthInterceptor @Inject constructor(
                     tryMakeToast(swapKeysResponse.message(), context)
                 }
             } else {
-                modifiedRequest =
-                    originalRequest.newBuilder().header("Authorization", getClientToken()).build()
+                modifiedRequest = originalRequest.newBuilder().header("Authorization", context.getClientToken()).build()
                 return chain.proceed(modifiedRequest!!)
             }
         }
@@ -95,40 +93,39 @@ class AuthInterceptor @Inject constructor(
                 public_key1 = DiffieHellman.getDiffieHellman()._g.toBigInteger(),
                 public_key2 = DiffieHellman.getDiffieHellman()._p.toBigInteger(),
                 encryptData = DiffieHellman.getDiffieHellman().keyA,
-                phoneNumber = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE) ?: "".replace("", ""),
+                phoneNumber = context.getFromPaper(Const.PAPER_CLIENT_PHONE) ?: "".replace("", ""),
             )
         ).execute()
     }
 
     private fun getIpResponse(): retrofit2.Response<UserInfo> {
-        return swapKeyService.getUserDetailedInfo(Keys.getUserInfoUrl() + context.getIpAddress())
-            .execute()
+        return swapKeyService.getUserDetailedInfo(Keys.getUserInfoUrl() + context.getIpAddress()).execute()
     }
 
     private fun getSignInResponse(userInfo: UserInfo): retrofit2.Response<SignInResponse> {
         val device = GetDeviceInfo(context).deviceInfo
         val signInRequest = SignInRequestNew(
-            phone_number = Paper.book().read(Const.PAPER_CLIENT_PHONE) ?: "",
+            phone_number = context.getFromPaper(Const.PAPER_CLIENT_PHONE) ?: "",
             device_type = "A",
             device_code = context.getDeviceIds(),
             device_name = getDeviceName(),
             version = "1",
             ip = context.getIpAddress(),
             client_id = Keys.getClientId(),
-            fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
-            password = Paper.book().read(Const.PASSWORD_ENC) ?: "",
+            fcm_token = context.getFromPaper(Const.PAPER_FCM_TOKEN),
+            password = context.getFromPaper(Const.PASSWORD_ENC),
             is_pin = 1,
             sim_iccd = device.simCcd.toString(),
             network_state = device.networkState.toString(),
             imei_data = device.imeiData.toString(),
             os_system_version_api = "A",
             os_version = Build.VERSION.SDK_INT.toString(),
-            app_version_code = Paper.book().read<String>("VERSION_CODE").toString(),
-            app_version = Paper.book().read<String?>("VERSION_NAME").toString(),
+            app_version_code = context.getFromPaper("VERSION_CODE"),
+            app_version = context.getFromPaper("VERSION_NAME"),
             userInfo = userInfo,
             app_key_hash = AppSignatureHelper(context).appKeyHash
         )
-        return apiInterface.get().signInNew(getClientToken(), signInRequest).execute()
+        return apiInterface.get().signInNew(context.getClientToken(), signInRequest).execute()
     }
 
     private fun setKeyForDiffieHellman(swapKeysResponse: SwapKeysResponse?) {
@@ -139,16 +136,14 @@ class AuthInterceptor @Inject constructor(
 
     private fun changeKey(keyK: String) {
         try {
-            val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).insertStringBetween("@$#", 3)
-            val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).insertStringBetween("&^%", 6)
+            val key1 = context.getFromPaper(Const.PAPER_CLIENT_PHONE).insertStringBetween("@$#", 3)
+            val key2 = context.getFromPaper(Const.PAPER_CLIENT_PHONE).insertStringBetween("&^%", 6)
             val newKey = CryptoUtil.encrypt(
-                Paper.book().read(Const.PASSWORD_ENC),
-                key1
+                context.getFromPaper(Const.PASSWORD_ENC), key1
             ) + keyK + CryptoUtil.encrypt(
-                Paper.book().read(Const.STRING_LINE),
-                key2
+                context.getFromPaper(Const.STRING_LINE), key2
             )
-            Paper.book().write(Const.KEY_K, newKey)
+            context.saveToPaper(Const.KEY_K, newKey)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -185,18 +180,20 @@ fun tryMakeToast(message: String, context: Context) {
     }
 }
 
-fun saveSignInPinResponse(signInResponse: SignInResponse) {
+fun saveSignInPinResponse(context: Context, signInResponse: SignInResponse) {
     Paper.book().write(Const.PAPER_CLIENT_INFO, signInResponse)
-    Paper.book().write(Const.FIRST_NAME, signInResponse.name)
-    Paper.book().write(Const.PAPER_CLIENT_ID, signInResponse.user_id)
-    Paper.book().write(Const.LAST_NAME, signInResponse.surname)
-    Paper.book().write(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number)
-    Paper.book().write(Const.PAPER_CLIENT_POINTS, signInResponse.points ?: "0")
-    Paper.book().write(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
-    Paper.book().write(Const.PAPER_CLIENT_STATUS_ID, signInResponse.user_status_id)
-    Paper.book().write(Const.PAPER_CLIENT_STATUS_NAME, signInResponse.user_status_name)
-    Paper.book().write(Const.PAPER_CLIENT_APPLICATION_COUNT, signInResponse.phone_number)
-    Paper.book().write(Const.APPLICATION_COUNT, signInResponse.application_count.toString())
-    Paper.book().write(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
-    Paper.book().write(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
+    context.run {
+        saveToPaper(Const.FIRST_NAME, signInResponse.name)
+        saveToPaper(Const.PAPER_CLIENT_ID, signInResponse.user_id)
+        saveToPaper(Const.LAST_NAME, signInResponse.surname)
+        saveToPaper(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number)
+        saveToPaper(Const.PAPER_CLIENT_POINTS, signInResponse.points ?: "0")
+        saveToPaper(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
+        saveToPaper(Const.PAPER_CLIENT_STATUS_ID, signInResponse.user_status_id)
+        saveToPaper(Const.PAPER_CLIENT_STATUS_NAME, signInResponse.user_status_name)
+        saveToPaper(Const.PAPER_CLIENT_APPLICATION_COUNT, signInResponse.phone_number)
+        saveToPaper(Const.APPLICATION_COUNT, signInResponse.application_count.toString())
+        saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
+        saveToPaper(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
+    }
 }

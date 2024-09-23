@@ -8,7 +8,6 @@ import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
 import com.ocnyang.pagetransformerhelp.cardtransformer.AlphaAndScalePageTransformer
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.AddCardRequest
 import uz.fido.network.domain.model.cards.CheckCardRequest
@@ -22,6 +21,7 @@ import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.adapter.CardBackgroundAdapter
 import uz.fido.universaldigital.ui.fragments.transfers.utils.checkCardNumber
 import uz.fido.universaldigital.ui.utils.extensions.getCardBackgroundList
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.context.AppSignatureHelper
@@ -144,7 +144,7 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
             getClientToken(), CheckCardRequest(
                 expireDate,
                 cardNumber,
-                Paper.book().read("client_phone"),
+                getFromPaper(Const.PAPER_CLIENT_PHONE),
                 AppSignatureHelper(requireContext()).appKeyHash,
                 requireContext().getDeviceIds()
             )
@@ -156,7 +156,7 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
                         val addCardRequest = AddCardRequest(
                             object_value = cardNumber,
                             object_expiry = expireDate,
-                            phone_number = Paper.book().read("client_phone"),
+                            phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE),
                             object_name = cardName,
                             sms_code = "",
                             is_main = isMain(),
@@ -227,6 +227,7 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 binding.cardNumber.setText(result.data?.extras?.getString("card_number"))
+                binding.cardExpire.setText(result.data?.extras?.getString("card_expire"))
             }
         }
 

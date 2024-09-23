@@ -30,11 +30,6 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMenuHomeBinding
 import uz.fido.universaldigital.ui.fragments.products.adapter.CardStackAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeCardsAdapter
-import uz.fido.universaldigital.ui.utils.stack_notification.CardStackLayoutManager
-import uz.fido.universaldigital.ui.utils.stack_notification.CardStackListener
-import uz.fido.universaldigital.ui.utils.stack_notification.Direction
-import uz.fido.universaldigital.ui.utils.stack_notification.StackFrom
-import uz.fido.universaldigital.ui.utils.stack_notification.SwipeableMethod
 import uz.fido.universaldigital.ui.fragments.products.widgets.balance.MainBalanceDialog
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isValidSumCard
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isValidVisaCard
@@ -52,6 +47,11 @@ import uz.fido.universaldigital.ui.utils.home_utils.loadCardsFromPaper
 import uz.fido.universaldigital.ui.utils.home_utils.loadProfileImage
 import uz.fido.universaldigital.ui.utils.home_utils.setUpTickerView
 import uz.fido.universaldigital.ui.utils.home_utils.setUserDetails
+import uz.fido.universaldigital.ui.utils.stack_notification.CardStackLayoutManager
+import uz.fido.universaldigital.ui.utils.stack_notification.CardStackListener
+import uz.fido.universaldigital.ui.utils.stack_notification.Direction
+import uz.fido.universaldigital.ui.utils.stack_notification.StackFrom
+import uz.fido.universaldigital.ui.utils.stack_notification.SwipeableMethod
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
@@ -71,12 +71,13 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     private var currency = "UZS"
     private var balanceUpdateCounter = 0
     private var notificationList = arrayListOf<Notification>()
-    private lateinit var notificationsAdapter:CardStackAdapter
+    private lateinit var notificationsAdapter: CardStackAdapter
 
     override fun onResume() {
         super.onResume()
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -109,11 +110,11 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
 
     private fun setNotification() {
         lifecycleScope.launch {
-            menuProductsViewModel.notification.collect{item->
-                if (item.isEmpty()){
+            menuProductsViewModel.notification.collect { item ->
+                if (item.isEmpty()) {
                     getNotification()
-                }else{
-                    notificationList=item
+                } else {
+                    notificationList = item
                     checkNotification()
                 }
             }
@@ -129,8 +130,8 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         ).observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-                    val list= resource.data?.notifications?.filter { it.is_read == "N" } ?: emptyList()
-                    val arraylist= arrayListOf<Notification>()
+                    val list = resource.data?.notifications?.filter { it.is_read == "N" } ?: emptyList()
+                    val arraylist = arrayListOf<Notification>()
                     arraylist.addAll(list)
                     notificationList = arraylist
                     menuProductsViewModel.setNotificationList(arraylist)
@@ -153,7 +154,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     }
 
     private fun setNotificationAdapter() {
-        notificationsAdapter= CardStackAdapter(requireContext(), notificationList){
+        notificationsAdapter = CardStackAdapter(requireContext(), notificationList) {
             removeNotificationItem(it)
         }
         val manager = CardStackLayoutManager(requireContext(), object : CardStackListener {
@@ -180,8 +181,8 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         manager.setSwipeableMethod(SwipeableMethod.AutomaticAndManual)
         manager.setOverlayInterpolator(LinearInterpolator())
         binding.consNotification.apply {
-            layoutManager=manager
-            adapter=notificationsAdapter
+            layoutManager = manager
+            adapter = notificationsAdapter
         }
         binding.notificationItem.visibility = View.VISIBLE
         binding.consNotification.visibility = View.VISIBLE
@@ -194,19 +195,20 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         menuProductsViewModel.updateNotificationStatus(
             getClientToken(), UpdateNotificationState(list)
         ).observe(viewLifecycleOwner) {
-            when(it.status){
-                Status.SUCCESS->{
-                      notificationList.remove(notification)
-                      menuProductsViewModel.setNotificationList(notificationList)
-                    if (notificationList.isEmpty()){
+            when (it.status) {
+                Status.SUCCESS -> {
+                    notificationList.remove(notification)
+                    menuProductsViewModel.setNotificationList(notificationList)
+                    if (notificationList.isEmpty()) {
                         binding.notificationItem.visibility = View.INVISIBLE
                         binding.consNotification.visibility = View.GONE
                     }
                     //setNotificationAdapter()
                     binding.notificationItem.text = notificationList.size.toString()
-                      notificationsAdapter.setList(notification)
+                    notificationsAdapter.setList(notification)
                 }
-                Status.ERROR->{
+
+                Status.ERROR -> {
 
                 }
             }

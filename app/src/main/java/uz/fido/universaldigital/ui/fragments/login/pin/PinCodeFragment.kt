@@ -17,6 +17,8 @@ import uz.fido.universaldigital.databinding.FragmentPinCodeBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.activities.MainActivity
 import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAndOutAnim
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.device.isFingerEnable
@@ -121,7 +123,7 @@ class PinCodeFragment : BaseFragment<FragmentPinCodeBinding, PinCodeViewModel>(
             initPinFirstStep = false
         } else {
             if (secondPin == pin) {
-                Paper.book().write(Const.PAPER_CLIENT_PIN, getEncodedString(pin))
+                saveToPaper(Const.PAPER_CLIENT_PIN, getEncodedString(pin))
                 if (isFingerEnable(requireContext())) {
                     goto(R.id.fingerPrintFragment)
                 } else {
@@ -138,7 +140,7 @@ class PinCodeFragment : BaseFragment<FragmentPinCodeBinding, PinCodeViewModel>(
     private fun operationChangePin() {
         if (oldPassword == null) {
             oldPassword = pin
-            if (oldPassword == getDecodedString(Paper.book().read(Const.PAPER_CLIENT_PIN))) {
+            if (oldPassword == getDecodedString(getFromPaper(Const.PAPER_CLIENT_PIN))) {
                 binding.appBar.setTitle(getString(R.string.create_pin_code))
                 clearDots()
             } else {
@@ -153,7 +155,7 @@ class PinCodeFragment : BaseFragment<FragmentPinCodeBinding, PinCodeViewModel>(
                 first = false
             } else {
                 if (secondPin == pin) {
-                    Paper.book().write(Const.PAPER_CLIENT_PIN, getEncodedString(pin))
+                    saveToPaper(Const.PAPER_CLIENT_PIN, getEncodedString(pin))
                     showSnackbar(
                         getString(R.string.pin_code_success_changed),
                         getString(R.string.successfully)

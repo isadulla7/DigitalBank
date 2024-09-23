@@ -1,10 +1,13 @@
 package uz.fido.utils.security;
 
+import android.content.Context;
+
 import java.math.BigInteger;
 import java.util.Random;
 
 import io.paperdb.Paper;
 import uz.fido.utils.log.Logger;
+import uz.fido.utils.utility.user.PaperExtKt;
 
 public class DiffieHellman {
 
@@ -55,12 +58,12 @@ public class DiffieHellman {
         Logger.writeLog("bik________________________" + biK);
     }
 
-    public void setKeyBSwapKey(String B, String additionalText) {
+    public void setKeyBSwapKey(String B, String additionalText, Context context) {
         biB = new BigInteger(B);
         biK = biB.modPow(a, p);
         biKString = biK.toString();
         biKString += additionalText;
-        Paper.book().write("KEY_K", biKString);
+        PaperExtKt.saveToPaper(context, "KEY_K", biKString);
     }
 
     public String getKeyK() {

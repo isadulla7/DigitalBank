@@ -1,11 +1,12 @@
 package uz.fido.network.data.interceptor
 
-import io.paperdb.Paper
+import android.content.Context
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.LanguageConst
+import uz.fido.utils.utility.user.getFromPaper
 import java.util.Locale
 
 /**
@@ -13,20 +14,20 @@ import java.util.Locale
  * Tashkent, Uzbekistan.
  */
 
-class HeaderInterceptor : Interceptor {
+class HeaderInterceptor(private val context: Context) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
         val request: Request =
             chain.request().newBuilder()
-                .header(HEADER_APP_VERSION, Paper.book().read<String?>("VERSION_CODE").toString())
+                .header(HEADER_APP_VERSION, context.getFromPaper("VERSION_CODE"))
                 .header(HEADER_APP_LANGUAGE, language)
                 .header(HEADER_DEVICE_TYPE, DEVICE)
-                .header(HEADER_DEVICE_CODE, Paper.book().read(Const.DEVICE_CODE) ?: "")
+                .header(HEADER_DEVICE_CODE, context.getFromPaper(Const.DEVICE_CODE))
                 .build()
         return chain.proceed(request)
     }
 
-    private val language = Paper.book().read(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN)
+    private val language = context.getFromPaper(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN)
         .uppercase(Locale.ROOT)
         .replace("RUS", "RU")
         .replace("UZ", "UZL")

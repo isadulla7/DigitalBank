@@ -30,11 +30,9 @@ import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.CloseWalletD
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.DeleteCardDialog
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.ShareCardNumberDialog
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.WalletOperationsDialog
-import uz.fido.universaldigital.ui.fragments.services.order_card.CardType
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getLayoutManager
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getSpanCount
 import uz.fido.utils.const.CardConst
-import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
@@ -181,8 +179,8 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
             R.id.monitoring -> {
                 cardOperationsDialog.dismiss()
                 Log.d("TAG", "onClick:${selectedCard.object_id} ")
-                when (selectedCard.object_type){
-                    CardConst.UZCARD ->goto(R.id.uzCardMonitoringFragment, bundleOf(Const.CARD to selectedCard))
+                when (selectedCard.object_type) {
+                    CardConst.UZCARD -> goto(R.id.uzCardMonitoringFragment, bundleOf(Const.CARD to selectedCard))
                     CardConst.HUMO_CARD -> goto(R.id.humoMonitoringFragment, bundleOf(Const.CARD to selectedCard))
                     CardConst.WALLET -> goto(R.id.walletMonitoringFragment, bundleOf(Const.CARD to selectedCard))
                     //else->goto(R.id.visaMonitoringFragment, bundleOf(Const.CARD to selectedCard))
@@ -237,9 +235,10 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
                         hideProgress()
                         it.data?.let { cardListResponse ->
                             cardListResponse.objects?.let { it1 ->
-                                cardsAdapter?.submitList(it1)
-                                cardsAdapter?.notifyDataSetChanged()
+                                binding.cardList.itemAnimator = null
                                 menuProductsViewModel.updateCards(it1)
+                                initCardsRv(getLayoutManager())
+                                initCards()
                             }
                         }
                     }

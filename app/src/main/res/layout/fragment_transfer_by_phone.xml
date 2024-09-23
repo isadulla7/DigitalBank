@@ -116,7 +116,7 @@
                     android:id="@+id/et_phone_number"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:digits="0123456789+ "
+                    android:digits="0123456789 "
                     android:imeOptions="actionNext"
                     android:inputType="phone"
                     android:theme="@style/DefaultEditTextTheme"
@@ -216,6 +216,19 @@
                 android:textColor="@color/mainTextColor"
                 android:textSize="20sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_min_amount" />
+
+            <ImageView
+                android:id="@+id/ic_add_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="10dp"
+                android:src="@drawable/ic_add_btn"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/tv_saved_receivers"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_saved_receivers"
+                app:tint="@color/brandBlueColor"
+                tools:ignore="ContentDescription" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/saved_receivers"

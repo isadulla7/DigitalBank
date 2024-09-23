@@ -28,11 +28,11 @@ class IdentificationViewModel @Inject constructor(
 
     fun checkPassport(myIdGetAccessTokenRequest: MyIdGetAccessTokenRequest) =
         liveData(Dispatchers.IO) {
-            emit(userRepository.getAccessToken(myIdGetAccessTokenRequest))
+            emit(userRepository.getAccessToken(context.getClientToken(), myIdGetAccessTokenRequest))
         }
 
     fun signIn(signInRequest: SignInRequestNew) = liveData(Dispatchers.IO) {
-        emit(userRepository.signInPin(getClientToken(), signInRequest))
+        emit(userRepository.signInPin(context.getClientToken(), signInRequest))
     }
 
     fun swapKeysPin(request: SwapKeysRequest) = liveData(Dispatchers.IO) {

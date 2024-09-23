@@ -21,6 +21,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentInitTransferDetailsBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -121,9 +122,7 @@ class InitTransferDetailsFragment :
 
     private fun initSetOnClickListeners() {
         binding.etCustomerName.setText(
-            "${Paper.book().read(Const.FIRST_NAME, "")} ${
-                Paper.book().read(Const.LAST_NAME, "")
-            }"
+            "${getFromPaper(Const.FIRST_NAME)} ${getFromPaper(Const.LAST_NAME)}"
         )
         binding.btnContinue.setOnClickListener { nextBtnClicked() }
         binding.etDateValue.setOnClickListener { datePicker(it) }

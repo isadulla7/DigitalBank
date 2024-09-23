@@ -26,7 +26,7 @@ class PublicOfferFragment : BaseFragment<FragmentPublicOfferBinding, MenuProfile
 
     private fun loadPublicOffer() {
         showProgress()
-        binding.webview.loadUrl("https://universalbank.uz/about-bank")
+        binding.webview.loadUrl("https://ibank.ubank.uz/cib/defaultdig.html")
         binding.webview.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {
                 if (isVisible && !isDetached) {

@@ -75,6 +75,7 @@ interface IUserRepository {
     ): Resource<BaseResponse>
 
     suspend fun getAccessToken(
+        clientToken: String,
         myIdGetAccessTokenRequest: MyIdGetAccessTokenRequest
     ): Resource<MyIdMeResponse>
 

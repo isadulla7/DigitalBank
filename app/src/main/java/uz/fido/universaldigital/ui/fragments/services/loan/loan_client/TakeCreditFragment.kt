@@ -17,6 +17,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentTakeCreditBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.CardConst.HUMO_CARD
@@ -160,6 +161,6 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
     }
 
     fun getClientPhoneNumber(): String {
-        return Paper.book().read(Const.PAPER_CLIENT_PHONE, "") ?: ""
+        return getFromPaper(Const.PAPER_CLIENT_PHONE)
     }
 }

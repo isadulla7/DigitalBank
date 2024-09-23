@@ -14,15 +14,15 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentTransferHistoryBinding
 import uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferToCardViewModel
 import uz.fido.utils.utility.adapter.showSkeleton
+import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import java.util.Locale
 
 @AndroidEntryPoint
-class PopularTransfersFragment :
-    BaseFragment<FragmentTransferHistoryBinding, TransferToCardViewModel>(
-        FragmentTransferHistoryBinding::inflate, TransferToCardViewModel::class.java
-    ) {
+class PopularTransfersFragment : BaseFragment<FragmentTransferHistoryBinding, TransferToCardViewModel>(
+    FragmentTransferHistoryBinding::inflate, TransferToCardViewModel::class.java
+) {
 
     private lateinit var popularTransfersAdapter: PopularTransfersAdapter
     private var histories = ArrayList<PopularTransfers>()
@@ -35,10 +35,18 @@ class PopularTransfersFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         popularTransfersAdapter = PopularTransfersAdapter(true) { popularTransfer ->
-            val bundle = Bundle()
-            bundle.putString(DATA, popularTransfer.card_number)
-            setFragmentResult(REQUEST_KEY, bundle)
-            findNavController().navigateUp()
+            if (arguments != null) {
+                if (requireArguments().getString("path") == "home") {
+                    val bundle = Bundle()
+                    bundle.putString(DATA, popularTransfer.card_number)
+                    goto(R.id.transferToCardFragment, bundle)
+                }
+            } else {
+                val bundle = Bundle()
+                bundle.putString(DATA, popularTransfer.card_number)
+                setFragmentResult(REQUEST_KEY, bundle)
+                findNavController().navigateUp()
+            }
         }
     }
 
@@ -71,6 +79,7 @@ class PopularTransfersFragment :
 
                 Status.SUCCESS -> {
                     skeletonScreen.hide()
+                    histories.clear()
                     resource.data!!.popular_transfers.let { arrayList ->
                         arrayList.forEach {
                             if (!it.empbossed_name.isNullOrEmpty() && !it.card_number.isNullOrEmpty() && it.card_number!!.length == 16) {

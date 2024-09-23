@@ -37,7 +37,7 @@ class TotalBalanceWidget : AppWidgetProvider() {
     }
 
     private fun setTotalBalance(views: RemoteViews) {
-        var totalBalance = Paper.book().read(Const.TOTAL_BALANCE, "0.00 UZS") + " UZS"
+        var totalBalance = Paper.book().read(Const.TOTAL_BALANCE, "0.00") + " UZS"
         val visibility = Paper.book().read<Boolean>(Const.BALANCE_VISIBILITY) ?: true
         if (!visibility) {
             totalBalance = "*** *** ***"

@@ -18,7 +18,6 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.UserInfo
 import uz.fido.network.domain.model.cards.AddCardRequest
@@ -50,9 +49,11 @@ import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpViewModel
 import uz.fido.universaldigital.ui.fragments.login.sign_up_password.SignUpPasswordFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.main_dialogs.AllServicesDialog
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
-import uz.fido.utils.app.getFCMToken
+import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.EMAIL
 import uz.fido.utils.const.Const.PHONE_NUMBER
@@ -205,7 +206,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         viewModel.resetPinCount(getClientToken(), item).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Paper.book().write(Const.STRING_LINE, stringLineEnc)
+                    saveToPaper(Const.STRING_LINE, stringLineEnc)
                     binding.btnContinue.setProgress(false)
                     val bundle = Bundle().apply {
                         this.putString(Const.OPERATION, BasicSuccessFragment.HUMO_ACTIVATION)
@@ -239,7 +240,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         ).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    Paper.book().write(Const.STRING_LINE, stringLineEnc)
+                    saveToPaper(Const.STRING_LINE, stringLineEnc)
                     hideProgress()
                     pop()
                 }
@@ -309,7 +310,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             val signInRequest = CheckUserSms(
                 phone_number = data.phone_number.replace("+", ""),
                 string_line = stringLineEnc,
-                fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
+                fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
                 device_code = requireContext().getDeviceIds(),
                 device_name = getDeviceName(),
                 device_type = "A",
@@ -333,8 +334,8 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                         Status.SUCCESS -> {
                             val signInResponse = it.data
                             if (signInResponse?.token != null) {
-                                Paper.book().write(Const.STRING_LINE, stringLineEnc)
-                                Paper.book().write(Const.PASSWORD_ENC, data.password)
+                                saveToPaper(Const.STRING_LINE, stringLineEnc)
+                                saveToPaper(Const.PASSWORD_ENC, data.password)
                                 signInResponse.password = encryptPassword(data.password)
                                 requireContext().saveSignInResponse(signInResponse)
                                 requireContext().saveUserSms(smsCode)
@@ -362,14 +363,14 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     }
 
     private fun changeKey() {
-        val key1 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).insertStringBetween("@$#", 3)
-        val key2 = Paper.book().read<String?>(Const.PAPER_CLIENT_PHONE).insertStringBetween("&^%", 6)
+        val key1 = getFromPaper(Const.PAPER_CLIENT_PHONE).insertStringBetween("@$#", 3)
+        val key2 = getFromPaper(Const.PAPER_CLIENT_PHONE).insertStringBetween("&^%", 6)
         val newKey = CryptoUtil.encrypt(
-            Paper.book().read(Const.PASSWORD_ENC), key1
-        ) + Paper.book().read(Const.KEY_K) + CryptoUtil.encrypt(
-            Paper.book().read(Const.STRING_LINE), key2
+            getFromPaper(Const.PASSWORD_ENC), key1
+        ) + getFromPaper(Const.KEY_K) + CryptoUtil.encrypt(
+            getFromPaper(Const.STRING_LINE), key2
         )
-        Paper.book().write(Const.KEY_K, newKey)
+        saveToPaper(Const.KEY_K, newKey)
     }
 
     private fun showWrongSmsCodeDialog() {
@@ -400,7 +401,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                     binding.btnContinue.setProgress(false)
                     when (it.status) {
                         Status.SUCCESS -> {
-                            Paper.book().write(Const.STRING_LINE, stringLineEnc)
+                            saveToPaper(Const.STRING_LINE, stringLineEnc)
 
                             if (it.data != null) {
                                 if (operation == SMS_OPERATION_SIGN_UP) {
@@ -441,7 +442,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {
-                    Paper.book().write(Const.STRING_LINE, stringLineEnc)
+                    saveToPaper(Const.STRING_LINE, stringLineEnc)
                     binding.btnContinue.setProgress(false)
                     val bundle = Bundle().apply {
                         this.putString(Const.OPERATION, BasicSuccessFragment.HUMO_ACTIVATION)
@@ -470,7 +471,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                 getClientToken(), AddCardRequest(
                     object_value = data.object_value,
                     object_expiry = data.object_expiry,
-                    phone_number = Paper.book().read("client_phone"),
+                    phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE),
                     object_name = data.object_name,
                     sms_code = binding.etSms.editableText.toString(),
                     string_line = stringLineEnc,
@@ -591,7 +592,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             device_name = getDeviceName(),
             version = "0",
             ip = requireContext().getIpAddress(),
-            fcm_token = Paper.book().read(Const.PAPER_FCM_TOKEN) ?: "",
+            fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
             sim_iccd = device.simCcd,
             network_state = device.networkState,
             imei_data = device.imeiData,

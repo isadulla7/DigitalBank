@@ -112,12 +112,6 @@ object NetworkModule {
         return httpLoggingInterceptor
     }
 
-    @Provides
-    @Singleton
-    fun headerInterceptor(): HeaderInterceptor {
-        return HeaderInterceptor()
-    }
-
     @BaseOkhttpClient
     @Provides
     fun provideOkhttpClient(
@@ -126,18 +120,17 @@ object NetworkModule {
         loggingInterceptor: HttpLoggingInterceptor,
         swapKeyService: SwapKeyApiInterface,
         apiInterface: dagger.Lazy<UserApiInterface>,
-        headerInterceptor: HeaderInterceptor
     ): OkHttpClient = OkHttpClient.Builder()
         .sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
-        .addInterceptor(headerInterceptor)
+        .addInterceptor(HeaderInterceptor(context = appContext))
         .addInterceptor(loggingInterceptor)
         .addInterceptor(
             AuthInterceptor(
                 swapKeyService = swapKeyService, context = appContext, apiInterface
             )
         )
-        .addInterceptor(EncryptionInterceptor())
-        .addInterceptor(DecryptionInterceptor())
+        .addInterceptor(EncryptionInterceptor(appContext))
+        .addInterceptor(DecryptionInterceptor(appContext))
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS).build()
 

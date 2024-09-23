@@ -21,7 +21,7 @@ class PinCodeViewModel @Inject constructor(
 ) : AbstractViewModel(application) {
 
     fun signIn(signInRequest: SignInRequestNew) = liveData(Dispatchers.IO) {
-        emit(userRepository.signInPin(getClientToken(), signInRequest))
+        emit(userRepository.signInPin(context.getClientToken(), signInRequest))
     }
 
     fun swapKeysPin(request: SwapKeysRequest) = liveData(Dispatchers.IO) {
