@@ -47,6 +47,7 @@ import uz.fido.utils.utility.user.getClientToken
 import java.text.DecimalFormat
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import kotlin.math.log
 
 @AndroidEntryPoint
 class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInterface {
@@ -56,7 +57,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     private lateinit var binding: FragmentMenuPaymentsBinding
 
     private val utilsViewModel: UtilsViewModel by activityViewModels()
-    private var updateLang:Boolean=false
+
 
 
     private var templatesSkeleton: SkeletonScreen? = null
@@ -73,32 +74,20 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
        //
     }
 
-    private fun checkLang() {
-        try {
-            updateLang= Paper.book().read(Const.UPDATE_LANG)
-            if (updateLang){
-                paymentGroupsList= arrayListOf()
-                downloadPaymentStart()
-                downloadCheckLang()
-            }
-        }catch (e:Exception){
-            updateLang=false
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentMenuPaymentsBinding.inflate(layoutInflater)
+        checkLang()
         setPaymentStatusListener(this)
         initPaymentListRv()
-
         checkPaymentForDownload()
         initPaymentList()
         initPaymentTemplatesRv()
         initSetOnClickListeners()
         checkForPaymentTemplates()
-        checkLang()
+
         return binding.root
     }
 
@@ -106,11 +95,8 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         downloadPaymentViewModel.paymentGroupMutableList.observe(viewLifecycleOwner) {
             skeletonScreen?.hide()
             paymentGroupsList = ArrayList()
-            if (!updateLang){
-                paymentGroupsList.addAll(it)
-                menuPaymentsAdapter.submitList(paymentGroupsList)
-            }
-
+            paymentGroupsList.addAll(it)
+            menuPaymentsAdapter.submitList(paymentGroupsList)
 
         }
     }
@@ -160,10 +146,6 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     private fun drawViews() {
         paymentGroupsList.sortBy { it.order }
         downloadPaymentViewModel.paymentGroupMutableList.postValue(paymentGroupsList)
-        if (updateLang){
-            menuPaymentsAdapter.submitList(paymentGroupsList)
-            Paper.book().write(Const.UPDATE_LANG,false)
-        }
     }
 
     override fun fetchCompleteFromDB() {
@@ -172,6 +154,9 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     }
 
     override fun downloadPaymentSuccess() {
+        if (skeletonScreen!=null){
+        skeletonScreen?.hide()
+        }
         try {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 skeletonScreen?.hide()
@@ -180,7 +165,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
                 executor.execute {
                     val searchListSize = SearchList.getSearchList(requireActivity()).size
                     if (searchListSize < 50) {
-                        fillSearchList()
+                      //  fillSearchList()
                     }
                 }
             }

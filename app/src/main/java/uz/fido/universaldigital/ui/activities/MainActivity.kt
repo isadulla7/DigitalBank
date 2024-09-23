@@ -225,15 +225,16 @@ class MainActivity : BaseActivity() {
     }
 
     private fun initSearchList() {
-        lifecycleScope.launch(Dispatchers.Default) {
-            if (SearchList.getSearchList(this@MainActivity).isNotEmpty()) {
+
+        /*lifecycleScope.launch(Dispatchers.Default) {
+            if (SearchList.(this@MainActivity).isNotEmpty()) {
                 SearchList.searchList.clear()
                 SearchList.searchList = SearchList.getSearchList(this@MainActivity)
             } else {
                 SearchList.fillSearchList(this@MainActivity)
                 SearchList.saveSearchList(this@MainActivity)
             }
-        }
+        }*/
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

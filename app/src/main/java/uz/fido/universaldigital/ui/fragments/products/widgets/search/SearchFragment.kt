@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.os.bundleOf
@@ -46,11 +47,37 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
+
         showKeyBoard()
         initSearchRv()
         initTextChangeListener()
         initClearButtonClickListener()
     }
+
+    override fun onStart() {
+        super.onStart()
+        viewLifecycleOwner.lifecycleScope.launch {
+            if (list.isEmpty()){
+                viewModel.setItemList(requireContext())
+            }
+
+        }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiState.collect{
+                if (list.isEmpty()){
+                    list.addAll(it)
+                }
+
+
+            }
+        }
+
+    }
+
 
     private fun showKeyBoard() {
         Handler(Looper.getMainLooper()).postDelayed({
@@ -60,7 +87,6 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
     }
 
     private fun initSearchRv() {
-        list = SearchList.searchList
         searchAdapter = SearchAdapter(ArrayList(), this@SearchFragment, "")
         binding.searchList.apply {
             setHasFixedSize(true)
@@ -107,7 +133,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
     }
 
     private fun searchByQuery(query: String) {
-        val filteredList = ArrayList<SearchItem>()
+        var filteredList = ArrayList<SearchItem>()
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
             if (query.isEmpty()) {
                 withContext(Dispatchers.Main) {
@@ -121,14 +147,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
                     }
                 }
             } else {
-                list = SearchList.searchList
-                for (i in 0 until list.size) {
-                    if (list[i].name!!.lowercase(Locale.getDefault())
-                            .contains(query.lowercase(Locale.getDefault()))
-                    ) {
-                        filteredList.add(list[i])
-                    }
-                }
+               // list = SearchList.searchList
+                filteredList = list.filter {
+                    it.name.orEmpty().lowercase(Locale.getDefault())
+                        .contains(query.lowercase(Locale.getDefault()))
+                } as ArrayList<SearchItem>
                 withContext(Dispatchers.Main) {
                     binding.emptyView.isVisible = filteredList.isEmpty()
                     operationsList = filteredList

@@ -3,15 +3,15 @@ package uz.fido.universaldigital.ui.utils.stack_notification;
 import android.view.View;
 
 public interface CardStackListener {
-    void onCardDragging(Direction direction, float ratio);
+ /*   void onCardDragging(Direction direction, float ratio);
     void onCardSwiped(Direction direction);
     void onCardRewound();
     void onCardCanceled();
-    void onCardAppeared(View view, int position);
+    void onCardAppeared(View view, int position);*/
     void onCardDisappeared(View view, int position);
 
     CardStackListener DEFAULT = new CardStackListener() {
-        @Override
+      /*  @Override
         public void onCardDragging(Direction direction, float ratio) {}
         @Override
         public void onCardSwiped(Direction direction) {}
@@ -20,7 +20,7 @@ public interface CardStackListener {
         @Override
         public void onCardCanceled() {}
         @Override
-        public void onCardAppeared(View view, int position) {}
+        public void onCardAppeared(View view, int position) {}*/
         @Override
         public void onCardDisappeared(View view, int position) {}
     };

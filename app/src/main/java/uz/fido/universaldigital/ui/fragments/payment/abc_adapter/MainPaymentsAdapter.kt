@@ -46,7 +46,7 @@ class MainPaymentsAdapter(private var itemClickListener: (PaymentGroup) -> Unit)
         override fun areContentsTheSame(
             oldItem: PaymentGroup, newItem: PaymentGroup
         ): Boolean {
-            return oldItem.group_code == newItem.group_code
+            return oldItem.name == newItem.name
         }
     }
 

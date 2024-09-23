@@ -29,6 +29,7 @@ abstract class DownloadPayment : Fragment() {
 
     var databaseHelper: DatabaseHelper? = null
     var paymentGroupsList: ArrayList<PaymentGroup> = ArrayList()
+     var updateLang:Boolean=false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,22 +38,14 @@ abstract class DownloadPayment : Fragment() {
         databaseHelper = DatabaseHelper(requireContext())
     }
 
-    fun downloadCheckLang(){
-        databaseHelper = DatabaseHelper(requireContext())
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default){
-            databaseHelper?.let{databaseHelper ->
-                if (databaseHelper.getGroupList().size != 0) {
-                    Log.d("TAG", "downloadCheckLang:${databaseHelper.getGroupList()[0].name} ")
-                    paymentGroupsList = databaseHelper.getGroupList()
-                    paymentGroupsList.sortBy { it.order }
-                    withContext(Dispatchers.Main) {
-                        downloadPaymentInterface.fetchCompleteFromDB()
-                    }
-                }
-            }
+
+
+  fun checkLang() {
+        try {
+            updateLang= Paper.book().read(Const.UPDATE_LANG)
+        }catch (e:Exception){
+            updateLang=false
         }
-
-
     }
 
 
@@ -61,12 +54,14 @@ abstract class DownloadPayment : Fragment() {
     }
 
     fun checkForPaymentDownload() {
+
         val currentDatabaseVersion = Paper.book().read(Const.PAPER_PAYMENT_VERSION, "0")
         val savedDatabaseVersion = Paper.book().read(Const.PAPER_PAYMENT_VERSION_DB, "0")
-        if (downloadPaymentViewModel.paymentGroupMutableList.value != null && downloadPaymentViewModel.paymentGroupMutableList.value!!.size != 0
+        if (downloadPaymentViewModel.paymentGroupMutableList.value != null && downloadPaymentViewModel.paymentGroupMutableList.value!!.size != 0 && !updateLang
         ) {
             downloadPaymentInterface.getMutablePaymentList()
         } else {
+            Paper.book().write(Const.UPDATE_LANG,false)
             if (currentDatabaseVersion == savedDatabaseVersion) {
                 getPaymentsFromLocal()
             } else {
@@ -119,13 +114,15 @@ abstract class DownloadPayment : Fragment() {
                 databaseHelper.insertCashbackList(payment.cashback_list ?: ArrayList())
                 databaseHelper.insertReferenceList(payment.references_list ?: ArrayList())
                 paymentGroupsList = databaseHelper.getGroupList()
+                withContext(Dispatchers.Main){
                 downloadPaymentInterface.downloadPaymentSuccess()
+                }
                 Paper.book().write(Const.PAPER_PAYMENT_VERSION_DB, payment.curr_version ?: "0")
             }
         }
     }
 
-    fun fillSearchList() {
+  /*  fun fillSearchList() {
         val paymentService = ArrayList<SearchItem>()
         val paymentGroups = ArrayList<SearchItem>()
         paymentGroupsList.forEach { paymentGroup ->
@@ -155,6 +152,6 @@ abstract class DownloadPayment : Fragment() {
         SearchList.addList(paymentService)
         SearchList.addList(paymentGroups)
         SearchList.saveSearchList(requireActivity())
-    }
+    }*/
 
 }
