@@ -78,7 +78,7 @@ class TransferViewModel @Inject constructor(
         }
     }
 
-    fun getTransferInfo(senderCard: CardResponse?, receiverCardDto: CardInfoDto?) {
+    fun getTransferInfo(senderCard: CardResponse?, receiverCardDto: CardInfoDto?, isByPhone: String? = "N") {
         if (senderCard != null && receiverCardDto != null) {
             if (senderCard.object_value != receiverCardDto.card_number) {
                 vmScope.launch {
@@ -93,7 +93,8 @@ class TransferViewModel @Inject constructor(
                             expire = senderCard.object_expiry,
                             to_object_value = receiverCardDto.card_number ?: "",
                             to_object_id = receiverCardDto.card_id,
-                            command = getInfoCommand(receiverCardDto.card_number ?: "")
+                            command = getInfoCommand(receiverCardDto.card_number ?: ""),
+                            is_by_phone = isByPhone
                         )
                     )
                     p2pInfo.postValue(result)

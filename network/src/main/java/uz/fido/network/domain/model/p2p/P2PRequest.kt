@@ -13,6 +13,7 @@ data class P2PRequest(
     val to_object_id: String? = null,
     val from_object_expire: String,
     val get_info: String? = null,
+    val phone_number: String? = "",
     var sms_code: String? = null,
     var target: String? = null,
     var target_id: String? = null,

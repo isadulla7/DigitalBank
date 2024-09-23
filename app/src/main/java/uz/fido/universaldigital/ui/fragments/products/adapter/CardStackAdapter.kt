@@ -7,20 +7,21 @@ import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.news.Notification
 import uz.fido.universaldigital.databinding.StackItemBinding
 
-class CardStackAdapter(private val context: Context,
-                       private val list: ArrayList<Notification>,
-                       private val onCLick: (Notification) -> Unit) : RecyclerView.Adapter<CardStackAdapter.VhStack>() {
+class CardStackAdapter(
+    private val context: Context,
+    private val list: ArrayList<Notification>,
+    private val onCLick: (Notification) -> Unit
+) : RecyclerView.Adapter<CardStackAdapter.VhStack>() {
 
     inner class VhStack(private val view: StackItemBinding) : RecyclerView.ViewHolder(view.root) {
 
         fun obBind(item: Notification) {
-            view.notificationText.text = item.text
-            view.notificationTitle.text = item.title
+            view.notificationText.text = item.text.trim()
+            view.notificationTitle.text = item.title.trim()
             view.notificationHide.setOnClickListener {
                 onCLick(item)
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VhStack {
@@ -35,7 +36,7 @@ class CardStackAdapter(private val context: Context,
     }
 
     fun setList(notification: Notification) {
-        val position= list.indexOf(notification)
+        val position = list.indexOf(notification)
         list.remove(notification)
         notifyDataSetChanged()
     }

@@ -66,12 +66,13 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
     private var cardInfoDto: CardInfoDto? = null
     private var senderCard: CardResponse? = null
     private var p2PInfoDto: P2PInfoDto? = null
+    private var phoneNumber: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getHistoriesByPhone()
         popularTransfersAdapter =
-            P2PHistoryAdapter(isByPhone = false, onItemClickListener = ::popularTransferClickEvent)
+            P2PHistoryAdapter(isByPhone = true, onItemClickListener = ::popularTransferClickEvent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -111,7 +112,7 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
             binding.emptyCards.isVisible = userSumCards.isEmpty()
             if (userSumCards.isNotEmpty()) {
                 senderCard = userSumCards[binding.senderCards.currentItem]
-                viewModel.getTransferInfo(senderCard, cardInfoDto)
+                viewModel.getTransferInfo(senderCard, cardInfoDto, "Y")
             }
             listener.invoke()
         }
@@ -138,7 +139,7 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
             override fun onPageSelected(position: Int) {
                 vibrateTick(requireContext())
                 senderCard = userSumCards[position]
-                viewModel.getTransferInfo(senderCard, cardInfoDto)
+                viewModel.getTransferInfo(senderCard, cardInfoDto, "Y")
                 if (senderCard?.object_value == cardInfoDto?.card_number) {
                     binding.tvMinAmount.visibility = View.VISIBLE
                     binding.tvMinAmount.text = getString(R.string.sender_and_receiver_the_same)
@@ -188,8 +189,12 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
             editable?.let {
                 if (it.toString().length == 17) {
                     val phoneNumber = it.toString().replace(" ", "").replace("+", "")
+                    binding.btnContact.visibility = View.GONE
+                    binding.progressView.visibility = View.VISIBLE
+                    this.phoneNumber = phoneNumber
                     viewModel.getCardInfoByPhone(phoneNumber)
                 } else {
+                    phoneNumber = ""
                     binding.ownerName.visibility = View.GONE
                     cardInfoDto = null
                 }
@@ -242,7 +247,7 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
                     cardMiniLogoByType(cardInfo.card_type!!), 0, 0, 0
                 )
                 cardInfoDto = cardInfo
-                viewModel.getTransferInfo(senderCard, cardInfoDto)
+                viewModel.getTransferInfo(senderCard, cardInfoDto, "Y")
                 if (senderCard?.object_value == cardInfoDto?.card_number) {
                     binding.tvMinAmount.visibility = View.VISIBLE
                     binding.tvMinAmount.text = getString(R.string.sender_and_receiver_the_same)
@@ -255,6 +260,9 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
     private fun p2pInfoLoaded(p2PInfo: P2PInfoDto) {
         p2PInfoDto = p2PInfo
         binding.tvMinAmount.visibility = View.VISIBLE
+        if (!p2PInfo.isSuccess && !p2PInfo.errorMessage.isNullOrEmpty()) {
+            binding.tvMinAmount.text = p2PInfo.errorMessage
+        }
         binding.btnContinue.isEnabled(
             binding.tvMinAmount.setMinMaxAmount(
                 senderCard,
@@ -328,17 +336,22 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
 
     private fun continueButtonClickEvent() {
         val amount = binding.etAmount.editableText.toString()
-        gotoWithSlide(
-            R.id.confirmTransferFragment, bundleOf(
-                SuccessTransferFragment.TRANSFER_DTO to TransferDto(
-                    senderCard = senderCard,
-                    receiverCard = cardInfoDto,
-                    transferAmount = Format.sendFormat(amount),
-                    commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
-                    operation = SuccessTransferFragment.TRANSFER_BY_PHONE
+        if (p2PInfoDto?.isSuccess == true) {
+            if (amount.isNotEmpty()) {
+                gotoWithSlide(
+                    R.id.confirmTransferFragment, bundleOf(
+                        SuccessTransferFragment.TRANSFER_DTO to TransferDto(
+                            senderCard = senderCard,
+                            receiverCard = cardInfoDto,
+                            transferAmount = Format.sendFormat(amount),
+                            commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
+                            operation = SuccessTransferFragment.TRANSFER_BY_PHONE,
+                            phoneNumber = phoneNumber
+                        )
+                    )
                 )
-            )
-        )
+            }
+        } else showSnackbar(p2PInfoDto?.errorMessage ?: "")
     }
 
     override fun contactsPermissionGranted() {
