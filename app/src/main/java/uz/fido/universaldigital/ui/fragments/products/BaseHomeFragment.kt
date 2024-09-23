@@ -12,10 +12,12 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.SnapHelper
 import io.paperdb.Paper
+import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.deposits.Deposit
 import uz.fido.network.domain.model.deposits.GetDepositListRequest
@@ -296,8 +298,13 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
             Paper.book().write(Const.UPDATE_MAIN_WIDGETS, false)
         } else {
             if (fastAccessOperations.size == 0) {
+                val checkList= getFastAccessOperationList(requireContext())
                 val list = Paper.book().read<ArrayList<FastAccessOperation>>(Const.FAST_ACCESS)
                 list.forEach {
+                    viewLifecycleOwner.lifecycleScope.launch {
+                        val newItem=checkList.firstOrNull {item-> item.id==it.id }
+                        it.name=newItem?.name?:it.name
+                    }
                     if (it.isVisible) {
                         fastAccessOperations.add(it)
                     }
