@@ -1,47 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/cornered_bg_12dp"
-    app:cardUseCompatPadding="true"
-    android:layout_marginTop="24dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/cornered_bg_12dp"
+    android:paddingVertical="8dp"
     app:cardPreventCornerOverlap="false"
-    android:layout_height="wrap_content">
-                 <uz.fido.utils.view.custom_text_view.TextViewMedium
-                      android:id="@+id/notification_title"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:layout_marginHorizontal="16dp"
-                      android:layout_marginTop="8dp"
-                      android:textSize="17sp"
-                      app:layout_constraintStart_toStartOf="parent"
-                      app:layout_constraintTop_toTopOf="parent"
-                      tools:text="HUMO VAQTINCHALIK" />
+    app:cardUseCompatPadding="true">
 
-                  <androidx.appcompat.widget.AppCompatImageView
-                      android:id="@+id/notification_hide"
-                      android:layout_width="24dp"
-                      android:layout_height="24dp"
-                      android:layout_margin="8dp"
-                      android:padding="4dp"
-                      android:src="@drawable/hide_notification_icon"
-                      app:layout_constraintEnd_toEndOf="parent"
-                      app:layout_constraintTop_toTopOf="parent" />
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/notification_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="17sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="HUMO VAQTINCHALIK" />
 
-                  <uz.fido.utils.view.custom_text_view.TextViewRegular
-                      android:id="@+id/notification_text"
-                      android:layout_width="match_parent"
-                      android:layout_height="wrap_content"
-                      android:layout_marginHorizontal="16dp"
-                      android:layout_marginTop="8dp"
-                      android:maxLines="3"
-                      android:textColor="@color/brandBlueColor"
-                      android:textSize="14sp"
-                      app:layout_constraintStart_toStartOf="parent"
-                      app:layout_constraintTop_toBottomOf="@id/notification_title"
-                      tools:text="Humo tizimi vaqtinchalik ishlfaoliyatida emas qaytadan urinib kuring" />
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/notification_hide"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="8dp"
+        android:padding="4dp"
+        android:src="@drawable/hide_notification_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/notification_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/notification_title"
+        tools:text="Humo tizimi vaqtinchalik ishlfaoliyatida emas qaytadan urinib kuring" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
