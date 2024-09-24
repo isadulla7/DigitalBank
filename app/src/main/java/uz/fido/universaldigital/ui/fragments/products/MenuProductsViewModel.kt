@@ -66,8 +66,8 @@ class MenuProductsViewModel @Inject constructor(
         updateCardState.postValue(false)
     }
 
-    fun setNotificationList(list:ArrayList<Notification>){
-        _notification.value=list
+    fun setNotificationList(list: ArrayList<Notification>) {
+        _notification.value = list
     }
 
     fun updateClientDepositList(list: ArrayList<ClientDeposit>) {
@@ -177,6 +177,7 @@ class MenuProductsViewModel @Inject constructor(
     fun getNotifications(token: String, request: GetNotificationsRequest) = liveData(Dispatchers.IO) {
         emit(utilsRepository.getNotifications(token, request))
     }
+
     fun updateNotificationStatus(token: String, updateNewsStatusRequest: UpdateNotificationState) =
         liveData(Dispatchers.IO) {
             emit(utilsRepository.updateNotificationStatus(token, updateNewsStatusRequest))

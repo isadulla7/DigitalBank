@@ -3,7 +3,6 @@ package uz.fido.universaldigital.ui.fragments.products
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,7 +111,11 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         lifecycleScope.launch {
             menuProductsViewModel.notification.collect { item ->
                 if (item.isEmpty()) {
-                    getNotification()
+                    try {
+                        getNotification()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 } else {
                     notificationList = item
                     checkNotification()
@@ -160,11 +163,11 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         val manager = CardStackLayoutManager(requireContext(), object : CardStackListener {
             override fun onCardDisappeared(view: View?, position: Int) {
                 try {
-                    if (notificationList.isNotEmpty()){
+                    if (notificationList.isNotEmpty()) {
                         removeNotificationItem(notificationList[0])
                     }
 
-                }finally {
+                } finally {
 
                 }
             }
