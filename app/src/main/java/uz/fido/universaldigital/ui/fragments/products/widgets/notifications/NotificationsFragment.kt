@@ -77,8 +77,7 @@ class NotificationsFragment : BaseFragment<FragmentNotificationsBinding, Notific
         if (page == "0") {
             scrollListener.resetState()
             binding.shimmerView.visibility = View.VISIBLE
-            skeletonScreen =
-                showSkeleton(binding.shimmerView, shimmerAdapter, R.layout.shimmer_item_branch, 8)
+            skeletonScreen = showSkeleton(binding.shimmerView, shimmerAdapter, R.layout.shimmer_item_branch, 8)
         } else {
             binding.progressBar.visibility = View.VISIBLE
 
@@ -113,8 +112,8 @@ class NotificationsFragment : BaseFragment<FragmentNotificationsBinding, Notific
         super<BaseFragment>.openNotification(item)
         item.is_read = "Y"
         notificationsAdapter!!.notifyItemChanged(news.indexOf(item))
-        val filter= news.filter { it.is_read=="N" }
-        val arraylist= arrayListOf<Notification>()
+        val filter = news.filter { it.is_read == "N" }
+        val arraylist = arrayListOf<Notification>()
         arraylist.addAll(filter)
         menuProductViewModel.setNotificationList(arraylist)
         val list = ArrayList<String>()

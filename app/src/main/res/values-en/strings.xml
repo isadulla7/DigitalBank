@@ -1015,4 +1015,8 @@
     <string name="password_symbol_requirement">At least one special symbol</string>
     <string name="no_transaction_or_payment_selected_period">Вы не делали никаких платежей или переводов через приложение в выбранном месяце</string>
     <string name="secret_word_instruction">Security code must be more than 5 and less than 10.</string>
+    <string name="card_or_phone_number">Card or phone number</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+
 </resources>
