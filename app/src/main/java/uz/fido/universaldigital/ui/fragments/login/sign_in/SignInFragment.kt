@@ -185,9 +185,11 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun gotoConfirmSmsFragment(model: SignInRequestNew) {
+        saveToPaper(Const.PAPER_PAYMENT_VERSION,model.version)
         val bundle = Bundle().apply {
             putString(Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString())
             putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_IN)
+
             putSerializable(ConfirmSmsFragment.SIGN_IN_REQUEST, model)
         }
         saveToPaper(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
