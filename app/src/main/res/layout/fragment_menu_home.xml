@@ -64,7 +64,7 @@
         android:background="@drawable/notification_backgroud"
         android:gravity="center"
         android:includeFontPadding="false"
-        android:textColor="@color/brandBlueColor"
+        android:textColor="@color/frozenBlue"
         android:textSize="10sp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"

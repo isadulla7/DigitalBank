@@ -33,6 +33,7 @@
     <color name="blackColor">#000000</color>
     <color name="whiteColor">#FFFFFF</color>
     <color name="frozenWhite">#FFFFFF</color>
+    <color name="frozenBlue">#091C3A</color>
     <color name="cardBgColor">#FFFFFF</color>
     <color name="cardBorderColor">#F6F6F6</color>
 
