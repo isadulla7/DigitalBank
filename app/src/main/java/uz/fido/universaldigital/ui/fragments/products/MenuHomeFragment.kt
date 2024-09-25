@@ -47,7 +47,6 @@ import uz.fido.universaldigital.ui.utils.home_utils.loadProfileImage
 import uz.fido.universaldigital.ui.utils.home_utils.setUpTickerView
 import uz.fido.universaldigital.ui.utils.home_utils.setUserDetails
 import uz.fido.universaldigital.ui.utils.stack_notification.CardStackLayoutManager
-import uz.fido.universaldigital.ui.utils.stack_notification.CardStackListener
 import uz.fido.universaldigital.ui.utils.stack_notification.Direction
 import uz.fido.universaldigital.ui.utils.stack_notification.StackFrom
 import uz.fido.universaldigital.ui.utils.stack_notification.SwipeableMethod
@@ -160,18 +159,14 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         notificationsAdapter = CardStackAdapter(requireContext(), notificationList) {
             removeNotificationItem(it)
         }
-        val manager = CardStackLayoutManager(requireContext(), object : CardStackListener {
-            override fun onCardDisappeared(view: View?, position: Int) {
-                try {
-                    if (notificationList.isNotEmpty()) {
-                        removeNotificationItem(notificationList[0])
-                    }
-
-                } finally {
-
+        val manager = CardStackLayoutManager(requireContext()) { _, _ ->
+            try {
+                if (notificationList.isNotEmpty()) {
+                    removeNotificationItem(notificationList[0])
                 }
+            } finally {
             }
-        })
+        }
         manager.setStackFrom(StackFrom.Top)
         manager.setVisibleCount(2)
         manager.setTranslationInterval(12.0f)

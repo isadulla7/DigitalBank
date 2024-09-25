@@ -7,6 +7,7 @@ import uz.fido.network.domain.model.news.UpdateNotificationState
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentReadNotificationBinding
+import uz.fido.universaldigital.ui.utils.extensions.getFormattedDate
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
@@ -36,7 +37,7 @@ class ReadNotificationFragment :
         item?.let { notification ->
             binding.newsTitle.text = notification.title
             binding.description.text = notification.text
-            binding.date.text = notification.created_on
+            binding.date.text = requireContext().getFormattedDate(notification.created_on)
             changeNewsStatus(notification)
         }
     }
