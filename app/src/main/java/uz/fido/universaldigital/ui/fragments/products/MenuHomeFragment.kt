@@ -71,9 +71,15 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     private var notificationList = arrayListOf<Notification>()
     private lateinit var notificationsAdapter: CardStackAdapter
 
+    override fun onStart() {
+        super.onStart()
+        uz.fido.utils.log.Logger.writeErrorLog("onStart--${System.currentTimeMillis()}")
+    }
+
     override fun onResume() {
         super.onResume()
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        uz.fido.utils.log.Logger.writeErrorLog("onResume--${System.currentTimeMillis()}")
     }
 
     override fun onCreateView(

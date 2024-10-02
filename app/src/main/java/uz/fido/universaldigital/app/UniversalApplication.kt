@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.HiltAndroidApp
 import io.paperdb.Paper
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
+import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
+import uz.fido.universaldigital.ui.utils.lang.LocaleHelper.getLanguage
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.DEVICE_CODE
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.utility.context.getDeviceIds
-import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
-import uz.fido.universaldigital.ui.utils.lang.LocaleHelper.getLanguage
 
 @HiltAndroidApp
 class UniversalApplication : Application() {
@@ -36,7 +36,7 @@ class UniversalApplication : Application() {
     }
 
     private fun initTheme() {
-        AppCompatDelegate.setDefaultNightMode(Paper.book().read(Const.APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM))
+        AppCompatDelegate.setDefaultNightMode(Paper.book().read(Const.APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 
 }

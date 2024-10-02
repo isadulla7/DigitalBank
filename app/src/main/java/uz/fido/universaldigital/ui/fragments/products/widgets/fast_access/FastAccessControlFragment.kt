@@ -37,8 +37,8 @@ class FastAccessControlFragment : BaseSimpleFragment<FragmentFastAccessControlBi
         val checkList= getFastAccessOperationList(requireContext())
         visibleList.clear()
         hiddenList.clear()
-        val list: ArrayList<FastAccessOperation> = Paper.book().read(Const.FAST_ACCESS)
-        list.forEach {
+        val list: ArrayList<FastAccessOperation>? = Paper.book().read(Const.FAST_ACCESS)
+        list?.forEach {
             viewLifecycleOwner.lifecycleScope.launch {
                 val newItem=checkList.firstOrNull {item-> item.id==it.id }
                 it.name=newItem?.name?:it.name

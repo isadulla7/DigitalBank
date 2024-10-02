@@ -20,7 +20,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentWalletFirstMonitoringBinding
-import uz.fido.universaldigital.databinding.FragmentWalletMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.WalletMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
@@ -106,7 +105,7 @@ class WalletFirstMonitoringFragment :
             pageSize = "20",
             type = operationType.toString(),
             account = walletList[0],
-            codeFilial = info.filial_code,
+            codeFilial = info?.filial_code,
             dateClose = dateEnd,
             dateBegin = dateBegin
         )
@@ -290,7 +289,7 @@ class WalletFirstMonitoringFragment :
             pageSize = "20",
             type = operationType.toString(),
             account = walletList[0],
-            codeFilial = info.filial_code,
+            codeFilial = info?.filial_code,
             dateClose = dateEnd,
             dateBegin = dateBegin
         )

@@ -36,11 +36,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation ProjectDependencies.coreKtx
-    implementation ProjectDependencies.appCompat
-    implementation ProjectDependencies.espressoIdling
-    implementation ProjectDependencies.constraintLayout
-    implementation ProjectDependencies.tensorFlow
+    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.test.espresso.espresso.idling.resource)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.org.tensorflow.tensorflow.lite)
 }
 
 afterEvaluate {

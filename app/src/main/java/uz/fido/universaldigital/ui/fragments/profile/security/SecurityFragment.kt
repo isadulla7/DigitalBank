@@ -1,6 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.profile.security
 
-import uz.fido.universaldigital.ui.dialogs.DeleteAccountDialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -15,6 +14,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSecurityBinding
 import uz.fido.universaldigital.ui.activities.MainActivity
+import uz.fido.universaldigital.ui.dialogs.DeleteAccountDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
 import uz.fido.universaldigital.ui.fragments.login.restore_profile.ChangePasswordFragment
@@ -79,9 +79,9 @@ class SecurityFragment : BaseFragment<FragmentSecurityBinding, MenuProfileViewMo
     }
 
     private fun initDefaultSwitchStates() {
-        binding.switchFingerprint.isChecked = Paper.book().read(Const.FINGER_STATE, false)
+        binding.switchFingerprint.isChecked = Paper.book().read(Const.FINGER_STATE, false) == true
         binding.confirmPaymentSwitch.isChecked =
-            Paper.book().read(Const.PAPER_PAYMENT_PIN_CONFIRMATION, false)
+            Paper.book().read(Const.PAPER_PAYMENT_PIN_CONFIRMATION, false) == true
         binding.confirmPaymentByPin.isVisible = hasBiometrics()
         binding.fingerprint.isVisible = hasBiometrics()
     }

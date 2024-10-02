@@ -134,7 +134,7 @@ fun TextView.setMinMaxAmount(
     val formattedAmount = etAmount.toBigDecimal()
     if (p2PInfoDto != null && selectedCard != null && receiverCard != null) {
         val minAmount = p2PInfoDto.minAmount?.toBigDecimal()?.divide(100.toBigDecimal()) ?: 1000.0.toBigDecimal()
-        val maxAmount = p2PInfoDto.maxAmount?.toBigDecimal() ?: 50000000.0.toBigDecimal()
+        val maxAmount = p2PInfoDto.maxAmount?.toBigDecimal()?.divide(100.toBigDecimal()) ?: 50000000.0.toBigDecimal()
         val percent = p2PInfoDto.percent?.toDouble()?.toBigDecimal() ?: 0.0.toBigDecimal()
         val totalAmount = formattedAmount + (formattedAmount.divide(100.toBigDecimal())) * percent
 
@@ -146,7 +146,7 @@ fun TextView.setMinMaxAmount(
                 return false
             }
 
-            formattedAmount > maxAmount.divide(100.toBigDecimal()) -> {
+            formattedAmount > maxAmount -> {
                 text = context.getString(R.string.max_amount) + " " +
                         Format.formatAmount((maxAmount).toString()) + " " +
                         context.getString(R.string.sum_text)

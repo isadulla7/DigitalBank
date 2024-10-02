@@ -99,7 +99,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             }
 
             R.id.fingerprint -> {
-                if (Paper.book().read(Const.FINGER_STATE)) {
+                if (Paper.book().read<Boolean>(Const.FINGER_STATE) == true) {
                     fingerAuth()
                 }
             }
@@ -462,7 +462,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     private fun initFingerprint() {
         if (Paper.book().read<Boolean>(Const.FINGER_STATE) != null && Paper.book()
-                .read(Const.FINGER_STATE)
+                .read<Boolean>(Const.FINGER_STATE) == true
         ) {
             binding.fingerprint.visibility = View.VISIBLE
             fingerAuth()
