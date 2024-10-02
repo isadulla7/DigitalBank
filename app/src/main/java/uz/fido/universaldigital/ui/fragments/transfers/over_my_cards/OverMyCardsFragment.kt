@@ -33,12 +33,14 @@ import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.device.vibrateTick
+import uz.fido.utils.format.Format
 import uz.fido.utils.utility.format.Format.Companion.sendFormat
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.view.amount.AmountSuggestionView
+import java.math.BigDecimal
 
 @SuppressLint("SetTextI18n")
 @AndroidEntryPoint
@@ -51,13 +53,12 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
     private var receiverCard: CardResponse? = null
     private var senderCard: CardResponse? = null
     private var p2PInfoDto: P2PInfoDto? = null
-    private var maxAmount = 50000000.0
-    private var minAmount = 1000.0
+    private var maxAmount = BigDecimal(50000000.0)
+    private var minAmount = BigDecimal(1000.0)
     private var fromConfirmPage = false
     private var receiverName = ""
-    private var percent = "0"
+    private var percent = BigDecimal(0.0)
     private var amount = "0"
-
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
@@ -182,6 +183,10 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
     private fun getTransferInfo() {
         showCommissionProgress()
         Handler(Looper.getMainLooper()).postDelayed({
+            if (senderCard == receiverCard) {
+                binding.btnContinue.isEnabled(continueButtonState())
+                return@postDelayed
+            }
             if (senderCard != null && receiverCard != null && senderCard != receiverCard) {
                 viewModel.p2pInfoRequest(
                     getClientToken(), P2PInfoRequest(
@@ -197,10 +202,10 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                         Status.SUCCESS -> {
                             val p2pInfoResponse = it.data as P2PInfoResponse
                             p2PInfoDto = p2pInfoResponse.mapToDto()
-                            minAmount = p2pInfoResponse.min_amount.toDouble() / 100
-                            maxAmount = p2pInfoResponse.max_amount.toDouble() / 100
+                            minAmount = p2pInfoResponse.min_amount.toBigDecimal().divide(100.toBigDecimal())
+                            maxAmount = p2pInfoResponse.max_amount.toBigDecimal().divide(100.toBigDecimal()) ?: 15000000.0.toBigDecimal()
                             receiverName = p2pInfoResponse.empbossed_name.toString()
-                            percent = p2pInfoResponse.percent
+                            percent = p2pInfoResponse.percent.toBigDecimal()
                             setCommission(percent)
                             binding.btnContinue.isEnabled(continueButtonState())
                         }
@@ -218,7 +223,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
         }, 100)
     }
 
-    private fun setCommission(commission: String) {
+    private fun setCommission(commission: BigDecimal) {
         binding.commissionProgress.visibility = View.GONE
         binding.tvCommission.visibility = View.VISIBLE
         binding.tvCommission.setTextColor(
@@ -283,33 +288,60 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
 
     private fun continueButtonState(): Boolean {
         val etAmount = binding.etAmount.editableText.toString().replace(" ", "").ifEmpty { "0" }
-        val formattedAmount = etAmount.toDouble()
-        val totalAmount = formattedAmount + (formattedAmount / 100) * percent.toDouble()
+        val formattedAmount = etAmount.toBigDecimal()
+        val totalAmount = formattedAmount + (formattedAmount.divide(100.toBigDecimal())) * percent
         when {
-            senderCard == null || receiverCard == null -> return false
-            senderCard == receiverCard -> return false
-            senderCard!!.isNotActive() || receiverCard!!.isNotActive() -> return false
+            senderCard == null || receiverCard == null -> {
+                binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
+                hideCommissionBlock()
+                return false
+            }
+
+            senderCard == receiverCard -> {
+                binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+                binding.tvMinAmount.text = requireContext().getString(R.string.sender_and_receiver_the_same)
+                hideCommissionBlock()
+                return false
+            }
+
+            senderCard!!.isNotActive() -> {
+                binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+                binding.tvMinAmount.text = requireContext().getString(R.string.sender_card_is_not_active)
+                hideCommissionBlock()
+                return false
+            }
+
+            receiverCard!!.isNotActive() -> {
+                binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+                binding.tvMinAmount.text = requireContext().getString(R.string.receiver_card_is_not_active)
+                hideCommissionBlock()
+                return false
+            }
 
             formattedAmount < minAmount -> {
+                binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 binding.tvMinAmount.text =
-                    getString(R.string.min_amount) + " $minAmount ${getString(R.string.sum_text)}"
+                    getString(R.string.min_amount) + " ${Format.formatAmount((minAmount).toString())} ${getString(R.string.sum_text)}"
                 return false
             }
 
             formattedAmount > maxAmount -> {
+                binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text =
-                    getString(R.string.max_amount) + " $maxAmount ${getString(R.string.sum_text)}"
+                    getString(R.string.max_amount) + " ${Format.formatAmount((maxAmount).toString())} ${getString(R.string.sum_text)}"
                 return false
             }
 
-            totalAmount > senderCard!!.balance.toDouble() / 100 -> {
+            totalAmount > senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) -> {
+                binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text = getString(R.string.insufficient_amount)
                 return false
             }
 
-            totalAmount > minAmount && totalAmount < senderCard!!.balance.toDouble() / 100 -> {
+            totalAmount > minAmount && totalAmount < senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) -> {
+                binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 binding.tvMinAmount.text =
-                    getString(R.string.min_amount) + " $minAmount ${getString(R.string.sum_text)}"
+                    getString(R.string.min_amount) + " ${Format.formatAmount((minAmount).toString())} ${getString(R.string.sum_text)}"
                 return true
             }
 

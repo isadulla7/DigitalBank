@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.widget.EditText
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ethanhua.skeleton.SkeletonScreen
 import uz.fido.network.domain.model.cards.CardResponse
@@ -134,12 +135,13 @@ fun TextView.setMinMaxAmount(
     val formattedAmount = etAmount.toBigDecimal()
     if (p2PInfoDto != null && selectedCard != null && receiverCard != null) {
         val minAmount = p2PInfoDto.minAmount?.toBigDecimal()?.divide(100.toBigDecimal()) ?: 1000.0.toBigDecimal()
-        val maxAmount = p2PInfoDto.maxAmount?.toBigDecimal()?.divide(100.toBigDecimal()) ?: 50000000.0.toBigDecimal()
+        val maxAmount = p2PInfoDto.maxAmount?.toBigDecimal()?.divide(100.toBigDecimal()) ?: 15000000.0.toBigDecimal()
         val percent = p2PInfoDto.percent?.toDouble()?.toBigDecimal() ?: 0.0.toBigDecimal()
         val totalAmount = formattedAmount + (formattedAmount.divide(100.toBigDecimal())) * percent
 
         when {
             formattedAmount < minAmount -> {
+                setTextColor(ContextCompat.getColor(context, R.color.brandBlueColor_50))
                 text = context.getString(R.string.min_amount) + " " +
                         Format.formatAmount(minAmount.toString()) + " " +
                         context.getString(R.string.sum_text)
@@ -147,6 +149,7 @@ fun TextView.setMinMaxAmount(
             }
 
             formattedAmount > maxAmount -> {
+                setTextColor(ContextCompat.getColor(context, R.color.brandRedColor))
                 text = context.getString(R.string.max_amount) + " " +
                         Format.formatAmount((maxAmount).toString()) + " " +
                         context.getString(R.string.sum_text)
@@ -154,20 +157,24 @@ fun TextView.setMinMaxAmount(
             }
 
             selectedCard.object_value == receiverCard -> {
+                setTextColor(ContextCompat.getColor(context, R.color.brandRedColor))
                 text = context.getString(R.string.sender_and_receiver_the_same)
                 return false
             }
 
             totalAmount > selectedCard.balance.toBigDecimal().divide(100.toBigDecimal()) -> {
+                setTextColor(ContextCompat.getColor(context, R.color.brandRedColor))
                 text = context.getString(R.string.insufficient_amount)
                 return false
             }
 
             selectedCard.isNotActive() -> {
+                setTextColor(ContextCompat.getColor(context, R.color.brandRedColor))
                 return false
             }
 
             else -> {
+                setTextColor(ContextCompat.getColor(context, R.color.brandBlueColor_50))
                 text = context.getString(R.string.commission) + " " +
                         percent.toString() + "% (" + Format.formatAmount(
                     Format.convertFromTiynDivide(

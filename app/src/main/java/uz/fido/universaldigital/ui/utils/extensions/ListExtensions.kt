@@ -169,14 +169,14 @@ fun Fragment.getTransferTypes(): ArrayList<MenuServiceItem> {
             getString(R.string.request_money_desc)
         )
     )
-//    transferTypes.add(
-//        MenuServiceItem(
-//            R.drawable.ic_conversion_24dp,
-//            getString(R.string.currency_exchange),
-//            500,
-//            getString(R.string.currency_exchange)
-//        )
-//    )
+    transferTypes.add(
+        MenuServiceItem(
+            R.drawable.ic_conversion_24dp,
+            getString(R.string.currency_exchange),
+            500,
+            getString(R.string.currency_exchange)
+        )
+    )
     return transferTypes
 }
 

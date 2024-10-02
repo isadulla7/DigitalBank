@@ -1018,4 +1018,6 @@
     <string name="card_or_phone_number">Karta yoki telefon raqami</string>
     <string name="today">Bugun</string>
     <string name="yesterday">Kecha</string>
+    <string name="sender_card_is_not_active">Yuboruvchi karta faol emas</string>
+    <string name="receiver_card_is_not_active">Qabul qiluvchi karta faol emas</string>
 </resources>
