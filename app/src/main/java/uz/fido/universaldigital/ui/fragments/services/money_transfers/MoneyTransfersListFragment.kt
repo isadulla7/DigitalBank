@@ -60,12 +60,14 @@ class MoneyTransfersListFragment :
             moneyTransferParamsResponse?.remittance_type = item
             when (item.foreignCode) {
                 42202 -> {
-                    for (account in cards) {
-                        if (account.currency_char == "USD") {
-                            val bundle = Bundle()
-                            bundle.putSerializable("params_model", moneyTransferParamsResponse)
-                            bundle.putString("privacy", "wu_terms.txt")
-                            return
+                    if (cards != null) {
+                        for (account in cards) {
+                            if (account.currency_char == "USD") {
+                                val bundle = Bundle()
+                                bundle.putSerializable("params_model", moneyTransferParamsResponse)
+                                bundle.putString("privacy", "wu_terms.txt")
+                                return
+                            }
                         }
                     }
                 }

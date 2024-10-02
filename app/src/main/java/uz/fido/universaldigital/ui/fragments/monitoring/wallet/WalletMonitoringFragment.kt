@@ -6,13 +6,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import uz.fido.network.domain.model.monitoring.ListItem
 import io.paperdb.Paper
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.monitoring.AccountHistoriesRequest
 import uz.fido.network.domain.model.monitoring.AccountHistory
 import uz.fido.network.domain.model.monitoring.DateItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.WalletHistoryItem
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.R
@@ -32,7 +32,6 @@ import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.user.getClientToken
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.HashMap
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -107,7 +106,7 @@ class WalletMonitoringFragment :
                 pageSize = "20",
                 type = operationType.toString(),
                 account = walletList[0],
-                codeFilial = info.filial_code,
+                codeFilial = info?.filial_code,
                 dateClose = dateEnd,
                 dateBegin = dateBegin
             )
@@ -257,7 +256,7 @@ class WalletMonitoringFragment :
             pageSize = "20",
             type = operationType.toString(),
             account = walletList[0],
-            codeFilial = info.filial_code,
+            codeFilial = info?.filial_code,
             dateClose = dateEnd,
             dateBegin = dateBegin
         )

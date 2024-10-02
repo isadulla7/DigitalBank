@@ -235,7 +235,7 @@ object BaseCardUtils {
 
     fun getLayoutManager(): GridLayoutManager {
         return try {
-            if (Paper.book().read(Const.LAYOUT_MANAGER_GRID, true)) {
+            if (Paper.book().read(Const.LAYOUT_MANAGER_GRID, true) == true) {
                 GridLayoutManager(UniversalApplication.getContext(), 1)
             } else {
                 GridLayoutManager(UniversalApplication.getContext(), 2)
@@ -246,7 +246,7 @@ object BaseCardUtils {
     }
 
     fun getSpanCount(): Int {
-        return if (Paper.book().read(Const.LAYOUT_MANAGER_GRID, true)) {
+        return if (Paper.book().read(Const.LAYOUT_MANAGER_GRID, true) == true) {
             1
         } else {
             2

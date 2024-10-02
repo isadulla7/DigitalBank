@@ -357,7 +357,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
         Paper.book().write(LoanUserInfo1Fragment.CREDIT_PROGRESS_STEP, step)
 
         if (step > 1) {
-            Paper.book().write(LoanUserInfo1Fragment.CLIENT_MY_ID_INFO, profile)
+            profile?.let { Paper.book().write(LoanUserInfo1Fragment.CLIENT_MY_ID_INFO, it) }
         }
         if (finalHashMap != null) {
             Paper.book().write(LoanUserInfo1Fragment.RESULT_USER_INFO, finalHashMap)

@@ -40,7 +40,7 @@ class OpenWalletFragment : BaseFragment<FragmentOpenWalletBinding, WalletViewMod
     private fun openWalletRequest() {
         binding.openWalletBtn.setProgress(true)
         val info = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
-        if (info.filial_code!!.isNotEmpty()) viewModel.createWallet(
+        if (info?.filial_code!!.isNotEmpty()) viewModel.createWallet(
             getClientToken(),
             CreateWalletRequest(info.filial_code!!, "000", binding.walletName.text.toString())
         ).observe(viewLifecycleOwner) {

@@ -47,28 +47,23 @@ android {
 
 dependencies {
 
-    //hilt
-    implementation ProjectDependencies.hiltAndroid
-    kapt ProjectDependencies.hiltCompiler
+    implementation(libs.com.google.dagger.hilt.android)
+    kapt libs.com.google.dagger.hilt.android.compiler
 
-    //retrofit
-    implementation ProjectDependencies.retrofit
-    implementation ProjectDependencies.retrofitConverter
-    implementation ProjectDependencies.gson
+    implementation(libs.com.squareup.retrofit2.retrofit)
+    implementation(libs.com.squareup.retrofit2.converter.gson)
+    implementation(libs.com.google.code.gson)
+    implementation(libs.androidx.room.room.runtime)
+    kapt libs.androidx.room.room.compiler
 
-    implementation ProjectDependencies.roomRuntime
-    kapt ProjectDependencies.roomCompiler
-    implementation ProjectDependencies.roomKtx
+    implementation(libs.androidx.room.room.ktx)
+    implementation(libs.io.github.pilgr.paperdb)
+    implementation(libs.com.squareup.okhttp3)
+    implementation(libs.com.squareup.okhttp3.logging.interceptor)
 
-    //logging
-    debugImplementation ProjectDependencies.chuckerLib
-    releaseImplementation ProjectDependencies.chuckerLibNoOp
+    debugImplementation(libs.com.github.chuckerteam.chucker.library)
+    releaseImplementation(libs.com.github.chuckerteam.chucker.library.no.op)
 
-    implementation ProjectDependencies.paper
-    implementation ProjectDependencies.okhttp
-    implementation ProjectDependencies.okhttpLogging
-
-    //utils module
-    implementation project(path: ':utils')
+    implementation(project(ModuleList.UTILS))
 
 }

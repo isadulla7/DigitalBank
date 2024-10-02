@@ -38,7 +38,7 @@ abstract class DownloadPayment : Fragment() {
 
     fun checkLang() {
         updateLang = try {
-            Paper.book().read(Const.UPDATE_LANG)
+            Paper.book().read<Boolean>(Const.UPDATE_LANG) == true
         } catch (e: Exception) {
             false
         }
