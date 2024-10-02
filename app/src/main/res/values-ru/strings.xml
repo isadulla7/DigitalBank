@@ -1020,5 +1020,7 @@
     <string name="card_or_phone_number">Карта или номер телефона</string>
     <string name="today">Сегодня</string>
     <string name="yesterday">Вчера</string>
+    <string name="sender_card_is_not_active">Карта-отправитель неактивна</string>
+    <string name="receiver_card_is_not_active">Принимающая карта не активна</string>
 
 </resources>
