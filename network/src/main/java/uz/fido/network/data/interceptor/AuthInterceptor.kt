@@ -93,7 +93,7 @@ class AuthInterceptor @Inject constructor(
                 public_key1 = DiffieHellman.getDiffieHellman()._g.toBigInteger(),
                 public_key2 = DiffieHellman.getDiffieHellman()._p.toBigInteger(),
                 encryptData = DiffieHellman.getDiffieHellman().keyA,
-                phoneNumber = context.getFromPaper(Const.PAPER_CLIENT_PHONE) ?: "".replace("", ""),
+                phoneNumber = context.getFromPaper(Const.PAPER_CLIENT_PHONE),
             )
         ).execute()
     }
@@ -105,7 +105,7 @@ class AuthInterceptor @Inject constructor(
     private fun getSignInResponse(userInfo: UserInfo): retrofit2.Response<SignInResponse> {
         val device = GetDeviceInfo(context).deviceInfo
         val signInRequest = SignInRequestNew(
-            phone_number = context.getFromPaper(Const.PAPER_CLIENT_PHONE) ?: "",
+            phone_number = context.getFromPaper(Const.PAPER_CLIENT_PHONE),
             device_type = "A",
             device_code = context.getDeviceIds(),
             device_name = getDeviceName(),

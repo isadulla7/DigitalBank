@@ -59,7 +59,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             binding.userName.text = getString(R.string.your_phone_number)
         }
         binding.userPhone.text = Format.phoneFormat(getFromPaper(Const.PAPER_CLIENT_PHONE))
-        binding.version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+        binding.version.text = getString(R.string.version, BuildConfig.VERSION_NAME) + "(${BuildConfig.VERSION_CODE})"
         storage = FirebaseStorage.getInstance()
         storageReference = storage!!.reference
     }

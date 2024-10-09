@@ -20,6 +20,7 @@ import uz.fido.universaldigital.databinding.FragmentSavePaymentMonthBinding
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.adapter.AutoPaymentDaysAdapter
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment.SaveAutoPaymentFinalFragment
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.LoanMonthDialog
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
@@ -43,8 +44,8 @@ class SaveAutoPaymentMonthFragment : SimpleAbstractFragment<FragmentSavePaymentM
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            saveAutoPaymentModel = it.getSerializable(SaveAutoPaymentFinalFragment.SAVE_AUTO_PAYMENT_MODEL) as SaveAutoPaymentModel?
-            autoPayment = it.getSerializable("item") as AutoPayment?
+            saveAutoPaymentModel = it.serializable<SaveAutoPaymentModel>(SaveAutoPaymentFinalFragment.SAVE_AUTO_PAYMENT_MODEL)
+            autoPayment = it.serializable<AutoPayment>("item")
         }
 
         if (monthsList.isEmpty())

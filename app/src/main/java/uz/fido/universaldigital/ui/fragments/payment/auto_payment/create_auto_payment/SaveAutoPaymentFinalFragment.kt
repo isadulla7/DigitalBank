@@ -17,6 +17,7 @@ import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.AutoPaymentViewModel
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.format.Format
@@ -45,8 +46,7 @@ class SaveAutoPaymentFinalFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            saveAutoPaymentModel =
-                it.getSerializable(SAVE_AUTO_PAYMENT_MODEL) as SaveAutoPaymentModel?
+            saveAutoPaymentModel = it.serializable<SaveAutoPaymentModel>(SAVE_AUTO_PAYMENT_MODEL)
             operation = it.getString("operation")
         }
     }

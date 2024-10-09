@@ -12,6 +12,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMoneyTransferGetBinding
 import uz.fido.universaldigital.ui.fragments.services.money_transfers.dialogs.ChooseCountryDialog
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientPhoneNumber
@@ -31,8 +32,7 @@ class MoneyTransferGetFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            moneyTransferParamsResponse =
-                it.getSerializable("params_model") as MoneyTransferParamsResponse?
+            moneyTransferParamsResponse = it.serializable<MoneyTransferParamsResponse>("params_model")
             countries = moneyTransferParamsResponse!!.countries
         }
     }

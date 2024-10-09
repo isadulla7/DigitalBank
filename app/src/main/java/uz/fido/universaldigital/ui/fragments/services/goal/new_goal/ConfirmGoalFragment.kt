@@ -16,6 +16,7 @@ import uz.fido.universaldigital.databinding.FragmentConfirmGoalBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.fragments.services.goal.GoalViewModel
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.utility.fragment.goto
@@ -43,13 +44,13 @@ class ConfirmGoalFragment : BaseFragment<FragmentConfirmGoalBinding, GoalViewMod
         arguments?.let {
             operation = it.getString(Const.OPERATION).toString()
             if (operation == "create") {
-                targetRequest = arguments?.getSerializable("target") as SetTargetRequest
+                targetRequest = arguments?.serializable<SetTargetRequest>("target") as SetTargetRequest
                 initCards()
                 setTextTarget()
 
             } else {
                 binding.btnContinue.isEnabled(true)
-                editGoalRequest = it.getSerializable("model") as EditGoalRequest
+                editGoalRequest = it.serializable<EditGoalRequest>("model") as EditGoalRequest
                 setTextEdit()
                 editInitCatd()
 

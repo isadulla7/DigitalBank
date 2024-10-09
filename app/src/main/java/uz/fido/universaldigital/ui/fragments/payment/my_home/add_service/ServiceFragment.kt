@@ -19,6 +19,7 @@ import uz.fido.universaldigital.databinding.FragmentAddServiceBinding
 import uz.fido.universaldigital.ui.fragments.payment.my_home.MyHomeViewModel
 import uz.fido.universaldigital.ui.fragments.payment.my_home.adapter.ServiceAdapter
 import uz.fido.universaldigital.ui.fragments.payment.my_home.dialog.MyHouseServiceOperationDialog
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -37,7 +38,7 @@ class ServiceFragment : BaseFragment<FragmentAddServiceBinding, MyHomeViewModel>
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            myHouseGroup = it.getSerializable("home") as MyHouseGroup
+            myHouseGroup = it.serializable<MyHouseGroup>("home") as MyHouseGroup
             binding.appBar.setTitle(myHouseGroup.name.toString())
         }
         binding.btnPaymentList.isEnabled(true)
