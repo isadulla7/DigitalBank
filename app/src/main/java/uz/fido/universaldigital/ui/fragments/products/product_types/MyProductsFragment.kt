@@ -42,13 +42,12 @@ class MyCardsListFragment : BaseSimpleFragment<FragmentMyCardsListBinding>(
     }
 
     private fun setAdditionIcon() {
-        if (Paper.book().read(Const.LAYOUT_MANAGER_GRID, true)
-        ) binding.appBar.setAdditionalIcon(R.drawable.grid_list2)
+        if (Paper.book().read(Const.LAYOUT_MANAGER_GRID, true) == true) binding.appBar.setAdditionalIcon(R.drawable.grid_list2)
         else binding.appBar.setAdditionalIcon(R.drawable.grid_icon)
     }
 
     private fun setCardListState() {
-        val currentState = Paper.book().read(Const.LAYOUT_MANAGER_GRID, true)
+        val currentState = Paper.book().read(Const.LAYOUT_MANAGER_GRID, true) ?: true
         Paper.book().write(Const.LAYOUT_MANAGER_GRID, !currentState)
     }
 

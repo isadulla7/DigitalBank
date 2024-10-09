@@ -29,9 +29,10 @@ class OpenDepositStepFirst : BaseFragment<FragmentDepositStepFirstBinding, MainD
     private lateinit var dialog: CalculatorDialog
     private lateinit var nearBranchDialog: NearBranchDialog
     private lateinit var deposit: Deposit
-    private var operation: String? = null
+
     private var bxmList: ArrayList<BxmCodeAndName> = arrayListOf()
     private var selectedBranch: BxmCodeAndName? = null
+    private var operation: String? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -124,7 +125,13 @@ class OpenDepositStepFirst : BaseFragment<FragmentDepositStepFirstBinding, MainD
             when (resources.status) {
                 Status.SUCCESS -> {
                     bxmList.clear()
-                    bxmList = (resources.data?.list ?: arrayListOf()) as ArrayList<BxmCodeAndName>
+                    resources.data?.list?.let {
+                        it.forEach {
+                            if (it.bxm_code != "01186") {
+                                bxmList.add(it)
+                            }
+                        }
+                    }
                 }
 
                 Status.ERROR -> {

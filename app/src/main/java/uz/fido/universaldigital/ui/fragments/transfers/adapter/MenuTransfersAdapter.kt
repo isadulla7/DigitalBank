@@ -47,7 +47,7 @@ class MenuTransfersAdapter(
             findViewById<LinearLayoutCompat>(R.id.father).setOnClickListener {
                 onItemClickListener.invoke(item.serviceId)
             }
-//            findViewById<TextViewMedium>(R.id.tv_soon).isVisible = item.serviceId == 500
+            findViewById<TextViewMedium>(R.id.tv_soon).isVisible = item.serviceId == 500
         }
         return itemView
     }

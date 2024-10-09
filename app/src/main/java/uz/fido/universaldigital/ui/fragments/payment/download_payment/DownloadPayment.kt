@@ -38,7 +38,7 @@ abstract class DownloadPayment : Fragment() {
 
     fun checkLang() {
         updateLang = try {
-            Paper.book().read(Const.UPDATE_LANG)
+            Paper.book().read<Boolean>(Const.UPDATE_LANG) == true
         } catch (e: Exception) {
             false
         }
@@ -49,7 +49,6 @@ abstract class DownloadPayment : Fragment() {
     }
 
     fun checkForPaymentDownload() {
-
         val currentDatabaseVersion = getFromPaper(Const.PAPER_PAYMENT_VERSION, "0")
         val savedDatabaseVersion = getFromPaper(Const.PAPER_PAYMENT_VERSION_DB, "0")
         if (downloadPaymentViewModel.paymentGroupMutableList.value != null && downloadPaymentViewModel.paymentGroupMutableList.value!!.size != 0 && !updateLang

@@ -33,6 +33,7 @@ class LoanPaymentFragment : BaseFragment<FragmentLoanPaymentBinding, ClientLoanV
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             clientProduct = it.serializable<CreditProduct>(ClientCreditFragment.CLIENT_CREDIT_MODEL) as CreditProduct
+            clientProduct.earlyClosure = it.getString("earlyClosure") ?: "1"
             clientActualGraph = it.serializable<CreditActualGraph>("actualGraph") as CreditActualGraph
         }
         binding.linearSwitch.visibility = View.GONE
@@ -56,16 +57,13 @@ class LoanPaymentFragment : BaseFragment<FragmentLoanPaymentBinding, ClientLoanV
         binding.btnContinue.setOnClickListener {
             if (binding.etAmount.text.toString().isNotEmpty()) {
                 clientProduct.paymentAmount = binding.etAmount.text.toString().replace(" ", "")
-                clientProduct.earlyClosure = arguments?.getString("earlyClosure") ?: "1" /*if (binding.switchId.isChecked) "2" else "1"*/
+                gotoWithSlide(R.id.confirmCreditPaymentFragment, bundleOf(ClientCreditFragment.CLIENT_CREDIT_MODEL to clientProduct))
             }
-            gotoWithSlide(R.id.confirmCreditPaymentFragment, bundleOf(ClientCreditFragment.CLIENT_CREDIT_MODEL to clientProduct))
-
         }
     }
 
     private fun setText() {
         val recommendedAmount = (totalAmount - (clientProduct.mainAccBalance ?: "0").toBigDecimal()).divide(100.toBigDecimal()).toString()
-        // binding.textMaxAmount.text = Format.formatAmount(Format.convertFromTiynDivide(clientProduct.totalDebt))
         binding.maxAmount.text = if (recommendedAmount.startsWith("-")) "0" else Format.formatAmount(
             recommendedAmount
         ) + " сум"

@@ -113,10 +113,10 @@
     <string name="identify">Pass</string>
     <string name="online_identification">Online identification</string>
     <string name="identification_desc">You can become a bank client without visiting an office</string>
-    <string name="uzs_account">Usual account</string>
+    <string name="uzs_account">Sum account</string>
     <string name="currency_account">Currency account</string>
-    <string name="budget_payment">Payment to the budget</string>
-    <string name="to_uzs_account">To the sum account</string>
+    <string name="budget_payment">Payment for budget</string>
+    <string name="to_uzs_account">To sum account</string>
     <string name="sample_string">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularized in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</string>
     <string name="fiz_mib">Individual</string>
     <string name="you_mib">Legal entity</string>
@@ -125,7 +125,7 @@
     <string name="receiver_name">Recipient name</string>
     <string name="payment_details">Payment details</string>
     <string name="amount">Amount</string>
-    <string name="to_usd_account">To a foreign currency account</string>
+    <string name="to_usd_account">To currency account</string>
     <string name="amount_in_dollar">Amount (In US dollars)</string>
     <string name="receiver_account_budget">Recipient account (25/27 characters)</string>
     <string name="warning">Warning</string>
@@ -1016,5 +1016,9 @@
     <string name="no_transaction_or_payment_selected_period">Вы не делали никаких платежей или переводов через приложение в выбранном месяце</string>
     <string name="secret_word_instruction">Security code must be more than 5 and less than 10.</string>
     <string name="card_or_phone_number">Card or phone number</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
+    <string name="sender_card_is_not_active">Sender card is not active</string>
+    <string name="receiver_card_is_not_active">Receiver card is not active</string>
 
 </resources>

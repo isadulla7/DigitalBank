@@ -18,6 +18,7 @@
     <color name="lightRedColor">#F4DBDB</color>
 
     <!-- BLUE -->
+    <color name="frozenBlue">#091C3A</color>
     <color name="brandBlueColor">#ffffff</color>
     <color name="brandBlueColor_90">#ffffff</color>
     <color name="brandBlueColor_80">#3A4961</color>

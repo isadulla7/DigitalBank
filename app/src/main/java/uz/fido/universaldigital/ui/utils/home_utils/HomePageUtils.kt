@@ -48,7 +48,7 @@ fun MenuHomeFragment.setUpTickerView() {
 
 fun loadCardsFromPaper(): ArrayList<CardResponse> {
     return try {
-        Paper.book().read(Const.PAPER_CLIENT_CARDS, ArrayList())
+        Paper.book().read(Const.PAPER_CLIENT_CARDS, ArrayList()) ?: arrayListOf()
     } catch (e: Exception) {
         Paper.book().write(Const.PAPER_CLIENT_CARDS, ArrayList<CardResponse>())
         ArrayList()
@@ -57,7 +57,7 @@ fun loadCardsFromPaper(): ArrayList<CardResponse> {
 
 fun getCardsWithBalanceVisibility(): ArrayList<CardResponse> {
     return try {
-        Paper.book().read(Const.PAPER_CARDS_WITH_BALANCE_VIS, ArrayList())
+        Paper.book().read(Const.PAPER_CARDS_WITH_BALANCE_VIS, ArrayList()) ?: arrayListOf()
     } catch (e: Exception) {
         Paper.book().write(Const.PAPER_CARDS_WITH_BALANCE_VIS, ArrayList<CardResponse>())
         ArrayList()

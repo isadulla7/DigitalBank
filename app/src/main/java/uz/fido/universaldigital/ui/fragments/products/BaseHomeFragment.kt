@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.products
 
 import android.os.Bundle
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -97,10 +96,10 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
     }
 
     fun initWidgets() {
-        if (Const.MAIN_WIDGETS_VERSION > Paper.book()
-                .read(Const.MAIN_WIDGETS_VERSION_SAVED, 0) || Paper.book()
+        if (Const.MAIN_WIDGETS_VERSION > (Paper.book()
+                .read<Int>(Const.MAIN_WIDGETS_VERSION_SAVED, 0) ?: 0) || Paper.book()
                 .read<java.util.ArrayList<MainWidget>>(Const.MAIN_WIDGETS) == null || Paper.book()
-                .read(Const.UPDATE_MAIN_WIDGETS, false)
+                .read<Boolean>(Const.UPDATE_MAIN_WIDGETS, false) == true
         ) {
             mainWidgetsList = java.util.ArrayList()
             val names = resources.getStringArray(R.array.main_widgets)
@@ -118,7 +117,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
         } else {
             if (mainWidgetsList.size == 0) {
                 val list = Paper.book().read<java.util.ArrayList<MainWidget>>(Const.MAIN_WIDGETS)
-                list.forEach {
+                list?.forEach {
                     if (it.is_visible) {
                         mainWidgetsList.add(it)
                     }
@@ -289,8 +288,8 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
         var fastAccessOperations = ArrayList<FastAccessOperation>()
         if (Paper.book()
                 .read<ArrayList<FastAccessOperation>>(Const.FAST_ACCESS) == null || Paper.book()
-                .read(Const.UPDATE_FAST_ACCESS, true) ||
-            Paper.book().read(Const.UPDATE_MAIN_WIDGETS, false)
+                .read(Const.UPDATE_FAST_ACCESS, true) == true ||
+            Paper.book().read(Const.UPDATE_MAIN_WIDGETS, false) == true
         ) {
             fastAccessOperations = getFastAccessOperationList(requireContext())
             Paper.book().write(Const.FAST_ACCESS, fastAccessOperations)
@@ -298,12 +297,12 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
             Paper.book().write(Const.UPDATE_MAIN_WIDGETS, false)
         } else {
             if (fastAccessOperations.size == 0) {
-                val checkList= getFastAccessOperationList(requireContext())
+                val checkList = getFastAccessOperationList(requireContext())
                 val list = Paper.book().read<ArrayList<FastAccessOperation>>(Const.FAST_ACCESS)
-                list.forEach {
+                list?.forEach {
                     viewLifecycleOwner.lifecycleScope.launch {
-                        val newItem=checkList.firstOrNull {item-> item.id==it.id }
-                        it.name=newItem?.name?:it.name
+                        val newItem = checkList.firstOrNull { item -> item.id == it.id }
+                        it.name = newItem?.name ?: it.name
                     }
                     if (it.isVisible) {
                         fastAccessOperations.add(it)

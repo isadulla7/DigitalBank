@@ -5,7 +5,6 @@ import android.app.Activity
 import android.app.Dialog
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,8 +60,8 @@ class MainWidgetSettingsDialog(private val baseInterface: BaseInterface) :
         visibleList.clear()
         hiddenList.clear()
         val langList=getAllWidgetList()
-        val list: ArrayList<MainWidget> = Paper.book().read(Const.MAIN_WIDGETS)
-        list.forEach {
+        val list: ArrayList<MainWidget>? = Paper.book().read(Const.MAIN_WIDGETS)
+        list?.forEach {
             val widget= langList.firstOrNull { item->item.id==it.id }
             if (it.is_visible) {
                 it.name=widget?.name?:it.name

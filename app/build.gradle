@@ -61,137 +61,94 @@ android {
 
 dependencies {
 
-    implementation ProjectDependencies.coreKtx
-    implementation ProjectDependencies.appCompat
-    implementation ProjectDependencies.constraintLayout
-    implementation ProjectDependencies.kotlin
-    implementation ProjectDependencies.legacySupport
-    implementation ProjectDependencies.workRuntime
-    implementation ProjectDependencies.material
+    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.livedata.ktx)
+    implementation(libs.androidx.work.runtime)
+    implementation(libs.androidx.legacy.support)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.lifecycle.extensions)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.camera.lifecycle)
+    implementation(libs.androidx.camera.camera.view)
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.androidx.biometric)
+    implementation(libs.androidx.preference)
 
-    //play services and maps
-    implementation ProjectDependencies.playServicesVision
-    implementation ProjectDependencies.playServicesMaps
-    implementation ProjectDependencies.playServicesLocation
-    implementation ProjectDependencies.playServicesMapsUtils
+    implementation(libs.com.google.android.material)
+    implementation(libs.com.google.android.play.services.maps)
+    implementation(libs.com.google.android.play.services.vision)
+    implementation(libs.com.google.android.play.services.vision.common)
+    implementation(libs.com.google.android.play.services.location)
+    implementation(libs.com.google.android.play.services.auth.api.phone)
+    implementation(libs.com.google.android.play.services.mlkit.face.detection)
+    implementation(libs.com.google.android.play.services.mlkit.text.recognition)
+    implementation(libs.com.google.android.play.services.mlkit.barcode.scanning)
+    implementation(libs.com.google.android.flexbox)
+    implementation(libs.com.google.android.app.update)
+    implementation(libs.com.google.dagger.hilt.android)
+    implementation(libs.com.google.mlkit.barcode.scanning)
+    implementation(libs.com.google.code.gson)
+    implementation(libs.com.google.maps.utils)
 
-    implementation ProjectDependencies.barcodeScanning
-    implementation ProjectDependencies.smsRetrieve
-    implementation ProjectDependencies.coroutinesCore
-    implementation ProjectDependencies.coroutinesAndroid
-    implementation ProjectDependencies.liveDataKtx
+    kapt(libs.com.google.dagger.hilt.android.compiler)
+    compileOnly(libs.com.google.android.wearable)
 
-    implementation ProjectDependencies.lifeCycleExtension
-    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
-    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
-    compileOnly ProjectDependencies.wearable
-    kapt ProjectDependencies.lifeCycleCompiler
+    implementation(libs.org.jetbrains.kotlin)
+    implementation(libs.org.jetbrains.coroutines.core)
+    implementation(libs.org.jetbrains.coroutines.android)
+    implementation(libs.org.jetbrains.kotlin.reflect)
 
-    //coil,picasso (image loader)
-    implementation ProjectDependencies.coil
-    implementation ProjectDependencies.picasso
-    implementation ProjectDependencies.videoCache
-
-    //glide(image loader)
-    implementation ProjectDependencies.glide
-    kapt ProjectDependencies.glideCompiler
-
-    implementation ProjectDependencies.circleImageView
-    implementation ProjectDependencies.expandableLayout
-
-    //cameraX dependencies(please don't update)
-    implementation ProjectDependencies.camera
-    implementation ProjectDependencies.cameraLifecycle
-    implementation ProjectDependencies.cameraView
-
-    //firebase
-    implementation platform(ProjectDependencies.firebaseBom)
-    implementation ProjectDependencies.firebaseAnalytics
-    implementation ProjectDependencies.firebaseStorage
-    implementation ProjectDependencies.firebaseCrashlytics
-    implementation ProjectDependencies.firebaseDynamicLinks
-    implementation ProjectDependencies.firebaseMessaging
-    implementation ProjectDependencies.firebaseFireStore
-
-    implementation ProjectDependencies.viewModelKoin
-    implementation ProjectDependencies.maskCardPhone
-
-
-    //smart refresh layout
-    implementation ProjectDependencies.libMaterialProgress
-    implementation ProjectDependencies.smartRefreshLayout
-    implementation ProjectDependencies.smartRefreshHeader
-
-    implementation ProjectDependencies.ticker
-    implementation ProjectDependencies.ktorAndroid
-    implementation ProjectDependencies.kotlinxCoroutines
-
-    //ml kit
-    implementation ProjectDependencies.mlkitFaceDetection
-    implementation ProjectDependencies.mlkitTextRecognition
-    implementation ProjectDependencies.mlkitBarcodeScanning
-
-    //lifecycle (please don't update)
-    implementation ProjectDependencies.lifecycleViewModel
-    implementation ProjectDependencies.lifecycleRuntime
-
-    implementation ProjectDependencies.splashScreen
-    implementation ProjectDependencies.playServiceVisionCommon
-    implementation ProjectDependencies.playServiceVision
-
-    implementation ProjectDependencies.rxBinding
-    implementation ProjectDependencies.viewPagerDotIndicator
-    implementation ProjectDependencies.pageTransformerHelper
-    implementation ProjectDependencies.rvAnimators
-
-    implementation ProjectDependencies.qrGenAndroid
-    implementation ProjectDependencies.customQrGenerator
-    implementation ProjectDependencies.commonsLang
-    implementation ProjectDependencies.animatedProgressBar
-    implementation ProjectDependencies.rxRelay
-
-    //hilt
-    implementation ProjectDependencies.hiltAndroid
-    kapt ProjectDependencies.hiltCompiler
-    implementation ProjectDependencies.paper
-
-    implementation ProjectDependencies.navigationFragment
-    implementation ProjectDependencies.navigationUi
-    implementation ProjectDependencies.navigationKtx
-
-    implementation ProjectDependencies.securityCrypto
-    implementation ProjectDependencies.biometric
-    implementation ProjectDependencies.skeleton
-    implementation ProjectDependencies.shimmerLayout
-    implementation ProjectDependencies.sharedPref
-    implementation ProjectDependencies.gson
+    implementation(platform(libs.com.google.firebase.firebase.bom))
+    implementation(libs.com.google.firebase.firebase.analytics.ktx)
+    implementation(libs.com.google.firebase.firebase.storage)
+    implementation(libs.com.google.firebase.firebase.crashlytics)
+    implementation(libs.com.google.firebase.firebase.dynamic.links.ktx)
+    implementation(libs.com.google.firebase.firebase.messaging.ktx)
+    implementation(libs.com.google.firebase.firebase.firestore.ktx)
 
     //retrofit
-    implementation ProjectDependencies.retrofit
-    implementation ProjectDependencies.retrofitConverter
+    implementation(libs.com.squareup.retrofit2.retrofit)
+    implementation(libs.com.squareup.retrofit2.converter.gson)
+    implementation(libs.com.squareup.okhttp3.logging.interceptor)
 
-    implementation ProjectDependencies.lottie
-    implementation ProjectDependencies.inAppUpdate
-    implementation ProjectDependencies.flexbox
+    //coil,picasso,glide (image loader)
+    implementation(libs.io.coil.kt.coil)
+    implementation(libs.com.squareup.picasso.picasso)
+    implementation(libs.com.github.bumptech.glide)
+    kapt libs.com.github.bumptech.glide.compiler
 
-    //my id(native libs)
-    implementation ProjectDependencies.myId
+    implementation(libs.de.hdodenhof.circleimageview)
+    implementation(libs.com.github.cachapa.expandableLayout)
 
-    //nfc card reader
-    implementation files(ProjectDependencies.nfcCardReader)
+    implementation(libs.org.koin.koin.androidx.viewmodel)
+    implementation(libs.com.redmadrobot.input.mask.android)
+    implementation(libs.com.robinhood.ticker.ticker)
+    implementation(libs.io.ktor.ktor.client.android)
+    implementation(libs.com.jakewharton.rxbinding4.rxbinding)
+    implementation(libs.com.tbuonomo.andrui.viewpagerdotsindicator)
+    implementation(libs.com.github.OCNYang.pageTransformerHelp)
+    implementation(libs.com.scwang.smartrefresh.layout)
+    implementation(libs.com.scwang.smartrefresh.header)
+    implementation(libs.com.github.alexzhirkevich.custom.qr.generator)
+    implementation(libs.org.apache.commons.commons.lang3)
+    implementation(libs.com.github.mckrpk.animatedProgressBar)
+    implementation(libs.com.jakewharton.rxrelay2.rxrelay)
+    implementation(libs.io.github.pilgr.paperdb)
+    implementation(libs.com.ethanhua.skeleton)
+    implementation(libs.io.supercharge.shimmerlayout)
+    implementation(libs.com.airbnb.android.lottie)
+    implementation(libs.com.github.philjay.mpadroidChart)
+    implementation(libs.uz.myid.sdk.capture)
 
-    //pie chart
-    implementation ProjectDependencies.PieChart
-
-    //card scanner project
-    implementation project(':cardScanner')
-
-    //network module
-    implementation project(':network')
-
-    //utils module
-    implementation project(':utils')
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.8.22"
-    implementation ProjectDependencies.okhttpLogging
-
+    implementation(files(ModuleList.NFC_LIBRARY))
+    implementation(project(ModuleList.CARD_SCANNER))
+    implementation(project(ModuleList.NETWORK))
+    implementation(project(ModuleList.UTILS))
 }

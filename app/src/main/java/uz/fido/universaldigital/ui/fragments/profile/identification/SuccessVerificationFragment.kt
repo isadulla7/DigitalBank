@@ -65,8 +65,8 @@ class SuccessVerificationFragment : BaseFragment<FragmentSuccessVerificationBind
 
     private fun changeUserStatus() {
         val signInResponse = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
-        signInResponse.user_status_id = "1"
-        Paper.book().write(Const.PAPER_CLIENT_INFO, signInResponse)
+        signInResponse?.user_status_id = "1"
+        signInResponse?.let { Paper.book().write(Const.PAPER_CLIENT_INFO, it) }
     }
 
     private fun loadIllustration() {
