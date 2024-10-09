@@ -31,6 +31,7 @@ import uz.fido.universaldigital.ui.fragments.services.loan.LoanGroupListFragment
 import uz.fido.universaldigital.ui.fragments.services.loan.LoanViewModel
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.LoanMonthDialog
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_info.LoanUserInfo1Fragment
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.CardConst.HUMO_CARD
 import uz.fido.utils.const.CardConst.UZCARD
@@ -64,13 +65,10 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        creditGroup =
-            requireArguments().getSerializable(LoanGroupListFragment.CREATE_LOAN) as CreditGroup
-
+        creditGroup = requireArguments().serializable<CreditGroup>(LoanGroupListFragment.CREATE_LOAN) as CreditGroup
         initCards()
         setInfoText()
         seekBarAmount()
-        // lifeTime()
         paymentTime()
         loanType()
         //  calculateMonthlyAmount(minAmount.toBigDecimal())

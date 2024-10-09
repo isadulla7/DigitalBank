@@ -7,11 +7,9 @@ import android.text.InputFilter
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import com.google.android.material.textfield.TextInputEditText
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.payment.TemplateKeyValue
@@ -20,8 +18,8 @@ import uz.fido.network.domain.model.swift.SwiftRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentInitTransferDetailsBinding
-import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -35,11 +33,9 @@ import java.util.Locale
 
 @AndroidEntryPoint
 @SuppressLint("SetTextI18n")
-class InitTransferDetailsFragment :
-    BaseFragment<FragmentInitTransferDetailsBinding, SwiftTransferViewModel>(
-        FragmentInitTransferDetailsBinding::inflate, SwiftTransferViewModel::class.java
-    ) {
-
+class InitTransferDetailsFragment : BaseFragment<FragmentInitTransferDetailsBinding, SwiftTransferViewModel>(
+    FragmentInitTransferDetailsBinding::inflate, SwiftTransferViewModel::class.java
+) {
 
     companion object {
         const val BANK_TRANSFER_OPERATION = "BANK_TRANSFER_OPERATION"
@@ -53,23 +49,16 @@ class InitTransferDetailsFragment :
 
     private var selectedCard: CardResponse? = null
     private var requestModel: CreateSwiftAppRequest? = null
-    private val productsViewModel: MenuProductsViewModel by activityViewModels()
-
     private val myFormat = "dd.MM.yy"
     private val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
     private var editTextList = ArrayList<TextInputEditText>()
-    private var userCardList = ArrayList<CardResponse>()
     private var bicChecked = false
-    private var addTemplate = false
-    private var commissionAmount = ""
     private var operation: Int = 1
-    private var commissionUsd = 0
     private var amount = 0L
     private var bic = ""
     private var currency = ""
     private var tempId = ""
 
-    //    private lateinit var addTemplateDialog: AddTemplateDialog
     private val params = HashMap<String, String>()
 
     private var bankTransferModel: ArrayList<TemplateKeyValue>? = null
@@ -79,8 +68,8 @@ class InitTransferDetailsFragment :
         arguments?.let {
             currency = it.getString(TRANSFER_CURRENCY).toString()
             operation = it.getInt(BANK_TRANSFER_OPERATION)
-            if (it.getSerializable("details") != null) {
-                bankTransferModel = it.getSerializable("details") as ArrayList<TemplateKeyValue>
+            if (it.serializable<ArrayList<TemplateKeyValue>>("details") != null) {
+                bankTransferModel = it.serializable<ArrayList<TemplateKeyValue>>("details") as ArrayList<TemplateKeyValue>
                 if (operation == BANK_OPERATION_CHANGE) tempId = it.getString("temp_id").toString()
             }
         }
@@ -145,7 +134,6 @@ class InitTransferDetailsFragment :
             AmountSuggestionView.AmountType.AMOUNT_TYPE_PAYMENT, binding.editTextAmount, currency
         )
     }
-
 
     private fun addTextChangeListeners() {
         binding.editTextAmount.addTextChangedListener {
@@ -261,7 +249,6 @@ class InitTransferDetailsFragment :
         }
     }
 
-
     private fun collectData() {
         requestModel = CreateSwiftAppRequest(
             request_code = "CREATE_IBS_SWIFT_APP",
@@ -304,7 +291,6 @@ class InitTransferDetailsFragment :
             bicorbei_57a = binding.etBicName57a.text.toString()
         )
     }
-
 
     private fun saveTemplate() {
 ////        val templateGroupId = PaymentFragment.TemplateGroups.DEFAULT_TEMPLATES.toString()

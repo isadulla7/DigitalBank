@@ -25,6 +25,7 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentBranchDetailsBinding
 import uz.fido.universaldigital.ui.utils.extensions.bitmapDescriptorFromVector
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.utility.fragment.pop
 
 class FragmentBranchDetails :
@@ -53,7 +54,7 @@ class FragmentBranchDetails :
     }
 
     private fun initBranchDetails() {
-        branch = this.requireArguments().getSerializable("branch") as Branches
+        branch = this.requireArguments().serializable<Branches>("branch") as Branches
         binding.name.text = branch.name
         if (!branch.address.isNullOrBlank()) {
             binding.address.text = branch.address

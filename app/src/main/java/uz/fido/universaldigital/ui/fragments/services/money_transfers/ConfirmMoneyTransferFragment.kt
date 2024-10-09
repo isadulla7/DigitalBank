@@ -18,6 +18,7 @@ import uz.fido.universaldigital.databinding.ItemConfirmPaymentBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.utility.format.Format
@@ -41,8 +42,7 @@ class ConfirmMoneyTransferFragment :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            moneyTransferParamsResponse =
-                it.getSerializable("model") as MoneyTransferParamsResponse?
+            moneyTransferParamsResponse = it.serializable<MoneyTransferParamsResponse>("model")
             countries = moneyTransferParamsResponse!!.countries
         }
     }

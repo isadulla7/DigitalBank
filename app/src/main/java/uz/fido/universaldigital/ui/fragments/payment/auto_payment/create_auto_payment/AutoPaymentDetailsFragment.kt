@@ -13,6 +13,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentAutoPaymentDetailBinding
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.AutoPaymentViewModel
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst.STATE_ACTIVE
 import uz.fido.utils.const.CardConst.STATE_PASSIVE
 import uz.fido.utils.format.Format
@@ -31,7 +32,7 @@ class AutoPaymentDetailsFragment : BaseFragment<FragmentAutoPaymentDetailBinding
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
-            autoPayment = it.getSerializable("item") as AutoPayment?
+            autoPayment = it.serializable<AutoPayment>("item")
         }
 
         getList()

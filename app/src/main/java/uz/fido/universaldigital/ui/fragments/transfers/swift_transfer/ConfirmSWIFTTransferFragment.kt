@@ -19,6 +19,7 @@ import uz.fido.universaldigital.databinding.ItemConfirmPaymentBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.utility.format.Format
@@ -122,7 +123,7 @@ class ConfirmSWIFTTransferFragment :
                         R.id.basicSuccessFragment, bundleOf(
                             Const.OPERATION to BasicSuccessFragment.SWIFT_SUCCESS,
                             Const.OPERATION_AMOUNT to requestModel!!.amount,
-                            "params" to requireArguments().getSerializable("details") as HashMap<String, String>
+                            "params" to requireArguments().serializable<HashMap<String, String>>("details") as HashMap<String, String>
                         )
                     )
                 }
@@ -151,7 +152,7 @@ class ConfirmSWIFTTransferFragment :
 
     private fun getArgs() {
         arguments?.let {
-            requestModel = it.getSerializable("model") as CreateSwiftAppRequest
+            requestModel = it.serializable<CreateSwiftAppRequest>("model") as CreateSwiftAppRequest
             currency = it.getString("currency_char").toString()
         }
     }

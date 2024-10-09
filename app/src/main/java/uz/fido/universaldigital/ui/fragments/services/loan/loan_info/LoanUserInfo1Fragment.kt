@@ -12,6 +12,7 @@ import uz.fido.network.domain.model.my_id.Profile
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentLoanUserInfo1Binding
 import uz.fido.universaldigital.ui.fragments.services.loan.LoanViewModel
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.pop
@@ -41,7 +42,7 @@ class LoanUserInfo1Fragment : BaseFragment<FragmentLoanUserInfo1Binding, LoanVie
     }
 
     private fun getArgumentsItem() {
-        clientDetailedInfo = requireArguments().getSerializable(CLIENT_INFO) as ClientDetailedInfo
+        clientDetailedInfo = requireArguments().serializable<ClientDetailedInfo>(CLIENT_INFO) as ClientDetailedInfo
     }
 
     private val faceIdActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

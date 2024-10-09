@@ -18,6 +18,7 @@ import uz.fido.universaldigital.databinding.FragmentSavePaymentSpecialBinding
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.adapter.AutoPaymentCustomDateAdapter
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment.SaveAutoPaymentFinalFragment
 import uz.fido.universaldigital.ui.utils.extensions.hideSoftKeyboard
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
@@ -39,7 +40,7 @@ class SaveAutoPaymentSpecialFragment : SimpleAbstractFragment<FragmentSavePaymen
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            autoPayment = it.getSerializable("item") as AutoPayment?
+            autoPayment = it.serializable<AutoPayment>("item")
         }
         getAutoPayment()
         setAdapter()

@@ -16,6 +16,7 @@ import uz.fido.universaldigital.databinding.FragmentConfirmLocalPaymentBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.fragments.services.map_payment.PaymentBranchViewModel
+import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst.CURRENCY_CARD
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
@@ -39,8 +40,8 @@ class ConfirmLocalPaymentFragment :
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             amount = arguments?.getString("amount").toString()
-            localPayment = it.getSerializable("model") as LocalPayment?
-            localPaymentType = it.getSerializable("type") as LocalPaymentType?
+            localPayment = it.serializable<LocalPayment>("model")
+            localPaymentType = it.serializable<LocalPaymentType>("type")
         }
 
         setTextInit()
