@@ -21,6 +21,21 @@
         <item name="android:windowLightStatusBar">true</item>
     </style>
 
+
+    <style name="AppBottomSheetDialogThemetwo" parent="Theme.AppCompat.DayNight.DialogWhenLarge">
+        <item name="bottomSheetStyle">@style/AppModalStyle</item>
+        <item name="android:colorAccent">@color/whiteColor</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowFullscreen">false</item>
+
+        <!-- This is important! Don't forget to set window background -->
+        <item name="android:windowBackground">@color/whiteColor</item>
+        <item name="colorAccent">@color/whiteColor</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="colorPrimaryDark">@color/whiteColor</item>
+        <item name="colorPrimary">@color/whiteColor</item>
+        <item name="colorOnSurface">@color/whiteColor</item>
+    </style>
     <style name="Widget.BottomNavigationView" parent="Widget.Design.BottomNavigationView">
         <item name="fontFamily">@font/inter_regular</item>
         <item name="android:textSize">12sp</item>
