@@ -11,6 +11,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentSuccessTransferBinding
 import uz.fido.universaldigital.ui.activities.MainActivity
+import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.Companion.OPERATION_P2P
 import uz.fido.universaldigital.ui.fragments.transfers.cheque.TransferChequeFragment
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
@@ -78,6 +79,7 @@ class SuccessTransferFragment :
         val operationDate = dateFormat.format(now)
         goto(
             R.id.transferChequeFragment2, bundleOf(
+                uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.OPERATION to OPERATION_P2P,
                 TRANSFER_DTO to transferDto,
                 TransferChequeFragment.OPERATION_DATE to operationDate
             )

@@ -15,10 +15,10 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_margin="32dp"
+        android:layout_margin="16dp"
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="0dp"
-        app:layout_constraintBottom_toTopOf="@id/share_button"
+        app:layout_constraintBottom_toTopOf="@id/buttons"
         app:layout_constraintTop_toBottomOf="@id/app_bar">
 
         <ImageView
@@ -29,13 +29,38 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/share_button"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/buttons"
         android:layout_width="match_parent"
-        android:textColor="@color/frozenWhite"
-        android:layout_height="56dp"
-        android:layout_margin="16dp"
-        android:text="@string/share"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/btn_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="16dp"
+            android:drawableTop="@drawable/ic_btn_share"
+            android:gravity="center"
+            android:text="@string/share"
+            android:textColor="@color/mainTextColor"
+            android:textSize="16sp" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="12dp"
+            android:layout_marginBottom="16dp"
+            android:drawableTop="@drawable/ic_info_monitoring"
+            android:gravity="center"
+            android:text="@string/save"
+            android:textColor="@color/mainTextColor"
+            android:textSize="16sp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

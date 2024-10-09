@@ -89,13 +89,13 @@ class InfoMonitoringDialog(
             when (searchDateResponse.request_code) {
                 "P2P", "CONVERSION" -> {
                     if (searchDateResponse.from_object_value != null) {
-                        addView(getString(R.string.sender_card), Format.formatCardNumber(searchDateResponse.from_object_value!!))
+                        addView(getString(R.string.sender_card), Format.formatCardNumberForCheque(searchDateResponse.from_object_value!!))
                         if (!searchDateResponse.from_embossed_name.isNullOrEmpty()) {
                             addView(getString(R.string.sender_name), searchDateResponse.from_embossed_name.orEmpty())
                         }
                     }
                     if (searchDateResponse.to_object_value != null) {
-                        addView(getString(R.string.receiver_card), Format.formatCardNumber(searchDateResponse.to_object_value!!))
+                        addView(getString(R.string.receiver_card), Format.formatCardNumberForCheque(searchDateResponse.to_object_value!!))
                         if (!searchDateResponse.to_embossed_name.isNullOrEmpty()) {
                             addView(getString(R.string.receiver_name), searchDateResponse.to_embossed_name.orEmpty())
                         }

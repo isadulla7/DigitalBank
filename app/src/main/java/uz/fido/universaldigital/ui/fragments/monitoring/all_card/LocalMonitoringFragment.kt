@@ -30,6 +30,9 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentLocalMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.LocalMonitoringAdapter
+import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.Companion.CHEQUE_MODEL
+import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.Companion.OPERATION_MONITORING
+import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.InfoMonitoringDialog
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
@@ -38,8 +41,10 @@ import uz.fido.utils.format.Format
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.sticky.StickyHeaderDecoration
 import uz.fido.utils.utility.adapter.showSkeleton
+import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
+import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -452,7 +457,6 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                                     super.fullInfo(localeMonitoring)
                                     dialogInfo.dismiss()
                                     printCheque(localMonitoring, it)
-
                                 }
                             })
                         dialogInfo.show(childFragmentManager, "")
@@ -483,15 +487,19 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                     Status.SUCCESS -> {
                         val response = it.data!!
                         response.monitoring_info = localMonitoring
-                        gotoWithSlide(
-                            R.id.checkInfoPaymentFragment,
-                            bundleOf(
-                                "details" to response,
-                                "operation" to "local",
-                                "command" to resource.data?.command,
-                                "data" to resource.data
+                        if (resource.data?.request_code == "P2P") {
+                            resource.data?.let { it1 -> drawTransferCheque(localMonitoring, it1) }
+                        } else {
+                            gotoWithSlide(
+                                R.id.checkInfoPaymentFragment,
+                                bundleOf(
+                                    "details" to response,
+                                    "operation" to "local",
+                                    "command" to resource.data?.command,
+                                    "data" to resource.data
+                                )
                             )
-                        )
+                        }
                     }
 
                     Status.ERROR -> {
@@ -499,7 +507,37 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                     }
                 }
             }
+    }
 
+    private fun drawTransferCheque(
+        localMonitoring: LocalMonitoring,
+        data: SearchDataResponse
+    ) {
+        val percent = localMonitoring.fee_percent
+        val commissionAmount = localMonitoring.fee_amount.toBigDecimal().divide(BigDecimal(100))
+        val totalAmount = localMonitoring.amount.toBigDecimal().divide(BigDecimal(100))
+        val model = TransferChequeModel(
+            transactionDate = localMonitoring.created_date,
+            transactionAmount = Format.formatAmount((data.amount?.toDouble()?.div(100)).toString()) + " " + getString(
+                R.string.sum_text
+            ),
+            transactionFee = "$percent % (" + Format.formatAmount(commissionAmount.toString()) + " " + getString(
+                R.string.sum_text
+            ) + ")",
+            transactionNumber = data.request_id.orEmpty(),
+            senderCardNumber = Format.formatCardNumberForCheque(data.from_object_value.orEmpty()),
+            senderCardName = data.from_embossed_name.orEmpty(),
+            receiverCardName = data.to_embossed_name.orEmpty(),
+            receiverCardNumber = Format.formatCardNumberForCheque(data.to_object_value.orEmpty()),
+            operationName = "(${getString(R.string.transfer)})",
+            totalAmount = "${uz.fido.utils.utility.format.Format.formatAmount(totalAmount.toString())} ${getString(uz.fido.utils.R.string.sum)}"
+        )
+        goto(
+            R.id.transferChequeFragment2, bundleOf(
+                uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.OPERATION to OPERATION_MONITORING,
+                CHEQUE_MODEL to model
+            )
+        )
     }
 
     private fun getOperationParams(
