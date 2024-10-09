@@ -138,7 +138,7 @@
                     android:id="@+id/call"
                     style="@style/FloatingButtonStyle"
                     android:clickable="false"
-                    android:src="@drawable/add_card"
+                    android:src="@drawable/ic_cbank_call"
                     tools:ignore="ContentDescription" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -161,7 +161,7 @@
                     android:id="@+id/locate"
                     style="@style/FloatingButtonStyle"
                     android:clickable="false"
-                    android:src="@drawable/add_card"
+                    android:src="@drawable/ic_location_icon"
                     tools:ignore="ContentDescription" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium

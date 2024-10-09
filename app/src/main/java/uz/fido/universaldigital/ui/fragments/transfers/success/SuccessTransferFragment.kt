@@ -17,6 +17,7 @@ import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.goto
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 @SuppressLint("SetTextI18n")
@@ -25,6 +26,7 @@ class SuccessTransferFragment :
     BaseSimpleFragment<FragmentSuccessTransferBinding>(FragmentSuccessTransferBinding::inflate) {
 
     private lateinit var transferDto: TransferDto
+    private lateinit var now: Date
 
     companion object {
         const val TRANSFER_DTO = "TRANSFER_DTO"
@@ -72,10 +74,12 @@ class SuccessTransferFragment :
     }
 
     private fun gotoChequePage() {
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
+        val operationDate = dateFormat.format(now)
         goto(
-            R.id.transferChequeFragment, bundleOf(
+            R.id.transferChequeFragment2, bundleOf(
                 TRANSFER_DTO to transferDto,
-                TransferChequeFragment.OPERATION_DATE to binding.date.text
+                TransferChequeFragment.OPERATION_DATE to operationDate
             )
         )
     }
@@ -91,7 +95,7 @@ class SuccessTransferFragment :
 
     private fun setOperationTime() {
         val dateFormat = SimpleDateFormat("dd.MM.yyyy • HH:mm", Locale.US)
-        val now = Calendar.getInstance().time
+        now = Calendar.getInstance().time
         binding.date.text = dateFormat.format(now)
     }
 

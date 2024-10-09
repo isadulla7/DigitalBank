@@ -588,11 +588,9 @@ class PaymentSecondStepFragment :
                     } else {
                         calculateRange()
                     }
-                    if (binding.mainLayout.findViewWithTag<ViewElectricityCalculator>(paymentService?.payment_detail_code) != null && homeId == null)
-                        binding.mainLayout.findViewWithTag<ViewElectricityCalculator>(
-                            paymentService?.payment_detail_code
-                        ).visibility =
-                            if (allServiceLists.addition == "P") View.GONE else View.VISIBLE
+                    if (binding.mainLayout.findViewWithTag<ViewElectricityCalculator>(paymentService?.payment_detail_code) != null && homeId == null) {
+                        binding.mainLayout.findViewWithTag<ViewElectricityCalculator>(paymentService?.payment_detail_code).visibility = if (allServiceLists.addition == "P") View.GONE else View.VISIBLE
+                    }
                 }
             }
         }

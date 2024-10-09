@@ -12,5 +12,6 @@ data class TransferDto(
     var operation: String? = null,
     var currentRate: String? = "",
     var phoneNumber: String? = "",
-    var requestId: String? = ""
+    var requestId: String? = "",
+    var createdDate: String? = ""
 ) : Serializable

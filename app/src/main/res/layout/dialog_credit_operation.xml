@@ -17,13 +17,13 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="16sp"
         android:layout_marginTop="6dp"
         android:gravity="center"
         android:text="@string/loan_time"
         android:textColor="@color/mainTextColor"
-        android:layout_height="wrap_content"/>
+        android:textSize="16sp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewSemiBold
         android:id="@+id/tv_title"
@@ -38,38 +38,38 @@
         android:id="@+id/loan_information"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
         android:layout_marginTop="16dp"
-        android:drawablePadding="16dp"
         android:drawableStart="@drawable/ic_loan_information"
-        android:paddingStart="16dp"
+        android:drawablePadding="16dp"
         android:paddingVertical="16dp"
+        android:paddingStart="16dp"
         android:text="@string/loan_information"
-        android:textColor="@color/mainTextColor"/>
+        android:textColor="@color/mainTextColor"
+        android:textSize="16sp" />
+
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/requisites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:drawablePadding="16dp"
         android:drawableStart="@drawable/details"
-        android:paddingStart="16dp"
+        android:drawablePadding="16dp"
         android:paddingVertical="16dp"
+        android:paddingStart="16dp"
         android:text="@string/requisites"
-        android:textColor="@color/mainTextColor"/>
-
+        android:textColor="@color/mainTextColor"
+        android:textSize="16sp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/repayment_schedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-         android:layout_marginBottom="16dp"
-        android:drawablePadding="16dp"
+        android:layout_marginBottom="16dp"
         android:drawableStart="@drawable/ic_calendar_loan"
-        android:paddingStart="16dp"
+        android:drawablePadding="16dp"
         android:paddingVertical="16dp"
+        android:paddingStart="16dp"
         android:text="@string/repayment_schedule"
-        android:textColor="@color/mainTextColor"/>
+        android:textColor="@color/mainTextColor"
+        android:textSize="16sp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>
