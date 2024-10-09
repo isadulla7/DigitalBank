@@ -209,7 +209,7 @@ object BaseCardUtils {
 
             else -> {
                 textView.visibility = View.VISIBLE
-                textView.text = card.stateName
+                textView.text = card.stateName.orEmpty().ifEmpty { context.getString(R.string.can_not_receive_balance) }
             }
         }
     }

@@ -8,5 +8,11 @@ data class P2PResponse(
     val fee_amount: String,
     val request_id: String,
     val code: String,
+    val createdDocuments: ArrayList<CreatedDocuments>? = arrayListOf(),
     val msg: String
 ) : Serializable
+
+data class CreatedDocuments(
+    val transactionId: Long = 0,
+    val externalId: String = ""
+)

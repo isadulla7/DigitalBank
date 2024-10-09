@@ -242,7 +242,6 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
     }
 
     private fun setDate() {
-
         binding.linearOut.visibility = if (clientDeposit.partialWrite == "Y") View.VISIBLE
         else View.INVISIBLE
 
