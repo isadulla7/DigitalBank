@@ -25,6 +25,7 @@ import uz.fido.utils.utility.fragment.pop
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -39,21 +40,74 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
     private lateinit var file: File
     private var childName = ""
     private val dateFormat2 = SimpleDateFormat("ddMMyyyyhhmmss", Locale.getDefault())
+    private var operation = ""
+    private lateinit var model: TransferChequeModel
+
+    companion object {
+        const val OPERATION_MONITORING = "operation_monitoring"
+        const val OPERATION_P2P = "operation_p2p"
+        const val CHEQUE_MODEL = "cheque_model"
+        const val OPERATION = "operation"
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            operation = requireArguments().getString(OPERATION).toString()
+            if (operation == OPERATION_MONITORING) {
+                model = requireArguments().serializable<TransferChequeModel>(CHEQUE_MODEL) as TransferChequeModel
+            } else {
+                transferDto = requireArguments().serializable<TransferDto>(SuccessTransferFragment.TRANSFER_DTO) as TransferDto
+            }
+        }
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        arguments?.let {
-            transferDto = requireArguments().serializable<TransferDto>(SuccessTransferFragment.TRANSFER_DTO) as TransferDto
-        }
-        setOnClickView()
-        initLocal()
+        initSetOnClickListeners()
+        drawPdfCheque()
     }
 
-    private fun setOnClickView() {
+    private fun drawPdfCheque() {
+        if (operation == OPERATION_P2P) {
+            val percent = (transferDto.commission ?: 0.0).toBigDecimal()
+            val commissionAmount = percent * (transferDto.transferAmount?.toBigDecimal()?.divide(BigDecimal(1000)) ?: BigDecimal(0))
+            val totalAmount = transferDto.transferAmount?.toBigDecimal()?.divide(BigDecimal(100))?.plus(commissionAmount)
+            val model = TransferChequeModel(
+                transactionDate = requireArguments().getString("operation_date").toString(),
+                transactionAmount = Format.formatAmount((transferDto.transferAmount?.toDouble()?.div(100)).toString()) + " " + getString(
+                    R.string.sum_text
+                ),
+                transactionFee = "$percent % (" + Format.formatAmount(commissionAmount.toString()) + " " + getString(
+                    R.string.sum_text
+                ) + ")",
+                transactionNumber = transferDto.requestId.orEmpty(),
+                senderCardNumber = Format.formatCardNumberForCheque(transferDto.senderCard?.object_value ?: ""),
+                senderCardName = transferDto.senderCard?.embossed_name.orEmpty(),
+                receiverCardName = transferDto.receiverCard?.card_owner.orEmpty(),
+                receiverCardNumber = Format.formatCardNumberForCheque(transferDto.receiverCard?.card_number ?: ""),
+                operationName = "(${getOperationName()})",
+                totalAmount = "${uz.fido.utils.utility.format.Format.formatAmount(totalAmount.toString())} ${getString(uz.fido.utils.R.string.sum)}"
+            )
+            drawCheque(model)
+        } else if (operation == OPERATION_MONITORING) {
+            if (this::model.isInitialized) {
+                drawCheque(model)
+            }
+        } else {
+            toast(getString(uz.fido.utils.R.string.unkknown_error))
+            pop()
+        }
+    }
+
+    private fun initSetOnClickListeners() {
         binding.apply {
             appBar.setOnBackButtonClickListener { pop() }
-            shareButton.setOnClickListener {
+            btnShare.setOnClickListener {
                 share(file)
+            }
+            btnSave.setOnClickListener {
+                toast(getString(R.string.successfully_saved))
             }
         }
     }
@@ -75,24 +129,7 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
         }
     }
 
-    private fun initLocal() {
-        val percent = transferDto.commission ?: 0.0
-        val commissionAmount = percent * transferDto.transferAmount?.toDouble()!! / 10000
-        val model = TransferChequeModel(
-            transactionDate = requireArguments().getString("operation_date").toString(),
-            transactionAmount = Format.formatAmount((transferDto.transferAmount?.toDouble()?.div(100)).toString()) + " " + getString(
-                R.string.sum_text
-            ),
-            transactionFee = "$percent % (" + Format.formatAmount(commissionAmount.toString()) + " " + getString(
-                R.string.sum_text
-            ) + ")",
-            transactionNumber = transferDto.requestId.orEmpty(),
-            senderCardNumber = Format.formatCardNumber(transferDto.senderCard?.object_value ?: ""),
-            senderCardName = transferDto.senderCard?.embossed_name.orEmpty(),
-            receiverCardName = transferDto.receiverCard?.card_owner.orEmpty(),
-            receiverCardNumber = Format.formatCardNumber(transferDto.receiverCard?.card_number ?: ""),
-            operationName = "(${getOperationName()})"
-        )
+    private fun drawCheque(model: TransferChequeModel) {
         createPdfDocument(model)
         openPdf()
     }
@@ -222,7 +259,7 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
 
         if (model.senderCardNumber.isNotEmpty()) {
             val senderCard = model.senderCardNumber
-            startPositionY += 70f
+            startPositionY += 50f
             canvas.drawText(
                 getString(R.string.sender_card),
                 startPositionX,
@@ -307,7 +344,7 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
         canvas.drawText(model.transactionDate, xPosition6, startPositionY, paintMediumText)
 
 
-        startPositionY += 70f
+        startPositionY += 50f
         // Draw a dotted line
         drawDottedLine(
             canvas,
@@ -343,6 +380,18 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
                 pageInfo.pageWidth - paintAmount.measureText(model.transactionAmount) - startPositionX
             canvas.drawText(model.transactionAmount, xPosition8, startPositionY, paintAmount)
         }
+
+        startPositionY += 50f
+        canvas.drawText(
+            getString(R.string.to_payment),
+            startPositionX,
+            startPositionY,
+            paintRegularText
+        )
+        val xPosition8 =
+            pageInfo.pageWidth - paintAmount.measureText(model.totalAmount) - startPositionX
+        canvas.drawText(model.totalAmount, xPosition8, startPositionY, paintAmount)
+
 
         val logoQrCode = BitmapFactory.decodeResource(resources, R.drawable.universalbank12)
         val scaledBitmap1 = Bitmap.createScaledBitmap(logoQrCode, 200, 200, true)

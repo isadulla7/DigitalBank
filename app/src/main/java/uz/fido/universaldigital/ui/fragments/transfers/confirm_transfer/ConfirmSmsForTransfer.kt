@@ -108,7 +108,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
                     try {
                         if (!response.isNullOrEmpty()) {
                             transferDto.requestId = response.first().transactionId.toString()
-                        } else transferDto.requestId = p2pRequest.request_id
+                        } else transferDto.requestId = it.data?.request_id.orEmpty()
                     } catch (e: Exception) {
                         e.printStackTrace()
                     }

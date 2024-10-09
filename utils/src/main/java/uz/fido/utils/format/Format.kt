@@ -46,6 +46,17 @@ object Format {
         }
     }
 
+    fun formatCardNumberForCheque(cardNumber: String): String {
+        return if (cardNumber.length == 16) {
+            cardNumber.substring(0, 4) + " " + cardNumber.substring(
+                4,
+                6
+            ) + "** **** " + cardNumber.substring(12, cardNumber.length)
+        } else {
+            cardNumber
+        }
+    }
+
     fun formatWalletNumber(cardNumber: String): String {
         return if (cardNumber.length == 11) {
             cardNumber.substring(0, 3) + " •• " + cardNumber.substring(7, cardNumber.length)
