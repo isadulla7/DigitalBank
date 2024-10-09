@@ -124,7 +124,7 @@
     <string name="you_mib">Юр.лицо</string>
     <string name="receiver_mfo">Код банка получателя</string>
     <string name="receiver_account">Счет получателя</string>
-    <string name="receiver_name">Наименование получателя</string>
+    <string name="receiver_name">Имя получателя</string>
     <string name="payment_details">Детали платежа</string>
     <string name="amount">Сумма</string>
     <string name="to_usd_account">На валютный счет</string>
@@ -285,7 +285,7 @@
     <string name="total_conversion_amount">Конвертируемая сумма:</string>
     <string name="sum_text">сум</string>
     <string name="detail_transfer">Детали перевода</string>
-    <string name="receiver_card">Карта получения</string>
+    <string name="receiver_card">Карта получателя</string>
     <string name="currency_rate">Курс</string>
     <string name="to_payment">Итого к оплате</string>
     <string name="today_rate">Сегодняшний курс:</string>

@@ -35,10 +35,10 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
     private lateinit var pdfRenderer: PdfRenderer
     private lateinit var currentPage: PdfRenderer.Page
     private lateinit var parcelFileDescriptor: ParcelFileDescriptor
+    private lateinit var transferDto: TransferDto
     private lateinit var file: File
     private var childName = ""
     private val dateFormat2 = SimpleDateFormat("ddMMyyyyhhmmss", Locale.getDefault())
-    private lateinit var transferDto: TransferDto
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -237,6 +237,9 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
         if (model.senderCardName.isEmpty()) {
             model.senderCardName = getString(R.string.not_mentioned)
         }
+        if (model.senderCardName.length > 25) {
+            model.senderCardName = model.senderCardName.substring(0, 24) + "..."
+        }
         startPositionY += 50f
         canvas.drawText(
             getString(R.string.sender_name),
@@ -264,6 +267,9 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
         }
         if (model.receiverCardName.isEmpty()) {
             model.receiverCardName = getString(R.string.not_mentioned)
+        }
+        if (model.receiverCardName.length > 25) {
+            model.receiverCardName = model.receiverCardName.substring(0, 24) + "..."
         }
         startPositionY += 50f
         canvas.drawText(
@@ -372,7 +378,7 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
         val directory =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val suffix = dateFormat2.format(Calendar.getInstance().time).trim()
-        childName = "transfer_bill_${suffix}.pdf"
+        childName = "receipt_${suffix}.pdf"
         file = File(directory, childName)
         try {
             pdfDocument.writeTo(FileOutputStream(file))

@@ -5,6 +5,7 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
@@ -15,6 +16,7 @@ import uz.fido.network.domain.model.deposits.operations.PartialWithdrawMoneyDepo
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentDepositFillingBinding
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.extensions.serializable
@@ -34,27 +36,34 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
 ) {
 
     val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
-
-    private lateinit var choosenCard: CardResponse
+    private lateinit var chosenCard: CardResponse
     private lateinit var deposit: ClientDeposit
-
     private var depositType: String = ""
     private var operation = ""
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         arguments?.let {
             deposit = it.serializable<ClientDeposit>("deposit") as ClientDeposit
             operation = it.serializable<String>(Const.OPERATION) as String
             depositType = it.serializable<String>("card_type") as String
         }
-
-        initCards()
-        textWatchers()
-        setOnClick()
+        setFragmentResultListener(ConfirmSmsFragment.SMS_OPERATION_PAYMENT_KEY) { _, bundle ->
+            val stringLine = bundle.getString("string_line").orEmpty()
+            if (operation == "top_up") {
+                investMoney(stringLine)
+            }
+        }
     }
 
-    private fun setOnClick() {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initCards()
+        textWatchers()
+        initSetOnClickListeners()
+    }
+
+    private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
             when (operation) {
@@ -63,7 +72,6 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                 "with_draw_percent" -> withDrawPercent()
                 "with_draw" -> withDrawPercent()
             }
-
         }
     }
 
@@ -73,13 +81,13 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         viewModel.partialWithDraw(
             getClientToken(),
             PartialWithdrawMoneyDepositRequest(
-                command = if (choosenCard.object_type == WALLET) "dep&purse" else "dep&card",
+                command = if (chosenCard.object_type == WALLET) "dep&purse" else "dep&card",
                 savDepId = deposit.savDepId.orEmpty(),
                 amount = Format.formatAmountToTiyn(amount),
-                to_object_value = choosenCard.object_value,
-                to_object_id = choosenCard.object_id,
+                to_object_value = chosenCard.object_value,
+                to_object_id = chosenCard.object_id,
                 service_id = "-7",
-                to_object_expire = choosenCard.object_expiry
+                to_object_expire = chosenCard.object_expiry
             )
         ).observe(viewLifecycleOwner) {
             binding.btnContinue.setProgress(false)
@@ -93,7 +101,6 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                 }
             }
         }
-
     }
 
     private fun closeDeposit() {
@@ -102,10 +109,10 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         viewModel.closeDeposit(
             getClientToken(),
             EarlyClosureRequest(
-                command = if (choosenCard.object_type == WALLET) "dep&purse" else "dep&card",
-                to_object_value = choosenCard.object_value,
-                to_object_id = choosenCard.object_id,
-                to_object_expire = choosenCard.object_expiry,
+                command = if (chosenCard.object_type == WALLET) "dep&purse" else "dep&card",
+                to_object_value = chosenCard.object_value,
+                to_object_id = chosenCard.object_id,
+                to_object_expire = chosenCard.object_expiry,
                 savDepId = deposit.savDepId.orEmpty(),
                 credit_amount = (amount ?: "0").replace(",", "."),
                 client_id = getClientId(),
@@ -128,17 +135,20 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     }
 
     private fun smsCheck() {
+        val amount = binding.etAmount.editableText.toString().replace(" ", "")
         binding.btnContinue.setProgress(true)
-        if (!checkForPaymentSms(choosenCard, "-1", Format.formatAmountToTiyn(deposit.amount))) {
+        if (!checkForPaymentSms(chosenCard, "-1", Format.formatAmountToTiyn(amount))) {
             investMoney()
         } else {
             checkForSms(
-                choosenCard,
-                Format.formatAmountToTiyn(deposit.amount),
+                chosenCard,
+                Format.formatAmountToTiyn(amount),
                 "-6"
             ) { sms_yes, string_line ->
                 if (sms_yes == "Y") {
-
+                    goto(
+                        R.id.confirmSmsFragment, bundleOf(Const.OPERATION to ConfirmSmsFragment.SMS_OPERATION_PAYMENT_KEY)
+                    )
                 } else {
                     investMoney()
                 }
@@ -146,19 +156,17 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         }
     }
 
-    private fun investMoney() {
+    private fun investMoney(stringLine: String? = "") {
         val amount = binding.etAmount.editableText.toString().replace(" ", "")
         val model = InvestMoneyToDepositRequest(
-            command = if (choosenCard.object_type == WALLET) "purse&dep" else "card&dep",
+            command = if (chosenCard.object_type == WALLET) "purse&dep" else "card&dep",
             savDepId = deposit.savDepId.orEmpty(),
             amount = Format.formatAmountToTiyn(amount),
-            from_object_id = choosenCard.object_id,
+            from_object_id = chosenCard.object_id,
             service_id = "-6",
+            string_line = stringLine
         )
-        viewModel.investMoney(
-            getClientToken(), model
-
-        ).observe(viewLifecycleOwner) {
+        viewModel.investMoney(getClientToken(), model).observe(viewLifecycleOwner) {
             binding.btnContinue.isEnabled(false)
             when (it.status) {
                 Status.SUCCESS -> {
@@ -179,7 +187,6 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
             "with_draw_percent" -> percentWithDraw()
             "with_draw" -> withDraw()
         }
-
     }
 
     private fun withDraw() {
@@ -220,26 +227,23 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     }
 
     private fun checkItem(amount: String) {
-        if (amount != "" && this::choosenCard.isInitialized) {
-            if (choosenCard.balance.toBigDecimal() > amount.toBigDecimal()
-            ) {
+        if (amount != "" && this::chosenCard.isInitialized) {
+            if (chosenCard.balance.toBigDecimal() > amount.toBigDecimal()) {
                 binding.btnContinue.isEnabled(true)
             } else {
                 binding.btnContinue.isEnabled(false)
             }
-        } else
-            binding.btnContinue.isEnabled(false)
+        } else binding.btnContinue.isEnabled(false)
     }
 
     private fun initCards() {
         var type = ""
-        var min_amount = ""
-
+        var minAmount = ""
         when (operation) {
-            "top_up" -> min_amount = "100"
-            "delete" -> min_amount = "0"
-            "with_draw_percent" -> min_amount = "0"
-            "with_draw" -> min_amount = "0"
+            "top_up" -> minAmount = "100"
+            "delete" -> minAmount = "0"
+            "with_draw_percent" -> minAmount = "0"
+            "with_draw" -> minAmount = "0"
         }
         type = when (depositType) {
             CURRENCY_CODE_UZS -> {
@@ -252,10 +256,10 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         }
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {
             binding.chooseCardLayout.getUniversalCards(
-                it as ArrayList<CardResponse>, min_amount, type
+                it as ArrayList<CardResponse>, minAmount, type
             ) { cardResponse ->
                 cardResponse?.let { card ->
-                    choosenCard = cardResponse
+                    chosenCard = cardResponse
                     textWatchers()
                 }
             }
@@ -294,7 +298,6 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                                     )
                                 )
                             }
-
                         }
                     }
                 }

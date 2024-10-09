@@ -232,7 +232,14 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 R.color.brandBlueColor_50
             )
         )
-        binding.tvCommission.text = getString(R.string.commission) + " $commission%"
+        val etAmount = binding.etAmount.text.toString().replace(" ", "").ifEmpty { "0" }
+        val formattedAmount = etAmount.toBigDecimal()
+        binding.tvCommission.text = getString(R.string.commission) + " " +
+                commission.toString() + "% (" + Format.formatAmount(
+            Format.convertFromTiynDivide(
+                (formattedAmount * commission).toString()
+            )
+        ) + " " + getString(R.string.sum_text) + ") "
     }
 
     private fun showCommissionProgress() {
@@ -273,7 +280,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                         receiverCard = CardInfoDto(
                             card_type = receiverCard!!.object_type,
                             card_number = receiverCard!!.object_value,
-                            card_owner = receiverCard!!.embossed_name,
+                            card_owner = receiverName,
                             card_expire = receiverCard!!.object_expiry,
                             card_id = receiverCard!!.object_id
                         ),

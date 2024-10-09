@@ -56,7 +56,7 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
     }
 
     private fun initDetails() {
-        binding.tvReceiver.text = transferDto.receiverCard?.card_owner
+        binding.tvReceiver.text = transferDto.receiverCard?.card_owner.orEmpty().ifEmpty { getString(R.string.not_mentioned) }
         binding.tvReceiverCard.text = Format.formatCardNumber(transferDto.receiverCard?.card_number ?: "")
         binding.tvReceivedAmount.text = "${Format.conversionFormat(transferDto.transferAmount?.toDouble()?.div(100) ?: 0.0)} ${getString(uz.fido.utils.R.string.sum)}"
         setCommission(transferDto.commission.toString(), transferDto.transferAmount?.toDouble()?.div(100) ?: 0.0)

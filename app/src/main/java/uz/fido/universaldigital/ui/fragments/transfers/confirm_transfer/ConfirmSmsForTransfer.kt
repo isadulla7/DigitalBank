@@ -104,7 +104,14 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
-                    transferDto.requestId = p2pRequest.request_id
+                    val response = it.data?.createdDocuments
+                    try {
+                        if (!response.isNullOrEmpty()) {
+                            transferDto.requestId = response.first().transactionId.toString()
+                        } else transferDto.requestId = p2pRequest.request_id
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                     gotoWithSlide(
                         R.id.action_confirmSmsForTransfer_to_successTransferFragment,
                         bundleOf(SuccessTransferFragment.TRANSFER_DTO to transferDto)
