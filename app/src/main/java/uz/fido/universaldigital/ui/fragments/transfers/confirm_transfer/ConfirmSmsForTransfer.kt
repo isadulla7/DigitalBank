@@ -104,6 +104,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
+                    transferDto.requestId = p2pRequest.request_id
                     gotoWithSlide(
                         R.id.action_confirmSmsForTransfer_to_successTransferFragment,
                         bundleOf(SuccessTransferFragment.TRANSFER_DTO to transferDto)

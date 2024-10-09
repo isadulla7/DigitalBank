@@ -709,4 +709,8 @@
         android:id="@+id/clearPinFragment"
         android:name="uz.fido.universaldigital.ui.fragments.products.cards.card_operations.clear_pin.ClearPinFragment"
         android:label="ClearPinFragment" />
+    <fragment
+        android:id="@+id/transferChequeFragment2"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment"
+        android:label="TransferChequeFragment" />
 </navigation>
