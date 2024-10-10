@@ -260,15 +260,12 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     }
 
     private fun recyclerViewScroll() {
-        scrollListener =
-            object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
-                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                    if (saveViewModel.localFilter)
-                        getFilterLocalMonitoringList(page, operationType)
-                    else
-                        getLocalMonitoringListScroll(page, operationType)
-                }
+        scrollListener = object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                if (saveViewModel.localFilter) getFilterLocalMonitoringList(page, operationType)
+                else getLocalMonitoringListScroll(page, operationType)
             }
+        }
     }
 
     private fun createMonitoringAdapter() {
@@ -333,7 +330,6 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
             )
         ).observe(viewLifecycleOwner) { resource ->
             binding.progress.visibility = View.GONE
-
             when (resource.status) {
                 Status.SUCCESS -> {
                     binding.consError.visibility = View.GONE
