@@ -10,7 +10,7 @@ import java.util.Locale
 fun Context.getFormattedDate(date: String): String {
     if (date.length == 19) {
         val formattedDate = date.dropLast(3)
-        val dateFormat = SimpleDateFormat("dd.MM.yyyy hh:mm", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault())
         val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
 
         val today = Calendar.getInstance().apply {
