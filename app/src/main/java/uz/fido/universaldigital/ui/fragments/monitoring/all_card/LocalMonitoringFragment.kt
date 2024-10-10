@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.all_card
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -57,7 +58,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var dialogInfo: InfoMonitoringDialog
-
+    private var linearLayoutManager: LinearLayoutManager? = null
     private var operationType = 2
     private var dateBegin: String = ""
     private var dateEnd: String = ""
@@ -77,6 +78,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        linearLayoutManager = LinearLayoutManager(requireContext())
         if (saveViewModel.allCardList.value != false)
             allOperation()
         else {
@@ -260,19 +262,23 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     }
 
     private fun recyclerViewScroll() {
-        scrollListener = object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                if (saveViewModel.localFilter) getFilterLocalMonitoringList(page, operationType)
-                else getLocalMonitoringListScroll(page, operationType)
+        scrollListener =
+            object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
+                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                    Log.d("TAG", "onLoadMore:$page ")
+                    if (saveViewModel.localFilter)
+                        getFilterLocalMonitoringList(page, operationType)
+                    else
+                        getLocalMonitoringListScroll(page, operationType)
+                }
             }
-        }
     }
 
     private fun createMonitoringAdapter() {
         binding.rec.apply {
             adapter = localMonitoringAdapter
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = linearLayoutManager
             addOnScrollListener(scrollListener)
             addItemDecoration(StickyHeaderDecoration(localMonitoringAdapter))
         }
