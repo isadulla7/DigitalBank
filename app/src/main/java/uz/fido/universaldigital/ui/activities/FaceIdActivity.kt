@@ -3,7 +3,6 @@ package uz.fido.universaldigital.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import io.paperdb.Paper
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
@@ -54,7 +53,7 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
             .withResidency(MyIdResidentType.USER_DEFINED).withLocale(Locale(initLanguage()))
             .withCameraShape(MyIdCameraShape.CIRCLE)
             .withResolution(MyIdResolution.RESOLUTION_720).withImageFormat(MyIdImageFormat.PNG)
-            .withPhoto(false).build()
+            .build()
         val intent = client.createIntent(this, myIdConfig)
         result.launch(intent)
     }

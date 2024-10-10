@@ -64,14 +64,13 @@ skeleton = "1.1.2"
 mPAndroidChart = "v3.1.0"
 shimmerLayout = "2.1.0"
 lottie = "5.2.0"
-myId = "2.2.5"
-dataBinding = "8.0.2"
+myId = "2.3.3"
+dataBinding = "8.7.0"
 junit = "4.13.2"
 androidxJunit = "1.1.5"
 espressoCore = "3.5.1"
 okhttp = "4.10.0"
 roomRuntime = "2.6.0-rc01"
-chukerLib = "3.5.2"
 espressoIdling = "3.4.0"
 tenserFlow = "2.9.0"
 
@@ -173,9 +172,6 @@ androidx-room-room-runtime = { group = "androidx.room", name = "room-runtime", v
 androidx-room-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomRuntime" }
 androidx-room-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomRuntime" }
 org-tensorflow-tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tenserFlow" }
-com-github-chuckerteam-chucker-library = { group = "com.github.chuckerteam.chucker", name = "library", version.ref = "chukerLib" }
-com-github-chuckerteam-chucker-library-no-op = { group = "com.github.chuckerteam.chucker", name = "library-no-op", version.ref = "chukerLib" }
-
 
 [plugins]
 com-android-application = { id = "com.android.application" }

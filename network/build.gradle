@@ -61,9 +61,6 @@ dependencies {
     implementation(libs.com.squareup.okhttp3)
     implementation(libs.com.squareup.okhttp3.logging.interceptor)
 
-    debugImplementation(libs.com.github.chuckerteam.chucker.library)
-    releaseImplementation(libs.com.github.chuckerteam.chucker.library.no.op)
-
     implementation(project(ModuleList.UTILS))
 
 }
