@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.all_card
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
@@ -30,9 +31,6 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentLocalMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.LocalMonitoringAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.Companion.CHEQUE_MODEL
-import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.Companion.OPERATION_MONITORING
-import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.InfoMonitoringDialog
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
@@ -41,10 +39,8 @@ import uz.fido.utils.format.Format
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.sticky.StickyHeaderDecoration
 import uz.fido.utils.utility.adapter.showSkeleton
-import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
-import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -57,7 +53,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var dialogInfo: InfoMonitoringDialog
-
+    private var linearLayoutManager: LinearLayoutManager? = null
     private var operationType = 2
     private var dateBegin: String = ""
     private var dateEnd: String = ""
@@ -77,6 +73,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        linearLayoutManager = LinearLayoutManager(requireContext())
         if (saveViewModel.allCardList.value != false)
             allOperation()
         else {
@@ -260,19 +257,23 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     }
 
     private fun recyclerViewScroll() {
-        scrollListener = object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                if (saveViewModel.localFilter) getFilterLocalMonitoringList(page, operationType)
-                else getLocalMonitoringListScroll(page, operationType)
+        scrollListener =
+            object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
+                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                    Log.d("TAG", "onLoadMore:$page ")
+                    if (saveViewModel.localFilter)
+                        getFilterLocalMonitoringList(page, operationType)
+                    else
+                        getLocalMonitoringListScroll(page, operationType)
+                }
             }
-        }
     }
 
     private fun createMonitoringAdapter() {
         binding.rec.apply {
             adapter = localMonitoringAdapter
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = linearLayoutManager
             addOnScrollListener(scrollListener)
             addItemDecoration(StickyHeaderDecoration(localMonitoringAdapter))
         }
@@ -330,6 +331,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
             )
         ).observe(viewLifecycleOwner) { resource ->
             binding.progress.visibility = View.GONE
+
             when (resource.status) {
                 Status.SUCCESS -> {
                     binding.consError.visibility = View.GONE
@@ -453,6 +455,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                                     super.fullInfo(localeMonitoring)
                                     dialogInfo.dismiss()
                                     printCheque(localMonitoring, it)
+
                                 }
                             })
                         dialogInfo.show(childFragmentManager, "")
@@ -483,19 +486,15 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                     Status.SUCCESS -> {
                         val response = it.data!!
                         response.monitoring_info = localMonitoring
-                        if (resource.data?.request_code == "P2P") {
-                            resource.data?.let { it1 -> drawTransferCheque(localMonitoring, it1) }
-                        } else {
-                            gotoWithSlide(
-                                R.id.checkInfoPaymentFragment,
-                                bundleOf(
-                                    "details" to response,
-                                    "operation" to "local",
-                                    "command" to resource.data?.command,
-                                    "data" to resource.data
-                                )
+                        gotoWithSlide(
+                            R.id.checkInfoPaymentFragment,
+                            bundleOf(
+                                "details" to response,
+                                "operation" to "local",
+                                "command" to resource.data?.command,
+                                "data" to resource.data
                             )
-                        }
+                        )
                     }
 
                     Status.ERROR -> {
@@ -503,37 +502,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                     }
                 }
             }
-    }
 
-    private fun drawTransferCheque(
-        localMonitoring: LocalMonitoring,
-        data: SearchDataResponse
-    ) {
-        val percent = localMonitoring.fee_percent
-        val commissionAmount = localMonitoring.fee_amount.toBigDecimal().divide(BigDecimal(100))
-        val totalAmount = localMonitoring.amount.toBigDecimal().divide(BigDecimal(100))
-        val model = TransferChequeModel(
-            transactionDate = localMonitoring.created_date,
-            transactionAmount = Format.formatAmount((data.amount?.toDouble()?.div(100)).toString()) + " " + getString(
-                R.string.sum_text
-            ),
-            transactionFee = "$percent % (" + Format.formatAmount(commissionAmount.toString()) + " " + getString(
-                R.string.sum_text
-            ) + ")",
-            transactionNumber = data.request_id.orEmpty(),
-            senderCardNumber = Format.formatCardNumberForCheque(data.from_object_value.orEmpty()),
-            senderCardName = data.from_embossed_name.orEmpty(),
-            receiverCardName = data.to_embossed_name.orEmpty(),
-            receiverCardNumber = Format.formatCardNumberForCheque(data.to_object_value.orEmpty()),
-            operationName = "(${getString(R.string.transfer)})",
-            totalAmount = "${uz.fido.utils.utility.format.Format.formatAmount(totalAmount.toString())} ${getString(uz.fido.utils.R.string.sum)}"
-        )
-        goto(
-            R.id.transferChequeFragment2, bundleOf(
-                uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.OPERATION to OPERATION_MONITORING,
-                CHEQUE_MODEL to model
-            )
-        )
     }
 
     private fun getOperationParams(
