@@ -2,18 +2,26 @@ package uz.fido.universaldigital.ui.activities
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.telephony.PhoneStateListener
+import android.telephony.TelephonyCallback
+import android.telephony.TelephonyManager
+import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,6 +30,8 @@ import kotlinx.coroutines.launch
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityMainBinding
+import uz.fido.universaldigital.services.CallReceiver
+import uz.fido.universaldigital.services.CallReceiverEnum
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
 import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
 import uz.fido.universaldigital.ui.fragments.payment.abc_confirm.ConfirmPaymentFragment
@@ -56,11 +66,12 @@ class MainActivity : BaseActivity() {
 
     private var noConnectionDialog: NoConnectionDialog? = null
     private var isStop = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        checkAndRequestPermissions()
+        registerReceiver(CallReceiver(),IntentFilter(TelephonyManager.ACTION_PHONE_STATE_CHANGED))
         initBottomNavigationMenu()
         checkUpdate()
         askNotificationPermission()
@@ -69,6 +80,7 @@ class MainActivity : BaseActivity() {
         bottomNavSheet()
     }
 
+
     private fun bottomNavSheet() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigation) { view, insets ->
             val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
@@ -76,6 +88,12 @@ class MainActivity : BaseActivity() {
                 bottomMargin = imeInsets.bottom
             }
             insets
+        }
+    }
+
+    private fun checkAndRequestPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.READ_PHONE_STATE), 100)
         }
     }
 
@@ -129,6 +147,8 @@ class MainActivity : BaseActivity() {
         navController.navigate(id, bundle, null)
     }
 
+
+
     override fun onStop() {
         super.onStop()
         pausedMillis = Calendar.getInstance().timeInMillis
@@ -166,6 +186,7 @@ class MainActivity : BaseActivity() {
             )
         }
     }
+
 
     private fun internetListener() {
         InternetConnectionChecker(this).observeForever { isConnected ->
