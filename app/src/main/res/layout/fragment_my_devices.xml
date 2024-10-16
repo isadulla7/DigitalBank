@@ -75,7 +75,7 @@
                         android:id="@+id/device_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/brandRedColor"
+                        android:textColor="@color/monitoring_amount"
                         android:textSize="16sp" />
 
                     <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -130,8 +130,8 @@
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:ev_title="@string/no_other_devices_found"
         android:visibility="gone"
+        app:ev_title="@string/no_other_devices_found"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

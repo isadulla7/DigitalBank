@@ -44,7 +44,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
 
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
     private var clientAllCardList = ArrayList<CardResponse>()
-
     private var cardsAdapter: CardsListAdapter? = null
 
     private lateinit var walletOperationsDialog: WalletOperationsDialog
