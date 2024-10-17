@@ -22,7 +22,7 @@
     <string name="wrong_format">Noto\'g\'ri formati</string>
     <string name="wrong_card_expire_date">To‘g‘ri kartaning amal qilish muddatini kiriting</string>
     <string name="main_card">Asosiy karta</string>
-    <string name="sum">sum</string>
+    <string name="sum">so‘m</string>
     <string name="no_card">Kartaga</string>
     <string name="unkknown_error">Noma\'lum xatolik</string>
     <string name="empty_list">Hech narsa topilmadi</string>
