@@ -91,6 +91,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             aboutBank.setOnClickListener { gotoWithSlide(R.id.aboutBankFragment) }
             logOut.setOnClickListener { showLogOutDialog() }
             profile.setOnClickListener { gotoWithSlide(R.id.myDetailsFragment) }
+            cheques.setOnClickListener { gotoWithSlide(R.id.savedChequesFragment) }
         }
     }
 

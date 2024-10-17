@@ -713,4 +713,8 @@
         android:id="@+id/transferChequeFragment2"
         android:name="uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment"
         android:label="TransferChequeFragment" />
+    <fragment
+        android:id="@+id/savedChequesFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.saved_cheques.SavedChequesFragment"
+        android:label="SavedChequesFragment" />
 </navigation>

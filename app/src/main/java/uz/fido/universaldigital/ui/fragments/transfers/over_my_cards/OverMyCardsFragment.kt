@@ -288,7 +288,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                         transferAmount = sendFormat(amount),
                         commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
                         operation = SuccessTransferFragment.TRANSFER_OVER_MY_CARDS,
-                        requestId = p2PInfoDto?.requestId
+                        cardId = p2PInfoDto?.cardId
                     )
                 )
             )
