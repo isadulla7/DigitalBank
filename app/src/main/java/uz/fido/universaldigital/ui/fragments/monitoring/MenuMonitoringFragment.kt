@@ -13,7 +13,6 @@ import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoring
 import uz.fido.universaldigital.ui.fragments.monitoring.chart.MonitoringChartFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringFragment
-import uz.fido.universaldigital.ui.fragments.monitoring.visa.VisaMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
@@ -67,15 +66,20 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
                     menuMonitoringViewModel.isFilterWindows = true
                 }
 
-                3 -> if (cardCurrencyList.isNotEmpty()) {
-                    gotoWithSlide(R.id.monitoringVisaFilterFragment)
-                    menuMonitoringViewModel.isFilterWindows = true
-                }
-
-                4 -> if (cardWalledList.isNotEmpty()) {
+                3 -> if (cardWalledList.isNotEmpty()) {
                     gotoWithSlide(R.id.monitoringWalletFilterFragment)
                     menuMonitoringViewModel.isFilterWindows = true
                 }
+
+                /*if (cardCurrencyList.isNotEmpty()) {
+                gotoWithSlide(R.id.monitoringVisaFilterFragment)
+                menuMonitoringViewModel.isFilterWindows = true
+            }*/
+
+//                4 -> if (cardWalledList.isNotEmpty()) {
+//                    gotoWithSlide(R.id.monitoringWalletFilterFragment)
+//                    menuMonitoringViewModel.isFilterWindows = true
+//                }
 
                 else -> if (isFilter) gotoWithSlide(R.id.monitoringFilterFragment)
             }
@@ -129,7 +133,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
         adapter.addFragment(LocalMonitoringFragment())
         adapter.addFragment(UzcardMonitoringFragment())
         adapter.addFragment(HumoMonitoringFragment())
-        adapter.addFragment(VisaMonitoringFragment())
+//        adapter.addFragment(VisaMonitoringFragment())
         adapter.addFragment(WalletMonitoringFragment())
         binding.viewPager.apply {
             offscreenPageLimit = 1
@@ -175,16 +179,19 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
             }
 
             3 -> {
-                if (menuMonitoringViewModel.visaFilter)
-                    binding.filter.setImageResource(R.drawable.ic_filter_yes)
-                else binding.filter.setImageResource(R.drawable.ic_filter_frame)
-            }
-
-            4 -> {
+//                if (menuMonitoringViewModel.visaFilter)
+//                    binding.filter.setImageResource(R.drawable.ic_filter_yes)
+//                else binding.filter.setImageResource(R.drawable.ic_filter_frame)
                 if (menuMonitoringViewModel.walletFilter)
                     binding.filter.setImageResource(R.drawable.ic_filter_yes)
                 else binding.filter.setImageResource(R.drawable.ic_filter_frame)
             }
+
+//            4 -> {
+//                if (menuMonitoringViewModel.walletFilter)
+//                    binding.filter.setImageResource(R.drawable.ic_filter_yes)
+//                else binding.filter.setImageResource(R.drawable.ic_filter_frame)
+//            }
         }
     }
 

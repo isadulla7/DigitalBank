@@ -5,7 +5,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import uz.fido.universaldigital.R
-import java.util.*
 
 class MonitoringPagerAdapter(private var context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
@@ -29,11 +28,11 @@ class MonitoringPagerAdapter(private var context: Context, fm: FragmentManager) 
 
     override fun getPageTitle(position: Int): CharSequence {
         return when (position) {
-            0->context.getString(R.string.local_monitoring)
-            1->context.getString(R.string.uzcard)
-            2->context.getString(R.string.humo)
-            3->context.getString(R.string.visa)
-            4->context.getString(R.string.wallet)
+            0 -> context.getString(R.string.local_monitoring)
+            1 -> context.getString(R.string.uzcard)
+            2 -> context.getString(R.string.humo)
+            3 -> context.getString(R.string.wallet)
+//            4->context.getString(R.string.wallet)
             else -> ""
         }
     }
