@@ -28,6 +28,7 @@ import uz.fido.network.domain.model.template.Template
 import uz.fido.network.domain.model.widget.MainWidget
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.model.SearchItem
 import uz.fido.universaldigital.ui.fragments.profile.about_bank.branches.BranchesAdapter
+import java.io.File
 
 interface BaseInterface {
     fun setToEditText(allServiceLists: AllServiceLists, tag: String) {}
@@ -105,5 +106,7 @@ interface BaseInterface {
     fun deviceDelete() {}
     fun deviceState() {}
     fun deviceDeleteAll() {}
+    fun openCheque(file: File) {}
+    fun chequeOperations(file: File) {}
 
 }

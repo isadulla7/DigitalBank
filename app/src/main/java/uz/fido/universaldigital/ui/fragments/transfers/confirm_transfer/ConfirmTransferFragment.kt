@@ -103,7 +103,8 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
                     to_object_id = transferDto.receiverCard?.card_id,
                     request_id = transferDto.requestId.orEmpty(),
                     to_embossed_name = transferDto.receiverCard?.card_owner.orEmpty(),
-                    phone_number = if (transferDto.operation == SuccessTransferFragment.TRANSFER_BY_PHONE) transferDto.phoneNumber else ""
+                    phone_number = if (transferDto.operation == SuccessTransferFragment.TRANSFER_BY_PHONE) transferDto.phoneNumber else "",
+                    card_id = transferDto.cardId
                 )
                 checkForSmsConfirmation()
             }
