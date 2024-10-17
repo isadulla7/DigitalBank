@@ -19,11 +19,11 @@ class MonitoringAmountDialog(private val onClick:(String,String)->Unit): BottomS
   private lateinit var binding:DialogMonitoringAmountBinding
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+  /*  override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(DialogFragment.STYLE_NORMAL, uz.fido.utils.R.style.DialogStyle)
 
-    }
+    }*/
 
     override fun onCreateView(
         inflater: LayoutInflater,

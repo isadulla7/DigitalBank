@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.first_card
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,7 +45,7 @@ class WalletFirstMonitoringFragment :
         FragmentWalletFirstMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
     ), (AccountHistory) -> Unit {
     private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
-    private var operationType = 2
+    private var operationType = 0
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private var choose: Int = 2
     private var timeType: String = ""
@@ -174,6 +175,7 @@ class WalletFirstMonitoringFragment :
     }
 
     private fun getWalletList(page: Int, operationType: Int) {
+        Log.d("TAG", "getWalletList:$operationType ")
         if (walletList.isNotEmpty()) {
             val skeletonScreen = showSkeleton(
                 binding.shimmerView,
@@ -215,8 +217,9 @@ class WalletFirstMonitoringFragment :
         operationType: Int
     ) {
         val sortedResponse = java.util.ArrayList<AccountHistory>()
-        val groupedHashMap: HashMap<String, MutableList<AccountHistory>> = when (operationType) {
-            0 -> {
+
+        val groupedHashMap: HashMap<String, MutableList<AccountHistory>> = groupDataIntoHashMap(response)/*when (operationType) {
+            2 -> {
                 response.forEach {
                     if (it.debit == "0") {
                         sortedResponse.add(it)
@@ -235,7 +238,7 @@ class WalletFirstMonitoringFragment :
             }
 
             else -> groupDataIntoHashMap(response)
-        }
+        }*/
         val sortedMap = groupedHashMap.toSortedMap(compareByDescending { it })
         for (date in sortedMap.keys) {
             val dateItem = DateItem()
@@ -251,6 +254,7 @@ class WalletFirstMonitoringFragment :
                     }
                 ) totalList.add(dateItem)
             }
+
             for (visaMonitoringItem in groupedHashMap[date]!!) {
                 val generalItem = WalletHistoryItem()
                 generalItem.walletItem = visaMonitoringItem
