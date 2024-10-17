@@ -40,7 +40,7 @@ class WalletMonitoringFragment :
         FragmentWalletMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
     ), (AccountHistory) -> Unit {
     private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
-    private var operationType = 2
+    private var operationType = 0
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
 
     private var dateBegin: String = ""
@@ -183,7 +183,7 @@ class WalletMonitoringFragment :
     ) {
         val sortedResponse = java.util.ArrayList<AccountHistory>()
         val groupedHashMap: HashMap<String, MutableList<AccountHistory>> = when (operationType) {
-            0 -> {
+            2 -> {
                 response.forEach {
                     if (it.debit == "0") {
                         sortedResponse.add(it)

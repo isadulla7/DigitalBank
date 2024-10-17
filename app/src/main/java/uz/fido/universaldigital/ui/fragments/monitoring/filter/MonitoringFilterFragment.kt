@@ -109,7 +109,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
     }
 
     private fun getSaveFilter() {
-
         val layoutFlexBox = FlexboxLayoutManager(context).apply {
             flexWrap = FlexWrap.WRAP
             flexDirection = FlexDirection.ROW

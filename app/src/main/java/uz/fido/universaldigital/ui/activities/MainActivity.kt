@@ -13,12 +13,9 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityMainBinding
@@ -28,7 +25,6 @@ import uz.fido.universaldigital.ui.fragments.payment.abc_confirm.ConfirmPaymentF
 import uz.fido.universaldigital.ui.fragments.payment.abc_success.SuccessPaymentFragment
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.products.cards.card_operations.add_card.AddCardFragment
-import uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchList
 import uz.fido.universaldigital.ui.fragments.profile.MenuProfileFragment
 import uz.fido.universaldigital.ui.fragments.profile.about_bank.branches.MainBranchesFragment
 import uz.fido.universaldigital.ui.fragments.profile.identification.MainIdentificationFragment
@@ -56,7 +52,6 @@ class MainActivity : BaseActivity() {
 
     private var noConnectionDialog: NoConnectionDialog? = null
     private var isStop = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -69,6 +64,7 @@ class MainActivity : BaseActivity() {
         bottomNavSheet()
     }
 
+
     private fun bottomNavSheet() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigation) { view, insets ->
             val imeInsets = insets.getInsets(WindowInsetsCompat.Type.ime())
@@ -78,6 +74,7 @@ class MainActivity : BaseActivity() {
             insets
         }
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -129,6 +126,8 @@ class MainActivity : BaseActivity() {
         navController.navigate(id, bundle, null)
     }
 
+
+
     override fun onStop() {
         super.onStop()
         pausedMillis = Calendar.getInstance().timeInMillis
@@ -166,6 +165,7 @@ class MainActivity : BaseActivity() {
             )
         }
     }
+
 
     private fun internetListener() {
         InternetConnectionChecker(this).observeForever { isConnected ->
