@@ -7,7 +7,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.news.GetNotificationsRequest
@@ -19,6 +18,7 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentNotificationsBinding
 import uz.fido.universaldigital.ui.fragments.payment.templates.adapter.PaymentTemplatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
+import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.gotoWithSlide

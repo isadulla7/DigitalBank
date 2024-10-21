@@ -8,7 +8,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Resource
@@ -36,6 +35,7 @@ import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.D
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.utils.format.Format
+import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.sticky.StickyHeaderDecoration
 import uz.fido.utils.utility.adapter.showSkeleton

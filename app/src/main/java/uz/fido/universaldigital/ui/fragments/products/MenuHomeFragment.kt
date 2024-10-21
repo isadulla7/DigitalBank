@@ -13,7 +13,6 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.scwang.smartrefresh.layout.api.RefreshLayout
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import kotlinx.coroutines.launch
@@ -250,7 +249,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         }
     }
 
-    fun getCardList(refreshLayout: RefreshLayout?) {
+    fun getCardList(refreshLayout: uz.fido.utils.libs.smart_refresh.refresh_layout.api.RefreshLayout?) {
         menuProductsViewModel.getCardListRequest(getClientToken()).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -288,7 +287,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     }
 
     private fun getCardInfo(
-        position: Int, cardList: ArrayList<CardResponse>, refreshLayout: RefreshLayout?
+        position: Int, cardList: ArrayList<CardResponse>, refreshLayout: uz.fido.utils.libs.smart_refresh.refresh_layout.api.RefreshLayout?
     ) {
         val ids = arrayListOf(cardList[position].object_id)
         val cardInfoRequest = CardInfoRequest(ids)
