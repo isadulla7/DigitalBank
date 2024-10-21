@@ -131,7 +131,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
-                    android:drawableEnd="@drawable/ic_monitoring_filter_icon"
                     android:drawablePadding="2dp"
                     android:gravity="center_vertical"
                     android:paddingEnd="16dp"
