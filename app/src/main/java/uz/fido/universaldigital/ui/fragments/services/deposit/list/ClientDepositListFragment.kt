@@ -5,7 +5,6 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
@@ -15,6 +14,7 @@ import uz.fido.universaldigital.databinding.FragmentClientDepositListBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeDepositsAdapter
 import uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.ClientDepositFragment
+import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop

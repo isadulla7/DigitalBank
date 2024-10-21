@@ -14,7 +14,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
-import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.domain.model.cards.CardInfoDto
 import uz.fido.network.domain.model.cards.CardResponse
@@ -42,6 +41,7 @@ import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.device.vibrateTick
+import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.activity.observe
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto

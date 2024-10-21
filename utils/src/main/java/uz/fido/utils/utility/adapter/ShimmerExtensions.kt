@@ -2,9 +2,9 @@ package uz.fido.utils.utility.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.ethanhua.skeleton.Skeleton
-import com.ethanhua.skeleton.SkeletonScreen
 import uz.fido.utils.R
+import uz.fido.utils.libs.skeleton.Skeleton
+import uz.fido.utils.libs.skeleton.SkeletonScreen
 
 fun showSkeleton(recyclerView: RecyclerView, adapter: RecyclerView.Adapter<*>, id: Int, count: Int? = null): SkeletonScreen {
     return if (count != null)

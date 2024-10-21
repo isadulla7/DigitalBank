@@ -47,20 +47,19 @@ glide = "4.16.0"
 glideCompiler = "4.16.0"
 circleimageview = "3.1.0"
 expandableLayout = "2.9.2"
-koinViewModel = "2.0.1"
+koinViewModel = "2.2.3"
 inputMaskAndroid = "7.2.4"
 ticker = "2.0.2"
 ktor = "2.1.2"
 rxbinding = "4.0.0"
-viewpagerdotsindicator = "4.1.2"
+viewpagerdotsindicator = "4.2"
 pageTransformerHelp = "v1.0.1"
-smartRefreshLayout = "1.1.2"
+smartRefreshLayout = "2.1.0"
 qrGenerator = "2.0.0-alpha01"
 commonLangs = "3.12.0"
 animatedProgressBar = "0.1.0"
 rxrelay = "2.1.1"
 paperdb = "2.7.2"
-skeleton = "1.1.2"
 mPAndroidChart = "v3.1.0"
 shimmerLayout = "2.1.0"
 lottie = "5.2.0"
@@ -132,7 +131,7 @@ org-jetbrains-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotli
 org-jetbrains-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 org-jetbrains-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 org-jetbrains-kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlinReflect" }
-org-koin-koin-androidx-viewmodel = { group = "org.koin", name = "koin-androidx-viewmodel", version.ref = "koinViewModel" }
+org-koin-koin-androidx-viewmodel = { group = "io.insert-koin", name = "koin-androidx-viewmodel", version.ref = "koinViewModel" }
 
 com-squareup-retrofit2-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 com-squareup-retrofit2-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
@@ -155,15 +154,14 @@ de-hdodenhof-circleimageview = { group = "de.hdodenhof", name = "circleimageview
 com-redmadrobot-input-mask-android = { group = "com.redmadrobot", name = "input-mask-android", version.ref = "inputMaskAndroid" }
 com-robinhood-ticker-ticker = { group = "com.robinhood.ticker", name = "ticker", version.ref = "ticker" }
 com-jakewharton-rxbinding4-rxbinding = { group = "com.jakewharton.rxbinding4", name = "rxbinding", version.ref = "rxbinding" }
-com-tbuonomo-andrui-viewpagerdotsindicator = { group = "com.tbuonomo.andrui", name = "viewpagerdotsindicator", version.ref = "viewpagerdotsindicator" }
-com-scwang-smartrefresh-layout = { group = "com.scwang.smartrefresh", name = "SmartRefreshLayout", version.ref = "smartRefreshLayout" }
-com-scwang-smartrefresh-header = { group = "com.scwang.smartrefresh", name = "SmartRefreshHeader", version.ref = "smartRefreshLayout" }
+com-tbuonomo-andrui-viewpagerdotsindicator = { group = "com.tbuonomo", name = "dotsindicator", version.ref = "viewpagerdotsindicator" }
+com-scwang-smartrefresh-layout = { group = "io.github.scwang90", name = "refresh-layout-kernel", version.ref = "smartRefreshLayout" }
+com-scwang-smartrefresh-header = { group = "io.github.scwang90", name = "refresh-header-falsify", version.ref = "smartRefreshLayout" }
 com-github-alexzhirkevich-custom-qr-generator = { group = "com.github.alexzhirkevich", name = "custom-qr-generator", version.ref = "qrGenerator" }
 org-apache-commons-commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonLangs" }
 com-github-mckrpk-animatedProgressBar = { group = "com.github.mckrpk", name = "AnimatedProgressBar", version.ref = "animatedProgressBar" }
 com-jakewharton-rxrelay2-rxrelay = { group = "com.jakewharton.rxrelay2", name = "rxrelay", version.ref = "rxrelay" }
 io-github-pilgr-paperdb = { group = "io.github.pilgr", name = "paperdb", version.ref = "paperdb" }
-com-ethanhua-skeleton = { group = "com.ethanhua", name = "skeleton", version.ref = "skeleton" }
 io-supercharge-shimmerlayout = { group = "io.supercharge", name = "shimmerlayout", version.ref = "shimmerLayout" }
 com-airbnb-android-lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 uz-myid-sdk-capture = { group = "uz.myid.sdk.capture", name = "myid-capture-sdk", version.ref = "myId" }

@@ -215,6 +215,23 @@ object BaseCardUtils {
     }
 
 
+    fun TextView.setProcessingStatusIsNotWorking(card: CardResponse) {
+        text = when (card.object_type) {
+            UZCARD -> context.getString(R.string.uzcard_not_working)
+            HUMO_CARD -> context.getString(R.string.humo_not_working)
+            CURRENCY_CARD -> {
+                if (card.error_message != null) {
+                    card.error_message
+                } else {
+                    context.getString(R.string.visa_not_working)
+                }
+            }
+
+            else -> context.getString(R.string.can_not_receive_balance)
+        }
+    }
+
+
     fun CardResponse.isNotActive(): Boolean {
         return state != "0" && state != "A"
     }

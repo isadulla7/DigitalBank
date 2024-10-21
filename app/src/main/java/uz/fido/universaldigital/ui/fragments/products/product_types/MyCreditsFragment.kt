@@ -5,7 +5,6 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.loans.loan_products.CreditProduct
@@ -15,6 +14,7 @@ import uz.fido.universaldigital.databinding.FragmentMyCreditsBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeCreditsAdapter
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCreditFragment
+import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
