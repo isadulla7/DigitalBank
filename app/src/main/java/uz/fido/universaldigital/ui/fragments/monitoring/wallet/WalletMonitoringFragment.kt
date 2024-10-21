@@ -34,7 +34,6 @@ import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.sticky.StickyHeaderDecoration
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.user.getClientToken
-import uz.myid.android.sdk.ca
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -44,6 +43,7 @@ class WalletMonitoringFragment :
     BaseFragment<FragmentWalletMonitoringBinding, LocalMonitoringViewModel>(
         FragmentWalletMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
     ), (AccountHistory) -> Unit {
+
     private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
     private var operationType = 0
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
@@ -85,26 +85,26 @@ class WalletMonitoringFragment :
 
     private fun getFilterWalletList() {
         menuMonitoringViewModel.walletMonitoringFilter.observe(viewLifecycleOwner) { filterSaveVh ->
-            val skeletonScreen =  showSkeleton(
+            val skeletonScreen = showSkeleton(
                 binding.shimmerView,
                 MibDetailsAdapter(requireContext(), this),
                 R.layout.shimmer_item_monitoring,
                 1
             )
-            val newList=arrayListOf<CardResponse>()
-            menuProductsViewModel.cards.observe(viewLifecycleOwner){card->
+            val newList = arrayListOf<CardResponse>()
+            menuProductsViewModel.cards.observe(viewLifecycleOwner) { card ->
                 card.forEach {
-                    if (it.object_type==CardConst.WALLET){
-                       newList.add(it)
+                    if (it.object_type == CardConst.WALLET) {
+                        newList.add(it)
                     }
                 }
             }
             val card = arrayListOf<Int>()
             filterSaveVh.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_id) }
-             val checkList= newList.filter { it.object_id== card[0].toString() }
-            walletList=arrayListOf()
+            val checkList = newList.filter { it.object_id == card[0].toString() }
+            walletList = arrayListOf()
             checkList.forEach {
-              walletList.add(it.account_code)
+                walletList.add(it.account_code)
             }
             totalList = arrayListOf()
             val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
@@ -163,12 +163,12 @@ class WalletMonitoringFragment :
 
     private fun getWalletList(page: Int, operationType: Int) {
         if (walletList.isNotEmpty()) {
-        val skeletonScreen = showSkeleton(
-            binding.shimmerView,
-            MibDetailsAdapter(requireContext(), this),
-            R.layout.shimmer_item_monitoring,
-            1
-        )
+            val skeletonScreen = showSkeleton(
+                binding.shimmerView,
+                MibDetailsAdapter(requireContext(), this),
+                R.layout.shimmer_item_monitoring,
+                1
+            )
 
             val model = createModel(page)
             viewModel.getAccountHistories(getClientToken(), model).observe(viewLifecycleOwner) {
@@ -191,10 +191,10 @@ class WalletMonitoringFragment :
                 }
             }
         } else {
-            binding.shimmerView.visibility=View.GONE
-            binding.rec.visibility=View.GONE
-            binding.layoutEmpty.visibility=View.VISIBLE
-            binding.layoutEmpty.title.text=getString(R.string.card_list_no)
+            binding.shimmerView.visibility = View.GONE
+            binding.rec.visibility = View.GONE
+            binding.layoutEmpty.visibility = View.VISIBLE
+            binding.layoutEmpty.title.text = getString(R.string.card_list_no)
         }
     }
 
@@ -283,7 +283,6 @@ class WalletMonitoringFragment :
         )
         return model
     }
-
 
     private fun getCardList() {
         walletList = menuMonitoringViewModel.walledList.value ?: arrayListOf()
