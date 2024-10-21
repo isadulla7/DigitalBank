@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/father"
     android:layout_width="match_parent"
     android:layout_height="52dp"
-    android:id="@+id/father"
-    android:layout_marginTop="16dp"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+    android:layout_marginTop="16dp">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/wallet_monitoring_bg"
+        android:src="@drawable/ic_wallet_blue"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:src="@drawable/uzcard_monitoring"/>
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/icon"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginStart="12dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/icon"
+        app:layout_constraintTop_toTopOf="parent">
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/card_name"
@@ -33,26 +33,26 @@
             android:layout_height="wrap_content"
             android:textColor="@color/mainTextColor"
             android:textSize="14sp"
-            android:text="MASTER CARD 332944 4364"/>
+            tools:text="MASTER CARD 332944 4364" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:id="@+id/status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Status: activ"
-            android:textColor="@color/brandBlueColor_50"/>
+            android:textColor="@color/brandBlueColor_50"
+            tools:text="Status: activ" />
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ImageView
         android:id="@+id/option"
         android:layout_width="22dp"
-        android:scaleType="centerCrop"
         android:layout_height="22dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         tools:ignore="ContentDescription" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -328,31 +328,7 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
                         }
                     }
                     if (cardList.isEmpty()) {
-                        cardList.add(
-                            FilterCard(
-                                0,
-                                getString(R.string.activ),
-                                "",
-                                "",
-                                "",
-                                false,
-                                1
-                            )
-                        )
                         cardList.addAll(activeList)
-                        cardList.add(
-                            FilterCard(
-                                0,
-                                getString(R.string.no_activ),
-                                "",
-                                "",
-                                "",
-                                false,
-                                1
-                            )
-                        )
-                        cardList.addAll(passiveList)
-
                     }
                     successCardList(cardList)
                 }
