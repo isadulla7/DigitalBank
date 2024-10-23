@@ -61,8 +61,7 @@ android {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlinx:kotlinx-metadata-jvm:0.6.1'
-
+    implementation(libs.kotlinx.metadata.jvm)
     implementation(libs.androidx.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.livedata.ktx)
@@ -123,8 +122,6 @@ dependencies {
     //coil,picasso,glide (image loader)
     implementation(libs.io.coil.kt.coil)
     implementation(libs.com.squareup.picasso.picasso)
-    implementation(libs.com.github.bumptech.glide)
-    kapt libs.com.github.bumptech.glide.compiler
 
     implementation(libs.de.hdodenhof.circleimageview)
     implementation(libs.com.github.cachapa.expandableLayout)
