@@ -4,6 +4,7 @@ coreKtx = "1.10.1"
 appCompat = "1.6.1"
 constraintLayout = "2.1.4"
 kotlin = "1.6.10"
+kotlinxMetadataJvm = "0.6.1"
 legacySupport = "1.0.0"
 work = "2.8.1"
 material = "1.12.0"
@@ -43,8 +44,6 @@ converterGson = "2.9.0"
 loggingInternceptor = "4.10.0"
 coil = "2.4.0"
 picasso = "2.71828"
-glide = "4.16.0"
-glideCompiler = "4.16.0"
 circleimageview = "3.1.0"
 expandableLayout = "2.9.2"
 koinViewModel = "2.2.3"
@@ -120,6 +119,7 @@ com-google-firebase-firebase-crashlytics = { group = "com.google.firebase", name
 com-google-firebase-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestore" }
 com-google-firebase-firebase-dynamic-links-ktx = { group = "com.google.firebase", name = "firebase-dynamic-links-ktx" }
 
+kotlinx-metadata-jvm = { module = "org.jetbrains.kotlinx:kotlinx-metadata-jvm", version.ref = "kotlinxMetadataJvm" }
 org-jetbrains-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 org-jetbrains-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 org-jetbrains-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
@@ -137,8 +137,6 @@ androidx-test-espresso-espresso-core = { group = "androidx.test.espresso", name 
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 junit-junit = { group = "junit", name = "junit", version.ref = "junit" }
 
-com-github-bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
-com-github-bumptech-glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glideCompiler" }
 com-github-cachapa-expandableLayout = { group = "com.github.cachapa", name = "ExpandableLayout", version.ref = "expandableLayout" }
 com-github-OCNYang-pageTransformerHelp = { group = "com.github.OCNYang", name = "PageTransformerHelp", version.ref = "pageTransformerHelp" }
 io-coil-kt-coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
