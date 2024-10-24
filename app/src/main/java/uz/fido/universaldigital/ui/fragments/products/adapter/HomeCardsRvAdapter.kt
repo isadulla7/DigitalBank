@@ -4,8 +4,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import uz.fido.network.domain.model.cards.CardResponse
@@ -20,11 +18,10 @@ import uz.fido.universaldigital.ui.utils.extensions.setCardState
 import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.view.recycler_view_drag.ItemTouchHelperAdapter
 
-class HomeCardsAdapter(
-    private var baseInterface: BaseInterface
-) : ListAdapter<CardResponse, HomeCardsAdapter.ViewHolder>(
-    MyDiffUtil()
-), ItemTouchHelperAdapter {
+class HomeCardsRvAdapter(
+    private var baseInterface: BaseInterface,
+    private var list: ArrayList<CardResponse>
+) : RecyclerView.Adapter<HomeCardsRvAdapter.ViewHolder>(), ItemTouchHelperAdapter {
 
     inner class ViewHolder(private var binding: ItemHomeUserCardBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -78,18 +75,10 @@ class HomeCardsAdapter(
         return ViewHolder(binding)
     }
 
+    override fun getItemCount() = list.size
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.onBind(getItem(position))
-    }
-
-
-    class MyDiffUtil : DiffUtil.ItemCallback<CardResponse>() {
-        override fun areItemsTheSame(oldItem: CardResponse, newItem: CardResponse): Boolean =
-            oldItem == newItem
-
-        override fun areContentsTheSame(oldItem: CardResponse, newItem: CardResponse): Boolean {
-            return oldItem == newItem
-        }
+        holder.onBind(list[position])
     }
 
     override fun onItemMove(fromPosition: Int, toPosition: Int): Boolean {
