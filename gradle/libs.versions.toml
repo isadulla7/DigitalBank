@@ -4,6 +4,7 @@ coreKtx = "1.10.1"
 appCompat = "1.6.1"
 constraintLayout = "2.1.4"
 kotlin = "1.6.10"
+kotlinxMetadataJvm = "0.6.1"
 legacySupport = "1.0.0"
 work = "2.8.1"
 material = "1.12.0"
@@ -43,24 +44,20 @@ converterGson = "2.9.0"
 loggingInternceptor = "4.10.0"
 coil = "2.4.0"
 picasso = "2.71828"
-glide = "4.16.0"
-glideCompiler = "4.16.0"
 circleimageview = "3.1.0"
 expandableLayout = "2.9.2"
-koinViewModel = "2.0.1"
+koinViewModel = "2.2.3"
 inputMaskAndroid = "7.2.4"
 ticker = "2.0.2"
 ktor = "2.1.2"
 rxbinding = "4.0.0"
-viewpagerdotsindicator = "4.1.2"
+viewpagerdotsindicator = "4.2"
 pageTransformerHelp = "v1.0.1"
-smartRefreshLayout = "1.1.2"
 qrGenerator = "2.0.0-alpha01"
 commonLangs = "3.12.0"
 animatedProgressBar = "0.1.0"
 rxrelay = "2.1.1"
 paperdb = "2.7.2"
-skeleton = "1.1.2"
 mPAndroidChart = "v3.1.0"
 shimmerLayout = "2.1.0"
 lottie = "5.2.0"
@@ -73,12 +70,6 @@ okhttp = "4.10.0"
 roomRuntime = "2.6.0-rc01"
 espressoIdling = "3.4.0"
 tenserFlow = "2.9.0"
-
-gradle = "7.4.2"
-kotlinGradlePlugin = "1.7.20"
-googleServices = "4.4.0"
-daggerHilt = "2.42"
-firebaseCrashlytics = "2.9.9"
 
 [libraries]
 
@@ -128,11 +119,12 @@ com-google-firebase-firebase-crashlytics = { group = "com.google.firebase", name
 com-google-firebase-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestore" }
 com-google-firebase-firebase-dynamic-links-ktx = { group = "com.google.firebase", name = "firebase-dynamic-links-ktx" }
 
+kotlinx-metadata-jvm = { module = "org.jetbrains.kotlinx:kotlinx-metadata-jvm", version.ref = "kotlinxMetadataJvm" }
 org-jetbrains-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
 org-jetbrains-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
 org-jetbrains-kotlin = { group = "org.jetbrains.kotlin", name = "kotlin-stdlib", version.ref = "kotlin" }
 org-jetbrains-kotlin-reflect = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlinReflect" }
-org-koin-koin-androidx-viewmodel = { group = "org.koin", name = "koin-androidx-viewmodel", version.ref = "koinViewModel" }
+org-koin-koin-androidx-viewmodel = { group = "io.insert-koin", name = "koin-androidx-viewmodel", version.ref = "koinViewModel" }
 
 com-squareup-retrofit2-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 com-squareup-retrofit2-converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converterGson" }
@@ -145,8 +137,6 @@ androidx-test-espresso-espresso-core = { group = "androidx.test.espresso", name 
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidxJunit" }
 junit-junit = { group = "junit", name = "junit", version.ref = "junit" }
 
-com-github-bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
-com-github-bumptech-glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glideCompiler" }
 com-github-cachapa-expandableLayout = { group = "com.github.cachapa", name = "ExpandableLayout", version.ref = "expandableLayout" }
 com-github-OCNYang-pageTransformerHelp = { group = "com.github.OCNYang", name = "PageTransformerHelp", version.ref = "pageTransformerHelp" }
 io-coil-kt-coil = { group = "io.coil-kt", name = "coil", version.ref = "coil" }
@@ -155,15 +145,12 @@ de-hdodenhof-circleimageview = { group = "de.hdodenhof", name = "circleimageview
 com-redmadrobot-input-mask-android = { group = "com.redmadrobot", name = "input-mask-android", version.ref = "inputMaskAndroid" }
 com-robinhood-ticker-ticker = { group = "com.robinhood.ticker", name = "ticker", version.ref = "ticker" }
 com-jakewharton-rxbinding4-rxbinding = { group = "com.jakewharton.rxbinding4", name = "rxbinding", version.ref = "rxbinding" }
-com-tbuonomo-andrui-viewpagerdotsindicator = { group = "com.tbuonomo.andrui", name = "viewpagerdotsindicator", version.ref = "viewpagerdotsindicator" }
-com-scwang-smartrefresh-layout = { group = "com.scwang.smartrefresh", name = "SmartRefreshLayout", version.ref = "smartRefreshLayout" }
-com-scwang-smartrefresh-header = { group = "com.scwang.smartrefresh", name = "SmartRefreshHeader", version.ref = "smartRefreshLayout" }
+com-tbuonomo-andrui-viewpagerdotsindicator = { group = "com.tbuonomo", name = "dotsindicator", version.ref = "viewpagerdotsindicator" }
 com-github-alexzhirkevich-custom-qr-generator = { group = "com.github.alexzhirkevich", name = "custom-qr-generator", version.ref = "qrGenerator" }
 org-apache-commons-commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonLangs" }
 com-github-mckrpk-animatedProgressBar = { group = "com.github.mckrpk", name = "AnimatedProgressBar", version.ref = "animatedProgressBar" }
 com-jakewharton-rxrelay2-rxrelay = { group = "com.jakewharton.rxrelay2", name = "rxrelay", version.ref = "rxrelay" }
 io-github-pilgr-paperdb = { group = "io.github.pilgr", name = "paperdb", version.ref = "paperdb" }
-com-ethanhua-skeleton = { group = "com.ethanhua", name = "skeleton", version.ref = "skeleton" }
 io-supercharge-shimmerlayout = { group = "io.supercharge", name = "shimmerlayout", version.ref = "shimmerLayout" }
 com-airbnb-android-lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
 uz-myid-sdk-capture = { group = "uz.myid.sdk.capture", name = "myid-capture-sdk", version.ref = "myId" }
@@ -174,12 +161,3 @@ androidx-room-room-ktx = { group = "androidx.room", name = "room-ktx", version.r
 org-tensorflow-tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tenserFlow" }
 
 [plugins]
-com-android-application = { id = "com.android.application" }
-com-android-tools-build-gradle = { id = "com.android.tools.build.gradle", version.ref = "gradle" }
-org-jetbrains-kotlin-kotlin-gradle-plugin = { id = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
-com-google-gms-google-services = { id = "com.google.gms:google-services", version.ref = "googleServices" }
-com-google-dagger-hilt-android-gradle-plugin = { id = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "daggerHilt" }
-com-google-firebase-firebase-crashlytics-gradle = { id = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlytics" }
-jitpack-io = { id = "https://jitpack.io" }
-uzinfocom-myid = { id = "https://storage.uzinfocom.uz/libs/android/myid" }
-flutter-io-myid-lib = { id = "https://storage.googleapis.com/download.flutter.io" }

@@ -5,7 +5,6 @@ import android.content.ComponentName
 import androidx.core.content.res.ResourcesCompat
 import coil.load
 import com.robinhood.ticker.TickerUtils
-import com.scwang.smartrefresh.header.BezierCircleHeader
 import com.squareup.picasso.Picasso
 import io.paperdb.Paper
 import uz.fido.network.domain.model.cards.CardResponse
@@ -15,6 +14,7 @@ import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.widgets.total_balance.TotalBalanceWidget
 import uz.fido.utils.const.Const
+import uz.fido.utils.libs.smart_refresh.smart.BezierCircleHeader
 import uz.fido.utils.utility.format.Format
 import java.text.SimpleDateFormat
 import java.util.Date

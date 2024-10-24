@@ -6,7 +6,6 @@ import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.template.CreateTemplateRequest
@@ -27,6 +26,7 @@ import uz.fido.universaldigital.ui.fragments.payment.templates.dialog.AddTemplat
 import uz.fido.universaldigital.ui.fragments.payment.templates.dialog.TemplateOperationDialog
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.utils.const.Const
+import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken

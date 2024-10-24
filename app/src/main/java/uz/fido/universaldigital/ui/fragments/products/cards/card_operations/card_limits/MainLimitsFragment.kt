@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ethanhua.skeleton.Skeleton
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
@@ -22,6 +21,7 @@ import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const
+import uz.fido.utils.libs.skeleton.Skeleton
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken

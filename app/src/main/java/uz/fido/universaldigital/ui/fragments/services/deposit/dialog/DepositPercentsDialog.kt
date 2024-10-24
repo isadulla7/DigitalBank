@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
@@ -17,6 +16,7 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.Cli
 import uz.fido.universaldigital.ui.fragments.services.loan.adapter.AccountHistoriesAdapter
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
+import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.format.Format

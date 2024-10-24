@@ -16,13 +16,11 @@ import java.util.List;
 
 import uz.fido.universaldigital.R;
 
-public class CardStackLayoutManager
-        extends RecyclerView.LayoutManager
-        implements RecyclerView.SmoothScroller.ScrollVectorProvider {
+public class CardStackLayoutManager extends RecyclerView.LayoutManager implements RecyclerView.SmoothScroller.ScrollVectorProvider {
 
     private final Context context;
 
-    private CardStackListener listener = CardStackListener.DEFAULT;
+    private CardStackListener listener;
     private CardStackSetting setting = new CardStackSetting();
     private CardStackState state = new CardStackState();
 
@@ -49,7 +47,7 @@ public class CardStackLayoutManager
         if (s.didStructureChange()) {
             View topView = getTopView();
             if (topView != null) {
-             //   listener.onCardAppeared(getTopView(), state.topPosition);
+                //   listener.onCardAppeared(getTopView(), state.topPosition);
             }
         }
     }
@@ -349,7 +347,7 @@ public class CardStackLayoutManager
         }
 
         if (state.status.isDragging()) {
-           // listener.onCardDragging(state.getDirection(), state.getRatio());
+            // listener.onCardDragging(state.getDirection(), state.getRatio());
         }
     }
 
@@ -544,7 +542,7 @@ public class CardStackLayoutManager
     private void smoothScrollToPrevious(int position) {
         View topView = getTopView();
         if (topView != null) {
-           // listener.onCardDisappeared(getTopView(), state.topPosition);
+            // listener.onCardDisappeared(getTopView(), state.topPosition);
         }
 
         state.proportion = 0.0f;
@@ -624,10 +622,6 @@ public class CardStackLayoutManager
 
     public void setSwipeAnimationSetting(@NonNull SwipeAnimationSetting swipeAnimationSetting) {
         setting.swipeAnimationSetting = swipeAnimationSetting;
-    }
-
-    public void setRewindAnimationSetting(@NonNull RewindAnimationSetting rewindAnimationSetting) {
-        setting.rewindAnimationSetting = rewindAnimationSetting;
     }
 
     public void setOverlayInterpolator(@NonNull Interpolator overlayInterpolator) {

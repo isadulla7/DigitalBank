@@ -6,7 +6,6 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.ethanhua.skeleton.SkeletonScreen
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.p2p.P2PInfoDto
 import uz.fido.universaldigital.R
@@ -15,6 +14,7 @@ import uz.fido.universaldigital.ui.fragments.transfers.transfer_history.PopularT
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isNotActive
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.format.Format
+import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.adapter.showSkeleton
 import java.util.Locale
 

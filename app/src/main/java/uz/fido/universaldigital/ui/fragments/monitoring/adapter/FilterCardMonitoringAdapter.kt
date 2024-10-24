@@ -21,13 +21,15 @@ class FilterCardMonitoringAdapter(private val context: Context, private val base
     inner class VH(private val binding: ItemMonitoringFilterCardBinding) :
         ViewHolder(binding.root) {
         fun onBind(itemId: FilterCard) {
-            binding.cardName.text = if (itemId.object_value.length == 16) Format.formatCardNumberMonitoring(context, itemId.object_value) else itemId.object_value
-            binding.status.text =
-                if (itemId.state == "A") "${context.getString(R.string.status)}: ${context.getString(R.string.activ)}" else "${context.getString(R.string.status)}: ${context.getString(R.string.no_activ)}"
+
+            binding.cardName.text = itemId.object_value
+            binding.status.text = itemId.object_name
+
             when (itemId.object_type) {
                 UZCARD -> binding.icon.setImageResource(R.drawable.uzcard_monitoring)
                 HUMO_CARD -> binding.icon.setImageResource(R.drawable.humo_monitoring)
                 CURRENCY_CARD -> binding.icon.setImageResource(R.drawable.master_card)
+                else -> {}
             }
 
             if (!itemId.is_selected_monitoring) {

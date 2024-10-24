@@ -71,7 +71,7 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
     private fun drawPdfCheque() {
         if (operation == OPERATION_P2P) {
             val percent = (transferDto.commission ?: 0.0).toBigDecimal()
-            val commissionAmount = percent * (transferDto.transferAmount?.toBigDecimal()?.divide(BigDecimal(1000)) ?: BigDecimal(0))
+            val commissionAmount = percent * (transferDto.transferAmount?.toBigDecimal()?.divide(BigDecimal(10000)) ?: BigDecimal(0))
             val totalAmount = transferDto.transferAmount?.toBigDecimal()?.divide(BigDecimal(100))?.plus(commissionAmount)
             val model = TransferChequeModel(
                 transactionDate = requireArguments().getString("operation_date").toString(),

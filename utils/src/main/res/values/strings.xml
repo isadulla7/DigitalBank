@@ -45,4 +45,7 @@
     <string name="card">Карта</string>
     <string name="deposit_min_amount">от %s</string>
     <string name="please_log_out">Из-за изменений в безопасности приложения просим вас войти в приложение заново для безопасности ваших данных. Просим прощение за неудобство</string>
+    <string name="srl_content_empty" translatable="false">The content view in SmartRefreshLayout is empty. Do you forget to add it in xml layout file?</string>
+    <string name="srl_component_falsify" formatted="false" translatable="false">%s falsify area,\n Represents the height[%.1fdp] of drag at run time,\n It does not show anything.</string>
+
 </resources>

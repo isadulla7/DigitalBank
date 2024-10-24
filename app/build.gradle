@@ -31,7 +31,7 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             ndk {
                 abiFilters "arm64-v8a", "armeabi-v7a"
@@ -52,6 +52,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+
     }
     kotlinOptions {
         jvmTarget = '1.8'
@@ -60,7 +61,7 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.kotlinx.metadata.jvm)
     implementation(libs.androidx.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.livedata.ktx)
@@ -121,8 +122,6 @@ dependencies {
     //coil,picasso,glide (image loader)
     implementation(libs.io.coil.kt.coil)
     implementation(libs.com.squareup.picasso.picasso)
-    implementation(libs.com.github.bumptech.glide)
-    kapt libs.com.github.bumptech.glide.compiler
 
     implementation(libs.de.hdodenhof.circleimageview)
     implementation(libs.com.github.cachapa.expandableLayout)
@@ -134,14 +133,12 @@ dependencies {
     implementation(libs.com.jakewharton.rxbinding4.rxbinding)
     implementation(libs.com.tbuonomo.andrui.viewpagerdotsindicator)
     implementation(libs.com.github.OCNYang.pageTransformerHelp)
-    implementation(libs.com.scwang.smartrefresh.layout)
-    implementation(libs.com.scwang.smartrefresh.header)
     implementation(libs.com.github.alexzhirkevich.custom.qr.generator)
     implementation(libs.org.apache.commons.commons.lang3)
     implementation(libs.com.github.mckrpk.animatedProgressBar)
     implementation(libs.com.jakewharton.rxrelay2.rxrelay)
     implementation(libs.io.github.pilgr.paperdb)
-    implementation(libs.com.ethanhua.skeleton)
+
     implementation(libs.io.supercharge.shimmerlayout)
     implementation(libs.com.airbnb.android.lottie)
     implementation(libs.com.github.philjay.mpadroidChart)

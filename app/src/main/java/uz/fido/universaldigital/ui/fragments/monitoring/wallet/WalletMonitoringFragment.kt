@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.wallet
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Status
+import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.monitoring.AccountHistoriesRequest
 import uz.fido.network.domain.model.monitoring.AccountHistory
 import uz.fido.network.domain.model.monitoring.DateItem
@@ -23,7 +25,9 @@ import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.WalletMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.WalletMonitoringDetailsDialog
+import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
+import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format.newDateFormat
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
@@ -39,9 +43,11 @@ class WalletMonitoringFragment :
     BaseFragment<FragmentWalletMonitoringBinding, LocalMonitoringViewModel>(
         FragmentWalletMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
     ), (AccountHistory) -> Unit {
+
     private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
-    private var operationType = 2
+    private var operationType = 0
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    private val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
 
     private var dateBegin: String = ""
     private var dateEnd: String = ""
@@ -79,15 +85,27 @@ class WalletMonitoringFragment :
 
     private fun getFilterWalletList() {
         menuMonitoringViewModel.walletMonitoringFilter.observe(viewLifecycleOwner) { filterSaveVh ->
-            showSkeleton(
+            val skeletonScreen = showSkeleton(
                 binding.shimmerView,
                 MibDetailsAdapter(requireContext(), this),
                 R.layout.shimmer_item_monitoring,
                 1
             )
-            val card = arrayListOf<String>()
-            filterSaveVh.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_value) }
-            walletList = card
+            val newList = arrayListOf<CardResponse>()
+            menuProductsViewModel.cards.observe(viewLifecycleOwner) { card ->
+                card.forEach {
+                    if (it.object_type == CardConst.WALLET) {
+                        newList.add(it)
+                    }
+                }
+            }
+            val card = arrayListOf<Int>()
+            filterSaveVh.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_id) }
+            val checkList = newList.filter { it.object_id == card[0].toString() }
+            walletList = arrayListOf()
+            checkList.forEach {
+                walletList.add(it.account_code)
+            }
             totalList = arrayListOf()
             val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             if (filterSaveVh.startDate != "") {
@@ -95,9 +113,9 @@ class WalletMonitoringFragment :
                 dateBegin = df.format(format.parse(filterSaveVh.startDate).time)
             } else setTime()
             val type = when (filterSaveVh.plusMinus) {
-                getString(R.string.enrollments) -> 0
+                getString(R.string.enrollments) -> 2
                 getString(R.string.write_offs) -> 1
-                else -> 2
+                else -> 0
             }
 
             val info = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
@@ -111,9 +129,12 @@ class WalletMonitoringFragment :
                 dateBegin = dateBegin
             )
             viewModel.getAccountHistories(getClientToken(), model).observe(viewLifecycleOwner) {
+                skeletonScreen.hide()
+                binding.shimmerView.visibility = View.GONE
                 when (it.status) {
                     Status.SUCCESS -> {
                         val response = it.data!!.response
+                        Log.d("TAG", "getFilterWalletList:${response.size} ")
                         successMonitoringList(response, type)
                         if (response.size < 1) {
                             binding.layoutEmpty.visibility = View.VISIBLE
@@ -142,12 +163,12 @@ class WalletMonitoringFragment :
 
     private fun getWalletList(page: Int, operationType: Int) {
         if (walletList.isNotEmpty()) {
-        val skeletonScreen = showSkeleton(
-            binding.shimmerView,
-            MibDetailsAdapter(requireContext(), this),
-            R.layout.shimmer_item_monitoring,
-            1
-        )
+            val skeletonScreen = showSkeleton(
+                binding.shimmerView,
+                MibDetailsAdapter(requireContext(), this),
+                R.layout.shimmer_item_monitoring,
+                1
+            )
 
             val model = createModel(page)
             viewModel.getAccountHistories(getClientToken(), model).observe(viewLifecycleOwner) {
@@ -170,10 +191,10 @@ class WalletMonitoringFragment :
                 }
             }
         } else {
-            binding.shimmerView.visibility=View.GONE
-            binding.rec.visibility=View.GONE
-            binding.layoutEmpty.visibility=View.VISIBLE
-            binding.layoutEmpty.title.text=getString(R.string.card_list_no)
+            binding.shimmerView.visibility = View.GONE
+            binding.rec.visibility = View.GONE
+            binding.layoutEmpty.visibility = View.VISIBLE
+            binding.layoutEmpty.title.text = getString(R.string.card_list_no)
         }
     }
 
@@ -183,7 +204,7 @@ class WalletMonitoringFragment :
     ) {
         val sortedResponse = java.util.ArrayList<AccountHistory>()
         val groupedHashMap: HashMap<String, MutableList<AccountHistory>> = when (operationType) {
-            0 -> {
+            2 -> {
                 response.forEach {
                     if (it.debit == "0") {
                         sortedResponse.add(it)
@@ -262,7 +283,6 @@ class WalletMonitoringFragment :
         )
         return model
     }
-
 
     private fun getCardList() {
         walletList = menuMonitoringViewModel.walledList.value ?: arrayListOf()

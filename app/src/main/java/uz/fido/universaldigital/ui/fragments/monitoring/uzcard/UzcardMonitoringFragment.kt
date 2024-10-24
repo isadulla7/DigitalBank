@@ -9,7 +9,6 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.ethanhua.skeleton.SkeletonScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Status
@@ -29,6 +28,7 @@ import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoring
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.UzCardMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.utils.format.Format
+import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.sticky.StickyHeaderDecoration
 import uz.fido.utils.utility.adapter.showSkeleton
@@ -97,7 +97,10 @@ class UzcardMonitoringFragment :
     private fun getFilterUzCardMonitoringList(page: Int, operationType: Int) {
         saveViewModel.uzCardMonitoringFilter.observe(viewLifecycleOwner) { it ->
             val card = arrayListOf<String>()
-            it.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_id.toString()) }
+            it.cardList.forEach { item->
+                if (!item.is_selected_monitoring)
+                    card.add(item.object_id.toString())
+            }
             val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             if (it.startDate != "") {
                 dateEnd = df.format(format.parse(it.endDate).time)
