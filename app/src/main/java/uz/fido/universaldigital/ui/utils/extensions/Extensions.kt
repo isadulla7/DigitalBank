@@ -49,6 +49,7 @@ import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
+import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setProcessingStatusIsNotWorking
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.universaldigital.ui.utils.validator.RangeValidator
 import uz.fido.utils.const.Const
@@ -355,6 +356,12 @@ fun setCardState(
     context: Context
 ) {
     when (item.processing_server_status) {
+        "-1" -> {
+            textView.visibility = View.VISIBLE
+            textView.setProcessingStatusIsNotWorking(item)
+            return
+        }
+
         "0" -> {
             textView.visibility = View.GONE
             return

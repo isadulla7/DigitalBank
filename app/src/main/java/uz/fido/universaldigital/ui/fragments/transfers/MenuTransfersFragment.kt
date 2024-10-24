@@ -37,8 +37,8 @@ class MenuTransfersFragment :
             200 -> goto(R.id.overMyCardsFragment)
             300 -> goto(R.id.transferByPhoneFragment)
             400 -> goto(R.id.transferByWalletFragment)
-            500 -> /*goto(R.id.conversionFragment)*/functionInProgress()
-            600 -> goto(R.id.requestMoneyFragment)/*functionInProgress()*/
+            500 -> goto(R.id.transferToAccountFragment)
+            600 -> goto(R.id.requestMoneyFragment)
         }
     }
 
