@@ -1,5 +1,4 @@
 [versions]
-
 coreKtx = "1.10.1"
 appCompat = "1.6.1"
 constraintLayout = "2.1.4"
@@ -70,6 +69,12 @@ okhttp = "4.10.0"
 roomRuntime = "2.6.0-rc01"
 espressoIdling = "3.4.0"
 tenserFlow = "2.9.0"
+gradle = "7.4.2"
+kotlinGradlePlugin = "1.7.20"
+googleServices = "4.4.0"
+daggerHilt = "2.42"
+firebaseCrashlytics = "2.9.9"
+agp = "8.4.2"
 
 [libraries]
 
@@ -161,3 +166,12 @@ androidx-room-room-ktx = { group = "androidx.room", name = "room-ktx", version.r
 org-tensorflow-tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tenserFlow" }
 
 [plugins]
+com-android-application = { id = "com.android.application", version.ref = "agp" }
+com-android-tools-build-gradle = { id = "com.android.tools.build.gradle", version.ref = "gradle" }
+org-jetbrains-kotlin-kotlin-gradle-plugin = { id = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
+com-google-gms-google-services = { id = "com.google.gms:google-services", version.ref = "googleServices" }
+com-google-dagger-hilt-android-gradle-plugin = { id = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "daggerHilt" }
+com-google-firebase-firebase-crashlytics-gradle = { id = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlytics" }
+jitpack-io = { id = "https://jitpack.io" }
+uzinfocom-myid = { id = "https://storage.uzinfocom.uz/libs/android/myid" }
+flutter-io-myid-lib = { id = "https://storage.googleapis.com/download.flutter.io" }
