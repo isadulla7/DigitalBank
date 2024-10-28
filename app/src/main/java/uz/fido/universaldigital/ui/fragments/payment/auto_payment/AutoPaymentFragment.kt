@@ -6,35 +6,41 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.subscriptions.AutoPayment
 import uz.fido.network.domain.model.subscriptions.AutoPaymentRequest
 import uz.fido.network.domain.model.subscriptions.DeleteAutoPaymentRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
-import uz.fido.universaldigital.databinding.FragmentAutoPaymentBinding
+import uz.fido.universaldigital.databinding.FragmentApWithCalendarBinding
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.adapter.AutoPaymentsAdapter
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.dialog.AutoPaymentOperationDialog
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.const.Const
+import uz.fido.utils.libs.calendar_view.EventObjects
+import uz.fido.utils.log.Log
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @AndroidEntryPoint
-class AutoPaymentFragment : BaseFragment<FragmentAutoPaymentBinding, AutoPaymentViewModel>
-    (FragmentAutoPaymentBinding::inflate, AutoPaymentViewModel::class.java) {
+class AutoPaymentFragment : BaseFragment<FragmentApWithCalendarBinding, AutoPaymentViewModel>
+    (FragmentApWithCalendarBinding::inflate, AutoPaymentViewModel::class.java) {
 
     private lateinit var autoPaymentAdapter: AutoPaymentsAdapter
     private lateinit var dialog: AutoPaymentOperationDialog
     private var list = ArrayList<AutoPayment>()
+    val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.US)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         init()
         onClickView()
+        initCalendarEvents()
+//        initCustomDateEvent()
     }
 
     private fun onClickView() {
@@ -120,6 +126,7 @@ class AutoPaymentFragment : BaseFragment<FragmentAutoPaymentBinding, AutoPayment
                     list = response
                     binding.layoutEmpty.isVisible = list.isEmpty()
                     autoPaymentAdapter.setList(list)
+                    initCustomDateEvent()
                 }
 
                 Status.ERROR -> {
@@ -129,6 +136,35 @@ class AutoPaymentFragment : BaseFragment<FragmentAutoPaymentBinding, AutoPayment
                 }
             }
         }
+    }
+
+    private fun initCustomDateEvent() {
+        val events: MutableList<EventObjects> = java.util.ArrayList<EventObjects>()
+
+        if (list.isNotEmpty()) {
+            list.forEach {
+                if (!it.selected_days.isNullOrEmpty()) {
+                    it.selected_days?.forEach { days ->
+                        if (days.isNotEmpty() && days != "0" && days.length == 10) {
+                            val date = dateFormat.parse(days)
+                            events.add(EventObjects(it.name, date))
+                            binding.calendar.addEvents(events)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun initCalendarEvents() {
+        binding.calendar.setDateSelector { selectedDate ->
+            val stringDate = dateFormat.format(selectedDate)
+            if (list.isNotEmpty()) {
+                val filteredList = list.filter { it.selected_days?.contains(stringDate) == true }
+                autoPaymentAdapter.setList(filteredList as ArrayList<AutoPayment>)
+            }
+        }
+        binding.calendar.setMonthChanger { changedMonth -> Log.d("Changed", "month changed $changedMonth") }
     }
 
 }

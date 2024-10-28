@@ -88,4 +88,9 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">32dp</item>
     </style>
+    <style name="weekText" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/inter_regular</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>
