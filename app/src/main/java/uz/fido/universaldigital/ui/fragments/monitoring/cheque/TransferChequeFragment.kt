@@ -19,6 +19,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentTransferPdfChequeBinding
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.pop
@@ -471,9 +472,13 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
     }
 
     private fun closePdfRenderer() {
-        currentPage.close()
-        pdfRenderer.close()
-        parcelFileDescriptor.close()
+        try {
+            currentPage.close()
+            pdfRenderer.close()
+            parcelFileDescriptor.close()
+        } catch (e: Exception) {
+            recordException(e)
+        }
     }
 
     override fun onDestroy() {

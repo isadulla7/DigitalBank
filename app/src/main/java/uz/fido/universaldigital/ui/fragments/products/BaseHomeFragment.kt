@@ -280,7 +280,6 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
         }
     }
 
-
     private fun initFastAccessLayout() {
         val layoutBinding = LayoutHomeFastAccessBinding.inflate(
             LayoutInflater.from(requireContext()), container, false

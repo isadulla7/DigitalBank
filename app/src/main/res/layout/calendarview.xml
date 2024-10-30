@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
-    android:background="@color/white"
+    android:background="@color/cardBgColor"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -13,7 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true"
-        android:background="@color/white"
         android:orientation="horizontal">
 
         <ImageView
@@ -31,7 +30,7 @@
             android:layout_gravity="center"
             android:layout_weight="3"
             android:gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/blackColor"
             tools:text="CurDate" />
 
         <ImageView
@@ -47,7 +46,6 @@
         android:id="@+id/ll_calendar_week"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:orientation="horizontal"
         android:paddingTop="4dp"
         android:paddingBottom="4dp">
@@ -136,6 +134,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:animateLayoutChanges="false"
+        android:nestedScrollingEnabled="false"
         android:numColumns="7"
         tools:animateLayoutChanges="false"
         tools:listitem="@layout/calendarview_cell" />

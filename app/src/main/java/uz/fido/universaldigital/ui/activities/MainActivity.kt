@@ -34,6 +34,7 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.Basic
 import uz.fido.universaldigital.ui.fragments.transfers.by_phone.TransferByPhoneFragment
 import uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferFragment
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.const.Const
 import uz.fido.utils.internet_checker.InternetConnectionChecker
 import uz.fido.utils.internet_checker.NoConnectionDialog
@@ -127,7 +128,6 @@ class MainActivity : BaseActivity() {
     }
 
 
-
     override fun onStop() {
         super.onStop()
         pausedMillis = Calendar.getInstance().timeInMillis
@@ -169,16 +169,20 @@ class MainActivity : BaseActivity() {
 
     private fun internetListener() {
         InternetConnectionChecker(this).observeForever { isConnected ->
-            if (isConnected) {
-                if (!isDestroyed && !isFinishing) {
-                    if (noConnectionDialog != null) {
-                        noConnectionDialog?.dismiss()
-                        noConnectionDialog = null
+            try {
+                if (isConnected) {
+                    if (!isDestroyed && !isFinishing) {
+                        if (noConnectionDialog != null) {
+                            noConnectionDialog?.dismiss()
+                            noConnectionDialog = null
+                        }
                     }
+                } else if (!this@MainActivity.isStop && !isDestroyed && !isFinishing) {
+                    noConnectionDialog = NoConnectionDialog()
+                    noConnectionDialog?.show(supportFragmentManager, "")
                 }
-            } else if (!this@MainActivity.isStop && !isDestroyed && !isFinishing) {
-                noConnectionDialog = NoConnectionDialog()
-                noConnectionDialog?.show(supportFragmentManager, "")
+            } catch (e: Exception) {
+                recordException(e)
             }
         }
     }

@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.textfield.TextInputLayout
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.paperdb.Paper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
@@ -406,3 +407,35 @@ fun String.hasSpecialSymbol(): Boolean {
 }
 
 fun String.removeSpace() = trim().replace("\\s+".toRegex(), replacement = "")
+
+fun String.capitalizeFirstChar(): String {
+    return this.replaceFirstChar { it.uppercase() }
+}
+
+fun recordException(e: Exception, activity: Activity) {
+    FirebaseCrashlytics.getInstance().apply {
+        setCustomKey("class_name", activity.javaClass.simpleName)
+        recordException(e)
+    }
+}
+
+fun Activity.recordException(e: Exception) {
+    FirebaseCrashlytics.getInstance().apply {
+        setCustomKey("class_name", this@recordException.javaClass.simpleName)
+        recordException(e)
+    }
+}
+
+fun recordException(e: Exception, fragment: Fragment) {
+    FirebaseCrashlytics.getInstance().apply {
+        setCustomKey("class_name", fragment.javaClass.simpleName)
+        recordException(e)
+    }
+}
+
+fun Fragment.recordException(e: Exception) {
+    FirebaseCrashlytics.getInstance().apply {
+        setCustomKey("class_name", this@recordException.javaClass.simpleName)
+        recordException(e)
+    }
+}

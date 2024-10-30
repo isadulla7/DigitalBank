@@ -22,3 +22,4 @@
 
 -keep class kotlin.Metadata { *; }
 -dontwarn kotlin.time.**
+-keep class uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation { *; }

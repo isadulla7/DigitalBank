@@ -45,4 +45,11 @@
     <string name="card">Card</string>
     <string name="deposit_min_amount">from %s</string>
     <string name="please_log_out">Due to changes in the app security, we kindly ask you to log in to the app again for the safety of your data. We apologize for the inconvenience.</string>
+    <string name="sat">Sat</string>
+    <string name="fri">Fri</string>
+    <string name="thu">Thu</string>
+    <string name="wed">Wed</string>
+    <string name="tue">Tue</string>
+    <string name="mon">Mon</string>
+    <string name="sun">Sun</string>
 </resources>

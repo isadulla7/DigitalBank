@@ -1,4 +1,4 @@
-package uz.fido.utils.libs.calendar_view;
+package uz.fido.universaldigital.ui.utils.calendar_view;
 
 import java.util.Date;
 
