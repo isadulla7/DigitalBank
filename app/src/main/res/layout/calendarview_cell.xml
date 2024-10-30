@@ -4,7 +4,7 @@
     android:id="@+id/cl_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/cardBgColor"
     android:gravity="right">
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -12,7 +12,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="1dp"
-        android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="4dp"
@@ -29,7 +28,7 @@
             android:layout_gravity="center"
             android:includeFontPadding="false"
             android:text="31"
-            android:textColor="@color/black"
+            android:textColor="@color/blackColor"
             android:textSize="13sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -45,4 +45,11 @@
     <string name="interest_withdrawal">Foizlarni yechib olish</string>
     <string name="re_calculate_percents">Foizlarni qayta hisoblash</string>
     <string name="please_log_out">Ilova xavfsizligidagi o‘zgarishlar tufayli ma\'lumotlaringiz xavfsizligini himoya qilish uchun ilovaga qayta kirishingizni so‘raymiz. Noqulaylik uchun uzr so‘raymiz</string>
+    <string name="sat">Shan</string>
+    <string name="fri">Jum</string>
+    <string name="thu">Pay</string>
+    <string name="wed">Chor</string>
+    <string name="tue">Sesh</string>
+    <string name="mon">Du</string>
+    <string name="sun">Yak</string>
 </resources>

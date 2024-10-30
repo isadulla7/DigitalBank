@@ -15,6 +15,7 @@ import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringFragm
 import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst.CURRENCY_CARD
 import uz.fido.utils.const.CardConst.HUMO_CARD
@@ -41,8 +42,12 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        position = arguments?.getInt("position", 0) ?: 0
-        selectedCard = arguments?.serializable(Const.CARD)
+        try {
+            position = arguments?.getInt("position", 0) ?: 0
+            selectedCard = arguments?.serializable(Const.CARD)
+        } catch (e: Exception) {
+            recordException(e)
+        }
     }
 
     override fun onInit(savedInstanceState: Bundle?) {

@@ -1,11 +1,11 @@
-package uz.fido.utils.libs.calendar_view;
+package uz.fido.universaldigital.ui.utils.calendar_view;
 
 import java.util.Date;
 
 public class EventObjects {
     private int id;
-    private String message;
-    private Date date;
+    private final String message;
+    private final Date date;
 
     public EventObjects(String message, Date date) {
         this.message = message;

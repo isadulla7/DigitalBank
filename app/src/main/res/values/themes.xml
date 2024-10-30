@@ -173,7 +173,7 @@
     <style name="weekText" parent="Widget.AppCompat.TextView">
         <item name="fontFamily">@font/inter_regular</item>
         <item name="android:textStyle">normal</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/blackColor</item>
     </style>
 
     <style name="CalenderViewCustom" parent="Theme.AppCompat">
@@ -182,7 +182,7 @@
     </style>
 
     <style name="CalenderViewWeekCustomText" parent="android:TextAppearance.DeviceDefault.Small">
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/blackColor</item>
         <item name="font">@font/inter_medium</item>
         <item name="fontStyle">normal</item>
         <item name="monthFontFamily">@font/inter_bold</item>
