@@ -192,7 +192,8 @@
                     android:paddingHorizontal="12dp"
                     android:text="@string/cheques"
                     android:textColor="@color/brandBlueColor"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="gone" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/about_bank"
