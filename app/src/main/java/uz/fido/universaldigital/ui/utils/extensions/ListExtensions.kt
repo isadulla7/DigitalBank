@@ -68,13 +68,13 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
             202
         )
     )
-    serviceList.add(
-        MenuServiceItem(
-            R.drawable.ic_service_transfer_to_account,
-            getString(R.string.transfer_to_account),
-            500
-        )
-    )
+//    serviceList.add(
+//        MenuServiceItem(
+//            R.drawable.ic_service_transfer_to_account,
+//            getString(R.string.transfer_to_account),
+//            500
+//        )
+//    )
     serviceList.add(
         MenuServiceItem(
             R.drawable.ic_service_connect_sms_info,
@@ -103,20 +103,20 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
             900
         )
     )
-    serviceList.add(
-        MenuServiceItem(
-            R.drawable.ic_transfer_swift,
-            getString(R.string.swift_transfer),
-            801
-        )
-    )
-    serviceList.add(
-        MenuServiceItem(
-            R.drawable.ic_service_money_transfers,
-            getString(R.string.money_transfers),
-            800
-        )
-    )
+//    serviceList.add(
+//        MenuServiceItem(
+//            R.drawable.ic_transfer_swift,
+//            getString(R.string.swift_transfer),
+//            801
+//        )
+//    )
+//    serviceList.add(
+//        MenuServiceItem(
+//            R.drawable.ic_service_money_transfers,
+//            getString(R.string.money_transfers),
+//            800
+//        )
+//    )
 //    serviceList.add(
 //        MenuServiceItem(
 //            R.drawable.ic_service_payment_in_places,
@@ -163,20 +163,28 @@ fun Fragment.getTransferTypes(): ArrayList<MenuServiceItem> {
     )
     transferTypes.add(
         MenuServiceItem(
+            R.drawable.ic_service_transfer_to_account,
+            getString(R.string.transfer_to_account),
+            500,
+            getString(R.string.by_wallet_number_desc)
+        )
+    )
+    transferTypes.add(
+        MenuServiceItem(
             R.drawable.ic_transfer_request_money,
             getString(R.string.request_money),
             600,
             getString(R.string.request_money_desc)
         )
     )
-    transferTypes.add(
-        MenuServiceItem(
-            R.drawable.ic_conversion_24dp,
-            getString(R.string.currency_exchange),
-            500,
-            getString(R.string.currency_exchange)
-        )
-    )
+//    transferTypes.add(
+//        MenuServiceItem(
+//            R.drawable.ic_conversion_24dp,
+//            getString(R.string.currency_exchange),
+//            500,
+//            getString(R.string.currency_exchange)
+//        )
+//    )
     return transferTypes
 }
 

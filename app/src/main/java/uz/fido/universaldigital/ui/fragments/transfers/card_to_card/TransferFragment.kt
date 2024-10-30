@@ -328,7 +328,8 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
                         transferAmount = Format.sendFormat(amount),
                         commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
                         operation = SuccessTransferFragment.TRANSFER_BY_CARD,
-                        requestId = p2PInfoDto?.requestId
+                        requestId = p2PInfoDto?.requestId,
+                        cardId = p2PInfoDto?.cardId
                     )
                 )
             )

@@ -11,7 +11,8 @@ data class P2PInfoResponse(
     val to_object_type: String,
     val max_amount: String,
     val min_amount: String,
-    val request_id: String
+    val request_id: String,
+    val card_id: String? = null
 ) {
     fun mapToDto(): P2PInfoDto {
         return P2PInfoDto(
@@ -20,7 +21,8 @@ data class P2PInfoResponse(
             percent = percent,
             receiverCardOwner = empbossed_name,
             requestId = request_id,
-            errorMessage = msg
+            errorMessage = msg,
+            cardId = card_id.orEmpty()
         )
     }
 }
@@ -32,5 +34,6 @@ data class P2PInfoDto(
     val receiverCardOwner: String? = "",
     val isSuccess: Boolean = true,
     val requestId: String? = "",
-    val errorMessage: String? = ""
+    val errorMessage: String? = "",
+    val cardId: String? = ""
 )

@@ -428,7 +428,7 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
         val directory =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val suffix = dateFormat2.format(Calendar.getInstance().time).trim()
-        childName = "receipt_${suffix}.pdf"
+        childName = "Universalbank_receipt_${suffix}.pdf"
         file = File(directory, childName)
         try {
             pdfDocument.writeTo(FileOutputStream(file))

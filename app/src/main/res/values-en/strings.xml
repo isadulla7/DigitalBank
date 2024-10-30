@@ -1020,5 +1020,10 @@
     <string name="yesterday">Yesterday</string>
     <string name="sender_card_is_not_active">Sender card is not active</string>
     <string name="receiver_card_is_not_active">Receiver card is not active</string>
+    <string name="cheques">Receipts</string>
+    <string name="you_dont_have_saved_cheques">You have no saved receipts</string>
+    <string name="file_not_exist">File does not exist!</string>
+    <string name="file_deleted_successfully">File successfully deleted!</string>
+    <string name="open">Open</string>
 
 </resources>
