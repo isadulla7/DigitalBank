@@ -62,17 +62,9 @@ class MainActivity : BaseActivity() {
             when (intent?.action) {
                 "ACTION_OPEN_ACTIVITY" -> {
                     if (!isFinishing) {
-                        startActivity(Intent(this@MainActivity, VpnErrorActivity::class.java))
+                        startActivity(Intent(this@MainActivity, CallSafeActivity::class.java))
                     }
-//                    Log.d(TAG, "Received open action. Starting CallModeActivity.")
                 }
-
-//                "ACTION_CLOSE_ACTIVITY" -> {
-////                    Log.d(TAG, "Received close action. Finishing CallModeActivity.")
-//                    if (!isFinishing) {
-//                        finish() // Close the activity
-//                    }
-//                }
             }
         }
     }
@@ -113,14 +105,14 @@ class MainActivity : BaseActivity() {
         internetListener()
         try {
             startService(Intent(this, AudioModeService::class.java))
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    registerReceiver(broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY"), RECEIVER_NOT_EXPORTED)
-                } else {
-                    registerReceiver(broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY"))
-                }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(
+                    broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY"), Context.RECEIVER_EXPORTED
+                )
             } else {
-                registerReceiver(broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY"))
+                registerReceiver(
+                    broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY")
+                )
             }
         } catch (e: Exception) {
             e.printStackTrace()
