@@ -22,6 +22,7 @@ import uz.fido.network.domain.model.cards.CheckCardRequest
 import uz.fido.network.domain.model.cards.DeleteCardRequest
 import uz.fido.network.domain.model.cards.EditCardRequest
 import uz.fido.network.domain.model.cards.GetCVVRequest
+import uz.fido.network.domain.model.cards.GetObjValueRequest
 import uz.fido.network.domain.model.cards.Secure3DRequest
 import uz.fido.network.domain.model.deposits.Deposit
 import uz.fido.network.domain.model.deposits.GetDepositListRequest
@@ -88,6 +89,10 @@ class MenuProductsViewModel @Inject constructor(
 
     fun getCardListRequest(token: String) = liveData(Dispatchers.IO) {
         emit(cardRepository.getCardList(token))
+    }
+
+    fun getCardNumberRequest(token: String,request: GetObjValueRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.getObjValue(token,request))
     }
 
     fun getCardInfoRequest(token: String, cardInfoRequest: CardInfoRequest) = liveData(Dispatchers.IO) {
