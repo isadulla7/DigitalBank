@@ -47,6 +47,12 @@ interface CardApiInterface {
         @Body cardInfoRequest: CardInfoRequest
     ): CardInfoResponse
 
+    @POST("GET_REAL_OBJECT_VALUE")
+    suspend fun getObjectRealValue(
+        @Header("Authorization") token: String,
+        @Body getObjValue: GetObjValueRequest
+    ): GetObjValueResponse
+
     @POST("USER_OBJ_DEL")
     suspend fun deleteCard(
         @Header("Authorization") token: String,

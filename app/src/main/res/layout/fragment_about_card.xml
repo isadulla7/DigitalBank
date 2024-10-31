@@ -63,6 +63,16 @@
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
+                <ProgressBar
+                    android:id="@+id/progress_view"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginHorizontal="6dp"
+                    android:elevation="5dp"
+                    android:indeterminateDrawable="@drawable/anim_custom_loader"
+                    android:indeterminateTint="@color/brandRedColor"
+                    android:visibility="invisible" />
+
                 <ImageView
                     android:id="@+id/copy_card_number"
                     android:layout_width="24dp"

@@ -8,16 +8,22 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
+import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.cards.GetCVVRequest
+import uz.fido.network.domain.model.cards.GetObjValueRequest
+import uz.fido.network.domain.model.cards.GetObjValueResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentAboutCardBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst.CURRENCY_CARD
 import uz.fido.utils.const.CardConst.WALLET
+import uz.fido.utils.const.Const
+import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
@@ -76,27 +82,54 @@ class AboutCardFragment : BaseFragment<FragmentAboutCardBinding, MenuProductsVie
             isCvvVisible = !isCvvVisible
         }
         binding.copyCardNumber.setOnClickListener {
-            val clipboard: ClipboardManager =
-                requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText(label.toString(), card.object_value)
-            clipboard.setPrimaryClip(clip)
+            getObjValue()
         }
     }
 
     private fun getSecurityCode() {
         if (card.object_type == CURRENCY_CARD) {
-            viewModel.getCVV(getClientToken(), GetCVVRequest(cardNumber = card.object_value))
-                .observe(viewLifecycleOwner) {
-                    it?.let {
-                        if (it.status == Status.SUCCESS) {
-                            if (it.data?.securityCode != null && it.data!!.securityCode.isNotEmpty()) {
-                                binding.cvvLayout.visibility = View.VISIBLE
-                                binding.cvvNumber.text = it.data!!.securityCode
-                                securityCode = it.data!!.securityCode
-                            }
+            viewModel.getCVV(getClientToken(), GetCVVRequest(cardNumber = card.object_value)).observe(viewLifecycleOwner) {
+                it?.let {
+                    if (it.status == Status.SUCCESS) {
+                        if (it.data?.securityCode != null && it.data!!.securityCode.isNotEmpty()) {
+                            binding.cvvLayout.visibility = View.VISIBLE
+                            binding.cvvNumber.text = it.data!!.securityCode
+                            securityCode = it.data!!.securityCode
                         }
                     }
                 }
+            }
         }
     }
+
+    private fun getObjValue() {
+        binding.progressView.visibility = View.VISIBLE
+        viewModel.getCardNumberRequest(getClientToken(), GetObjValueRequest(from_object_id = card.object_id)).observe(viewLifecycleOwner) {
+            it?.let {
+                binding.progressView.visibility = View.GONE
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        val result = it.data as GetObjValueResponse
+                        try {
+                            copyObjValue(CryptoUtil.decryptWithoutSalt(result.object_value, getFromPaper(Const.PASSWORD_ENC)))
+                        } catch (e: Exception) {
+                            toast(e.localizedMessage)
+                        }
+                    }
+
+                    Status.ERROR -> {
+
+                    }
+                }
+            }
+        }
+    }
+
+    private fun copyObjValue(objValue: String) {
+        val clipboard: ClipboardManager =
+            requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText(label.toString(), objValue)
+        clipboard.setPrimaryClip(clip)
+    }
+
 }
