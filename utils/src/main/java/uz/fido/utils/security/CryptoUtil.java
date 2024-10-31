@@ -54,6 +54,23 @@ public class CryptoUtil {
         return Base64.encodeToString(encrypted, Base64.DEFAULT).replaceAll("\\r\\n|\\r|\\n", "");
     }
 
+    public static String decryptWithoutSalt(String encryptedData, String plainText) throws Exception {
+        // Generate SHA2 key based on the plain text (same as encryption process)
+        String sha2 = SHA2(plainText);
+        SecretKeySpec keySpec = new SecretKeySpec(sha2.getBytes(), "AES");
+
+        // Initialize cipher in DECRYPT_MODE with the same IV
+        Cipher cipher = Cipher.getInstance(cypherInstance); // Ensure cypherInstance is consistent with encryption
+        cipher.init(Cipher.DECRYPT_MODE, keySpec, new IvParameterSpec(initializationVector.getBytes()));
+
+        // Decode base64 encoded encrypted data
+        byte[] decodedEncryptedData = Base64.decode(encryptedData, Base64.DEFAULT);
+
+        // Perform decryption
+        byte[] decryptedBytes = cipher.doFinal(decodedEncryptedData);
+        return new String(decryptedBytes);
+    }
+
     private static byte[] getRaw(String plainText) {
         try {
             SecretKeyFactory factory = SecretKeyFactory.getInstance(secretKeyInstance);

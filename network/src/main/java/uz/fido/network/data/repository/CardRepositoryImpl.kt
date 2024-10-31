@@ -24,6 +24,8 @@ import uz.fido.network.domain.model.cards.EditCardRequest
 import uz.fido.network.domain.model.cards.EditCardResponse
 import uz.fido.network.domain.model.cards.GetCVVRequest
 import uz.fido.network.domain.model.cards.GetCVVResponse
+import uz.fido.network.domain.model.cards.GetObjValueRequest
+import uz.fido.network.domain.model.cards.GetObjValueResponse
 import uz.fido.network.domain.model.cards.ResetPinCount
 import uz.fido.network.domain.model.cards.ResetPinCountCheck
 import uz.fido.network.domain.model.cards.Secure3DRequest
@@ -50,8 +52,7 @@ import uz.fido.network.domain.model.p2p.P2PHistoryRequest
 import uz.fido.network.domain.model.p2p.P2PHistoryResponse
 import javax.inject.Inject
 
-class CardRepositoryImpl @Inject constructor(private val cardApiService: CardApiInterface) :
-    ICardRepository {
+class CardRepositoryImpl @Inject constructor(private val cardApiService: CardApiInterface) : ICardRepository {
 
     var cardList: MutableLiveData<List<CardResponse>> = MutableLiveData()
 
@@ -73,6 +74,10 @@ class CardRepositoryImpl @Inject constructor(private val cardApiService: CardApi
 
     override suspend fun getCardList(token: String): Resource<CardListResponse> = getResult {
         cardApiService.getCardList(token)
+    }
+
+    override suspend fun getObjValue(token: String, request: GetObjValueRequest): Resource<GetObjValueResponse> = getResult {
+        cardApiService.getObjectRealValue(token, request)
     }
 
     override suspend fun getCardInfo(
@@ -171,10 +176,9 @@ class CardRepositoryImpl @Inject constructor(private val cardApiService: CardApi
         cardApiService.svSetMainCard(token, svSetMainCardRequest)
     }
 
-    override suspend fun getSvLimitParams(token: String): Resource<LimitParamsResponse> =
-        getResult {
-            cardApiService.getSvLimitParams(token)
-        }
+    override suspend fun getSvLimitParams(token: String): Resource<LimitParamsResponse> = getResult {
+        cardApiService.getSvLimitParams(token)
+    }
 
     override suspend fun setSvCardLimit(
         token: String, svSetCardLimit: SvSetCardLimitRequest
@@ -200,10 +204,9 @@ class CardRepositoryImpl @Inject constructor(private val cardApiService: CardApi
         cardApiService.getGlLimitBalance(token, glLimitBaseRequest)
     }
 
-    override suspend fun getGlLimitParams(token: String): Resource<GlLimitParamsResponse> =
-        getResult {
-            cardApiService.getGlLimitParams(token)
-        }
+    override suspend fun getGlLimitParams(token: String): Resource<GlLimitParamsResponse> = getResult {
+        cardApiService.getGlLimitParams(token)
+    }
 
     override suspend fun checkSMSActivate(
         token: String, request: CheckSMSActivateRequest

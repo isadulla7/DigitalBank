@@ -19,6 +19,8 @@ import uz.fido.network.domain.model.cards.EditCardRequest
 import uz.fido.network.domain.model.cards.EditCardResponse
 import uz.fido.network.domain.model.cards.GetCVVRequest
 import uz.fido.network.domain.model.cards.GetCVVResponse
+import uz.fido.network.domain.model.cards.GetObjValueRequest
+import uz.fido.network.domain.model.cards.GetObjValueResponse
 import uz.fido.network.domain.model.cards.ResetPinCount
 import uz.fido.network.domain.model.cards.ResetPinCountCheck
 import uz.fido.network.domain.model.cards.Secure3DRequest
@@ -53,6 +55,7 @@ interface ICardRepository {
     suspend fun addCard(token: String, addCardRequest: AddCardRequest): Resource<BaseResponse>
 
     suspend fun getCardList(token: String): Resource<CardListResponse>
+    suspend fun getObjValue(token: String,request: GetObjValueRequest): Resource<GetObjValueResponse>
 
     suspend fun getCardInfo(
         token: String, cardInfoRequest: CardInfoRequest
