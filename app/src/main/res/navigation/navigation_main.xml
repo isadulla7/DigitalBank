@@ -717,4 +717,16 @@
         android:id="@+id/savedChequesFragment"
         android:name="uz.fido.universaldigital.ui.fragments.profile.saved_cheques.SavedChequesFragment"
         android:label="SavedChequesFragment" />
+    <fragment
+        android:id="@+id/myCardsServiceFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.main.MyCardsServiceFragment"
+        android:label="MyCardsServiceFragment" />
+    <fragment
+        android:id="@+id/myDepositsServiceFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.main.MyDepositsServiceFragment"
+        android:label="MyDepositsServiceFragment" />
+    <fragment
+        android:id="@+id/myCreditsServiceFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.services.main.MyCreditsServiceFragment"
+        android:label="MyCreditsServiceFragment" />
 </navigation>
