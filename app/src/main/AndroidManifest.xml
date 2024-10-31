@@ -93,6 +93,10 @@
             android:exported="false" />
 
         <activity
+            android:name=".ui.activities.CallSafeActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".ui.activities.FaceIdActivity"
             android:exported="false" />
 

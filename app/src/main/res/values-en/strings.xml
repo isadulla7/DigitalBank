@@ -1013,7 +1013,7 @@
     <string name="password_letter_requirement">At least one lowercase and uppercase letter</string>
     <string name="password_number_requirement">At least one number</string>
     <string name="password_symbol_requirement">At least one special symbol</string>
-    <string name="no_transaction_or_payment_selected_period">Вы не делали никаких платежей или переводов через приложение в выбранном месяце</string>
+    <string name="no_transaction_or_payment_selected_period">You have not made any payments or transfers through the app in the selected month</string>
     <string name="secret_word_instruction">Security code must be more than 5 and less than 10.</string>
     <string name="card_or_phone_number">Card or phone number</string>
     <string name="today">Today</string>
@@ -1025,5 +1025,6 @@
     <string name="file_not_exist">File does not exist!</string>
     <string name="file_deleted_successfully">File successfully deleted!</string>
     <string name="open">Open</string>
+    <string name="in_call_you_cant_use_app">For security reasons, you cannot use the application during a call</string>
 
 </resources>

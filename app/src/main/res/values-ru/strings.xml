@@ -1027,5 +1027,6 @@
     <string name="file_not_exist">Файл не существует!</string>
     <string name="file_deleted_successfully">Файл успешно удален</string>
     <string name="open">Открыть</string>
+    <string name="in_call_you_cant_use_app">Из соображений безопасности вы не можете использовать приложение во время разговора</string>
 
 </resources>
