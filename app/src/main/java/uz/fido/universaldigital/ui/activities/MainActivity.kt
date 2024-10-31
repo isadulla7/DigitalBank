@@ -2,7 +2,10 @@ package uz.fido.universaldigital.ui.activities
 
 import android.Manifest
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -19,6 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityMainBinding
+import uz.fido.universaldigital.services.AudioModeService
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
 import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
 import uz.fido.universaldigital.ui.fragments.payment.abc_confirm.ConfirmPaymentFragment
@@ -50,9 +54,29 @@ class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var updateChecker: UpdateChecker
-
     private var noConnectionDialog: NoConnectionDialog? = null
     private var isStop = false
+
+    private val broadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                "ACTION_OPEN_ACTIVITY" -> {
+                    if (!isFinishing) {
+                        startActivity(Intent(this@MainActivity, VpnErrorActivity::class.java))
+                    }
+//                    Log.d(TAG, "Received open action. Starting CallModeActivity.")
+                }
+
+//                "ACTION_CLOSE_ACTIVITY" -> {
+////                    Log.d(TAG, "Received close action. Finishing CallModeActivity.")
+//                    if (!isFinishing) {
+//                        finish() // Close the activity
+//                    }
+//                }
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -60,11 +84,19 @@ class MainActivity : BaseActivity() {
         initBottomNavigationMenu()
         checkUpdate()
         askNotificationPermission()
-        initSearchList()
         checkForDeepLink()
         bottomNavSheet()
     }
 
+    override fun onPause() {
+        super.onPause()
+        try {
+            unregisterReceiver(broadcastReceiver)
+            stopService(Intent(this, AudioModeService::class.java))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
     private fun bottomNavSheet() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigation) { view, insets ->
@@ -76,10 +108,23 @@ class MainActivity : BaseActivity() {
         }
     }
 
-
     override fun onResume() {
         super.onResume()
         internetListener()
+        try {
+            startService(Intent(this, AudioModeService::class.java))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    registerReceiver(broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY"), RECEIVER_NOT_EXPORTED)
+                } else {
+                    registerReceiver(broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY"))
+                }
+            } else {
+                registerReceiver(broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY"))
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         isStop = false
         if (!showPinCode) {
             showPinCode = true
@@ -127,7 +172,6 @@ class MainActivity : BaseActivity() {
         navController.navigate(id, bundle, null)
     }
 
-
     override fun onStop() {
         super.onStop()
         pausedMillis = Calendar.getInstance().timeInMillis
@@ -165,7 +209,6 @@ class MainActivity : BaseActivity() {
             )
         }
     }
-
 
     private fun internetListener() {
         InternetConnectionChecker(this).observeForever { isConnected ->
@@ -226,19 +269,6 @@ class MainActivity : BaseActivity() {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
-    }
-
-    private fun initSearchList() {
-
-        /*lifecycleScope.launch(Dispatchers.Default) {
-            if (SearchList.(this@MainActivity).isNotEmpty()) {
-                SearchList.searchList.clear()
-                SearchList.searchList = SearchList.getSearchList(this@MainActivity)
-            } else {
-                SearchList.fillSearchList(this@MainActivity)
-                SearchList.saveSearchList(this@MainActivity)
-            }
-        }*/
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

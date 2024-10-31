@@ -69,7 +69,9 @@ class MenuServicesFragment :
             3 -> goto(R.id.loanGroupListFragment) /*functionInProgress()*/
             4 -> checkIdentificationAndGoto(R.id.uzsDepositFragment)
             5 -> goto(R.id.openWalletFragment)
-            100 -> goto(R.id.conversionFragment)
+            100 -> goto(R.id.myCardsServiceFragment)
+            101 -> goto(R.id.myDepositsServiceFragment)
+            102 -> goto(R.id.myCreditsServiceFragment)
             200 -> /*openPaymentInPlaces()*/functionInProgress()
             201 -> /*checkIdentificationAndGoto(R.id.goalListFragment)*/functionInProgress()
             202 -> goto(R.id.mainApplicationListFragment)

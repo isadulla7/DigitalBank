@@ -24,9 +24,20 @@ abstract class BaseActivity : AppCompatActivity() {
         super.attachBaseContext(LocaleHelper.setLocale(newBase!!, getLanguage(newBase)))
     }
 
+
     override fun onStart() {
         super.onStart()
         this.adjustFontScale(resources.configuration)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+    }
+
+    override fun onPause() {
+        super.onPause()
+
     }
 
     fun showProgress(progressText: String? = null) {

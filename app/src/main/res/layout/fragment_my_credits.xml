@@ -18,7 +18,7 @@
         android:id="@+id/empty_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/backgroundColor"
+        android:background="@color/whiteColor"
         android:visibility="gone"
         app:ev_desc="@string/you_can_get_credit_by_clicking"
         app:ev_title="@string/no_credits" />
