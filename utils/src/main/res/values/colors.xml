@@ -49,6 +49,7 @@
     <color name="shadowColor">#0AFFFFFF</color>
 
     <color name="cardBgColor">#FFFFFF</color>
+    <color name="cardBgColor_90">#E6FFFFFF</color>
     <color name="cardBorderColor">#F6F6F6</color>
 
     <color name="rippleColor">#0099CC</color>

@@ -1026,5 +1026,6 @@
     <string name="file_deleted_successfully">File successfully deleted!</string>
     <string name="open">Open</string>
     <string name="in_call_you_cant_use_app">For security reasons, you cannot use the application during a call</string>
+    <string name="input_pin_code">Input PIN</string>
 
 </resources>

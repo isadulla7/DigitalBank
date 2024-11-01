@@ -1026,4 +1026,5 @@
     <string name="file_deleted_successfully">Fayl muvaffaqiyatli o‘chirildi</string>
     <string name="open">Ochish</string>
     <string name="in_call_you_cant_use_app">Xavfsizlikni ta\'minlash maqsadida qo‘ng‘iroq vaqtida ilovadan foydalana olmaysiz</string>
+    <string name="input_pin_code">PIN-kodni kiritish</string>
 </resources>

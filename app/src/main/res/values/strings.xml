@@ -1029,4 +1029,5 @@
     <string name="file_deleted_successfully">Файл успешно удален</string>
     <string name="open">Открыть</string>
     <string name="in_call_you_cant_use_app">Из соображений безопасности вы не можете использовать приложение во время разговора</string>
+    <string name="input_pin_code">Введите свой PIN-код</string>
 </resources>
