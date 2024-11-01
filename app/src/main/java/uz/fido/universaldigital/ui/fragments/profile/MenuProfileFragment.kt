@@ -15,6 +15,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMenuProfileBinding
 import uz.fido.universaldigital.ui.dialogs.LogOutDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
+import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeDialogFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.isUserIdentified
 import uz.fido.utils.app.PermissionInterface
@@ -86,7 +87,11 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             appBar.setOnBackButtonClickListener { pop() }
             gotoIdentification.setOnClickListener { gotoWithSlide(R.id.mainIdentificationFragment2) }
             tvIdentifiedClient.setOnClickListener { gotoWithSlide(R.id.mainIdentificationFragment2) }
-            security.setOnClickListener { gotoWithSlide(R.id.securityFragment) }
+            security.setOnClickListener {
+                PassCodeDialogFragment {
+                    gotoWithSlide(R.id.securityFragment)
+                }.show(childFragmentManager, "")
+            }
             settings.setOnClickListener { gotoWithSlide(R.id.settingsFragment) }
             aboutBank.setOnClickListener { gotoWithSlide(R.id.aboutBankFragment) }
             logOut.setOnClickListener { showLogOutDialog() }

@@ -14,7 +14,7 @@
 
 
     <color name="brandRedActiveColor">#A31D21</color>
-    =
+
     <!-- BLUE -->
     <color name="brandBlueColor">#ffffff</color>
     <color name="brandBlueColor_90">#22334E</color>
@@ -31,6 +31,7 @@
     <color name="blackColor">#FFFFFF</color>
     <color name="whiteColor">#FFFFFF</color>
     <color name="cardBgColor">#2D2D2D</color>
+    <color name="cardBgColor_90">#E62D2D2D</color>
     <color name="cardBorderColor">#444444</color>
     <color name="appBarShadowColor">#000000</color>
     <color name="shimmerColor">#2D2D2D</color>
