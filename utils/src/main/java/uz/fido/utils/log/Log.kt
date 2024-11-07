@@ -56,11 +56,6 @@ object Log {
         e("Error: ${this.javaClass.simpleName}-", message)
     }
 
-    private fun wtf(tag: String, message: String) {
-        Log.w(tag, message)
-        crashlyticsLog(tag,message)
-    }
-
     fun d(message: String, throwable: Throwable) {
         d("Debug", throwable.localizedMessage)
     }

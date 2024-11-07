@@ -1,6 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.payment.init_payment
 
-import uz.fido.universaldigital.ui.dialogs.OpenSettingsDialog
 import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -13,8 +12,10 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.text.InputType
 import android.text.method.DigitsKeyListener
-import android.util.Log
-import android.view.*
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -37,6 +38,7 @@ import uz.fido.universaldigital.databinding.ViewPaymentDateBinding
 import uz.fido.universaldigital.databinding.ViewPaymentNavigationBinding
 import uz.fido.universaldigital.databinding.ViewPaymentPhoneNumberBinding
 import uz.fido.universaldigital.databinding.ViewPaymentSimpleInputBinding
+import uz.fido.universaldigital.ui.dialogs.OpenSettingsDialog
 import uz.fido.universaldigital.ui.dialogs.ReferenceDialog
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.DownloadPayment
 import uz.fido.universaldigital.ui.utils.extensions.getFormattedContact
@@ -51,7 +53,8 @@ import uz.fido.utils.view.custom_edit_text.mask_edit_text.ClipBoardListener
 import uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
 import java.sql.SQLException
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 
 @SuppressLint("SetTextI18n")
 abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseInterface,

@@ -5,7 +5,6 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Status
@@ -19,7 +18,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentVisaFirstMonitoringBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.VisaMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
@@ -52,7 +50,6 @@ class FirstVisaMonitoringFragment : BaseFragment<FragmentVisaFirstMonitoringBind
     private lateinit var filterDialog: MonitoringAllCardDialog
     private lateinit var visaMonitoringDetailsDialog: VisaMonitoringDetailsDialog
     private var currencyList = arrayListOf<String>()
-    private val menuMonitoringViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var totalList: ArrayList<ListItem> = ArrayList()
 
     private val visaMonitoringAdapter by lazy {

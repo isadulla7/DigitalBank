@@ -75,7 +75,7 @@ googleServices = "4.4.0"
 daggerHilt = "2.42"
 firebaseCrashlytics = "2.9.9"
 agp = "8.4.2"
-calendarView = "2.6.0"
+firebaseDatabaseKtx = "21.0.0"
 
 [libraries]
 
@@ -165,7 +165,7 @@ androidx-room-room-runtime = { group = "androidx.room", name = "room-runtime", v
 androidx-room-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomRuntime" }
 androidx-room-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomRuntime" }
 org-tensorflow-tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tenserFlow" }
-com-kizitonwose-calendar-view = { group = "com.kizitonwose.calendar", name = "view", version.ref = "calendarView" }
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "agp" }

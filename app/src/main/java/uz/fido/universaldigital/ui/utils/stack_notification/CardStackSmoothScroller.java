@@ -14,8 +14,8 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
         ManualCancel
     }
 
-    private ScrollType type;
-    private CardStackLayoutManager manager;
+    private final ScrollType type;
+    private final CardStackLayoutManager manager;
 
     public CardStackSmoothScroller(
             ScrollType type,

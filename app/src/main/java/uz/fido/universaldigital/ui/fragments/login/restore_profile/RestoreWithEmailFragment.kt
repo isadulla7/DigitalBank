@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.sign_up.FinishRegRequest
 import uz.fido.network.domain.model.sign_up.SignUpFlagsEnum

@@ -46,8 +46,3 @@ fun getNavOptions(): NavOptions {
         .setPopExitAnim(R.anim.exit_to_right).build()
 }
 
-fun getNavOptionsLeft(): NavOptions {
-    return NavOptions.Builder().setEnterAnim(R.anim.enter_from_left)
-        .setExitAnim(R.anim.exit_to_right).setPopEnterAnim(R.anim.enter_from_right)
-        .setPopExitAnim(R.anim.exit_to_left).build()
-}

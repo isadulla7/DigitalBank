@@ -67,7 +67,7 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
     override fun onSuccess(result: MyIdResult) {
         try {
             val resultIntent = Intent()
-            resultIntent.putExtra("code", result.code.toString())
+            resultIntent.putExtra("code", result.code)
             setResult(RESULT_OK, resultIntent)
             onBackPressed()
         } catch (e: Exception) {

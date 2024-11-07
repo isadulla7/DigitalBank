@@ -2,27 +2,22 @@ package uz.fido.universaldigital.ui.fragments.products.widgets.search
 
 import android.app.Application
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import uz.fido.network.domain.datasource.room.DbRepository
-import uz.fido.network.domain.model.search.LocalSearchDto
 import uz.fido.universaldigital.base.AbstractViewModel
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchList.GROUP_NAME_PAYMENT
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchList.GROUP_NAME_PAYMENT_GROUP
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.model.SearchItem
 import javax.inject.Inject
-import kotlin.math.log
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     application: Application,
-    private val dbRepository: DbRepository,
 
     ) : AbstractViewModel(application) {
 

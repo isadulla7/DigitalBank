@@ -24,10 +24,10 @@ object UseCaseProvider {
 
     @Provides
     fun provideNotificationsUseCase(utilsRepositoryImpl: UtilsRepositoryImpl): NotificationUseCase =
-        NotificationUseCaseImpl(utilsRepositoryImpl)
+        NotificationUseCaseImpl()
 
     @Provides
     fun provideCardsUseCase(cardsRepositoryImpl: CardRepositoryImpl, utilsRepositoryImpl: UtilsRepositoryImpl): CardsUseCase =
-        CardsUseCaseImpl(cardsRepositoryImpl, utilsRepositoryImpl)
+        CardsUseCaseImpl(utilsRepositoryImpl)
 
 }

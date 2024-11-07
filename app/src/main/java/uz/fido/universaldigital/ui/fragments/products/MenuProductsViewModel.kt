@@ -50,7 +50,6 @@ class MenuProductsViewModel @Inject constructor(
     private val walletRepository: IWalletRepository,
     private val depositRepository: IDepositRepository,
     private val creditRepository: ICreditRepository,
-    private val cardsUseCase: CardsUseCase,
     private val utilsRepository: IUtilsRepository,
 ) : AbstractViewModel(application) {
 

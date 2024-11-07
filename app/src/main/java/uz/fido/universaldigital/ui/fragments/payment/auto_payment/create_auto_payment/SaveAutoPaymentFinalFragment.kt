@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf

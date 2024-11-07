@@ -1,6 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,13 +9,11 @@ import uz.fido.network.domain.model.monitoring.filter.FilterCard
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemMonitoringFilterCardBinding
-import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.CardConst.CURRENCY_CARD
 import uz.fido.utils.const.CardConst.HUMO_CARD
 import uz.fido.utils.const.CardConst.UZCARD
-import uz.fido.utils.format.Format
 
-class FilterCardMonitoringAdapter(private val context: Context, private val baseInterface: BaseInterface) : ListAdapter<FilterCard, FilterCardMonitoringAdapter.VH>(FilterCallback()) {
+class FilterCardMonitoringAdapter(private val baseInterface: BaseInterface) : ListAdapter<FilterCard, FilterCardMonitoringAdapter.VH>(FilterCallback()) {
 
     inner class VH(private val binding: ItemMonitoringFilterCardBinding) :
         ViewHolder(binding.root) {

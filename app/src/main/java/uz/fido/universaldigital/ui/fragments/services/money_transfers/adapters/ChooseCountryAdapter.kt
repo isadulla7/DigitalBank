@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.money_transfers.adapters
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -9,7 +8,6 @@ import uz.fido.network.domain.model.money_transfer.receive.Country
 import uz.fido.universaldigital.databinding.ItemCountryBinding
 
 class ChooseCountryAdapter(
-    private val context: Context,
     private val list: ArrayList<Country>,
     private val countryName: (Country) -> Unit
 ) :

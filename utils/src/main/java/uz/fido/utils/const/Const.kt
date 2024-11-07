@@ -14,7 +14,7 @@ object Const {
     const val UPDATE_FAST_ACCESS = "UPDATE_FAST_ACCESS"
     const val MAIN_WIDGETS_VERSION_SAVED = "main_widget_version_saved"
     const val UPDATE_MAIN_WIDGETS = "false"
-    const val UPDATE_LANG="update_lang"
+    const val UPDATE_LANG = "update_lang"
     const val MAIN_WIDGETS = "main_widgets"
     const val MAIN_WIDGETS_VERSION = 6
     const val TOTAL_BALANCE_TYPE = "balance_type"
@@ -80,6 +80,7 @@ object Const {
     const val STRING_LINE = "STRING_LINE"
     const val PASSWORD_ENC = "ENC_PASS"
     const val KEY_K = "KEY_K"
+    const val CURRENT_SEASON = "current_season"
 
     var request_id = ""
 

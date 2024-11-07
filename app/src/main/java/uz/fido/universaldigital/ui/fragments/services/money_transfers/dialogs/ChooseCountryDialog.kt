@@ -48,7 +48,7 @@ class ChooseCountryDialog(
         savedInstanceState: Bundle?
     ): View {
         binding = ChooseCountryDialogBinding.inflate(inflater, container, false)
-        adapter = ChooseCountryAdapter(requireContext(), country as ArrayList<Country>) {
+        adapter = ChooseCountryAdapter(country as ArrayList<Country>) {
             selectedCountry.invoke(it)
         }
         layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -123,7 +123,7 @@ class ChooseCountryDialog(
                 setHasFixedSize(true)
                 layoutManager =
                     LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                adapter = ChooseCountryAdapter(requireContext(), country as ArrayList<Country>) {
+                adapter = ChooseCountryAdapter(country as ArrayList<Country>) {
                     selectedCountry.invoke(it)
                 }
             }
@@ -137,7 +137,7 @@ class ChooseCountryDialog(
             binding.countryList.apply {
                 setHasFixedSize(true)
                 layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                adapter = ChooseCountryAdapter(requireContext(), filteredList) {
+                adapter = ChooseCountryAdapter(filteredList) {
                     selectedCountry.invoke(it)
                 }
             }
