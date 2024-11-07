@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.applications.ApplicationStatus
 import uz.fido.network.domain.model.applications.GetProductDetailsRequest
@@ -28,7 +27,6 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.utility.context.AppSignatureHelper
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.format.Format
-import uz.fido.utils.utility.format.Format.Companion.formatCardNumberVisible
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 

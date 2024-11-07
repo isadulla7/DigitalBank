@@ -5,7 +5,6 @@ import android.content.Context;
 import java.math.BigInteger;
 import java.util.Random;
 
-import io.paperdb.Paper;
 import uz.fido.utils.log.Logger;
 import uz.fido.utils.utility.user.PaperExtKt;
 

@@ -13,7 +13,6 @@ import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.services.applications.AppDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.applications.MainApplicationListFragment
 import uz.fido.universaldigital.ui.fragments.services.applications.adapter.AppListAdapter
-import uz.fido.utils.const.Const
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.user.getClientToken
 import java.text.SimpleDateFormat

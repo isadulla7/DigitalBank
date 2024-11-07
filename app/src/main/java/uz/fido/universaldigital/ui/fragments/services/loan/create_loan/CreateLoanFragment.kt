@@ -17,7 +17,6 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.loans.loan_groups.CreditGroup
 import uz.fido.network.domain.model.payment.AllServiceLists
@@ -30,17 +29,14 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.dialog.DepositCons
 import uz.fido.universaldigital.ui.fragments.services.loan.LoanGroupListFragment
 import uz.fido.universaldigital.ui.fragments.services.loan.LoanViewModel
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.LoanMonthDialog
-import uz.fido.universaldigital.ui.fragments.services.loan.loan_info.LoanUserInfo1Fragment
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.CardConst.HUMO_CARD
 import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
-import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.loan.CreditCalculatorUtil
-import uz.fido.utils.utility.user.getClientToken
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -140,36 +136,6 @@ class CreateLoanFragment : BaseFragment<FragmentCreateLoanBinding, LoanViewModel
                     val amount = binding.etAmountMinMax.text.toString()
                     if (amount.isNotEmpty())
                         isCheckAmount(amount.replace(" ", "").toInt())
-                }
-            }
-        }
-    }
-
-    private fun getUserInfo() {
-        binding.btnContinue.setProgress(true)
-        viewModel.getUserInfo(getClientToken()).observe(viewLifecycleOwner) {
-            binding.btnContinue.setProgress(false)
-            when (it.status) {
-                Status.SUCCESS -> {
-                    creditGroup.creditAmount =
-                        binding.etAmountMinMax.text.toString().replace(" ", "")
-                    creditGroup.monthlyAmount = binding.etAmount.toString()
-                    creditGroup.selectedDate = selectedDate.toString()
-                    creditGroup.selectedPercent = "$percent%"
-                    creditGroup.paymentDate = binding.etPaymentTime.text.toString()
-                    saveCreditProgress(creditGroup, it.data?.client_info!!, null, 1)
-                    gotoWithSlide(
-                        R.id.loanUserInfo1Fragment, bundle =
-                        bundleOf(
-                            LoanUserInfo1Fragment.CREDIT_ITEM to creditGroup,
-                            LoanUserInfo1Fragment.CLIENT_INFO to it.data!!.client_info
-                        )
-                    )
-
-                }
-
-                Status.ERROR -> {
-                    showSnackbar(it.message.toString())
                 }
             }
         }

@@ -3,7 +3,6 @@ package uz.fido.universaldigital.ui.fragments.profile.user_details
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentMyDetailsBinding

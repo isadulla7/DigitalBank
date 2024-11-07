@@ -11,7 +11,6 @@ import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemMyHouseAmountBinding
 import uz.fido.universaldigital.ui.utils.keys.Keys
-import uz.fido.utils.const.APIServiceConst
 import uz.fido.utils.format.Format
 
 class MyHouseAmountAdapter(

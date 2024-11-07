@@ -34,7 +34,7 @@ class ChooseBranchDialog(
     ): View {
         binding = ChooseCountryDialogBinding.inflate(inflater, container, false)
         adapter =
-            ChooseBranchAdapter(requireContext(), baseInterface, country as ArrayList<Branches>)
+            ChooseBranchAdapter(baseInterface, country as ArrayList<Branches>)
         layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.countryList.adapter = adapter
         binding.countryList.layoutManager = layoutManager

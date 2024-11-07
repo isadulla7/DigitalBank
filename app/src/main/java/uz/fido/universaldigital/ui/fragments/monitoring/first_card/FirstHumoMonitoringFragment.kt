@@ -6,9 +6,7 @@ import android.os.Looper
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_pin_code.fingerprint
 import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
@@ -21,7 +19,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentHumoFirstMonitoringBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.HumoMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
@@ -56,9 +53,7 @@ class FirstHumoMonitoringFragment:
     private var choose:Int=2
     private var timeType:String=""
 
-    private val menuMonitoringViewModel by activityViewModels<MenuMonitoringViewModel>()
     private lateinit var filterDialog: MonitoringAllCardDialog
-    private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
     private var filter:Boolean=false
     private val humoMonitoringAdapter by lazy {

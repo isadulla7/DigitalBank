@@ -8,7 +8,6 @@ import android.text.TextWatcher
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.sign_up.FinishRegRequest
 import uz.fido.network.domain.model.sign_up.SignUpFlagsEnum

@@ -36,7 +36,6 @@ class ConfirmOrderCardFragment : BaseFragment<FragmentConfirmOrderCardBinding, O
     private var container: ViewGroup? = null
     private var amount: Int = 0
     private var smsCode = ""
-    private var percent = 0.00
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

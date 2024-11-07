@@ -6,7 +6,6 @@ import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.ProgressBar
-import androidx.appcompat.widget.LinearLayoutCompat
 import androidx.fragment.app.FragmentActivity
 import uz.fido.utils.device.longVibrate
 import java.util.Timer
@@ -19,14 +18,6 @@ object PinDotsAnimation {
     private var animationDuration = 400
     private var currentViewIndex = -1
     private var timer: Timer? = null
-
-    private fun scaleAnimation(linearLayoutCompat: LinearLayoutCompat) {
-        val view = linearLayoutCompat.getChildAt(currentViewIndex)
-        val duration = (animationDuration / 2).toLong()
-        view.animate().setInterpolator(interpolator).scaleX(1.25f).scaleY(1.25f).setDuration(duration).withEndAction {
-            view.animate().setInterpolator(interpolator).scaleX(1f).scaleY(1f).setDuration(duration).start()
-        }.start()
-    }
 
     fun stopPinDotsAnimation() {
         if (timer != null) {

@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.payment.my_home.payment_list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.lifecycle.lifecycleScope

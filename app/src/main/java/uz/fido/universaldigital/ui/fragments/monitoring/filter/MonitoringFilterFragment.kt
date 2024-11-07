@@ -42,7 +42,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
     private val cardAdapter by lazy {
         FilterLocalCardMonitoringAdapter(
             arrayListOf(),
-            requireContext(),
             this
         )
     }
@@ -463,8 +462,7 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
             choose,
             carNumber,
             cardList,
-            serviceList,
-            isServiceCurrent
+            serviceList
         )
         saveViewModel.setLocalMonitoringFilter(filter)
         pop()

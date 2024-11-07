@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.services.order_card
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -12,7 +11,6 @@ import androidx.viewpager.widget.ViewPager
 import com.google.gson.Gson
 import com.ocnyang.pagetransformerhelp.cardtransformer.AlphaAndScalePageTransformer
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.branches.Branches
 import uz.fido.network.domain.model.branches.GetBranchListRequest

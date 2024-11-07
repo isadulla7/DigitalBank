@@ -68,7 +68,6 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
     private var linearLayoutManager: LinearLayoutManager? = null
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private val df = SimpleDateFormat("yyyyMMdd", Locale.US)
-    private val menuMonitoringViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var cardList = arrayListOf<String>()
     private lateinit var filterDialog:MonitoringAllCardDialog
 

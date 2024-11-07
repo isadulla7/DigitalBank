@@ -6,6 +6,5 @@ class MenuServiceItem(
     val icon: Int? = 0,
     val serviceName: String,
     val serviceId: Int,
-    val serviceDescription: String? = null,
-    var isEditing: Boolean? = false
+    val serviceDescription: String? = null
 ) : Serializable

@@ -20,9 +20,9 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
 
     private final Context context;
 
-    private CardStackListener listener;
-    private CardStackSetting setting = new CardStackSetting();
-    private CardStackState state = new CardStackState();
+    private final CardStackListener listener;
+    private final CardStackSetting setting = new CardStackSetting();
+    private final CardStackState state = new CardStackState();
 
     public CardStackLayoutManager(Context context) {
         this(context, CardStackListener.DEFAULT);

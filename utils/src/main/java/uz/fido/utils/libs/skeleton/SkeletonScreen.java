@@ -6,7 +6,7 @@ package uz.fido.utils.libs.skeleton;
 
 public interface SkeletonScreen {
 
-    public void show();
+    void show();
 
-    public void hide();
+    void hide();
 }

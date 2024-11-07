@@ -14,7 +14,6 @@ import uz.fido.universaldigital.databinding.FragmentLoanUserInfo1Binding
 import uz.fido.universaldigital.ui.fragments.services.loan.LoanViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.universaldigital.ui.utils.keys.Keys
-import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.pop
 
 @AndroidEntryPoint

@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.goal.new_goal
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels

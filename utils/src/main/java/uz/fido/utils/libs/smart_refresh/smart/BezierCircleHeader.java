@@ -248,7 +248,7 @@ public class BezierCircleHeader extends SimpleComponent implements RefreshHeader
         final float reboundHeight = Math.min(mWaveHeight * 0.8f, mHeadHeight / 2);
         ValueAnimator waveAnimator = ValueAnimator.ofFloat(
                 mWaveHeight, 0,
-                -(reboundHeight * 1.0f), 0,
+                -(reboundHeight), 0,
                 -(reboundHeight * 0.4f), 0
         );
         waveAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {

@@ -30,16 +30,6 @@ abstract class BaseActivity : AppCompatActivity() {
         this.adjustFontScale(resources.configuration)
     }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
-
-    override fun onPause() {
-        super.onPause()
-
-    }
-
     fun showProgress(progressText: String? = null) {
         coroutineScope.launch {
             if (progressBarDialog != null) {

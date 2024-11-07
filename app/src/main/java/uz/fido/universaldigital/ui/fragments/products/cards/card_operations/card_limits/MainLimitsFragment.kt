@@ -9,7 +9,6 @@ import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.limits.CardLimitRequest
 import uz.fido.network.domain.model.limits.SvLimit
-import uz.fido.network.domain.model.limits.SvSetMainCardRequest
 import uz.fido.network.domain.model.limits.gl.GlLimitListRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
@@ -18,7 +17,6 @@ import uz.fido.universaldigital.databinding.FragmentMainLimitsBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.cards.card_operations.card_limits.adapters.LimitAdapter
 import uz.fido.universaldigital.ui.utils.extensions.serializable
-import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const
 import uz.fido.utils.libs.skeleton.Skeleton
@@ -72,13 +70,6 @@ class MainLimitsFragment : BaseFragment<FragmentMainLimitsBinding, MenuProductsV
             getGlLimitList()
         }
         binding.swipeRefresh.isRefreshing = false
-    }
-
-    private fun svSetMainCard() {
-        viewModel.svSetMainCard(getClientToken(), SvSetMainCardRequest(card.object_value))
-            .observe(viewLifecycleOwner) {
-                getSvLimitList()
-            }
     }
 
     private fun getSvLimitList() {

@@ -84,7 +84,7 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
     }
 
     enum class MessageStates(id: Int) {
-        STATE_DELETED(3), STATE_DELETED_ALL(4);
+        STATE_DELETED_ALL(4);
 
         var stateId: Int = 0
 

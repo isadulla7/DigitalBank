@@ -30,7 +30,7 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     (FragmentMonitoringUzcardFilterBinding::inflate, MonitoringFilterViewModel::class.java),
     View.OnClickListener, (MonitoringFilter) -> Unit {
 
-    private val cardAdapter by lazy { FilterCardMonitoringAdapter(requireContext(), this) }
+    private val cardAdapter by lazy { FilterCardMonitoringAdapter(this) }
     private val monitoringFilterAdapter by lazy { MonitoringFilterAdapter(arrayListOf(), this) }
     private var filterSaveVh: FilterSaveVh? = null
     private lateinit var monitoringDateDialog: MonitoringDateDialog

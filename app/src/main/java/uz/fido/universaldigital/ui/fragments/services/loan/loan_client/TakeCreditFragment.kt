@@ -1,13 +1,11 @@
 package uz.fido.universaldigital.ui.fragments.services.loan.loan_client
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import org.apache.commons.lang3.math.NumberUtils
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
@@ -19,7 +17,6 @@ import uz.fido.universaldigital.databinding.FragmentTakeCreditBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.serializable
-import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.CardConst.HUMO_CARD
 import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const

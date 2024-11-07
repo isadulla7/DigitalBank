@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.order_card.adapters
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,7 +9,6 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ItemCountryBinding
 
 class ChooseBranchAdapter(
-    private val context: Context,
     private val baseInterface: BaseInterface,
     private val list: ArrayList<Branches>
 ) :

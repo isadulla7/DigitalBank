@@ -18,11 +18,17 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityMainBinding
 import uz.fido.universaldigital.services.AudioModeService
+import uz.fido.universaldigital.ui.activities.seasons.Season
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
 import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
 import uz.fido.universaldigital.ui.fragments.payment.abc_confirm.ConfirmPaymentFragment
@@ -39,6 +45,7 @@ import uz.fido.universaldigital.ui.fragments.transfers.by_phone.TransferByPhoneF
 import uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferFragment
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
 import uz.fido.universaldigital.ui.utils.extensions.recordException
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.internet_checker.InternetConnectionChecker
 import uz.fido.utils.internet_checker.NoConnectionDialog
@@ -56,6 +63,7 @@ class MainActivity : BaseActivity() {
     private lateinit var updateChecker: UpdateChecker
     private var noConnectionDialog: NoConnectionDialog? = null
     private var isStop = false
+    private lateinit var database: DatabaseReference
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -72,12 +80,26 @@ class MainActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        database = FirebaseDatabase.getInstance().getReference("season")
         setContentView(binding.root)
         initBottomNavigationMenu()
         checkUpdate()
         askNotificationPermission()
         checkForDeepLink()
         bottomNavSheet()
+        listenForSeasonChanges()
+    }
+
+    private fun listenForSeasonChanges() {
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                saveToPaper(Const.CURRENT_SEASON, snapshot.value.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                saveToPaper(Const.CURRENT_SEASON, Season.DEFAULT)
+            }
+        })
     }
 
     override fun onPause() {
