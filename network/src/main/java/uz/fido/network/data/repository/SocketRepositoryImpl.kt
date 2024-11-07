@@ -9,9 +9,6 @@ import javax.inject.Inject
 
 class SocketRepositoryImpl @Inject constructor(private val socketService: SocketInterface) :
     ISocketRepository {
-    override suspend fun testSocket(token: String, deviceId: String): Resource<Any> = getResult {
-        socketService.testSocket(token, deviceId)
-    }
 
     override suspend fun getMessages(
         token: String,

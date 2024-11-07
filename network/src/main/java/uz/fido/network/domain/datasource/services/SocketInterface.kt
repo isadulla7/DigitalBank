@@ -7,12 +7,6 @@ import retrofit2.http.Header
 interface SocketInterface {
 
     @GET("chatTask")
-    suspend fun testSocket(
-        @Header("Authorization") token: String,
-        @Header("id") deviceId: String
-    ): Any
-
-    @GET("chatTask")
     fun socketTest(
         @Header("Authorization") token: String,
         @Header("id") deviceId: String

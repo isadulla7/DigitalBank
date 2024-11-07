@@ -120,6 +120,7 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
         ) {
             p2pRequest()
         } else {
+            binding.btnContinue.setProgress(true)
             checkForSms(
                 card = transferDto.senderCard!!,
                 amount = transferDto.transferAmount!!,
