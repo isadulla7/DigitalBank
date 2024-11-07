@@ -8,6 +8,30 @@
     android:background="@drawable/dialog_bg"
     android:clipChildren="false">
 
+    <ImageView
+        android:id="@+id/handle"
+        android:layout_width="36dp"
+        android:layout_height="4dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="8dp"
+        android:src="@drawable/ic_dialog_handle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+        android:id="@+id/welcome_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        android:text="@string/input_pin_code"
+        android:textColor="@color/mainTextColor"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/handle" />
+
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/dot_view"
         android:layout_width="wrap_content"
@@ -19,7 +43,7 @@
         app:layout_constraintBottom_toTopOf="@id/error_text"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@id/welcome_text">
 
         <ImageView
             android:id="@+id/dot1"
@@ -84,7 +108,7 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/num1"
-        style="@style/pin_number_style"
+        style="@style/pin_number_style_mini"
         android:layout_marginEnd="44dp"
         android:text="1"
         app:layout_constraintBottom_toBottomOf="@id/num2"
@@ -93,7 +117,7 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/num2"
-        style="@style/pin_number_style"
+        style="@style/pin_number_style_mini"
         android:layout_marginBottom="24dp"
         android:text="2"
         app:layout_constraintBottom_toTopOf="@id/num5"
@@ -102,7 +126,7 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/num3"
-        style="@style/pin_number_style"
+        style="@style/pin_number_style_mini"
         android:layout_marginStart="44dp"
         android:text="3"
         app:layout_constraintBottom_toBottomOf="@id/num2"
@@ -111,7 +135,7 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/num4"
-        style="@style/pin_number_style"
+        style="@style/pin_number_style_mini"
         android:layout_marginEnd="44dp"
         android:text="4"
         app:layout_constraintBottom_toBottomOf="@id/num5"
@@ -120,7 +144,7 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/num5"
-        style="@style/pin_number_style"
+        style="@style/pin_number_style_mini"
         android:layout_marginBottom="24dp"
         android:text="5"
         app:layout_constraintBottom_toTopOf="@id/num8"
@@ -129,7 +153,7 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/num6"
-        style="@style/pin_number_style"
+        style="@style/pin_number_style_mini"
         android:layout_marginStart="44dp"
         android:text="6"
         app:layout_constraintBottom_toBottomOf="@id/num5"
@@ -138,7 +162,7 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/num7"
-        style="@style/pin_number_style"
+        style="@style/pin_number_style_mini"
         android:layout_marginEnd="44dp"
         android:text="7"
         app:layout_constraintBottom_toBottomOf="@id/num8"
@@ -147,7 +171,7 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/num8"
-        style="@style/pin_number_style"
+        style="@style/pin_number_style_mini"
         android:layout_marginBottom="24dp"
         android:text="8"
         app:layout_constraintBottom_toTopOf="@id/num0"
@@ -156,7 +180,7 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/num9"
-        style="@style/pin_number_style"
+        style="@style/pin_number_style_mini"
         android:layout_marginStart="44dp"
         android:text="9"
         app:layout_constraintBottom_toBottomOf="@id/num8"
@@ -165,7 +189,7 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/num0"
-        style="@style/pin_number_style"
+        style="@style/pin_number_style_mini"
         android:layout_marginTop="24dp"
         android:layout_marginBottom="28dp"
         android:text="0"

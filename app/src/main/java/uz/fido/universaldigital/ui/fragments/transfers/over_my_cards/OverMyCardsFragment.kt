@@ -7,6 +7,7 @@ import android.os.Looper
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
@@ -41,6 +42,7 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.view.amount.AmountSuggestionView
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 @SuppressLint("SetTextI18n")
 @AndroidEntryPoint
@@ -109,6 +111,16 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 R.id.addCardFragment,
                 bundleOf(Const.ADD_CARD_OPERATION to AddCardFragment.OPERATION_OVER_MY_CARDS)
             )
+        }
+        binding.btnMagnet.setOnClickListener {
+            if (binding.commissionProgress.isVisible) return@setOnClickListener
+            if (senderCard == receiverCard) return@setOnClickListener
+            if (percent == BigDecimal(0.0)) {
+                binding.etAmount.setText(senderCard?.balance.toString().toBigDecimal().divide(BigDecimal(100)).toString())
+                return@setOnClickListener
+            }
+            binding.etAmount.setText(getAvailableAmount())
+            continueButtonState()
         }
     }
 
@@ -347,7 +359,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 return false
             }
 
-            totalAmount > minAmount && totalAmount < senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) -> {
+            totalAmount > minAmount && totalAmount <= senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) -> {
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 binding.tvMinAmount.text =
                     getString(R.string.min_amount) + " ${Format.formatAmount((minAmount).toString())} ${getString(R.string.sum_text)}"
@@ -355,6 +367,19 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             else -> return true
+        }
+    }
+
+    private fun getAvailableAmount(): String {
+        try {
+            if (senderCard != null) {
+                val balance = senderCard?.balance.toString().toBigDecimal().divide(BigDecimal(100))
+                val calculatedAmount = balance.divide(BigDecimal(1) + percent.divide(BigDecimal(100)),3, RoundingMode.DOWN)
+                return calculatedAmount.toString()
+            } else return ""
+        } catch (e: Exception) {
+            e.printStackTrace()
+            return ""
         }
     }
 

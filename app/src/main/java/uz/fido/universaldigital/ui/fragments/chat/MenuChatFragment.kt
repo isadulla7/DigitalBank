@@ -437,7 +437,9 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
                             }
                         }
                     }
-                    sendTestRequest()
+                    if (storageReference != null) {
+                        sendTestRequest()
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -445,12 +447,19 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
 
             override fun onFailure(call: Call<SocketInterface.BgTaskResponse>, t: Throwable) {
                 try {
-                    sendTestRequest()
+                    if (storageReference != null) {
+                        sendTestRequest()
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        storageReference = null
     }
 
 }

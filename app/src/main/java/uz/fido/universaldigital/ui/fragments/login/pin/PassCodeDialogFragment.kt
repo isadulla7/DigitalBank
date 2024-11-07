@@ -45,7 +45,6 @@ class PassCodeDialogFragment(var onSuccessBack: () -> Unit) : BottomSheetDialogF
         return binding.root
     }
 
-
     override fun onClick(view: View) {
         when (view.id) {
             R.id.clear -> {
@@ -59,6 +58,7 @@ class PassCodeDialogFragment(var onSuccessBack: () -> Unit) : BottomSheetDialogF
             }
 
             else -> {
+                vibrateTick(requireContext())
                 val textView = view as TextViewMedium
                 onNumberClicked(textView.text.toString())
             }
