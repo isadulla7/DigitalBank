@@ -1,5 +1,6 @@
 package uz.fido.universaldigital.ui.activities
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -27,7 +28,6 @@ class CallSafeActivity : BaseActivity() {
         isActivityOpen = true
         binding = ActivityCallSafeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setOnClickListener()
     }
 
     private val broadcastReceiver = object : BroadcastReceiver() {
@@ -38,17 +38,19 @@ class CallSafeActivity : BaseActivity() {
         }
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
         super.onResume()
         try {
+            val intentFilter = IntentFilter("ACTION_CLOSE_ACTIVITY")
             startService(Intent(this, AudioModeService::class.java))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 registerReceiver(
-                    broadcastReceiver, IntentFilter("ACTION_CLOSE_ACTIVITY"), Context.RECEIVER_EXPORTED
+                    broadcastReceiver, intentFilter, Context.RECEIVER_EXPORTED
                 )
             } else {
                 registerReceiver(
-                    broadcastReceiver, IntentFilter("ACTION_CLOSE_ACTIVITY")
+                    broadcastReceiver, intentFilter
                 )
             }
         } catch (e: Exception) {
@@ -64,11 +66,6 @@ class CallSafeActivity : BaseActivity() {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-    }
-
-
-    private fun setOnClickListener() {
-
     }
 
     private fun finishIfOpen() {

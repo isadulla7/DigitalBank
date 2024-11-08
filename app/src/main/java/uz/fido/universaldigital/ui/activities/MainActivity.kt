@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -122,6 +123,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
         super.onResume()
         internetListener()
