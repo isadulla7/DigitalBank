@@ -25,14 +25,12 @@ class VpnErrorActivity : BaseActivity() {
         setOnClickListener()
     }
 
-
     private fun setOnClickListener() {
         binding.update.setOnClickListener {
             if (!SecurityCheck.isFromVpn()) {
                 finish()
             }
         }
-
     }
 
     override fun onBackPressed() {
