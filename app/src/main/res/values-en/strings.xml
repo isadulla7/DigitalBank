@@ -1027,5 +1027,10 @@
     <string name="open">Open</string>
     <string name="in_call_you_cant_use_app">For security reasons, you cannot use the application during a call</string>
     <string name="input_pin_code">Input PIN</string>
+    <string name="new_design">Новый дизайн</string>
+    <string name="switch_new_design">Перейти на новый дизайн</string>
+    <string name="stay_old_design">Остаться в старом дизайне</string>
+    <string name="new_design_description">Мы обновили дизайн главной страницы, сделав ее более удобной и понятной. Убрали лишние элементы, чтобы улучшить навигацию и упростить работу для наших клиентов</string>
+    <string name="new_design_title">Изменили дизайн для вашего удобства</string>
 
 </resources>

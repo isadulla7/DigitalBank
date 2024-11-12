@@ -81,6 +81,7 @@ object Const {
     const val PASSWORD_ENC = "ENC_PASS"
     const val KEY_K = "KEY_K"
     const val CURRENT_SEASON = "current_season"
+    const val NEW_DESIGN = "new_design"
 
     var request_id = ""
 

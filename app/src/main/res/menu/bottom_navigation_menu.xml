@@ -6,6 +6,12 @@
         android:icon="@drawable/ic_menu_home"
         android:title="@string/home" />
     <item
+        android:id="@+id/menuNewHomeFragment"
+        android:enabled="true"
+        android:icon="@drawable/ic_menu_home"
+        android:title="@string/home"
+        android:visible="false" />
+    <item
         android:id="@+id/menuTransfersFragment"
         android:enabled="true"
         android:icon="@drawable/ic_men_transfer"
