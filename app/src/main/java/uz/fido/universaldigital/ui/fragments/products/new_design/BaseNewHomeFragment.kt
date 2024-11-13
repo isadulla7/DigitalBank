@@ -21,9 +21,6 @@ import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMenuNewHomeBinding
-import uz.fido.universaldigital.databinding.LayoutHomeFastAccessBinding
-import uz.fido.universaldigital.databinding.LayoutHomeTemplatesBinding
-import uz.fido.universaldigital.databinding.LayoutPhoneCardBinding
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.payment.templates.TemplateTypes
@@ -35,6 +32,8 @@ import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
 import uz.fido.universaldigital.ui.fragments.products.widgets.card_phone.CardNumberDialog
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFastAccessOperationList
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.universaldigital.ui.utils.home_utils.DoAfterTextWatcher
 import uz.fido.universaldigital.ui.utils.home_utils.applyMask
@@ -74,10 +73,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     }
 
     private fun cardAndPhoneLayout() {
-        val layoutBinding = LayoutPhoneCardBinding.inflate(
-            LayoutInflater.from(requireContext()), container, false
-        )
-        layoutBinding.btnContact.setOnClickListener {
+        binding.btnContact.setOnClickListener {
             if (typeCurrent) {
                 dialogCard = CardNumberDialog(
                     onClick = {
@@ -91,32 +87,32 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             }
         }
         if (typeCurrent) {
-            layoutBinding.imageType.setImageResource(R.drawable.ic_phone_28)
-            layoutBinding.btnContact.setImageResource(R.drawable.ic_star_unselected)
-            layoutBinding.title.setText(R.string.transfer)
-            layoutBinding.phoneNumberLayout.setHint(R.string.card_or_phone_number)
+            binding.imageType.setImageResource(R.drawable.ic_phone_28)
+            binding.btnContact.setImageResource(R.drawable.ic_star_unselected)
+            binding.title.setText(R.string.transfer)
+            binding.phoneNumberLayout.setHint(R.string.card_or_phone_number)
 
         } else {
-            layoutBinding.btnContact.setImageResource(R.drawable.ic_contact)
-            layoutBinding.imageType.setImageResource(R.drawable.all_cards)
-            layoutBinding.title.setText(R.string.mobile_network)
-            layoutBinding.phoneNumberLayout.setHint(R.string.phone_number)
+            binding.btnContact.setImageResource(R.drawable.ic_contact)
+            binding.imageType.setImageResource(R.drawable.all_cards)
+            binding.title.setText(R.string.mobile_network)
+            binding.phoneNumberLayout.setHint(R.string.phone_number)
         }
-        layoutBinding.phoneCard.setOnClickListener {
+        binding.phoneCard.setOnClickListener {
             if (typeCurrent) {
                 typeCurrent = false
-                layoutBinding.btnContact.setImageResource(R.drawable.ic_contact)
-                layoutBinding.imageType.setImageResource(R.drawable.all_cards)
-                layoutBinding.etPhoneNumber.setText("")
-                layoutBinding.title.setText(R.string.mobile_network)
-                layoutBinding.phoneNumberLayout.setHint(R.string.phone_number)
+                binding.btnContact.setImageResource(R.drawable.ic_contact)
+                binding.imageType.setImageResource(R.drawable.all_cards)
+                binding.etPhoneNumber.setText("")
+                binding.title.setText(R.string.mobile_network)
+                binding.phoneNumberLayout.setHint(R.string.phone_number)
             } else {
                 typeCurrent = true
-                layoutBinding.title.setText(R.string.payments)
-                layoutBinding.imageType.setImageResource(R.drawable.ic_phone_28)
-                layoutBinding.etPhoneNumber.setText("")
-                layoutBinding.btnContact.setImageResource(R.drawable.ic_star_unselected)
-                layoutBinding.phoneNumberLayout.setHint(R.string.card_or_phone_number)
+                binding.title.setText(R.string.transfer)
+                binding.imageType.setImageResource(R.drawable.ic_phone_28)
+                binding.etPhoneNumber.setText("")
+                binding.btnContact.setImageResource(R.drawable.ic_star_unselected)
+                binding.phoneNumberLayout.setHint(R.string.card_or_phone_number)
             }
         }
         val maskTextWatcher = object : DoAfterTextWatcher() {
@@ -143,20 +139,20 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                     val cleanText = text.replace(Regex("[^+\\d]"), "")
                     val masked = applyMask(mask, cleanText)
                     isUpdating = true
-                    layoutBinding.etPhoneNumber.removeTextChangedListener(this)
-                    layoutBinding.etPhoneNumber.setText(masked)
+                    binding.etPhoneNumber.removeTextChangedListener(this)
+                    binding.etPhoneNumber.setText(masked)
                     val selectionIndex = if (masked.length > text.length) text.length else masked.length
-                    layoutBinding.etPhoneNumber.setSelection(selectionIndex)
-                    layoutBinding.etPhoneNumber.addTextChangedListener(this)
+                    binding.etPhoneNumber.setSelection(selectionIndex)
+                    binding.etPhoneNumber.addTextChangedListener(this)
                     isUpdating = false
 
                     if (typeCurrent) {
                         if (text.startsWith("+998") && text.length == 17) {
                             goto(R.id.transferByPhoneFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ", "")))
-                            layoutBinding.etPhoneNumber.setText("")
+                            binding.etPhoneNumber.setText("")
                         } else if (text.length == 19) {
                             goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ", "")))
-                            layoutBinding.etPhoneNumber.setText("")
+                            binding.etPhoneNumber.setText("")
                         }
                     } else if (text.length == 17) {
                         val serviceCode = mobileServiceId(text.replace("+", "").replace(" ", ""))
@@ -167,14 +163,13 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
-                            gotoMobilePayments(serviceCode, text, layoutBinding.etPhoneNumber)
+                            gotoMobilePayments(serviceCode, text, binding.etPhoneNumber)
                         }
                     }
                 }
             }
         }
-        layoutBinding.etPhoneNumber.addTextChangedListener(maskTextWatcher)
-        binding.widgetsLayout.addView(layoutBinding.root)
+        binding.etPhoneNumber.addTextChangedListener(maskTextWatcher)
     }
 
     private fun gotoMobilePayments(
@@ -208,9 +203,6 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     }
 
     private fun initFastAccessLayout() {
-        val layoutBinding = LayoutHomeFastAccessBinding.inflate(
-            LayoutInflater.from(requireContext()), container, false
-        )
         var fastAccessOperations = ArrayList<FastAccessOperation>()
         if (Paper.book()
                 .read<ArrayList<FastAccessOperation>>(Const.FAST_ACCESS) == null || Paper.book()
@@ -236,26 +228,27 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                 }
             }
         }
-        layoutBinding.rvFastAccess.apply {
+        binding.rvFastAccess.apply {
             val operationsAdapter = FastAccessOperationAdapter(
                 requireContext(), this@BaseNewHomeFragment, fastAccessOperations
             )
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
             adapter = operationsAdapter
         }
-        layoutBinding.llFastAccess.setOnClickListener { goto(R.id.fastAccessControlFragment) }
-        binding.widgetsLayout.addView(layoutBinding.root)
+        binding.llFastAccess.setOnClickListener { goto(R.id.fastAccessControlFragment) }
     }
 
     private fun initHomeTemplates() {
-        val layoutTemplatesBinding = LayoutHomeTemplatesBinding.inflate(
-            LayoutInflater.from(requireContext()), container, false
-        )
-        val paymentTemplatesAdapter =
-            HomeTemplatesAdapter(this@BaseNewHomeFragment, ArrayList())
-        layoutTemplatesBinding.rvTemplates.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        val paymentTemplatesAdapter = HomeTemplatesAdapter(this@BaseNewHomeFragment, ArrayList())
+        if (getFromPaper(Const.HOME_TEMPLATES_EXPANDED, "N") == "Y") {
+            binding.templateExpandable.isExpanded = true
+            binding.templatesExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
+        } else {
+            binding.templateExpandable.isExpanded = false
+            binding.templatesExpandableHandle.setImageResource(R.drawable.ic_arrow_down)
+        }
+        binding.rvTemplates.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = paymentTemplatesAdapter
         }
         utilsViewModel.templates.observe(viewLifecycleOwner) {
@@ -264,8 +257,18 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         if (utilsViewModel.templates.value.isNullOrEmpty() || utilsViewModel.shouldTemplateUpdate) {
             fetchTemplateList()
         }
-        layoutTemplatesBinding.header.setOnClickListener { goto(R.id.templateListFragment) }
-        binding.widgetsLayout.addView(layoutTemplatesBinding.root)
+        binding.homeTemplatesParent.setOnClickListener { goto(R.id.templateListFragment) }
+        binding.templatesExpandableHandle.setOnClickListener {
+            if (binding.templateExpandable.isExpanded) {
+                binding.templatesExpandableHandle.setImageResource(R.drawable.ic_arrow_down)
+                binding.templateExpandable.collapse()
+                saveToPaper(Const.HOME_TEMPLATES_EXPANDED, "N")
+            } else {
+                binding.templatesExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
+                binding.templateExpandable.expand()
+                saveToPaper(Const.HOME_TEMPLATES_EXPANDED, "Y")
+            }
+        }
     }
 
     private fun fetchTemplateList() {

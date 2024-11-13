@@ -82,6 +82,7 @@ object Const {
     const val KEY_K = "KEY_K"
     const val CURRENT_SEASON = "current_season"
     const val NEW_DESIGN = "new_design"
+    const val HOME_TEMPLATES_EXPANDED = "HOME_TEMPLATES_EXPANDED"
 
     var request_id = ""
 

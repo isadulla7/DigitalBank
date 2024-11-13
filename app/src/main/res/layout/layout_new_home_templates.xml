@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/home_templates_parent"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="20dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="4dp">
+
+        <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/home_templates_icon"
+            android:drawablePadding="8dp"
+            android:text="@string/saved_payments"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/templates_expandable_handle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_arrow_down"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="14sp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/template_expandable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:el_duration="300"
+        app:el_expanded="true"
+        app:el_parallax="0">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_templates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:clipToPadding="false"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="4dp"
+            tools:listitem="@layout/item_payment_template" />
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -730,10 +730,6 @@
         android:name="uz.fido.universaldigital.ui.fragments.services.main.MyCreditsServiceFragment"
         android:label="MyCreditsServiceFragment" />
     <fragment
-        android:id="@+id/newDesignOnboardingPage"
-        android:name="uz.fido.universaldigital.ui.fragments.profile.settings.NewDesignOnboardingPage"
-        android:label="NewDesignOnboardingPage" />
-    <fragment
         android:id="@+id/menuNewHomeFragment"
         android:name="uz.fido.universaldigital.ui.fragments.products.new_design.MenuNewHomeFragment"
         android:label="MenuNewHomeFragment" />

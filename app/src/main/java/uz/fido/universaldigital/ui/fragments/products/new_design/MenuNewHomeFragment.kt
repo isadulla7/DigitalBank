@@ -35,15 +35,9 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
     private var homeCardsAdapter: NewHomeCardsAdapter? = null
     private var balanceUpdateCounter = 0
 
-    override fun onStart() {
-        super.onStart()
-        uz.fido.utils.log.Logger.writeErrorLog("onStart--${System.currentTimeMillis()}")
-    }
-
     override fun onResume() {
         super.onResume()
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-        uz.fido.utils.log.Logger.writeErrorLog("onResume--${System.currentTimeMillis()}")
     }
 
     override fun onCreateView(
@@ -172,7 +166,9 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
 
     private fun initUserCards() {
         if (userCards.isNotEmpty()) {
-            val firstTwoCard = userCards.take(2)
+            val firstTwoCard = if (userCards.size > 1) {
+                userCards.take(2)
+            } else userCards
             homeCardsAdapter?.submitList(firstTwoCard)
         }
     }
@@ -199,11 +195,4 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
     }
 
-    companion object {
-        var sellingRate = 1.0
-        var buyingRate = 1.0
-        var sellingRateRub = 1.0
-        var sellingRateEur = 1.0
-        var buyingRateDollar = 1.0
-    }
 }
