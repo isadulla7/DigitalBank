@@ -1023,4 +1023,11 @@
     <string name="yesterday">Вчера</string>
     <string name="sender_card_is_not_active">Карта-отправитель неактивна</string>
     <string name="receiver_card_is_not_active">Принимающая карта не активна</string>
+    <string name="cheques">Квитанции</string>
+    <string name="you_dont_have_saved_cheques">У вас нет сохраненных квитанций</string>
+    <string name="file_not_exist">Файл не существует!</string>
+    <string name="file_deleted_successfully">Файл успешно удален</string>
+    <string name="open">Открыть</string>
+    <string name="in_call_you_cant_use_app">Из соображений безопасности вы не можете использовать приложение во время разговора</string>
+    <string name="input_pin_code">Введите свой PIN-код</string>
 </resources>

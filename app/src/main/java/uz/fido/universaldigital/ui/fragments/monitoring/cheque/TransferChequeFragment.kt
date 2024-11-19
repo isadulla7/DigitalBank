@@ -19,6 +19,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentTransferPdfChequeBinding
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.pop
@@ -427,7 +428,7 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
         val directory =
             Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
         val suffix = dateFormat2.format(Calendar.getInstance().time).trim()
-        childName = "receipt_${suffix}.pdf"
+        childName = "Universalbank_receipt_${suffix}.pdf"
         file = File(directory, childName)
         try {
             pdfDocument.writeTo(FileOutputStream(file))
@@ -471,9 +472,13 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
     }
 
     private fun closePdfRenderer() {
-        currentPage.close()
-        pdfRenderer.close()
-        parcelFileDescriptor.close()
+        try {
+            currentPage.close()
+            pdfRenderer.close()
+            parcelFileDescriptor.close()
+        } catch (e: Exception) {
+            recordException(e)
+        }
     }
 
     override fun onDestroy() {

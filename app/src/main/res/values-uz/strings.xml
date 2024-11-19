@@ -1014,10 +1014,17 @@
     <string name="password_number_requirement">Kamida bitta raqam</string>
     <string name="password_symbol_requirement">Kamida bitta maxsus simvol</string>
     <string name="no_transaction_or_payment_selected_period">Вы не делали никаких платежей или переводов через приложение в выбранном месяце</string>
-    <string name="secret_word_instruction">Maxfiy so\'z uzunligi 5 tadan ko\'p va 10 dan kam bo\'lishi kerak.</string>
+    <string name="secret_word_instruction">Maxfiy so‘z uzunligi 5 tadan ko‘p va 10 dan kam bo‘lishi kerak.</string>
     <string name="card_or_phone_number">Karta yoki telefon raqami</string>
     <string name="today">Bugun</string>
     <string name="yesterday">Kecha</string>
     <string name="sender_card_is_not_active">Yuboruvchi karta faol emas</string>
     <string name="receiver_card_is_not_active">Qabul qiluvchi karta faol emas</string>
+    <string name="cheques">Kvitansiyalar</string>
+    <string name="you_dont_have_saved_cheques">Sizda saqlangan kvitansiyalar mavjud emas</string>
+    <string name="file_not_exist">Fayl mavjud emas!</string>
+    <string name="file_deleted_successfully">Fayl muvaffaqiyatli o‘chirildi</string>
+    <string name="open">Ochish</string>
+    <string name="in_call_you_cant_use_app">Xavfsizlikni ta\'minlash maqsadida qo‘ng‘iroq vaqtida ilovadan foydalana olmaysiz</string>
+    <string name="input_pin_code">PIN-kodni kiritish</string>
 </resources>

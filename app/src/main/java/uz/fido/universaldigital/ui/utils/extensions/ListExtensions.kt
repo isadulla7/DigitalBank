@@ -26,32 +26,32 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
         MenuServiceItem(
             icon = R.drawable.ic_3d_order_card,
             serviceName = getString(R.string.order_card),
-            serviceDescription = getString(R.string.order_card_description),
-            serviceId = 2
+            serviceId = 2,
+            serviceDescription = getString(R.string.order_card_description)
         )
     )
     serviceList.add(
         MenuServiceItem(
             icon = R.drawable.ic_3d_apply_loan,
             serviceName = getString(R.string.apply_loan),
-            serviceDescription = getString(R.string.apply_loan_description),
-            serviceId = 3
+            serviceId = 3,
+            serviceDescription = getString(R.string.apply_loan_description)
         )
     )
     serviceList.add(
         MenuServiceItem(
             icon = R.drawable.ic_3d_open_deposit,
             serviceName = getString(R.string.open_deposit),
-            serviceDescription = getString(R.string.open_deposit_description),
-            serviceId = 4
+            serviceId = 4,
+            serviceDescription = getString(R.string.open_deposit_description)
         )
     )
     serviceList.add(
         MenuServiceItem(
             icon = R.drawable.ic_3d_open_wallet,
             serviceName = getString(R.string.open_wallet),
-            serviceDescription = getString(R.string.open_wallet_description),
-            serviceId = 5
+            serviceId = 5,
+            serviceDescription = getString(R.string.open_wallet_description)
         )
     )
     serviceList.add(
@@ -61,6 +61,31 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
             6
         )
     )
+
+    serviceList.add(
+        MenuServiceItem(
+            R.drawable.all_cards,
+            getString(R.string.my_cards),
+            100
+        )
+    )
+
+    serviceList.add(
+        MenuServiceItem(
+            R.drawable.ic_deposit,
+            getString(R.string.my_deposits),
+            101
+        )
+    )
+
+    serviceList.add(
+        MenuServiceItem(
+            R.drawable.ic_my_credits,
+            getString(R.string.my_credits),
+            102
+        )
+    )
+
     serviceList.add(
         MenuServiceItem(
             R.drawable.application_icon,
@@ -68,13 +93,13 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
             202
         )
     )
-    serviceList.add(
-        MenuServiceItem(
-            R.drawable.ic_service_transfer_to_account,
-            getString(R.string.transfer_to_account),
-            500
-        )
-    )
+//    serviceList.add(
+//        MenuServiceItem(
+//            R.drawable.ic_service_transfer_to_account,
+//            getString(R.string.transfer_to_account),
+//            500
+//        )
+//    )
     serviceList.add(
         MenuServiceItem(
             R.drawable.ic_service_connect_sms_info,
@@ -117,13 +142,13 @@ fun Fragment.getServiceList(): ArrayList<MenuServiceItem> {
             800
         )
     )
-//    serviceList.add(
-//        MenuServiceItem(
-//            R.drawable.ic_service_payment_in_places,
-//            getString(R.string.payment_in_places),
-//            200
-//        )
-//    )
+    serviceList.add(
+        MenuServiceItem(
+            R.drawable.ic_service_payment_in_places,
+            getString(R.string.payment_in_places),
+            200
+        )
+    )
     return serviceList
 }
 
@@ -163,20 +188,28 @@ fun Fragment.getTransferTypes(): ArrayList<MenuServiceItem> {
     )
     transferTypes.add(
         MenuServiceItem(
+            R.drawable.ic_service_transfer_to_account,
+            getString(R.string.transfer_to_account),
+            500,
+            getString(R.string.by_wallet_number_desc)
+        )
+    )
+    transferTypes.add(
+        MenuServiceItem(
             R.drawable.ic_transfer_request_money,
             getString(R.string.request_money),
             600,
             getString(R.string.request_money_desc)
         )
     )
-    transferTypes.add(
-        MenuServiceItem(
-            R.drawable.ic_conversion_24dp,
-            getString(R.string.currency_exchange),
-            500,
-            getString(R.string.currency_exchange)
-        )
-    )
+//    transferTypes.add(
+//        MenuServiceItem(
+//            R.drawable.ic_conversion_24dp,
+//            getString(R.string.currency_exchange),
+//            700,
+//            getString(R.string.currency_exchange)
+//        )
+//    )
     return transferTypes
 }
 

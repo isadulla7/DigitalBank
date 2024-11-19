@@ -16,7 +16,6 @@ import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.OrderCardTypeResponse
 import uz.fido.network.domain.model.cards.OrderVirtualCardRequest

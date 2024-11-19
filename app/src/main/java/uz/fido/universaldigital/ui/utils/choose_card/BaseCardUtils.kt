@@ -191,6 +191,12 @@ object BaseCardUtils {
         card: CardResponse, context: Context, textView: TextView
     ) {
         when (card.processing_server_status) {
+            "-1" -> {
+                textView.visibility = View.VISIBLE
+                textView.setProcessingStatusIsNotWorking(card)
+                return
+            }
+
             "0" -> {
                 textView.visibility = View.GONE
                 return

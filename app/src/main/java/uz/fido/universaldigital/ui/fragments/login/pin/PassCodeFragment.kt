@@ -113,6 +113,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             }
 
             else -> {
+                vibrateTick(requireContext())
                 val textView = view as TextViewMedium
                 onNumberClicked(textView.text.toString())
             }

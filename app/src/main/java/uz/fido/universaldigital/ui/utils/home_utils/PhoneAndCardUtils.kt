@@ -1,10 +1,5 @@
 package uz.fido.universaldigital.ui.utils.home_utils
 
-import android.widget.Toast
-import io.paperdb.Paper
-import uz.fido.universaldigital.R
-import uz.fido.utils.const.Const
-
 fun applyMask(mask: String, text: String): String {
     var maskedText = ""
     var index = 0

@@ -96,7 +96,6 @@ class MyHomeFragment : DownloadPayment(), BaseInterface {
     private fun setList(list: java.util.ArrayList<MyHouseGroup>) {
         initEmptyView()
         adapterGroup.setList(list)
-
     }
 
     private fun initEmptyView() {

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
-import io.paperdb.Paper
 import uz.fido.network.domain.model.loans.loan_products.CreditProduct
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.FragmentCreditRequisitesBinding

@@ -7,7 +7,6 @@ import android.net.ConnectivityManager
 import android.net.LinkProperties
 import android.net.Network
 import android.net.NetworkCapabilities
-import android.net.wifi.WifiManager
 import android.os.Build
 import android.provider.Settings
 import android.util.Log
@@ -16,11 +15,7 @@ import uz.fido.utils.R
 import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.language.Utility.getLocalIpAddress
 import uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
-import java.math.BigInteger
 import java.net.Inet4Address
-import java.net.InetAddress
-import java.net.UnknownHostException
-import java.nio.ByteOrder
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.UUID

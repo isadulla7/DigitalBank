@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.products
 
 import uz.fido.network.data.utility.Status
-import uz.fido.network.domain.datasource.interfaces.ICardRepository
 import uz.fido.network.domain.datasource.interfaces.IUtilsRepository
 import uz.fido.network.domain.model.rates.CourseItem
 import uz.fido.network.domain.model.rates.GetCurrencyRatesRequest
@@ -13,7 +12,6 @@ interface CardsUseCase {
 }
 
 class CardsUseCaseImpl @Inject constructor(
-    private val cardRepository: ICardRepository,
     private val utilsRepository: IUtilsRepository
 ) : CardsUseCase {
 

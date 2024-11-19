@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.cards.GetCVVRequest

@@ -67,7 +67,7 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
     override fun onSuccess(result: MyIdResult) {
         try {
             val resultIntent = Intent()
-            resultIntent.putExtra("code", result.code.toString())
+            resultIntent.putExtra("code", result.code)
             setResult(RESULT_OK, resultIntent)
             onBackPressed()
         } catch (e: Exception) {
@@ -75,8 +75,8 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
         }
     }
 
-    override fun onError(e: MyIdException) {
-        Toast.makeText(this, e.message, Toast.LENGTH_LONG).show()
+    override fun onError(exception: MyIdException) {
+        Toast.makeText(this, exception.message, Toast.LENGTH_LONG).show()
         finish()
     }
 
@@ -93,10 +93,9 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
     }
 
     private fun getArgs() {
-        val bundle = intent.extras
-        bundle?.let {
-            clientPassport = it.getString(CLIENT_PASSPORT) ?: ""
-            clientBirthday = it.getString(CLIENT_DATE_OF_BIRTH) ?: ""
+        intent.extras?.let {
+            clientPassport = it.getString(CLIENT_PASSPORT).orEmpty()
+            clientBirthday = it.getString(CLIENT_DATE_OF_BIRTH).orEmpty()
         }
     }
 

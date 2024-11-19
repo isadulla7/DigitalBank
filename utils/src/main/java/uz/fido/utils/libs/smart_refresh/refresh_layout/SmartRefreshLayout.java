@@ -1045,7 +1045,7 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
                             final ViewParent parent = thisView.getParent();
                             if (parent instanceof ViewGroup) {
                                 //修复问题 https://github.com/scwang90/SmartRefreshLayout/issues/580
-                                ((ViewGroup) parent).requestDisallowInterceptTouchEvent(true);//通知父控件不要拦截事件
+                                parent.requestDisallowInterceptTouchEvent(true);//通知父控件不要拦截事件
                             }
                         }
                     } else if (Math.abs(dx) >= mTouchSlop && Math.abs(dx) > Math.abs(dy) && mDragDirection != 'v') {

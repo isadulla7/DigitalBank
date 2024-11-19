@@ -17,7 +17,6 @@ class PaymentGroup : Serializable {
     var name: String? = ""
     var parent_service_group_code: String? = ""
     var service_list: ArrayList<PaymentService>? = ArrayList()
-    var sub_group_list: ArrayList<PaymentGroup> = ArrayList()
 
     companion object {
         const val TABLE_NAME: String = "service_groups"
@@ -29,8 +28,6 @@ class PaymentGroup : Serializable {
         const val ICON_NAME = "icon_name"
         const val ORDER = "ord"
         const val COLUMN_PARENT_SERVICE = "parent_service_group_code"
-        const val CONTRACT_ID = "contract_id"
-        const val PAYMENT_DETAIL_CODE = "payment_detail_code"
     }
 
     @SuppressLint("NotConstructor")

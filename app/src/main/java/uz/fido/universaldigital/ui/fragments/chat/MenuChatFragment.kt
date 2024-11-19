@@ -84,7 +84,7 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
     }
 
     enum class MessageStates(id: Int) {
-        STATE_DELETED(3), STATE_DELETED_ALL(4);
+        STATE_DELETED_ALL(4);
 
         var stateId: Int = 0
 
@@ -437,7 +437,9 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
                             }
                         }
                     }
-                    sendTestRequest()
+                    if (storageReference != null) {
+                        sendTestRequest()
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
@@ -445,12 +447,19 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
 
             override fun onFailure(call: Call<SocketInterface.BgTaskResponse>, t: Throwable) {
                 try {
-                    sendTestRequest()
+                    if (storageReference != null) {
+                        sendTestRequest()
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        storageReference = null
     }
 
 }

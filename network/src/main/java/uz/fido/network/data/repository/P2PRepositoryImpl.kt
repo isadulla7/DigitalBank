@@ -1,6 +1,5 @@
 package uz.fido.network.data.repository
 
-import androidx.lifecycle.MutableLiveData
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
 import uz.fido.network.domain.datasource.interfaces.IP2PRepository
@@ -38,7 +37,6 @@ import uz.fido.network.domain.model.collect_split_money.CollectMoneyMenuResponse
 import uz.fido.network.domain.model.collect_split_money.CollectMoneyTransferRequest
 import uz.fido.network.domain.model.collect_split_money.CollectMoneyUserTransferRequest
 import uz.fido.network.domain.model.conversion.ConversionRequest
-import uz.fido.network.domain.model.get_card_by_phone.CardByPhone
 import uz.fido.network.domain.model.money_transfer.create.CreateTransferRequest
 import uz.fido.network.domain.model.money_transfer.list.MoneyTransferHistoryResponse
 import uz.fido.network.domain.model.money_transfer.receive.MoneyTransferParamsResponse
@@ -56,8 +54,6 @@ import javax.inject.Inject
 
 class P2PRepositoryImpl @Inject constructor(private val p2pService: P2PApiInterface) :
     IP2PRepository {
-
-    private var histories: MutableLiveData<List<CardByPhone>> = MutableLiveData()
 
     override suspend fun checkCardInfo(
         token: String,

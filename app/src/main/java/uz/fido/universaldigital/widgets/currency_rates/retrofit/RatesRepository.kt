@@ -7,7 +7,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import uz.fido.network.domain.model.rates.CurrencyRatesResponse
 
-class RatesRepository() : Repository {
+class RatesRepository : Repository {
 
     override fun getData(callback: (RepoResult) -> Unit) {
 

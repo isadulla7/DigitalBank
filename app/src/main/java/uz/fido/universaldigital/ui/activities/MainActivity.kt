@@ -1,8 +1,12 @@
 package uz.fido.universaldigital.ui.activities
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,10 +19,17 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityMainBinding
+import uz.fido.universaldigital.services.AudioModeService
+import uz.fido.universaldigital.ui.activities.seasons.Season
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
 import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
 import uz.fido.universaldigital.ui.fragments.payment.abc_confirm.ConfirmPaymentFragment
@@ -34,6 +45,8 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.Basic
 import uz.fido.universaldigital.ui.fragments.transfers.by_phone.TransferByPhoneFragment
 import uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferFragment
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
+import uz.fido.universaldigital.ui.utils.extensions.recordException
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.internet_checker.InternetConnectionChecker
 import uz.fido.utils.internet_checker.NoConnectionDialog
@@ -49,21 +62,56 @@ class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var updateChecker: UpdateChecker
-
     private var noConnectionDialog: NoConnectionDialog? = null
     private var isStop = false
+    private lateinit var database: DatabaseReference
+
+    private val broadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            when (intent?.action) {
+                "ACTION_OPEN_ACTIVITY" -> {
+                    if (!isFinishing) {
+                        startActivity(Intent(this@MainActivity, CallSafeActivity::class.java))
+                    }
+                }
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        database = FirebaseDatabase.getInstance().getReference("season")
         setContentView(binding.root)
         initBottomNavigationMenu()
         checkUpdate()
         askNotificationPermission()
-        initSearchList()
         checkForDeepLink()
         bottomNavSheet()
+        listenForSeasonChanges()
     }
 
+    private fun listenForSeasonChanges() {
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                saveToPaper(Const.CURRENT_SEASON, snapshot.value.toString())
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                saveToPaper(Const.CURRENT_SEASON, Season.DEFAULT)
+            }
+        })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        try {
+            unregisterReceiver(broadcastReceiver)
+            stopService(Intent(this, AudioModeService::class.java))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
     private fun bottomNavSheet() {
         ViewCompat.setOnApplyWindowInsetsListener(binding.bottomNavigation) { view, insets ->
@@ -75,10 +123,24 @@ class MainActivity : BaseActivity() {
         }
     }
 
-
+    @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
         super.onResume()
         internetListener()
+        try {
+            startService(Intent(this, AudioModeService::class.java))
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                registerReceiver(
+                    broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY"), Context.RECEIVER_EXPORTED
+                )
+            } else {
+                registerReceiver(
+                    broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY")
+                )
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         isStop = false
         if (!showPinCode) {
             showPinCode = true
@@ -126,8 +188,6 @@ class MainActivity : BaseActivity() {
         navController.navigate(id, bundle, null)
     }
 
-
-
     override fun onStop() {
         super.onStop()
         pausedMillis = Calendar.getInstance().timeInMillis
@@ -166,19 +226,22 @@ class MainActivity : BaseActivity() {
         }
     }
 
-
     private fun internetListener() {
         InternetConnectionChecker(this).observeForever { isConnected ->
-            if (isConnected) {
-                if (!isDestroyed && !isFinishing) {
-                    if (noConnectionDialog != null) {
-                        noConnectionDialog?.dismiss()
-                        noConnectionDialog = null
+            try {
+                if (isConnected) {
+                    if (!isDestroyed && !isFinishing) {
+                        if (noConnectionDialog != null) {
+                            noConnectionDialog?.dismiss()
+                            noConnectionDialog = null
+                        }
                     }
+                } else if (!this@MainActivity.isStop && !isDestroyed && !isFinishing) {
+                    noConnectionDialog = NoConnectionDialog()
+                    noConnectionDialog?.show(supportFragmentManager, "")
                 }
-            } else if (!this@MainActivity.isStop && !isDestroyed && !isFinishing) {
-                noConnectionDialog = NoConnectionDialog()
-                noConnectionDialog?.show(supportFragmentManager, "")
+            } catch (e: Exception) {
+                recordException(e)
             }
         }
     }
@@ -222,19 +285,6 @@ class MainActivity : BaseActivity() {
                 requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
             }
         }
-    }
-
-    private fun initSearchList() {
-
-        /*lifecycleScope.launch(Dispatchers.Default) {
-            if (SearchList.(this@MainActivity).isNotEmpty()) {
-                SearchList.searchList.clear()
-                SearchList.searchList = SearchList.getSearchList(this@MainActivity)
-            } else {
-                SearchList.fillSearchList(this@MainActivity)
-                SearchList.saveSearchList(this@MainActivity)
-            }
-        }*/
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

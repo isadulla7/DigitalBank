@@ -167,7 +167,6 @@ class AuthInterceptor @Inject constructor(
     companion object {
         const val TOKEN_EXPIRED = 406
         const val UNAUTHORIZED = 401
-        const val DEVICE_DELETE = 66
     }
 
 }

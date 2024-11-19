@@ -24,6 +24,7 @@ abstract class BaseActivity : AppCompatActivity() {
         super.attachBaseContext(LocaleHelper.setLocale(newBase!!, getLanguage(newBase)))
     }
 
+
     override fun onStart() {
         super.onStart()
         this.adjustFontScale(resources.configuration)

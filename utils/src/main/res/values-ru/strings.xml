@@ -45,5 +45,12 @@
     <string name="interest_withdrawal">Снятие процентов</string>
     <string name="re_calculate_percents">Пересчет процентов</string>
     <string name="please_log_out">Из-за изменений в безопасности приложения просим вас войти в приложение заново для безопасности ваших данных. Просим прощение за неудобство</string>
+    <string name="sat">Сб</string>
+    <string name="fri">Пт</string>
+    <string name="thu">Чт</string>
+    <string name="wed">Ср</string>
+    <string name="tue">Вт</string>
+    <string name="mon">Пн</string>
+    <string name="sun">Вс</string>
 
 </resources>

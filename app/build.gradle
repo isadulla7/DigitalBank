@@ -97,6 +97,7 @@ dependencies {
     implementation(libs.com.google.mlkit.barcode.scanning)
     implementation(libs.com.google.code.gson)
     implementation(libs.com.google.maps.utils)
+    implementation libs.firebase.database.ktx
 
     kapt(libs.com.google.dagger.hilt.android.compiler)
     compileOnly(libs.com.google.android.wearable)

@@ -85,11 +85,7 @@ class HomeCardsAdapter(
 
     class MyDiffUtil : DiffUtil.ItemCallback<CardResponse>() {
         override fun areItemsTheSame(oldItem: CardResponse, newItem: CardResponse): Boolean =
-            oldItem.balance == newItem.balance &&
-                    oldItem.processing_server_status == newItem.processing_server_status &&
-                    oldItem.state == newItem.state &&
-                    oldItem.stateName == newItem.stateName &&
-                    oldItem.object_name == newItem.object_name
+            oldItem == newItem
 
         override fun areContentsTheSame(oldItem: CardResponse, newItem: CardResponse): Boolean {
             return oldItem == newItem

@@ -1,13 +1,12 @@
 package uz.fido.universaldigital.ui.fragments.payment.my_home.my_house_history
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.monitoring.DateItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.home.HomeGeneralItem
 import uz.fido.network.domain.model.monitoring.home.HomeHistoryRequest
 import uz.fido.network.domain.model.monitoring.home.ItemHomeHistory

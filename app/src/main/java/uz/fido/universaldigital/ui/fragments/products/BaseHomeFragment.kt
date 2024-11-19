@@ -82,7 +82,6 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
     lateinit var binding: FragmentMenuHomeBinding
 
     var mainWidgetsList = ArrayList<MainWidget>()
-    private var nextPage = false
 
     var container: ViewGroup? = null
 
@@ -279,7 +278,6 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
             ).show()
         }
     }
-
 
     private fun initFastAccessLayout() {
         val layoutBinding = LayoutHomeFastAccessBinding.inflate(

@@ -20,7 +20,7 @@ class MonitoringCardDialog(
 
     private lateinit var binding: DialogMonitoringCardBinding
 
-    private val cardAdapter by lazy { FilterCardMonitoringAdapter(requireContext(), this) }
+    private val cardAdapter by lazy { FilterCardMonitoringAdapter(this) }
     private var sortCardList = arrayListOf<FilterCard>()
     override fun onCreateView(
         inflater: LayoutInflater,

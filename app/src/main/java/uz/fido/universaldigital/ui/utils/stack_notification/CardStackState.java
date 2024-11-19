@@ -80,9 +80,7 @@ public class CardStackState {
     public boolean isSwipeCompleted() {
         if (status.isSwipeAnimating()) {
             if (topPosition < targetPosition) {
-                if (width < Math.abs(dx) || height < Math.abs(dy)) {
-                    return true;
-                }
+                return width < Math.abs(dx) || height < Math.abs(dy);
             }
         }
         return false;
@@ -98,10 +96,7 @@ public class CardStackState {
         if (itemCount < position) {
             return false;
         }
-        if (status.isBusy()) {
-            return false;
-        }
-        return true;
+        return !status.isBusy();
     }
 
 }

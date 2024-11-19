@@ -6,8 +6,6 @@ import uz.fido.network.domain.datasource.services.SocketInterface
 
 interface ISocketRepository {
 
-    suspend fun testSocket(token: String, deviceId: String): Resource<Any>
-
     suspend fun getMessages(
         token: String,
         deviceId: String
