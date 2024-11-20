@@ -16,7 +16,6 @@ import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentCheckInfoBinding
 import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.payment.abc_dialog.BottomReceiptsDialog
-import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
 import uz.fido.utils.format.Format.takeScreenShot
@@ -39,22 +38,18 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
-            try {
-                operation = it.getString("operation").toString()
-                command = it.getString("command").toString()
-                when (operation) {
-                    "local" -> {
-                        printChequeResponse = it.serializable<PrintChequeResponse>("details") as PrintChequeResponse
-                        searchDataResponse = it.serializable<SearchDataResponse>("data")
-                    }
-
-                    "uzcard" -> svMonitoringItem = it.serializable<SVMonitoringItem>("uzcard") as SVMonitoringItem
-                    "humo" -> humoMonitoringItem = it.serializable<HumoMonitoringItem>("humo") as HumoMonitoringItem
-                    "visa" -> visaMonitoringItem = it.serializable<CurrencyCardMonitoringItem>("visa") as CurrencyCardMonitoringItem
-                    else -> return
+            operation = it.getString("operation").toString()
+            command = it.getString("command").toString()
+            when (operation) {
+                "local" -> {
+                    printChequeResponse = it.serializable<PrintChequeResponse>("details") as PrintChequeResponse
+                    searchDataResponse = it.serializable<SearchDataResponse>("data") as? SearchDataResponse
                 }
-            } catch (e: Exception) {
-                recordException(e, ::onViewCreated.name)
+
+                "uzcard" -> svMonitoringItem = it.serializable<SVMonitoringItem>("uzcard") as SVMonitoringItem
+                "humo" -> humoMonitoringItem = it.serializable<HumoMonitoringItem>("humo") as HumoMonitoringItem
+                "visa" -> visaMonitoringItem = it.serializable<CurrencyCardMonitoringItem>("visa") as CurrencyCardMonitoringItem
+                else -> return
             }
         }
         checkTip()

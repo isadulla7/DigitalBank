@@ -39,14 +39,14 @@ fun Fragment.getFromPaper(key: String, defaultValue: String? = ""): String {
 
 fun Context.getFromPaper(key: String, defaultValue: String? = ""): String {
     val encryptedValue = Paper.book().read<String>(key, defaultValue)
-    var decryptedValue: String = ""
+    val decryptedValue: String
     try {
         decryptedValue = CryptoUtil.decrypt(encryptedValue, getDeviceIds())
         Log.d("TAG", "getFromPaper:$decryptedValue")
 
     } catch (e: Exception) {
-        Log.d("TAG", "getFromPaper:----$decryptedValue")
         return encryptedValue.orEmpty()
+        Log.d("TAG", "getFromPaper:----$decryptedValue")
 
     }
     return decryptedValue

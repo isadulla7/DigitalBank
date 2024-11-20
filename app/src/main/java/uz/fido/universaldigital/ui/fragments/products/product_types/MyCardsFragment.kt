@@ -7,9 +7,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -24,7 +22,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentAllCardsBinding
-import uz.fido.universaldigital.databinding.FragmentMyCardsListBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.cards.adapter.CardsListAdapter
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.AddCardDialog
@@ -50,6 +47,8 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
     private var clientAllCardList = ArrayList<CardResponse>()
     private var cardsAdapter: CardsListAdapter? = null
+    private var stateCurrent: Boolean = false
+
     private lateinit var walletOperationsDialog: WalletOperationsDialog
     private lateinit var cardOperationsDialog: CardOperationsDialog
     private lateinit var selectedCard: CardResponse
@@ -60,10 +59,8 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     }
 
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initCards()
         binding.addCardBtn.setOnClickListener {
             AddCardDialog {
@@ -76,8 +73,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         }
     }
 
-
-
     private fun initCards() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) { list ->
             clientAllCardList = list as ArrayList<CardResponse>
@@ -85,7 +80,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
             showEmptyView(clientAllCardList)
         }
     }
-
 
     private fun initCardsRv(cardLayoutManager: GridLayoutManager) {
         cardsAdapter = CardsListAdapter(this@MyCardsFragment, cardLayoutManager)
@@ -102,21 +96,26 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
 
     override fun onPause() {
         super.onPause()
+        stateCurrent=true
     }
 
     override fun onResume() {
         super.onResume()
 
+
     }
 
 
     private fun refreshCards() {
-        try {
-            cardsAdapter = CardsListAdapter(this@MyCardsFragment, getLayoutManager())
-            (binding.cardList.layoutManager as GridLayoutManager).spanCount = getSpanCount()
-        } catch (e: Exception) {
+      //  try {
+            binding?.let {
+                cardsAdapter = CardsListAdapter(this@MyCardsFragment, getLayoutManager())
+                (binding.cardList.layoutManager as GridLayoutManager).spanCount = getSpanCount()
+            }
+
+     /*   } catch (e: Exception) {
             e.printStackTrace()
-        }
+        }*/
     }
 
     private fun showEmptyView(list: ArrayList<CardResponse>) {

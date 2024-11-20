@@ -49,11 +49,10 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         setTermsOfUseColor()
         setPhonePrefix()
         initTextChangeListeners()
-        initMyAccount()
     }
 
     private fun setPhonePrefix() {
-        binding.etPhoneNumber.filters = arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter { it.isDigit() || it == '+' } })
+        binding.etPhoneNumber.filters= arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter { it.isDigit() || it=='+' }  })
         binding.etPhoneNumber.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus && binding.etPhoneNumber.text.toString().isEmpty()) binding.etPhoneNumber.setText(getString(R.string.phone_number_prefix))
         }
@@ -188,7 +187,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun gotoConfirmSmsFragment(model: SignInRequestNew) {
-        saveToPaper(Const.PAPER_PAYMENT_VERSION, model.version)
+        saveToPaper(Const.PAPER_PAYMENT_VERSION,model.version)
         val bundle = Bundle().apply {
             putString(Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString())
             putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_IN)
@@ -205,13 +204,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun passwordFormatted(): String {
         return binding.etPassword.editableText.toString().replace(" ", "")
-    }
-
-    private fun initMyAccount() {
-        if (BuildConfig.DEBUG) {
-            binding.etPhoneNumber.setText("+998930088809")
-            binding.etPassword.setText("Qwerty2398@")
-        }
     }
 
 }
