@@ -17,7 +17,13 @@
                 app:attributeName="roundPercent"
                 app:customFloatValue="1" />
         </Constraint>
-        <Constraint android:id="@id/bottom_layout">
+        <Constraint android:id="@id/bottom_layout"
+            app:layout_constraintVertical_bias="0.0"
+            android:layout_height="wrap_content"
+            app:layout_editor_absoluteX="0dp"
+            app:layout_constraintBottom_toTopOf="@+id/version"
+            android:layout_width="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_identified_client">
             <Layout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

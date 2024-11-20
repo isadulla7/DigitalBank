@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
@@ -34,6 +35,7 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getLayoutMana
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getSpanCount
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
+import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
 
@@ -45,6 +47,7 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
     private var clientAllCardList = ArrayList<CardResponse>()
     private var cardsAdapter: CardsListAdapter? = null
+    private var stateCurrent: Boolean = false
 
     private lateinit var walletOperationsDialog: WalletOperationsDialog
     private lateinit var cardOperationsDialog: CardOperationsDialog
@@ -54,6 +57,7 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         super.onInit(savedInstanceState)
         initCardsRv(getLayoutManager())
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -90,18 +94,28 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         refreshCards()
     }
 
-    override fun onResume() {
-        super.onResume()
-        refreshCards()
+    override fun onPause() {
+        super.onPause()
+        stateCurrent=true
     }
 
+    override fun onResume() {
+        super.onResume()
+
+
+    }
+
+
     private fun refreshCards() {
-        try {
-            cardsAdapter = CardsListAdapter(this@MyCardsFragment, getLayoutManager())
-            (binding.cardList.layoutManager as GridLayoutManager).spanCount = getSpanCount()
-        } catch (e: Exception) {
+      //  try {
+            binding?.let {
+                cardsAdapter = CardsListAdapter(this@MyCardsFragment, getLayoutManager())
+                (binding.cardList.layoutManager as GridLayoutManager).spanCount = getSpanCount()
+            }
+
+     /*   } catch (e: Exception) {
             e.printStackTrace()
-        }
+        }*/
     }
 
     private fun showEmptyView(list: ArrayList<CardResponse>) {
@@ -193,10 +207,15 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
             }
 
             R.id.delete_wallet -> {
-                walletOperationsDialog.dismiss()
-                CloseWalletDialog {
-                    closeWallet()
-                }.show(childFragmentManager, "")
+                if (checkWalletBalance(selectedCard.balance)) {
+                    showSnackbar(title = getString(R.string.wallet), snackbarText = getString(R.string.wallet_be_closed))
+                } else {
+                    walletOperationsDialog.dismiss()
+                    CloseWalletDialog {
+                        closeWallet()
+                    }.show(childFragmentManager, "")
+                }
+
             }
 
             R.id.rename_wallet -> {
@@ -249,6 +268,12 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
                 }
             }
         }
+    }
+
+    private fun checkWalletBalance(balance: String): Boolean {
+        Log.d("TAG", "checkWalletBalance:${balance} ")
+        val doubleBalance = balance.toDouble()
+        return doubleBalance > 0
     }
 
     private fun deleteCard() {

@@ -43,7 +43,7 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
             when (operation) {
                 "local" -> {
                     printChequeResponse = it.serializable<PrintChequeResponse>("details") as PrintChequeResponse
-                    searchDataResponse = it.serializable<SearchDataResponse>("data") as SearchDataResponse
+                    searchDataResponse = it.serializable<SearchDataResponse>("data") as? SearchDataResponse
                 }
 
                 "uzcard" -> svMonitoringItem = it.serializable<SVMonitoringItem>("uzcard") as SVMonitoringItem

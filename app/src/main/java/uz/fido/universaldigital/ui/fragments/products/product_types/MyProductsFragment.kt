@@ -21,7 +21,7 @@ class MyCardsListFragment : BaseSimpleFragment<FragmentMyCardsListBinding>(
 ), BaseInterface {
 
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
-
+   var stateCurrent:Boolean=false
     private lateinit var adapter: CardPagerAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -30,6 +30,7 @@ class MyCardsListFragment : BaseSimpleFragment<FragmentMyCardsListBinding>(
         setAdditionIcon()
         initSetOnClickListeners()
     }
+
 
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
@@ -73,5 +74,17 @@ class MyCardsListFragment : BaseSimpleFragment<FragmentMyCardsListBinding>(
             }
 
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stateCurrent=true
+    }
+    override fun onResume() {
+        super.onResume()
+        if (stateCurrent){
+            binding.appBar.setAdditionalBtnVisibility(false)
+            stateCurrent=false
+        }
     }
 }

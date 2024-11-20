@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -78,8 +79,14 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
             getTransferInfo()
             arguments?.let {
-                senderCard = requireArguments().serializable(Const.SENDER_CARD) as CardResponse?
-                receiverCard = requireArguments().serializable(Const.RECEIVER_CARD) as CardResponse?
+                val card= requireArguments().serializable(Const.SENDER_CARD) as CardResponse?
+                val recCard=requireArguments().serializable(Const.RECEIVER_CARD) as CardResponse?
+                if (card!=null){
+                    senderCard =card
+                }
+                if (recCard!=null){
+                    receiverCard =recCard
+                }
                 binding.senderCards.setCurrentItem(userSumCards.indexOf(senderCard), true)
                 binding.receiverCards.setCurrentItem(userSumCards.indexOf(receiverCard), true)
             }
@@ -315,6 +322,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
         when {
             senderCard == null || receiverCard == null -> {
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
+                Log.d("TAG", "continueButtonState: ${senderCard==null}")
                 hideCommissionBlock()
                 return false
             }
@@ -364,6 +372,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 binding.tvMinAmount.text =
                     getString(R.string.min_amount) + " ${Format.formatAmount((minAmount).toString())} ${getString(R.string.sum_text)}"
+                Log.d("TAG", "continueButtonState:1 ")
                 return true
             }
 
