@@ -283,7 +283,7 @@ class PinCodeFragment : BaseFragment<FragmentPinCodeBinding, PinCodeViewModel>(
     }
 
     private fun setWrongPinCounter() {
-        incorrectPinCount++
+      //  incorrectPinCount++
         if (incorrectPinCount == 2) {
             showWrongPinWarning()
         }
