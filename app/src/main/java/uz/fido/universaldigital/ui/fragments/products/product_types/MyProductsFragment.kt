@@ -84,7 +84,6 @@ class MyCardsListFragment : BaseSimpleFragment<FragmentMyCardsListBinding>(
         super.onResume()
         if (stateCurrent){
             initCardTypes()
-           // initCardTypes()
           //  binding.appBar.setAdditionalBtnVisibility(false)
             stateCurrent=false
         }
