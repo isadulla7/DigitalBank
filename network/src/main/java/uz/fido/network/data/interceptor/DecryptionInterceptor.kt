@@ -45,12 +45,6 @@ class DecryptionInterceptor(val context: Context) : Interceptor {
                 newResponse.body(decryptedString.toResponseBody(contentType.toString().toMediaTypeOrNull()))
             }
         }
-
-        val handshake = response.handshake
-        handshake?.let {
-            Logger.writeLog("Negotiated TLS Version: ${it.tlsVersion}")
-            Logger.writeLog("peerCertificates: ${it.peerCertificates}")
-        }
         return newResponse.build()
     }
 
