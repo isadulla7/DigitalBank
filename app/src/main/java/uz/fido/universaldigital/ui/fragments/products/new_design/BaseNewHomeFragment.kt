@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.paperdb.Paper
+import kotlinx.android.synthetic.main.fragment_transfer_history.transfer_histories
 import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.template.GetTemplateListRequest
@@ -28,6 +29,7 @@ import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.products.adapter.FastAccessOperationAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeTemplatesAdapter
+import uz.fido.universaldigital.ui.fragments.products.adapter.MainMyHouseAdapter
 import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
 import uz.fido.universaldigital.ui.fragments.products.widgets.card_phone.CardNumberDialog
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
@@ -70,6 +72,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         cardAndPhoneLayout()
         initFastAccessLayout()
         initHomeTemplates()
+        initMyHome()
     }
 
     private fun cardAndPhoneLayout() {
@@ -269,6 +272,20 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                 saveToPaper(Const.HOME_TEMPLATES_EXPANDED, "Y")
             }
         }
+    }
+
+    private fun initMyHome(){
+        val myHomeAdapter = MainMyHouseAdapter(arrayListOf(),requireContext(),{})
+        binding.homeMyHouseParent.setOnClickListener { goto(R.id.myHomeFragment) }
+        binding.myHouseExpandableHandle.setOnClickListener {
+            binding.myHouseExpandable.isExpanded=true
+            binding.templatesExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
+        }
+        binding.rvMyHouse.apply {
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            adapter = myHomeAdapter
+        }
+
     }
 
     private fun fetchTemplateList() {
