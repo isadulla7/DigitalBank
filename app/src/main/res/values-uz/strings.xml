@@ -1027,4 +1027,5 @@
     <string name="open">Ochish</string>
     <string name="in_call_you_cant_use_app">Xavfsizlikni ta\'minlash maqsadida qo‘ng‘iroq vaqtida ilovadan foydalana olmaysiz</string>
     <string name="input_pin_code">PIN-kodni kiritish</string>
+    <string name="wallet_be_closed">Hamyonni yopib bulmaydi oldin mablag\'ni yechib oling</string>
 </resources>

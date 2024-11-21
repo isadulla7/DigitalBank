@@ -5,8 +5,11 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -21,6 +24,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentAllCardsBinding
+import uz.fido.universaldigital.databinding.FragmentMyCardsListBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.cards.adapter.CardsListAdapter
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.AddCardDialog
@@ -34,6 +38,7 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getLayoutMana
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getSpanCount
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
+import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
 
@@ -45,7 +50,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
     private var clientAllCardList = ArrayList<CardResponse>()
     private var cardsAdapter: CardsListAdapter? = null
-
     private lateinit var walletOperationsDialog: WalletOperationsDialog
     private lateinit var cardOperationsDialog: CardOperationsDialog
     private lateinit var selectedCard: CardResponse
@@ -55,8 +59,11 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         initCardsRv(getLayoutManager())
     }
 
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initCards()
         binding.addCardBtn.setOnClickListener {
             AddCardDialog {
@@ -69,6 +76,8 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         }
     }
 
+
+
     private fun initCards() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) { list ->
             clientAllCardList = list as ArrayList<CardResponse>
@@ -76,6 +85,7 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
             showEmptyView(clientAllCardList)
         }
     }
+
 
     private fun initCardsRv(cardLayoutManager: GridLayoutManager) {
         cardsAdapter = CardsListAdapter(this@MyCardsFragment, cardLayoutManager)
@@ -90,10 +100,15 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         refreshCards()
     }
 
+    override fun onPause() {
+        super.onPause()
+    }
+
     override fun onResume() {
         super.onResume()
-        refreshCards()
+
     }
+
 
     private fun refreshCards() {
         try {
@@ -193,10 +208,15 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
             }
 
             R.id.delete_wallet -> {
-                walletOperationsDialog.dismiss()
-                CloseWalletDialog {
-                    closeWallet()
-                }.show(childFragmentManager, "")
+                if (checkWalletBalance(selectedCard.balance)) {
+                    showSnackbar(title = getString(R.string.wallet), snackbarText = getString(R.string.wallet_be_closed))
+                } else {
+                    walletOperationsDialog.dismiss()
+                    CloseWalletDialog {
+                        closeWallet()
+                    }.show(childFragmentManager, "")
+                }
+
             }
 
             R.id.rename_wallet -> {
@@ -249,6 +269,12 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
                 }
             }
         }
+    }
+
+    private fun checkWalletBalance(balance: String): Boolean {
+        Log.d("TAG", "checkWalletBalance:${balance} ")
+        val doubleBalance = balance.toDouble()
+        return doubleBalance > 0
     }
 
     private fun deleteCard() {
