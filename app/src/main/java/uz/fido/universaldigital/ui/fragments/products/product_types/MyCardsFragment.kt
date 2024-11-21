@@ -22,6 +22,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentAllCardsBinding
+import uz.fido.universaldigital.databinding.FragmentMyCardsListBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.cards.adapter.CardsListAdapter
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.AddCardDialog
@@ -48,7 +49,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     private var clientAllCardList = ArrayList<CardResponse>()
     private var cardsAdapter: CardsListAdapter? = null
     private var stateCurrent: Boolean = false
-
     private lateinit var walletOperationsDialog: WalletOperationsDialog
     private lateinit var cardOperationsDialog: CardOperationsDialog
     private lateinit var selectedCard: CardResponse
@@ -61,6 +61,9 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+          savedInstanceState?.let {
+
+          }
         initCards()
         binding.addCardBtn.setOnClickListener {
             AddCardDialog {
@@ -80,6 +83,7 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
             showEmptyView(clientAllCardList)
         }
     }
+
 
     private fun initCardsRv(cardLayoutManager: GridLayoutManager) {
         cardsAdapter = CardsListAdapter(this@MyCardsFragment, cardLayoutManager)
@@ -108,10 +112,10 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
 
     private fun refreshCards() {
       //  try {
-            binding?.let {
+           // binding?.let {
                 cardsAdapter = CardsListAdapter(this@MyCardsFragment, getLayoutManager())
                 (binding.cardList.layoutManager as GridLayoutManager).spanCount = getSpanCount()
-            }
+          //  }
 
      /*   } catch (e: Exception) {
             e.printStackTrace()

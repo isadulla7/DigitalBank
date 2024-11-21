@@ -1,7 +1,9 @@
 package uz.fido.universaldigital.ui.fragments.products.product_types
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,16 +23,22 @@ class MyCardsListFragment : BaseSimpleFragment<FragmentMyCardsListBinding>(
 ), BaseInterface {
 
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
-   var stateCurrent:Boolean=false
+   private var stateCurrent:Boolean=false
     private lateinit var adapter: CardPagerAdapter
-
+    private var savedPosition: Int = 0
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        savedInstanceState?.let {
+            savedPosition=it.getInt("Save",0)
+        }
         initCardTypes()
         setAdditionIcon()
         initSetOnClickListeners()
     }
-
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putInt("Save", binding.viewPager.currentItem)
+    }
 
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
