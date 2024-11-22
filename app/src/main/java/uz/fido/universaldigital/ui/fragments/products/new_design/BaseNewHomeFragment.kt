@@ -16,6 +16,7 @@ import io.paperdb.Paper
 import kotlinx.android.synthetic.main.fragment_transfer_history.transfer_histories
 import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
+import uz.fido.network.domain.model.my_house.MyHouseGroup
 import uz.fido.network.domain.model.template.GetTemplateListRequest
 import uz.fido.network.domain.model.template.GetTemplateRequest
 import uz.fido.network.domain.model.template.Template
@@ -275,17 +276,50 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     }
 
     private fun initMyHome(){
+
         val myHomeAdapter = MainMyHouseAdapter(arrayListOf(),requireContext(),{})
+        if (utilsViewModel.myHouse.value.isNullOrEmpty()){
+            fetchMyHouseList()
+        }
+        utilsViewModel.myHouse.observe(viewLifecycleOwner) {
+            myHomeAdapter.setList(it)
+        }
+        if (getFromPaper(Const.HOME_MY_HOUSE_EXPANDED, "N") == "Y") {
+            binding.myHouseExpandable.isExpanded = true
+            binding.myHouseExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
+        } else {
+            binding.myHouseExpandable.isExpanded = false
+            binding.myHouseExpandableHandle.setImageResource(R.drawable.ic_arrow_down)
+        }
         binding.homeMyHouseParent.setOnClickListener { goto(R.id.myHomeFragment) }
         binding.myHouseExpandableHandle.setOnClickListener {
-            binding.myHouseExpandable.isExpanded=true
-            binding.templatesExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
+            if (binding.myHouseExpandable.isExpanded){
+                binding.myHouseExpandableHandle.setImageResource(R.drawable.ic_arrow_down)
+                binding.myHouseExpandable.collapse()
+                saveToPaper(Const.HOME_MY_HOUSE_EXPANDED, "N")
+            }else{
+                binding.myHouseExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
+                binding.myHouseExpandable.expand()
+                saveToPaper(Const.HOME_MY_HOUSE_EXPANDED, "Y")
+            }
         }
         binding.rvMyHouse.apply {
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = myHomeAdapter
         }
 
+    }
+
+    private fun fetchMyHouseList() {
+          utilsViewModel.getTemplateGroups(getClientToken()).observe(viewLifecycleOwner){resource->
+              resource?.let { _ ->
+                  if (resource.status == Status.SUCCESS) {
+                   val list= resource.data?.template_groups?: arrayListOf()
+                    //  val
+                  // utilsViewModel.updateMyHouse(list)
+                  }
+              }
+          }
     }
 
     private fun fetchTemplateList() {

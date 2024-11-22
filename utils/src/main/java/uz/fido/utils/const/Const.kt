@@ -83,6 +83,7 @@ object Const {
     const val CURRENT_SEASON = "current_season"
     const val NEW_DESIGN = "new_design"
     const val HOME_TEMPLATES_EXPANDED = "HOME_TEMPLATES_EXPANDED"
+    const val HOME_MY_HOUSE_EXPANDED = "HOME_MY_HOUSE_EXPANDED"
 
     var request_id = ""
 

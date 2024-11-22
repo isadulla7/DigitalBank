@@ -21,7 +21,6 @@ class MainMyHouseAdapter(
             binding.text.text = myHouseGroup.name
             binding.father.setOnClickListener {
                 onClick()
-               // baseInterface.myHouseMoreIcon(myHouseGroup, "service")
             }
         }
 
