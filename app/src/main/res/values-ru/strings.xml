@@ -1030,5 +1030,6 @@
     <string name="in_call_you_cant_use_app">Из соображений безопасности вы не можете использовать приложение во время разговора</string>
     <string name="input_pin_code">Введите свой PIN-код</string>
     <string name="wallet_be_closed">Невозможно закрыть кошелек, сначала извлеките средства</string>
+    <string name="error_card_number">Номер карты может быть неверным</string>
 
 </resources>
