@@ -67,7 +67,7 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
             if (isValid(binding.cardNumber.editableText.toString().replace(" ", ""))) {
                 checkCardRequest()
             } else {
-                showSnackbar("Karta raqam xato bo'lishi munkin")
+                showSnackbar(getString(R.string.error_card_number))
             }
         }
         binding.imageScanner.setOnClickListener {
