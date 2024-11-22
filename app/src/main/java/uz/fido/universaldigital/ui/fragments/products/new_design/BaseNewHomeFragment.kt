@@ -275,10 +275,9 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         }
     }
 
-    private fun initMyHome(){
-
-        val myHomeAdapter = MainMyHouseAdapter(arrayListOf(),requireContext(),{})
-        if (utilsViewModel.myHouse.value.isNullOrEmpty()){
+    private fun initMyHome() {
+        val myHomeAdapter = MainMyHouseAdapter(arrayListOf(), requireContext(), {}, {})
+        if (utilsViewModel.myHouse.value.isNullOrEmpty()) {
             fetchMyHouseList()
         }
         utilsViewModel.myHouse.observe(viewLifecycleOwner) {
@@ -293,11 +292,11 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         }
         binding.homeMyHouseParent.setOnClickListener { goto(R.id.myHomeFragment) }
         binding.myHouseExpandableHandle.setOnClickListener {
-            if (binding.myHouseExpandable.isExpanded){
+            if (binding.myHouseExpandable.isExpanded) {
                 binding.myHouseExpandableHandle.setImageResource(R.drawable.ic_arrow_down)
                 binding.myHouseExpandable.collapse()
                 saveToPaper(Const.HOME_MY_HOUSE_EXPANDED, "N")
-            }else{
+            } else {
                 binding.myHouseExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
                 binding.myHouseExpandable.expand()
                 saveToPaper(Const.HOME_MY_HOUSE_EXPANDED, "Y")
@@ -311,15 +310,16 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     }
 
     private fun fetchMyHouseList() {
-          utilsViewModel.getTemplateGroups(getClientToken()).observe(viewLifecycleOwner){resource->
-              resource?.let { _ ->
-                  if (resource.status == Status.SUCCESS) {
-                   val list= resource.data?.template_groups?: arrayListOf()
-                    //  val
-                  // utilsViewModel.updateMyHouse(list)
-                  }
-              }
-          }
+        utilsViewModel.getTemplateGroups(getClientToken()).observe(viewLifecycleOwner) { resource ->
+            resource?.let { _ ->
+                if (resource.status == Status.SUCCESS) {
+                    val list = resource.data?.template_groups ?: arrayListOf()
+                    val first = MyHouseGroup("0", getString(R.string.add_your_home), 0)
+                    list.add(0, first)
+                    utilsViewModel.updateMyHouse(list)
+                }
+            }
+        }
     }
 
     private fun fetchTemplateList() {
