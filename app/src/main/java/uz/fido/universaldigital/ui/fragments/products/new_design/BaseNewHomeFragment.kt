@@ -276,7 +276,11 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     }
 
     private fun initMyHome() {
-        val myHomeAdapter = MainMyHouseAdapter(arrayListOf(), requireContext(), {}, {})
+        val myHomeAdapter = MainMyHouseAdapter(arrayListOf(), requireContext(), {myHouseGroup->
+            gotoWithSlide(R.id.serviceFragment, bundleOf("home" to myHouseGroup))
+        }, {
+            goto(R.id.myHomeFragment)
+        })
         if (utilsViewModel.myHouse.value.isNullOrEmpty()) {
             fetchMyHouseList()
         }

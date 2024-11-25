@@ -13,7 +13,7 @@ import uz.fido.universaldigital.databinding.MainMyHouseGroupBinding
 class MainMyHouseAdapter(
     private var list: ArrayList<MyHouseGroup>,
     private val context: Context,
-    private val onClick:()->Unit={},
+    private val onClick:(MyHouseGroup)->Unit={},
     private val newHome:()->Unit={}
 ) : RecyclerView.Adapter<MainMyHouseAdapter.ViewHolder>() {
 
@@ -26,7 +26,7 @@ class MainMyHouseAdapter(
             binding.text.text = myHouseGroup.name
             binding.father.setOnClickListener {
                 if(myHouseGroup.id!="0"){
-                    onClick()
+                    onClick(myHouseGroup)
                 }else{
                    newHome()
                 }
