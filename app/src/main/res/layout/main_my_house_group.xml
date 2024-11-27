@@ -10,12 +10,13 @@
     android:layout_marginHorizontal="16dp"
     android:layout_margin="4dp"
     android:background="@drawable/cornered_bg_12dp_stroke">
+
+
     <ImageView
         android:id="@+id/icon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_margin="12dp"
         android:src="@drawable/ic_add_template_empty"
         tools:ignore="ContentDescription" />
 
@@ -25,10 +26,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginHorizontal="12dp"
-        android:layout_marginTop="6dp"
         android:ellipsize="end"
-        android:maxLines="1"
+        android:maxLines="2"
         android:text="@string/add_payment"
         android:textColor="@color/brandBlueColor"
-        android:textSize="12sp" />
+        android:textSize="14sp" />
+
 </LinearLayout>

@@ -311,7 +311,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         }
     }
 
-    private fun fetchMyHouseList() {
+    fun fetchMyHouseList() {
         utilsViewModel.getTemplateGroups(getClientToken()).observe(viewLifecycleOwner) { resource ->
             resource?.let { _ ->
                 if (resource.status == Status.SUCCESS) {
