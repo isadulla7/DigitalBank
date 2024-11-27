@@ -45,17 +45,15 @@ class TransferHistoriesFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        operation =
-            requireArguments().serializable<TransferOperation>(Const.OPERATION) as TransferOperation
-        p2PHistoryAdapter =
-            P2PHistoryAdapter(true, operation == TransferOperation.BY_PHONE) { cardByPhone ->
-                val bundle = Bundle()
-                if (operation == TransferOperation.BY_PHONE) {
-                    bundle.putString(DATA, cardByPhone.phone_number)
-                } else bundle.putString(DATA, cardByPhone.card_number)
-                setFragmentResult(REQUEST_KEY, bundle)
-                findNavController().navigateUp()
-            }
+        operation = requireArguments().serializable<TransferOperation>(Const.OPERATION) as TransferOperation
+        p2PHistoryAdapter = P2PHistoryAdapter(true, operation == TransferOperation.BY_PHONE) { cardByPhone ->
+            val bundle = Bundle()
+            if (operation == TransferOperation.BY_PHONE) {
+                bundle.putString(DATA, cardByPhone.phone_number)
+            } else bundle.putString(DATA, cardByPhone.card_number)
+            setFragmentResult(REQUEST_KEY, bundle)
+            findNavController().navigateUp()
+        }
     }
 
     override fun onInit(savedInstanceState: Bundle?) {

@@ -11,6 +11,14 @@
         app:layout_constraintHeight_percent="0.85"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="snow.json"
+        app:lottie_loop="true" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_avatar"
         android:layout_width="40dp"

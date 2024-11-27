@@ -71,7 +71,7 @@ class TransferToUzsAccountFragment :
     }
 
     private fun setData() {
-        templateDetails!!.forEach {
+        templateDetails?.forEach {
             when (it.code) {
                 "RECEIVER_ACCOUNT" -> binding.etReceiverAccount.setText(it.value)
                 "RECEIVER_FILLIAL_CODE" -> binding.etReceiverMfo.setText(it.value)
@@ -146,8 +146,6 @@ class TransferToUzsAccountFragment :
                     binding.etReceiverMfo.editableText.toString()
                 )
             } else {
-                binding.etReceiverName.setText("")
-                binding.etPurpose.setText("")
                 binding.textPercent.text = ""
             }
         }
@@ -217,8 +215,7 @@ class TransferToUzsAccountFragment :
                             if (response.payment_purpose.isNotEmpty()) binding.etPurpose.setText(
                                 response.payment_purpose
                             )
-                            binding.textPercent.text =
-                                getString(R.string.commission_with_dots) + " " + response.fee_percent + "%"
+                            binding.textPercent.text = getString(R.string.commission_with_dots) + " " + response.fee_percent + "%"
                         }
                     }
 
