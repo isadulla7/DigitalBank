@@ -13,7 +13,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import io.paperdb.Paper
-import kotlinx.android.synthetic.main.fragment_transfer_history.transfer_histories
 import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.my_house.MyHouseGroup
@@ -276,7 +275,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     }
 
     private fun initMyHome() {
-        val myHomeAdapter = MainMyHouseAdapter(arrayListOf(), requireContext(), {myHouseGroup->
+        val myHomeAdapter = MainMyHouseAdapter(arrayListOf(), requireContext(), { myHouseGroup ->
             gotoWithSlide(R.id.serviceFragment, bundleOf("home" to myHouseGroup))
         }, {
             goto(R.id.myHomeFragment)
@@ -310,7 +309,6 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = myHomeAdapter
         }
-
     }
 
     private fun fetchMyHouseList() {

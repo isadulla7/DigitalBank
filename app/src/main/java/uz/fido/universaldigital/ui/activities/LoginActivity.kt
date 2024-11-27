@@ -5,13 +5,23 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.Navigation
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import uz.fido.universaldigital.R
+import uz.fido.universaldigital.base.AppIcons
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityLoginBinding
+import uz.fido.universaldigital.ui.activities.app_icon_changer.changeAppIcon
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
+import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.security.SecurityCheck
 
@@ -19,13 +29,32 @@ import uz.fido.utils.security.SecurityCheck
 class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        database = FirebaseDatabase.getInstance().getReference(Const.FIREBASE_APP_ICON_NAME)
         setContentView(binding.root)
         checkForDeviceLock()
+        listenAppIconChanges()
+    }
+
+    private fun listenAppIconChanges() {
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val currentIcon = getFromPaper(Const.CURRENT_APP_ICON, AppIcons.APP_ICON_DEFAULT)
+                if (currentIcon != snapshot.value.toString()) {
+                    saveToPaper(Const.CURRENT_APP_ICON, snapshot.value.toString())
+                    changeAppIcon()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                saveToPaper(Const.CURRENT_APP_ICON, AppIcons.APP_ICON_DEFAULT)
+            }
+        })
     }
 
     private fun checkForDeviceLock() {

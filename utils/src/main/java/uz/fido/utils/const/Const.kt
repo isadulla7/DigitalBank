@@ -81,9 +81,11 @@ object Const {
     const val PASSWORD_ENC = "ENC_PASS"
     const val KEY_K = "KEY_K"
     const val CURRENT_SEASON = "current_season"
+    const val CURRENT_APP_ICON = "current_app_icon"
     const val NEW_DESIGN = "new_design"
     const val HOME_TEMPLATES_EXPANDED = "HOME_TEMPLATES_EXPANDED"
     const val HOME_MY_HOUSE_EXPANDED = "HOME_MY_HOUSE_EXPANDED"
+    const val FIREBASE_APP_ICON_NAME = "app_icon"
 
     var request_id = ""
 
