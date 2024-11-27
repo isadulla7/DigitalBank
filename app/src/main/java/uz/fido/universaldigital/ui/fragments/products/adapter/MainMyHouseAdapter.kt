@@ -21,7 +21,7 @@ class MainMyHouseAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(myHouseGroup: MyHouseGroup) {
             if (myHouseGroup.id!="0"){
-                binding.icon.setImageResource(R.drawable.my_home_voise)
+                binding.icon.setImageResource(R.drawable.ic_my_home_40)
             }
             binding.text.text = myHouseGroup.name
             binding.father.setOnClickListener {

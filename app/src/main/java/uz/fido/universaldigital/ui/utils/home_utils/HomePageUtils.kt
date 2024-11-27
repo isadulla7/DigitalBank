@@ -105,6 +105,7 @@ fun MenuNewHomeFragment.initRefreshLayout() {
             .setEnableNestedScroll(true)
         setOnRefreshListener {
             getCardList(it)
+            fetchMyHouseList()
         }
         setOnClickListener {
             binding.nestedScrollView.scrollTo(0, 0)
