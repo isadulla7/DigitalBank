@@ -1027,10 +1027,13 @@
     <string name="open">Open</string>
     <string name="in_call_you_cant_use_app">For security reasons, you cannot use the application during a call</string>
     <string name="input_pin_code">Input PIN</string>
-    <string name="new_design">Новый дизайн</string>
-    <string name="switch_new_design">Перейти на новый дизайн</string>
-    <string name="stay_old_design">Остаться в старом дизайне</string>
-    <string name="new_design_description">Мы обновили дизайн главной страницы, сделав ее более удобной и понятной. Убрали лишние элементы, чтобы улучшить навигацию и упростить работу для наших клиентов</string>
-    <string name="new_design_title">Изменили дизайн для вашего удобства</string>
+    <string name="new_design">New design</string>
+    <string name="switch_new_design">Switch to new design</string>
+    <string name="stay_old_design">Stay in old design</string>
+    <string name="new_design_description">We have updated the design of the main page, making it more convenient and understandable. We have removed unnecessary elements to improve navigation and simplify the work for our customers</string>
+    <string name="new_design_title">Changed the design for your convenience</string>
+    <string name="old_design_title">Change the design to default mode</string>
+    <string name="old_design_description">The standard design contains more elements, such as loans, deposits, exchange rate and others</string>
+    <string name="switch_old_design">Switch to the default design</string>
 
 </resources>

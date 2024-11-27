@@ -57,24 +57,11 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginBottom="16dp"
         android:backgroundTint="@color/brandRedColor"
         android:shadowColor="@color/brandRedColor"
         android:text="@string/switch_new_design"
         android:textColor="@color/white"
-        android:textSize="16sp"
-        app:cornerRadius="16dp"
-        app:layout_constraintBottom_toTopOf="@id/stay_old_design" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/stay_old_design"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#F8E7E7"
-        android:text="@string/stay_old_design"
-        android:textColor="@color/brandRedColor"
         android:textSize="16sp"
         app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent" />

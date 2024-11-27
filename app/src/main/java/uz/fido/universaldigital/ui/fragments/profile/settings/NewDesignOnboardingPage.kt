@@ -34,9 +34,14 @@ class NewDesignOnboardingPage : DialogFragment() {
 
     private fun loadImage() {
         if (getFromPaper(Const.NEW_DESIGN, "N") == "Y") {
-
+            binding.title.setText(R.string.old_design_title)
+            binding.description.setText(R.string.old_design_description)
+            binding.switchNewDesign.setText(R.string.switch_old_design)
             binding.designImage.load(R.drawable.old_design_s22)
         } else {
+            binding.title.setText(R.string.new_design_title)
+            binding.description.setText(R.string.new_design_description)
+            binding.switchNewDesign.setText(R.string.switch_new_design)
             binding.designImage.load(R.drawable.new_design_s22)
         }
     }

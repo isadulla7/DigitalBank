@@ -1027,9 +1027,12 @@
     <string name="open">Ochish</string>
     <string name="in_call_you_cant_use_app">Xavfsizlikni ta\'minlash maqsadida qo‘ng‘iroq vaqtida ilovadan foydalana olmaysiz</string>
     <string name="input_pin_code">PIN-kodni kiritish</string>
-    <string name="new_design">Новый дизайн</string>
-    <string name="switch_new_design">Перейти на новый дизайн</string>
+    <string name="new_design">Yangi dizayn</string>
+    <string name="switch_new_design">Yangi dizaynga o‘tish</string>
     <string name="stay_old_design">Остаться в старом дизайне</string>
-    <string name="new_design_description">Мы обновили дизайн главной страницы, сделав ее более удобной и понятной. Убрали лишние элементы, чтобы улучшить навигацию и упростить работу для наших клиентов</string>
-    <string name="new_design_title">Изменили дизайн для вашего удобства</string>
+    <string name="new_design_description">Biz asosiy sahifaning dizaynini yangilab, uni yanada qulay va tushunarli qildik. Navigatsiyani yaxshilash va mijozlarimiz ishini soddalashtirish uchun keraksiz elementlar olib tashlandi</string>
+    <string name="new_design_title">Sizning qulayligingiz uchun dizaynni yangiladik</string>
+    <string name="old_design_title">Dizaynni standart rejimga o‘zgartiring</string>
+    <string name="old_design_description">Standart dizaynda kreditlar, depozitlar, valyuta kursi va boshqalar kabi ko‘proq elementlar mavjud</string>
+    <string name="switch_old_design">Dizaynni standart rejimga o‘zgartirish</string>
 </resources>
