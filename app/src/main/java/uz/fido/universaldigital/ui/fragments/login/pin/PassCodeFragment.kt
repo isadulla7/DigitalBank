@@ -43,6 +43,7 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.device.vibrateTick
+import uz.fido.utils.log.Logger
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.security.getDecodedString
@@ -55,8 +56,10 @@ import uz.fido.utils.utility.language.Utility.getDeviceName
 import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.view.custom_text_view.TextViewMedium
+import java.net.URL
 import java.util.Calendar
 import java.util.concurrent.Executors
+import javax.net.ssl.HttpsURLConnection
 
 @AndroidEntryPoint
 class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>(FragmentPassCodeBinding::inflate, PinCodeViewModel::class.java), View.OnClickListener {

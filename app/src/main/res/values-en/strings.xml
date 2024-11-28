@@ -1027,6 +1027,8 @@
     <string name="open">Open</string>
     <string name="in_call_you_cant_use_app">For security reasons, you cannot use the application during a call</string>
     <string name="input_pin_code">Input PIN</string>
+    <string name="wallet_be_closed">The wallet cannot be closed, please withdraw the funds first.</string>
+    <string name="error_card_number">The card number may be incorrect.</string>
     <string name="new_design">New design</string>
     <string name="switch_new_design">Switch to new design</string>
     <string name="stay_old_design">Stay in old design</string>

@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.utils.lang;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.util.Log;
 
 import java.util.Locale;
 
@@ -45,6 +46,8 @@ public class LocaleHelper {
     }
 
     private static void persist(String language, Context context) {
+
+        Log.d("TAG", "persist: "+language);
         PaperExtensionKt.saveToPaper(context, "lang", language);
     }
 

@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.login.sign_in
 
 import android.os.Build
 import android.os.Bundle
+import android.text.InputFilter
 import android.text.method.LinkMovementMethod
 import android.view.KeyEvent
 import androidx.core.content.ContextCompat
@@ -51,6 +52,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun setPhonePrefix() {
+        binding.etPhoneNumber.filters= arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter { it.isDigit() || it=='+' }  })
         binding.etPhoneNumber.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus && binding.etPhoneNumber.text.toString().isEmpty()) binding.etPhoneNumber.setText(getString(R.string.phone_number_prefix))
         }

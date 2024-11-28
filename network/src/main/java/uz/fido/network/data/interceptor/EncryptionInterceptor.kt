@@ -1,6 +1,7 @@
 package uz.fido.network.data.interceptor
 
 import android.content.Context
+import android.util.Log
 import okhttp3.Interceptor
 import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
@@ -38,6 +39,7 @@ class EncryptionInterceptor(val context: Context) : Interceptor {
     }
 
     private fun getRequest(request: Request, requestBody: RequestBody? = null): Request {
+        var language=getLang()
         return if (request.method == "GET") {
             request.newBuilder()
                 .header(HEADER_APP_LANGUAGE, language).build()
@@ -45,6 +47,14 @@ class EncryptionInterceptor(val context: Context) : Interceptor {
             request.newBuilder().header(HEADER_CONTENT_TYPE, requestBody?.contentType().toString())
                 .header(HEADER_CONTENT_LENGTH, requestBody?.contentLength().toString())
                 .header(HEADER_APP_LANGUAGE, language).method(request.method, requestBody).build()
+        }
+    }
+
+    private fun getLang(): String {
+       return when(context.getFromPaper(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN)){
+            "uz"->"UZL"
+            "en"->"EN"
+            else->"RU"
         }
     }
 
