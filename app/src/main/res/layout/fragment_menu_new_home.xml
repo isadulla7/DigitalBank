@@ -16,7 +16,6 @@
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="snow.json"
         app:lottie_loop="true" />
 
     <de.hdodenhof.circleimageview.CircleImageView
