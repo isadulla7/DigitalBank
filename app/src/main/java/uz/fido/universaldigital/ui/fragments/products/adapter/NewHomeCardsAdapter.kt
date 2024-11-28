@@ -55,7 +55,7 @@ class NewHomeCardsAdapter(
                     binding.cardName.setTextColor(
                         ContextCompat.getColor(
                             itemView.context,
-                            R.color.brandBlueColor_50
+                            R.color.home_card_description_color
                         )
                     )
                     binding.cardBalance.setTextColor(

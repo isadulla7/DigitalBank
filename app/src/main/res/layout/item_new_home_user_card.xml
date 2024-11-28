@@ -51,7 +51,7 @@
         android:layout_marginHorizontal="12dp"
         android:layout_marginTop="2dp"
         android:includeFontPadding="false"
-        android:textColor="@color/brandBlueColor_50"
+        android:textColor="@color/home_card_description_color"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@id/card_bg"
         app:layout_constraintEnd_toStartOf="@id/main_card_sign"

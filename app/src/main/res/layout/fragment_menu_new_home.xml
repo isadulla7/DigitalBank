@@ -166,6 +166,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/my_cards"
+                        android:textColor="@color/brandBlueColor"
                         android:textSize="20sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -338,22 +339,17 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="32dp"
-                        android:background="@color/cardBorderColor" />
-
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/home_templates_parent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingVertical="20dp">
+                        android:paddingTop="16dp">
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
                             android:gravity="center"
                             android:paddingHorizontal="16dp"
                             android:paddingVertical="4dp">
@@ -362,8 +358,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:drawableStart="@drawable/home_templates_icon"
-                                android:drawablePadding="8dp"
                                 android:text="@string/saved_payments"
                                 android:textColor="@color/brandBlueColor"
                                 android:textSize="16sp" />
@@ -373,10 +367,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:contentDescription="@string/templates"
-                                android:src="@drawable/ic_arrow_down"
-                                android:textColor="@color/brandBlueColor"
-                                android:textSize="14sp"
-                                app:tint="@color/brandBlueColor_30" />
+                                android:src="@drawable/ic_arrow_down" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -402,17 +393,12 @@
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/cardBorderColor" />
-
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/home_my_house_parent"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="vertical"
-                        android:paddingVertical="20dp">
+                        android:paddingVertical="16dp">
 
                         <androidx.appcompat.widget.LinearLayoutCompat
                             android:layout_width="match_parent"
@@ -425,8 +411,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:drawableStart="@drawable/ic_new_home_icon"
-                                android:drawablePadding="8dp"
                                 android:text="@string/my_house"
                                 android:textColor="@color/brandBlueColor"
                                 android:textSize="16sp" />
@@ -436,10 +420,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:contentDescription="@string/templates"
-                                android:src="@drawable/ic_arrow_down"
-                                android:textColor="@color/brandBlueColor"
-                                android:textSize="14sp"
-                                app:tint="@color/brandBlueColor_30" />
+                                android:src="@drawable/ic_arrow_down" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -464,11 +445,6 @@
                         </net.cachapa.expandablelayout.ExpandableLayout>
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/cardBorderColor" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

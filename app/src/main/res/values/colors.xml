@@ -68,4 +68,5 @@
     <color name="alert_dialog_background">#F2FFFFFF</color>
     <color name="view_pager_tab_color">#ffffff</color>
     <color name="view_pager_stroke_color">#E7E9EC</color>
+    <color name="home_card_description_color">#848E9D</color>
 </resources>
