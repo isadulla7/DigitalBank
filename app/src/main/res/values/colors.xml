@@ -35,6 +35,7 @@
     <color name="frozenWhite">#FFFFFF</color>
     <color name="frozenBlue">#091C3A</color>
     <color name="cardBgColor">#FFFFFF</color>
+    <color name="newCardBgColor">#F8F8F8</color>
     <color name="cardBorderColor">#F6F6F6</color>
 
     <color name="etBackgroundColor">#F6F6F6</color>
@@ -58,6 +59,7 @@
 
     <color name="searchBackgroundColor">#F0F0F0</color>
     <color name="backgroundColor">#F8F8F8</color>
+    <color name="newBackgroundColor">#FFFFFF</color>
     <color name="status_waiting">#FCB924</color>
     <color name="status_done">#3BBC7E</color>
     <color name="goal_out">#1E000000</color>

@@ -1,6 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.products.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -10,13 +9,11 @@ import uz.fido.universaldigital.databinding.MainMyHouseGroupBinding
 
 class MainMyHouseAdapter(
     private var list: ArrayList<MyHouseGroup>,
-    private val context: Context,
-    private val onClick: (MyHouseGroup) -> Unit = {},
-    private val newHome: () -> Unit = {}
+    private val onClickHouse: (MyHouseGroup) -> Unit = {},
+    private val addNewHouse: () -> Unit = {}
 ) : RecyclerView.Adapter<MainMyHouseAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: MainMyHouseGroupBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: MainMyHouseGroupBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(myHouseGroup: MyHouseGroup) {
             if (myHouseGroup.id != "0") {
                 binding.icon.setImageResource(R.drawable.ic_new_home_icon)
@@ -24,9 +21,9 @@ class MainMyHouseAdapter(
             binding.text.text = myHouseGroup.name
             binding.father.setOnClickListener {
                 if (myHouseGroup.id != "0") {
-                    onClick(myHouseGroup)
+                    onClickHouse(myHouseGroup)
                 } else {
-                    newHome()
+                    addNewHouse()
                 }
             }
         }
@@ -35,7 +32,7 @@ class MainMyHouseAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
             MainMyHouseGroupBinding.inflate(
-                LayoutInflater.from(context),
+                LayoutInflater.from(parent.context),
                 parent,
                 false
             )

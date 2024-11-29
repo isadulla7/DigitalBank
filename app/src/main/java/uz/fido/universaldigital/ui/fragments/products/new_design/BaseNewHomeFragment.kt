@@ -27,9 +27,9 @@ import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragmen
 import uz.fido.universaldigital.ui.fragments.payment.templates.TemplateTypes
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
-import uz.fido.universaldigital.ui.fragments.products.adapter.FastAccessOperationAdapter
-import uz.fido.universaldigital.ui.fragments.products.adapter.HomeTemplatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.MainMyHouseAdapter
+import uz.fido.universaldigital.ui.fragments.products.adapter.NewFastAccessOperationAdapter
+import uz.fido.universaldigital.ui.fragments.products.adapter.NewHomeTemplatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
 import uz.fido.universaldigital.ui.fragments.products.widgets.card_phone.CardNumberDialog
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
@@ -232,7 +232,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             }
         }
         binding.rvFastAccess.apply {
-            val operationsAdapter = FastAccessOperationAdapter(
+            val operationsAdapter = NewFastAccessOperationAdapter(
                 requireContext(), this@BaseNewHomeFragment, fastAccessOperations
             )
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
@@ -242,7 +242,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     }
 
     private fun initHomeTemplates() {
-        val paymentTemplatesAdapter = HomeTemplatesAdapter(this@BaseNewHomeFragment, ArrayList())
+        val paymentTemplatesAdapter = NewHomeTemplatesAdapter(this@BaseNewHomeFragment, ArrayList())
         if (getFromPaper(Const.HOME_TEMPLATES_EXPANDED, "N") == "Y") {
             binding.templateExpandable.isExpanded = true
             binding.templatesExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
@@ -275,7 +275,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     }
 
     private fun initMyHome() {
-        val myHomeAdapter = MainMyHouseAdapter(arrayListOf(), requireContext(), { myHouseGroup ->
+        val myHomeAdapter = MainMyHouseAdapter(arrayListOf(), { myHouseGroup ->
             gotoWithSlide(R.id.serviceFragment, bundleOf("home" to myHouseGroup))
         }, {
             goto(R.id.myHomeFragment)
