@@ -15,6 +15,7 @@ import uz.fido.network.domain.model.payment.Payment
 import uz.fido.network.domain.model.payment.PaymentGroup
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 
@@ -30,10 +31,12 @@ abstract class DownloadPayment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        downloadPaymentViewModel =
-            ViewModelProvider(requireActivity())[DownloadPaymentViewModel::class.java]
-        databaseHelper = DatabaseHelper(requireContext())
+        try {
+            downloadPaymentViewModel = ViewModelProvider(requireActivity())[DownloadPaymentViewModel::class.java]
+            databaseHelper = DatabaseHelper(requireContext())
+        } catch (e: Exception) {
+            recordException(e)
+        }
     }
 
     fun checkLang() {

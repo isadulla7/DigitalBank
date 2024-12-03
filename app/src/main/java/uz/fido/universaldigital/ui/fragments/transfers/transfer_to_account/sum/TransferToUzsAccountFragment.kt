@@ -23,6 +23,7 @@ import uz.fido.universaldigital.ui.fragments.payment.abc_success.SuccessPaymentF
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.RequisitesViewModel
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Command.ABS
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CHAR_UZS
@@ -227,53 +228,58 @@ class TransferToUzsAccountFragment :
     }
 
     private fun preparePaymentBank() {
-        val params = HashMap<String, String>()
-        val templateKeyValueList = ArrayList<TemplateKeyValue>()
-        params["AMOUNT"] =
-            Format.formatAmountToTiyn(binding.etBankAmount.text.toString().replace(" ", ""))
-        params["RECEIVER_ACCOUNT"] = binding.etReceiverAccount.text.toString().trim()
-        params["RECEIVER_NAME"] = binding.etReceiverName.text.toString()
-        params["RECEIVER_FILLIAL_CODE"] = binding.etReceiverMfo.text.toString()
-        params["RECEIVER_INN"] = ""
-        params["PAYMENT_PURPOSE"] = binding.etPurpose.text.toString()
-        params["PAYMENT_PURPOSE_CODE"] = "00667"
+        try {
+            val params = HashMap<String, String>()
+            val templateKeyValueList = ArrayList<TemplateKeyValue>()
+            params["AMOUNT"] =
+                Format.formatAmountToTiyn(binding.etBankAmount.text.toString().replace(" ", ""))
+            params["RECEIVER_ACCOUNT"] = binding.etReceiverAccount.text.toString().trim()
+            params["RECEIVER_NAME"] = binding.etReceiverName.text.toString()
+            params["RECEIVER_FILLIAL_CODE"] = binding.etReceiverMfo.text.toString()
+            params["RECEIVER_INN"] = ""
+            params["PAYMENT_PURPOSE"] = binding.etPurpose.text.toString()
+            params["PAYMENT_PURPOSE_CODE"] = "00667"
 
-        params.forEach {
-            val templateKeyValue = TemplateKeyValue()
-            templateKeyValue.code = it.key
-            templateKeyValue.level_position = "1"
-            templateKeyValue.value = it.value
-            templateKeyValueList.add(templateKeyValue)
-        }
+            params.forEach {
+                val templateKeyValue = TemplateKeyValue()
+                templateKeyValue.code = it.key
+                templateKeyValue.level_position = "1"
+                templateKeyValue.value = it.value
+                templateKeyValueList.add(templateKeyValue)
+            }
 
-        val request = PreparePaymentRequest(
-            service_id = SERVICE_ID__4,
-            payment_detail_code = "PAYMENT_ONE_TIME",
-            command = ABS,
-            curr_level_position = "1",
-            params = params
-        )
-        val paymentService: PaymentService = dbHelper.getServiceByContractId(SERVICE_ID__4)!!
-        val amount = binding.etBankAmount.editableText.toString().replace(" ", "").trim()
-        viewModel.preparePaymentRequest(getClientToken(), request).observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    val bundle = Bundle()
-                    bundle.putSerializable("list", it.data?.service_details)
-                    bundle.putSerializable("paymentService", paymentService)
-                    bundle.putSerializable("templateKeyValues", templateKeyValueList)
-                    bundle.putSerializable(SuccessPaymentFragment.PAYMENT_KEY_VALUES, params)
-                    bundle.putString("currency", currency)
-                    bundle.putDouble("percent", percent)
-                    bundle.putString("amount", amount)
-                    gotoWithSlide(R.id.confirmRequisitesPayment, bundle)
-                }
+            val request = PreparePaymentRequest(
+                service_id = SERVICE_ID__4,
+                payment_detail_code = "PAYMENT_ONE_TIME",
+                command = ABS,
+                curr_level_position = "1",
+                params = params
+            )
+            val paymentService: PaymentService = dbHelper.getServiceByContractId(SERVICE_ID__4)!!
+            val amount = binding.etBankAmount.editableText.toString().replace(" ", "").trim()
+            viewModel.preparePaymentRequest(getClientToken(), request).observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        val bundle = Bundle()
+                        bundle.putSerializable("list", it.data?.service_details)
+                        bundle.putSerializable("paymentService", paymentService)
+                        bundle.putSerializable("templateKeyValues", templateKeyValueList)
+                        bundle.putSerializable(SuccessPaymentFragment.PAYMENT_KEY_VALUES, params)
+                        bundle.putString("currency", currency)
+                        bundle.putDouble("percent", percent)
+                        bundle.putString("amount", amount)
+                        gotoWithSlide(R.id.confirmRequisitesPayment, bundle)
+                    }
 
-                Status.ERROR -> {
-                    binding.btnContinue.setProgress(false)
-                    showSnackbar(it.message.toString())
+                    Status.ERROR -> {
+                        binding.btnContinue.setProgress(false)
+                        showSnackbar(it.message.toString())
+                    }
                 }
             }
+        } catch (e: Exception) {
+            showSnackbar(getString(uz.fido.utils.R.string.unkknown_error))
+            recordException(e)
         }
     }
 

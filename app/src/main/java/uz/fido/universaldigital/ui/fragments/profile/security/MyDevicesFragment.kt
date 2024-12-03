@@ -26,6 +26,7 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientPhoneNumber
 import uz.fido.utils.utility.user.getClientToken
+import java.util.Calendar
 
 @AndroidEntryPoint
 @SuppressLint("SetTextI18n")
@@ -63,6 +64,8 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
             devicesAdapter = DevicesAdapter(list, this@MyDevicesFragment, requireContext())
             adapter = devicesAdapter
         }
+        binding.deviceName.text = android.os.Build.MODEL
+        binding.lastSeen.text = Calendar.getInstance().time.toString()
     }
 
     override fun terminateSessionType(type: String) {
@@ -88,8 +91,8 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
                     data?.forEach {
                         if (it.device_code != requireContext().getDeviceIds()) list.add(it)
                         else {
-                            binding.deviceName.text = it.device_name + ", " + if (it.device_type == "A") "Android" else "iOS"
-                            binding.lastSeen.text = it.last_seen_date
+//                            binding.deviceName.text = it.device_name + ", " + if (it.device_type == "A") "Android" else "iOS"
+//                            binding.lastSeen.text = it.last_seen_date
                         }
                     }
                     initRecyclerView()
