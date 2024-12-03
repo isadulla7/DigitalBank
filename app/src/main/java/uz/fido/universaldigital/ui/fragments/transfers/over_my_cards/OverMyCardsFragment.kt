@@ -31,6 +31,7 @@ import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFr
 import uz.fido.universaldigital.ui.fragments.transfers.utils.getInfoCommand
 import uz.fido.universaldigital.ui.fragments.transfers.utils.getServiceIdInfo
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isNotActive
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
@@ -79,13 +80,13 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
             getTransferInfo()
             arguments?.let {
-                val card= requireArguments().serializable(Const.SENDER_CARD) as CardResponse?
-                val recCard=requireArguments().serializable(Const.RECEIVER_CARD) as CardResponse?
-                if (card!=null){
-                    senderCard =card
+                val card = requireArguments().serializable(Const.SENDER_CARD) as CardResponse?
+                val recCard = requireArguments().serializable(Const.RECEIVER_CARD) as CardResponse?
+                if (card != null) {
+                    senderCard = card
                 }
-                if (recCard!=null){
-                    receiverCard =recCard
+                if (recCard != null) {
+                    receiverCard = recCard
                 }
                 binding.senderCards.setCurrentItem(userSumCards.indexOf(senderCard), true)
                 binding.receiverCards.setCurrentItem(userSumCards.indexOf(receiverCard), true)
@@ -120,14 +121,18 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             )
         }
         binding.btnMagnet.setOnClickListener {
-            if (binding.commissionProgress.isVisible) return@setOnClickListener
-            if (senderCard == receiverCard) return@setOnClickListener
-            if (percent == BigDecimal(0.0)) {
-                binding.etAmount.setText(senderCard?.balance.toString().toBigDecimal().divide(BigDecimal(100)).toString())
-                return@setOnClickListener
+            try {
+                if (binding.commissionProgress.isVisible) return@setOnClickListener
+                if (senderCard == receiverCard) return@setOnClickListener
+                if (percent == BigDecimal(0.0)) {
+                    binding.etAmount.setText(senderCard?.balance.toString().toBigDecimal().divide(BigDecimal(100)).toString())
+                    return@setOnClickListener
+                }
+                binding.etAmount.setText(getAvailableAmount())
+                continueButtonState()
+            } catch (e: Exception) {
+                recordException(e)
             }
-            binding.etAmount.setText(getAvailableAmount())
-            continueButtonState()
         }
     }
 
@@ -322,7 +327,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
         when {
             senderCard == null || receiverCard == null -> {
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
-                Log.d("TAG", "continueButtonState: ${senderCard==null}")
+                Log.d("TAG", "continueButtonState: ${senderCard == null}")
                 hideCommissionBlock()
                 return false
             }
@@ -384,7 +389,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
         try {
             if (senderCard != null) {
                 val balance = senderCard?.balance.toString().toBigDecimal().divide(BigDecimal(100))
-                val calculatedAmount = balance.divide(BigDecimal(1) + percent.divide(BigDecimal(100)),3, RoundingMode.DOWN)
+                val calculatedAmount = balance.divide(BigDecimal(1) + percent.divide(BigDecimal(100)), 3, RoundingMode.DOWN)
                 return calculatedAmount.toString()
             } else return ""
         } catch (e: Exception) {
