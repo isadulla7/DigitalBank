@@ -57,7 +57,6 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
         binding.etRepeatPassword.addTextChangedListener { checkForButton() }
         binding.btnContinue.setOnClickListener {
             if (isValidPasswordFormat(binding.etPassword.text.toString())) {
-                binding.btnContinue.setProgress(true)
                 changePasswordOperation()
             } else {
                 showSnackbar(requireContext().getString(R.string.pass_check))
@@ -99,12 +98,12 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
     }
 
     private fun changePassword() {
-        showProgress()
+        binding.btnContinue.setProgress(true)
         val model = ChangePasswordRequest(new_password = encryptPassword(binding.etPassword.text.toString().trim()), current_password = requireContext().getUserQwerty())
         viewModel.changePassword(getClientToken(), model).observe(viewLifecycleOwner) {
+            binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
-                    hideProgress()
                     showSnackbar(getString(R.string.success_change_password))
                     Handler(Looper.getMainLooper()).postDelayed(
                         { requireActivity().logOut() }, 500
@@ -112,7 +111,6 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
                 }
 
                 Status.ERROR -> {
-                    hideProgress()
                     showSnackbar(it.message!!)
                 }
             }
@@ -120,7 +118,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
     }
 
     private fun changePasswordWithSmsRequest() {
-        showProgress()
+        binding.btnContinue.setProgress(true)
         val changePasswordRequest = ChangePasswordRequest(
             phone_number = phoneNumber,
             sms_code = smsCode,
@@ -128,22 +126,20 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
             client_id = Keys.getClientId()
         )
         viewModel.changePasswordWithSMS(changePasswordRequest).observe(viewLifecycleOwner) {
+            binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
-                    hideProgress()
                     requireContext().saveUserQwerty(encryptPassword(binding.etPassword.text.toString().trim()))
                     showSnackbar(getString(R.string.success_change_password))
                     requireContext().startActivityWithClearTask(LoginActivity::class.java)
                 }
 
                 Status.ERROR -> {
-                    hideProgress()
                     showSnackbar(it.message!!)
                 }
             }
         }
     }
-
 
     private fun checkForButton() {
         val pass = binding.etPassword.text.toString()

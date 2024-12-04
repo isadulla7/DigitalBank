@@ -129,7 +129,6 @@ fun Context.saveUserSms(qwerty: String) {
 }
 
 fun Context.getUserQwerty(): String {
-
     if (Build.VERSION.SDK_INT > Build.VERSION_CODES.M) {
         val mainKey = MasterKey.Builder(this, MasterKey.DEFAULT_MASTER_KEY_ALIAS)
             .setKeyScheme(MasterKey.KeyScheme.AES256_GCM).build()

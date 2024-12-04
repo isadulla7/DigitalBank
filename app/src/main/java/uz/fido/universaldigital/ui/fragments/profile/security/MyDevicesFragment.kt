@@ -26,7 +26,9 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientPhoneNumber
 import uz.fido.utils.utility.user.getClientToken
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 @AndroidEntryPoint
 @SuppressLint("SetTextI18n")
@@ -36,6 +38,7 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
 
     private lateinit var deviceDialog: DeviceDialog
 
+    private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
     private var list = ArrayList<UserDevices>()
     private var devicesAdapter: DevicesAdapter? = null
     private var userDevices: UserDevices? = null
@@ -65,7 +68,7 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
             adapter = devicesAdapter
         }
         binding.deviceName.text = android.os.Build.MODEL
-        binding.lastSeen.text = Calendar.getInstance().time.toString()
+        binding.lastSeen.text = dateFormat.format(Calendar.getInstance().time)
     }
 
     override fun terminateSessionType(type: String) {
@@ -90,10 +93,6 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
                     list.clear()
                     data?.forEach {
                         if (it.device_code != requireContext().getDeviceIds()) list.add(it)
-                        else {
-//                            binding.deviceName.text = it.device_name + ", " + if (it.device_type == "A") "Android" else "iOS"
-//                            binding.lastSeen.text = it.last_seen_date
-                        }
                     }
                     initRecyclerView()
                     if (list.isEmpty()) {
