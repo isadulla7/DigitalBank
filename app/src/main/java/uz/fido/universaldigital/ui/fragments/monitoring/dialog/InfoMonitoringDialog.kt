@@ -15,6 +15,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.DialogInfoMonitoringBinding
 import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.format.Format
 
 class InfoMonitoringDialog(
@@ -85,31 +86,35 @@ class InfoMonitoringDialog(
     }
 
     private fun init() {
-        if (searchDateResponse != null) {
-            when (searchDateResponse.request_code) {
-                "P2P", "CONVERSION" -> {
-                    if (searchDateResponse.from_object_value != null) {
-                        addView(getString(R.string.sender_card), Format.formatCardNumberForCheque(searchDateResponse.from_object_value!!))
-                        if (!searchDateResponse.from_embossed_name.isNullOrEmpty()) {
-                            addView(getString(R.string.sender_name), searchDateResponse.from_embossed_name.orEmpty())
+        try {
+            if (searchDateResponse != null) {
+                when (searchDateResponse.request_code) {
+                    "P2P", "CONVERSION" -> {
+                        if (searchDateResponse.from_object_value != null) {
+                            addView(getString(R.string.sender_card), Format.formatCardNumberForCheque(searchDateResponse.from_object_value.orEmpty()))
+                            if (!searchDateResponse.from_embossed_name.isNullOrEmpty()) {
+                                addView(getString(R.string.sender_name), searchDateResponse.from_embossed_name.orEmpty())
+                            }
                         }
-                    }
-                    if (searchDateResponse.to_object_value != null) {
-                        addView(getString(R.string.receiver_card), Format.formatCardNumberForCheque(searchDateResponse.to_object_value!!))
-                        if (!searchDateResponse.to_embossed_name.isNullOrEmpty()) {
-                            addView(getString(R.string.receiver_name), searchDateResponse.to_embossed_name.orEmpty())
+                        if (searchDateResponse.to_object_value != null) {
+                            addView(getString(R.string.receiver_card), Format.formatCardNumberForCheque(searchDateResponse.to_object_value.orEmpty()))
+                            if (!searchDateResponse.to_embossed_name.isNullOrEmpty()) {
+                                addView(getString(R.string.receiver_name), searchDateResponse.to_embossed_name.orEmpty())
+                            }
                         }
+                        initViews(isRequired = false, isPayment = false)
                     }
-                    initViews(isRequired = false, isPayment = false)
-                }
 
-                "CREATE_PAYMENT" -> {
-                    initViews(isRequired = true, isPayment = true)
-                }
+                    "CREATE_PAYMENT" -> {
+                        initViews(isRequired = true, isPayment = true)
+                    }
 
-                else -> initViews(isRequired = true, isPayment = true)
-            }
-        } else initViews(isRequired = true, isPayment = true)
+                    else -> initViews(isRequired = true, isPayment = true)
+                }
+            } else initViews(isRequired = true, isPayment = true)
+        } catch (e: Exception) {
+            recordException(e)
+        }
     }
 
     private fun initViews(isRequired: Boolean, isPayment: Boolean) {

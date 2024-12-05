@@ -75,7 +75,6 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
         const val MONITORING_DEBIT = "debit"
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         linearLayoutManager = LinearLayoutManager(requireContext())

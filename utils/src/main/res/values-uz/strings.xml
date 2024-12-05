@@ -52,4 +52,9 @@
     <string name="tue">Sesh</string>
     <string name="mon">Du</string>
     <string name="sun">Yak</string>
+    <string name="one_year">yil</string>
+    <string name="two_three_four_year">yil</string>
+    <string name="five_year">yil</string>
+    <string name="two_three_four_day">kun</string>
+    <string name="two_three_four_month">oy</string>
 </resources>

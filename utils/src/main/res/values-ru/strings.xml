@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="please_try_again_later">Noma\'lum xatolik, birozdan so\'ng harakat qilib ko\'ring</string>
+    <string name="please_try_again_later">Неизвестная ошибка, попробуйте через некоторое время</string>
     <string name="error_security_connection">Не удалось установить безопасное соединение с сервером</string>
     <string name="slow_internet_connection">Пожалуйста, проверьте интернет соединение</string>
     <string name="tech_works">Ведутся технические работы\nПожалуйста, попробуйте позже</string>
@@ -10,8 +10,8 @@
     <string name="update_downloaded">Обновление скачано</string>
     <string name="cancel">Отменить</string>
     <string name="reopen">Перезагрузить</string>
-    <string name="today">Bugun</string>
-    <string name="yesterday">Kecha</string>
+    <string name="today">Сегодня</string>
+    <string name="yesterday">Ночь</string>
     <string name="day">день</string>
     <string name="days">дней</string>
     <string name="month">месяц</string>
@@ -19,12 +19,12 @@
     <string name="year">год</string>
     <string name="years">годы</string>
     <string name="indefinite">Бессрочный</string>
-    <string name="wrong_format">Noto\'g\'ri format</string>
+    <string name="wrong_format">Неправильный формат</string>
     <string name="wrong_card_expire_date">Введите правильный срок действия карты</string>
     <string name="main_card">Main card</string>
     <string name="sum">сум</string>
     <string name="no_card">На карту</string>
-    <string name="unkknown_error">Unknown error</string>
+    <string name="unkknown_error">Неизвестная ошибка</string>
     <string name="empty_list">Ничего не нашлось</string>
     <string name="you_have_no_internet">У вас нет интернета</string>
     <string name="you_have_no_internet_desc">Нет подключения к интернета повторите попытку или попробуйте позже</string>
@@ -52,5 +52,10 @@
     <string name="tue">Вт</string>
     <string name="mon">Пн</string>
     <string name="sun">Вс</string>
+    <string name="one_year">год</string>
+    <string name="two_three_four_year">года</string>
+    <string name="five_year">лет</string>
+    <string name="two_three_four_day">дня</string>
+    <string name="two_three_four_month">месяца</string>
 
 </resources>

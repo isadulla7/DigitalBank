@@ -567,6 +567,8 @@ class Format {
                 'D' -> {
                     return if (expire.dropLast(1) == "1") {
                         expire.dropLast(1) + " " + context.getString(R.string.day)
+                    } else if (expire.dropLast(1) == "2" || expire.dropLast(1) == "3" || expire.dropLast(1) == "4") {
+                        expire.dropLast(1) + " " + context.getString(R.string.two_three_four_day)
                     } else {
                         expire.dropLast(1) + " " + context.getString(R.string.days)
                     }
@@ -575,6 +577,8 @@ class Format {
                 'M' -> {
                     return if (expire.dropLast(1) == "1") {
                         expire.dropLast(1) + " " + context.getString(R.string.month)
+                    } else if (expire.dropLast(1) == "2" || expire.dropLast(1) == "3" || expire.dropLast(1) == "4") {
+                        expire.dropLast(1) + " " + context.getString(R.string.two_three_four_month)
                     } else {
                         expire.dropLast(1) + " " + context.getString(R.string.months)
                     }
@@ -582,10 +586,10 @@ class Format {
 
                 'Y' -> {
                     return if (expire.dropLast(1) == "1") {
-                        expire.dropLast(1) + " " + context.getString(R.string.year)
-                    } else {
-                        expire.dropLast(1) + " " + context.getString(R.string.years)
-                    }
+                        expire.dropLast(1) + " " + context.getString(R.string.one_year)
+                    } else if (expire.dropLast(1) == "2" || expire.dropLast(1) == "3" || expire.dropLast(1) == "4") {
+                        expire.dropLast(1) + " " + context.getString(R.string.two_three_four_year)
+                    } else expire.dropLast(1) + " " + context.getString(R.string.five_year)
                 }
 
                 else -> return expire

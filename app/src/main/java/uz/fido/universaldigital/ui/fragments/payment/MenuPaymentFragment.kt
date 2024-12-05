@@ -55,19 +55,15 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     private val utilsViewModel: UtilsViewModel by activityViewModels()
 
 
-
     private var templatesSkeleton: SkeletonScreen? = null
     private var skeletonScreen: SkeletonScreen? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         menuPaymentsAdapter = MainPaymentsAdapter {
             goto(R.id.paymentListFragment, bundleOf(PaymentListFragment.PAYMENT_GROUP to it))
         }
-
         paymentTemplatesAdapter = PaymentTemplatesAdapter(this)
-       //
     }
 
 
@@ -150,8 +146,8 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     }
 
     override fun downloadPaymentSuccess() {
-        if (skeletonScreen!=null){
-        skeletonScreen?.hide()
+        if (skeletonScreen != null) {
+            skeletonScreen?.hide()
         }
         try {
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
@@ -161,7 +157,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
                 executor.execute {
                     val searchListSize = SearchList.getSearchList(requireActivity()).size
                     if (searchListSize < 50) {
-                      //  fillSearchList()
+                        //  fillSearchList()
                     }
                 }
             }

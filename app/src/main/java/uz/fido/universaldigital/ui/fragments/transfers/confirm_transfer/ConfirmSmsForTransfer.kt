@@ -22,6 +22,7 @@ import uz.fido.universaldigital.databinding.FragmentConfirmSmsBinding
 import uz.fido.universaldigital.services.SMSBroadcastReceiver
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsViewModel
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -50,9 +51,13 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        transferDto = requireArguments().serializable<TransferDto>(SuccessTransferFragment.TRANSFER_DTO) as TransferDto
-        operation = transferDto.operation.toString()
-        p2pRequest = requireArguments().serializable<P2PRequest>(TRANSFER_REQUEST) as P2PRequest
+        try {
+            transferDto = requireArguments().serializable<TransferDto>(SuccessTransferFragment.TRANSFER_DTO) as TransferDto
+            operation = transferDto.operation.toString()
+            p2pRequest = requireArguments().serializable<P2PRequest>(TRANSFER_REQUEST) as P2PRequest
+        } catch (e: Exception) {
+            recordException(e)
+        }
     }
 
     override fun onInit(savedInstanceState: Bundle?) {

@@ -268,8 +268,8 @@
     <string name="maybe_deposit">Deposit</string>
     <string name="interest_rate_type">Interest rate type</string>
     <string name="with_drawal">Drawing</string>
-    <string name="maybe_dep">Maybe</string>
-    <string name="possible">This is impossible</string>
+    <string name="maybe_dep">Possible</string>
+    <string name="possible">Impossible</string>
     <string name="accept_deposit_privacy">I agree to the <annotation type="help_link">User Agreement</annotation> Universal Bank</string>
     <string name="open_deposit_success">The deposit was successfully opened</string>
     <string name="text_empty_deposit">Deposit not available yet</string>
