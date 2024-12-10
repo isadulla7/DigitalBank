@@ -49,12 +49,11 @@ import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpViewModel
 import uz.fido.universaldigital.ui.fragments.login.sign_up_password.SignUpPasswordFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.main_dialogs.AllServicesDialog
+import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
-import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
-import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.EMAIL
 import uz.fido.utils.const.Const.PHONE_NUMBER
@@ -356,7 +355,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                         Status.ERROR -> {
                             binding.btnContinue.setProgress(false)
                             showSnackbar(it.message.toString())
-                         //   showWrongSmsCodeDialog()
+                            //   showWrongSmsCodeDialog()
                         }
                     }
                 }
@@ -715,7 +714,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                 when (it.status) {
                     Status.SUCCESS -> {
                         getFCMToken()
-                        model.string_line = it.data!!.string_line
+                        model.string_line = it.data?.string_line.orEmpty()
                     }
 
                     Status.ERROR -> {}

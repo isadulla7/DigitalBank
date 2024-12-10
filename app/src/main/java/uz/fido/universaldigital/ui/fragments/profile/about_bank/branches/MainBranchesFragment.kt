@@ -1,11 +1,14 @@
 package uz.fido.universaldigital.ui.fragments.profile.about_bank.branches
 
+import android.Manifest
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.location.Location
 import android.location.LocationListener
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -163,10 +166,16 @@ class MainBranchesFragment : BaseFragment<FragmentBranchesBinding, MenuProfileVi
         }
     }
 
-    @SuppressLint("MissingPermission")
     private fun initBranches(addMarker: Boolean, isMove: Boolean, zoom: Float) {
         map?.let {
             it.isMyLocationEnabled = true
+            if (ActivityCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
             LocationServices.getFusedLocationProviderClient(requireActivity()).lastLocation.addOnSuccessListener(
                 requireActivity()
             ) { location ->
