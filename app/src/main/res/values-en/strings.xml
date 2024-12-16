@@ -340,7 +340,7 @@
     <string name="transfer">Transfer</string>
     <string name="by_wallet_number">By wallet number</string>
     <string name="request_money">Request funds</string>
-    <string name="by_requisites">By details</string>
+    <string name="by_requisites">By requisites</string>
     <string name="swift_transfer">SWIFT transfers</string>
     <string name="to_card_desc">Transfer to any bank card</string>
     <string name="over_my_cards_desc">Transfer between your cards</string>
