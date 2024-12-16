@@ -186,3 +186,8 @@ fun TextView.setMinMaxAmount(
         }
     } else return false
 }
+
+fun Context.formatErrorMessage(message: String? = null): String {
+    if (message == "CARD_EXPIRED") return getString(R.string.card_expired)
+    return getString(R.string.card_not_found)
+}

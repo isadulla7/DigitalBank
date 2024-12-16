@@ -54,6 +54,7 @@ class MenuProductsViewModel @Inject constructor(
 ) : AbstractViewModel(application) {
 
     var cards: LiveData<List<CardResponse>> = cardRepository.cardList
+    var isCardPasted: MutableLiveData<Boolean> = MutableLiveData(false)
     private val _notification = MutableStateFlow<ArrayList<Notification>>(arrayListOf())
     val notification: StateFlow<ArrayList<Notification>> = _notification
     var updateCardState: MutableLiveData<Boolean> = MutableLiveData()
@@ -90,8 +91,8 @@ class MenuProductsViewModel @Inject constructor(
         emit(cardRepository.getCardList(token))
     }
 
-    fun getCardNumberRequest(token: String,request: GetObjValueRequest) = liveData(Dispatchers.IO) {
-        emit(cardRepository.getObjValue(token,request))
+    fun getCardNumberRequest(token: String, request: GetObjValueRequest) = liveData(Dispatchers.IO) {
+        emit(cardRepository.getObjValue(token, request))
     }
 
     fun getCardInfoRequest(token: String, cardInfoRequest: CardInfoRequest) = liveData(Dispatchers.IO) {

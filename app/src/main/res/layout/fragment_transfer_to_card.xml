@@ -200,13 +200,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
-                android:text="@string/min_amount_1000"
                 android:textColor="@color/brandBlueColor_50"
                 android:textSize="14sp"
-                android:visibility="gone"
+                android:visibility="invisible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/amount_suggestions" />
+                app:layout_constraintTop_toBottomOf="@id/amount_suggestions"
+                tools:text="@string/min_amount_1000" />
 
             <uz.fido.utils.view.custom_text_view.TextViewSemiBold
                 android:id="@+id/tv_saved_receivers"
