@@ -711,8 +711,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
                         editText.visibility = View.GONE
                     } else {
                         if (!paymentParams.settlement.isNullOrEmpty()) {
-                            var tag =
-                                paymentParams.settlement + mainBlockBinding.textInputLayout.tag
+                            var tag = paymentParams.settlement + mainBlockBinding.textInputLayout.tag
                             if (paymentParams.settlement == "-1") {
                                 tag = "-1"
                             }
@@ -788,22 +787,21 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
         }
     }
 
-    private val contactsPermission =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            permissions.entries.forEach {
-                if (!it.value) {
-                    OpenSettingsDialog((getString(R.string.contact_permission_description))) {
-                        run {
-                            val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                            intent.data = Uri.fromParts("package", activity?.packageName, null)
-                            startActivity(intent)
-                        }
-                    }.show(childFragmentManager, "")
-                    return@registerForActivityResult
-                }
+    private val contactsPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+        permissions.entries.forEach {
+            if (!it.value) {
+                OpenSettingsDialog((getString(R.string.contact_permission_description))) {
+                    run {
+                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        intent.data = Uri.fromParts("package", activity?.packageName, null)
+                        startActivity(intent)
+                    }
+                }.show(childFragmentManager, "")
+                return@registerForActivityResult
             }
-            this.permissionInterface?.contactsPermissionGranted()
         }
+        this.permissionInterface?.contactsPermissionGranted()
+    }
 
     private fun checkForContactsPermission(permissionInterface: PermissionInterface?): Boolean {
         val listPermissionsNeeded = ArrayList<String>()
@@ -827,7 +825,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
 
     /*
     *
-    * Agar SETTLEMENT -1 bo'lsa SETTLEMENT qiymatidan qat'iy nazar qo'shiladi
+    * Agar SETTLEMENT -1 bo'lsa SETTLEMENT qiymatidan qat'iy nazar listga qo'shiladi
     * Agar SETTLEMENT -1 dan boshqa bo'lsa SETTLEMENTlar ro'yxati vergul bilan ajratilgan bo'ladi, ulani
     * arrayga split(",") qilinib tanlangan to'lov turini SETTLEMENTi shu arrayda bor bo'lsa ko'rsatiladi aks holda ko'rastilmaydi
     *

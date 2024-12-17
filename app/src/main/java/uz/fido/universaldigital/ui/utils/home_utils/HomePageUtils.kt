@@ -10,6 +10,7 @@ import io.paperdb.Paper
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.ui.fragments.products.MenuHomeFragment
+import uz.fido.universaldigital.ui.fragments.products.new_design.MenuNewHomeFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.widgets.total_balance.TotalBalanceWidget
@@ -32,7 +33,26 @@ fun MenuHomeFragment.loadProfileImage() {
     }
 }
 
+
+fun MenuNewHomeFragment.loadProfileImage() {
+    if (getFromPaper(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
+        Picasso.get()
+            .load(getFromPaper(Const.PAPER_USER_PHOTO_PATH))
+            .placeholder(R.drawable.ic_profile_image_empty)
+            .error(R.drawable.ic_profile_image_empty)
+            .into(binding.userAvatar)
+    } else {
+        binding.userAvatar.load(R.drawable.ic_profile_image_empty)
+    }
+}
+
 fun MenuHomeFragment.setUserDetails() {
+    val fullName = getFromPaper(Const.PAPER_CLIENT_FULL_NAME)
+    val clientPhone = Format.phoneFormat(getFromPaper(Const.PAPER_CLIENT_PHONE))
+    binding.userName.text = fullName.trim().ifEmpty { clientPhone }
+}
+
+fun MenuNewHomeFragment.setUserDetails() {
     val fullName = getFromPaper(Const.PAPER_CLIENT_FULL_NAME)
     val clientPhone = Format.phoneFormat(getFromPaper(Const.PAPER_CLIENT_PHONE))
     binding.userName.text = fullName.trim().ifEmpty { clientPhone }
@@ -71,6 +91,21 @@ fun MenuHomeFragment.initRefreshLayout() {
         setOnRefreshListener {
             getCardList(it)
             fetchCurrencyRates()
+        }
+        setOnClickListener {
+            binding.nestedScrollView.scrollTo(0, 0)
+            binding.refreshLayout.autoRefresh()
+        }
+    }
+}
+
+fun MenuNewHomeFragment.initRefreshLayout() {
+    binding.refreshLayout.apply {
+        setRefreshHeader(BezierCircleHeader(requireContext()))
+            .setEnableNestedScroll(true)
+        setOnRefreshListener {
+            getCardList(it)
+            fetchMyHouseList()
         }
         setOnClickListener {
             binding.nestedScrollView.scrollTo(0, 0)

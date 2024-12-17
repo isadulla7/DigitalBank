@@ -49,7 +49,7 @@ class TransferViewModel @Inject constructor(
         vmScope.launch {
             popularTransfersLoader.postValue(true)
             val result = useCase.getPopularTransferList(context.getClientToken())
-            val sortedList = result.filter { it.is_favourite == "Y" }
+            val sortedList = result.filter { it.is_favourite == "Y" && it.card_number?.length == 16 }
             popularTransfers.postValue(sortedList as ArrayList<PopularTransfers>?)
             popularTransfersLoader.postValue(false)
 

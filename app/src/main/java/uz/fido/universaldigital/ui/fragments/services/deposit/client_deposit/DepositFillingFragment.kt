@@ -19,6 +19,7 @@ import uz.fido.universaldigital.databinding.FragmentDepositFillingBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
@@ -104,32 +105,38 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     }
 
     private fun closeDeposit() {
-        val amount = deposit.sumDep
-        binding.btnContinue.setProgress(true)
-        viewModel.closeDeposit(
-            getClientToken(),
-            EarlyClosureRequest(
-                command = if (chosenCard.object_type == WALLET) "dep&purse" else "dep&card",
-                to_object_value = chosenCard.object_value,
-                to_object_id = chosenCard.object_id,
-                to_object_expire = chosenCard.object_expiry,
-                savDepId = deposit.savDepId.orEmpty(),
-                credit_amount = (amount ?: "0").replace(",", "."),
-                client_id = getClientId(),
-                service_id = "-8",
-                status = deposit.status.orEmpty(),
-                closing_date = deposit.closingDate.orEmpty()
-            )
-        ).observe(viewLifecycleOwner) {
-            binding.btnContinue.setProgress(false)
-            when (it.status) {
-                Status.SUCCESS -> {
-                    getDeposits("0")
-                }
+        if (this::chosenCard.isInitialized) {
+            try {
+                val amount = deposit.sumDep
+                binding.btnContinue.setProgress(true)
+                viewModel.closeDeposit(
+                    getClientToken(),
+                    EarlyClosureRequest(
+                        command = if (chosenCard.object_type == WALLET) "dep&purse" else "dep&card",
+                        to_object_value = chosenCard.object_value,
+                        to_object_id = chosenCard.object_id,
+                        to_object_expire = chosenCard.object_expiry,
+                        savDepId = deposit.savDepId.orEmpty(),
+                        credit_amount = (amount ?: "0").replace(",", "."),
+                        client_id = getClientId(),
+                        service_id = "-8",
+                        status = deposit.status.orEmpty(),
+                        closing_date = deposit.closingDate.orEmpty()
+                    )
+                ).observe(viewLifecycleOwner) {
+                    binding.btnContinue.setProgress(false)
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            getDeposits("0")
+                        }
 
-                Status.ERROR -> {
-                    showSnackbar(it.message.toString())
+                        Status.ERROR -> {
+                            showSnackbar(it.message.toString())
+                        }
+                    }
                 }
+            } catch (e: Exception) {
+                recordException(e)
             }
         }
     }

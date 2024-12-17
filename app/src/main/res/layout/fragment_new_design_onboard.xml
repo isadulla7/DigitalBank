@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/new_design_header_bg">
+
+    <ImageView
+        android:id="@+id/design_image"
+        android:layout_width="256dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="-100dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/new_design_s22"
+        app:layout_constraintBottom_toTopOf="@id/background_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/background_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/new_design_content_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="@id/title" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="12dp"
+        android:includeFontPadding="false"
+        android:paddingTop="32dp"
+        android:text="@string/new_design_title"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/description"
+        app:lineHeight="28sp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/new_design_description"
+        android:textColor="@color/brandBlueColor_40"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toTopOf="@id/switch_new_design"
+        app:lineHeight="18sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/switch_new_design"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/brandRedColor"
+        android:shadowColor="@color/brandRedColor"
+        android:text="@string/switch_new_design"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:cornerRadius="16dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

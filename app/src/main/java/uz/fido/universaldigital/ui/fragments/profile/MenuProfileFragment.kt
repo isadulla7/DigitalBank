@@ -16,6 +16,7 @@ import uz.fido.universaldigital.databinding.FragmentMenuProfileBinding
 import uz.fido.universaldigital.ui.dialogs.LogOutDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeDialogFragment
+import uz.fido.universaldigital.ui.fragments.profile.settings.NewDesignOnboardingPage
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.isUserIdentified
 import uz.fido.utils.app.PermissionInterface
@@ -63,6 +64,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
         binding.version.text = getString(R.string.version, BuildConfig.VERSION_NAME) + "(${BuildConfig.VERSION_CODE})" + if (BuildConfig.DEBUG) "-DEBUG" else ""
         storage = FirebaseStorage.getInstance()
         storageReference = storage!!.reference
+        binding.newDesignSwitch.isChecked = getFromPaper(Const.NEW_DESIGN, "N") == "Y"
     }
 
     private fun initUserIdentifyStatus() {
@@ -97,6 +99,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             logOut.setOnClickListener { showLogOutDialog() }
             profile.setOnClickListener { gotoWithSlide(R.id.myDetailsFragment) }
             cheques.setOnClickListener { gotoWithSlide(R.id.savedChequesFragment) }
+            newDesignState.setOnClickListener { NewDesignOnboardingPage().show(childFragmentManager, "") }
         }
     }
 

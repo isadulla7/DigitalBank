@@ -31,10 +31,12 @@ abstract class DownloadPayment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        downloadPaymentViewModel =
-            ViewModelProvider(requireActivity())[DownloadPaymentViewModel::class.java]
-        databaseHelper = DatabaseHelper(requireContext())
+        try {
+            downloadPaymentViewModel = ViewModelProvider(requireActivity())[DownloadPaymentViewModel::class.java]
+            databaseHelper = DatabaseHelper(requireContext())
+        } catch (e: Exception) {
+            recordException(e)
+        }
     }
 
     fun checkLang() {

@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -85,7 +86,7 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
 
 
         setFragmentResultListener(TransferHistoriesFragment.REQUEST_KEY) { _, bundle ->
-            val walletNumber = bundle.getString(TransferHistoriesFragment.REQUEST_KEY)
+            val walletNumber = bundle.getString(TransferHistoriesFragment.DATA)
             binding.etWalletNumber.setText(walletNumber)
         }
     }
@@ -153,12 +154,11 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
         }
     }
 
-    private fun setWalletMask(prefix: String) {
-        if (prefix.length == 2) {
-            if (binding.etWalletNumber.editableText.toString() == "DV") {
-                binding.etWalletNumber.setMask("## #########")
-            } else {
-                binding.etWalletNumber.setMask("### ########")
+    private fun setWalletNumberMask(number: String) {
+        when (number.length) {
+            2, 11, 12 -> {
+                if (number.startsWith("DV")) binding.etWalletNumber.setMask("## #########")
+                if (number.startsWith("AUZ")) binding.etWalletNumber.setMask("### ########")
             }
         }
     }
@@ -169,14 +169,17 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
         )
     }
 
-    private fun setInputType(){
+    private fun setInputType() {
         binding.etWalletNumber.filters += InputFilter.AllCaps()
     }
 
     private fun initTextWatchers() {
+        binding.etWalletNumber.doOnTextChanged { text, start, before, count ->
+            val inputText = text.toString()
+            setWalletNumberMask(inputText)
+        }
         binding.etWalletNumber.doAfterTextChanged { editable ->
             editable?.let { s ->
-                setWalletMask(s.toString())
                 if (s.length == 11 || s.length == 12) {
                     if (s.startsWith("DV") && s.length == 11) {
                         viewModel.getWalletInfo(s.toString().replace(" ", ""))
@@ -240,7 +243,7 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
                 cardInfoDto = cardInfo
                 cardInfoDto!!.card_number = senderWallet
                 viewModel.getTransferInfo(senderCard, cardInfoDto)
-                btnContinue.isEnabled(etAmount.text.toString()=="" || etAmount.text.toString()=="0")
+                btnContinue.isEnabled(etAmount.text.toString() == "" || etAmount.text.toString() == "0")
                 if (senderCard?.object_value == cardInfoDto?.card_number) {
                     binding.tvMinAmount.visibility = View.VISIBLE
                     binding.tvMinAmount.text = getString(R.string.sender_and_receiver_the_same)
@@ -260,7 +263,7 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
                 binding.etAmount,
                 p2PInfoDto,
                 requireContext()
-            ) && (binding.etAmount.text.toString()!="" && binding.etAmount.text.toString()!="0")
+            ) && (binding.etAmount.text.toString() != "" && binding.etAmount.text.toString() != "0")
         )
     }
 

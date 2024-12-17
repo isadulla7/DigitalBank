@@ -35,6 +35,7 @@ import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSi
 import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAndOutAnim
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
@@ -42,7 +43,6 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.device.vibrateTick
-import uz.fido.utils.log.Logger
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.security.getDecodedString
@@ -55,10 +55,8 @@ import uz.fido.utils.utility.language.Utility.getDeviceName
 import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.view.custom_text_view.TextViewMedium
-import java.net.URL
 import java.util.Calendar
 import java.util.concurrent.Executors
-import javax.net.ssl.HttpsURLConnection
 
 @AndroidEntryPoint
 class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>(FragmentPassCodeBinding::inflate, PinCodeViewModel::class.java), View.OnClickListener {
@@ -82,7 +80,11 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let { operation = it.getString(Const.OPERATION, "") }
+        try {
+            arguments?.let { operation = it.getString(Const.OPERATION, "") }
+        } catch (e: Exception) {
+            recordException(e)
+        }
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -489,12 +491,14 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         PinDotsAnimation.errorAnimation(binding.dotView, requireActivity())
         secondPin = ""
         binding.errorText.text = getString(R.string.wrong_pin)
-        Handler(Looper.myLooper()!!).postDelayed({
-            if (context != null) {
+        try {
+            Handler(Looper.getMainLooper()).postDelayed({
                 clearDots()
                 binding.errorText.text = ""
-            }
-        }, 1000)
+            }, 1000)
+        } catch (e: Exception) {
+            recordException(e)
+        }
         setWrongPinCounter()
     }
 
