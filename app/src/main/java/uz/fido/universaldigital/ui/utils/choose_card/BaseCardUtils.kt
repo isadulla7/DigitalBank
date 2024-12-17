@@ -122,7 +122,7 @@ object BaseCardUtils {
         if (cardNumber.isNotEmpty() && cardNumber.length > 6) {
             return when (cardNumber.substring(0, 6)) {
                 "860055", "986009", "626272", "49169905" -> R.drawable.ic_bank_aab
-                "860002", "986012" -> R.drawable.ic_bank_nbu
+                "860002", "986012", "561468" -> R.drawable.ic_bank_nbu
                 "860006", "626291", "409783", "419813", "986008" -> R.drawable.ic_bank_xalq
                 "860013", "986004", "55553664" -> R.drawable.ic_bank_asaka
                 "860033", "986001", "479092", "55553630" -> R.drawable.ic_bank_ipoteka
