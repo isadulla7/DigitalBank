@@ -1,5 +1,4 @@
 object ConfigData {
-
     const val APPLICATION_ID = "uz.fido.universaldigital"
     const val MIN_SDK_VERSION = 23
     const val COMPILE_SDK_VERSION = 34
@@ -8,5 +7,4 @@ object ConfigData {
     const val VERSION_CODE = 101
     const val RELEASE_VERSION_NAME = "1.0.29"
     const val ARCHIVES_BASE_NAME = "Universalbank($VERSION_CODE)"
-
 }
