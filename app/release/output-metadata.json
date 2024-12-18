@@ -11,9 +11,9 @@
       "type": "SINGLE",
       "filters": [],
       "attributes": [],
-      "versionCode": 88,
-      "versionName": "1.0.26",
-      "outputFile": "Universalbank(88)-release.apk"
+      "versionCode": 100,
+      "versionName": "1.0.29",
+      "outputFile": "Universalbank(100)-release.apk"
     }
   ],
   "elementType": "File"

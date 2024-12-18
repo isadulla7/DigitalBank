@@ -169,7 +169,7 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
         )
     }
 
-    private fun setInputType(){
+    private fun setInputType() {
         binding.etWalletNumber.filters += InputFilter.AllCaps()
     }
 
@@ -192,15 +192,17 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
             }
         }
         binding.etAmount.doAfterTextChanged {
-            binding.btnContinue.isEnabled(
-                binding.tvMinAmount.setMinMaxAmount(
-                    senderCard,
-                    cardInfoDto?.card_number,
-                    binding.etAmount,
-                    p2PInfoDto,
-                    requireContext()
+            if (p2PInfoDto?.isSuccess == true) {
+                binding.btnContinue.isEnabled(
+                    binding.tvMinAmount.setMinMaxAmount(
+                        senderCard,
+                        cardInfoDto?.card_number,
+                        binding.etAmount,
+                        p2PInfoDto,
+                        requireContext()
+                    )
                 )
-            )
+            } else binding.btnContinue.isEnabled(false)
         }
     }
 
@@ -240,7 +242,7 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
                 cardInfoDto = cardInfo
                 cardInfoDto!!.card_number = senderWallet
                 viewModel.getTransferInfo(senderCard, cardInfoDto)
-                btnContinue.isEnabled(etAmount.text.toString()=="" || etAmount.text.toString()=="0")
+                btnContinue.isEnabled(etAmount.text.toString() == "" || etAmount.text.toString() == "0")
                 if (senderCard?.object_value == cardInfoDto?.card_number) {
                     binding.tvMinAmount.visibility = View.VISIBLE
                     binding.tvMinAmount.text = getString(R.string.sender_and_receiver_the_same)
@@ -253,15 +255,21 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
     private fun p2pInfoLoaded(p2PInfo: P2PInfoDto) {
         p2PInfoDto = p2PInfo
         binding.tvMinAmount.visibility = View.VISIBLE
-        binding.btnContinue.isEnabled(
-            binding.tvMinAmount.setMinMaxAmount(
-                senderCard,
-                cardInfoDto?.card_number,
-                binding.etAmount,
-                p2PInfoDto,
-                requireContext()
-            ) && (binding.etAmount.text.toString()!="" && binding.etAmount.text.toString()!="0")
-        )
+        if (!p2PInfo.isSuccess && !p2PInfo.errorMessage.isNullOrEmpty()) {
+            binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+            binding.tvMinAmount.text = p2PInfo.errorMessage
+            binding.btnContinue.isEnabled(false)
+        } else {
+            binding.btnContinue.isEnabled(
+                binding.tvMinAmount.setMinMaxAmount(
+                    senderCard,
+                    cardInfoDto?.card_number,
+                    binding.etAmount,
+                    p2PInfoDto,
+                    requireContext()
+                ) && (binding.etAmount.text.toString() != "" && binding.etAmount.text.toString() != "0")
+            )
+        }
     }
 
     private fun setCardNumberError() {
@@ -324,17 +332,21 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
 
     private fun continueButtonClickEvent() {
         val amount = binding.etAmount.editableText.toString()
-        gotoWithSlide(
-            R.id.confirmTransferFragment, bundleOf(
-                SuccessTransferFragment.TRANSFER_DTO to TransferDto(
-                    senderCard = senderCard,
-                    receiverCard = cardInfoDto,
-                    transferAmount = Format.sendFormat(amount),
-                    commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
-                    operation = SuccessTransferFragment.TRANSFER_BY_WALLET
+        if (p2PInfoDto?.isSuccess == true) {
+            if (amount.isNotEmpty()) {
+                gotoWithSlide(
+                    R.id.confirmTransferFragment, bundleOf(
+                        SuccessTransferFragment.TRANSFER_DTO to TransferDto(
+                            senderCard = senderCard,
+                            receiverCard = cardInfoDto,
+                            transferAmount = Format.sendFormat(amount),
+                            commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
+                            operation = SuccessTransferFragment.TRANSFER_BY_WALLET
+                        )
+                    )
                 )
-            )
-        )
+            }
+        } else showSnackbar(p2PInfoDto?.errorMessage ?: "")
     }
 
 }

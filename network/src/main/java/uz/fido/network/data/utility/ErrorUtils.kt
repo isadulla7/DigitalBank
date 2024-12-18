@@ -44,10 +44,7 @@ object ErrorUtils {
                 "Token expired"
             )
         } else {
-            APIError(
-                ServerCode.BAD_REQUEST.code,
-                "Unknown error$"
-            )
+            APIError(ServerCode.BAD_REQUEST.code, "Unknown error$")
         }
     }
 

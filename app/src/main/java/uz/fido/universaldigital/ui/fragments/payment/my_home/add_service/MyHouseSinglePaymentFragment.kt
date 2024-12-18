@@ -190,7 +190,7 @@ class MyHouseSinglePaymentFragment :
                     Status.SUCCESS -> {
                         gotoWithSlide(
                             R.id.successPaymentFragment, bundleOf(
-                                "transactId" to it.data?.request_id,
+                                "transactId" to it.data?.request_id.toString(),
                                 Const.OPERATION to SuccessPaymentFragment.OPERATION_HOME_PAYMENT,
                                 SuccessPaymentFragment.PAYMENT_KEY_VALUES to params,
                                 Const.OPERATION_AMOUNT to Format.formatMoney(

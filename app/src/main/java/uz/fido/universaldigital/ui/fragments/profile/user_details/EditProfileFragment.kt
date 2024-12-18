@@ -166,8 +166,6 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
         if (it.resultCode == Activity.RESULT_OK && it.data?.data != null) {
             val path = it.data?.data.toString()
             openEditPhotoActivity(path)
-        } else {
-            toast(it.toString())
         }
     }
 

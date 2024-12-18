@@ -90,4 +90,14 @@
         <item name="cornerSize">32dp</item>
     </style>
 
+    <style name="my_dialog_theme" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="colorAccent">@color/brandRedColor</item>
+        <item name="android:windowBackground">@color/cardBgColor</item>     <!--calendar background-->
+        <item name="android:colorControlActivated">@color/brandRedColor</item> <!--selected day-->
+        <item name="android:textColorPrimary">@color/mainTextColor</item> <!--days of the month-->
+        <item name="android:textColorSecondary">@color/mainTextColor
+        </item>    <!--days of the week-->
+        <item name="android:textColorPrimaryInverse">@color/white</item>
+    </style>
+
 </resources>

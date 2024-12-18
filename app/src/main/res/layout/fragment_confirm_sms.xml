@@ -25,6 +25,7 @@
             android:id="@+id/et_sms"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:digits="1234567890"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
             android:maxLength="8"
