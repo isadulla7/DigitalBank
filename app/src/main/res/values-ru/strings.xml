@@ -1031,5 +1031,13 @@
     <string name="input_pin_code">Введите свой PIN-код</string>
     <string name="wallet_be_closed">Невозможно закрыть кошелек, сначала извлеките средства</string>
     <string name="error_card_number">Номер карты может быть неверным</string>
+    <string name="new_design">Новый дизайн</string>
+    <string name="switch_new_design">Перейти на новый дизайн</string>
+    <string name="stay_old_design">Остаться в старом дизайне</string>
+    <string name="new_design_description">Мы обновили дизайн главной страницы, сделав ее более удобной и понятной. Убрали лишние элементы, чтобы улучшить навигацию и упростить работу для наших клиентов</string>
+    <string name="new_design_title">Изменили дизайн для вашего удобства</string>
+    <string name="old_design_title">Изменить дизайн на режим по умолчанию</string>
+    <string name="old_design_description">Стандартный дизайн содержит больше элементов, таких как кредиты, депозиты, обменный курс и другие</string>
+    <string name="switch_old_design">Изменить дизайн на режим по умолчанию</string>
 
 </resources>

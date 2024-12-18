@@ -22,6 +22,7 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardBalanc
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardNumberFormatted
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardTypeImage
 import uz.fido.universaldigital.ui.utils.extensions.getDrawableFromRes
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -112,32 +113,37 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
     }
 
     private fun checkForSmsConfirmation() {
-        if (!checkForPaymentSms(
-                card = transferDto.senderCard!!,
-                smsControlLimit = "0",
-                amount = Format.formatAmountToTiyn(transferDto.transferAmount)
-            )
-        ) {
-            p2pRequest()
-        } else {
-            binding.btnContinue.setProgress(true)
-            checkForSms(
-                card = transferDto.senderCard!!,
-                amount = transferDto.transferAmount!!,
-                serviceId = getServiceIdInfo(transferDto.receiverCard?.card_number!!, transferDto.senderCard!!.object_value),
-            ) { needConfirmSms, stringLine ->
-                if (needConfirmSms == "Y") {
-                    gotoWithSlide(
-                        R.id.confirmSmsForTransfer, bundleOf(
-                            ConfirmSmsForTransfer.STRING_LINE to stringLine,
-                            ConfirmSmsForTransfer.TRANSFER_REQUEST to p2pRequest,
-                            SuccessTransferFragment.TRANSFER_DTO to transferDto
+        try {
+            if (!checkForPaymentSms(
+                    card = transferDto.senderCard!!,
+                    smsControlLimit = "0",
+                    amount = Format.formatAmountToTiyn(transferDto.transferAmount)
+                )
+            ) {
+                p2pRequest()
+            } else {
+                binding.btnContinue.setProgress(true)
+                checkForSms(
+                    card = transferDto.senderCard!!,
+                    amount = transferDto.transferAmount!!,
+                    serviceId = getServiceIdInfo(transferDto.receiverCard?.card_number!!, transferDto.senderCard!!.object_value),
+                ) { needConfirmSms, stringLine ->
+                    if (needConfirmSms == "Y") {
+                        gotoWithSlide(
+                            R.id.confirmSmsForTransfer, bundleOf(
+                                ConfirmSmsForTransfer.STRING_LINE to stringLine,
+                                ConfirmSmsForTransfer.TRANSFER_REQUEST to p2pRequest,
+                                SuccessTransferFragment.TRANSFER_DTO to transferDto
+                            )
                         )
-                    )
-                } else {
-                    p2pRequest()
+                    } else {
+                        p2pRequest()
+                    }
                 }
             }
+        } catch (e: Exception) {
+            showSnackbar(getString(uz.fido.utils.R.string.unkknown_error))
+            recordException(e)
         }
     }
 

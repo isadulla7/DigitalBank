@@ -8,6 +8,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -85,7 +86,7 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
 
 
         setFragmentResultListener(TransferHistoriesFragment.REQUEST_KEY) { _, bundle ->
-            val walletNumber = bundle.getString(TransferHistoriesFragment.REQUEST_KEY)
+            val walletNumber = bundle.getString(TransferHistoriesFragment.DATA)
             binding.etWalletNumber.setText(walletNumber)
         }
     }
@@ -153,12 +154,11 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
         }
     }
 
-    private fun setWalletMask(prefix: String) {
-        if (prefix.length == 2) {
-            if (binding.etWalletNumber.editableText.toString() == "DV") {
-                binding.etWalletNumber.setMask("## #########")
-            } else {
-                binding.etWalletNumber.setMask("### ########")
+    private fun setWalletNumberMask(number: String) {
+        when (number.length) {
+            2, 11, 12 -> {
+                if (number.startsWith("DV")) binding.etWalletNumber.setMask("## #########")
+                if (number.startsWith("AUZ")) binding.etWalletNumber.setMask("### ########")
             }
         }
     }
@@ -174,9 +174,12 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
     }
 
     private fun initTextWatchers() {
+        binding.etWalletNumber.doOnTextChanged { text, start, before, count ->
+            val inputText = text.toString()
+            setWalletNumberMask(inputText)
+        }
         binding.etWalletNumber.doAfterTextChanged { editable ->
             editable?.let { s ->
-                setWalletMask(s.toString())
                 if (s.length == 11 || s.length == 12) {
                     if (s.startsWith("DV") && s.length == 11) {
                         viewModel.getWalletInfo(s.toString().replace(" ", ""))
@@ -192,17 +195,15 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
             }
         }
         binding.etAmount.doAfterTextChanged {
-            if (p2PInfoDto?.isSuccess == true) {
-                binding.btnContinue.isEnabled(
-                    binding.tvMinAmount.setMinMaxAmount(
-                        senderCard,
-                        cardInfoDto?.card_number,
-                        binding.etAmount,
-                        p2PInfoDto,
-                        requireContext()
-                    )
+            binding.btnContinue.isEnabled(
+                binding.tvMinAmount.setMinMaxAmount(
+                    senderCard,
+                    cardInfoDto?.card_number,
+                    binding.etAmount,
+                    p2PInfoDto,
+                    requireContext()
                 )
-            } else binding.btnContinue.isEnabled(false)
+            )
         }
     }
 
@@ -255,21 +256,15 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
     private fun p2pInfoLoaded(p2PInfo: P2PInfoDto) {
         p2PInfoDto = p2PInfo
         binding.tvMinAmount.visibility = View.VISIBLE
-        if (!p2PInfo.isSuccess && !p2PInfo.errorMessage.isNullOrEmpty()) {
-            binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
-            binding.tvMinAmount.text = p2PInfo.errorMessage
-            binding.btnContinue.isEnabled(false)
-        } else {
-            binding.btnContinue.isEnabled(
-                binding.tvMinAmount.setMinMaxAmount(
-                    senderCard,
-                    cardInfoDto?.card_number,
-                    binding.etAmount,
-                    p2PInfoDto,
-                    requireContext()
-                ) && (binding.etAmount.text.toString() != "" && binding.etAmount.text.toString() != "0")
-            )
-        }
+        binding.btnContinue.isEnabled(
+            binding.tvMinAmount.setMinMaxAmount(
+                senderCard,
+                cardInfoDto?.card_number,
+                binding.etAmount,
+                p2PInfoDto,
+                requireContext()
+            ) && (binding.etAmount.text.toString() != "" && binding.etAmount.text.toString() != "0")
+        )
     }
 
     private fun setCardNumberError() {
@@ -332,21 +327,17 @@ class TransferByWalletFragment : BaseFragment<FragmentTransferByWalletBinding, T
 
     private fun continueButtonClickEvent() {
         val amount = binding.etAmount.editableText.toString()
-        if (p2PInfoDto?.isSuccess == true) {
-            if (amount.isNotEmpty()) {
-                gotoWithSlide(
-                    R.id.confirmTransferFragment, bundleOf(
-                        SuccessTransferFragment.TRANSFER_DTO to TransferDto(
-                            senderCard = senderCard,
-                            receiverCard = cardInfoDto,
-                            transferAmount = Format.sendFormat(amount),
-                            commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
-                            operation = SuccessTransferFragment.TRANSFER_BY_WALLET
-                        )
-                    )
+        gotoWithSlide(
+            R.id.confirmTransferFragment, bundleOf(
+                SuccessTransferFragment.TRANSFER_DTO to TransferDto(
+                    senderCard = senderCard,
+                    receiverCard = cardInfoDto,
+                    transferAmount = Format.sendFormat(amount),
+                    commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
+                    operation = SuccessTransferFragment.TRANSFER_BY_WALLET
                 )
-            }
-        } else showSnackbar(p2PInfoDto?.errorMessage ?: "")
+            )
+        )
     }
 
 }

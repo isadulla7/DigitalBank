@@ -729,4 +729,8 @@
         android:id="@+id/myCreditsServiceFragment"
         android:name="uz.fido.universaldigital.ui.fragments.services.main.MyCreditsServiceFragment"
         android:label="MyCreditsServiceFragment" />
+    <fragment
+        android:id="@+id/menuNewHomeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.new_design.MenuNewHomeFragment"
+        android:label="MenuNewHomeFragment" />
 </navigation>

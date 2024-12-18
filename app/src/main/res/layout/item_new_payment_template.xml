@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/template"
+    android:layout_width="120dp"
+    android:layout_height="100dp"
+    android:layout_margin="4dp"
+    android:background="@drawable/new_cornered_bg_12dp_stroke"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:src="@drawable/ic_add_template_empty"
+        tools:ignore="ContentDescription" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/template_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="6dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/add_payment"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="12sp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/template_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginTop="4dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="@string/add_payment"
+        android:textColor="@color/brandBlueColor_40"
+        android:textSize="12sp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

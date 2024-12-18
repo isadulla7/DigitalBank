@@ -25,6 +25,7 @@ import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoring
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.HumoMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format
@@ -39,7 +40,7 @@ import java.util.Locale
 import java.util.SortedMap
 
 @AndroidEntryPoint
-class FirstHumoMonitoringFragment:
+class FirstHumoMonitoringFragment :
     BaseFragment<FragmentHumoFirstMonitoringBinding, LocalMonitoringViewModel>(
         FragmentHumoFirstMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
     ), (HumoMonitoringItem) -> Unit {
@@ -50,12 +51,12 @@ class FirstHumoMonitoringFragment:
     private var dateBegin: String = ""
     private var dateEnd: String = ""
     private var operationType = 2
-    private var choose:Int=2
-    private var timeType:String=""
+    private var choose: Int = 2
+    private var timeType: String = ""
 
     private lateinit var filterDialog: MonitoringAllCardDialog
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
-    private var filter:Boolean=false
+    private var filter: Boolean = false
     private val humoMonitoringAdapter by lazy {
         HumoMonitoringAdapter(
             totalList,
@@ -71,6 +72,7 @@ class FirstHumoMonitoringFragment:
         checkFilter()
         onClickView()
     }
+
     private fun setImageFirst() {
         binding.appBar.setAdditionalIcon(R.drawable.ic_filter_frame)
     }
@@ -89,44 +91,48 @@ class FirstHumoMonitoringFragment:
     }
 
     private fun getFilterHumoMonitoring() {
-        totalList = arrayListOf()
-        binding.shimmerView.visibility=View.VISIBLE
-        binding.rec.visibility=View.GONE
-        val skeletonScreen = showSkeleton(
-            binding.shimmerView,
-            MibDetailsAdapter(requireContext(), this),
-            R.layout.shimmer_item_monitoring,
-            1
-        )
-        val inputFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
-        val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-        val formatStartDate=inputFormat.parse(dateBegin)
-        val formatEndDate=inputFormat.parse(dateEnd)
-        dateBegin=format.format(formatStartDate)
-        dateEnd=format.format(formatEndDate)
-
-        val type = choose
-        viewModel.getHumoMonitoring(
-            getClientToken(), HumoMonitoringRequest(
-                from_object_id = cardList[0],
-                start_date = dateBegin,
-                end_date = dateEnd
+        try {
+            totalList = arrayListOf()
+            binding.shimmerView.visibility = View.VISIBLE
+            binding.rec.visibility = View.GONE
+            val skeletonScreen = showSkeleton(
+                binding.shimmerView,
+                MibDetailsAdapter(requireContext(), this),
+                R.layout.shimmer_item_monitoring,
+                1
             )
-        ).observe(viewLifecycleOwner) {
-            skeletonScreen.hide()
-            binding.shimmerView.visibility = View.GONE
-            binding.rec.visibility=View.VISIBLE
-            when (it.status) {
-                Status.SUCCESS -> {
-                    val response = it.data?.transactions ?: arrayListOf()
-                    successMonitoringList(response, type)
-                }
+            val inputFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+            val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            val formatStartDate = inputFormat.parse(dateBegin)
+            val formatEndDate = inputFormat.parse(dateEnd)
+            dateBegin = format.format(formatStartDate)
+            dateEnd = format.format(formatEndDate)
 
-                Status.ERROR -> {
-                    humoMonitoringAdapter.removeList()
-                    binding.consError.visibility = View.VISIBLE
+            val type = choose
+            viewModel.getHumoMonitoring(
+                getClientToken(), HumoMonitoringRequest(
+                    from_object_id = cardList[0],
+                    start_date = dateBegin,
+                    end_date = dateEnd
+                )
+            ).observe(viewLifecycleOwner) {
+                skeletonScreen.hide()
+                binding.shimmerView.visibility = View.GONE
+                binding.rec.visibility = View.VISIBLE
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        val response = it.data?.transactions ?: arrayListOf()
+                        successMonitoringList(response, type)
+                    }
+
+                    Status.ERROR -> {
+                        humoMonitoringAdapter.removeList()
+                        binding.consError.visibility = View.VISIBLE
+                    }
                 }
             }
+        } catch (e: Exception) {
+            recordException(e)
         }
     }
 
@@ -137,45 +143,45 @@ class FirstHumoMonitoringFragment:
         }
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.appBar.setOnClickListener {
-            if (dateBegin!=""  && dateBegin.contains(".")){
+            if (dateBegin != "" && dateBegin.contains(".")) {
                 val inputFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
                 val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-                val formatStartDate=format.parse(dateBegin)
-                val formatEndDate=format.parse(dateEnd)
-                dateBegin=inputFormat.format(formatStartDate)
-                dateEnd=inputFormat.format(formatEndDate)
+                val formatStartDate = format.parse(dateBegin)
+                val formatEndDate = format.parse(dateEnd)
+                dateBegin = inputFormat.format(formatStartDate)
+                dateEnd = inputFormat.format(formatEndDate)
             }
-            filterDialog= MonitoringAllCardDialog(choose,dateBegin,dateEnd,timeType,
-                onClickItem = { choose,startDate,endDate,type->
-                    this.choose=choose
-                    dateBegin=startDate
-                    dateEnd=endDate
-                    timeType=type
-                    filter=true
+            filterDialog = MonitoringAllCardDialog(choose, dateBegin, dateEnd, timeType,
+                onClickItem = { choose, startDate, endDate, type ->
+                    this.choose = choose
+                    dateBegin = startDate
+                    dateEnd = endDate
+                    timeType = type
+                    filter = true
                     binding.appBar.setAdditionalIcon(R.drawable.ic_filter_yes)
                     getFilterHumoMonitoring()
                     filterDialog.dismiss()
-            },
+                },
                 clear = {
-                    this.choose=2
-                    dateBegin=""
-                    dateEnd=""
-                    timeType=""
+                    this.choose = 2
+                    dateBegin = ""
+                    dateEnd = ""
+                    timeType = ""
                     totalList.clear()
-                    filter=false
+                    filter = false
                     setImageFirst()
                     setTime()
                     getHumoMonitoringList(operationType)
                     filterDialog.dismiss()
                 })
-            filterDialog.show(childFragmentManager,"")
+            filterDialog.show(childFragmentManager, "")
         }
     }
 
     private fun getCardList() {
-        val card= arguments?.serializable<CardResponse>(Const.CARD)
-        cardList= arrayListOf()
-        cardList.add(card?.object_id?:"")
+        val card = arguments?.serializable<CardResponse>(Const.CARD)
+        cardList = arrayListOf()
+        cardList.add(card?.object_id ?: "")
 
     }
 

@@ -45,6 +45,7 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.Basic
 import uz.fido.universaldigital.ui.fragments.transfers.by_phone.TransferByPhoneFragment
 import uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferFragment
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
@@ -83,6 +84,7 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         database = FirebaseDatabase.getInstance().getReference("season")
         setContentView(binding.root)
+        initBottomNavigationMenuItems()
         initBottomNavigationMenu()
         checkUpdate()
         askNotificationPermission()
@@ -182,7 +184,7 @@ class MainActivity : BaseActivity() {
         }
     }
 
-    private fun openPage(id: Int, bundle: Bundle) {
+    private fun openPage(id: Int, bundle: Bundle? = null) {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
         navController.navigate(id, bundle, null)
@@ -246,22 +248,51 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    private fun initBottomNavigationMenuItems() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navGraph = navHostFragment.navController.navInflater.inflate(R.navigation.navigation_main)
+        navGraph.setStartDestination(getStartDestination())
+        navHostFragment.navController.setGraph(navGraph, null)
+        binding.bottomNavigation.setupWithNavController(navHostFragment.navController)
+        binding.bottomNavigation.apply {
+            menu.add(0, if (isNewDesign()) R.id.menuNewHomeFragment else R.id.productsFragment, 0, getString(R.string.home)).setIcon(R.drawable.ic_menu_home)
+            menu.add(0, R.id.menuTransfersFragment, 1, getString(R.string.transfer)).setIcon(R.drawable.ic_men_transfer)
+            menu.add(0, R.id.menuServicesFragment, 2, getString(R.string.services)).setIcon(R.drawable.ic_menu_products)
+            menu.add(0, R.id.basePaymentFragment, 3, getString(R.string.payments)).setIcon(R.drawable.ic_menu_payment)
+            menu.add(0, R.id.menuMonitoringFragment, 4, getString(R.string.monitoring)).setIcon(R.drawable.ic_menu_monitoring)
+        }
+    }
+
     private fun initBottomNavigationMenu() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        binding.bottomNavigation.setupWithNavController(navHostFragment.navController)
+//        val navGraph = navHostFragment.navController.navInflater.inflate(R.navigation.navigation_main)
+//        navGraph.setStartDestination(getStartDestination())
+//        navHostFragment.navController.setGraph(navGraph, null)
+//        binding.bottomNavigation.menu.findItem(R.id.menuNewHomeFragment).isVisible = getFromPaper(Const.NEW_DESIGN, "N") == "Y"
+//        binding.bottomNavigation.menu.findItem(R.id.productsFragment).isVisible = getFromPaper(Const.NEW_DESIGN, "N") != "Y"
+
         navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.productsFragment ||
                 destination.id == R.id.menuTransfersFragment ||
                 destination.id == R.id.basePaymentFragment ||
                 destination.id == R.id.menuServicesFragment ||
-                destination.id == R.id.menuMonitoringFragment
+                destination.id == R.id.menuMonitoringFragment ||
+                destination.id == R.id.menuNewHomeFragment
             ) {
                 binding.bottomNavigation.showAnimWithSlideUp()
                 binding.divider.showAnimWithSlideUp()
-                if (destination.id == R.id.productsFragment) {
-                    tintSystemBars(R.color.brandRedColor, R.color.backgroundColor)
-                } else {
-                    tintSystemBars(R.color.backgroundColor, R.color.backgroundColor)
+                when (destination.id) {
+                    R.id.productsFragment -> {
+                        tintSystemBars(R.color.brandRedColor, R.color.backgroundColor)
+                    }
+
+                    R.id.menuNewHomeFragment -> {
+                        tintSystemBars(R.color.whiteColor, R.color.whiteColor)
+                    }
+
+                    else -> {
+                        tintSystemBars(R.color.backgroundColor, R.color.backgroundColor)
+                    }
                 }
             } else {
                 tintSystemBars(R.color.whiteColor)
@@ -269,11 +300,63 @@ class MainActivity : BaseActivity() {
                 binding.divider.hideAnimWithSlideDown()
             }
         }
+//        binding.bottomNavigation.setOnItemSelectedListener { item ->
+//            when (item.itemId) {
+//                R.id.productsFragment -> {
+//                    if (navHostFragment.navController.currentDestination!!.id != R.id.productsFragment) {
+//                        if (getFromPaper(Const.NEW_DESIGN, "N") == "Y") {
+//                            openPage(R.id.productsFragment)
+//                        } else {
+//                            openPage(R.id.menuNewHomeFragment)
+//                        }
+//                    }
+//                    true
+//                }
+//
+//                R.id.menuTransfersFragment -> {
+//                    if (navHostFragment.navController.currentDestination!!.id != R.id.menuTransfersFragment) {
+//                        openPage(R.id.menuTransfersFragment)
+//                    }
+//                    true
+//                }
+//
+//                R.id.basePaymentFragment -> {
+//                    if (navHostFragment.navController.currentDestination!!.id != R.id.basePaymentFragment) {
+//                        openPage(R.id.basePaymentFragment)
+//                    }
+//                    true
+//                }
+//
+//                R.id.menuServicesFragment -> {
+//                    if (navHostFragment.navController.currentDestination!!.id != R.id.menuServicesFragment) {
+//                        openPage(R.id.menuServicesFragment)
+//                    }
+//                    true
+//                }
+//
+//                R.id.menuMonitoringFragment -> {
+//                    if (navHostFragment.navController.currentDestination!!.id != R.id.menuMonitoringFragment) {
+//                        openPage(R.id.menuMonitoringFragment)
+//                    }
+//                    true
+//                }
+//
+//                else -> {
+//                    true
+//                }
+//            }
+//        }
+    }
+
+    private fun getStartDestination(): Int {
+        return if (getFromPaper(Const.NEW_DESIGN, "N") == "Y") R.id.menuNewHomeFragment else R.id.productsFragment
     }
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) {}
+
+    private fun isNewDesign() = getFromPaper(Const.NEW_DESIGN, "N") == "Y"
 
     private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

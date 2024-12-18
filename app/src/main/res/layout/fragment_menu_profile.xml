@@ -130,6 +130,36 @@
                     android:textColor="@color/brandRedColor"
                     app:layout_constraintTop_toBottomOf="@id/no_identification_desc" />
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/new_design_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/cornered_bg_12dp">
+
+                    <uz.fido.utils.view.custom_text_view.TextViewMedium
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/ic_paint_brush"
+                        android:drawablePadding="12dp"
+                        android:gravity="center|start"
+                        android:paddingHorizontal="12dp"
+                        android:text="@string/new_design"
+                        android:textColor="@color/brandBlueColor"
+                        android:textSize="14sp" />
+
+                    <androidx.appcompat.widget.SwitchCompat
+                        android:id="@+id/new_design_switch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="12dp"
+                        android:checked="false"
+                        android:clickable="false" />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/profile"
                     android:layout_width="match_parent"

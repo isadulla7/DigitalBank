@@ -18,6 +18,7 @@ import uz.fido.universaldigital.databinding.ItemConfirmPaymentBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
@@ -58,23 +59,27 @@ class ConfirmMoneyTransferFragment :
     }
 
     private fun initUI() {
-        s(
-            getString(R.string.sender_country),
-            moneyTransferParamsResponse!!.remittance_type!!.country_name!!
-        )
-        s(
-            getString(R.string.transfer_control_number),
-            moneyTransferParamsResponse!!.remittance_type!!.control_number!!
-        )
-        s(
-            getString(R.string.fio),
-            moneyTransferParamsResponse!!.remittance_type!!.second_name!! + " " + moneyTransferParamsResponse!!.remittance_type!!.first_name!! + " " + moneyTransferParamsResponse!!.remittance_type!!.patronymic!!
-        )
-        s(
-            getString(R.string.sender_country),
-            moneyTransferParamsResponse!!.remittance_type!!.amount!! + " USD"
-        )
-        initCards()
+        try {
+            initItems(
+                getString(R.string.sender_country),
+                moneyTransferParamsResponse?.remittance_type?.country_name.orEmpty()
+            )
+            initItems(
+                getString(R.string.transfer_control_number),
+                moneyTransferParamsResponse?.remittance_type?.control_number.orEmpty()
+            )
+            initItems(
+                getString(R.string.fio),
+                moneyTransferParamsResponse?.remittance_type?.second_name.orEmpty() + " " + moneyTransferParamsResponse?.remittance_type?.first_name.orEmpty() + " " + moneyTransferParamsResponse?.remittance_type?.patronymic.orEmpty()
+            )
+            initItems(
+                getString(R.string.sender_country),
+                moneyTransferParamsResponse?.remittance_type?.amount.orEmpty() + " USD"
+            )
+            initCards()
+        } catch (e: Exception) {
+            recordException(e)
+        }
     }
 
     private fun sendRequest() {
@@ -122,7 +127,7 @@ class ConfirmMoneyTransferFragment :
         }
     }
 
-    private fun s(name: String, value: String) {
+    private fun initItems(name: String, value: String) {
         val mainBlockBinding = ItemConfirmPaymentBinding.inflate(
             LayoutInflater.from(requireContext()), requireView().parent as ViewGroup, false
         )

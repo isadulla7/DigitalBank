@@ -54,11 +54,6 @@
             android:theme="@style/Theme.App.SplashScreen"
             android:windowSoftInputMode="adjustResize">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
             <intent-filter
                 android:autoVerify="true"
                 android:label="@string/app_name">
@@ -175,6 +170,105 @@
         <service
             android:name=".services.AudioModeService"
             android:exported="false" />
+
+        <activity-alias
+            android:name=".spring"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/app_icon_spring"
+            android:label="@string/app_name"
+            android:roundIcon="@drawable/app_icon_spring"
+            android:targetActivity=".ui.activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".summer"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/app_icon_summer"
+            android:label="@string/app_name"
+            android:roundIcon="@drawable/app_icon_summer"
+            android:targetActivity=".ui.activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".autumn"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/app_icon_autumn"
+            android:label="@string/app_name"
+            android:roundIcon="@drawable/app_icon_autumn"
+            android:targetActivity=".ui.activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".winter"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/app_icon_winter"
+            android:label="@string/app_name"
+            android:roundIcon="@drawable/app_icon_winter"
+            android:targetActivity=".ui.activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".march"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/app_icon_8mart"
+            android:label="@string/app_name"
+            android:roundIcon="@drawable/app_icon_8mart"
+            android:targetActivity=".ui.activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".flag"
+            android:enabled="false"
+            android:exported="true"
+            android:icon="@drawable/app_icon_flag"
+            android:label="@string/app_name"
+            android:roundIcon="@drawable/app_icon_flag"
+            android:targetActivity=".ui.activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
+        <activity-alias
+            android:name=".default"
+            android:enabled="true"
+            android:exported="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:targetActivity=".ui.activities.LoginActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity-alias>
+
     </application>
 
 </manifest>

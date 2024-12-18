@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.wallet
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,6 +26,7 @@ import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoring
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.WalletMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format.newDateFormat
@@ -84,70 +84,72 @@ class WalletMonitoringFragment :
     }
 
     private fun getFilterWalletList() {
-        menuMonitoringViewModel.walletMonitoringFilter.observe(viewLifecycleOwner) { filterSaveVh ->
-            val skeletonScreen = showSkeleton(
-                binding.shimmerView,
-                MibDetailsAdapter(requireContext(), this),
-                R.layout.shimmer_item_monitoring,
-                1
-            )
-            val newList = arrayListOf<CardResponse>()
-            menuProductsViewModel.cards.observe(viewLifecycleOwner) { card ->
-                card.forEach {
-                    if (it.object_type == CardConst.WALLET) {
-                        newList.add(it)
-                    }
-                }
-            }
-            val card = arrayListOf<Int>()
-            filterSaveVh.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_id) }
-            val checkList = newList.filter { it.object_id == card[0].toString() }
-            walletList = arrayListOf()
-            checkList.forEach {
-                walletList.add(it.account_code)
-            }
-            totalList = arrayListOf()
-            val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-            if (filterSaveVh.startDate != "") {
-                dateEnd = df.format(format.parse(filterSaveVh.endDate).time)
-                dateBegin = df.format(format.parse(filterSaveVh.startDate).time)
-            } else setTime()
-            val type = when (filterSaveVh.plusMinus) {
-                getString(R.string.enrollments) -> 2
-                getString(R.string.write_offs) -> 1
-                else -> 0
-            }
-
-            val info = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
-            val model = AccountHistoriesRequest(
-                pageNumber = "1",
-                pageSize = "20",
-                type = operationType.toString(),
-                account = walletList[0],
-                codeFilial = info?.filial_code,
-                dateClose = dateEnd,
-                dateBegin = dateBegin
-            )
-            viewModel.getAccountHistories(getClientToken(), model).observe(viewLifecycleOwner) {
-                skeletonScreen.hide()
-                binding.shimmerView.visibility = View.GONE
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        val response = it.data!!.response
-                        Log.d("TAG", "getFilterWalletList:${response.size} ")
-                        successMonitoringList(response, type)
-                        if (response.size < 1) {
-                            binding.layoutEmpty.visibility = View.VISIBLE
+        try {
+            menuMonitoringViewModel.walletMonitoringFilter.observe(viewLifecycleOwner) { filterSaveVh ->
+                val skeletonScreen = showSkeleton(
+                    binding.shimmerView,
+                    MibDetailsAdapter(requireContext(), this),
+                    R.layout.shimmer_item_monitoring,
+                    1
+                )
+                val newList = arrayListOf<CardResponse>()
+                menuProductsViewModel.cards.observe(viewLifecycleOwner) { card ->
+                    card.forEach {
+                        if (it.object_type == CardConst.WALLET) {
+                            newList.add(it)
                         }
                     }
+                }
+                val card = arrayListOf<Int>()
+                filterSaveVh.cardList.forEach { if (!it.is_selected_monitoring) card.add(it.object_id) }
+                val checkList = newList.filter { it.object_id == card[0].toString() }
+                walletList = arrayListOf()
+                checkList.forEach {
+                    walletList.add(it.account_code)
+                }
+                totalList = arrayListOf()
+                val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+                if (filterSaveVh.startDate != "") {
+                    dateEnd = df.format(format.parse(filterSaveVh.endDate)?.time ?: "")
+                    dateBegin = df.format(format.parse(filterSaveVh.startDate)?.time ?: "")
+                } else setTime()
+                val type = when (filterSaveVh.plusMinus) {
+                    getString(R.string.enrollments) -> 2
+                    getString(R.string.write_offs) -> 1
+                    else -> 0
+                }
 
-                    Status.ERROR -> {
-                        walletMonitoringAdapter.removeList()
-                        binding.consError.visibility = View.VISIBLE
+                val info = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
+                val model = AccountHistoriesRequest(
+                    pageNumber = "1",
+                    pageSize = "20",
+                    type = operationType.toString(),
+                    account = walletList[0],
+                    codeFilial = info?.filial_code,
+                    dateClose = dateEnd,
+                    dateBegin = dateBegin
+                )
+                viewModel.getAccountHistories(getClientToken(), model).observe(viewLifecycleOwner) {
+                    skeletonScreen.hide()
+                    binding.shimmerView.visibility = View.GONE
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            val response = it.data!!.response
+                            successMonitoringList(response, type)
+                            if (response.size < 1) {
+                                binding.layoutEmpty.visibility = View.VISIBLE
+                            }
+                        }
+
+                        Status.ERROR -> {
+                            walletMonitoringAdapter.removeList()
+                            binding.consError.visibility = View.VISIBLE
+                        }
                     }
                 }
             }
-
+        } catch (e: Exception) {
+            recordException(e)
         }
     }
 
