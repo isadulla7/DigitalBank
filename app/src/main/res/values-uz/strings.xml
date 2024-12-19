@@ -1037,4 +1037,6 @@
     <string name="old_design_title">Dizaynni standart rejimga o‘zgartiring</string>
     <string name="old_design_description">Standart dizaynda kreditlar, depozitlar, valyuta kursi va boshqalar kabi ko‘proq elementlar mavjud</string>
     <string name="switch_old_design">Dizaynni standart rejimga o‘zgartirish</string>
+    <string name="try_now">Try now</string>
+    <string name="try_universalbankpro_s_sleek_new_app_mode">Try UniversalBankPro\'s sleek new app mode!</string>
 </resources>

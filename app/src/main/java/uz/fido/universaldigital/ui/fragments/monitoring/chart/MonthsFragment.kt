@@ -73,7 +73,7 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
             pieChart.legend.isEnabled = false
             pieChart.setDrawEntryLabels(false)
             pieChart.setEntryLabelTextSize(12f)
-            pieChart.setDrawRoundedSlices(false)
+            pieChart.setDrawRoundedSlices(true)
             pieChart.isRotationEnabled = false
             val pieDataSet = PieDataSet(histories, "")
             pieDataSet.setAutomaticallyDisableSliceSpacing(false)

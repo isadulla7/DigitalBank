@@ -1039,5 +1039,7 @@
     <string name="old_design_title">Изменить дизайн на режим по умолчанию</string>
     <string name="old_design_description">Стандартный дизайн содержит больше элементов, таких как кредиты, депозиты, обменный курс и другие</string>
     <string name="switch_old_design">Изменить дизайн на режим по умолчанию</string>
+    <string name="try_now">Try now</string>
+    <string name="try_universalbankpro_s_sleek_new_app_mode">Try UniversalBankPro\'s sleek new app mode!</string>
 
 </resources>

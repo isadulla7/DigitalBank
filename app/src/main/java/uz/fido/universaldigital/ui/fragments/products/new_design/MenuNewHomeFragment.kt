@@ -19,6 +19,7 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMenuNewHomeBinding
 import uz.fido.universaldigital.ui.activities.seasons.Season
 import uz.fido.universaldigital.ui.fragments.products.adapter.NewHomeCardsAdapter
+import uz.fido.universaldigital.ui.fragments.profile.settings.NewDesignOnboardingPage
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.home_utils.initRefreshLayout
@@ -177,6 +178,7 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
         binding.userAvatar.setOnClickListener { goto(R.id.menuProfileFragment) }
         binding.notifications.setOnClickListener { goto(R.id.notificationsFragment) }
         binding.addCardLayout.setOnClickListener { goto(R.id.addCardFragment) }
+        binding.backToOldDesign.setOnClickListener { NewDesignOnboardingPage().show(childFragmentManager, "") }
     }
 
     private fun initUserCards() {

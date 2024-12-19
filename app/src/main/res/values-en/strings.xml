@@ -1037,5 +1037,7 @@
     <string name="old_design_title">Change the design to default mode</string>
     <string name="old_design_description">The standard design contains more elements, such as loans, deposits, exchange rate and others</string>
     <string name="switch_old_design">Switch to the default design</string>
+    <string name="try_now">Try now</string>
+    <string name="try_universalbankpro_s_sleek_new_app_mode">Try UniversalBankPro\'s sleek new app mode!</string>
 
 </resources>

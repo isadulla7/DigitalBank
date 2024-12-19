@@ -15,7 +15,7 @@
         android:id="@+id/lottie_file"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:alpha="0.6"
+        android:alpha="0.8"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true" />
@@ -445,6 +445,66 @@
                                 tools:listitem="@layout/item_payment_template" />
 
                         </net.cachapa.expandablelayout.ExpandableLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/back_to_old_design"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:background="@drawable/new_cornered_bg_12dp_stroke"
+                        android:gravity="center">
+
+                        <androidx.appcompat.widget.LinearLayoutCompat
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <uz.fido.utils.view.custom_text_view.TextViewBold
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="-4dp"
+                                android:drawableStart="@drawable/ic_universal_logo_red"
+                                android:drawablePadding="8dp"
+                                android:gravity="center"
+                                android:text="Universalbank Pro"
+                                android:textColor="@color/brandBlueColor"
+                                android:textSize="17sp" />
+
+                            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                                android:layout_width="wrap_content"
+                                android:layout_height="0dp"
+                                android:layout_weight="1"
+                                android:paddingVertical="12dp"
+                                android:text="@string/try_universalbankpro_s_sleek_new_app_mode"
+                                android:textColor="@color/brandBlueColor_50"
+                                android:textSize="15sp" />
+
+                            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/red_gradient_background_12dp"
+                                android:ellipsize="end"
+                                android:maxLines="1"
+                                android:paddingHorizontal="24dp"
+                                android:paddingVertical="8dp"
+                                android:text="@string/try_now"
+                                android:textColor="@color/brandRedColor"
+                                android:textSize="13sp" />
+
+                        </androidx.appcompat.widget.LinearLayoutCompat>
+
+                        <ImageView
+                            android:layout_width="84dp"
+                            android:layout_height="112dp"
+                            android:layout_marginVertical="12dp"
+                            android:layout_marginEnd="16dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/rocket_app" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
