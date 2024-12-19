@@ -31,7 +31,6 @@
             android:layout_marginEnd="4dp"
             android:padding="10dp"
             android:src="@drawable/monitoring"
-            android:visibility="gone"
             tools:ignore="ContentDescription" />
 
         <ImageView

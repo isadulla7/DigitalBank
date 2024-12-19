@@ -501,28 +501,6 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
         }
     }
 
-//    private fun deleteTemplate(templateId: String) {
-////        showProgress()
-//        menuPaymentsViewModel.deleteTemplate(
-//            getClientToken(), DeleteTemplateRequest(
-//                templateId
-//            )
-//        ).observe(viewLifecycleOwner) { resource ->
-//            resource?.let { it ->
-//                when (it.status) {
-//                    Status.SUCCESS -> {
-//                        saveTemplate(true)
-//                    }
-//
-//                    Status.ERROR -> {
-////                        hideProgress()
-//                        showSnackbar(resource.message.toString())
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     private fun prepareQRPayment() {
         qrCodeValuesList =
             arguments?.serializable<ArrayList<QrCode>>("qr_list") as ArrayList<QrCode>

@@ -17,7 +17,9 @@ import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMenuNewHomeBinding
+import uz.fido.universaldigital.ui.activities.seasons.Season
 import uz.fido.universaldigital.ui.fragments.products.adapter.NewHomeCardsAdapter
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.home_utils.initRefreshLayout
 import uz.fido.universaldigital.ui.utils.home_utils.loadCardsFromPaper
@@ -64,6 +66,19 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
     private fun initDefaultStates() {
         loadProfileImage()
         setUserDetails()
+        setSeasonAnimation()
+    }
+
+    private fun setSeasonAnimation() {
+        val currentSeason = getFromPaper(Const.CURRENT_SEASON, Season.DEFAULT)
+        val currentAnim = when (currentSeason) {
+            Season.WINTER -> R.raw.snowing
+            Season.AUTUMN -> R.raw.falling_leaves_anim
+            else -> null
+        }
+        if (currentAnim != null) {
+            binding.lottieFile.setAnimation(currentAnim)
+        }
     }
 
     private fun initTotalBalance() {

@@ -265,12 +265,6 @@ class MainActivity : BaseActivity() {
 
     private fun initBottomNavigationMenu() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-//        val navGraph = navHostFragment.navController.navInflater.inflate(R.navigation.navigation_main)
-//        navGraph.setStartDestination(getStartDestination())
-//        navHostFragment.navController.setGraph(navGraph, null)
-//        binding.bottomNavigation.menu.findItem(R.id.menuNewHomeFragment).isVisible = getFromPaper(Const.NEW_DESIGN, "N") == "Y"
-//        binding.bottomNavigation.menu.findItem(R.id.productsFragment).isVisible = getFromPaper(Const.NEW_DESIGN, "N") != "Y"
-
         navHostFragment.navController.addOnDestinationChangedListener { _, destination, _ ->
             if (destination.id == R.id.productsFragment ||
                 destination.id == R.id.menuTransfersFragment ||
@@ -300,52 +294,6 @@ class MainActivity : BaseActivity() {
                 binding.divider.hideAnimWithSlideDown()
             }
         }
-//        binding.bottomNavigation.setOnItemSelectedListener { item ->
-//            when (item.itemId) {
-//                R.id.productsFragment -> {
-//                    if (navHostFragment.navController.currentDestination!!.id != R.id.productsFragment) {
-//                        if (getFromPaper(Const.NEW_DESIGN, "N") == "Y") {
-//                            openPage(R.id.productsFragment)
-//                        } else {
-//                            openPage(R.id.menuNewHomeFragment)
-//                        }
-//                    }
-//                    true
-//                }
-//
-//                R.id.menuTransfersFragment -> {
-//                    if (navHostFragment.navController.currentDestination!!.id != R.id.menuTransfersFragment) {
-//                        openPage(R.id.menuTransfersFragment)
-//                    }
-//                    true
-//                }
-//
-//                R.id.basePaymentFragment -> {
-//                    if (navHostFragment.navController.currentDestination!!.id != R.id.basePaymentFragment) {
-//                        openPage(R.id.basePaymentFragment)
-//                    }
-//                    true
-//                }
-//
-//                R.id.menuServicesFragment -> {
-//                    if (navHostFragment.navController.currentDestination!!.id != R.id.menuServicesFragment) {
-//                        openPage(R.id.menuServicesFragment)
-//                    }
-//                    true
-//                }
-//
-//                R.id.menuMonitoringFragment -> {
-//                    if (navHostFragment.navController.currentDestination!!.id != R.id.menuMonitoringFragment) {
-//                        openPage(R.id.menuMonitoringFragment)
-//                    }
-//                    true
-//                }
-//
-//                else -> {
-//                    true
-//                }
-//            }
-//        }
     }
 
     private fun getStartDestination(): Int {

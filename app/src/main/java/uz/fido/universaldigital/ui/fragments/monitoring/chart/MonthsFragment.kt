@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.monitoring.chart
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.data.Entry
@@ -21,6 +22,7 @@ import uz.fido.universaldigital.databinding.FragmentMonthsBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.utils.utility.format.Format
+import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -46,7 +48,10 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         mobileDBHelper = DatabaseHelper(requireContext())
-        chartDetailsAdapter = ChartDetailsAdapter(arrayListOf())
+        chartDetailsAdapter = ChartDetailsAdapter(arrayListOf()) {
+            val paymentHistoryDialog = PaymentHistoryDialog(it.serviceId)
+            paymentHistoryDialog.show(childFragmentManager, "")
+        }
         initChartDetails()
         getLocalMonitoring()
     }

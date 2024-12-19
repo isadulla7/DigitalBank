@@ -11,6 +11,7 @@ import java.math.RoundingMode
 
 class ChartDetailsAdapter(
     private var list: ArrayList<ChartData>,
+    private val setOnClickListener: (ChartData) -> Unit
 ) : RecyclerView.Adapter<ChartDetailsAdapter.VhService>() {
 
     inner class VhService(val binding: ItemMonitoringChartDetailsBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -21,6 +22,9 @@ class ChartDetailsAdapter(
             binding.detailName.text = item.paymentService?.nameIndex
             binding.amount.text = Format.formatAmount(item.amount.toString()).replace(".00", "") + " UZS"
             binding.percent.text = percent
+            binding.father.setOnClickListener {
+                setOnClickListener.invoke(item)
+            }
         }
     }
 
