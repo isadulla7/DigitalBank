@@ -3,7 +3,6 @@ package uz.fido.universaldigital.ui.fragments.monitoring.chart
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.mikephil.charting.data.Entry
@@ -22,7 +21,6 @@ import uz.fido.universaldigital.databinding.FragmentMonthsBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.utils.utility.format.Format
-import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
 import java.math.BigDecimal
 import java.math.RoundingMode
@@ -39,6 +37,7 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
 
     private lateinit var mobileDBHelper: DatabaseHelper
     private lateinit var chartDetailsAdapter: ChartDetailsAdapter
+    private lateinit var period: Pair<String, String>
 
     companion object {
         private const val PAGE_SIZE = "1000"
@@ -47,18 +46,18 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
+        getCurrentPeriod()
         mobileDBHelper = DatabaseHelper(requireContext())
         chartDetailsAdapter = ChartDetailsAdapter(arrayListOf()) {
-            val paymentHistoryDialog = PaymentHistoryDialog(it.serviceId)
+            val paymentHistoryDialog = PaymentHistoryDialog(it.serviceId, period)
             paymentHistoryDialog.show(childFragmentManager, "")
         }
         initChartDetails()
-        getLocalMonitoring()
+        getLocalMonitoring(period)
     }
 
     private fun drawMonthlyChart(list: ArrayList<ChartData>) {
         val total = list.map { it.amount }.sumOf { it }
-
         binding.apply {
             pieChart.invalidate()
             val histories: ArrayList<PieEntry> = ArrayList()
@@ -110,16 +109,15 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
         }
     }
 
-    private fun getLocalMonitoring() {
+    private fun getCurrentPeriod() {
         arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
             val position = getInt(ARG_OBJECT)
-            if (position == 23) {
-                getLocalMonitoring(getCurrentMonth())
+            period = if (position == 23) {
+                getCurrentMonth()
             } else {
-                getLocalMonitoring(getSelectedMonth(position))
+                getSelectedMonth(position)
             }
         }
-
     }
 
     private fun getLocalMonitoring(startEndDate: Pair<String, String>) {

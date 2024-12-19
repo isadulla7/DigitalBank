@@ -20,7 +20,6 @@ import uz.fido.network.domain.model.abc_base.InParamsResponse
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.GeneralItem
 import uz.fido.network.domain.model.monitoring.ListItem
-import uz.fido.network.domain.model.payment.PaymentService
 import uz.fido.network.domain.model.payment.PrintChequeRequest
 import uz.fido.network.domain.model.payment.TemplateKeyValue
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
@@ -46,31 +45,22 @@ import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.sticky.StickyHeaderDecoration
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.gotoWithSlide
-import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
-import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Locale
 import java.util.SortedMap
 
 @AndroidEntryPoint
-class PaymentHistoryDialog(private val paymentServiceId: String) : DialogFragment(), BaseInterface {
+class PaymentHistoryDialog(private val paymentServiceId: String, private val period: Pair<String, String>) : DialogFragment(), BaseInterface {
 
     private lateinit var binding: FragmentRequisitesHistoryBinding
     private val viewModel by activityViewModels<LocalMonitoringViewModel>()
 
-
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var localMonitoringAdapter: LocalMonitoringAdapter
     private lateinit var dialogInfo: InfoMonitoringDialog
-
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
     private var totalList: ArrayList<ListItem> = ArrayList()
 
-    private var dateBegin: String = ""
-
     companion object {
-        const val PAGE_SIZE = "20"
+        const val PAGE_SIZE = "100"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -127,8 +117,8 @@ class PaymentHistoryDialog(private val paymentServiceId: String) : DialogFragmen
         scrollListener.resetState()
         viewModel.getLocalMonitoring(
             getClientToken(), LocalMonitoringRequest(
-                start_date = dateBegin,
-                end_date = dateFormat.format(Calendar.getInstance().time),
+                start_date = period.first,
+                end_date = period.second,
                 page_number = "1",
                 page_item_size = PAGE_SIZE,
                 object_ids = ArrayList(),
@@ -152,8 +142,8 @@ class PaymentHistoryDialog(private val paymentServiceId: String) : DialogFragmen
     private fun getLocalMonitoringListScroll(page: Int) {
         viewModel.getLocalMonitoring(
             getClientToken(), LocalMonitoringRequest(
-                start_date = dateBegin,
-                end_date = dateFormat.format(Calendar.getInstance().time),
+                start_date = period.first,
+                end_date = period.second,
                 page_number = page.toString(),
                 page_item_size = PAGE_SIZE,
                 object_ids = ArrayList()
