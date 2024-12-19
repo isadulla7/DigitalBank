@@ -10,7 +10,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.ListItem
@@ -34,6 +33,7 @@ import uz.fido.utils.sticky.StickyHeaderDecoration
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
+import uz.fido.utils.view.custom_text_view.TextViewMedium
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -241,7 +241,7 @@ class UzcardMonitoringFragment :
                     binding.shimmerView.visibility = View.GONE
                     binding.rec.visibility = View.GONE
                     binding.layoutEmpty.visibility = View.VISIBLE
-                    binding.layoutEmpty.title.text = getString(R.string.card_list_no)
+                    binding.layoutEmpty.findViewById<TextViewMedium>(R.id.title).text = getString(R.string.card_list_no)
 
                 }
             }, 500)

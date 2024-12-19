@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager
-import com.ocnyang.pagetransformerhelp.cardtransformer.AlphaPageTransformer
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.cards.EditCardRequest
@@ -53,7 +52,6 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding, MenuProductsViewM
         cardBgAdapter = CardBgAdapter(requireContext(), cardBgNames)
         binding.viewpager.adapter = cardBgAdapter
         binding.dotsIndicator.setViewPager(binding.viewpager)
-        binding.viewpager.setPageTransformer(true, AlphaPageTransformer())
         binding.viewpager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(

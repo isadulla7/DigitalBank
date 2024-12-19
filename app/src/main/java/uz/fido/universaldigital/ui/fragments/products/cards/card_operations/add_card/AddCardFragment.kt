@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
-import com.ocnyang.pagetransformerhelp.cardtransformer.AlphaAndScalePageTransformer
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.AddCardRequest
@@ -235,7 +234,6 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
         val cardBgAdapter = CardBackgroundAdapter(requireContext(), getCardBackgroundList(), this)
         binding.viewPager.adapter = cardBgAdapter
         binding.dotsIndicator.setViewPager(binding.viewPager)
-        binding.viewPager.setPageTransformer(true, AlphaAndScalePageTransformer())
     }
 
     private fun isValid(cardNumber: String): Boolean {

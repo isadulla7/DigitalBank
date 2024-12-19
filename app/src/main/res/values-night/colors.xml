@@ -37,6 +37,7 @@
     <color name="whiteColor">#171717</color>
     <color name="frozenWhite">#FFFFFF</color>
     <color name="cardBgColor">#2D2D2D</color>
+    <color name="newCardBgColor">#2D2D2D</color>
     <color name="cardBorderColor">#444444</color>
 
     <color name="etBackgroundColor">#2D2D2D</color>
@@ -60,6 +61,7 @@
 
     <color name="searchBackgroundColor">#2D2D2D</color>
     <color name="backgroundColor">#171717</color>
+    <color name="newBackgroundColor">#171717</color>
     <color name="status_waiting">#FCB924</color>
     <color name="status_done">#3BBC7E</color>
     <color name="goal_out">#1E000000</color>
@@ -69,5 +71,6 @@
     <color name="color_for_disable_card">#C5C5C5</color>
     <color name="alert_dialog_background">#2D2D2D</color>
     <color name="link_color">#0000EE</color>
+    <color name="home_card_description_color">#FFFFFF</color>
 
 </resources>
