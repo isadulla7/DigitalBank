@@ -86,12 +86,11 @@ class PaymentHistoryDialog(private val paymentServiceId: String, private val per
     }
 
     private fun initEndlessScrollListener() {
-        scrollListener =
-            object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
-                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                    getLocalMonitoringListScroll(page)
-                }
+        scrollListener = object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                getLocalMonitoringListScroll(page)
             }
+        }
     }
 
     private fun initHistoriesRv() {

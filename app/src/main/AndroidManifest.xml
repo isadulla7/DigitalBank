@@ -214,7 +214,7 @@
         </activity-alias>
 
         <activity-alias
-            android:name=".winter"
+            android:name=".cold"
             android:enabled="false"
             android:exported="true"
             android:icon="@drawable/app_icon_winter"

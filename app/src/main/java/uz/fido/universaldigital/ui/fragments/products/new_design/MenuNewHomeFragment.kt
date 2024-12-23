@@ -73,7 +73,7 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
     private fun setSeasonAnimation() {
         val currentSeason = getFromPaper(Const.CURRENT_SEASON, Season.DEFAULT)
         val currentAnim = when (currentSeason) {
-            Season.WINTER -> R.raw.snowing
+            Season.WINTER -> R.raw.snow
             Season.AUTUMN -> R.raw.falling_leaves_anim
             else -> null
         }

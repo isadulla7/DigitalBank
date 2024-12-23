@@ -14,8 +14,9 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_file"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:alpha="0.8"
+        app:layout_constraintHeight_percent="0.5"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true" />
@@ -464,23 +465,39 @@
                             android:orientation="vertical"
                             android:padding="16dp">
 
-                            <uz.fido.utils.view.custom_text_view.TextViewBold
-                                android:layout_width="wrap_content"
+                            <androidx.appcompat.widget.LinearLayoutCompat
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="-4dp"
-                                android:drawableStart="@drawable/ic_universal_logo_red"
-                                android:drawablePadding="8dp"
-                                android:gravity="center"
-                                android:text="Universalbank Pro"
-                                android:textColor="@color/brandBlueColor"
-                                android:textSize="17sp" />
+                                android:gravity="center|start">
+
+                                <uz.fido.utils.view.custom_text_view.TextViewBold
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="-4dp"
+                                    android:drawableStart="@drawable/ic_universal_logo_red"
+                                    android:drawablePadding="8dp"
+                                    android:gravity="center"
+                                    android:text="Universalbank"
+                                    android:textColor="@color/brandBlueColor"
+                                    android:textSize="16sp" />
+
+                                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                                    android:id="@+id/app_mode"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
+                                    android:gravity="center"
+                                    android:text="Pro"
+                                    android:textColor="@color/brandRedColor"
+                                    android:textSize="16sp" />
+                            </androidx.appcompat.widget.LinearLayoutCompat>
 
                             <uz.fido.utils.view.custom_text_view.TextViewRegular
                                 android:layout_width="wrap_content"
                                 android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:paddingVertical="12dp"
-                                android:text="@string/try_universalbankpro_s_sleek_new_app_mode"
+                                android:text="@string/try_pro_mode"
                                 android:textColor="@color/brandBlueColor_50"
                                 android:textSize="15sp" />
 

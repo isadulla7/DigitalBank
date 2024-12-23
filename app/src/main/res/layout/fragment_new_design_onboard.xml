@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/design_image"
-        android:layout_width="256dp"
+        android:layout_width="300dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="-100dp"
+        android:layout_marginBottom="-120dp"
         android:scaleType="fitCenter"
         android:src="@drawable/new_design_s22"
         app:layout_constraintBottom_toTopOf="@id/background_view"
