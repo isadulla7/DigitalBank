@@ -174,11 +174,27 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
     private fun initSetOnClickListeners() {
         binding.chat.setOnClickListener { goto(R.id.menuChatFragment) }
         binding.userName.setOnClickListener { goto(R.id.menuProfileFragment) }
-        binding.btnShowMore.setOnClickListener { goto(R.id.myCardsListFragment) }
+        binding.btnAllCards.setOnClickListener { goto(R.id.myCardsListFragment) }
         binding.userAvatar.setOnClickListener { goto(R.id.menuProfileFragment) }
         binding.notifications.setOnClickListener { goto(R.id.notificationsFragment) }
         binding.addCardLayout.setOnClickListener { goto(R.id.addCardFragment) }
         binding.backToOldDesign.setOnClickListener { NewDesignOnboardingPage().show(childFragmentManager, "") }
+        binding.hideBalance.setOnClickListener { changeBalanceVisibility() }
+    }
+
+    private fun changeBalanceVisibility() {
+        if (Paper.book().read<Boolean>(Const.BALANCE_VISIBILITY) != false) {
+            binding.apply {
+                hideBalance.setImageResource(R.drawable.ic_eye_close)
+            }
+            Paper.book().write(Const.BALANCE_VISIBILITY, false)
+        } else {
+            binding.apply {
+                hideBalance.setImageResource(R.drawable.ic_eye)
+            }
+            Paper.book().write(Const.BALANCE_VISIBILITY, true)
+        }
+        homeCardsAdapter?.notifyDataSetChanged()
     }
 
     private fun initUserCards() {
