@@ -7,7 +7,6 @@ import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import uz.fido.utils.const.Const
-import uz.fido.utils.log.Logger
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.utility.user.getFromPaper
 import java.io.IOException
