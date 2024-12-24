@@ -75,4 +75,11 @@ class MainAppBar(context: Context, attr: AttributeSet) : LinearLayoutCompat(cont
         }
     }
 
+    fun setOnAdditionalLongClickListener(function: () -> Unit) {
+        binding.additional.setOnLongClickListener {
+            function.invoke()
+            true
+        }
+    }
+
 }

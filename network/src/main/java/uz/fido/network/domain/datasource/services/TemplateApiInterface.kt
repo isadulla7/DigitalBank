@@ -48,6 +48,11 @@ interface TemplateApiInterface {
         @Body getTemplateListRequest: GetTemplateListRequest
     ): GetTemplateListResponse
 
+    @POST("GET_PAYMENT_BALANCE")
+    suspend fun getUpdatedTemplateList(
+        @Header("Authorization") token: String
+    ): GetTemplateListResponse
+
     @POST("GET_TEMPLATE")
     suspend fun getTemplate(
         @Header("Authorization") token: String,

@@ -46,10 +46,13 @@ class MyHomeViewModel @Inject constructor(
             emit(templateRepository.editTemplateGroup(token, editTemplateGroupRequest))
         }
 
-    fun getTemplateList(token: String, getTemplateListRequest: GetTemplateListRequest) =
-        liveData(Dispatchers.IO) {
-            emit(templateRepository.getTemplateList(token, getTemplateListRequest))
-        }
+    fun getTemplateList(token: String, getTemplateListRequest: GetTemplateListRequest) = liveData(Dispatchers.IO) {
+        emit(templateRepository.getTemplateList(token, getTemplateListRequest))
+    }
+
+    fun getUpdatedTemplateList(token: String) = liveData(Dispatchers.IO) {
+        emit(templateRepository.getUpdatedTemplateList(token))
+    }
 
     fun deleteTemplate(token: String, deleteTemplateRequest: DeleteTemplateRequest) =
         liveData(Dispatchers.IO) {

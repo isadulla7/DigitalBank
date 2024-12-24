@@ -17,7 +17,7 @@ object ErrorUtils {
                     message = "Unknown error&"
                 }
                 if ((message.contains("502 Bad"))) {
-                    message = "$message Unknown error*"
+                    message = "$message ошибка подключения к серверу"
                 }
                 APIError(
                     code,
@@ -25,16 +25,27 @@ object ErrorUtils {
                     response.errorBody()!!.string()
                 )
             } catch (e: Exception) {
-                if (response.code() == ServerCode.TOKEN_EXPIRED.code) {
-                    APIError(
-                        ServerCode.TOKEN_EXPIRED.code,
-                        "Token expired"
-                    )
-                } else {
-                    APIError(
-                        ServerCode.BAD_REQUEST.code,
-                        "Unknown error#"
-                    )
+                when (response.code()) {
+                    ServerCode.TECHNICAL_WORKS.code -> {
+                        APIError(
+                            ServerCode.BAD_REQUEST.code,
+                            "Ошибка подключения к серверу"
+                        )
+                    }
+
+                    ServerCode.TOKEN_EXPIRED.code -> {
+                        APIError(
+                            ServerCode.TOKEN_EXPIRED.code,
+                            "Срок действия токена истек"
+                        )
+                    }
+
+                    else -> {
+                        APIError(
+                            ServerCode.BAD_REQUEST.code,
+                            "Неизвестная ошибка"
+                        )
+                    }
                 }
             }
         }

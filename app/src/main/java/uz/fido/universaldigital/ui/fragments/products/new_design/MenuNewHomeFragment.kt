@@ -91,6 +91,7 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
             binding.userCardsLayout.isVisible = currentCards.isNotEmpty()
             Paper.book().write(Const.PAPER_CLIENT_CARDS, currentCards)
             initUserCards()
+            initBalanceVisibility()
         }
     }
 
@@ -180,6 +181,14 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
         binding.addCardLayout.setOnClickListener { goto(R.id.addCardFragment) }
         binding.backToOldDesign.setOnClickListener { NewDesignOnboardingPage().show(childFragmentManager, "") }
         binding.hideBalance.setOnClickListener { changeBalanceVisibility() }
+    }
+
+    private fun initBalanceVisibility() {
+        if (Paper.book().read<Boolean>(Const.BALANCE_VISIBILITY) != false) {
+            binding.hideBalance.setImageResource(R.drawable.ic_eye)
+        } else {
+            binding.hideBalance.setImageResource(R.drawable.ic_eye_close)
+        }
     }
 
     private fun changeBalanceVisibility() {

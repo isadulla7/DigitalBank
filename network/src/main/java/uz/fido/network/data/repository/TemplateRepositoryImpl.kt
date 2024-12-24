@@ -56,6 +56,10 @@ class TemplateRepositoryImpl @Inject constructor(private val templateService: Te
         templateService.getTemplateList(token, getTemplateListRequest)
     }
 
+    override suspend fun getUpdatedTemplateList(token: String): Resource<GetTemplateListResponse> = getResult {
+        templateService.getUpdatedTemplateList(token)
+    }
+
     override suspend fun getTemplate(
         token: String,
         getTemplateRequest: GetTemplateRequest
