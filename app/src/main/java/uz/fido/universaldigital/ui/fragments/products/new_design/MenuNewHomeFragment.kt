@@ -72,13 +72,43 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
 
     private fun setSeasonAnimation() {
         val currentSeason = getFromPaper(Const.CURRENT_SEASON, Season.DEFAULT)
-        val currentAnim = when (currentSeason) {
-            Season.WINTER -> R.raw.snow
-            Season.AUTUMN -> R.raw.falling_leaves_anim
-            else -> null
-        }
-        if (currentAnim != null) {
-            binding.lottieFile.setAnimation(currentAnim)
+        when (currentSeason) {
+            Season.WINTER -> {
+                binding.homeAnimView.apply {
+                    setSnowflakeImage(R.drawable.blue_snowflake)
+                    setSnowflakeSpeedMin(1)
+                    setSnowflakeSpeedMax(1)
+                    setSnowflakesNum(50)
+                    setSnowflakeSizeMax(24)
+                    setSnowflakeSizeMin(16)
+                }
+            }
+
+            Season.AUTUMN -> {
+                binding.homeAnimView.apply {
+                    setSnowflakeImage(R.drawable.maple_leaf)
+                    setSnowflakeSpeedMin(1)
+                    setSnowflakeSpeedMax(1)
+                    setSnowflakesNum(16)
+                    setSnowflakeSizeMax(36)
+                    setSnowflakeSizeMin(20)
+                }
+            }
+
+            Season.SPRING -> {
+                binding.homeAnimView.apply {
+                    setSnowflakeImage(R.drawable.sakura)
+                    setSnowflakeSpeedMin(1)
+                    setSnowflakeSpeedMax(2)
+                    setSnowflakesNum(30)
+                    setSnowflakeSizeMax(30)
+                    setSnowflakeSizeMin(16)
+                }
+            }
+
+            else -> {
+                binding.homeAnimView.visibility = View.GONE
+            }
         }
     }
 

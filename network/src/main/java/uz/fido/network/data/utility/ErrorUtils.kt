@@ -14,7 +14,7 @@ object ErrorUtils {
                 val code = jsonObject.getInt("code")
                 var message: String? = jsonObject.getString("msg")
                 if (message == null) {
-                    message = "Unknown error&"
+                    message = "Неизвестная ошибка_"
                 }
                 if ((message.contains("502 Bad"))) {
                     message = "$message ошибка подключения к серверу"
@@ -28,7 +28,7 @@ object ErrorUtils {
                 when (response.code()) {
                     ServerCode.TECHNICAL_WORKS.code -> {
                         APIError(
-                            ServerCode.BAD_REQUEST.code,
+                            ServerCode.TECHNICAL_WORKS.code,
                             "Ошибка подключения к серверу"
                         )
                     }
@@ -37,6 +37,20 @@ object ErrorUtils {
                         APIError(
                             ServerCode.TOKEN_EXPIRED.code,
                             "Срок действия токена истек"
+                        )
+                    }
+
+                    ServerCode.SERVER_ERROR.code -> {
+                        APIError(
+                            ServerCode.SERVER_ERROR.code,
+                            "Внутренняя ошибка сервера"
+                        )
+                    }
+
+                    ServerCode.SERVICE_UNAVAILABLE.code -> {
+                        APIError(
+                            ServerCode.SERVICE_UNAVAILABLE.code,
+                            "Сервер временно недоступен"
                         )
                     }
 
@@ -52,10 +66,10 @@ object ErrorUtils {
         return if (response.code() == ServerCode.TOKEN_EXPIRED.code) {
             APIError(
                 ServerCode.TOKEN_EXPIRED.code,
-                "Token expired"
+                "Срок действия токена истек"
             )
         } else {
-            APIError(ServerCode.BAD_REQUEST.code, "Unknown error$")
+            APIError(ServerCode.BAD_REQUEST.code, "Неизвестная ошибка")
         }
     }
 

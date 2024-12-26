@@ -40,7 +40,7 @@ class MonitoringChartFragment : DialogFragment() {
 
     private fun onPageListenerTabLayout() {
         binding.viewpager.addOnPageChangeListener(TabLayout.TabLayoutOnPageChangeListener(binding.tabLayout))
-        binding.appBar.setOnBackButtonClickListener { dismiss() }
+        binding.appBar.setOnBackButtonClickListener { this.dismiss() }
     }
 
     private fun setupViewPager(viewpager: ViewPager) {

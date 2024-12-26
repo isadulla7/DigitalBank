@@ -1,11 +1,22 @@
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/brandRedColor">
 
+    <uz.fido.universaldigital.ui.utils.snowflake.SnowfallView
+        android:id="@+id/home_anim_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:snowflakeSizeMax="16dp"
+        app:snowflakeSizeMin="8dp"
+        app:snowflakeSpeedMax="2"
+        app:snowflakeSpeedMin="1"
+        app:snowflakesAlreadyFalling="true"
+        app:snowflakesFadingEnabled="true"
+        app:snowflakesNum="64" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_avatar"
@@ -74,17 +85,6 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="5" />
 
-    <!--    <com.airbnb.lottie.LottieAnimationView-->
-    <!--        android:layout_width="250dp"-->
-    <!--        android:layout_height="150dp"-->
-    <!--        android:layout_marginTop="-16dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/user_name"-->
-    <!--        app:lottie_autoPlay="true"-->
-    <!--        app:lottie_fileName="snowman.json"-->
-    <!--        app:lottie_loop="true" />-->
-
     <uz.fido.utils.libs.smart_refresh.refresh_layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
@@ -105,7 +105,6 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/brandRedColor"
                 android:orientation="vertical">
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular

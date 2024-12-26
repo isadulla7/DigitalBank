@@ -78,7 +78,7 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
             val pieDataSet = PieDataSet(histories, "")
             pieDataSet.setAutomaticallyDisableSliceSpacing(false)
             if (histories.isNotEmpty())
-                pieDataSet.colors = getPieChartColors(histories.size)
+                pieDataSet.colors = getPieChartColors()
             pieDataSet.setDrawValues(false)
             pieDataSet.valueTextSize = 12f
             pieDataSet.valueTextColor = Color.WHITE

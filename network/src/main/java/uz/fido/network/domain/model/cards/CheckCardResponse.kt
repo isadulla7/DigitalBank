@@ -46,7 +46,7 @@ fun getCardOwnerNameFormatted(firstName: String?, surname: String?, embossedName
     if (!firstName.isNullOrEmpty() && !surname.isNullOrEmpty()) {
         return firstName.capitalizeWord() + " " + surname.first() + "."
     }
-    return "Not Found"
+    return embossedName.orEmpty()
 }
 
 fun getUserNameFormatted(embossedName: String?): String {
