@@ -25,18 +25,14 @@ import uz.fido.network.data.interceptor.HeaderInterceptor
 import uz.fido.network.domain.datasource.services.SwapKeyApiInterface
 import uz.fido.network.domain.datasource.services.UserApiInterface
 import uz.fido.utils.const.MyIdServiceConst
-import uz.fido.utils.log.Logger
 import java.io.InputStream
 import java.security.GeneralSecurityException
 import java.security.KeyStore
-import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
-import java.security.cert.CertificateFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
-import javax.net.ssl.SSLParameters
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManagerFactory
 import javax.net.ssl.X509TrustManager
@@ -57,16 +53,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideCertificate(@ApplicationContext appContext: Context): InputStream = appContext.resources.openRawResource(R.raw.unversal_uz)
+    fun provideCertificate(@ApplicationContext appContext: Context): InputStream = appContext.resources.openRawResource(R.raw.mycertificate)
 
     @Provides
     @Singleton
     fun provideKeyStore(caFileInputStream: InputStream): KeyStore = kotlin.run {
-        val keyStore = KeyStore.getInstance(KeyStore.getDefaultType())
-        keyStore.load(null, null)
-        val cf: CertificateFactory = CertificateFactory.getInstance("X.509")
-        val ca = cf.generateCertificate(caFileInputStream)
-        keyStore.setCertificateEntry("ca", ca)
+        val keyStore = KeyStore.getInstance("PKCS12")
+        val password = "ModileCert@856".toCharArray()
+        keyStore.load(caFileInputStream, password)
         return@run keyStore
     }
 
@@ -74,7 +68,7 @@ object NetworkModule {
     @Singleton
     fun provideKeyManagerFactory(keyStore: KeyStore): KeyManagerFactory = kotlin.run {
         val keyFactory = KeyManagerFactory.getInstance("X509")
-        keyFactory.init(keyStore, null)
+        keyFactory.init(keyStore, "ModileCert@856".toCharArray())
         return@run keyFactory
     }
 
@@ -119,7 +113,6 @@ object NetworkModule {
     private val modernTlsSpec = ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
         .tlsVersions(TlsVersion.TLS_1_3, TlsVersion.TLS_1_2)
         .build()
-
 
     @BaseOkhttpClient
     @Provides
