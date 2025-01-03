@@ -1041,5 +1041,6 @@
     <string name="try_universalbankpro_s_sleek_new_app_mode">Try UniversalBankPro\'s sleek new app mode!</string>
     <string name="try_lite_mode">Switch to the Lite version and use the simplified version of the app</string>
     <string name="try_pro_mode">Pro is the version of the app with all features available</string>
+    <string name="central_bank">CB rate</string>
 
 </resources>

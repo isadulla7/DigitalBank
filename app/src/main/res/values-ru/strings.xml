@@ -1043,5 +1043,6 @@
     <string name="try_universalbankpro_s_sleek_new_app_mode">Try UniversalBankPro\'s sleek new app mode!</string>
     <string name="try_lite_mode">Перейдите на Lite версию и используйте упрощённую версию приложения</string>
     <string name="try_pro_mode">Pro версия приложения с полным набором функций</string>
+    <string name="central_bank">Курс ЦБ</string>
 
 </resources>

@@ -12,6 +12,7 @@ import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentCurrencyRatesBinding
 import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeRatesAdapter
+import uz.fido.universaldigital.ui.fragments.products.adapter.RatesAdapter
 import uz.fido.utils.utility.fragment.pop
 
 @AndroidEntryPoint
@@ -20,7 +21,7 @@ class RatesFragment : BaseSimpleFragment<FragmentCurrencyRatesBinding>(
     FragmentCurrencyRatesBinding::inflate
 ), BaseInterface {
 
-    private lateinit var currencyRatesAdapter: HomeRatesAdapter
+    private lateinit var currencyRatesAdapter: RatesAdapter
 
     private val utilsViewModel: UtilsViewModel by activityViewModels()
     private var homeCurrencyRates = ArrayList<CourseItem>()
@@ -36,7 +37,7 @@ class RatesFragment : BaseSimpleFragment<FragmentCurrencyRatesBinding>(
         binding.rvCurrencyRates.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            currencyRatesAdapter = HomeRatesAdapter(ArrayList())
+            currencyRatesAdapter = RatesAdapter(ArrayList())
             adapter = currencyRatesAdapter
         }
     }
@@ -45,7 +46,7 @@ class RatesFragment : BaseSimpleFragment<FragmentCurrencyRatesBinding>(
         utilsViewModel.currencyRates.observe(viewLifecycleOwner) {
             homeCurrencyRates = it as ArrayList<CourseItem>
             if (homeCurrencyRates.isNotEmpty()) {
-                binding.lastUpdateDate.text = getString(R.string.currency_rate_date) + " " + homeCurrencyRates[0].beginDate
+                binding.lastUpdateDate.text = getString(R.string.currency_rate_date) + " " + homeCurrencyRates[0].beginDate.take(10)
                 for (i in 0 until homeCurrencyRates.size) {
                     when (homeCurrencyRates[i].currencyCode) {
                         "840" -> homeCurrencyRates[i].order = 1
@@ -65,6 +66,7 @@ class RatesFragment : BaseSimpleFragment<FragmentCurrencyRatesBinding>(
                 val newList = ArrayList<CourseItem>()
                 homeCurrencyRates.forEach { courseItem ->
                     if (courseItem.quoteCurrency == "000") {
+                        newList.add(courseItem)
                         newList.add(courseItem)
                     }
                 }
