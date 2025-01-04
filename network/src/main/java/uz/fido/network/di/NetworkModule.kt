@@ -80,7 +80,7 @@ object NetworkModule {
     @Singleton
     fun provideSslContext(keyStore: KeyStore, keyManagerFactory: KeyManagerFactory): SSLContext =
         kotlin.run {
-            val sslContext = SSLContext.getInstance("TLSv1.3")
+            val sslContext = SSLContext.getInstance("TLS")
             val tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm()
             val tmf = TrustManagerFactory.getInstance(tmfAlgorithm)
             tmf.init(keyStore)
