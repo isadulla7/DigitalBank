@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.chart
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -58,6 +59,7 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
 
     private fun drawMonthlyChart(list: ArrayList<ChartData>) {
         val total = list.map { it.amount }.sumOf { it }
+        list.sortByDescending { it.amount }
         binding.apply {
             pieChart.invalidate()
             val histories: ArrayList<PieEntry> = ArrayList()
@@ -86,11 +88,15 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
             pieChart.data = pieData
             pieChart.description.isEnabled = false
             pieChart.centerText = getString(R.string.total_amount) + "\n" + Format.formatAmount(total.toString()).replace(".00", "") + " UZS"
-            pieChart.setCenterTextSize(13F)
+            pieChart.setCenterTextTypeface(
+                Typeface.createFromAsset(
+                    requireContext().resources.assets, "fonts/Inter-Medium.ttf"
+                )
+            )
             pieChart.isDrawHoleEnabled = true
             pieChart.setDrawSlicesUnderHole(true)
             pieChart.holeRadius = 48f
-            pieChart.transparentCircleRadius = 56f
+            pieChart.transparentCircleRadius = 60f
             pieChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
                 override fun onValueSelected(e: Entry?, h: Highlight?) {
                     println("entryData:" + e?.y?.toString())

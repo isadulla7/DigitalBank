@@ -51,8 +51,8 @@
             android:layout_width="match_parent"
             android:layout_height="240dp"
             android:background="@color/transparent"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
+            android:scaleX="0.4"
+            android:scaleY="0.4"
             app:animateCircleAngleTo="clockwise"
             app:layout_constraintBottom_toTopOf="parent" />
 
