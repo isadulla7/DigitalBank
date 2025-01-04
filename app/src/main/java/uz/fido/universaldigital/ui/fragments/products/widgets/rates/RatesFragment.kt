@@ -67,7 +67,6 @@ class RatesFragment : BaseSimpleFragment<FragmentCurrencyRatesBinding>(
                 homeCurrencyRates.forEach { courseItem ->
                     if (courseItem.quoteCurrency == "000") {
                         newList.add(courseItem)
-                        newList.add(courseItem)
                     }
                 }
                 currencyRatesAdapter.setList(newList)
