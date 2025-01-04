@@ -60,7 +60,7 @@ object NetworkModule {
     fun provideKeyStore(caFileInputStream: InputStream): KeyStore = kotlin.run {
         val keyStore = KeyStore.getInstance("PKCS12")
         try {
-            val password = "ModileCert@856".toCharArray()
+            val password = "223377".toCharArray()
             keyStore.load(caFileInputStream, password)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -72,7 +72,7 @@ object NetworkModule {
     @Singleton
     fun provideKeyManagerFactory(keyStore: KeyStore): KeyManagerFactory = kotlin.run {
         val keyFactory = KeyManagerFactory.getInstance("X509")
-        keyFactory.init(keyStore, "ModileCert@856".toCharArray())
+        keyFactory.init(keyStore, "223377".toCharArray())
         return@run keyFactory
     }
 

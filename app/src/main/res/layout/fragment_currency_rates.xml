@@ -29,7 +29,6 @@
                 android:id="@+id/rv_currency_rates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:clipToPadding="false"
                 android:paddingHorizontal="16dp"
                 android:paddingBottom="16dp"
                 tools:listitem="@layout/item_home_currency_rates_new" />

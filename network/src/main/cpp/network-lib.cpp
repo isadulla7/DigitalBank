@@ -36,7 +36,7 @@ Java_uz_fido_network_di_Keys_paynetPhotoUrl(JNIEnv *env, jobject thiz) {
 
 JNIEXPORT jstring
 Java_uz_fido_network_di_Keys_getCertFilePassword(JNIEnv *env, jobject thiz) {
-    char *certFilePassword = "ModileCert@856";
+    char *certFilePassword = "223377";
     return env->NewStringUTF(certFilePassword);
 }
 

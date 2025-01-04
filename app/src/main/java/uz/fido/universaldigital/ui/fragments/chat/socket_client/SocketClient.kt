@@ -63,7 +63,7 @@ object SocketClient {
 
     private val sslContext: SSLContext = kotlin.run {
         val keyStore = KeyStore.getInstance("PKCS12")
-        val password = "ModileCert@856".toCharArray()
+        val password = "223377".toCharArray()
         keyStore.load(caFileInputStream, password)
         val keyManagerFactory = KeyManagerFactory.getInstance("X509")
         keyManagerFactory.init(keyStore, password)
