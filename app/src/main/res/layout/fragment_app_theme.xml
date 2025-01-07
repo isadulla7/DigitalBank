@@ -34,7 +34,7 @@
             android:paddingStart="16dp"
             android:text="@string/day_mode"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/switch_daymode"
@@ -65,7 +65,7 @@
             android:paddingStart="16dp"
             android:text="@string/night_mode"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/switch_darkmode"
@@ -95,7 +95,7 @@
             android:gravity="center|start"
             android:text="@string/automatic"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/switch_auto"

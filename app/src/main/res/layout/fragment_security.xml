@@ -34,7 +34,7 @@
             android:gravity="center|start"
             android:text="@string/change_pin_code"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ImageView
             android:layout_width="24dp"
@@ -63,7 +63,7 @@
             android:gravity="center|start"
             android:text="@string/change_password"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ImageView
             android:layout_width="24dp"
@@ -92,7 +92,7 @@
             android:gravity="center|start"
             android:text="@string/trusted_devices"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ImageView
             android:layout_width="24dp"
@@ -121,7 +121,7 @@
             android:gravity="center|start"
             android:text="@string/confirm_payment_by_touch_id"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/confirm_payment_switch"
@@ -148,7 +148,7 @@
             android:gravity="center|start"
             android:text="@string/enter_with_biometrics"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_fingerprint"
@@ -175,7 +175,7 @@
             android:gravity="center|start"
             android:text="@string/delete_account"
             android:textColor="@color/brandRedColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ImageView
             android:layout_width="24dp"

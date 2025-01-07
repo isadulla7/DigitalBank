@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:text="@string/issue_cost"
         android:textColor="@color/hintColor"
-        android:textSize="14sp" />
+        android:textSize="14dp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/costs_tv"
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
         android:textColor="@color/blackColor"
-        android:textSize="14sp"
+        android:textSize="14dp"
         tools:text="40500 UZS" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

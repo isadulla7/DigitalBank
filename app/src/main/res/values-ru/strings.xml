@@ -280,7 +280,7 @@
     <string name="receiver">Получатель</string>
     <string name="choose_receiver">Выберите получателя</string>
     <string name="choose_sender">Выберите отправитель</string>
-    <string name="input_amount">Введиту сумму</string>
+    <string name="input_amount">Введите сумму</string>
     <string name="conversion_currency">Валюту в которой хотите конвертировать</string>
     <string name="total_conversion_amount">Конвертируемая сумма:</string>
     <string name="sum_text">сум</string>
@@ -1044,5 +1044,6 @@
     <string name="try_lite_mode">Перейдите на Lite версию и используйте упрощённую версию приложения</string>
     <string name="try_pro_mode">Pro версия приложения с полным набором функций</string>
     <string name="central_bank">Курс ЦБ</string>
+    <string name="successful"><Успешно></Успешно></string>
 
 </resources>

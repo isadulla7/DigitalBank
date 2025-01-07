@@ -40,7 +40,7 @@
             android:layout_marginTop="16dp"
             android:text="@string/mib_debts"
             android:textColor="@color/brandBlueColor_50"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/tv_amount"
@@ -50,7 +50,7 @@
             android:layout_marginTop="4dp"
             android:layout_marginBottom="16dp"
             android:textColor="@color/brandRedColor_80"
-            android:textSize="14sp"
+            android:textSize="14dp"
             tools:text="1000000000 UZS" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

@@ -55,7 +55,7 @@
             android:gravity="center_horizontal"
             android:text="@string/recommeded_amount"
             android:textColor="@color/brandRedColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/max_amount"
@@ -64,7 +64,7 @@
             android:layout_marginStart="10dp"
             android:text="2 2000 "
             android:textColor="@color/brandRedColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -83,7 +83,7 @@
             android:layout_weight="1"
             android:text="@string/pay_on_time"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_id"
@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="end"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

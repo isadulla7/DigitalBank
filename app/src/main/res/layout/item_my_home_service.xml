@@ -38,7 +38,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/icon"
                 app:layout_constraintTop_toTopOf="parent"
@@ -75,7 +75,7 @@
                 android:layout_weight="1"
                 android:text="@string/call_number"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/person"
@@ -84,7 +84,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 tools:text="+998 97 778 35 33" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -105,7 +105,7 @@
                 android:layout_weight="1"
                 android:text="@string/balance"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/amount"
@@ -114,7 +114,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 tools:text="54 000 usz" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 

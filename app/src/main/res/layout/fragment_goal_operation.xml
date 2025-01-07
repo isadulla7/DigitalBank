@@ -40,7 +40,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:textColor="@color/brandBlueColor"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -53,7 +53,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="12dp"
                 android:textColor="@color/brandBlueColor"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_name"
@@ -83,7 +83,7 @@
                 android:layout_marginTop="6dp"
                 android:layout_marginBottom="16dp"
                 android:textColor="@color/brandBlueColor"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/progress_view" />
 
@@ -95,7 +95,7 @@
                 android:gravity="center"
                 android:text="@string/target_suspended"
                 android:textColor="@color/whiteColor"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -136,7 +136,7 @@
                     android:layout_marginVertical="16dp"
                     android:text="@string/top_up"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -165,7 +165,7 @@
                     android:layout_marginVertical="16dp"
                     android:text="@string/take_off"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -196,7 +196,7 @@
                 android:layout_weight="0.1"
                 android:text="@string/history_operation"
                 android:textColor="@color/mainTextColor"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/filter"
@@ -240,7 +240,7 @@
                 android:layout_marginTop="4dp"
                 android:text="@string/transfers_is_empty"
                 android:textColor="@color/brandBlueColor_50"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/description"
@@ -251,7 +251,7 @@
                 android:gravity="center"
                 android:text="@string/empty_goal_title"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

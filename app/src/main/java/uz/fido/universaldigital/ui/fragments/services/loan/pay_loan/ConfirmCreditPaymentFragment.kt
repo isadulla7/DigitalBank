@@ -19,6 +19,7 @@ import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCreditFragment
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientLoanViewModel
 import uz.fido.universaldigital.ui.fragments.transfers.confirm_transfer.ConfirmSmsForTransfer
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
@@ -58,7 +59,6 @@ class ConfirmCreditPaymentFragment : BaseFragment<FragmentCreditConfirmBinding, 
                         gotoWithSlide(
                             R.id.confirmSmsForTransfer, bundleOf(
                                 ConfirmSmsForTransfer.STRING_LINE to stringLine,
-//                                ConfirmSmsForTransfer.SMS_OPERATION to ConfirmSmsForTransfer.CREDIT_PAYMENT,
                                 "model" to model
                             )
                         )
@@ -137,11 +137,15 @@ class ConfirmCreditPaymentFragment : BaseFragment<FragmentCreditConfirmBinding, 
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {
             binding.chooseCardLayout.initCards(it as ArrayList<CardResponse>, clientProduct.paymentAmount, CurrencyConst.CURRENCY_CHAR_UZS) { cardResponse ->
                 cardResponse?.let { card ->
-                    if (card.balance.toBigDecimal().divide(100.toBigDecimal()).compareTo(clientProduct.paymentAmount!!.toBigDecimal()) == -1) {
-                        binding.btnContinue.isEnabled(false)
-                    } else {
-                        selectedCard = cardResponse
-                        binding.btnContinue.isEnabled(true)
+                    try {
+                        if (card.balance.toBigDecimal().divide(100.toBigDecimal()).compareTo((clientProduct.paymentAmount ?: "0").toBigDecimal()) == -1) {
+                            binding.btnContinue.isEnabled(false)
+                        } else {
+                            selectedCard = cardResponse
+                            binding.btnContinue.isEnabled(true)
+                        }
+                    } catch (e: Exception) {
+                        recordException(e)
                     }
                 }
             }

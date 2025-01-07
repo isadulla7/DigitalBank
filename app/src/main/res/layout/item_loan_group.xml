@@ -22,7 +22,7 @@
         android:drawablePadding="12dp"
         android:gravity="center_vertical|start"
         android:textColor="@color/mainTextColor"
-        android:textSize="20sp"
+        android:textSize="20dp"
         tools:text="Микрозайм" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -41,14 +41,14 @@
             android:gravity="center|start"
             android:text="@string/loan_amount"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/loan_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp"
+            android:textSize="14dp"
             tools:text="До 10 000 000.00 сум" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -76,14 +76,14 @@
             android:gravity="center|start"
             android:text="@string/loan_percent"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/loan_percent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp"
+            android:textSize="14dp"
             tools:text="25 %" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -112,14 +112,14 @@
             android:gravity="center|start"
             android:text="@string/loan_time"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/loan_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp"
+            android:textSize="14dp"
             tools:text="До 36 месяцев" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>

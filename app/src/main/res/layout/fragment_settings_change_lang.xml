@@ -41,7 +41,7 @@
             android:gravity="center|start"
             android:text="@string/uzbek"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/switch_uzbek"
@@ -77,7 +77,7 @@
             android:gravity="center|start"
             android:text="@string/russian"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/switch_russian"
@@ -112,7 +112,7 @@
             android:gravity="center|start"
             android:text="@string/english"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <com.google.android.material.radiobutton.MaterialRadioButton
             android:id="@+id/switch_english"

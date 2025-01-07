@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/brandBlueColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:id="@+id/last_seen"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:id="@+id/last_state"
@@ -52,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <ImageView

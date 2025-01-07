@@ -29,7 +29,7 @@
             android:maxLines="1"
             android:text="@string/bank_transfer_application"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                 android:gravity="start"
                 android:text="@string/amount"
                 android:textColor="@color/hintColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/text_amount"
@@ -52,7 +52,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 
@@ -67,7 +67,7 @@
                 android:gravity="start"
                 android:text="@string/receiver"
                 android:textColor="@color/hintColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/text_receiver"
@@ -77,7 +77,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 
@@ -92,7 +92,7 @@
                 android:gravity="start"
                 android:text="@string/status"
                 android:textColor="@color/hintColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/text_status"
@@ -102,7 +102,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 
@@ -118,7 +118,7 @@
                 android:gravity="start"
                 android:text="@string/beneficiary_account"
                 android:textColor="@color/hintColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/text_beneficiary_account"
@@ -128,7 +128,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 
@@ -144,7 +144,7 @@
                 android:gravity="start"
                 android:text="@string/beneficiary_bank_account_bi"
                 android:textColor="@color/hintColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/text_bank_account_bis"
@@ -154,7 +154,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 
@@ -169,7 +169,7 @@
                 android:gravity="start"
                 android:text="@string/payment_details"
                 android:textColor="@color/hintColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/text_details"
@@ -179,7 +179,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
         </LinearLayout>
 

@@ -29,7 +29,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:id="@+id/transfer_type_desc"
@@ -39,7 +39,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:textColor="@color/brandBlueColor_50"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

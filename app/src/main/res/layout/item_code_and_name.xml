@@ -22,7 +22,7 @@
             android:maxLines="2"
             android:text="@string/verification"
             android:textColor="@color/brandBlueColor"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:theme="@style/DefaultEditTextTheme" />
 
     </com.google.android.material.textfield.TextInputLayout>

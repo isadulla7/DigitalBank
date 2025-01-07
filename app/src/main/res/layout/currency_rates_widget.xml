@@ -24,7 +24,7 @@
             android:gravity="center_vertical"
             android:text="@string/currency_widget"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
         <TextView
             android:layout_width="0dp"
@@ -33,7 +33,7 @@
             android:gravity="center_vertical"
             android:text="@string/buy"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
         <TextView
             android:layout_width="0dp"
@@ -42,7 +42,7 @@
             android:gravity="center_vertical"
             android:text="@string/sell"
             android:textColor="@color/white"
-            android:textSize="12sp" />
+            android:textSize="12dp" />
 
     </LinearLayout>
 
@@ -62,7 +62,7 @@
             android:gravity="center_vertical"
             android:text="@string/usd"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:drawableStartCompat="@drawable/home_rate_usd" />
 
         <TextView
@@ -75,7 +75,7 @@
             android:gravity="center_vertical"
             android:text="@string/usd"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/selling_rate1"
@@ -87,7 +87,7 @@
             android:gravity="center_vertical"
             android:text="@string/usd"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
 
     </LinearLayout>
@@ -109,7 +109,7 @@
             android:gravity="center_vertical"
             android:text="@string/eur_text"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:drawableStartCompat="@drawable/home_rate_eur" />
 
         <TextView
@@ -122,7 +122,7 @@
             android:gravity="center_vertical"
             android:text="@string/eur_text"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/selling_rate2"
@@ -134,7 +134,7 @@
             android:gravity="center_vertical"
             android:text="@string/eur_text"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
 
     </LinearLayout>
@@ -157,7 +157,7 @@
             android:gravity="center_vertical"
             android:text="@string/rub_text"
             android:textColor="@color/white"
-            android:textSize="14sp"
+            android:textSize="14dp"
             app:drawableStartCompat="@drawable/home_rate_ruble" />
 
         <TextView
@@ -170,7 +170,7 @@
             android:gravity="center_vertical"
             android:text="@string/rub_text"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <TextView
             android:id="@+id/selling_rate"
@@ -182,7 +182,7 @@
             android:gravity="center_vertical"
             android:text="@string/rub_text"
             android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
 
     </LinearLayout>

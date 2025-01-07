@@ -24,7 +24,7 @@
         android:paddingBottom="16dp"
         android:text="@string/home_page_widgets"
         android:textColor="@color/mainTextColor"
-        android:textSize="16sp" />
+        android:textSize="16dp" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                 android:gravity="center|start"
                 android:text="@string/active"
                 android:textColor="@color/brandBlueColor"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_widgets" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -67,7 +67,7 @@
                 android:gravity="center|start"
                 android:text="@string/can_add"
                 android:textColor="@color/brandBlueColor"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_widgets" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -90,7 +90,7 @@
         android:backgroundTint="@color/brandRedColor"
         android:text="@string/save"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:cornerRadius="12dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

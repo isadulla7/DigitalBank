@@ -26,6 +26,7 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentOrderVirtualCardBinding
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -113,19 +114,29 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
             "VISA_VIRTUAL_CARD" -> {
                 binding.etSecretWord.addTextChangedListener {
                     binding.btnContinue.isEnabled(
-                        it.toString().isNotEmpty() && binding.checkBox.isChecked
+                        it.toString().trim().isNotEmpty() && binding.checkBox.isChecked
                     )
                 }
                 binding.p2pPercent.text = priceItem.transact_process_perc + " %"
+                binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
+                    binding.btnContinue.isEnabled(
+                        binding.etSecretWord.editableText.toString().trim().length in 5..10 && b
+                    )
+                }
             }
 
             "SV_DUO_VIRTUAL_CARD" -> {
                 binding.etSecretWord.addTextChangedListener {
                     binding.btnContinue.isEnabled(
-                        it.toString().length in 5..10 && binding.checkBox.isChecked
+                        it.toString().trim().length in 5..10 && binding.checkBox.isChecked
                     )
                 }
                 binding.layoutP2pPercent.visibility = View.GONE
+                binding.checkBox.setOnCheckedChangeListener { compoundButton, b ->
+                    binding.btnContinue.isEnabled(
+                        binding.etSecretWord.editableText.toString().trim().length in 5..10 && b
+                    )
+                }
             }
         }
         binding.expire.text = priceItem.card_validity_period + " ${requireContext().getString(R.string.let)}"
@@ -166,12 +177,14 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
         val annotations = fullText.getSpans(0, fullText.length, Annotation::class.java)
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                val website = "https://ibank.ubank.uz/cib/offertaCard.html"/*if (priceItem.code == "TET_VIRTUAL_CARD") {
-                    "https://aab.uz/download.php?f=101ccbefc15f322d168a7e6bdeb04ca7.pdf&i=40425"
-                } else "https://aab.uz/upload/iblock/01d/3shax3op5pzox646d243uuv2hywnfb82.pdf"*/
-                val webIntent = Intent(Intent.ACTION_VIEW)
-                webIntent.data = Uri.parse(website)
-                requireActivity().startActivity(webIntent)
+                try {
+                    val website = "https://ibank.ubank.uz/cib/offertaCard.html"
+                    val webIntent = Intent(Intent.ACTION_VIEW)
+                    webIntent.data = Uri.parse(website)
+                    requireActivity().startActivity(webIntent)
+                } catch (e: Exception) {
+                    recordException(e)
+                }
             }
 
             override fun updateDrawState(ds: TextPaint) {

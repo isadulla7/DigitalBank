@@ -32,7 +32,7 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/service"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/payment_name"
@@ -41,7 +41,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/content"
@@ -59,7 +59,7 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/commission"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/commission"
@@ -68,7 +68,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="match_parent"
@@ -77,7 +77,7 @@
                 android:layout_marginTop="12dp"
                 android:text="@string/to_payment"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewBold
                 android:id="@+id/total"
@@ -86,7 +86,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>

@@ -21,7 +21,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="16dp"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp"
+            android:textSize="14dp"
             tools:text="DUPLEX TEL" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -34,7 +34,7 @@
             android:paddingTop="6dp"
             android:paddingBottom="16dp"
             android:textColor="@color/hintColor"
-            android:textSize="12sp"
+            android:textSize="12dp"
             tools:text="YUNUSOBOD TUMANI NIYOZBEK YOLI 8" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -47,6 +47,6 @@
         android:layout_marginTop="8dp"
         android:text="N/A"
         android:textColor="@color/hintColor"
-        android:textSize="12sp" />
+        android:textSize="12dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

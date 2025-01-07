@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:text="@string/type_of_transaction_text"/>
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular

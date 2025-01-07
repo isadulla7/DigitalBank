@@ -46,7 +46,7 @@
         android:gravity="start|center"
         android:maxLines="2"
         android:textColor="@color/brandBlueColor"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toStartOf="@id/chat"
         app:layout_constraintStart_toEndOf="@id/user_avatar"
         app:layout_constraintTop_toTopOf="parent"
@@ -86,7 +86,7 @@
         android:gravity="center"
         android:includeFontPadding="false"
         android:textColor="@color/frozenBlue"
-        android:textSize="10sp"
+        android:textSize="10dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -132,7 +132,7 @@
                         android:gravity="center"
                         android:text="@string/you_have_no_cards"
                         android:textColor="@color/brandBlueColor_50"
-                        android:textSize="16sp" />
+                        android:textSize="16dp" />
 
                     <uz.fido.utils.view.custom_text_view.TextViewRegular
                         android:layout_width="match_parent"
@@ -142,7 +142,7 @@
                         android:gravity="center"
                         android:text="@string/no_card_description"
                         android:textColor="@color/brandBlueColor_50"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
 
                     <uz.fido.utils.view.custom_text_view.TextViewMedium
                         android:layout_width="wrap_content"
@@ -155,7 +155,7 @@
                         android:gravity="center"
                         android:text="@string/add_card"
                         android:textColor="@color/brandRedColor"
-                        android:textSize="16sp" />
+                        android:textSize="16dp" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -173,7 +173,7 @@
                         android:layout_marginTop="16dp"
                         android:text="@string/my_cards"
                         android:textColor="@color/brandBlueColor"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -212,7 +212,7 @@
                         android:gravity="center"
                         android:text="@string/all_cards"
                         android:textColor="@color/brandRedColor"
-                        android:textSize="16sp"
+                        android:textSize="16dp"
                         app:layout_constraintTop_toBottomOf="@id/user_cards" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -242,7 +242,7 @@
                             android:paddingVertical="8dp"
                             android:text="@string/transfer"
                             android:textColor="@color/brandBlueColor"
-                            android:textSize="16sp"
+                            android:textSize="16dp"
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <com.google.android.material.textfield.TextInputLayout
@@ -327,14 +327,14 @@
                                 android:layout_weight="1"
                                 android:text="@string/fast_access"
                                 android:textColor="@color/brandBlueColor"
-                                android:textSize="16sp" />
+                                android:textSize="16dp" />
 
                             <uz.fido.utils.view.custom_text_view.TextViewMedium
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/edit"
                                 android:textColor="@color/brandBlueColor"
-                                android:textSize="14sp" />
+                                android:textSize="14dp" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -372,7 +372,7 @@
                                 android:layout_weight="1"
                                 android:text="@string/saved_payments"
                                 android:textColor="@color/brandBlueColor"
-                                android:textSize="16sp" />
+                                android:textSize="16dp" />
 
                             <ImageView
                                 android:id="@+id/templates_expandable_handle"
@@ -425,7 +425,7 @@
                                 android:layout_weight="1"
                                 android:text="@string/my_house"
                                 android:textColor="@color/brandBlueColor"
-                                android:textSize="16sp" />
+                                android:textSize="16dp" />
 
                             <ImageView
                                 android:id="@+id/my_house_expandable_handle"
@@ -488,7 +488,7 @@
                                     android:gravity="center"
                                     android:text="Universalbank"
                                     android:textColor="@color/brandBlueColor"
-                                    android:textSize="16sp" />
+                                    android:textSize="16dp" />
 
                                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                                     android:id="@+id/app_mode"
@@ -498,7 +498,7 @@
                                     android:gravity="center"
                                     android:text="Pro"
                                     android:textColor="@color/brandRedColor"
-                                    android:textSize="16sp" />
+                                    android:textSize="16dp" />
                             </androidx.appcompat.widget.LinearLayoutCompat>
 
                             <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -508,7 +508,7 @@
                                 android:paddingVertical="12dp"
                                 android:text="@string/try_pro_mode"
                                 android:textColor="@color/brandBlueColor_50"
-                                android:textSize="15sp" />
+                                android:textSize="15dp" />
 
                             <uz.fido.utils.view.custom_text_view.TextViewMedium
                                 android:layout_width="wrap_content"
@@ -520,7 +520,7 @@
                                 android:paddingVertical="8dp"
                                 android:text="@string/try_now"
                                 android:textColor="@color/brandRedColor"
-                                android:textSize="13sp" />
+                                android:textSize="13dp" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>
 

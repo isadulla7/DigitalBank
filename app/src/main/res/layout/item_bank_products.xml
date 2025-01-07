@@ -17,7 +17,7 @@
         android:layout_weight="1"
         android:text="@string/microloan"
         android:textColor="@color/frozenWhite"
-        android:textSize="12sp" />
+        android:textSize="12dp" />
 
     <ImageView
         android:id="@+id/icon"

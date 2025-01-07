@@ -46,7 +46,7 @@
                     android:gravity="center|start"
                     android:text="@string/deposit_percent_text"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     android:layout_marginStart="16dp"
                     app:layout_constraintStart_toStartOf="parent"
                     />
@@ -66,7 +66,7 @@
                     android:gravity="center|start"
                     android:layout_marginStart="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     app:layout_constraintStart_toStartOf="parent"
                     />
 
@@ -84,7 +84,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/hintColor"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     android:layout_marginStart="32dp"
                     android:text="@string/amount_term"/>
 
@@ -94,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/hintColor"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     android:layout_marginHorizontal="8dp"
                     android:text="0.00"/>
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -105,7 +105,7 @@
         android:layout_width="match_parent"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="24dp"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:text="@string/currency_receive"
         android:layout_height="wrap_content"/>
     
@@ -188,7 +188,7 @@
          android:layout_height="wrap_content"
          android:layout_marginHorizontal="16dp"
          android:layout_marginTop="16dp"
-         android:textSize="16sp"
+         android:textSize="16dp"
          android:textColor="@color/mainTextColor"
          android:text="@string/deposit_term"/>
 
@@ -332,14 +332,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 android:layout_marginHorizontal="16dp"/>
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:textColor="@color/mainTextColor"
         android:text="@string/constructor_percent"
         android:layout_marginHorizontal="16dp"/>
@@ -393,7 +393,7 @@
                 android:gravity="center_vertical"
                 android:paddingStart="16dp"
                 android:textColor="@color/brandBlueColor_60"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 android:text="@string/extra_option"
                 android:drawableEnd="@drawable/ic_arrow_down"/>
 

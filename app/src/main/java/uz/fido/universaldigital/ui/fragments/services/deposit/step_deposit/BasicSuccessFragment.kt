@@ -54,7 +54,7 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
         const val GOAL_INCOME = "goal_income"
         const val MY_HOME_PAYMENT_LIST = "my_home_payment_list"
         const val DEPOSIT_WITH_DRAW_PERCENT = "deposit_with_draw_percent"
-        const val HUMO_ACTIVATION="humo_activation"
+        const val HUMO_ACTIVATION = "humo_activation"
 
     }
 
@@ -86,9 +86,11 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
                     MY_HOME_PAYMENT_LIST -> {
                         gotoMainPage()
                     }
+
                     HUMO_ACTIVATION -> {
                         gotoMainPage()
                     }
+
                     else -> {
                         gotoMainPage()
                     }
@@ -217,7 +219,7 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
 
                 ADD_CARD -> {
                     if (requireArguments().getString(Const.ADD_CARD_OPERATION) != null) {
-                        showProgress()
+                        binding.progressBar.visibility = View.VISIBLE
                         getCardList()
                     } else {
                         gotoMainPage()
@@ -259,7 +261,8 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
                 DEPOSIT_EDIT_NAME, DEPOSIT_FILLING, DEPOSIT_CLOSE -> {
                     goto(R.id.action_basicSuccessFragment_to_clientDepositListFragment)
                 }
-                HUMO_ACTIVATION->{
+
+                HUMO_ACTIVATION -> {
                     gotoMainPage()
                 }
 
@@ -323,8 +326,8 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
                                 object_status = response[0].object_status
                             }
                             menuProductsViewModel.updateCards(cardList)
+                            binding.progressBar.visibility = View.GONE
                             if (position == cardList.size - 1) {
-                                hideProgress()
                                 when (requireArguments().getString(Const.ADD_CARD_OPERATION)) {
                                     AddCardFragment.OPERATION_CARD_TO_CARD -> {
                                         goto(R.id.action_basicSuccessFragment_to_transferToCardFragment)

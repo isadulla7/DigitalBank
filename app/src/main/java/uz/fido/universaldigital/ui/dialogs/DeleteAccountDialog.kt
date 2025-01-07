@@ -13,6 +13,7 @@ class DeleteAccountDialog(
         super.onInit(savedInstanceState)
         binding.title.text = getString(R.string.delete_account_q)
         binding.subtitle.text = getString(R.string.delete_account_description)
+        binding.logOut.text = getString(R.string.delete)
         binding.cancel.setOnClickListener { dismiss() }
         binding.logOut.setOnClickListener {
             okClickListener.invoke()

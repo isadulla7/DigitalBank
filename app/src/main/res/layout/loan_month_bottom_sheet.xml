@@ -24,14 +24,14 @@
         android:gravity="center"
         android:text="@string/loan_time"
         android:textColor="@color/mainTextColor"
-        android:textSize="16sp" />
+        android:textSize="16dp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewSemiBold
         android:id="@+id/tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:textSize="18sp"
+        android:textSize="18dp"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -31,7 +31,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/receiver"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/tv_receiver"
@@ -42,7 +42,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="match_parent"
@@ -51,7 +51,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/receiver_card"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/tv_receiver_card"
@@ -62,7 +62,7 @@
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/commission"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/tv_commission"
@@ -80,7 +80,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="match_parent"
@@ -89,7 +89,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/received_amount"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/tv_received_amount"
@@ -98,7 +98,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="match_parent"
@@ -107,7 +107,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/to_payment"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewSemiBold
                 android:id="@+id/tv_total_amount"
@@ -116,7 +116,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewBold
                 android:layout_width="match_parent"
@@ -126,7 +126,7 @@
                 android:layout_marginEnd="16sp"
                 android:text="@string/write_off_card"
                 android:textColor="@color/mainTextColor"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -171,7 +171,7 @@
                     android:layout_marginHorizontal="16dp"
                     android:includeFontPadding="false"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     app:layout_constraintBottom_toTopOf="@id/tv_main_card"
                     app:layout_constraintTop_toBottomOf="@id/bank_logo"
                     tools:text="5 557 000 UZS" />
@@ -185,7 +185,7 @@
                     android:includeFontPadding="false"
                     android:text="@string/main_card"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -196,7 +196,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="**0924" />

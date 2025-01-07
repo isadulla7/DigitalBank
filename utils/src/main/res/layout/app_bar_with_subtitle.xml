@@ -37,7 +37,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:textColor="@color/brandBlueColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <ImageView
             android:id="@+id/additional"
@@ -58,6 +58,6 @@
         android:layout_marginTop="20dp"
         android:includeFontPadding="false"
         android:textColor="@color/brandBlueColor_50"
-        android:textSize="16sp" />
+        android:textSize="16dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

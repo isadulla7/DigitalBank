@@ -29,7 +29,7 @@
             android:layout_weight="1"
             android:gravity="start"
             android:textColor="@color/brandBlueColor"
-            android:textSize="17sp"
+            android:textSize="17dp"
             tools:text="USD" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/buy"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/buying_rate"
@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|start"
                 android:textColor="@color/brandBlueColor"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 tools:text="11590 UZS" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -72,7 +72,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sell"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/sell_rate"
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|start"
                 android:textColor="@color/brandBlueColor"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 tools:text="11590 UZS" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/central_bank"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/central_bank"
@@ -104,7 +104,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center|start"
                 android:textColor="@color/brandBlueColor"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 tools:text="11590 UZS" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

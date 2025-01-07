@@ -40,7 +40,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:paddingBottom="16dp"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </ScrollView>
 

@@ -51,6 +51,7 @@
         <activity
             android:name=".ui.activities.LoginActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.App.SplashScreen"
             android:windowSoftInputMode="adjustResize">
 
@@ -75,29 +76,36 @@
 
         <activity
             android:name=".ui.activities.LockSetActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.UniversalMobileDigital"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="DiscouragedApi" />
 
         <activity
             android:name=".ui.activities.VpnErrorActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activities.CallSafeActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.activities.FaceIdActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".ui.fragments.profile.edit_photo.EditPhotoActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
         <uses-library
             android:name="com.google.android.maps"

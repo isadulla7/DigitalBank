@@ -46,7 +46,7 @@
                     android:gravity="center"
                     android:text="@string/saved_receivers"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -73,7 +73,7 @@
                     android:paddingEnd="16dp"
                     android:text="@string/type_of_transaction"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rec_service"
@@ -99,7 +99,7 @@
                     android:paddingEnd="16dp"
                     android:text="@string/card"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
 
                     <androidx.appcompat.widget.AppCompatImageView
                         android:id="@+id/card_animation"
@@ -148,7 +148,7 @@
                     android:gravity="center"
                     android:text="@string/period"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -177,7 +177,7 @@
                             android:text="@string/card"
                             android:visibility="gone"
                             android:textColor="@color/mainTextColor"
-                            android:textSize="14sp" />
+                            android:textSize="14dp" />
 
                         <uz.fido.utils.view.custom_text_view.TextViewMedium
                             android:id="@+id/time"
@@ -190,7 +190,7 @@
                             android:paddingHorizontal="12dp"
                             android:text="@string/select_period"
                             android:textColor="@color/mainTextColor"
-                            android:textSize="14sp" />
+                            android:textSize="14dp" />
 
                         <uz.fido.utils.view.custom_text_view.TextViewMedium
                             android:id="@+id/amount"
@@ -203,7 +203,7 @@
                             android:paddingHorizontal="12dp"
                             android:text="@string/amount"
                             android:textColor="@color/mainTextColor"
-                            android:textSize="14sp" />
+                            android:textSize="14dp" />
 
                         <uz.fido.utils.view.custom_text_view.TextViewMedium
                             android:id="@+id/min_plus"
@@ -217,7 +217,7 @@
                             android:paddingHorizontal="12dp"
                             android:text="@string/funds_flow"
                             android:textColor="@color/mainTextColor"
-                            android:textSize="14sp" />
+                            android:textSize="14dp" />
                     </LinearLayout>
 
                 </HorizontalScrollView>
@@ -235,7 +235,7 @@
                     android:visibility="gone"
                     android:text="@string/title_card"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -278,7 +278,7 @@
                         android:includeFontPadding="false"
                         android:paddingStart="16dp"
                         android:textColor="@color/mainTextColor"
-                        android:textSize="12sp"
+                        android:textSize="12dp"
                         android:visibility="gone"
                         app:layout_constraintTop_toBottomOf="@+id/card_number_layout" />
 
@@ -340,7 +340,7 @@
             android:backgroundTint="#F9EAEA"
             android:text="@string/reset"
             android:textColor="@color/brandRedColor"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:cornerRadius="16dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -354,7 +354,7 @@
             android:enabled="false"
             android:text="@string/apply"
             android:textColor="@color/frozenWhite"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:cornerRadius="12dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 

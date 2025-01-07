@@ -27,7 +27,7 @@
             android:gravity="start"
             android:paddingVertical="10dp"
             android:textColor="@color/brandBlueColor"
-            android:textSize="16sp"
+            android:textSize="16dp"
             tools:text="USD" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -39,7 +39,7 @@
         android:gravity="center|start"
         android:paddingVertical="10dp"
         android:textColor="@color/brandBlueColor"
-        android:textSize="16sp"
+        android:textSize="16dp"
         tools:text="11590 UZS" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -50,7 +50,7 @@
         android:gravity="center|start"
         android:paddingVertical="10dp"
         android:textColor="@color/brandBlueColor"
-        android:textSize="16sp"
+        android:textSize="16dp"
         tools:text="11590 UZS" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

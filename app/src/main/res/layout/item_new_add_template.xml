@@ -29,6 +29,6 @@
         android:maxLines="2"
         android:text="@string/add_payment"
         android:textColor="@color/brandBlueColor"
-        android:textSize="14sp" />
+        android:textSize="14dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

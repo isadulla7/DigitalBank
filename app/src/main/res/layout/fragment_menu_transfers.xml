@@ -19,7 +19,7 @@
             android:gravity="center|start"
             android:text="@string/transfer"
             android:textColor="@color/brandBlueColor"
-            android:textSize="24sp" />
+            android:textSize="24dp" />
 
         <ImageView
             android:id="@+id/search"

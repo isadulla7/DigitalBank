@@ -28,7 +28,7 @@
         android:gravity="center|start"
         android:maxLines="2"
         android:textColor="@color/brandBlueColor"
-        android:textSize="12sp"
+        android:textSize="12dp"
         tools:text="Test" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -18,7 +18,7 @@
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:layout_width="match_parent"
         android:layout_gravity="center"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:layout_marginTop="6dp"
         android:gravity="center"
         android:text="@string/goal_operations_title"
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"
-        android:textSize="18sp"
+        android:textSize="18dp"
         android:visibility="gone" />
 
 
@@ -38,7 +38,7 @@
         android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:layout_marginTop="16dp"
         android:drawablePadding="16dp"
         android:drawableStart="@drawable/ic_edit_house"
@@ -50,7 +50,7 @@
         android:id="@+id/pause"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:drawablePadding="16dp"
         android:drawableStart="@drawable/ic_pause"
         android:paddingStart="16dp"
@@ -63,7 +63,7 @@
         android:id="@+id/delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="16dp"
          android:layout_marginBottom="16dp"
         android:drawablePadding="16dp"
         android:drawableStart="@drawable/ic_delete_red"

@@ -38,7 +38,7 @@
             android:gravity="center"
             android:maxLines="2"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

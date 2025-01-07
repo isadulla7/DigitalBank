@@ -19,7 +19,7 @@
         android:layout_width="match_parent"
         android:text="@string/open_calculator"
          android:gravity="center"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:layout_marginTop="6dp"
         android:textColor="@color/mainTextColor"
         android:layout_height="wrap_content"/>

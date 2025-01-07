@@ -36,7 +36,7 @@
             android:padding="10dp"
             android:singleLine="true"
             android:textColor="@color/blackColor"
-            android:textSize="17sp" />
+            android:textSize="17dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView
