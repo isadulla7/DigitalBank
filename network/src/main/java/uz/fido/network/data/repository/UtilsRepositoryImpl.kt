@@ -67,7 +67,6 @@ class UtilsRepositoryImpl @Inject constructor(private val utilsService: UtilsApi
         utilsService.getNewsList(token, getNewsList)
     }
 
-
     override suspend fun updateNewsStatus(
         token: String, updateNewsStatusRequest: UpdateNewsStatusRequest
     ): Resource<BaseResponse> = getResult {

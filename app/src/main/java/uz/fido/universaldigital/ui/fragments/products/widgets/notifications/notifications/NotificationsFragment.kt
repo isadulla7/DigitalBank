@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.products.widgets.notifications
+package uz.fido.universaldigital.ui.fragments.products.widgets.notifications.notifications
 
 import android.os.Bundle
 import android.view.View
@@ -18,11 +18,11 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentNotificationsBinding
 import uz.fido.universaldigital.ui.fragments.payment.templates.adapter.PaymentTemplatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
+import uz.fido.universaldigital.ui.fragments.products.widgets.notifications.NotificationsViewModel
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.gotoWithSlide
-import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
@@ -41,12 +41,7 @@ class NotificationsFragment : BaseFragment<FragmentNotificationsBinding, Notific
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initSetOnClickListeners()
         initNotifications()
-    }
-
-    private fun initSetOnClickListeners() {
-        binding.appBar.setOnBackButtonClickListener { pop() }
     }
 
     private fun initNotifications() {

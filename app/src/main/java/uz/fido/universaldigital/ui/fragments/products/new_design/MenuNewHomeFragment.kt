@@ -207,7 +207,7 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
         binding.userName.setOnClickListener { goto(R.id.menuProfileFragment) }
         binding.btnAllCards.setOnClickListener { goto(R.id.myCardsListFragment) }
         binding.userAvatar.setOnClickListener { goto(R.id.menuProfileFragment) }
-        binding.notifications.setOnClickListener { goto(R.id.notificationsFragment) }
+        binding.notifications.setOnClickListener { goto(R.id.mainNewsFragment) }
         binding.addCardLayout.setOnClickListener { goto(R.id.addCardFragment) }
         binding.backToOldDesign.setOnClickListener { NewDesignOnboardingPage().show(childFragmentManager, "") }
         binding.hideBalance.setOnClickListener { changeBalanceVisibility() }

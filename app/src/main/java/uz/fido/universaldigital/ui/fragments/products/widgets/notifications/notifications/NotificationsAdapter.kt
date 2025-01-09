@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.products.widgets.notifications
+package uz.fido.universaldigital.ui.fragments.products.widgets.notifications.notifications
 
 import android.view.LayoutInflater
 import android.view.View

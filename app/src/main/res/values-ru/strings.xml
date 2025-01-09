@@ -1044,6 +1044,7 @@
     <string name="try_lite_mode">Перейдите на Lite версию и используйте упрощённую версию приложения</string>
     <string name="try_pro_mode">Pro версия приложения с полным набором функций</string>
     <string name="central_bank">Курс ЦБ</string>
-    <string name="successful"><Успешно></Успешно></string>
+    <string name="successful">Успешно</string>
+    <string name="news">Новости</string>
 
 </resources>

@@ -27,7 +27,7 @@
     <string name="unkknown_error">Неизвестная ошибка</string>
     <string name="empty_list">Ничего не нашлось</string>
     <string name="you_have_no_internet">У вас нет интернета</string>
-    <string name="you_have_no_internet_desc">Нет подключения к интернета повторите попытку или попробуйте позже</string>
+    <string name="you_have_no_internet_desc">Нет подключения к интернету. Повторите попытку или попробуйте позже</string>
     <string name="from_card">С карты</string>
     <string name="card">Карта</string>
     <string name="deposit_min_amount">от %s</string>

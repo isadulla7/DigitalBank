@@ -42,16 +42,29 @@
 
     <CheckBox
         android:id="@+id/check_box"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="4dp"
         android:button="@drawable/custom_check_box"
-        android:paddingStart="8dp"
-        android:text="@string/verification_privacy"
+        android:paddingStart="16dp"
         android:textColor="@color/hintColor"
-        app:layout_constraintBottom_toTopOf="@id/bottom_layout" />
+        app:layout_constraintBottom_toTopOf="@id/bottom_layout"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/text_sing_up_terms"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:text="@string/verification_privacy"
+        android:textColor="@color/mainTextColor"
+        android:textSize="15dp"
+        app:layout_constraintBottom_toBottomOf="@id/check_box"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/check_box"
+        app:layout_constraintTop_toTopOf="@id/check_box" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/bottom_layout"

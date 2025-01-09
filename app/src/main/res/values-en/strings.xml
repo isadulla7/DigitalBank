@@ -1043,5 +1043,6 @@
     <string name="try_pro_mode">Pro is the version of the app with all features available</string>
     <string name="central_bank">CB rate</string>
     <string name="successful">Successful</string>
+    <string name="news">News</string>
 
 </resources>

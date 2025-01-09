@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.products.widgets.notifications
+package uz.fido.universaldigital.ui.fragments.products.widgets.notifications.notifications
 
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
@@ -7,6 +7,7 @@ import uz.fido.network.domain.model.news.UpdateNotificationState
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentReadNotificationBinding
+import uz.fido.universaldigital.ui.fragments.products.widgets.notifications.NotificationsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.getFormattedDate
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.utility.fragment.pop

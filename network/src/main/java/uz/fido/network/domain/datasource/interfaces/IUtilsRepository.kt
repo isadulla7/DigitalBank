@@ -107,4 +107,6 @@ interface IUtilsRepository {
         token: String,
         updateNotificationState: UpdateNotificationState
     ): Resource<BaseResponse>
+
+
 }

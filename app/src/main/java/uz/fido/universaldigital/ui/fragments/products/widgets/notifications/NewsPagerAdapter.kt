@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.adapter
+package uz.fido.universaldigital.ui.fragments.products.widgets.notifications
 
 import android.content.Context
 import androidx.fragment.app.Fragment
@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import uz.fido.universaldigital.R
 
-class MonitoringPagerAdapter(private var context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class NewsPagerAdapter(private var context: Context, fm: FragmentManager) : FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     private val mFragmentList = ArrayList<Fragment>()
 
@@ -28,10 +28,8 @@ class MonitoringPagerAdapter(private var context: Context, fm: FragmentManager) 
 
     override fun getPageTitle(position: Int): CharSequence {
         return when (position) {
-            0 -> context.getString(R.string.local_monitoring)
-            1 -> context.getString(R.string.uzcard)
-            2 -> context.getString(R.string.humo)
-            3 -> context.getString(R.string.wallet)
+            0 -> context.getString(R.string.news)
+            1 -> context.getString(R.string.notifications)
             else -> ""
         }
     }

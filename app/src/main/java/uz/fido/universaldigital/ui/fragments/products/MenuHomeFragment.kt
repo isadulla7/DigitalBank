@@ -376,7 +376,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         binding.btnShowMore.setOnClickListener {
             showMoreButtonClickEvent()
         }
-        binding.notifications.setOnClickListener { goto(R.id.notificationsFragment) }
+        binding.notifications.setOnClickListener { goto(R.id.mainNewsFragment) }
         binding.addCardLayout.setOnClickListener { goto(R.id.addCardFragment) }
         binding.balanceSettings.setOnClickListener {
             openBalanceSettingsDialog()

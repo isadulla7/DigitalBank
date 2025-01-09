@@ -17,6 +17,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentRestoreWithCardBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInResponse
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.PHONE_NUMBER
 import uz.fido.utils.utility.context.GetDeviceInfo
@@ -121,7 +122,7 @@ class RestoreWithCardFragment :
                     val signInResponse = it.data
                     signInResponse!!.phone_number = phoneNumber
                     requireContext().saveSignInResponse(signInResponse)
-
+                    saveToPaper(Const.PASSWORD_ENC, signInResponse.password)
                     gotoWithSlide(
                         R.id.changePasswordFragment2, bundleOf(
                             ChangePasswordFragment.CHANGE_PASSWORD_OPERATION to ChangePasswordFragment.CHANGE_PASSWORD_SIGNUP,
