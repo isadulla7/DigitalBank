@@ -54,7 +54,7 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
                     else -> return
                 }
             } catch (e: Exception) {
-                recordException(e)
+                recordException(e, ::onViewCreated.name)
             }
         }
         checkTip()

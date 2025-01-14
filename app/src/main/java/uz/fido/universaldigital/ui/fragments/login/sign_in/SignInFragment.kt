@@ -49,6 +49,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         setTermsOfUseColor()
         setPhonePrefix()
         initTextChangeListeners()
+        initMyAccount()
     }
 
     private fun setPhonePrefix() {
@@ -204,6 +205,13 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun passwordFormatted(): String {
         return binding.etPassword.editableText.toString().replace(" ", "")
+    }
+
+    private fun initMyAccount() {
+        if (BuildConfig.DEBUG) {
+            binding.etPhoneNumber.setText("+998930088809")
+            binding.etPassword.setText("Qwerty2398@")
+        }
     }
 
 }
