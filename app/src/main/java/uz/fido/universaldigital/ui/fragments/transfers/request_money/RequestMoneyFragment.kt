@@ -62,7 +62,7 @@ class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, Req
 
     private fun initTextWatchers() {
         binding.etAmount.doAfterTextChanged {
-            binding.btnContinue.isEnabled(checkForButton())
+            binding.btnContinue.isEnabled(checkForButton() && receiverCard != null)
         }
     }
 
@@ -81,10 +81,9 @@ class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, Req
     private fun initSetOnClickListeners() {
         binding.btnContinue.setOnClickListener {
             binding.btnContinue.setProgress(true)
-            val url =
-                "https://universaldigitalbank.page.link/qrcard?cardNumber=${receiverCard?.object_value}&amount=${
-                    Format.sendFormat(binding.etAmount.text.toString())
-                }&objectId=${receiverCard?.object_id}&comment=${binding.etComment.text.toString()}"
+            val url = "https://universaldigitalbank.page.link/qrcard?cardNumber=${receiverCard?.object_value}&amount=${
+                Format.sendFormat(binding.etAmount.text.toString())
+            }&objectId=${receiverCard?.object_id}&comment=${binding.etComment.text.toString()}"
             Firebase.dynamicLinks.shortLinkAsync {
                 link = Uri.parse(url)
                 domainUriPrefix = "https://universaldigitalbank.page.link"

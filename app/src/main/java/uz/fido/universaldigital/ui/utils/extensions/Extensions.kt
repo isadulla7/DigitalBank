@@ -170,7 +170,6 @@ fun Fragment.showSnackbar(
     title: String? = null,
     buttonText: String? = null
 ) {
-
     val message = getMeaningFulMessage(snackbarText)
     if (message.isNotEmpty() && view != null) {
         val dialog = BaseInfoDialog(title ?: getString(R.string.error), message, buttonText)
@@ -419,30 +418,34 @@ fun String.capitalizeFirstChar(): String {
     return this.replaceFirstChar { it.uppercase() }
 }
 
-fun recordException(e: Exception, activity: Activity) {
+fun recordException(e: Exception, activity: Activity, functionName: String? = "") {
     FirebaseCrashlytics.getInstance().apply {
         setCustomKey("class_name", activity.javaClass.simpleName)
+        setCustomKey("function_name", functionName.orEmpty())
         recordException(e)
     }
 }
 
-fun Activity.recordException(e: Exception) {
+fun Activity.recordException(e: Exception, functionName: String? = "") {
     FirebaseCrashlytics.getInstance().apply {
         setCustomKey("class_name", this@recordException.javaClass.simpleName)
+        setCustomKey("function_name", functionName.orEmpty())
         recordException(e)
     }
 }
 
-fun recordException(e: Exception, fragment: Fragment) {
+fun recordException(e: Exception, fragment: Fragment, functionName: String? = "") {
     FirebaseCrashlytics.getInstance().apply {
         setCustomKey("class_name", fragment.javaClass.simpleName)
+        setCustomKey("function_name", functionName.orEmpty())
         recordException(e)
     }
 }
 
-fun Fragment.recordException(e: Exception) {
+fun Fragment.recordException(e: Exception, functionName: String? = "") {
     FirebaseCrashlytics.getInstance().apply {
         setCustomKey("class_name", this@recordException.javaClass.simpleName)
+        setCustomKey("function_name", functionName.orEmpty())
         recordException(e)
     }
 }

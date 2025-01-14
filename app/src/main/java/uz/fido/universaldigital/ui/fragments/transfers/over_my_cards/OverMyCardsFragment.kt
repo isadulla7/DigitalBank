@@ -131,7 +131,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 binding.etAmount.setText(getAvailableAmount())
                 continueButtonState()
             } catch (e: Exception) {
-                recordException(e)
+                recordException(e, ::initSetOnClickListeners.name)
             }
         }
     }

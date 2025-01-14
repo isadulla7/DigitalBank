@@ -136,7 +136,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                     }
                 }
             } catch (e: Exception) {
-                recordException(e)
+                recordException(e,::initCards.name)
             }
         }
     }

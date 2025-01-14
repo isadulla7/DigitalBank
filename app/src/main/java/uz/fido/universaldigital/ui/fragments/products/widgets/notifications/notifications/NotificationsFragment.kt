@@ -22,6 +22,7 @@ import uz.fido.universaldigital.ui.fragments.products.widgets.notifications.Noti
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.utility.adapter.showSkeleton
+import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 
@@ -116,7 +117,7 @@ class NotificationsFragment : BaseFragment<FragmentNotificationsBinding, Notific
         viewModel.updateNotificationStatus(
             getClientToken(), UpdateNotificationState(list)
         ).observe(viewLifecycleOwner) {}
-        gotoWithSlide(R.id.readNotificationFragment, bundleOf("item" to item))
+        goto(R.id.readNotificationFragment, bundleOf("item" to item))
     }
 
 }

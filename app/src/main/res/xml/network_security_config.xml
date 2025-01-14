@@ -20,15 +20,11 @@
     </domain-config>
 
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">87.237.237.230:8181</domain>
-        <domain includeSubdomains="true">87.237.237.230</domain>
-        <domain includeSubdomains="true">ip-api.com</domain>
         <domain includeSubdomains="true">requestid.universalbank.uz</domain>
         <domain includeSubdomains="true">requestid.universalbank.uz/api</domain>
         <domain includeSubdomains="true">requestid.universalbank.uz/api/request</domain>
         <domain includeSubdomains="true">requestid.universalbank.uz/api/request/identify</domain>
         <domain includeSubdomains="true">https://requestid.universalbank.uz/api/request/identify</domain>
-        <domain includeSubdomains="true">https://requestid.universalbank.uz/api/request/identify/192.168.20.148</domain>
         <domain includeSubdomains="true">universaldigitalbank.uz</domain>
         <domain includeSubdomains="true">my.fido.uz</domain>
         <domain includeSubdomains="true">universaldigitalbank</domain>

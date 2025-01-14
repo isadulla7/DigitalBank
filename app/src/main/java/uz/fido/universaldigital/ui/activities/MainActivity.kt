@@ -243,7 +243,7 @@ class MainActivity : BaseActivity() {
                     noConnectionDialog?.show(supportFragmentManager, "")
                 }
             } catch (e: Exception) {
-                recordException(e)
+                recordException(e, ::internetListener.name)
             }
         }
     }

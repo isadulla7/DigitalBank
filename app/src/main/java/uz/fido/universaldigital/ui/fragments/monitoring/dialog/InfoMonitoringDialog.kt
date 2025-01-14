@@ -113,7 +113,7 @@ class InfoMonitoringDialog(
                 }
             } else initViews(isRequired = true, isPayment = true)
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::init.name)
         }
     }
 

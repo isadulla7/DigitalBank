@@ -41,29 +41,25 @@ object ApiServiceModule {
 
     @Provides
     @Singleton
-    fun provideCreditApiService(@BaseRetrofit retrofit: Retrofit): CreditApiInterface =
-        retrofit.create(
-            CreditApiInterface::class.java
-        )
+    fun provideCreditApiService(@BaseRetrofit retrofit: Retrofit): CreditApiInterface = retrofit.create(
+        CreditApiInterface::class.java
+    )
 
     @Provides
     @Singleton
-    fun provideDepositApiService(@BaseRetrofit retrofit: Retrofit): DepositApiInterface =
-        retrofit.create(
-            DepositApiInterface::class.java
-        )
+    fun provideDepositApiService(@BaseRetrofit retrofit: Retrofit): DepositApiInterface = retrofit.create(
+        DepositApiInterface::class.java
+    )
 
     @Provides
     @Singleton
-    fun provideMonitoringApiService(@BaseRetrofit retrofit: Retrofit): MonitoringApiInterface =
-        retrofit.create(
-            MonitoringApiInterface::class.java
-        )
+    fun provideMonitoringApiService(@BaseRetrofit retrofit: Retrofit): MonitoringApiInterface = retrofit.create(
+        MonitoringApiInterface::class.java
+    )
 
     @Provides
     @Singleton
-    fun provideMyIdService(@MyIdRetrofit retrofit: Retrofit): MyIdApiInterface =
-        retrofit.create(MyIdApiInterface::class.java)
+    fun provideMyIdService(@MyIdRetrofit retrofit: Retrofit): MyIdApiInterface = retrofit.create(MyIdApiInterface::class.java)
 
     @Provides
     @Singleton
@@ -73,38 +69,32 @@ object ApiServiceModule {
 
     @Provides
     @Singleton
-    fun providePaymentApiService(@BaseRetrofit retrofit: Retrofit): PaymentApiInterface =
-        retrofit.create(
-            PaymentApiInterface::class.java
-        )
+    fun providePaymentApiService(@BaseRetrofit retrofit: Retrofit): PaymentApiInterface = retrofit.create(
+        PaymentApiInterface::class.java
+    )
 
     @Provides
     @Singleton
-    fun provideServiceApiService(@BaseRetrofit retrofit: Retrofit): ServiceApiInterface =
-        retrofit.create(
-            ServiceApiInterface::class.java
-        )
+    fun provideServiceApiService(@BaseRetrofit retrofit: Retrofit): ServiceApiInterface = retrofit.create(
+        ServiceApiInterface::class.java
+    )
 
     @Provides
     @Singleton
-    fun provideSocketApiService(@SocketRetrofit retrofit: Retrofit): SocketInterface =
-        retrofit.create(SocketInterface::class.java)
+    fun provideSocketApiService(@SocketRetrofit retrofit: Retrofit): SocketInterface = retrofit.create(SocketInterface::class.java)
 
     @Provides
-    fun provideRatesApiService(@SimpleClientRetrofit retrofit: Retrofit): RatesApi =
-        retrofit.create(RatesApi::class.java)
-
-    @Provides
-    @Singleton
-    fun swapKeyService(@SwapKeyRetrofit retrofit: Retrofit): SwapKeyApiInterface =
-        retrofit.create(SwapKeyApiInterface::class.java)
+    fun provideRatesApiService(@SimpleClientRetrofit retrofit: Retrofit): RatesApi = retrofit.create(RatesApi::class.java)
 
     @Provides
     @Singleton
-    fun provideTemplateApiService(@BaseRetrofit retrofit: Retrofit): TemplateApiInterface =
-        retrofit.create(
-            TemplateApiInterface::class.java
-        )
+    fun swapKeyService(@SwapKeyRetrofit retrofit: Retrofit): SwapKeyApiInterface = retrofit.create(SwapKeyApiInterface::class.java)
+
+    @Provides
+    @Singleton
+    fun provideTemplateApiService(@BaseRetrofit retrofit: Retrofit): TemplateApiInterface = retrofit.create(
+        TemplateApiInterface::class.java
+    )
 
     @Provides
     fun provideUserApiService(@BaseRetrofit retrofit: Retrofit): UserApiInterface = retrofit.create(
@@ -112,16 +102,14 @@ object ApiServiceModule {
     )
 
     @Provides
-    fun provideUtilsApiService(@BaseRetrofit retrofit: Retrofit): UtilsApiInterface =
-        retrofit.create(
-            UtilsApiInterface::class.java
-        )
+    fun provideUtilsApiService(@BaseRetrofit retrofit: Retrofit): UtilsApiInterface = retrofit.create(
+        UtilsApiInterface::class.java
+    )
 
     @Provides
-    fun provideWalletApiService(@BaseRetrofit retrofit: Retrofit): WalletApiInterface =
-        retrofit.create(
-            WalletApiInterface::class.java
-        )
+    fun provideWalletApiService(@BaseRetrofit retrofit: Retrofit): WalletApiInterface = retrofit.create(
+        WalletApiInterface::class.java
+    )
 
 
 }

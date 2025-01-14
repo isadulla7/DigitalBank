@@ -183,7 +183,7 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
                     webIntent.data = Uri.parse(website)
                     requireActivity().startActivity(webIntent)
                 } catch (e: Exception) {
-                    recordException(e)
+                    recordException(e, ::initOffer.name)
                 }
             }
 

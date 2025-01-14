@@ -25,6 +25,7 @@ import uz.fido.universaldigital.ui.fragments.profile.MenuProfileViewModel
 import uz.fido.universaldigital.ui.fragments.profile.edit_photo.EditPhotoActivity
 import uz.fido.universaldigital.ui.utils.extensions.fixQuestionMarks
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.pop
@@ -33,11 +34,10 @@ import uz.fido.utils.utility.user.getClientToken
 import java.util.Random
 
 @AndroidEntryPoint
-@SuppressLint("SetTextI18n")
 class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfileViewModel>(FragmentEditProfileBinding::inflate, MenuProfileViewModel::class.java) {
 
-    private var storageReference: StorageReference? = null
-    private var storage: FirebaseStorage? = null
+    private lateinit var storageReference: StorageReference
+    private lateinit var storage: FirebaseStorage
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
@@ -47,7 +47,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
 
     private fun initUserDetails() {
         storage = FirebaseStorage.getInstance()
-        storageReference = storage!!.reference
+        storageReference = storage.reference
         loadProfileImage()
         binding.apply {
             userName.setText(getFromPaper(Const.FIRST_NAME, getString(R.string.unknown)).fixQuestionMarks())
@@ -120,18 +120,22 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
     }
 
     private fun uploadImageToFirebase(filePath: Uri) {
-        val photoId = "profile_photo_${getClientId()}_${(Random().nextInt(99999 - 10000) + 10000)}"
-        binding.progressBar.visibility = View.VISIBLE
-        binding.profileImage.alpha = 0.8f
-        val ref = storageReference!!.child("images/$photoId")
-        ref.putFile(filePath).addOnSuccessListener {
-            setProfilePhotoId(photoId)
-            binding.progressBar.visibility = View.GONE
-            binding.profileImage.alpha = 1f
-        }.addOnFailureListener { e ->
-            binding.progressBar.visibility = View.GONE
-            binding.profileImage.alpha = 1f
-            showSnackbar(e.localizedMessage.toString())
+        try {
+            val photoId = "profile_photo_${getClientId()}_${(Random().nextInt(99999 - 10000) + 10000)}"
+            binding.progressBar.visibility = View.VISIBLE
+            binding.profileImage.alpha = 0.8f
+            val ref = storageReference.child("images/$photoId")
+            ref.putFile(filePath).addOnSuccessListener {
+                setProfilePhotoId(photoId)
+                binding.progressBar.visibility = View.GONE
+                binding.profileImage.alpha = 1f
+            }.addOnFailureListener { e ->
+                binding.progressBar.visibility = View.GONE
+                binding.profileImage.alpha = 1f
+                showSnackbar(e.localizedMessage?.toString() ?: "")
+            }
+        } catch (e: Exception) {
+            recordException(e, ::uploadImageToFirebase.name)
         }
     }
 

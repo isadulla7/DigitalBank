@@ -35,7 +35,7 @@ abstract class DownloadPayment : Fragment() {
             downloadPaymentViewModel = ViewModelProvider(requireActivity())[DownloadPaymentViewModel::class.java]
             databaseHelper = DatabaseHelper(requireContext())
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::onCreate.name)
         }
     }
 
@@ -125,7 +125,7 @@ abstract class DownloadPayment : Fragment() {
                     saveToPaper(Const.PAPER_PAYMENT_VERSION_DB, payment.curr_version ?: "0")
                 }
             } catch (e: Exception) {
-                recordException(e)
+                recordException(e, ::setToStorage.name)
             }
         }
     }

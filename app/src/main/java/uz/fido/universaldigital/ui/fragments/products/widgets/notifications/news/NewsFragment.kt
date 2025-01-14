@@ -67,5 +67,4 @@ class NewsFragment : BaseFragment<FragmentNotificationsBinding, NotificationsVie
         }
     }
 
-
 }

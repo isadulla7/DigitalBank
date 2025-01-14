@@ -365,7 +365,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
             }
         } catch (e: Exception) {
             showSnackbar(getString(uz.fido.utils.R.string.unkknown_error))
-            recordException(e)
+            recordException(e, ::createPayment.name)
         }
     }
 

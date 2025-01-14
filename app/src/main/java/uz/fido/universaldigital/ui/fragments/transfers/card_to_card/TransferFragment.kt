@@ -389,7 +389,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
                     }
                 }
             } catch (e: Exception) {
-                recordException(e)
+                recordException(e, ::tryToGetClipboardData.name)
             }
         }
     }

@@ -149,7 +149,7 @@ class WalletMonitoringFragment :
                 }
             }
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::getFilterWalletList.name)
         }
     }
 

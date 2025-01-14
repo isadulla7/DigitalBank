@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.products.widgets.notifications.news
 
-import android.graphics.Typeface
+import android.os.Build
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -34,10 +35,14 @@ class NewsAdapter(
     inner class ViewHolder(private val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: News) {
-            binding.title.text = item.title
-            binding.description.text = item.content
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                binding.description.text = Html.fromHtml(item.content, Html.FROM_HTML_MODE_LEGACY)
+                binding.title.text = Html.fromHtml(item.title, Html.FROM_HTML_MODE_LEGACY)
+            } else {
+                binding.description.text = item.content
+                binding.title.text = item.title
+            }
             binding.date.text = item.date
-            binding.description.setTypeface(null, Typeface.NORMAL)
             binding.father.setOnClickListener {
                 baseInterface.openNews(item, item.img_url)
                 notifyDataSetChanged()

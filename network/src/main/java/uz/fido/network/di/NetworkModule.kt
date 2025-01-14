@@ -80,7 +80,7 @@ object NetworkModule {
     @Singleton
     fun provideSslContext(keyStore: KeyStore, keyManagerFactory: KeyManagerFactory): SSLContext =
         kotlin.run {
-            val sslContext = SSLContext.getInstance("TLS")
+            val sslContext = SSLContext.getInstance("TLSv1.3")
             val tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm()
             val tmf = TrustManagerFactory.getInstance(tmfAlgorithm)
             tmf.init(keyStore)
@@ -114,9 +114,7 @@ object NetworkModule {
         return httpLoggingInterceptor
     }
 
-    private val modernTlsSpec = ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS)
-        .tlsVersions(TlsVersion.TLS_1_3, TlsVersion.TLS_1_2)
-        .build()
+    private val modernTlsSpec = ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS).tlsVersions(TlsVersion.TLS_1_3, TlsVersion.TLS_1_2).build()
 
     @BaseOkhttpClient
     @Provides

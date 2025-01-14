@@ -83,7 +83,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         try {
             arguments?.let { operation = it.getString(Const.OPERATION, "") }
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::onCreate.name)
         }
     }
 
@@ -497,7 +497,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 binding.errorText.text = ""
             }, 1000)
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::errorPin.name)
         }
         setWrongPinCounter()
     }

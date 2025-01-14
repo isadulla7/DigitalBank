@@ -47,7 +47,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
             position = arguments?.getInt("position", 0) ?: 0
             selectedCard = arguments?.serializable(Const.CARD)
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::onCreate.name)
         }
     }
 

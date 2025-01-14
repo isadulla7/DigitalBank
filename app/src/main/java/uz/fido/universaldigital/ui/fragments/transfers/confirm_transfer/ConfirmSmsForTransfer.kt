@@ -56,7 +56,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
             operation = transferDto.operation.toString()
             p2pRequest = requireArguments().serializable<P2PRequest>(TRANSFER_REQUEST) as P2PRequest
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::onCreate.name)
         }
     }
 

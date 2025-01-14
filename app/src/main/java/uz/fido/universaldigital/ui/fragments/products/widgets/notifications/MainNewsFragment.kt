@@ -18,8 +18,8 @@ class MainNewsFragment : BaseSimpleFragment<FragmentMainNewsBinding>(
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
-        initViewPager()
         binding.appBar.setOnBackButtonClickListener { pop() }
+        initViewPager()
     }
 
 

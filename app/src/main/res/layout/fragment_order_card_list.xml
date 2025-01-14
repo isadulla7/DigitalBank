@@ -132,7 +132,7 @@
                     <ImageView
                         android:layout_width="28dp"
                         android:layout_height="28dp"
-                        android:src="@drawable/ic_card_type_humo"
+                        android:src="@drawable/ic_card_type_humo_png"
                         tools:ignore="ContentDescription" />
 
                     <uz.fido.utils.view.custom_text_view.TextViewMedium

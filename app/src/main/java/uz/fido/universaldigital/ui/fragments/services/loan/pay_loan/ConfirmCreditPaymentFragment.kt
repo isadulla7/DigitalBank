@@ -145,7 +145,7 @@ class ConfirmCreditPaymentFragment : BaseFragment<FragmentCreditConfirmBinding, 
                             binding.btnContinue.isEnabled(true)
                         }
                     } catch (e: Exception) {
-                        recordException(e)
+                        recordException(e, ::initCards.name)
                     }
                 }
             }

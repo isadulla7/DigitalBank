@@ -35,6 +35,7 @@ import uz.fido.universaldigital.ui.fragments.chat.adapter.ChatAdapter
 import uz.fido.universaldigital.ui.fragments.chat.socket_client.SocketClient
 import uz.fido.universaldigital.ui.fragments.payment.templates.adapter.PaymentTemplatesAdapter
 import uz.fido.universaldigital.ui.utils.extensions.formatStringToHtml
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.utility.adapter.showSkeleton
@@ -413,48 +414,52 @@ class MenuChatFragment : BaseFragment<FragmentMenuChatBinding, MenuChatViewModel
     }
 
     private fun sendTestRequest() {
-        val socketClient = SocketClient.retrofitService()
-        socketClient.socketTest(getClientId(), requireContext().getDeviceIds()).enqueue(object :
-            Callback<SocketInterface.BgTaskResponse> {
-            override fun onResponse(
-                call: Call<SocketInterface.BgTaskResponse>,
-                response1: Response<SocketInterface.BgTaskResponse>
-            ) {
-                try {
-                    val response = response1.body()
-                    if (response?.data != null && response.data.size > 0) {
-                        response.data.forEach {
-                            if (it.method != null) {
-                                when (it.method) {
-                                    "USER_MESSAGE", "USER_MESSAGE_EDITED", "USER_IS_TYPING", "USER_MESSAGE_DELETED" -> {
-                                        val sendMessageResponse = Gson().fromJson(
-                                            it.responses,
-                                            SendMessageResponse::class.java
-                                        )
-                                        checkForList(sendMessageResponse)
+        try {
+            val socketClient = SocketClient.retrofitService()
+            socketClient.socketTest(getClientId(), requireContext().getDeviceIds()).enqueue(object : Callback<SocketInterface.BgTaskResponse> {
+                override fun onResponse(
+                    call: Call<SocketInterface.BgTaskResponse>,
+                    response1: Response<SocketInterface.BgTaskResponse>
+                ) {
+                    try {
+                        val response = response1.body()
+                        if (response?.data != null && response.data.size > 0) {
+                            response.data.forEach {
+                                if (it.method != null) {
+                                    when (it.method) {
+                                        "USER_MESSAGE", "USER_MESSAGE_EDITED", "USER_IS_TYPING", "USER_MESSAGE_DELETED" -> {
+                                            val sendMessageResponse = Gson().fromJson(
+                                                it.responses,
+                                                SendMessageResponse::class.java
+                                            )
+                                            checkForList(sendMessageResponse)
+                                        }
                                     }
                                 }
                             }
                         }
+                        if (storageReference != null) {
+                            sendTestRequest()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
-                    if (storageReference != null) {
-                        sendTestRequest()
-                    }
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
-            }
 
-            override fun onFailure(call: Call<SocketInterface.BgTaskResponse>, t: Throwable) {
-                try {
-                    if (storageReference != null) {
-                        sendTestRequest()
+                override fun onFailure(call: Call<SocketInterface.BgTaskResponse>, t: Throwable) {
+                    try {
+                        if (storageReference != null) {
+                            sendTestRequest()
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
                     }
-                } catch (e: Exception) {
-                    e.printStackTrace()
                 }
-            }
-        })
+            })
+        } catch (e: Exception) {
+            recordException(e, ::sendTestRequest.name)
+            e.printStackTrace()
+        }
     }
 
     override fun onPause() {

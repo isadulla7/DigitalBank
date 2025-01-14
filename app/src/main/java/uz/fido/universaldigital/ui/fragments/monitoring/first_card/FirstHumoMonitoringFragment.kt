@@ -132,7 +132,7 @@ class FirstHumoMonitoringFragment :
                 }
             }
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::getFilterHumoMonitoring.name)
         }
     }
 

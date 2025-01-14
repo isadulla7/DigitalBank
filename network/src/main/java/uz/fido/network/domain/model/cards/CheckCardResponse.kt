@@ -51,11 +51,15 @@ fun getCardOwnerNameFormatted(firstName: String?, surname: String?, embossedName
 
 fun getUserNameFormatted(embossedName: String?): String {
     embossedName?.let { fullName ->
-        return if (fullName.trim().contains(" ")) {
-            fullName.split(" ")[0].capitalizeWord() + " " + fullName.split(" ")[1].first().uppercase() + "."
-        } else fullName.capitalizeWord()
+        try {
+            return if (fullName.contains(" ")) {
+                fullName.split(" ")[0].capitalizeWord() + " " + fullName.split(" ")[1].capitalizeWord()
+            } else fullName.capitalizeWord()
+        } catch (e: Exception) {
+            return fullName
+        }
     }
-    return "Not Found"
+    return "No name"
 }
 
 fun String.capitalizeWord(): String = if (this.length > 1) this[0].uppercaseChar().toString() + this.substring(1).lowercase(Locale.getDefault()) else ""

@@ -381,7 +381,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
             val sortedMap = groupedHashMap.toSortedMap(compareByDescending { it })
             addDateMonitoringList(sortedMap)
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::successMonitoringList.name)
         }
     }
 

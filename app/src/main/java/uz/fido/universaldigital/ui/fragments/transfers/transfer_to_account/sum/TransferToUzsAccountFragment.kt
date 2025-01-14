@@ -280,7 +280,7 @@ class TransferToUzsAccountFragment :
         } catch (e: Exception) {
             binding.btnContinue.setProgress(false)
             showSnackbar(getString(uz.fido.utils.R.string.unkknown_error))
-            recordException(e)
+            recordException(e, ::preparePaymentBank.name)
         }
     }
 
