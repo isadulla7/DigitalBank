@@ -1032,4 +1032,19 @@
     <string name="input_pin_code">Введите свой PIN-код</string>
     <string name="wallet_be_closed">Невозможно закрыть кошелек, сначала извлеките средства</string>
     <string name="error_card_number">Номер карты может быть неверным</string>
+    <string name="new_design">Новый дизайн</string>
+    <string name="switch_new_design">Переход на Lite версию</string>
+    <string name="stay_old_design">Остаться в старом дизайне</string>
+    <string name="new_design_description">Мы обновили дизайн главной страницы, сделав её более удобной и понятной. Убрали лишние элементы, чтобы улучшить навигацию и упростить взаимодействие с пользователями</string>
+    <string name="new_design_title">Переход на Lite версию</string>
+    <string name="old_design_title">Переход на Pro версию</string>
+    <string name="old_design_description">Стандартный дизайн содержит больше элементов, таких как кредиты, депозиты, обменный курс и другие</string>
+    <string name="switch_old_design">Переход на Pro версию</string>
+    <string name="try_now">Попробуйте</string>
+    <string name="try_universalbankpro_s_sleek_new_app_mode">Try UniversalBankPro\'s sleek new app mode!</string>
+    <string name="try_lite_mode">Перейдите на Lite версию и используйте упрощённую версию приложения</string>
+    <string name="try_pro_mode">Pro версия приложения с полным набором функций</string>
+    <string name="central_bank">Курс ЦБ</string>
+    <string name="successful">Успешно</string>
+    <string name="news">Новости</string>
 </resources>
