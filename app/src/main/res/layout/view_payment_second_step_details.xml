@@ -23,7 +23,7 @@
             android:includeFontPadding="false"
             android:maxLines="3"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/text_view_value"
@@ -36,7 +36,7 @@
             android:includeFontPadding="false"
             android:maxLines="3"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

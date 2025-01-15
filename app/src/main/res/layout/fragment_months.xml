@@ -57,7 +57,7 @@
             android:paddingHorizontal="32dp"
             android:text="@string/no_transaction_or_payment_selected_period"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/img" />

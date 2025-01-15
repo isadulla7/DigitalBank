@@ -29,7 +29,7 @@
             android:layout_gravity="center_vertical"
             android:text="@string/receiver"
             android:textColor="@color/hintColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -39,7 +39,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="4dp"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -57,7 +57,7 @@
             android:layout_gravity="center_vertical"
             android:text="@string/bank_mfo"
             android:textColor="@color/hintColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -67,7 +67,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="4dp"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -85,7 +85,7 @@
             android:layout_gravity="center_vertical"
             android:text="@string/receiver_bank"
             android:textColor="@color/hintColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -95,7 +95,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="4dp"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

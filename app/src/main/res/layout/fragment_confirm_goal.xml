@@ -42,7 +42,7 @@
                     android:layout_weight="1"
                     android:text="Название"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/name"
@@ -52,7 +52,7 @@
                     android:layout_weight="0.6"
                     android:gravity="end"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
@@ -75,7 +75,7 @@
                     android:layout_weight="1"
                     android:text="@string/term_goal"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/term_goal"
@@ -85,7 +85,7 @@
                     android:layout_weight="0.6"
                     android:gravity="end"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
@@ -108,7 +108,7 @@
                     android:layout_weight="1"
                     android:text="@string/an_initial_free"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/start_amount"
@@ -118,7 +118,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
@@ -141,7 +141,7 @@
                     android:layout_weight="1"
                     android:text="@string/fireproof"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/fireprool"
@@ -151,7 +151,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <View
@@ -174,7 +174,7 @@
                     android:layout_weight="1"
                     android:text="@string/write_offs"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/write_offs"
@@ -184,7 +184,7 @@
                     android:layout_weight="1"
                     android:gravity="end"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <uz.fido.universaldigital.ui.utils.choose_card.ChooseCardLayout

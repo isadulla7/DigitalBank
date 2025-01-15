@@ -36,7 +36,7 @@
             android:background="@drawable/shimmer_bg"
             android:gravity="center|start"
             android:textColor="@color/mainTextColor"
-            android:textSize="17sp" />
+            android:textSize="17dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:id="@+id/text_amount"
@@ -46,7 +46,7 @@
             android:background="@drawable/shimmer_bg"
             android:gravity="start"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:id="@+id/card_number"
@@ -55,7 +55,7 @@
             android:layout_marginTop="4dp"
             android:background="@drawable/shimmer_bg"
             android:textColor="@color/hintColor"
-            android:textSize="13sp"
+            android:textSize="13dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

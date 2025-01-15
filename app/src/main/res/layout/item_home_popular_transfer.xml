@@ -15,7 +15,7 @@
         android:background="@drawable/bg_home_popular_transfer"
         android:gravity="center"
         android:textColor="@color/brandBlueColor_40"
-        android:textSize="20sp"
+        android:textSize="20dp"
         tools:text="HM" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -30,7 +30,7 @@
         android:lineSpacingExtra="1.8dp"
         android:maxLines="2"
         android:textColor="@color/brandBlueColor"
-        android:textSize="12sp"
+        android:textSize="12dp"
         tools:text="Husniddin Madaminov" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

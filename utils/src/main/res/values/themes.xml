@@ -28,7 +28,7 @@
         <item name="android:disabledAlpha">1.0</item>
         <item name="android:stateListAnimator">@null</item>
         <item name="android:elevation">0dp</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">17dp</item>
         <item name="cornerRadius">12dp</item>
         <item name="android:letterSpacing">0</item>
     </style>
@@ -62,7 +62,7 @@
         <item name="android:padding">8dp</item>
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">15dp</item>
     </style>
 
     <style name="dialog_header_style">
@@ -72,7 +72,7 @@
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:textColor">@color/blackColor</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">17dp</item>
     </style>
 
     <style name="dialog_title_style">
@@ -82,7 +82,7 @@
         <item name="android:layout_marginTop">12dp</item>
         <item name="android:layout_marginEnd">16dp</item>
         <item name="android:textColor">@color/blackColor</item>
-        <item name="android:textSize">17sp</item>
+        <item name="android:textSize">17dp</item>
     </style>
 
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">

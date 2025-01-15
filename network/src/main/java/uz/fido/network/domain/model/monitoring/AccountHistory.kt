@@ -19,5 +19,6 @@ data class AccountHistory(
     val coMfo: String,
     val dtMfo: String,
     val credit: String? = null,
-    val dtAcc: String? = null
+    val dtAcc: String? = null,
+    var accout_type:Int=0
 ) : Serializable

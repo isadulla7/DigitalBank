@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -30,6 +31,7 @@ import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFr
 import uz.fido.universaldigital.ui.fragments.transfers.utils.getInfoCommand
 import uz.fido.universaldigital.ui.fragments.transfers.utils.getServiceIdInfo
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isNotActive
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
@@ -78,8 +80,14 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
             getTransferInfo()
             arguments?.let {
-                senderCard = requireArguments().serializable(Const.SENDER_CARD) as CardResponse?
-                receiverCard = requireArguments().serializable(Const.RECEIVER_CARD) as CardResponse?
+                val card = requireArguments().serializable(Const.SENDER_CARD) as CardResponse?
+                val recCard = requireArguments().serializable(Const.RECEIVER_CARD) as CardResponse?
+                if (card != null) {
+                    senderCard = card
+                }
+                if (recCard != null) {
+                    receiverCard = recCard
+                }
                 binding.senderCards.setCurrentItem(userSumCards.indexOf(senderCard), true)
                 binding.receiverCards.setCurrentItem(userSumCards.indexOf(receiverCard), true)
             }
@@ -113,14 +121,18 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             )
         }
         binding.btnMagnet.setOnClickListener {
-            if (binding.commissionProgress.isVisible) return@setOnClickListener
-            if (senderCard == receiverCard) return@setOnClickListener
-            if (percent == BigDecimal(0.0)) {
-                binding.etAmount.setText(senderCard?.balance.toString().toBigDecimal().divide(BigDecimal(100)).toString())
-                return@setOnClickListener
+            try {
+                if (binding.commissionProgress.isVisible) return@setOnClickListener
+                if (senderCard == receiverCard) return@setOnClickListener
+                if (percent == BigDecimal(0.0)) {
+                    binding.etAmount.setText(senderCard?.balance.toString().toBigDecimal().divide(BigDecimal(100)).toString())
+                    return@setOnClickListener
+                }
+                binding.etAmount.setText(getAvailableAmount())
+                continueButtonState()
+            } catch (e: Exception) {
+                recordException(e, ::initSetOnClickListeners.name)
             }
-            binding.etAmount.setText(getAvailableAmount())
-            continueButtonState()
         }
     }
 
@@ -274,6 +286,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
         )
         binding.commissionProgress.visibility = View.GONE
         binding.tvCommission.text = msg ?: getString(uz.fido.utils.R.string.unkknown_error)
+        binding.tvMinAmount.visibility = View.GONE
     }
 
     private fun initAmountTextWatcher() {
@@ -300,6 +313,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                         transferAmount = sendFormat(amount),
                         commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
                         operation = SuccessTransferFragment.TRANSFER_OVER_MY_CARDS,
+                        requestId = p2PInfoDto?.requestId,
                         cardId = p2PInfoDto?.cardId
                     )
                 )
@@ -313,12 +327,15 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
         val totalAmount = formattedAmount + (formattedAmount.divide(100.toBigDecimal())) * percent
         when {
             senderCard == null || receiverCard == null -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
+                Log.d("TAG", "continueButtonState: ${senderCard == null}")
                 hideCommissionBlock()
                 return false
             }
 
             senderCard == receiverCard -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text = requireContext().getString(R.string.sender_and_receiver_the_same)
                 hideCommissionBlock()
@@ -326,6 +343,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             senderCard!!.isNotActive() -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text = requireContext().getString(R.string.sender_card_is_not_active)
                 hideCommissionBlock()
@@ -333,6 +351,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             receiverCard!!.isNotActive() -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text = requireContext().getString(R.string.receiver_card_is_not_active)
                 hideCommissionBlock()
@@ -340,6 +359,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             formattedAmount < minAmount -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 binding.tvMinAmount.text =
                     getString(R.string.min_amount) + " ${Format.formatAmount((minAmount).toString())} ${getString(R.string.sum_text)}"
@@ -347,6 +367,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             formattedAmount > maxAmount -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text =
                     getString(R.string.max_amount) + " ${Format.formatAmount((maxAmount).toString())} ${getString(R.string.sum_text)}"
@@ -354,15 +375,18 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             totalAmount > senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text = getString(R.string.insufficient_amount)
                 return false
             }
 
             totalAmount > minAmount && totalAmount <= senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 binding.tvMinAmount.text =
                     getString(R.string.min_amount) + " ${Format.formatAmount((minAmount).toString())} ${getString(R.string.sum_text)}"
+                Log.d("TAG", "continueButtonState:1 ")
                 return true
             }
 
@@ -374,7 +398,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
         try {
             if (senderCard != null) {
                 val balance = senderCard?.balance.toString().toBigDecimal().divide(BigDecimal(100))
-                val calculatedAmount = balance.divide(BigDecimal(1) + percent.divide(BigDecimal(100)),3, RoundingMode.DOWN)
+                val calculatedAmount = balance.divide(BigDecimal(1) + percent.divide(BigDecimal(100)), 3, RoundingMode.DOWN)
                 return calculatedAmount.toString()
             } else return ""
         } catch (e: Exception) {

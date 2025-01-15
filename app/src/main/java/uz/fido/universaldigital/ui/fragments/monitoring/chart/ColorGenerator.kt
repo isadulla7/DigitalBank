@@ -2,9 +2,8 @@ package uz.fido.universaldigital.ui.fragments.monitoring.chart
 
 import android.graphics.Color
 
-fun getPieChartColors(numPieSlices: Int): MutableList<Int> {
+fun getPieChartColors(): MutableList<Int> {
     val colors = arrayListOf(
-        Color.parseColor("#FCB664"),
         Color.parseColor("#5ED1B6"),
         Color.parseColor("#57B6ED"),
         Color.parseColor("#9A99FB"),
@@ -13,8 +12,8 @@ fun getPieChartColors(numPieSlices: Int): MutableList<Int> {
         Color.parseColor("#FC9696"),
         Color.parseColor("#FEA17A"),
         Color.parseColor("#F88545"),
-        Color.parseColor("#F88545"),
-
+        Color.parseColor("#19B28D"),
+        Color.parseColor("#9F6C3F"),
         Color.parseColor("#ED5B7B"),
         Color.parseColor("#FEA17A"),
         Color.parseColor("#82A9FF"),

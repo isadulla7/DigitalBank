@@ -126,8 +126,6 @@ class TransferToUsdAccountFragment :
                     binding.etReceiverMfo.editableText.toString()
                 )
             } else {
-                binding.etReceiverName.setText("")
-                binding.etPurpose.setText("")
                 binding.textPercent.text = ""
             }
         }

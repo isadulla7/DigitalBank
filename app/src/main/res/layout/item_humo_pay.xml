@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@android:color/white"
-                android:textSize="24sp" />
+                android:textSize="24dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/currency"
@@ -62,7 +62,7 @@
                 android:gravity="start"
                 android:text="UZS"
                 android:textColor="#B2FFFFFF"
-                android:textSize="18sp"
+                android:textSize="18dp"
                 android:visibility="gone"
                 app:layout_constraintBaseline_toBaselineOf="@id/amount"
                 app:layout_constraintStart_toEndOf="@id/amount" />
@@ -78,7 +78,7 @@
             android:includeFontPadding="false"
             android:text="@string/main_card"
             android:textColor="@color/whiteColor"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -101,7 +101,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             android:textColor="@color/whiteColor"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             tools:text="**0924" />

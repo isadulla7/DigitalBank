@@ -21,6 +21,7 @@ import uz.fido.universaldigital.ui.fragments.payment.download_payment.DownloadPa
 import uz.fido.universaldigital.ui.fragments.payment.my_home.adapter.MyHouseAdapter
 import uz.fido.universaldigital.ui.fragments.payment.my_home.dialog.MyHouseAddDialog
 import uz.fido.universaldigital.ui.fragments.payment.my_home.dialog.MyHouseOperationDialog
+import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.hideProgress
 import uz.fido.universaldigital.ui.utils.extensions.showProgress
 import uz.fido.utils.utility.adapter.showSkeleton
@@ -35,6 +36,7 @@ class MyHomeFragment : DownloadPayment(), BaseInterface {
     private lateinit var binding: FragmentMyHomeBinding
 
     private val viewModel by activityViewModels<MyHomeViewModel>()
+    private val utilsViewModel: UtilsViewModel by activityViewModels()
     private var list = arrayListOf<MyHouseGroup>()
 
     private val adapterGroup by lazy { MyHouseAdapter(arrayListOf(), requireContext(), this) }
@@ -71,8 +73,7 @@ class MyHomeFragment : DownloadPayment(), BaseInterface {
     }
 
     private fun getMyHouseList() {
-        val skeletonScreen =
-            showSkeleton(binding.recyclerView, adapterGroup, R.layout.shimmer_item_my_home, 4)
+        val skeletonScreen = showSkeleton(binding.recyclerView, adapterGroup, R.layout.shimmer_item_my_home, 4)
         viewModel.getTemplateGroups(getClientToken()).observe(viewLifecycleOwner) { resource ->
             skeletonScreen.hide()
             when (resource.status) {
@@ -81,16 +82,22 @@ class MyHomeFragment : DownloadPayment(), BaseInterface {
                     response.sortBy { it.order }
                     list = response
                     setList(list)
-
+                    saveHomeList(list)
                 }
 
                 Status.ERROR -> {
-                    ///showSnackbar(it.message.toString())
                     initEmptyView()
-
                 }
             }
         }
+    }
+
+    private fun saveHomeList(list: ArrayList<MyHouseGroup>) {
+        val newList = arrayListOf<MyHouseGroup>()
+        val first = MyHouseGroup("0", getString(R.string.add_your_home), 0)
+        newList.add(first)
+        newList.addAll(list)
+        utilsViewModel.updateMyHouse(newList)
     }
 
     private fun setList(list: java.util.ArrayList<MyHouseGroup>) {

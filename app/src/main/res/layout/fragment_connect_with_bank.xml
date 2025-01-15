@@ -36,7 +36,7 @@
             android:gravity="center|start"
             android:text="@string/call"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ImageView
             android:layout_width="24dp"
@@ -67,7 +67,7 @@
             android:gravity="center|start"
             android:text="@string/mail"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ImageView
             android:layout_width="24dp"
@@ -98,7 +98,7 @@
             android:gravity="center|start"
             android:text="@string/telegram"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ImageView
             android:layout_width="24dp"
@@ -129,7 +129,7 @@
             android:gravity="center|start"
             android:text="@string/chat"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ImageView
             android:layout_width="24dp"

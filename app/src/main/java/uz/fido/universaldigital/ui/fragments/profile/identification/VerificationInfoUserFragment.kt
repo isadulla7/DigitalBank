@@ -1,7 +1,9 @@
 package uz.fido.universaldigital.ui.fragments.profile.identification
 
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +34,7 @@ class VerificationInfoUserFragment : BaseFragment<FragmentVerificationInfoUserBi
         super.onInit(savedInstanceState)
         initUI()
         getAccessToken()
+        setTermsOfUseColor()
     }
 
     private fun initUI() {
@@ -152,6 +155,15 @@ class VerificationInfoUserFragment : BaseFragment<FragmentVerificationInfoUserBi
                 write(Const.USER_PASS_EXPIRE_DATE, docData.expiry_date ?: "")
                 write(Const.USER_PINFL, commonData.pinfl)
             }
+        }
+    }
+
+    private fun setTermsOfUseColor() {
+        binding.textSingUpTerms.apply {
+            movementMethod = LinkMovementMethod.getInstance()
+            setLinkTextColor(
+                ContextCompat.getColor(requireContext(), R.color.brandRedColor)
+            )
         }
     }
 }

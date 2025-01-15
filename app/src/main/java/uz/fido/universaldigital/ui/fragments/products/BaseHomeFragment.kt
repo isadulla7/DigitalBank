@@ -32,6 +32,7 @@ import uz.fido.network.domain.model.widget.MainWidget
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMenuHomeBinding
+import uz.fido.universaldigital.databinding.HomeNewDesignWidgetBinding
 import uz.fido.universaldigital.databinding.LayoutHomeBankProductsBinding
 import uz.fido.universaldigital.databinding.LayoutHomeCurrencyRatesBinding
 import uz.fido.universaldigital.databinding.LayoutHomeDepositsBinding
@@ -52,12 +53,14 @@ import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
 import uz.fido.universaldigital.ui.fragments.products.widgets.bank_products.ForYouOnBoarding
 import uz.fido.universaldigital.ui.fragments.products.widgets.card_phone.CardNumberDialog
 import uz.fido.universaldigital.ui.fragments.products.widgets.settings.MainWidgetSettingsDialog
+import uz.fido.universaldigital.ui.fragments.profile.settings.NewDesignOnboardingPage
 import uz.fido.universaldigital.ui.fragments.services.deposit.adapter.DepositAdapter
 import uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.ClientDepositFragment
 import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCreditFragment
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.universaldigital.ui.utils.extensions.getBankProducts
 import uz.fido.universaldigital.ui.utils.extensions.getFastAccessOperationList
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.universaldigital.ui.utils.home_utils.DoAfterTextWatcher
 import uz.fido.universaldigital.ui.utils.home_utils.applyMask
@@ -137,6 +140,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
                 }
             }
         }
+        initNewDesignWidget()
         initWidgetSettingsButton()
     }
 
@@ -447,6 +451,17 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
             LayoutInflater.from(requireContext()), container, false
         )
         layoutBinding.widgetSettings.setOnClickListener { openWidgetSettings() }
+        binding.widgetsLayout.addView(layoutBinding.root)
+    }
+
+    private fun initNewDesignWidget() {
+        val layoutBinding = HomeNewDesignWidgetBinding.inflate(
+            LayoutInflater.from(requireContext()), container, false
+        )
+        layoutBinding.appMode.text = if (getFromPaper(Const.NEW_DESIGN, "N") == "Y") "Pro" else "Lite"
+        layoutBinding.backToLite.setOnClickListener {
+            NewDesignOnboardingPage().show(childFragmentManager, "")
+        }
         binding.widgetsLayout.addView(layoutBinding.root)
     }
 

@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.chart
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
@@ -37,6 +38,7 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
 
     private lateinit var mobileDBHelper: DatabaseHelper
     private lateinit var chartDetailsAdapter: ChartDetailsAdapter
+    private lateinit var period: Pair<String, String>
 
     companion object {
         private const val PAGE_SIZE = "1000"
@@ -45,15 +47,19 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
+        getCurrentPeriod()
         mobileDBHelper = DatabaseHelper(requireContext())
-        chartDetailsAdapter = ChartDetailsAdapter(arrayListOf())
+        chartDetailsAdapter = ChartDetailsAdapter(arrayListOf()) {
+            val paymentHistoryDialog = PaymentHistoryDialog(it.serviceId, period)
+            paymentHistoryDialog.show(childFragmentManager, "")
+        }
         initChartDetails()
-        getLocalMonitoring()
+        getLocalMonitoring(period)
     }
 
     private fun drawMonthlyChart(list: ArrayList<ChartData>) {
         val total = list.map { it.amount }.sumOf { it }
-
+        list.sortByDescending { it.amount }
         binding.apply {
             pieChart.invalidate()
             val histories: ArrayList<PieEntry> = ArrayList()
@@ -69,12 +75,12 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
             pieChart.legend.isEnabled = false
             pieChart.setDrawEntryLabels(false)
             pieChart.setEntryLabelTextSize(12f)
-            pieChart.setDrawRoundedSlices(false)
+            pieChart.setDrawRoundedSlices(true)
             pieChart.isRotationEnabled = false
             val pieDataSet = PieDataSet(histories, "")
             pieDataSet.setAutomaticallyDisableSliceSpacing(false)
             if (histories.isNotEmpty())
-                pieDataSet.colors = getPieChartColors(histories.size)
+                pieDataSet.colors = getPieChartColors()
             pieDataSet.setDrawValues(false)
             pieDataSet.valueTextSize = 12f
             pieDataSet.valueTextColor = Color.WHITE
@@ -82,11 +88,15 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
             pieChart.data = pieData
             pieChart.description.isEnabled = false
             pieChart.centerText = getString(R.string.total_amount) + "\n" + Format.formatAmount(total.toString()).replace(".00", "") + " UZS"
-            pieChart.setCenterTextSize(13F)
+            pieChart.setCenterTextTypeface(
+                Typeface.createFromAsset(
+                    requireContext().resources.assets, "fonts/Inter-Medium.ttf"
+                )
+            )
             pieChart.isDrawHoleEnabled = true
             pieChart.setDrawSlicesUnderHole(true)
             pieChart.holeRadius = 48f
-            pieChart.transparentCircleRadius = 56f
+            pieChart.transparentCircleRadius = 60f
             pieChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
                 override fun onValueSelected(e: Entry?, h: Highlight?) {
                     println("entryData:" + e?.y?.toString())
@@ -105,16 +115,15 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
         }
     }
 
-    private fun getLocalMonitoring() {
+    private fun getCurrentPeriod() {
         arguments?.takeIf { it.containsKey(ARG_OBJECT) }?.apply {
             val position = getInt(ARG_OBJECT)
-            if (position == 23) {
-                getLocalMonitoring(getCurrentMonth())
+            period = if (position == 23) {
+                getCurrentMonth()
             } else {
-                getLocalMonitoring(getSelectedMonth(position))
+                getSelectedMonth(position)
             }
         }
-
     }
 
     private fun getLocalMonitoring(startEndDate: Pair<String, String>) {

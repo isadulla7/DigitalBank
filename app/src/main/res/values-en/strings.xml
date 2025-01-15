@@ -268,8 +268,8 @@
     <string name="maybe_deposit">Deposit</string>
     <string name="interest_rate_type">Interest rate type</string>
     <string name="with_drawal">Drawing</string>
-    <string name="maybe_dep">Maybe</string>
-    <string name="possible">This is impossible</string>
+    <string name="maybe_dep">Possible</string>
+    <string name="possible">Impossible</string>
     <string name="accept_deposit_privacy">I agree to the <annotation type="help_link">User Agreement</annotation> Universal Bank</string>
     <string name="open_deposit_success">The deposit was successfully opened</string>
     <string name="text_empty_deposit">Deposit not available yet</string>
@@ -340,7 +340,7 @@
     <string name="transfer">Transfer</string>
     <string name="by_wallet_number">By wallet number</string>
     <string name="request_money">Request funds</string>
-    <string name="by_requisites">By details</string>
+    <string name="by_requisites">By requisites</string>
     <string name="swift_transfer">SWIFT transfers</string>
     <string name="to_card_desc">Transfer to any bank card</string>
     <string name="over_my_cards_desc">Transfer between your cards</string>
@@ -1027,5 +1027,22 @@
     <string name="open">Open</string>
     <string name="in_call_you_cant_use_app">For security reasons, you cannot use the application during a call</string>
     <string name="input_pin_code">Input PIN</string>
+    <string name="wallet_be_closed">The wallet cannot be closed, please withdraw the funds first.</string>
+    <string name="error_card_number">The card number may be incorrect.</string>
+    <string name="new_design">New design</string>
+    <string name="switch_new_design">Switch to Lite version</string>
+    <string name="stay_old_design">Switch to Pro version</string>
+    <string name="new_design_description">We have updated the design of the main page, making it more convenient and understandable. We have removed unnecessary elements to improve navigation and simplify the work for our customers</string>
+    <string name="new_design_title">Switch to Lite version</string>
+    <string name="old_design_title">Switch to Pro version</string>
+    <string name="old_design_description">The standard design contains more elements, such as loans, deposits, exchange rate and others</string>
+    <string name="switch_old_design">Switch to Pro version</string>
+    <string name="try_now">Try now</string>
+    <string name="try_universalbankpro_s_sleek_new_app_mode">Try UniversalBankPro\'s sleek new app mode!</string>
+    <string name="try_lite_mode">Switch to the Lite version and use the simplified version of the app</string>
+    <string name="try_pro_mode">Pro is the version of the app with all features available</string>
+    <string name="central_bank">CB rate</string>
+    <string name="successful">Successful</string>
+    <string name="news">News</string>
 
 </resources>

@@ -31,7 +31,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/receiver"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/tv_receiver"
@@ -39,7 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/commission"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/tv_commission"
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="match_parent"
@@ -63,7 +63,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/received_amount"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/tv_received_amount"
@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="match_parent"
@@ -79,7 +79,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/to_payment"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewSemiBold
                 android:id="@+id/tv_total_amount"
@@ -87,7 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewBold
                 android:id="@+id/tv_cards"
@@ -98,7 +98,7 @@
                 android:includeFontPadding="false"
                 android:text="@string/receiver_card"
                 android:textColor="@color/brandBlueColor"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -141,7 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="16dp"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     app:layout_constraintBottom_toTopOf="@id/tv_main_card"
                     app:layout_constraintTop_toBottomOf="@id/bank_logo"
                     tools:text="5 557 000 UZS" />
@@ -156,7 +156,7 @@
                     android:ellipsize="end"
                     android:text="@string/main_card"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/card_number"
                     app:layout_constraintStart_toStartOf="parent" />
@@ -168,7 +168,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="16dp"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="**0924" />

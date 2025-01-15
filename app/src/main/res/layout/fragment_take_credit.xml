@@ -40,7 +40,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/loan_amount"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -50,7 +50,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     tools:text="5 000" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -68,7 +68,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/loan_expire"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -78,7 +78,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     tools:text="5 000" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -96,7 +96,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/day_of_payment"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -106,7 +106,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     tools:text="5 000" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -124,7 +124,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/monthly_payment"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -134,7 +134,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     tools:text="5 000" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -152,7 +152,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/total_payment"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -162,7 +162,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     tools:text="5 000" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -180,7 +180,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/excess_on_credit_payment"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -190,7 +190,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     tools:text="5 000" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -208,7 +208,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/percentage_of_overpayment_loan"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -218,7 +218,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     tools:text="5 000" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -236,7 +236,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/full_cost_of_loan"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -246,7 +246,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     tools:text="5 000" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -264,7 +264,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/approval_period"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -274,7 +274,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     tools:text="5 000" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -8,5 +8,5 @@
     android:foreground="?selectableItemBackground"
     android:padding="16dp"
     android:textColor="@color/mainTextColor"
-    android:textSize="16sp"
+    android:textSize="16dp"
     tools:text="Test" />

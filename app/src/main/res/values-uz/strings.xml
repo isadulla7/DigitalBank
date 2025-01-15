@@ -267,7 +267,7 @@
     <string name="interest_rate_type">Foiz stavkasi turi</string>
     <string name="with_drawal">Yechish</string>
     <string name="maybe_dep">Mumkin</string>
-    <string name="possible">Bu mumkin emas</string>
+    <string name="possible">Mumkin emas</string>
     <string name="accept_deposit_privacy">Men Universal Bank <annotation type="help_link">foydalanuvchi shartnomasi</annotation> ga roziman</string>
     <string name="please_accept_privacy">Iltimos, shartnomaning barcha shartlarini qabul qiling</string>
     <string name="open_deposit_success">Deposit muvaffaqiyatli ochildi</string>
@@ -1027,4 +1027,21 @@
     <string name="open">Ochish</string>
     <string name="in_call_you_cant_use_app">Xavfsizlikni ta\'minlash maqsadida qo‘ng‘iroq vaqtida ilovadan foydalana olmaysiz</string>
     <string name="input_pin_code">PIN-kodni kiritish</string>
+    <string name="wallet_be_closed">Hamyonni yopib bulmaydi oldin mablag‘ni yechib oling</string>
+    <string name="error_card_number">Karta raqam xato bo‘lishi munkin</string>
+    <string name="new_design">Yangi dizayn</string>
+    <string name="switch_new_design">Lite versiyaga o‘tish</string>
+    <string name="stay_old_design">Pro versiyaga o‘tish</string>
+    <string name="new_design_description">Biz asosiy sahifaning dizaynini yangilab, uni yanada qulay va tushunarli qildik. Navigatsiyani yaxshilash va mijozlarimiz ishini soddalashtirish uchun keraksiz elementlar olib tashlandi</string>
+    <string name="new_design_title">Lite versiyaga o‘tish</string>
+    <string name="old_design_title">Pro versiyaga o‘tish</string>
+    <string name="old_design_description">Standart dizaynda kreditlar, depozitlar, valyuta kursi va boshqalar kabi ko‘proq elementlar mavjud</string>
+    <string name="switch_old_design">Pro versiyaga o‘tish</string>
+    <string name="try_now">Sinab ko‘ring</string>
+    <string name="try_universalbankpro_s_sleek_new_app_mode">Try UniversalBankPro\'s sleek new app mode!</string>
+    <string name="try_lite_mode">Lite versiyaga o\'ting va ilovaning soddalashtirilgan versiyasidan foydalaning</string>
+    <string name="try_pro_mode">Pro - ilovaning barcha funksiyalari mavjud bo\'lgan versiyasi</string>
+    <string name="central_bank">MB kursi</string>
+    <string name="successful">Muvaffaqiyatli</string>
+    <string name="news">Yangiliklar</string>
 </resources>

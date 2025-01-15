@@ -3,8 +3,10 @@ package uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.text.*
 import android.text.Annotation
+import android.text.SpannableString
+import android.text.SpannedString
+import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.LayoutInflater
@@ -32,8 +34,7 @@ import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Calendar
 
 @AndroidEntryPoint
 class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBinding, MainDepositViewModel>(FragmentOpenDepositTwoStepBinding::inflate, MainDepositViewModel::class.java),
@@ -169,9 +170,6 @@ class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBindin
             getString(R.string.deposit_amount), amount + " " + Format().getCurrencyChar(deposit.currency_code)
         )
         addView(getString(R.string.deposit_percent), deposit.percent + " %")
-        addView(
-            getString(R.string.rate), Format().formattedDepositExpire(requireContext(), deposit.keeping_time)
-        )
         addView(
             getString(R.string.shelf_life), Format().formattedDepositExpire(requireContext(), deposit.keeping_time)
         )

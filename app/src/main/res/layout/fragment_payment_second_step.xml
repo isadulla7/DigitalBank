@@ -49,7 +49,7 @@
                     android:gravity="center|start"
                     android:text="@string/current_balance"
                     android:textColor="@color/brandBlueColor_40"
-                    android:textSize="13sp"
+                    android:textSize="13dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 
@@ -60,7 +60,7 @@
                     android:layout_marginTop="2dp"
                     android:includeFontPadding="false"
                     android:textColor="@color/brandBlueColor_50"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     tools:text="123 321 UZS" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>

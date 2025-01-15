@@ -15,6 +15,7 @@ import uz.fido.network.domain.datasource.interfaces.IUtilsRepository
 import uz.fido.network.domain.model.applications.GetProductDetailsRequest
 import uz.fido.network.domain.model.cards.CheckCardRequest
 import uz.fido.network.domain.model.cards.ResetPinCountCheck
+import uz.fido.network.domain.model.my_house.MyHouseGroup
 import uz.fido.network.domain.model.popular_transfers.PopularTransfers
 import uz.fido.network.domain.model.rates.CourseItem
 import uz.fido.network.domain.model.rates.GetCurrencyRatesRequest
@@ -44,6 +45,7 @@ class UtilsViewModel @Inject constructor(
 
     var currencyRates: MutableLiveData<List<CourseItem>> = MutableLiveData()
     var templates: MutableLiveData<List<Template>> = MutableLiveData()
+    var myHouse: MutableLiveData<ArrayList<MyHouseGroup>> = MutableLiveData()
     var popularTransfers: MutableLiveData<List<PopularTransfers>> = MutableLiveData()
 
     fun updateRates() {
@@ -60,6 +62,9 @@ class UtilsViewModel @Inject constructor(
     fun updateTemplates(templateList: List<Template>) {
         templates.postValue(templateList)
     }
+    fun updateMyHouse(home:ArrayList<MyHouseGroup>) {
+        myHouse.postValue(home)
+    }
 
     fun updatePopularTransfers(transfers: List<PopularTransfers>) {
         popularTransfers.postValue(transfers)
@@ -71,6 +76,9 @@ class UtilsViewModel @Inject constructor(
 
     fun getTemplateList(token: String, getTemplateListRequest: GetTemplateListRequest) = liveData(Dispatchers.IO) {
         emit(templatesRepository.getTemplateList(token, getTemplateListRequest))
+    }
+    fun getTemplateGroups(token: String) = liveData(Dispatchers.IO) {
+        emit(templatesRepository.getTemplateGroup(token))
     }
 
     fun getUserAppList(token: String) = liveData(Dispatchers.IO) {

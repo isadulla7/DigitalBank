@@ -40,7 +40,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/credit_type"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -50,7 +50,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -60,7 +60,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/contract_number"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -70,7 +70,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -80,7 +80,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/contract_date"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/text_contract_date"
@@ -89,7 +89,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -99,7 +99,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/credit_amount"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/loan_amount"
@@ -108,7 +108,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -118,7 +118,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/account_number_for_repayment"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/account_number_for_repayment"
@@ -127,7 +127,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -137,7 +137,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/repayment_amount"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/repayment_amount"
@@ -146,7 +146,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -156,7 +156,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/commission"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/commission"
@@ -165,7 +165,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -175,7 +175,7 @@
                     android:layout_marginTop="16dp"
                     android:text="@string/total"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/text_total_amount"
@@ -184,7 +184,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <uz.fido.universaldigital.ui.utils.choose_card.ChooseCardLayout

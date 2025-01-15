@@ -27,7 +27,7 @@
         android:paddingBottom="24dp"
         android:text="@string/choose_one_of_function"
         android:textColor="@color/mainTextColor"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintTop_toBottomOf="@id/handle" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -50,7 +50,7 @@
         android:paddingBottom="32dp"
         android:text="@string/via_camera"
         android:textColor="@color/mainTextColor"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="@id/btn_camera"
         app:layout_constraintStart_toStartOf="@id/btn_camera"
         app:layout_constraintTop_toBottomOf="@id/btn_camera" />
@@ -77,7 +77,7 @@
         android:paddingBottom="32dp"
         android:text="@string/via_nfc"
         android:textColor="@color/mainTextColor"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="@id/btn_nfc"
         app:layout_constraintStart_toStartOf="@id/btn_nfc"
         app:layout_constraintTop_toBottomOf="@id/btn_nfc" />

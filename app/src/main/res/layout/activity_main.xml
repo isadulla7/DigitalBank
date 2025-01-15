@@ -2,8 +2,12 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/father"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whiteColor"
+    android:clipChildren="false"
+    android:orientation="vertical"
     tools:context=".ui.activities.MainActivity">
 
     <fragment
@@ -12,23 +16,37 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:defaultNavHost="true"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintBottom_toTopOf="@+id/divider"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/navigation_main" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/brandBlueColor_10"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="68dp"
+        android:background="@color/cardBgColor"
+        android:backgroundTint="@color/cardBgColor"
+        android:elevation="4dp"
         android:saveEnabled="true"
-        app:backgroundTint="@color/white"
+        app:elevation="4dp"
+        app:itemIconSize="24dp"
         app:itemIconTint="@color/bottom_navigation_colors"
+        app:itemPaddingTop="6dp"
         app:itemRippleColor="@null"
+        app:itemTextAppearance="@style/Widget.BottomNavigationView"
         app:itemTextAppearanceActive="@style/Widget.BottomNavigationView"
         app:itemTextAppearanceInactive="@style/Widget.BottomNavigationView"
         app:itemTextColor="@color/bottom_navigation_colors"
         app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

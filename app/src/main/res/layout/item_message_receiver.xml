@@ -64,7 +64,7 @@
                     android:maxLines="1"
                     android:text="adasdsadasdasdasdasdasdasdasdasdasdasdasd"
                     android:textColor="@color/brandBlueColor"
-                    android:textSize="13sp" />
+                    android:textSize="13dp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -84,7 +84,7 @@
                 android:padding="8dp"
                 android:text=""
                 android:textColor="@color/brandBlueColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/text_state"
@@ -95,7 +95,7 @@
                 android:layout_marginBottom="2dp"
                 android:text="@string/edited"
                 android:textColor="@color/brandBlueColor_70"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/text_time"
@@ -105,7 +105,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="2dp"
                 android:textColor="@color/brandBlueColor_50"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 app:layout_constraintBottom_toBottomOf="@+id/text_message"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/text_state"

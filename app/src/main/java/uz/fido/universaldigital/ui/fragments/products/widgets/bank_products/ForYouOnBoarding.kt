@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.databinding.FragmentAppFunctionsBinding
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.R
 
 @AndroidEntryPoint
@@ -85,21 +86,25 @@ class ForYouOnBoarding(private var currentItem: Int) : DialogFragment() {
     }
 
     private fun initStoriesTimer(length: Long) {
-        val countDownTimer = object : CountDownTimer(length, 100) {
-            override fun onFinish() {
-                cancel()
-                dismiss()
-            }
+        try {
+            val countDownTimer = object : CountDownTimer(length, 100) {
+                override fun onFinish() {
+                    cancel()
+                    dismiss()
+                }
 
-            override fun onTick(p0: Long) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    binding.storiesWheel.setProgress(((length - p0) / (length / 100)).toInt(), true)
-                } else {
-                    binding.storiesWheel.progress = ((length - p0) / (length / 100)).toInt()
+                override fun onTick(p0: Long) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        binding.storiesWheel.setProgress(((length - p0) / (length / 100)).toInt(), true)
+                    } else {
+                        binding.storiesWheel.progress = ((length - p0) / (length / 100)).toInt()
+                    }
                 }
             }
+            countDownTimer.start()
+        } catch (e: Exception) {
+            recordException(e, ::initStoriesTimer.name)
         }
-        countDownTimer.start()
     }
 
     private fun setDetails(title: String, description: String) {

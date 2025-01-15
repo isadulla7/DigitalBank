@@ -15,72 +15,34 @@
         app:layout_constraintTop_toTopOf="parent"
         app:s_title="@string/currency_rates" />
 
-    <androidx.appcompat.widget.LinearLayoutCompat
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/cornered_bg_12dp"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="12dp"
-            android:gravity="center">
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_currency_rates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
+                android:paddingBottom="16dp"
+                tools:listitem="@layout/item_home_currency_rates_new" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
-                android:id="@+id/currency_text"
-                android:layout_width="0dp"
+                android:id="@+id/last_update_date"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5"
-                android:text="@string/home_currency"
+                android:layout_marginHorizontal="16dp"
+                android:paddingBottom="16dp"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="12sp" />
-
-            <uz.fido.utils.view.custom_text_view.TextViewRegular
-                android:id="@+id/buy"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center|start"
-                android:text="@string/buy"
-                android:textColor="@color/brandBlueColor_40"
-                android:textSize="12sp" />
-
-            <uz.fido.utils.view.custom_text_view.TextViewRegular
-                android:id="@+id/sell"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:gravity="center|start"
-                android:text="@string/sell"
-                android:textColor="@color/brandBlueColor_40"
-                android:textSize="12sp" />
-
+                android:textSize="14dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
+    </ScrollView>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_currency_rates"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:clipToPadding="false"
-            android:paddingHorizontal="16dp"
-            android:paddingBottom="4dp"
-            tools:listitem="@layout/item_home_currency_rates" />
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <uz.fido.utils.view.custom_text_view.TextViewRegular
-        android:id="@+id/last_update_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="16dp"
-        android:layout_marginTop="24dp"
-        android:textColor="@color/brandBlueColor_40"
-        android:textSize="14sp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

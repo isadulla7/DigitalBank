@@ -20,14 +20,14 @@
             android:layout_weight="1"
             android:text="@string/currency_rates"
             android:textColor="@color/brandBlueColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/all"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -53,7 +53,7 @@
                 android:layout_weight="1.5"
                 android:text="@string/home_currency"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/buy"
@@ -63,7 +63,7 @@
                 android:gravity="center|start"
                 android:text="@string/buy"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/sell"
@@ -73,7 +73,7 @@
                 android:gravity="center|start"
                 android:text="@string/sell"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="12sp" />
+                android:textSize="12dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

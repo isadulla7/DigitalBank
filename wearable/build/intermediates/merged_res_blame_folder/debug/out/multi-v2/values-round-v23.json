@@ -1,0 +1,36 @@
+{
+    "logs": [
+        {
+            "outputFile": "uz.fido.wearable-mergeDebugResources-86:/values-round-v23/values-round-v23.xml",
+            "map": [
+                {
+                    "source": "D:\\Android\\Universalbank\\wearable\\src\\main\\res\\values-round\\strings.xml",
+                    "from": {
+                        "startLines": "6,7,3,9,11,1,2,4,10,8,5",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "310,359,141,451,535,17,94,200,494,404,253",
+                        "endColumns": "47,43,57,41,37,75,45,51,39,45,55",
+                        "endOffsets": "353,398,194,488,568,88,135,247,529,445,304"
+                    },
+                    "to": {
+                        "startLines": "3,4,5,6,7,8,9,10,11,12,13",
+                        "startColumns": "4,4,4,4,4,4,4,4,4,4,4",
+                        "startOffsets": "140,188,232,290,332,370,446,492,544,584,630",
+                        "endColumns": "47,43,57,41,37,75,45,51,39,45,55",
+                        "endOffsets": "183,227,285,327,365,441,487,539,579,625,681"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\user\\.gradle\\caches\\transforms-3\\1340bb45c0d690ff2d8b219d29bc7902\\transformed\\wear-1.3.0\\res\\values-round-v23\\values-round-v23.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "84",
+                        "endOffsets": "135"
+                    }
+                }
+            ]
+        }
+    ]
+}

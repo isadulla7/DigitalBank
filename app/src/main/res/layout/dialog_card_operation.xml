@@ -30,7 +30,7 @@
             android:paddingBottom="16dp"
             android:text="@string/operation_with_card"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/transfer_to_card"
@@ -54,7 +54,7 @@
                 android:gravity="center|start"
                 android:text="@string/transfer_to_card"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -80,7 +80,7 @@
                 android:gravity="center|start"
                 android:text="@string/monitoring"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -107,7 +107,7 @@
                 android:gravity="center|start"
                 android:text="@string/set_limit"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -134,7 +134,7 @@
                 android:gravity="center|start"
                 android:text="@string/requisites"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <ImageView
                 android:layout_width="16dp"
@@ -168,7 +168,7 @@
                 android:gravity="center|start"
                 android:text="@string/safety"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <ImageView
                 android:layout_width="16dp"
@@ -202,7 +202,7 @@
                 android:gravity="center|start"
                 android:text="@string/settings_card"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <ImageView
                 android:layout_width="16dp"
@@ -236,7 +236,7 @@
                 android:gravity="center|start"
                 android:text="@string/block_card"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <ImageView
                 android:layout_width="16dp"
@@ -269,7 +269,7 @@
                 android:gravity="center|start"
                 android:text="@string/delete"
                 android:textColor="@color/brandRedColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <ImageView
                 android:layout_width="16dp"

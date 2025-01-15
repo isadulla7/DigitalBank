@@ -189,9 +189,9 @@ fun Fragment.getTransferTypes(): ArrayList<MenuServiceItem> {
     transferTypes.add(
         MenuServiceItem(
             R.drawable.ic_service_transfer_to_account,
-            getString(R.string.transfer_to_account),
+            getString(R.string.by_requisites),
             500,
-            getString(R.string.by_wallet_number_desc)
+            getString(R.string.transfer_to_account)
         )
     )
     transferTypes.add(

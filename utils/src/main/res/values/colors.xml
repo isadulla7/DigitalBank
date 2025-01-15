@@ -2,6 +2,7 @@
 <resources>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
+    <color name="home_white">#FFFFFF</color>
     <color name="view_pager_tab_color">#FFFFFF</color>
     <color name="view_pager_stroke_color">#E7E9EC</color>
     <color name="white_50">#08FFFFFF</color>

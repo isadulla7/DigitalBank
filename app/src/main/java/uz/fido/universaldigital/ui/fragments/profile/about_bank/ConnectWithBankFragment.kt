@@ -47,13 +47,13 @@ class ConnectWithBankFragment : BaseFragment<FragmentConnectWithBankBinding, Men
     private fun openMail() {
         val email = "universaldigitalbank@gmail.com"
         val emailIntent = Intent(Intent.ACTION_SENDTO)
-        emailIntent.type = "message/rfc822"
-        emailIntent.putExtra(Intent.EXTRA_EMAIL, email)
-        emailIntent.data = Uri.parse("mailto:$email")
-        emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        emailIntent.addFlags(Intent.FLAG_FROM_BACKGROUND)
+        emailIntent.apply {
+            putExtra(Intent.EXTRA_EMAIL, email)
+            setDataAndType(Uri.parse("mailto:$email"), "message/rfc822")
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_FROM_BACKGROUND)
+        }
         startActivity(emailIntent)
-
     }
 
 }

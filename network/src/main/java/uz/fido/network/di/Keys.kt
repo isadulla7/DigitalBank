@@ -1,9 +1,15 @@
 package uz.fido.network.di
 
+import uz.fido.utils.log.Log
+
 object Keys {
 
     init {
-        System.loadLibrary("network-lib")
+        try {
+            System.loadLibrary("network-lib")
+        } catch (e: UnsatisfiedLinkError) {
+            Log.e("NativeLibrary", "Failed to load library: ${e.message}")
+        }
     }
 
     external fun getUserInfoUrl(): String
@@ -15,4 +21,7 @@ object Keys {
     external fun getSocketUrl(): String
 
     external fun paynetPhotoUrl(): String
+
+    external fun getCertFilePassword(): String
+
 }

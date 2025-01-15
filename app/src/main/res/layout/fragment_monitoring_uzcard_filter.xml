@@ -43,7 +43,7 @@
                     android:gravity="center"
                     android:text="@string/period"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     android:visibility="gone" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -64,7 +64,7 @@
                     android:gravity="center"
                     android:text="@string/period"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                             android:paddingHorizontal="12dp"
                             android:text="@string/select_period"
                             android:textColor="@color/mainTextColor"
-                            android:textSize="14sp" />
+                            android:textSize="14dp" />
 
                         <uz.fido.utils.view.custom_text_view.TextViewMedium
                             android:id="@+id/amount"
@@ -105,7 +105,7 @@
                             android:paddingHorizontal="12dp"
                             android:text="@string/amount"
                             android:textColor="@color/mainTextColor"
-                            android:textSize="14sp"
+                            android:textSize="14dp"
                             android:visibility="gone" />
 
                         <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -120,7 +120,7 @@
                             android:paddingHorizontal="12dp"
                             android:text="@string/funds_flow"
                             android:textColor="@color/mainTextColor"
-                            android:textSize="14sp" />
+                            android:textSize="14dp" />
                     </LinearLayout>
 
                 </HorizontalScrollView>
@@ -136,7 +136,7 @@
                     android:paddingEnd="16dp"
                     android:text="@string/card"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="20sp" />
+                    android:textSize="20dp" />
 
                 <net.cachapa.expandablelayout.ExpandableLayout
                     android:id="@+id/expandable_cards"
@@ -192,7 +192,7 @@
             android:backgroundTint="#F9EAEA"
             android:text="@string/reset"
             android:textColor="@color/brandRedColor"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:cornerRadius="16dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -205,7 +205,7 @@
             android:backgroundTint="@color/brandRedColor"
             android:text="@string/apply"
             android:textColor="@color/frozenWhite"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:cornerRadius="12dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 

@@ -29,7 +29,7 @@
         android:maxLines="2"
         android:text="@string/choose_language"
         android:textColor="@color/frozenWhite"
-        android:textSize="24sp"
+        android:textSize="24dp"
         app:layout_constraintTop_toTopOf="parent" />
 
     <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -42,7 +42,7 @@
         android:minLines="3"
         android:text="@string/choose_language_description"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintTop_toBottomOf="@id/title" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -75,7 +75,7 @@
                 android:layout_weight="1"
                 android:text="@string/uzbek"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <ImageView
                 android:id="@+id/selected_uz"
@@ -108,7 +108,7 @@
                 android:layout_weight="1"
                 android:text="@string/russian"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <ImageView
                 android:id="@+id/selected_rus"
@@ -141,7 +141,7 @@
                 android:layout_weight="1"
                 android:text="@string/english"
                 android:textColor="@color/blackColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
             <ImageView
                 android:id="@+id/selected_eng"

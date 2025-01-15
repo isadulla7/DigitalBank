@@ -5,6 +5,7 @@ import android.content.Context
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.text.isDigitsOnly
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.p2p.P2PInfoDto
@@ -70,7 +71,7 @@ fun checkCardNumber(cardNumber: String): Boolean {
 }
 
 fun checkCardAvailability(ccNumber: String): Boolean {
-    if (ccNumber.contains(".")) {
+    if (!isOnlyNumbers(ccNumber)) {
         return false
     }
     var sum = 0
@@ -89,11 +90,20 @@ fun checkCardAvailability(ccNumber: String): Boolean {
     return sum % 10 == 0
 }
 
+fun isOnlyNumbers(input: String): Boolean {
+    val regex = Regex("^\\d+$")
+    return regex.matches(input)
+}
+
 fun getUserNameFormatted(embossedName: String?): String {
     embossedName?.let { fullName ->
-        return if (fullName.contains(" ")) {
-            fullName.split(" ")[0].capitalizeWord() + " " + fullName.split(" ")[1].capitalizeWord()
-        } else fullName.capitalizeWord()
+        try {
+            return if (fullName.contains(" ")) {
+                fullName.split(" ")[0].capitalizeWord() + " " + fullName.split(" ")[1].capitalizeWord()
+            } else fullName.capitalizeWord()
+        } catch (e: Exception) {
+            return fullName
+        }
     }
     return "No name"
 }
@@ -185,4 +195,9 @@ fun TextView.setMinMaxAmount(
             }
         }
     } else return false
+}
+
+fun Context.formatErrorMessage(message: String? = null): String {
+    if (message == "CARD_EXPIRED") return getString(R.string.card_expired)
+    return getString(R.string.card_not_found)
 }

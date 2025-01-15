@@ -30,7 +30,7 @@
         android:paddingEnd="16dp"
         android:text="@string/select_period"
         android:textColor="@color/mainTextColor"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintTop_toBottomOf="@+id/handle" />
 
     <com.google.android.material.textfield.TextInputLayout

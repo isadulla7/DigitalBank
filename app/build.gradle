@@ -1,12 +1,15 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'dagger.hilt.android.plugin'
 }
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     defaultConfig {
@@ -29,6 +32,20 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    signingConfigs {
+        production {
+            v1SigningEnabled true
+            v2SigningEnabled true
+            enableV3Signing = true
+            enableV4Signing = true
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -36,6 +53,7 @@ android {
             ndk {
                 abiFilters "arm64-v8a", "armeabi-v7a"
             }
+            signingConfig signingConfigs.production
         }
     }
     externalNativeBuild {
@@ -99,7 +117,7 @@ dependencies {
     implementation(libs.com.google.maps.utils)
     implementation libs.firebase.database.ktx
 
-    kapt(libs.com.google.dagger.hilt.android.compiler)
+    ksp(libs.com.google.dagger.hilt.android.compiler)
     compileOnly(libs.com.google.android.wearable)
 
     implementation(libs.org.jetbrains.kotlin)
@@ -120,7 +138,7 @@ dependencies {
     implementation(libs.com.squareup.retrofit2.converter.gson)
     implementation(libs.com.squareup.okhttp3.logging.interceptor)
 
-    //coil,picasso,glide (image loader)
+    //coil,picasso (image loader)
     implementation(libs.io.coil.kt.coil)
     implementation(libs.com.squareup.picasso.picasso)
 
@@ -133,7 +151,6 @@ dependencies {
     implementation(libs.io.ktor.ktor.client.android)
     implementation(libs.com.jakewharton.rxbinding4.rxbinding)
     implementation(libs.com.tbuonomo.andrui.viewpagerdotsindicator)
-    implementation(libs.com.github.OCNYang.pageTransformerHelp)
     implementation(libs.com.github.alexzhirkevich.custom.qr.generator)
     implementation(libs.org.apache.commons.commons.lang3)
     implementation(libs.com.github.mckrpk.animatedProgressBar)

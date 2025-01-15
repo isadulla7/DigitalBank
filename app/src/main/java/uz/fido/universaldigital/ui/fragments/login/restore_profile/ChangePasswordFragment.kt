@@ -12,15 +12,16 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentChangePasswordBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
-import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.getUserQwerty
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveUserQwerty
 import uz.fido.universaldigital.ui.utils.keys.Keys
+import uz.fido.utils.const.Const
 import uz.fido.utils.security.encryptPassword
 import uz.fido.utils.utility.context.startActivityWithClearTask
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.Utility.isValidPasswordFormat
 import uz.fido.utils.utility.user.getClientToken
+import uz.fido.utils.utility.user.getFromPaper
 
 @AndroidEntryPoint
 class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, RestoreProfileViewModel>(FragmentChangePasswordBinding::inflate, RestoreProfileViewModel::class.java) {
@@ -57,7 +58,6 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
         binding.etRepeatPassword.addTextChangedListener { checkForButton() }
         binding.btnContinue.setOnClickListener {
             if (isValidPasswordFormat(binding.etPassword.text.toString())) {
-                binding.btnContinue.setProgress(true)
                 changePasswordOperation()
             } else {
                 showSnackbar(requireContext().getString(R.string.pass_check))
@@ -81,7 +81,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
     private fun changePasswordOperation() {
         when (operation) {
             CHANGE_PASSWORD -> {
-                if (encryptPassword(binding.etOldPassword.text.toString().trim()) == requireContext().getUserQwerty()) {
+                if (encryptPassword(binding.etOldPassword.text.toString().trim()) == getFromPaper(Const.PASSWORD_ENC)) {
                     changePassword()
                 } else {
                     showSnackbar(getString(R.string.old_password_is_wrong))
@@ -99,21 +99,20 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
     }
 
     private fun changePassword() {
-        showProgress()
-        val model = ChangePasswordRequest(new_password = encryptPassword(binding.etPassword.text.toString().trim()), current_password = requireContext().getUserQwerty())
+        binding.btnContinue.setProgress(true)
+        val model = ChangePasswordRequest(new_password = encryptPassword(binding.etPassword.text.toString().trim()), current_password = getFromPaper(Const.PASSWORD_ENC))
         viewModel.changePassword(getClientToken(), model).observe(viewLifecycleOwner) {
+            binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
-                    hideProgress()
                     showSnackbar(getString(R.string.success_change_password))
                     Handler(Looper.getMainLooper()).postDelayed(
-                        { requireActivity().logOut() }, 500
+                        { requireActivity().logOut() }, 1500
                     )
                 }
 
                 Status.ERROR -> {
-                    hideProgress()
-                    showSnackbar(it.message!!)
+                    showSnackbar(it.message.orEmpty())
                 }
             }
         }

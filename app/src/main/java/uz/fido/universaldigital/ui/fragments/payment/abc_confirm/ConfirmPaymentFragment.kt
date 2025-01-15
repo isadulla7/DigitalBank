@@ -36,6 +36,7 @@ import uz.fido.universaldigital.ui.fragments.payment.init_payment.second_step.Pa
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils
 import uz.fido.universaldigital.ui.utils.extensions.checkForFingerPrintConfirmation
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
@@ -302,64 +303,69 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
     }
 
     private fun createPayment() {
-        binding.continueButton.setProgress(true)
-        val command = if (senderCard!!.object_type == WALLET) "purse&${paymentService?.payment_type.toString().lowercase(Locale.getDefault()).trim()}" else "card&${
-            paymentService?.payment_type.toString().lowercase(Locale.getDefault()).trim()
-        }"
-        val model = CreatePaymentRequest(
-            service_id = paymentService?.service_id.toString(),
-            params = params,
-            from_object_id = senderCard?.object_id.toString(),
-            amount = params["AMOUNT"].toString(),
-            command = command,
-            string_line = stringLine,
-            i_request_id = Const.request_id
-        )
-        val path = if (paymentService?.pay_request_method.isNullOrEmpty()) "CREATE_PAYMENT" else paymentService?.pay_request_method.toString()
-        paymentViewModel.createPaymentRequest(getClientToken(), model, path).observe(viewLifecycleOwner) {
-            it?.let {
-                binding.continueButton.setProgress(false)
-                when (it.status) {
-                    Status.ERROR -> {
-                        showSnackbar(it.message.toString())
-                    }
+        try {
+            binding.continueButton.setProgress(true)
+            val command = if (senderCard!!.object_type == WALLET) "purse&${paymentService?.payment_type.toString().lowercase(Locale.getDefault()).trim()}" else "card&${
+                paymentService?.payment_type.toString().lowercase(Locale.getDefault()).trim()
+            }"
+            val model = CreatePaymentRequest(
+                service_id = paymentService?.service_id.toString(),
+                params = params,
+                from_object_id = senderCard?.object_id.toString(),
+                amount = params["AMOUNT"].toString(),
+                command = command,
+                string_line = stringLine,
+                i_request_id = Const.request_id
+            )
+            val path = if (paymentService?.pay_request_method.isNullOrEmpty()) "CREATE_PAYMENT" else paymentService?.pay_request_method.toString()
+            paymentViewModel.createPaymentRequest(getClientToken(), model, path).observe(viewLifecycleOwner) {
+                it?.let {
+                    binding.continueButton.setProgress(false)
+                    when (it.status) {
+                        Status.ERROR -> {
+                            showSnackbar(it.message.toString())
+                        }
 
-                    Status.SUCCESS -> {
-                        val bundle = bundleOf(
-                            SuccessPaymentFragment.CONFIRM_PAYMENT_OPERATION to SuccessPaymentFragment.PAYMENT,
-                            CONFIRM_PAYMENT_OPERATION to operation,
-                            Const.OPERATION_AMOUNT to Format.formatMoney(amount.toString()) + if (currency == "000") " ${
-                                getString(
-                                    R.string.sum_text
-                                )
-                            }" else " USD",
-                            Const.OPERATION_CURRENCY to if (currency == "000") " ${getString(R.string.sum_text)}" else " USD",
-                            Const.SENDER_CARD to senderCard,
-                            Const.PAYMENT_SERVICE to Gson().toJson(paymentService),
-                            "EXTRA_PAYMENT_PARAMS" to Gson().toJson(paymentParamsArrayList),
-                            SuccessPaymentFragment.PAYMENT_KEY_VALUES to requireArguments().serializable<HashMap<String, String>>(PaymentSecondStepFragment.PAYMENT_KEY_VALUES)
-                        )
-                        bundle.putString("transactId", it.data?.request_id!!.toString())
-                        if (operation != null) {
-                            when (operation) {
-                                OPERATION_REQUISITES -> {
-                                    gotoWithSlide(R.id.successPaymentFragment, bundle)
-                                }
+                        Status.SUCCESS -> {
+                            val bundle = bundleOf(
+                                SuccessPaymentFragment.CONFIRM_PAYMENT_OPERATION to SuccessPaymentFragment.PAYMENT,
+                                CONFIRM_PAYMENT_OPERATION to operation,
+                                Const.OPERATION_AMOUNT to Format.formatMoney(amount.toString()) + if (currency == "000") " ${
+                                    getString(
+                                        R.string.sum_text
+                                    )
+                                }" else " USD",
+                                Const.OPERATION_CURRENCY to if (currency == "000") " ${getString(R.string.sum_text)}" else " USD",
+                                Const.SENDER_CARD to senderCard,
+                                Const.PAYMENT_SERVICE to Gson().toJson(paymentService),
+                                "EXTRA_PAYMENT_PARAMS" to Gson().toJson(paymentParamsArrayList),
+                                SuccessPaymentFragment.PAYMENT_KEY_VALUES to requireArguments().serializable<HashMap<String, String>>(PaymentSecondStepFragment.PAYMENT_KEY_VALUES)
+                            )
+                            bundle.putString("transactId", it.data?.request_id!!.toString())
+                            if (operation != null) {
+                                when (operation) {
+                                    OPERATION_REQUISITES -> {
+                                        gotoWithSlide(R.id.successPaymentFragment, bundle)
+                                    }
 
-                                OPERATION_PAYMENT -> {
-                                    gotoWithSlide(R.id.successPaymentFragment, bundle)
-                                }
+                                    OPERATION_PAYMENT -> {
+                                        gotoWithSlide(R.id.successPaymentFragment, bundle)
+                                    }
 
-                                OPERATION_PAYMENT_SECOND -> {
-                                    gotoWithSlide(R.id.successPaymentFragment, bundle)
+                                    OPERATION_PAYMENT_SECOND -> {
+                                        gotoWithSlide(R.id.successPaymentFragment, bundle)
+                                    }
                                 }
+                            } else {
+                                gotoWithSlide(R.id.successPaymentFragment, bundle)
                             }
-                        } else {
-                            gotoWithSlide(R.id.successPaymentFragment, bundle)
                         }
                     }
                 }
             }
+        } catch (e: Exception) {
+            showSnackbar(getString(uz.fido.utils.R.string.unkknown_error))
+            recordException(e, ::createPayment.name)
         }
     }
 

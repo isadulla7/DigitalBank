@@ -47,7 +47,7 @@
         android:gravity="center"
         android:text="@string/maps_no_location"
         android:textColor="@color/brandBlueColor_30"
-        android:textSize="14sp"
+        android:textSize="14dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

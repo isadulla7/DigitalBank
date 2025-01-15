@@ -32,7 +32,7 @@
         android:paddingStart="16dp"
         android:textColor="@color/mainTextColor"
         app:layout_constraintTop_toBottomOf="@+id/handle"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:text="@string/add_my_house" />
 
 
@@ -40,7 +40,7 @@
         android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:layout_marginTop="16dp"
         android:drawablePadding="16dp"
         android:drawableStart="@drawable/ic_edit_house"
@@ -53,7 +53,7 @@
         android:id="@+id/delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:drawablePadding="16dp"
         android:drawableStart="@drawable/ic_delete_red"
         android:paddingStart="16dp"

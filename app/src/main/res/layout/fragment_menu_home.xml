@@ -5,6 +5,19 @@
     android:layout_height="match_parent"
     android:background="@color/brandRedColor">
 
+    <uz.fido.universaldigital.ui.utils.snowflake.SnowfallView
+        android:id="@+id/home_anim_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:snowflakeSizeMax="16dp"
+        app:snowflakeSizeMin="8dp"
+        app:snowflakeSpeedMax="2"
+        app:snowflakeSpeedMin="1"
+        app:snowflakesAlreadyFalling="true"
+        app:snowflakesFadingEnabled="true"
+        app:snowflakesNum="64" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/user_avatar"
         android:layout_width="40dp"
@@ -27,11 +40,12 @@
         android:gravity="start|center"
         android:maxLines="2"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toStartOf="@id/chat"
         app:layout_constraintStart_toEndOf="@id/user_avatar"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Husniddin Madaminov" />
+
 
     <ImageView
         android:id="@+id/chat"
@@ -65,22 +79,11 @@
         android:gravity="center"
         android:includeFontPadding="false"
         android:textColor="@color/frozenBlue"
-        android:textSize="10sp"
+        android:textSize="10dp"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="5" />
-
-    <!--    <com.airbnb.lottie.LottieAnimationView-->
-    <!--        android:layout_width="250dp"-->
-    <!--        android:layout_height="150dp"-->
-    <!--        android:layout_marginTop="-16dp"-->
-    <!--        app:layout_constraintEnd_toEndOf="parent"-->
-    <!--        app:layout_constraintStart_toStartOf="parent"-->
-    <!--        app:layout_constraintTop_toBottomOf="@id/user_name"-->
-    <!--        app:lottie_autoPlay="true"-->
-    <!--        app:lottie_fileName="snowman.json"-->
-    <!--        app:lottie_loop="true" />-->
 
     <uz.fido.utils.libs.smart_refresh.refresh_layout.SmartRefreshLayout
         android:id="@+id/refreshLayout"
@@ -102,7 +105,6 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/brandRedColor"
                 android:orientation="vertical">
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -119,7 +121,7 @@
                     android:paddingHorizontal="12dp"
                     android:text="@string/search"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/balance_layout"
@@ -166,7 +168,7 @@
                         android:paddingHorizontal="4dp"
                         android:text="••• ••• ••• •••"
                         android:textColor="@color/frozenWhite"
-                        android:textSize="24sp"
+                        android:textSize="24dp"
                         android:visibility="gone"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/hide_balance"
@@ -206,7 +208,7 @@
                         android:gravity="center"
                         android:text="@string/you_have_no_cards"
                         android:textColor="@color/brandBlueColor_50"
-                        android:textSize="16sp" />
+                        android:textSize="16dp" />
 
                     <uz.fido.utils.view.custom_text_view.TextViewRegular
                         android:layout_width="match_parent"
@@ -216,7 +218,7 @@
                         android:gravity="center"
                         android:text="@string/no_card_description"
                         android:textColor="@color/brandBlueColor_50"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
 
                     <uz.fido.utils.view.custom_text_view.TextViewMedium
                         android:layout_width="wrap_content"
@@ -229,7 +231,7 @@
                         android:gravity="center"
                         android:text="@string/add_card"
                         android:textColor="@color/brandRedColor"
-                        android:textSize="16sp" />
+                        android:textSize="16dp" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -249,7 +251,7 @@
                         android:layout_marginStart="16dp"
                         android:layout_marginTop="16dp"
                         android:text="@string/my_cards"
-                        android:textSize="20sp"
+                        android:textSize="20dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -265,7 +267,7 @@
                         android:paddingVertical="4dp"
                         android:text="@string/show_more"
                         android:textColor="@color/brandRedColor"
-                        android:textSize="14sp"
+                        android:textSize="14dp"
                         app:layout_constraintBottom_toBottomOf="@id/tv_my_cards"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@id/tv_my_cards" />
@@ -321,7 +323,7 @@
                             android:layout_marginHorizontal="12dp"
                             android:includeFontPadding="false"
                             android:textColor="@color/mainTextColor"
-                            android:textSize="16sp"
+                            android:textSize="16dp"
                             app:layout_constraintBottom_toTopOf="@id/main_card_name"
                             app:layout_constraintEnd_toStartOf="@id/main_card_sign"
                             app:layout_constraintStart_toEndOf="@id/main_card_bg"
@@ -336,7 +338,7 @@
                             android:layout_marginTop="2dp"
                             android:includeFontPadding="false"
                             android:textColor="@color/brandBlueColor_50"
-                            android:textSize="12sp"
+                            android:textSize="12dp"
                             app:layout_constraintBottom_toBottomOf="@id/main_card_bg"
                             app:layout_constraintEnd_toStartOf="@id/main_card_sign"
                             app:layout_constraintStart_toEndOf="@id/main_card_bg"
@@ -353,7 +355,7 @@
                             android:paddingBottom="8dp"
                             android:text="@string/humo_not_working"
                             android:textColor="@color/brandRedColor"
-                            android:textSize="12sp"
+                            android:textSize="12dp"
                             android:visibility="gone"
                             app:layout_constraintEnd_toStartOf="@id/main_card_sign"
                             app:layout_constraintStart_toEndOf="@id/main_card_bg"
@@ -408,7 +410,7 @@
                                 android:gravity="center|start"
                                 android:text="@string/all_cards"
                                 android:textColor="@color/brandRedColor"
-                                android:textSize="14sp"
+                                android:textSize="14dp"
                                 app:layout_constraintTop_toBottomOf="@id/expandable_layout" />
 
                             <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -421,7 +423,7 @@
                                 android:gravity="center|start"
                                 android:text="@string/add_card"
                                 android:textColor="@color/brandRedColor"
-                                android:textSize="14sp"
+                                android:textSize="14dp"
                                 app:layout_constraintTop_toBottomOf="@id/tv_all_cards" />
 
                         </androidx.appcompat.widget.LinearLayoutCompat>

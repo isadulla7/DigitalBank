@@ -37,9 +37,9 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/my_device"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
-            <LinearLayout
+            <androidx.appcompat.widget.LinearLayoutCompat
                 android:id="@+id/my_device"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
@@ -76,7 +76,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textColor="@color/monitoring_amount"
-                        android:textSize="16sp" />
+                        android:textSize="16dp" />
 
                     <uz.fido.utils.view.custom_text_view.TextViewRegular
                         android:id="@+id/last_seen"
@@ -84,10 +84,10 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
                         android:textColor="@color/brandBlueColor_40"
-                        android:textSize="14sp" />
+                        android:textSize="14dp" />
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
-            </LinearLayout>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
@@ -102,7 +102,7 @@
                     android:paddingTop="16dp"
                     android:paddingBottom="@dimen/elevation_8dp"
                     android:text="@string/other_devices"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
                 <ImageView
                     android:id="@+id/delete_all"

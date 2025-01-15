@@ -121,30 +121,30 @@ object BaseCardUtils {
     private fun getBankLogo(cardNumber: String): Int {
         if (cardNumber.isNotEmpty() && cardNumber.length > 6) {
             return when (cardNumber.substring(0, 6)) {
-                "860055", "986009", "626272" -> R.drawable.ic_bank_aab
+                "860055", "986009", "626272", "49169905" -> R.drawable.ic_bank_aab
                 "860002", "986012" -> R.drawable.ic_bank_nbu
-                "860006", "626291" -> R.drawable.ic_bank_xalq
-                "860013", "986004" -> R.drawable.ic_bank_asaka
-                "860033", "986001" -> R.drawable.ic_bank_ipoteka
+                "860006", "626291", "409783", "419813", "986008" -> R.drawable.ic_bank_xalq
+                "860013", "986004", "55553664" -> R.drawable.ic_bank_asaka
+                "860033", "986001", "479092", "55553630" -> R.drawable.ic_bank_ipoteka
                 "860003", "986002" -> R.drawable.ic_bank_sqb
-                "860004", "986003" -> R.drawable.ic_bank_agrobank
+                "860004", "986003", "402767", "407342", "416673", "424232", "49169911" -> R.drawable.ic_bank_agrobank
                 "860009", "986006" -> R.drawable.ic_bank_qqb
-                "860011", "986015" -> R.drawable.ic_bank_turon
-                "860005", "986013" -> R.drawable.ic_bank_mikrokredit
+                "860011", "986015", "47288700" -> R.drawable.ic_bank_turon
+                "860005", "986013", "406288", "55553650" -> R.drawable.ic_bank_mikrokredit
                 "860031", "626247", "986019" -> R.drawable.ic_bank_aloqa
                 "860014", "986017" -> R.drawable.ic_bank_ipakyoli
                 "860049", "986010" -> R.drawable.ic_bank_kapital
                 "860053", "986026" -> R.drawable.ic_bank_infin
-                "860030", "986018" -> R.drawable.ic_bank_trast
+                "860030", "986018", "40978402" -> R.drawable.ic_bank_trast
                 "860038" -> R.drawable.ic_bank_turkiston
-                "860051", "986025" -> R.drawable.ic_bank_davr
+                "860051", "986025", "42943400" -> R.drawable.ic_bank_davr
                 "860048", "986023" -> R.drawable.ic_bank_universal
                 "860050", "986024" -> R.drawable.ic_bank_ravnaq
                 "860057", "986027" -> R.drawable.ic_bank_ofb
-                "860008", "986014" -> R.drawable.ic_bank_savdogar
-                "860012", "986016" -> R.drawable.ic_bank_hamkor
-                "860034", "986020" -> R.drawable.ic_bank_kdb
-                "986060" -> R.drawable.ic_bank_anor
+                "860008", "986014", "55553687", "55553688", "55553689" -> R.drawable.ic_bank_savdogar
+                "860012", "986016", "40084700" -> R.drawable.ic_bank_hamkor
+                "860034", "986020", "41878300" -> R.drawable.ic_bank_kdb
+                "986060", "55553660", "55553661", "55553662" -> R.drawable.ic_bank_anor
                 "986035" -> R.drawable.ic_bank_tbc
 
                 else -> {

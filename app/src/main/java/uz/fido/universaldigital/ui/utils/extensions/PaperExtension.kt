@@ -8,11 +8,15 @@ import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.utility.context.getDeviceIds
 
 fun Fragment.saveToPaper(key: String, value: String?) {
-    if (value == null) {
-        throw PaperDbException("Paper doesn't support writing null root values")
-    } else {
-        val encryptedValue = CryptoUtil.encrypt(value, requireContext().getDeviceIds())
-        Paper.book().write(key, encryptedValue)
+    try {
+        if (value == null) {
+            throw PaperDbException("Paper doesn't support writing null root values")
+        } else {
+            val encryptedValue = CryptoUtil.encrypt(value, requireContext().getDeviceIds())
+            Paper.book().write(key, encryptedValue)
+        }
+    } catch (e: Exception) {
+        recordException(e, ::saveToPaper.name)
     }
 }
 

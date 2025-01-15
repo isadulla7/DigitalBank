@@ -59,9 +59,11 @@ object SocketClient {
         }
     }
 
+    private var caFileInputStream = UniversalApplication.getContext().resources.openRawResource(R.raw.mycertificate)
+
     private val sslContext: SSLContext = kotlin.run {
         val keyStore = KeyStore.getInstance("PKCS12")
-        val password = "1".toCharArray()
+        val password = "223377".toCharArray()
         keyStore.load(caFileInputStream, password)
         val keyManagerFactory = KeyManagerFactory.getInstance("X509")
         keyManagerFactory.init(keyStore, password)
@@ -69,8 +71,6 @@ object SocketClient {
         sslContext.init(keyManagerFactory.keyManagers, null, SecureRandom())
         return@run sslContext
     }
-
-    private var caFileInputStream = UniversalApplication.getContext().resources.openRawResource(R.raw.unversal_uz)
 
     private val sslSocketFactory = sslContext.socketFactory
 

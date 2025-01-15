@@ -53,7 +53,7 @@
                 android:drawableStart="@drawable/ic_location_maps"
                 android:drawablePadding="8dp"
                 android:textColor="@color/viewPagerTextColor"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 tools:text="YUNUSOBOD TUMANI NIYOZBEK YOLI 8" />
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular

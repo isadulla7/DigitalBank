@@ -127,7 +127,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/auto_payment_info"
                         android:textColor="@color/hintColor"
-                        android:textSize="13sp"
+                        android:textSize="13dp"
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat

@@ -12,7 +12,7 @@
     android:layout_marginTop="16dp"
     android:orientation="vertical"
     android:textColor="@color/blackColor"
-    android:textSize="16sp">
+    android:textSize="16dp">
     
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/brandBlueColor_50"
-        android:textSize="14sp"/>
+        android:textSize="14dp"/>
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:layout_width="match_parent"
@@ -34,6 +34,6 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:textColor="@color/brandBlueColor_30"
-        android:textSize="14sp"/>
+        android:textSize="14dp"/>
     
 </androidx.appcompat.widget.LinearLayoutCompat>

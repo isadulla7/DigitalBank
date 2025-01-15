@@ -1,7 +1,9 @@
 package uz.fido.universaldigital.ui.fragments.products.product_types
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,9 +23,8 @@ class MyCardsListFragment : BaseSimpleFragment<FragmentMyCardsListBinding>(
 ), BaseInterface {
 
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
-
+   private var stateCurrent:Boolean=false
     private lateinit var adapter: CardPagerAdapter
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initCardTypes()
@@ -73,5 +74,18 @@ class MyCardsListFragment : BaseSimpleFragment<FragmentMyCardsListBinding>(
             }
 
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+        stateCurrent=true
+    }
+    override fun onResume() {
+        super.onResume()
+        if (stateCurrent){
+            initCardTypes()
+          //  binding.appBar.setAdditionalBtnVisibility(false)
+            stateCurrent=false
+        }
     }
 }

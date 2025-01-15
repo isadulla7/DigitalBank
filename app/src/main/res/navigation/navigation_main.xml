@@ -418,7 +418,7 @@
         android:label="PinCodeFragment" />
     <fragment
         android:id="@+id/notificationsFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.NotificationsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.notifications.NotificationsFragment"
         android:label="NotificationsFragment" />
     <fragment
         android:id="@+id/searchEveryWhereFragment"
@@ -490,7 +490,7 @@
         android:label="OpenWalletFragment" />
     <fragment
         android:id="@+id/readNotificationFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.ReadNotificationFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.notifications.ReadNotificationFragment"
         android:label="ReadNotificationFragment" />
     <fragment
         android:id="@+id/fastAccessControlFragment"
@@ -729,4 +729,16 @@
         android:id="@+id/myCreditsServiceFragment"
         android:name="uz.fido.universaldigital.ui.fragments.services.main.MyCreditsServiceFragment"
         android:label="MyCreditsServiceFragment" />
+    <fragment
+        android:id="@+id/menuNewHomeFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.new_design.MenuNewHomeFragment"
+        android:label="MenuNewHomeFragment" />
+    <fragment
+        android:id="@+id/mainNewsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.MainNewsFragment"
+        android:label="MainNewsFragment" />
+    <fragment
+        android:id="@+id/mainNewsViewFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.news.MainNewsViewFragment"
+        android:label="MainNewsViewFragment" />
 </navigation>

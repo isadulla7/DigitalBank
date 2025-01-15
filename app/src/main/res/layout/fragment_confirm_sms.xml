@@ -25,6 +25,7 @@
             android:id="@+id/et_sms"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:digits="1234567890"
             android:imeOptions="actionDone"
             android:inputType="numberDecimal"
             android:maxLength="8"
@@ -41,7 +42,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="24dp"
         android:textColor="@color/brandBlueColor_50"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:visibility="visible"
         app:layout_constraintTop_toBottomOf="@id/sms_layout" />
 
@@ -53,7 +54,7 @@
         android:padding="16dp"
         android:text="@string/resend_code"
         android:textColor="@color/brandRedColor"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/sms_layout" />

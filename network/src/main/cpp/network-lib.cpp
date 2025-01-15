@@ -33,4 +33,11 @@ Java_uz_fido_network_di_Keys_paynetPhotoUrl(JNIEnv *env, jobject thiz) {
     char *socketUrl = "https://ibank.ubank.uz/files/";
     return env->NewStringUTF(socketUrl);
 }
+
+JNIEXPORT jstring
+Java_uz_fido_network_di_Keys_getCertFilePassword(JNIEnv *env, jobject thiz) {
+    char *certFilePassword = "223377";
+    return env->NewStringUTF(certFilePassword);
+}
+
 }

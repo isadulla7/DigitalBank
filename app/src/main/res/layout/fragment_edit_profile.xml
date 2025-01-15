@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/whiteColor"
     android:orientation="vertical">
 
     <uz.fido.utils.view.custom_app_bar.MainAppBar
@@ -69,7 +70,7 @@
                     android:maxLength="50"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -91,7 +92,7 @@
                     android:maxLength="50"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,7 +115,7 @@
                     android:maxLength="50"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -139,7 +140,7 @@
         android:layout_margin="16dp"
         android:text="@string/save"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:cornerRadius="12dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

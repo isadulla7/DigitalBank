@@ -176,9 +176,7 @@ class ConfirmRequisitesPayment :
                                 Const.PAYMENT_SERVICE to Gson().toJson(paymentService),
                                 Const.EXTRA_PARAMS to Gson().toJson(paymentParamsArrayList),
                                 Const.TRANSACTION_ID to it.data?.request_id!!,
-                                SuccessPaymentFragment.PAYMENT_KEY_VALUES to requireArguments().getSerializable(
-                                    SuccessPaymentFragment.PAYMENT_KEY_VALUES
-                                )
+                                SuccessPaymentFragment.PAYMENT_KEY_VALUES to requireArguments().serializable<HashMap<String, String>>(SuccessPaymentFragment.PAYMENT_KEY_VALUES)
                             )
                             goto(R.id.successPaymentFragment, bundle)
                         }

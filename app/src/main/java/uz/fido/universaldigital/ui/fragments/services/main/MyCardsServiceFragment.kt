@@ -32,6 +32,7 @@ import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.ShareCardNum
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.WalletOperationsDialog
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getLayoutManager
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getSpanCount
+import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.goto
@@ -195,10 +196,16 @@ class MyCardsServiceFragment : BaseSimpleFragment<FragmentMyCardsServiceBinding>
             }
 
             R.id.delete_wallet -> {
-                walletOperationsDialog.dismiss()
-                CloseWalletDialog {
-                    closeWallet()
-                }.show(childFragmentManager, "")
+                if (checkWalletBalance(selectedCard.balance)){
+                    showSnackbar(title = getString(R.string.wallet), snackbarText = getString(R.string.wallet_be_closed)  )
+                }else{
+                    walletOperationsDialog.dismiss()
+                    CloseWalletDialog {
+                        closeWallet()
+                    }.show(childFragmentManager, "")
+                }
+
+
             }
 
             R.id.rename_wallet -> {
@@ -226,6 +233,12 @@ class MyCardsServiceFragment : BaseSimpleFragment<FragmentMyCardsServiceBinding>
                 goto(R.id.walletMonitoringFragment, bundleOf(Const.CARD to selectedCard))
             }
         }
+    }
+
+    private fun checkWalletBalance(balance: String): Boolean {
+        Log.d("TAG", "checkWalletBalance:${balance} ")
+        val doubleBalance = balance.toDouble()
+        return doubleBalance > 0
     }
 
     private fun getCardList() {

@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/data_security_function"
             android:textColor="@color/mainTextColor"
-            android:textSize="30sp" />
+            android:textSize="30dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/tv_description"
@@ -28,7 +28,7 @@
             android:layout_marginTop="24dp"
             android:text="@string/emulator_is_not_allowed"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +58,7 @@
         android:enabled="true"
         android:text="@string/continue_text"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:visibility="gone"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toTopOf="@+id/button_open_settings" />
@@ -73,7 +73,7 @@
         android:enabled="true"
         android:text="@string/exit"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 

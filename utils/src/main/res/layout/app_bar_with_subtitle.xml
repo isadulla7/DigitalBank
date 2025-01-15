@@ -12,14 +12,15 @@
         android:layout_height="wrap_content"
         android:background="@color/whiteColor"
         android:outlineSpotShadowColor="@color/brandBlueColor_30"
-        android:translationZ="@dimen/elevation_8dp"
-        android:paddingVertical="4dp">
+        android:paddingVertical="4dp"
+        android:translationZ="@dimen/elevation_8dp">
 
         <ImageView
             android:id="@+id/back"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginStart="4dp"
+            android:contentDescription="Back Button"
             android:padding="12dp"
             android:src="@drawable/ic_back_button"
             tools:ignore="ContentDescription" />
@@ -36,7 +37,7 @@
             android:includeFontPadding="false"
             android:maxLines="1"
             android:textColor="@color/brandBlueColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <ImageView
             android:id="@+id/additional"
@@ -57,6 +58,6 @@
         android:layout_marginTop="20dp"
         android:includeFontPadding="false"
         android:textColor="@color/brandBlueColor_50"
-        android:textSize="16sp" />
+        android:textSize="16dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

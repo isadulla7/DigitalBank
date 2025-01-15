@@ -31,8 +31,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, MenuProfileViewMo
     }
 
     private fun getNotificationState(): Boolean {
-        val sharedPref: SharedPreferences =
-            requireContext().getSharedPreferences(NOTIFICATION_STATE, Context.MODE_PRIVATE)
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences(NOTIFICATION_STATE, Context.MODE_PRIVATE)
         return sharedPref.getBoolean(STATE, true)
     }
 

@@ -32,7 +32,6 @@ class MonitoringPagerAdapter(private var context: Context, fm: FragmentManager) 
             1 -> context.getString(R.string.uzcard)
             2 -> context.getString(R.string.humo)
             3 -> context.getString(R.string.wallet)
-//            4->context.getString(R.string.wallet)
             else -> ""
         }
     }

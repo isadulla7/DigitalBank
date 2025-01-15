@@ -23,6 +23,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentRequestMoneySuccessBinding
 import uz.fido.universaldigital.ui.activities.MainActivity
+import uz.fido.utils.utility.fragment.pop
 
 
 @AndroidEntryPoint
@@ -91,6 +92,7 @@ class RequestMoneySuccessFragment :
             startActivity(Intent(requireActivity(), MainActivity::class.java))
             requireActivity().finish()
         }
+        binding.appBar.setOnBackButtonClickListener { pop() }
     }
 
 }

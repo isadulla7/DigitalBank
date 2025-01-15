@@ -8,7 +8,7 @@
     android:gravity="center|start"
     android:paddingHorizontal="16dp"
     android:textColor="@color/brandBlueColor_50"
-    android:textSize="14sp"
+    android:textSize="14dp"
     tools:text="Today">
 
 </uz.fido.utils.view.custom_text_view.TextViewRegular>

@@ -13,8 +13,12 @@ class BaseInfoDialog(
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
-        initDialogDetails()
-        initSetOnClickListeners()
+        try {
+            initDialogDetails()
+            initSetOnClickListeners()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun initDialogDetails() {

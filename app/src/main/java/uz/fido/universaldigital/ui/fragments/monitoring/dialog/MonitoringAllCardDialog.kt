@@ -16,16 +16,16 @@ import java.util.Calendar
 import java.util.Locale
 
 class MonitoringAllCardDialog(
-    private val choose:Int,
-    private var startDate:String,
-    private var endDate:String,
-    private var timeType:String,
-    var onClickItem:(Int,String,String,String)->Unit,
-    val clear:()->Unit,
-): DialogFragment() {
+    private val choose: Int,
+    private var startDate: String,
+    private var endDate: String,
+    private var timeType: String,
+    var onClickItem: (Int, String, String, String) -> Unit,
+    val clear: () -> Unit,
+) : DialogFragment() {
 
     private lateinit var binding: DialogAllCardFilterBinding
-   private var minPlus:Int=2
+    private var minPlus: Int = 2
     private val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,10 +34,10 @@ class MonitoringAllCardDialog(
 
     }
 
-    companion object{
-        const val DATE_TYPE_MONTH="month"
-        const val DATE_TYPE_WEEK="week"
-        const val DATE_TYPE_PERIOD="period"
+    companion object {
+        const val DATE_TYPE_MONTH = "month"
+        const val DATE_TYPE_WEEK = "week"
+        const val DATE_TYPE_PERIOD = "period"
     }
 
     override fun onCreateView(
@@ -58,20 +58,20 @@ class MonitoringAllCardDialog(
     }
 
     private fun minMaxCheck() {
-        minPlus=choose
-        if (choose==0){
-            minPlus=0
+        minPlus = choose
+        if (choose == 0) {
+            minPlus = 0
             incomeClick()
         }
-        if (choose==1){
-            minPlus=1
+        if (choose == 1) {
+            minPlus = 1
             outComeClick()
         }
     }
 
     private fun onClick() {
         binding.btnEnter.setOnClickListener {
-            onClickItem(minPlus,startDate,endDate,timeType)
+            onClickItem(minPlus, startDate, endDate, timeType)
         }
         binding.btnCansel.setOnClickListener {
             clear()
@@ -90,16 +90,15 @@ class MonitoringAllCardDialog(
             showTimeRangeDialog()
         }
         binding.inCome.setOnClickListener {
-           incomeClick()
-            minPlus=0
+            incomeClick()
+            minPlus = 0
         }
         binding.outCome.setOnClickListener {
-          outComeClick()
-            minPlus=1
+            outComeClick()
+            minPlus = 1
 
         }
     }
-
 
 
     private fun showTimeRangeDialog() {
@@ -111,7 +110,7 @@ class MonitoringAllCardDialog(
         picker.addOnPositiveButtonClickListener {
             startDate = Format.getDateFromMilliseconds(it.first!!, "yyyyMMdd")
             endDate = Format.getDateFromMilliseconds(it.second!!, "yyyyMMdd")
-            timeType= DATE_TYPE_PERIOD
+            timeType = DATE_TYPE_PERIOD
             checkTime()
         }
         picker.addOnCancelListener {
@@ -121,39 +120,41 @@ class MonitoringAllCardDialog(
     }
 
     private fun checkTime() {
-     when(timeType){
-         DATE_TYPE_PERIOD->{
-             val inputFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
-             val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-             val formatStartDate=inputFormat.parse(startDate)
-             val formatEndDate=inputFormat.parse(endDate)
-             binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
-             binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
-             binding.time.text= "${outputFormat.format(formatStartDate)} - ${outputFormat.format(formatEndDate)}"
-             binding.week.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
-             binding.week.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
-             binding.month.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
-             binding.month.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
-         }
-         DATE_TYPE_MONTH->{
-             binding.month.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
-             binding.month.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
-             binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
-             binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
-             binding.time.text= requireContext().getString(R.string.select_period)
-             binding.week.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
-             binding.week.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
-         }
-         DATE_TYPE_WEEK->{
-             binding.week.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
-             binding.week.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
-             binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
-             binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
-             binding.time.text= requireContext().getString(R.string.select_period)
-             binding.month.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
-             binding.month.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
-         }
-     }
+        when (timeType) {
+            DATE_TYPE_PERIOD -> {
+                val inputFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+                val outputFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+                val formatStartDate = inputFormat.parse(startDate)
+                val formatEndDate = inputFormat.parse(endDate)
+                binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
+                binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
+                binding.time.text = "${outputFormat.format(formatStartDate)} - ${outputFormat.format(formatEndDate)}"
+                binding.week.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
+                binding.week.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+                binding.month.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
+                binding.month.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+            }
+
+            DATE_TYPE_MONTH -> {
+                binding.month.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
+                binding.month.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
+                binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
+                binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+                binding.time.text = requireContext().getString(R.string.select_period)
+                binding.week.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
+                binding.week.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+            }
+
+            DATE_TYPE_WEEK -> {
+                binding.week.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
+                binding.week.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
+                binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
+                binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+                binding.time.text = requireContext().getString(R.string.select_period)
+                binding.month.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
+                binding.month.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+            }
+        }
     }
 
     private fun showWeekRange() {
@@ -164,7 +165,7 @@ class MonitoringAllCardDialog(
         val endOfWeek = calendar.time
         startDate = dateFormat.format(startOfWeek)
         endDate = dateFormat.format(endOfWeek)
-        timeType= DATE_TYPE_WEEK
+        timeType = DATE_TYPE_WEEK
         checkTime()
 
     }
@@ -178,7 +179,7 @@ class MonitoringAllCardDialog(
         val endOfMonth = calendar.time
         startDate = dateFormat.format(startOfMonth)
         endDate = dateFormat.format(endOfMonth)
-        timeType= DATE_TYPE_MONTH
+        timeType = DATE_TYPE_MONTH
         checkTime()
     }
 
@@ -196,7 +197,6 @@ class MonitoringAllCardDialog(
         binding.outCome.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
         binding.outCome.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
     }
-
 
 
 }

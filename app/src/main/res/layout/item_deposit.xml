@@ -22,7 +22,7 @@
         android:drawablePadding="12dp"
         android:gravity="center_vertical|start"
         android:textColor="@color/mainTextColor"
-        android:textSize="20sp"
+        android:textSize="20dp"
         tools:text="Келажак" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -41,14 +41,14 @@
             android:gravity="center|start"
             android:text="@string/deposit_percent"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/deposit_expire"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp"
+            android:textSize="14dp"
             tools:text="До 29%" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -76,14 +76,14 @@
             android:gravity="center|start"
             android:text="@string/deposit_term"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/deposit_term"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp"
+            android:textSize="14dp"
             tools:text="24 месяцев" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
@@ -111,7 +111,7 @@
             android:gravity="center|start"
             android:text="@string/deposit_replenishment"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ImageView
             android:id="@+id/deposit_replenishment"
@@ -145,7 +145,7 @@
             android:gravity="center|start"
             android:text="@string/deposit_withdrawal"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ImageView
             android:id="@+id/deposit_check_okay"

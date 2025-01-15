@@ -14,7 +14,7 @@
         android:paddingHorizontal="12dp"
         android:paddingVertical="24dp"
         android:textColor="@color/brandBlueColor_50"
-        android:textSize="13sp"
+        android:textSize="13dp"
         tools:text="29.05" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

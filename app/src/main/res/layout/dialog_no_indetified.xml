@@ -20,7 +20,7 @@
         android:id="@+id/dialog_description"
         style="@style/dialog_title_style"
         android:text="@string/you_are_not_identified_user"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dialog_title" />
@@ -33,7 +33,7 @@
         android:padding="12dp"
         android:text="@string/cancel"
         android:textColor="@color/hintColor"
-        android:textSize="14sp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/done_button"
         app:layout_constraintTop_toBottomOf="@id/dialog_description" />
@@ -46,7 +46,7 @@
         android:padding="12dp"
         android:text="@string/identify"
         android:textColor="@color/dialogButtonColor"
-        android:textSize="14sp"
+        android:textSize="14dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dialog_description" />
 

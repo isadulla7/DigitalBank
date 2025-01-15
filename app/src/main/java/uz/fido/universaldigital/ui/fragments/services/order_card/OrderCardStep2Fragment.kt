@@ -9,7 +9,6 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager
 import com.google.gson.Gson
-import com.ocnyang.pagetransformerhelp.cardtransformer.AlphaAndScalePageTransformer
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.branches.Branches
@@ -228,7 +227,6 @@ class OrderCardStep2Fragment : BaseFragment<FragmentOrderCardStep2Binding, Order
         cardBgAdapter = OrderCardBgAdapter(requireContext(), designPriceList, this)
         binding.viewPager.adapter = cardBgAdapter
         binding.dotsIndicator.setViewPager(binding.viewPager)
-        binding.viewPager.setPageTransformer(true, AlphaAndScalePageTransformer())
         binding.viewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrollStateChanged(state: Int) {}
             override fun onPageScrolled(

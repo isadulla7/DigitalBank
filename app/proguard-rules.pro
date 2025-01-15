@@ -21,5 +21,6 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class kotlin.Metadata { *; }
--dontwarn kotlin.time.**
+-keep class uz.myid.android.sdk.**{*;}
 -keep class uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation { *; }
+-dontwarn kotlin.time.**

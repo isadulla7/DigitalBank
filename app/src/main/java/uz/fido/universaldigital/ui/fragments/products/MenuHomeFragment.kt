@@ -26,6 +26,7 @@ import uz.fido.network.domain.model.widget.MainWidget
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMenuHomeBinding
+import uz.fido.universaldigital.ui.activities.seasons.Season
 import uz.fido.universaldigital.ui.fragments.products.adapter.CardStackAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.HomeCardsAdapter
 import uz.fido.universaldigital.ui.fragments.products.widgets.balance.MainBalanceDialog
@@ -36,6 +37,7 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardNameAn
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardTypeImage
 import uz.fido.universaldigital.ui.utils.extensions.doTransferOperationByType
 import uz.fido.universaldigital.ui.utils.extensions.getDrawableFromRes
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.extensions.setCardState
 import uz.fido.universaldigital.ui.utils.home_utils.getCardsWithBalanceVisibility
@@ -70,15 +72,9 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     private var notificationList = arrayListOf<Notification>()
     private lateinit var notificationsAdapter: CardStackAdapter
 
-    override fun onStart() {
-        super.onStart()
-        uz.fido.utils.log.Logger.writeErrorLog("onStart--${System.currentTimeMillis()}")
-    }
-
     override fun onResume() {
         super.onResume()
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
-        uz.fido.utils.log.Logger.writeErrorLog("onResume--${System.currentTimeMillis()}")
     }
 
     override fun onCreateView(
@@ -107,8 +103,49 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         loadProfileImage()
         setUserDetails()
         setNotification()
+        setSeasonAnimation()
+    }
 
+    private fun setSeasonAnimation() {
+        val currentSeason = getFromPaper(Const.CURRENT_SEASON, Season.DEFAULT)
+        when (currentSeason) {
+            Season.WINTER -> {
+                binding.homeAnimView.apply {
+                    setSnowflakeImage(R.drawable.snowflake)
+                    setSnowflakeSpeedMin(1)
+                    setSnowflakeSpeedMax(1)
+                    setSnowflakesNum(50)
+                    setSnowflakeSizeMax(24)
+                    setSnowflakeSizeMax(16)
+                }
+            }
 
+            Season.AUTUMN -> {
+                binding.homeAnimView.apply {
+                    setSnowflakeImage(R.drawable.maple_leaf)
+                    setSnowflakeSpeedMin(1)
+                    setSnowflakeSpeedMax(1)
+                    setSnowflakesNum(24)
+                    setSnowflakeSizeMax(32)
+                    setSnowflakeSizeMin(20)
+                }
+            }
+
+            Season.SPRING -> {
+                binding.homeAnimView.apply {
+                    setSnowflakeImage(R.drawable.sakura)
+                    setSnowflakeSpeedMin(1)
+                    setSnowflakeSpeedMax(2)
+                    setSnowflakesNum(30)
+                    setSnowflakeSizeMax(30)
+                    setSnowflakeSizeMin(16)
+                }
+            }
+
+            else -> {
+                binding.homeAnimView.visibility = View.GONE
+            }
+        }
     }
 
     private fun setNotification() {
@@ -339,7 +376,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         binding.btnShowMore.setOnClickListener {
             showMoreButtonClickEvent()
         }
-        binding.notifications.setOnClickListener { goto(R.id.notificationsFragment) }
+        binding.notifications.setOnClickListener { goto(R.id.mainNewsFragment) }
         binding.addCardLayout.setOnClickListener { goto(R.id.addCardFragment) }
         binding.balanceSettings.setOnClickListener {
             openBalanceSettingsDialog()

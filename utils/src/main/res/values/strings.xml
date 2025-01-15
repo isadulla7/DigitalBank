@@ -54,5 +54,10 @@
     <string name="tue">Вт</string>
     <string name="mon">Пн</string>
     <string name="sun">Вс</string>
+    <string name="one_year">год</string>
+    <string name="two_three_four_year">года</string>
+    <string name="five_year">лет</string>
+    <string name="two_three_four_day">дня</string>
+    <string name="two_three_four_month">месяца</string>
 
 </resources>

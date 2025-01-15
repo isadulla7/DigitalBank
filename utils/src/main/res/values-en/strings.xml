@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="please_try_again_later">Noma\'lum xatolik, birozdan so\'ng harakat qilib ko\'ring</string>
+    <string name="please_try_again_later">An unknown error, try again later</string>
     <string name="error_security_connection">Could not establish a secure connection to the server</string>
     <string name="slow_internet_connection">Please check your internet connection</string>
     <string name="tech_works">Technical work in progress\nPlease try again later</string>
@@ -10,8 +10,8 @@
     <string name="update_downloaded">Update downloaded</string>
     <string name="cancel">Cancel</string>
     <string name="reopen">Restart</string>
-    <string name="today">Bugun</string>
-    <string name="yesterday">Kecha</string>
+    <string name="today">Today</string>
+    <string name="yesterday">Yesterday</string>
     <string name="day">day</string>
     <string name="days">days</string>
     <string name="month">month</string>
@@ -19,7 +19,7 @@
     <string name="year">year</string>
     <string name="years">years</string>
     <string name="indefinite">Indefinite</string>
-    <string name="wrong_format">Noto\'g\'ri format</string>
+    <string name="wrong_format">Wrong format</string>
     <string name="wrong_card_expire_date">Enter the correct card expiration date</string>
     <string name="main_card">Main card</string>
     <string name="sum">sum</string>
@@ -52,4 +52,9 @@
     <string name="tue">Tue</string>
     <string name="mon">Mon</string>
     <string name="sun">Sun</string>
+    <string name="one_year">year</string>
+    <string name="two_three_four_year">years</string>
+    <string name="five_year">years</string>
+    <string name="two_three_four_day">days</string>
+    <string name="two_three_four_month">months</string>
 </resources>

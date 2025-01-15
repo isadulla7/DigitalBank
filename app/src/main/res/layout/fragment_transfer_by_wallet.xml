@@ -15,7 +15,7 @@
         android:translationZ="@dimen/elevation_8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:s_additionalIcon="@drawable/ic_history"
-        app:s_title="@string/to_card" />
+        app:s_title="@string/by_wallet_number" />
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
@@ -87,7 +87,7 @@
                     android:gravity="center"
                     android:text="@string/you_dont_have_card"
                     android:textColor="@color/brandBlueColor_50"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
                     android:id="@+id/description"
@@ -98,7 +98,7 @@
                     android:gravity="center"
                     android:text="@string/no_cards_desc_p2p"
                     android:textColor="@color/brandRedColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -132,7 +132,7 @@
                 android:includeFontPadding="false"
                 android:paddingStart="16dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="12sp"
+                android:textSize="12dp"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/wallet_number_layout" />
 
@@ -184,7 +184,7 @@
                 android:layout_marginTop="8dp"
                 android:text="@string/min_amount_1000"
                 android:textColor="@color/brandBlueColor_50"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -198,7 +198,7 @@
                 android:layout_marginTop="28dp"
                 android:text="@string/saved_receivers"
                 android:textColor="@color/mainTextColor"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_min_amount" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -227,7 +227,7 @@
                     android:layout_gravity="center"
                     android:text="@string/empty_list"
                     android:textColor="@color/brandBlueColor_50"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
                     android:layout_width="wrap_content"
@@ -237,7 +237,7 @@
                     android:gravity="center"
                     android:text="@string/empty_transfers"
                     android:textColor="@color/brandBlueColor_50"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

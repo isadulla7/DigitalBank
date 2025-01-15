@@ -54,7 +54,7 @@
     <string name="uzbek">O‘zbekcha</string>
     <string name="russian">Русский</string>
     <string name="sign_up">Регистрация</string>
-    <string name="sign_up_description">Введите номер телефона что-бы зарегистрироваться, если у вас уже есть аккаунт то сделайте Вход</string>
+    <string name="sign_up_description">Введите номер телефона для регистрации. Если у вас уже есть аккаунт, выполните вход</string>
     <string name="sign_in">Вход</string>
     <string name="sign_in_description">Введите номер телефона и пароль для входа в приложение</string>
     <string name="sign_up_privacy">Нажимая кнопку \"Продолжить\", Вы подтверждаете свое согласие с условиями <a href="https://ibank.ubank.uz/cib/default.htm">пользовательского соглашения</a></string>
@@ -257,7 +257,7 @@
     <string name="no_replenishment">Без пополнения</string>
     <string name="no_partial_removal">Без частичного снятия</string>
     <string name="percent_text">Ствака до </string>
-    <string name="time_deposit">Срок вклад </string>
+    <string name="time_deposit">Срок вклада </string>
     <string name="min_summa">Минимальная сумма</string>
     <string name="max_summ_deposit">Максимальная сумма вклада до 50 000 000 сум</string>
     <string name="name_deposit">Название</string>
@@ -270,7 +270,7 @@
     <string name="interest_rate_type">Тип процентной ставки</string>
     <string name="with_drawal">Снятие</string>
     <string name="maybe_dep">Возможно</string>
-    <string name="possible">Это невозможно</string>
+    <string name="possible">Невозможно</string>
     <string name="accept_deposit_privacy">Я согласен на с <annotation type="help_link">пользователским соглашением</annotation> Universal Bank</string>
     <string name="open_deposit_success">Депосит  успешно открыт</string>
     <string name="text_empty_deposit">Депозит пока недоступен</string>
@@ -280,7 +280,7 @@
     <string name="receiver">Получатель</string>
     <string name="choose_receiver">Выберите получателя</string>
     <string name="choose_sender">Выберите отправитель</string>
-    <string name="input_amount">Введиту сумму</string>
+    <string name="input_amount">Введите сумму</string>
     <string name="conversion_currency">Валюту в которой хотите конвертировать</string>
     <string name="total_conversion_amount">Конвертируемая сумма:</string>
     <string name="sum_text">сум</string>
@@ -511,7 +511,7 @@
     <string name="period">Период</string>
     <string name="funds_flow">Движение средсвт</string>
     <string name="card">Карты</string>
-    <string name="status">Положение дел</string>
+    <string name="status">Статус</string>
     <string name="activ">Актив</string>
     <string name="no_activ">Не активен</string>
     <string name="type_of_transaction">Тип операции</string>
@@ -970,7 +970,7 @@
     <string name="info">Инфо</string>
     <string name="soon">Скоро!</string>
     <string name="add_your_home_service">Добавить платеж</string>
-    <string name="loan_repayment">Кредит погашения</string>
+    <string name="loan_repayment">Погашение кредита</string>
     <string name="edit_profile">Редактировать профиль</string>
     <string name="user_name">Имя</string>
     <string name="surname">Фамилия</string>
@@ -1029,5 +1029,22 @@
     <string name="open">Открыть</string>
     <string name="in_call_you_cant_use_app">Из соображений безопасности вы не можете использовать приложение во время разговора</string>
     <string name="input_pin_code">Введите свой PIN-код</string>
+    <string name="wallet_be_closed">Невозможно закрыть кошелек, сначала извлеките средства</string>
+    <string name="error_card_number">Номер карты может быть неверным</string>
+    <string name="new_design">Новый дизайн</string>
+    <string name="switch_new_design">Переход на Lite версию</string>
+    <string name="stay_old_design">Остаться в старом дизайне</string>
+    <string name="new_design_description">Мы обновили дизайн главной страницы, сделав её более удобной и понятной. Убрали лишние элементы, чтобы улучшить навигацию и упростить взаимодействие с пользователями</string>
+    <string name="new_design_title">Переход на Lite версию</string>
+    <string name="old_design_title">Переход на Pro версию</string>
+    <string name="old_design_description">Стандартный дизайн содержит больше элементов, таких как кредиты, депозиты, обменный курс и другие</string>
+    <string name="switch_old_design">Переход на Pro версию</string>
+    <string name="try_now">Попробуйте</string>
+    <string name="try_universalbankpro_s_sleek_new_app_mode">Try UniversalBankPro\'s sleek new app mode!</string>
+    <string name="try_lite_mode">Перейдите на Lite версию и используйте упрощённую версию приложения</string>
+    <string name="try_pro_mode">Pro версия приложения с полным набором функций</string>
+    <string name="central_bank">Курс ЦБ</string>
+    <string name="successful">Успешно</string>
+    <string name="news">Новости</string>
 
 </resources>

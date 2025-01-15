@@ -74,7 +74,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/hintColor"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:visibility="gone" />
 
             <ProgressBar
@@ -189,7 +189,7 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:textColor="@color/hintColor"
-                android:textSize="14sp" />
+                android:textSize="14dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

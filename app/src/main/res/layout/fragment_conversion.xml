@@ -45,7 +45,7 @@
                 android:includeFontPadding="false"
                 android:text="@string/take_off"
                 android:textColor="@color/mainTextColor"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <uz.fido.utils.view.custom_text_view.TextViewSemiBold
@@ -57,7 +57,7 @@
                 android:includeFontPadding="false"
                 android:text="@string/refill"
                 android:textColor="@color/mainTextColor"
-                android:textSize="20sp"
+                android:textSize="20dp"
                 app:layout_constraintTop_toBottomOf="@id/sum_card_block" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -83,7 +83,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Карта для покупок" />
@@ -96,7 +96,7 @@
                     android:layout_marginBottom="10dp"
                     android:includeFontPadding="false"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:text="7 519 900 UZS" />
@@ -133,7 +133,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="10dp"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="**1356" />
@@ -147,7 +147,7 @@
                     android:paddingHorizontal="16dp"
                     android:text="@string/choose_sender"
                     android:textColor="@color/brandBlueColor_50"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     android:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -175,7 +175,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="10dp"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Карта для покупок" />
@@ -188,7 +188,7 @@
                     android:layout_marginBottom="10dp"
                     android:includeFontPadding="false"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="20sp"
+                    android:textSize="20dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     tools:text="7 519 900 UZS" />
@@ -225,7 +225,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="10dp"
                     android:textColor="@color/frozenWhite"
-                    android:textSize="12sp"
+                    android:textSize="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     tools:text="**1356" />
@@ -239,7 +239,7 @@
                     android:paddingHorizontal="16dp"
                     android:text="@string/choose_receiver"
                     android:textColor="@color/brandBlueColor_50"
-                    android:textSize="16sp"
+                    android:textSize="16dp"
                     android:visibility="visible" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -252,7 +252,7 @@
                 android:layout_marginTop="24dp"
                 android:text="@string/today_rate"
                 android:textColor="@color/brandBlueColor_50"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/currency_card_block" />
 
@@ -262,7 +262,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 app:layout_constraintBottom_toBottomOf="@id/tv_current_rate"
                 app:layout_constraintStart_toEndOf="@id/tv_current_rate"
                 app:layout_constraintTop_toTopOf="@id/tv_current_rate"
@@ -304,7 +304,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/total_conversion_amount"
                     android:textColor="@color/brandBlueColor_50"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
                     android:id="@+id/total_amount"
@@ -312,7 +312,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     tools:text="1$ = 10430 сум" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -330,7 +330,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/min_amount_conversion"
                     android:textColor="@color/brandBlueColor_50"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewRegular
                     android:id="@+id/tv_min_amount"
@@ -338,7 +338,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp"
+                    android:textSize="14dp"
                     tools:text="1$ = 10430 сум" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
@@ -351,7 +351,7 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/conversion_currency"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintTop_toBottomOf="@id/calculated_amount_layout" />
 
             <com.google.android.material.tabs.TabLayout

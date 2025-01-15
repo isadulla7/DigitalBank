@@ -201,15 +201,17 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
             }
         }
         binding.etAmount.doAfterTextChanged {
-            binding.btnContinue.isEnabled(
-                binding.tvMinAmount.setMinMaxAmount(
-                    senderCard,
-                    cardInfoDto?.card_number,
-                    binding.etAmount,
-                    p2PInfoDto,
-                    requireContext()
+            if (p2PInfoDto?.isSuccess == true) {
+                binding.btnContinue.isEnabled(
+                    binding.tvMinAmount.setMinMaxAmount(
+                        senderCard,
+                        cardInfoDto?.card_number,
+                        binding.etAmount,
+                        p2PInfoDto,
+                        requireContext()
+                    )
                 )
-            )
+            } else binding.btnContinue.isEnabled(false)
         }
     }
 
@@ -230,13 +232,8 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
                 btnContact.visibility = View.VISIBLE
                 progressView.visibility = View.GONE
                 ownerName.visibility = View.VISIBLE
-                val name = if (cardInfo.card_owner!!.contains(" ")) {
-                    cardInfo.card_owner!!.split(" ")[1]
-                } else {
-                    cardInfo.card_owner!!
-                }
                 ownerName.text =
-                    name.capitalizeWord() + " " + Format.formatCardNumberNew(cardInfo.card_number!!)
+                    cardInfo.card_owner + " " + Format.formatCardNumberNew(cardInfo.card_number!!)
                 ownerName.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -261,17 +258,20 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
         p2PInfoDto = p2PInfo
         binding.tvMinAmount.visibility = View.VISIBLE
         if (!p2PInfo.isSuccess && !p2PInfo.errorMessage.isNullOrEmpty()) {
+            binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
             binding.tvMinAmount.text = p2PInfo.errorMessage
-        }
-        binding.btnContinue.isEnabled(
-            binding.tvMinAmount.setMinMaxAmount(
-                senderCard,
-                cardInfoDto?.card_number,
-                binding.etAmount,
-                p2PInfoDto,
-                requireContext()
+            binding.btnContinue.isEnabled(false)
+        } else {
+            binding.btnContinue.isEnabled(
+                binding.tvMinAmount.setMinMaxAmount(
+                    senderCard,
+                    cardInfoDto?.card_number,
+                    binding.etAmount,
+                    p2PInfoDto,
+                    requireContext()
+                )
             )
-        )
+        }
     }
 
     private fun setCardNumberError() {

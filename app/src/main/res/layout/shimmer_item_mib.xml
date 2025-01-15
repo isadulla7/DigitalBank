@@ -27,7 +27,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/shimmer_bg_2"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/tv_mib_type"
@@ -36,7 +36,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/shimmer_bg_2"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -56,7 +56,7 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/shimmer_bg_2"
             android:textColor="@color/brandBlueColor_40"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:layout_width="70dp"
@@ -64,7 +64,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="4dp"
             android:background="@drawable/shimmer_bg_2"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -17,11 +17,12 @@ import uz.fido.network.domain.model.payment.TemplateKeyValue
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentTransferToBudgetBinding
+import uz.fido.universaldigital.ui.fragments.payment.abc_history.PaymentHistoryFragment
 import uz.fido.universaldigital.ui.fragments.payment.abc_success.SuccessPaymentFragment
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
-import uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.RequisitesViewModel
-import uz.fido.universaldigital.ui.fragments.payment.abc_history.PaymentHistoryFragment
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
+import uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.RequisitesViewModel
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Command
 import uz.fido.utils.const.CurrencyConst
@@ -112,20 +113,20 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
     }
 
     private fun checkForError(): Boolean {
-       try {
-           if (binding.etBankAmount.text.toString().isEmpty()) {
-               return false
-           }
-           val amount = binding.etBankAmount.text.toString().replace(" ", "").toBigDecimal()
-           if (amount < minAmount || amount > maxAmount) {
-               return false
-           }
-           return (binding.etReceiverAccount.editableText.toString().length == 27 || binding.etReceiverAccount.editableText.toString().length == 25) &&
-                   binding.etPurpose.editableText.toString().isNotEmpty() &&
-                   binding.etBankAmount.editableText.toString().isNotEmpty()
-       }catch (e:Exception){
-           return false
-       }
+        try {
+            if (binding.etBankAmount.text.toString().isEmpty()) {
+                return false
+            }
+            val amount = binding.etBankAmount.text.toString().replace(" ", "").toBigDecimal()
+            if (amount < minAmount || amount > maxAmount) {
+                return false
+            }
+            return (binding.etReceiverAccount.editableText.toString().length == 27 || binding.etReceiverAccount.editableText.toString().length == 25) &&
+                    binding.etPurpose.editableText.toString().isNotEmpty() &&
+                    binding.etBankAmount.editableText.toString().isNotEmpty()
+        } catch (e: Exception) {
+            return false
+        }
     }
 
     private fun oneTimeInfo(accountCode: String) {
@@ -150,55 +151,59 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
     }
 
     private fun preparePaymentBank() {
-        val params = HashMap<String, String>()
-        val templateKeyValueList = ArrayList<TemplateKeyValue>()
-        params["AMOUNT"] =
-            Format.formatAmountToTiyn(binding.etBankAmount.text.toString().replace(" ", ""))
-        params["PAY_PURPOSE"] = binding.etPurpose.text.toString()
-        params["BUDGET_ACCOUNT"] =
-            if (binding.etReceiverAccount.editableText.length == 27) binding.etReceiverAccount.editableText.toString() else ""
-        params["BUDGET_INCOME"] =
-            if (binding.etReceiverAccount.editableText.length == 25) binding.etReceiverAccount.editableText.toString() else ""
-        params["SETTLEMENT"] =
-            if (binding.etReceiverAccount.editableText.length == 25) "02" else "01"
+        try {
+            val params = HashMap<String, String>()
+            val templateKeyValueList = ArrayList<TemplateKeyValue>()
+            params["AMOUNT"] =
+                Format.formatAmountToTiyn(binding.etBankAmount.text.toString().replace(" ", ""))
+            params["PAY_PURPOSE"] = binding.etPurpose.text.toString()
+            params["BUDGET_ACCOUNT"] =
+                if (binding.etReceiverAccount.editableText.length == 27) binding.etReceiverAccount.editableText.toString() else ""
+            params["BUDGET_INCOME"] =
+                if (binding.etReceiverAccount.editableText.length == 25) binding.etReceiverAccount.editableText.toString() else ""
+            params["SETTLEMENT"] =
+                if (binding.etReceiverAccount.editableText.length == 25) "02" else "01"
 
-        params.forEach {
-            val templateKeyValue = TemplateKeyValue()
-            templateKeyValue.code = it.key
-            templateKeyValue.level_position = "1"
-            templateKeyValue.value = it.value
-            templateKeyValueList.add(templateKeyValue)
-        }
+            params.forEach {
+                val templateKeyValue = TemplateKeyValue()
+                templateKeyValue.code = it.key
+                templateKeyValue.level_position = "1"
+                templateKeyValue.value = it.value
+                templateKeyValueList.add(templateKeyValue)
+            }
 
-        val request = PreparePaymentRequest(
-            service_id = ServiceId.SERVICE_ID_15,
-            payment_detail_code = "MUNIS_0202",
-            command = Command.MUNIS,
-            curr_level_position = "1",
-            params = params
-        )
-        val paymentService: PaymentService =
-            dbHelper.getServiceByContractId(ServiceId.SERVICE_ID_15)!!
-        val amount = binding.etBankAmount.editableText.toString().replace(" ", "").trim()
-        viewModel.preparePaymentRequest(getClientToken(), request).observe(viewLifecycleOwner) {
-            when (it.status) {
-                Status.SUCCESS -> {
-                    val bundle = Bundle()
-                    bundle.putSerializable("list", it.data?.service_details)
-                    bundle.putSerializable("paymentService", paymentService)
-                    bundle.putSerializable("templateKeyValues", templateKeyValueList)
-                    bundle.putSerializable(SuccessPaymentFragment.PAYMENT_KEY_VALUES, params)
-                    bundle.putString("currency", currency)
-                    bundle.putDouble("percent", percent)
-                    bundle.putString("amount", amount)
-                    gotoWithSlide(R.id.confirmRequisitesPayment, bundle)
-                }
+            val request = PreparePaymentRequest(
+                service_id = ServiceId.SERVICE_ID_15,
+                payment_detail_code = "MUNIS_0202",
+                command = Command.MUNIS,
+                curr_level_position = "1",
+                params = params
+            )
+            val paymentService: PaymentService =
+                dbHelper.getServiceByContractId(ServiceId.SERVICE_ID_15)!!
+            val amount = binding.etBankAmount.editableText.toString().replace(" ", "").trim()
+            viewModel.preparePaymentRequest(getClientToken(), request).observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        val bundle = Bundle()
+                        bundle.putSerializable("list", it.data?.service_details)
+                        bundle.putSerializable("paymentService", paymentService)
+                        bundle.putSerializable("templateKeyValues", templateKeyValueList)
+                        bundle.putSerializable(SuccessPaymentFragment.PAYMENT_KEY_VALUES, params)
+                        bundle.putString("currency", currency)
+                        bundle.putDouble("percent", percent)
+                        bundle.putString("amount", amount)
+                        gotoWithSlide(R.id.confirmRequisitesPayment, bundle)
+                    }
 
-                Status.ERROR -> {
-                    binding.btnContinue.setProgress(false)
-                    showSnackbar(it.message.toString())
+                    Status.ERROR -> {
+                        binding.btnContinue.setProgress(false)
+                        showSnackbar(it.message.toString())
+                    }
                 }
             }
+        } catch (e: Exception) {
+            recordException(e, ::preparePaymentBank.name)
         }
     }
 

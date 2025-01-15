@@ -35,6 +35,7 @@ import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSi
 import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAndOutAnim
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
@@ -79,7 +80,11 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let { operation = it.getString(Const.OPERATION, "") }
+        try {
+            arguments?.let { operation = it.getString(Const.OPERATION, "") }
+        } catch (e: Exception) {
+            recordException(e, ::onCreate.name)
+        }
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -486,12 +491,14 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         PinDotsAnimation.errorAnimation(binding.dotView, requireActivity())
         secondPin = ""
         binding.errorText.text = getString(R.string.wrong_pin)
-        Handler(Looper.myLooper()!!).postDelayed({
-            if (context != null) {
+        try {
+            Handler(Looper.getMainLooper()).postDelayed({
                 clearDots()
                 binding.errorText.text = ""
-            }
-        }, 1000)
+            }, 1000)
+        } catch (e: Exception) {
+            recordException(e, ::errorPin.name)
+        }
         setWrongPinCounter()
     }
 

@@ -1,6 +1,8 @@
 package uz.fido.universaldigital.ui.fragments.transfers.card_to_card
 
 import android.app.Activity
+import android.content.ClipboardManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -33,10 +35,11 @@ import uz.fido.universaldigital.ui.fragments.transfers.transfer_history.PopularT
 import uz.fido.universaldigital.ui.fragments.transfers.transfer_history.PopularTransfersFragment
 import uz.fido.universaldigital.ui.fragments.transfers.utils.checkCardAvailability
 import uz.fido.universaldigital.ui.fragments.transfers.utils.checkCardNumber
-import uz.fido.universaldigital.ui.fragments.transfers.utils.getUserNameFormatted
+import uz.fido.universaldigital.ui.fragments.transfers.utils.formatErrorMessage
 import uz.fido.universaldigital.ui.fragments.transfers.utils.setMinMaxAmount
 import uz.fido.universaldigital.ui.fragments.transfers.utils.showTransferSkeleton
 import uz.fido.universaldigital.ui.utils.extensions.cardMiniLogoByType
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
@@ -56,6 +59,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
 ), PermissionInterface {
 
     private lateinit var popularTransfersAdapter: PopularTransfersAdapter
+    private lateinit var clipboardManager: ClipboardManager
 
     private val cardsViewModel: MenuProductsViewModel by activityViewModels()
     private var userSumCards = ArrayList<CardResponse>()
@@ -67,6 +71,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         popularTransfersAdapter = PopularTransfersAdapter(false, ::popularTransferClickEvent)
+        clipboardManager = requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -79,6 +84,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
         initCardList {
             initSenderCards()
         }
+//        tryToGetClipboardData()
         viewModel.getFavoriteTransfers()
         observe(viewModel.popularTransfers, ::popularTransferLoaded)
         observe(viewModel.popularTransfersLoader, ::showLoader)
@@ -205,14 +211,14 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
 
     private fun cardInfoLoaded(cardInfo: CardInfoDto) {
         if (cardInfo.card_number.isNullOrEmpty()) {
-            setCardNumberError()
+            setCardNumberError(cardInfo.message)
             cardInfoDto = null
         } else {
             binding.apply {
                 btnScan.visibility = View.VISIBLE
                 progressView.visibility = View.GONE
                 ownerName.visibility = View.VISIBLE
-                ownerName.text = getUserNameFormatted(cardInfo.card_owner)
+                ownerName.text = cardInfo.card_owner
                 ownerName.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -253,7 +259,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
         }
     }
 
-    private fun setCardNumberError() {
+    private fun setCardNumberError(msg: String? = null) {
         binding.apply {
             ownerName.setTextColor(
                 ContextCompat.getColor(
@@ -264,7 +270,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
             progressView.visibility = View.GONE
             btnScan.visibility = View.VISIBLE
             ownerName.visibility = View.VISIBLE
-            ownerName.text = getString(R.string.card_not_found)
+            ownerName.text = requireContext().formatErrorMessage(msg)
             ownerName.setCompoundDrawablesWithIntrinsicBounds(
                 0, 0, 0, 0
             )
@@ -368,4 +374,23 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
                 binding.etCardNumber.setText(result.data?.extras?.getString("card_number"))
             }
         }
+
+    private fun tryToGetClipboardData() {
+        if (this::clipboardManager.isInitialized) {
+            try {
+                val clipData = clipboardManager.primaryClip
+                if (clipData != null && clipData.itemCount > 0) {
+                    val text = clipData.getItemAt(0).text
+                    if (checkCardAvailability(text.toString())) {
+                        if (cardsViewModel.isCardPasted.value == false) {
+                            binding.etCardNumber.setText(text)
+                            cardsViewModel.isCardPasted.value = true
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                recordException(e, ::tryToGetClipboardData.name)
+            }
+        }
+    }
 }
