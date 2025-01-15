@@ -75,7 +75,6 @@ googleServices = "4.4.0"
 daggerHilt = "2.42"
 firebaseCrashlytics = "2.9.9"
 agp = "8.4.2"
-firebaseDatabaseKtx = "21.0.0"
 org-jetbrains-kotlin-android = "1.8.0"
 
 [libraries]

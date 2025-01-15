@@ -51,7 +51,9 @@ class DepositOfferFragment : BaseSimpleFragment<FragmentDepositOfertaBinding>
             1674 -> "https://ibank.ubank.uz/cib/qulay_daromad.html"
             1694 -> "https://ibank.ubank.uz/cib/yubiley.html"
             1753 -> "https://ibank.ubank.uz/cib/yuksalish.html"
-            else -> "https://universalbank.uz/juristic"
+            1915 -> "https://ibank.ubank.uz/cib/foydali-hamyon18.html"
+            1916 -> "https://ibank.ubank.uz/cib/foydali-hamyon24.html"
+            else -> "https://ibank.ubank.uz/cib/defaultdig.html"
         }
         binding.webView.loadUrl(website)
     }
