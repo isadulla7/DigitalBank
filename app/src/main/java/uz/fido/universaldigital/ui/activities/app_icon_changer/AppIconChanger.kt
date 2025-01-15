@@ -9,6 +9,8 @@ import uz.fido.utils.const.Const
 
 fun Activity.changeAppIcon() {
     val iconAliasName = getFromPaper(Const.CURRENT_APP_ICON, AppIcons.APP_ICON_DEFAULT)
+    val packageManager = applicationContext.packageManager
+
     // Disable other aliases
     val aliases = listOf(
         AppIcons.APP_ICON_SPRING,
@@ -19,23 +21,22 @@ fun Activity.changeAppIcon() {
         AppIcons.APP_ICON_FLAG,
         AppIcons.APP_ICON_DEFAULT
     )
-    val packageManager = applicationContext.packageManager
-    for (alias in aliases) {
-        if (alias != iconAliasName) {
+
+    // If the icon name received from firebase is not one of our names, the default icon will be set.
+    if (aliases.contains(iconAliasName)) {
+        aliases.forEach { alias ->
+            val componentName = ComponentName(applicationContext, alias)
+            val state = if (alias == iconAliasName) {
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+            } else {
+                PackageManager.COMPONENT_ENABLED_STATE_DISABLED
+            }
             packageManager.setComponentEnabledSetting(
-                ComponentName(packageName, "$packageName.$alias"),
-                PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                componentName,
+                state,
                 PackageManager.DONT_KILL_APP
             )
         }
-    }
-    // Enable the selected alias
-    if (aliases.contains(iconAliasName)) {
-        packageManager.setComponentEnabledSetting(
-            ComponentName(packageName, "$packageName.$iconAliasName"),
-            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-            PackageManager.DONT_KILL_APP
-        )
     } else {
         packageManager.setComponentEnabledSetting(
             ComponentName(packageName, "$packageName.default"),
