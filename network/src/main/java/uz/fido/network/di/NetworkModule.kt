@@ -8,11 +8,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.ConnectionSpec
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.TlsVersion
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -80,7 +78,7 @@ object NetworkModule {
     @Singleton
     fun provideSslContext(keyStore: KeyStore, keyManagerFactory: KeyManagerFactory): SSLContext =
         kotlin.run {
-            val sslContext = SSLContext.getInstance("TLSv1.3")
+            val sslContext = SSLContext.getInstance("TLSv1.2")
             val tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm()
             val tmf = TrustManagerFactory.getInstance(tmfAlgorithm)
             tmf.init(keyStore)
@@ -114,7 +112,6 @@ object NetworkModule {
         return httpLoggingInterceptor
     }
 
-    private val modernTlsSpec = ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS).tlsVersions(TlsVersion.TLS_1_3, TlsVersion.TLS_1_2).build()
 
     @BaseOkhttpClient
     @Provides
@@ -127,7 +124,6 @@ object NetworkModule {
         apiInterface: dagger.Lazy<UserApiInterface>,
     ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager(keyStore) as X509TrustManager).addInterceptor(HeaderInterceptor(context = appContext))
         .addInterceptor(loggingInterceptor)
-        .connectionSpecs(listOf(modernTlsSpec))
         .addInterceptor(
             AuthInterceptor(
                 swapKeyService = swapKeyService, context = appContext, apiInterface

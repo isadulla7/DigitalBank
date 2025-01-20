@@ -1046,5 +1046,8 @@
     <string name="central_bank">Курс ЦБ</string>
     <string name="successful">Успешно</string>
     <string name="news">Новости</string>
+    <string name="actions">Действия</string>
+    <string name="enable_shaking_action">Enable shaking action</string>
+    <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
 
 </resources>

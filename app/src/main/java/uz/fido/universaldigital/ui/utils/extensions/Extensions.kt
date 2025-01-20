@@ -21,6 +21,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -447,5 +448,11 @@ fun Fragment.recordException(e: Exception, functionName: String? = "") {
         setCustomKey("class_name", this@recordException.javaClass.simpleName)
         setCustomKey("function_name", functionName.orEmpty())
         recordException(e)
+    }
+}
+
+fun RadioGroup.setChildrenEnable(enable: Boolean) {
+    for (i in 0 until this.childCount) {
+        this.getChildAt(i).isEnabled = enable
     }
 }

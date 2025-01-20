@@ -8,6 +8,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -25,8 +29,10 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
+import io.paperdb.Paper
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
+import uz.fido.universaldigital.base.ShakeActions
 import uz.fido.universaldigital.databinding.ActivityMainBinding
 import uz.fido.universaldigital.services.AudioModeService
 import uz.fido.universaldigital.ui.activities.seasons.Season
@@ -57,15 +63,20 @@ import uz.fido.utils.utility.context.startActivityWithClearTask
 import uz.fido.utils.view.bottom_menu_anim.hideAnimWithSlideDown
 import uz.fido.utils.view.bottom_menu_anim.showAnimWithSlideUp
 import java.util.Calendar
+import kotlin.math.sqrt
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var updateChecker: UpdateChecker
-    private var noConnectionDialog: NoConnectionDialog? = null
-    private var isStop = false
     private lateinit var database: DatabaseReference
+    private lateinit var sensorEventListener: SensorEventListener
+    private lateinit var sensorManager: SensorManager
+    private var noConnectionDialog: NoConnectionDialog? = null
+    private var accelerometer: Sensor? = null
+    private var isStop = false
+    private var lastShakeTime: Long = 0
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -84,6 +95,8 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         database = FirebaseDatabase.getInstance().getReference("season")
         setContentView(binding.root)
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         initBottomNavigationMenuItems()
         initBottomNavigationMenu()
         checkUpdate()
@@ -91,6 +104,7 @@ class MainActivity : BaseActivity() {
         checkForDeepLink()
         bottomNavSheet()
         listenForSeasonChanges()
+        initSensorEventListener()
     }
 
     private fun listenForSeasonChanges() {
@@ -110,6 +124,7 @@ class MainActivity : BaseActivity() {
         try {
             unregisterReceiver(broadcastReceiver)
             stopService(Intent(this, AudioModeService::class.java))
+            sensorManager.unregisterListener(sensorEventListener)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -131,6 +146,7 @@ class MainActivity : BaseActivity() {
         internetListener()
         try {
             startService(Intent(this, AudioModeService::class.java))
+            sensorManager.registerListener(sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_UI)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 registerReceiver(
                     broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY"), Context.RECEIVER_EXPORTED
@@ -323,6 +339,56 @@ class MainActivity : BaseActivity() {
         if (requestCode == UpdateChecker.UPDATE_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 updateChecker.appUpdateManager.registerListener(updateChecker.updateListener)
+            }
+        }
+    }
+
+    private fun initSensorEventListener() {
+        sensorEventListener = object : SensorEventListener {
+            override fun onSensorChanged(event: SensorEvent?) {
+                if (event == null) return
+                val x = event.values[0]
+                val y = event.values[1]
+                val z = event.values[2]
+                val acceleration = sqrt(x * x + y * y + z * z)
+                val currentTime = System.currentTimeMillis()
+                if (acceleration > 24) {
+                    if (currentTime - lastShakeTime > 1000) {
+                        lastShakeTime = currentTime
+                        onShakeDetected()
+                    }
+                }
+            }
+
+            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+        }
+    }
+
+
+    private fun onShakeDetected() {
+        if (getFromPaper(Const.SHAKING_ACTION_STATE, "N") == "Y") {
+            when (Paper.book().read<String>(Const.SELECTED_FRAGMENT)) {
+                ShakeActions.ACTION_MY_CARDS -> {
+                    openPage(R.id.myCardsServiceFragment)
+                }
+
+                ShakeActions.ACTION_MY_CREDITS -> {
+                    openPage(R.id.myCreditsServiceFragment)
+                }
+
+                ShakeActions.ACTION_MY_DEPOSITS -> {
+                    openPage(R.id.myDepositsServiceFragment)
+                }
+
+                ShakeActions.ACTION_RATES -> {
+                    openPage(R.id.ratesFragment)
+                }
+
+                ShakeActions.ACTION_TRANSFER -> {
+                    openPage(R.id.transferToCardFragment)
+                }
+
+                else -> {}
             }
         }
     }

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="enable_shaking_action">Enable shaking action</string>
+    <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
+</resources>

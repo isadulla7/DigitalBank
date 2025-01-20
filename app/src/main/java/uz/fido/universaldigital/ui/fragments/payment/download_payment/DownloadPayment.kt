@@ -110,22 +110,24 @@ abstract class DownloadPayment : Fragment() {
     }
 
     private fun setToStorage(payment: Payment) {
-        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
-            try {
-                databaseHelper?.let { databaseHelper ->
-                    databaseHelper.insertServiceGroups(payment.service_groups ?: ArrayList())
-                    databaseHelper.insertServiceList(payment.service_list ?: ArrayList())
-                    databaseHelper.insertPaymentParams(payment.payment_details ?: ArrayList())
-                    databaseHelper.insertCashbackList(payment.cashback_list ?: ArrayList())
-                    databaseHelper.insertReferenceList(payment.references_list ?: ArrayList())
-                    paymentGroupsList = databaseHelper.getGroupList()
-                    withContext(Dispatchers.Main) {
-                        downloadPaymentInterface.downloadPaymentSuccess()
+        viewLifecycleOwner.lifecycleScope.launch {
+            withContext(Dispatchers.Default) {
+                try {
+                    databaseHelper?.let { databaseHelper ->
+                        databaseHelper.insertServiceGroups(payment.service_groups ?: ArrayList())
+                        databaseHelper.insertServiceList(payment.service_list ?: ArrayList())
+                        databaseHelper.insertPaymentParams(payment.payment_details ?: ArrayList())
+                        databaseHelper.insertCashbackList(payment.cashback_list ?: ArrayList())
+                        databaseHelper.insertReferenceList(payment.references_list ?: ArrayList())
+                        paymentGroupsList = databaseHelper.getGroupList()
+                        withContext(Dispatchers.Main) {
+                            downloadPaymentInterface.downloadPaymentSuccess()
+                        }
+                        saveToPaper(Const.PAPER_PAYMENT_VERSION_DB, payment.curr_version ?: "0")
                     }
-                    saveToPaper(Const.PAPER_PAYMENT_VERSION_DB, payment.curr_version ?: "0")
+                } catch (e: Exception) {
+                    recordException(e, ::setToStorage.name)
                 }
-            } catch (e: Exception) {
-                recordException(e, ::setToStorage.name)
             }
         }
     }

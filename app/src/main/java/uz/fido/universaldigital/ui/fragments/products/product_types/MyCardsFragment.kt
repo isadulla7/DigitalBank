@@ -59,11 +59,8 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         initCardsRv(getLayoutManager())
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initCards()
         binding.addCardBtn.setOnClickListener {
             AddCardDialog {
@@ -75,7 +72,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
             }.show(parentFragmentManager, "")
         }
     }
-
 
 
     private fun initCards() {

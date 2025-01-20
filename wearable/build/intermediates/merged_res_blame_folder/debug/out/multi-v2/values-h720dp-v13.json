@@ -1,0 +1,19 @@
+{
+    "logs": [
+        {
+            "outputFile": "uz.fido.wearable-mergeDebugResources-113:/values-h720dp-v13/values-h720dp-v13.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\husniddin.madaminov\\.gradle\\caches\\transforms-4\\345b633bae25cf1d807cbec0c36e1a10\\transformed\\appcompat-1.6.1\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "66",
+                        "endOffsets": "117"
+                    }
+                }
+            ]
+        }
+    ]
+}

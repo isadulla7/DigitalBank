@@ -86,6 +86,9 @@ object Const {
     const val HOME_TEMPLATES_EXPANDED = "HOME_TEMPLATES_EXPANDED"
     const val HOME_MY_HOUSE_EXPANDED = "HOME_MY_HOUSE_EXPANDED"
     const val FIREBASE_APP_ICON_NAME = "app_icon"
+    const val SHAKING_ACTION_STATE = "shaking_action_state"
+    const val SELECTED_OPTION = "selected_option"
+    const val SELECTED_FRAGMENT = "selected_fragment"
 
     var request_id = ""
 

@@ -1044,4 +1044,7 @@
     <string name="central_bank">MB kursi</string>
     <string name="successful">Muvaffaqiyatli</string>
     <string name="news">Yangiliklar</string>
+    <string name="actions">Harakatlar</string>
+    <string name="enable_shaking_action">Enable shaking action</string>
+    <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
 </resources>

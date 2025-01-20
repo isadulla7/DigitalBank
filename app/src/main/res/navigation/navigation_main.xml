@@ -741,4 +741,8 @@
         android:id="@+id/mainNewsViewFragment"
         android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.news.MainNewsViewFragment"
         android:label="MainNewsViewFragment" />
+    <fragment
+        android:id="@+id/actionsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.settings.ActionsFragment"
+        android:label="ActionsFragment" />
 </navigation>

@@ -64,10 +64,14 @@ object SocketClient {
     private val sslContext: SSLContext = kotlin.run {
         val keyStore = KeyStore.getInstance("PKCS12")
         val password = "223377".toCharArray()
-        keyStore.load(caFileInputStream, password)
+        try {
+            keyStore.load(caFileInputStream, password)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
         val keyManagerFactory = KeyManagerFactory.getInstance("X509")
         keyManagerFactory.init(keyStore, password)
-        val sslContext = SSLContext.getInstance("TLS")
+        val sslContext = SSLContext.getInstance("TLSv1.2")
         sslContext.init(keyManagerFactory.keyManagers, null, SecureRandom())
         return@run sslContext
     }
