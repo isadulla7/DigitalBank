@@ -102,7 +102,7 @@ class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, Req
                 val shortLink = result.shortLink
                 goto(R.id.requestMoneySuccessFragment, bundleOf("url" to shortLink.toString()))
             }.addOnFailureListener {
-                toast(it.localizedMessage.toString())
+                toast(it.localizedMessage.orEmpty())
                 binding.btnContinue.setProgress(false)
             }
         }

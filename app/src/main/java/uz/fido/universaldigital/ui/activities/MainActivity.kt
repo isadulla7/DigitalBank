@@ -225,7 +225,7 @@ class MainActivity : BaseActivity() {
     private fun checkForDeepLink() {
         if (!intent.getStringExtra(PassCodeFragment.DEEP_LINK_OBJECT_VALUE).isNullOrEmpty()) {
             openPage(
-                R.id.requestMoneyPaymentFragment,
+                R.id.transferToCardFragment,
                 bundleOf(
                     PassCodeFragment.DEEP_LINK_OBJECT_VALUE to intent.getStringExtra(
                         PassCodeFragment.DEEP_LINK_OBJECT_VALUE

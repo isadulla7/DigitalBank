@@ -22,11 +22,6 @@ class AmountSuggestionView(context: Context, attr: AttributeSet) :
     init {
         inflate(context, R.layout.amount_suggestion_view, this)
         binding = AmountSuggestionViewBinding.bind(this)
-        initRecyclerView()
-    }
-
-    private fun initRecyclerView() {
-
     }
 
     fun initAmountSuggestions(
@@ -52,18 +47,18 @@ class AmountSuggestionView(context: Context, attr: AttributeSet) :
 
     private fun getP2PAmounts(): ArrayList<String> {
         val amounts = ArrayList<String>()
-        amounts.add("10 000")
-        amounts.add("20 000")
         amounts.add("50 000")
         amounts.add("100 000")
+        amounts.add("200 000")
         amounts.add("500 000")
+        amounts.add("1 000 000")
         return amounts
     }
 
     private fun getPaymentAmounts(): ArrayList<String> {
         val amounts = ArrayList<String>()
         amounts.add("5 000")
-        amounts.add("1 000")
+        amounts.add("10 000")
         amounts.add("20 000")
         amounts.add("50 000")
         amounts.add("100 000")
