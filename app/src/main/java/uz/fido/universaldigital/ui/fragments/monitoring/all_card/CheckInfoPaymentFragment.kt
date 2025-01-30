@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringItem
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
 import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
@@ -21,6 +22,7 @@ import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
 import uz.fido.utils.format.Format.takeScreenShot
 import uz.fido.utils.format.FormatUtilsKt
+import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import java.io.File
 
@@ -70,7 +72,11 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
             }
             buttonReceipt.setOnClickListener {
                 dialogReceipt = BottomReceiptsDialog(
-                    printChequeResponse.html.toString(), printChequeResponse.monitoring_info?.name.toString()
+                    printChequeResponse.html.toString(), printChequeResponse.monitoring_info?.name.toString(),
+                    {
+                        goto(R.id.receiptFullFragment, bundle = bundleOf("html" to printChequeResponse.html.toString()))
+                        dialogReceipt.dismiss()
+                    }
                 )
                 dialogReceipt.show(childFragmentManager, "TAG")
             }

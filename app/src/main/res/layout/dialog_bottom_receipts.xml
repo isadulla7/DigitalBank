@@ -40,7 +40,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/receipt_block"
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="210dp"
             android:layout_marginTop="24dp"
             android:background="@color/whiteColor"
             app:layout_constraintTop_toBottomOf="@id/title">
@@ -61,15 +61,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="190dp"
-            android:layout_marginTop="24dp"
-            android:clickable="true"
-            android:focusable="true"
-            app:layout_constraintTop_toBottomOf="@id/title" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
