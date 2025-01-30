@@ -48,7 +48,6 @@ class BottomReceiptsDialog(private var html: String, private var name: String, v
 
     private lateinit var binding: DialogBottomReceiptsBinding
 
-    val printManager = requireActivity().getSystemService(Context.PRINT_SERVICE) as PrintManager
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
