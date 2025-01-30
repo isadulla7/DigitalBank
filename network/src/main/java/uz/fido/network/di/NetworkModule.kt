@@ -1,6 +1,7 @@
 package uz.fido.network.di
 
 import android.content.Context
+import android.os.Build
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -58,7 +59,7 @@ object NetworkModule {
     fun provideKeyStore(caFileInputStream: InputStream): KeyStore = kotlin.run {
         val keyStore = KeyStore.getInstance("PKCS12")
         try {
-            val password = "223377".toCharArray()
+            val password = Keys.getCertFilePassword().toCharArray()
             keyStore.load(caFileInputStream, password)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -70,7 +71,7 @@ object NetworkModule {
     @Singleton
     fun provideKeyManagerFactory(keyStore: KeyStore): KeyManagerFactory = kotlin.run {
         val keyFactory = KeyManagerFactory.getInstance("X509")
-        keyFactory.init(keyStore, "223377".toCharArray())
+        keyFactory.init(keyStore, Keys.getCertFilePassword().toCharArray())
         return@run keyFactory
     }
 
@@ -78,7 +79,11 @@ object NetworkModule {
     @Singleton
     fun provideSslContext(keyStore: KeyStore, keyManagerFactory: KeyManagerFactory): SSLContext =
         kotlin.run {
-            val sslContext = SSLContext.getInstance("TLSv1.2")
+            val sslContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                SSLContext.getInstance("TLSv1.3")
+            } else {
+                SSLContext.getInstance("TLSv1.2")
+            }
             val tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm()
             val tmf = TrustManagerFactory.getInstance(tmfAlgorithm)
             tmf.init(keyStore)

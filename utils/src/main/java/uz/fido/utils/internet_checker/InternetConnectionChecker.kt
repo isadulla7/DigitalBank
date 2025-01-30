@@ -51,7 +51,6 @@ class InternetConnectionChecker(context: Context) : LiveData<Boolean>() {
         }
     }
 
-    private fun getNetworkRequest() =
-        NetworkRequest.Builder().addTransportType(NetworkCapabilities.TRANSPORT_WIFI).addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-            .addTransportType(NetworkCapabilities.TRANSPORT_ETHERNET).addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED).build()
+    private fun getNetworkRequest() = NetworkRequest.Builder().addTransportType(NetworkCapabilities.TRANSPORT_WIFI).addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
+        .addTransportType(NetworkCapabilities.TRANSPORT_ETHERNET).addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED).build()
 }

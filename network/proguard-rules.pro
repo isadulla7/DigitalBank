@@ -18,3 +18,7 @@
 # Keep keystore-related methods
 -keep public class * extends java.security.KeyStoreSpi
 -keep public class * extends javax.crypto.SecretKeyFactorySpi
+
+-keepnames class kotlinx.** { *; }
+-keep class kotlinx.coroutines.** { *; }
+-dontwarn kotlinx.coroutines.**

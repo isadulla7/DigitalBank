@@ -43,6 +43,12 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    packagingOptions {
+        exclude "lib/x86/liblog.so"
+        exclude "lib/x86_64/liblog.so"
+        exclude "lib/arm64-v8a/liblog.so"
+        exclude "lib/armeabi-v7a/liblog.so"
+    }
 }
 
 dependencies {

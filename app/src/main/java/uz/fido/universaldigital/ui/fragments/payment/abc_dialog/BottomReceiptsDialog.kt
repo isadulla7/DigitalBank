@@ -54,9 +54,9 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
     private fun loadView() {
         val displayWidth = getScreenWidth(requireActivity())
         binding.webView.settings.javaScriptEnabled = true
-        binding.webView.settings.builtInZoomControls = false
+        binding.webView.settings.builtInZoomControls = true
         binding.webView.setInitialScale(if (displayWidth != 0) (displayWidth * 0.14).toInt() else 100)
-        binding.webView.settings.displayZoomControls = false
+        binding.webView.settings.displayZoomControls = true
         binding.webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
         binding.webView.webViewClient = object : WebViewClient() {
             override fun onPageFinished(view: WebView?, url: String?) {

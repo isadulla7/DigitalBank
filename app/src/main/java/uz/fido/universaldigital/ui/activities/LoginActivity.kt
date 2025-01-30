@@ -58,8 +58,11 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkForDeviceLock() {
-        if (SecurityCheck.isFromEmulator()) {
+        if (SecurityCheck.isRunningOnEmulator()) {
             openLockActivity()
+            return
+        } else if (SecurityCheck.isPhoneRooted()) {
+            openRootedDeviceWarning()
             return
         } else {
             checkForDeepLink()
@@ -104,6 +107,12 @@ class LoginActivity : BaseActivity() {
 
     private fun openLockActivity() {
         val intent = Intent(this, LockSetActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun openRootedDeviceWarning() {
+        val intent = Intent(this, RootedDeviceActivity::class.java)
         startActivity(intent)
         finish()
     }

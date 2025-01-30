@@ -245,8 +245,9 @@ class MainActivity : BaseActivity() {
     }
 
     private fun internetListener() {
-        InternetConnectionChecker(this).observeForever { isConnected ->
-            try {
+        try {
+            InternetConnectionChecker(this).observeForever { isConnected ->
+
                 if (isConnected) {
                     if (!isDestroyed && !isFinishing) {
                         if (noConnectionDialog != null) {
@@ -258,9 +259,9 @@ class MainActivity : BaseActivity() {
                     noConnectionDialog = NoConnectionDialog()
                     noConnectionDialog?.show(supportFragmentManager, "")
                 }
-            } catch (e: Exception) {
-                recordException(e, ::internetListener.name)
             }
+        } catch (e: Exception) {
+            recordException(e, ::internetListener.name)
         }
     }
 

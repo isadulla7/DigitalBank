@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.payment.download_payment
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -56,19 +55,12 @@ abstract class DownloadPayment : Fragment() {
         val savedDatabaseVersion = getFromPaper(Const.PAPER_PAYMENT_VERSION_DB, "0")
         if (downloadPaymentViewModel.paymentGroupMutableList.value != null && downloadPaymentViewModel.paymentGroupMutableList.value!!.size != 0 && !updateLang
         ) {
-            Log.d("TAG", "checkForPaymentDownload: 1 ")
             downloadPaymentInterface.getMutablePaymentList()
         } else {
-            Log.d("TAG", "checkForPaymentDownload: 2")
-            Log.d("TAG", "checkForPaymentDownload:$currentDatabaseVersion ")
-            Log.d("TAG", "checkForPaymentDownload:$savedDatabaseVersion ")
-            Log.d("TAG", "checkForPaymentDownload:$updateLang ")
             Paper.book().write(Const.UPDATE_LANG, false)
             if (currentDatabaseVersion == savedDatabaseVersion) {
-                Log.d("TAG", "checkForPaymentDownload: 3 ")
                 getPaymentsFromLocal()
             } else {
-                Log.d("TAG", "checkForPaymentDownload: 4 ")
                 downloadPayments()
             }
         }

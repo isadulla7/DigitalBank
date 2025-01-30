@@ -21,6 +21,16 @@
 #-renamesourcefileattribute SourceFile
 
 -keep class kotlin.Metadata { *; }
--keep class uz.myid.android.sdk.**{*;}
 -keep class uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation { *; }
 -dontwarn kotlin.time.**
+-dontwarn org.slf4j.impl.StaticLoggerBinder
+-keepnames class kotlinx.** { *; }
+-keep class kotlinx.coroutines.** { *; }
+-dontwarn kotlinx.coroutines.**
+-keep class uz.fido.universaldigital.ui.dialogs.BaseInfoDialog { *; }
+-keep public class * extends androidx.fragment.app.Fragment {
+    public <init>();
+}
+
+
+

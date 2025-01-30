@@ -4,6 +4,13 @@
     <base-config cleartextTrafficPermitted="false" />
 
     <domain-config cleartextTrafficPermitted="false">
+        <domain includeSubdomains="true">https://ra.ubank.uz</domain>
+        <pin-set>
+            <pin digest="SHA-256">nhwFdtQQBT48b3nlYu8XKRq2RIp6Vuo89WSnbHAEZo0=</pin>
+        </pin-set>
+    </domain-config>
+
+    <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">127.0.0.1</domain>
         <domain includeSubdomains="true">firebasestorage.googleapis.com</domain>
         <domain includeSubdomains="true">koronapay.com</domain>

@@ -12,9 +12,20 @@ android {
         targetSdkVersion ConfigData.TARGET_SDK_VERSION
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+        externalNativeBuild {
+            cmake {
+                cppFlags("")
+            }
+        }
     }
     buildFeatures {
         viewBinding true
+    }
+    externalNativeBuild {
+        cmake {
+            path = "src/main/cpp/CMakeLists.txt"
+            version = "3.22.1"
+        }
     }
     buildTypes {
         release {
@@ -29,6 +40,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    ndkVersion '25.0.8775105'
 }
 
 dependencies {

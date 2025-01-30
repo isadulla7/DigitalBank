@@ -1047,4 +1047,5 @@
     <string name="actions">Harakatlar</string>
     <string name="enable_shaking_action">Enable shaking action</string>
     <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
+    <string name="rooted_device_not_allowed">Har qanday firibgarlikning oldini olish va ma\'lumotlaringizni xavfsiz saqlash uchun ilovadan ushbu qurilmada foydalanishga ruxsat berilmagan! Qurilma root qilingan bo‘lishi mumkin</string>
 </resources>
