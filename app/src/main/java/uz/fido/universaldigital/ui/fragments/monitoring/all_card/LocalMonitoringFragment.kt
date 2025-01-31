@@ -502,7 +502,8 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                                     "details" to response,
                                     "operation" to "local",
                                     "command" to resource.data?.command,
-                                    "data" to resource.data
+                                    "data" to resource.data,
+                                    "name" to localMonitoring.name
                                 )
                             )
                         }

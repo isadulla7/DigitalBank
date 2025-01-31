@@ -150,6 +150,7 @@ class CheckInfoPaymentFragment :
             OPERATION_PAYMENT -> {
                 binding.senderCardLayout.visibility = View.GONE
                 binding.commissionLayout.visibility = View.GONE
+                binding.paymentName.text = getString(R.string.payment)
             }
         }
     }

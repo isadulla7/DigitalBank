@@ -2,18 +2,38 @@ package uz.fido.universaldigital.ui.fragments.payment.abc_dialog
 
 import android.app.Activity
 import android.app.Dialog
+import android.content.ContentValues
+import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Insets
+import android.graphics.pdf.PdfDocument
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.CancellationSignal
+import android.os.Environment
+import android.os.ParcelFileDescriptor
+import android.print.PageRange
+import android.print.PrintAttributes
+import android.print.PrintDocumentAdapter
+import android.print.PrintDocumentInfo
+import android.print.PrintJob
+import android.print.PrintManager
+import android.provider.MediaStore
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
+import android.webkit.JavascriptInterface
+import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -22,12 +42,13 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogBottomReceiptsBinding
 import uz.fido.universaldigital.ui.utils.file.FileUtils
 import java.io.File
+import java.io.FileOutputStream
 
-class BottomReceiptsDialog(private var html: String, private var name: String) : BottomSheetDialogFragment(),
+class BottomReceiptsDialog(private var html: String,
+                           private var name: String, val webViewClick: () -> Unit = {}) : BottomSheetDialogFragment(),
     View.OnClickListener {
 
     private lateinit var binding: DialogBottomReceiptsBinding
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +62,6 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         loadView()
-
         setOnClickListeners()
     }
 
@@ -49,6 +69,9 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
         binding.saveQrCode.setOnClickListener(this)
         binding.shareQrCode.setOnClickListener(this)
         binding.printQrCode.setOnClickListener(this)
+        binding.receiptBlock.setOnClickListener(this)
+        binding.webView.setOnClickListener(this)
+
     }
 
     private fun loadView() {
@@ -57,8 +80,13 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
         binding.webView.settings.builtInZoomControls = true
         binding.webView.setInitialScale(if (displayWidth != 0) (displayWidth * 0.14).toInt() else 100)
         binding.webView.settings.displayZoomControls = true
+        binding.webView.setOnTouchListener { v, event ->
+            webViewClick()
+            true
+        }
         binding.webView.loadDataWithBaseURL(null, html, "text/html", "UTF-8", null)
         binding.webView.webViewClient = object : WebViewClient() {
+
             override fun onPageFinished(view: WebView?, url: String?) {
                 binding.progressBar.visibility = View.GONE
             }
@@ -97,19 +125,31 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
     }
 
     private fun takeScreenshot(view: View) {
-        val path = FileUtils.saveImageToGallery(requireContext(), FileUtils.takeScreenShot(view), "Card QR")
-        val intent: Intent = Intent().apply {
-            val uriPath = FileProvider.getUriForFile(
-                requireActivity(),
-                requireActivity().applicationContext.packageName + ".my.package.name.provider",
-                File(path)
-            )
-            setDataAndType(uriPath, "image/*")
-            action = Intent.ACTION_VIEW
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        val pdfDocument = PdfDocument()
+        val pageInfo = PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, 1).create()
+        val page = pdfDocument.startPage(pageInfo)
+        page.canvas.drawBitmap(bitmap, 0f, 0f, null)
+        pdfDocument.finishPage(page)
+        val pdfFile = File(requireContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "universal$name.pdf")
+        pdfFile.outputStream().use { pdfDocument.writeTo(it) }
+        pdfDocument.close()
+
+        val uri = FileProvider.getUriForFile(
+            requireActivity(),
+            requireActivity().applicationContext.packageName + ".my.package.name.provider",
+            pdfFile
+        )
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, "application/pdf")
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-        startActivity(intent)
+
+      startActivity(intent)
     }
 
     private fun share(view: View) {
@@ -128,26 +168,11 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
         startActivity(Intent.createChooser(shareIntent, "Send to"))
     }
 
-    private fun startPrintImage(view: WebView) {
-//        val path = FileUtils.saveImageToGallery(requireContext(), FileUtils.takeScreenShot(view)!!, "${getString(R.string.receipt)} (${name})")
-//        activity?.also { context ->
-//        val printManager = primaryBaseActivity.getSystemService(Context.PRINT_SERVICE) as PrintManager?
-//        val jobName = "createPDFReport"
-//        val adapter: PrintDocumentAdapter = view.createPrintDocumentAdapter()
-//        printManager!!.print(jobName, view.createPrintDocumentAdapter(), null)
 
-//        val printHelper = PrintHelper(primaryBaseActivity)
-//        printHelper.scaleMode = PrintHelper.SCALE_MODE_FIT
-//        val bitmap = BitmapFactory.decodeFile(path)
-//        printHelper.printBitmap("${getString(R.string.receipt)} (${name})", bitmap)
-//        PrintHelper(primaryBaseActivity).apply {
-//            scaleMode = PrintHelper.SCALE_MODE_FIT
-//        }.also { printHelper ->
-//            val bitmap = BitmapFactory.decodeFile(path)
-//            printHelper.printBitmap("${getString(R.string.receipt)} (${name})", bitmap)
-//        }
-//        }
-    }
+
+
+
+
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -161,9 +186,10 @@ class BottomReceiptsDialog(private var html: String, private var name: String) :
                 dismiss()
             }
 
-            R.id.print_qr_code -> {
-                startPrintImage(binding.webView)
-                dismiss()
+
+            R.id.receipt_block, R.id.web_view -> {
+                Log.d("TAG", "onClick: ")
+                webViewClick()
             }
         }
     }

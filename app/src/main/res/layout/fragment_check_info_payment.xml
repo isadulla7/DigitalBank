@@ -160,32 +160,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:text="@string/status"
-                    android:textColor="@color/hintColor"
-                    android:textSize="14dp" />
-
-
-                <uz.fido.utils.view.custom_text_view.TextViewMedium
-                    android:id="@+id/status"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="14dp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="8dp"
-                android:orientation="vertical">
-
-                <uz.fido.utils.view.custom_text_view.TextViewRegular
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
                     android:text="@string/amount"
                     android:textColor="@color/hintColor"
                     android:textSize="14dp" />

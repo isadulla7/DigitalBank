@@ -745,4 +745,8 @@
         android:id="@+id/actionsFragment"
         android:name="uz.fido.universaldigital.ui.fragments.profile.settings.ActionsFragment"
         android:label="ActionsFragment" />
+    <fragment
+        android:id="@+id/receiptFullFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.all_card.ReceiptFullFragment"
+        android:label="ActionsFragment" />
 </navigation>

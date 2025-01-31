@@ -118,6 +118,10 @@ class InfoMonitoringDialog(
     }
 
     private fun initViews(isRequired: Boolean, isPayment: Boolean) {
+        addView(getString(R.string.service),localMonitoring.name)
+        searchDateResponse?.params?.get("FIO")?.let { addView(getString(R.string.fio), it) }
+        searchDateResponse?.params?.get("FIO_ABONENT")?.let { addView(getString(R.string.fio), it) }
+        searchDateResponse?.params?.get("ADDRESS")?.let { addView(getString(R.string.address), it) }
         addView(getString(R.string.date_time), localMonitoring.created_date)
         addView(getString(R.string.transaction_number), localMonitoring.request_id)
         if (isRequired && localMonitoring.partner_obj.isNotEmpty()) {
