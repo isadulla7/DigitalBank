@@ -111,7 +111,11 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        operation = requireArguments().getString(Const.OPERATION).toString()
+        try {
+            operation = requireArguments().getString(Const.OPERATION).toString()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onInit(savedInstanceState: Bundle?) {

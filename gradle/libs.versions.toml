@@ -76,6 +76,7 @@ daggerHilt = "2.42"
 firebaseCrashlytics = "2.9.9"
 agp = "8.4.2"
 org-jetbrains-kotlin-android = "1.8.0"
+firebaseCrashlyticsVersion = "17.3.1"
 
 [libraries]
 
@@ -166,6 +167,7 @@ androidx-room-room-compiler = { group = "androidx.room", name = "room-compiler",
 androidx-room-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomRuntime" }
 org-tensorflow-tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tenserFlow" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlyticsVersion" }
 
 [plugins]
 org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "org-jetbrains-kotlin-android" }

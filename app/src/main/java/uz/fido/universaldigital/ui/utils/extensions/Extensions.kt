@@ -337,9 +337,9 @@ fun limitRange(): CalendarConstraints.Builder {
 }
 
 fun isUserIdentified(): Boolean {
-    val signInResponse = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
-    return if (signInResponse != null) {
-        signInResponse.user_type_id == 1 || signInResponse.user_type_id == 2
+    val userTypeId = Paper.book().read<Int>(Const.PAPER_CLIENT_USER_TYPE_ID)
+    return if (userTypeId != null) {
+        userTypeId == 1 || userTypeId == 2
     } else false
 }
 

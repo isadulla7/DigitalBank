@@ -25,7 +25,6 @@ class TotalBalanceWidget : AppWidgetProvider() {
     ) {
         val views = RemoteViews(context.packageName, R.layout.total_balance_widget_layout)
         setLastUpdatedDate(views)
-        setTotalBalance(views)
         setClickEvents(context, views)
         appWidgetManager.updateAppWidget(appWidgetId, views)
     }
@@ -34,15 +33,6 @@ class TotalBalanceWidget : AppWidgetProvider() {
     private fun setLastUpdatedDate(views: RemoteViews) {
         val updatedDate = Paper.book().read<String>(Const.TOTAL_BALANCE_UPDATED_AT)
         views.setTextViewText(R.id.updated_on, updatedDate)
-    }
-
-    private fun setTotalBalance(views: RemoteViews) {
-        var totalBalance = Paper.book().read(Const.TOTAL_BALANCE, "0.00") + " UZS"
-        val visibility = Paper.book().read<Boolean>(Const.BALANCE_VISIBILITY) ?: true
-        if (!visibility) {
-            totalBalance = "*** *** ***"
-        }
-        views.setTextViewText(R.id.total_balance_widget, totalBalance)
     }
 
     private fun setClickEvents(context: Context, views: RemoteViews) {

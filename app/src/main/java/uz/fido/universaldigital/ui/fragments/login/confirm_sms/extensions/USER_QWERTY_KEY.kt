@@ -28,7 +28,9 @@ import java.nio.charset.StandardCharsets
 const val USER_SMS_KEY = "user_sms_key"
 
 fun Context.saveSignInResponse(signInResponse: SignInResponse) {
-    Paper.book().write(Const.PAPER_CLIENT_INFO, signInResponse)
+    Paper.book().write<Int>(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id)
+    saveToPaper(Const.PAPER_CLIENT_FILIAL_CODE, signInResponse.filial_code.orEmpty())
+    saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
     saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
     saveToPaper(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
     saveToPaper(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
@@ -42,7 +44,8 @@ fun Context.saveSignInResponse(signInResponse: SignInResponse) {
 }
 
 fun Fragment.saveSignInPinResponse(signInResponse: SignInResponse) {
-    Paper.book().write(Const.PAPER_CLIENT_INFO, signInResponse)
+    Paper.book().write<Int>(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id)
+    saveToPaper(Const.PAPER_CLIENT_FILIAL_CODE, signInResponse.filial_code.orEmpty())
     saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
     saveToPaper(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
     saveToPaper(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))

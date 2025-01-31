@@ -12,6 +12,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentOpenWalletBinding
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
@@ -39,10 +40,10 @@ class OpenWalletFragment : BaseFragment<FragmentOpenWalletBinding, WalletViewMod
 
     private fun openWalletRequest() {
         binding.openWalletBtn.setProgress(true)
-        val info = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
-        if (info?.filial_code!!.isNotEmpty()) viewModel.createWallet(
+        val filialCode = getFromPaper(Const.PAPER_CLIENT_FILIAL_CODE)
+        if (filialCode.isNotEmpty()) viewModel.createWallet(
             getClientToken(),
-            CreateWalletRequest(info.filial_code!!, "000", binding.walletName.text.toString())
+            CreateWalletRequest(filialCode, "000", binding.walletName.text.toString())
         ).observe(viewLifecycleOwner) {
             binding.openWalletBtn.setProgress(false)
             when (it.status) {

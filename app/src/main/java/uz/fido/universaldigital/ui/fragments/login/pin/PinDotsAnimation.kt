@@ -3,7 +3,6 @@ package uz.fido.universaldigital.ui.fragments.login.pin
 import android.animation.TimeInterpolator
 import android.animation.ValueAnimator
 import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.fragment.app.FragmentActivity
@@ -14,9 +13,6 @@ import kotlin.math.sin
 
 object PinDotsAnimation {
 
-    private var interpolator = AccelerateDecelerateInterpolator()
-    private var animationDuration = 400
-    private var currentViewIndex = -1
     private var timer: Timer? = null
 
     fun stopPinDotsAnimation() {
@@ -39,7 +35,7 @@ object PinDotsAnimation {
 
     fun gatherAnimation(view: ImageView, progressBar: ProgressBar) {
         val x = progressBar.x + progressBar.width / 2 - view.width / 2
-        view.animate().x(x).setDuration(400).withEndAction {
+        view.animate().x(x).setDuration(250).withEndAction {
             view.visibility = View.GONE
             progressBar.visibility = View.VISIBLE
         }.start()

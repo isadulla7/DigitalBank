@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import coil.load
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
 import uz.fido.network.domain.model.abc_base.SwapKeysResponse
@@ -43,7 +42,6 @@ class SuccessVerificationFragment : BaseFragment<FragmentSuccessVerificationBind
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         loadIllustration()
-        changeUserStatus()
         binding.btnContinue.isEnabled(true)
         binding.btnContinue.setOnClickListener {
             binding.btnContinue.setProgress(true)
@@ -61,12 +59,6 @@ class SuccessVerificationFragment : BaseFragment<FragmentSuccessVerificationBind
             startActivity(Intent(requireContext(), LoginActivity::class.java))
             requireActivity().finish()
         }
-    }
-
-    private fun changeUserStatus() {
-        val signInResponse = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
-        signInResponse?.user_status_id = "1"
-        signInResponse?.let { Paper.book().write(Const.PAPER_CLIENT_INFO, it) }
     }
 
     private fun loadIllustration() {

@@ -26,6 +26,7 @@ import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoring
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.WalletMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format
@@ -100,13 +101,13 @@ class WalletFirstMonitoringFragment :
         dateBegin = format.format(formatStartDate)
         dateEnd = format.format(formatEndDate)
         val type = choose
-        val info = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
+        val filialCode = getFromPaper(Const.PAPER_CLIENT_FILIAL_CODE)
         val model = AccountHistoriesRequest(
             pageNumber = "1",
             pageSize = "20",
             type = operationType.toString(),
             account = walletList[0],
-            codeFilial = info?.filial_code,
+            codeFilial = filialCode,
             dateClose = dateEnd,
             dateBegin = dateBegin
         )
@@ -287,13 +288,13 @@ class WalletFirstMonitoringFragment :
     }
 
     private fun createModel(page: Int): AccountHistoriesRequest {
-        val info = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
+        val filialCode = getFromPaper(Const.PAPER_CLIENT_FILIAL_CODE)
         val model = AccountHistoriesRequest(
             pageNumber = page.toString(),
             pageSize = "20",
             type = operationType.toString(),
             account = walletList[0],
-            codeFilial = info?.filial_code,
+            codeFilial = filialCode,
             dateClose = dateEnd,
             dateBegin = dateBegin
         )

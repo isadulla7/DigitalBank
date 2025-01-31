@@ -1,10 +1,13 @@
 package uz.fido.utils.security
 
+import android.app.Activity
 import android.os.Build
 import java.io.File
 import java.net.NetworkInterface
 import java.net.SocketException
 import java.util.Collections
+import com.google.firebase.crashlytics.internal.common.CommonUtils;
+
 
 object SecurityCheck {
 
@@ -13,11 +16,7 @@ object SecurityCheck {
         try {
             for (networkInterface in Collections.list(NetworkInterface.getNetworkInterfaces())) {
                 if (networkInterface.isUp) interfaceName = networkInterface.name
-                if (
-                    interfaceName.contains("tun") ||
-                    interfaceName.contains("ppp") ||
-                    interfaceName.contains("pptp")
-                ) {
+                if (interfaceName.contains("tun") || interfaceName.contains("ppp") || interfaceName.contains("pptp")) {
                     return true
                 }
             }
@@ -27,26 +26,26 @@ object SecurityCheck {
         return false
     }
 
-    fun isRunningOnEmulator(): Boolean {
-        return (Build.FINGERPRINT.startsWith("google/sdk_gphone_")
-                && Build.FINGERPRINT.endsWith(":user/release-keys")
-                && Build.MANUFACTURER == "Google"
-                && Build.PRODUCT.startsWith("sdk_gphone_")
-                && Build.BRAND == "google"
-                && Build.MODEL.startsWith("sdk_gphone_")
-                ) || Build.FINGERPRINT.startsWith("generic")
-                || Build.FINGERPRINT.startsWith("unknown")
-                || Build.MODEL.contains("google_sdk")
-                || Build.MODEL.contains("Emulator")
-                || Build.MODEL.contains("Android SDK built for x86")
-                || Build.MANUFACTURER.contains("Genymotion")
-                || Build.HOST == "Build2" //MSI App Player
-                || Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
-                || Build.PRODUCT == "google_sdk"
-    }
+    fun Activity.isRunningOnEmulator(): Boolean =EmulatorCheck(this).isProbablyAnEmulator()
 
-    fun isPhoneRooted(): Boolean {
-        return (canExecuteSu() || isMagiskPresent() || canWriteToSystem() || checkRootProps())
+    fun Activity.isPhoneRooted() = checkRootedFiles() || canExecuteSu() || isMagiskPresent() || canWriteToSystem() || checkRootProps() || CommonUtils.isRooted(this)
+
+    private fun checkRootedFiles(): Boolean {
+        val paths = arrayOf(
+            "/system/app/Superuser.apk",
+            "/sbin/su",
+            "/system/bin/su",
+            "/system/xbin/su",
+            "/data/local/xbin/su",
+            "/data/local/bin/su",
+            "/system/sd/xbin/su",
+            "/system/bin/failsafe/su",
+            "/data/local/su"
+        )
+        for (path in paths) {
+            if (File(path).exists()) return true
+        }
+        return false
     }
 
     private fun canExecuteSu(): Boolean {
