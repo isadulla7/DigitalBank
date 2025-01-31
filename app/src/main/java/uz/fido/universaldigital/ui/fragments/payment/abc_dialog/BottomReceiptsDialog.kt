@@ -8,6 +8,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Insets
+import android.graphics.pdf.PdfDocument
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -43,7 +44,8 @@ import uz.fido.universaldigital.ui.utils.file.FileUtils
 import java.io.File
 import java.io.FileOutputStream
 
-class BottomReceiptsDialog(private var html: String, private var name: String, val webViewClick: () -> Unit = {}) : BottomSheetDialogFragment(),
+class BottomReceiptsDialog(private var html: String,
+                           private var name: String, val webViewClick: () -> Unit = {}) : BottomSheetDialogFragment(),
     View.OnClickListener {
 
     private lateinit var binding: DialogBottomReceiptsBinding
@@ -123,19 +125,31 @@ class BottomReceiptsDialog(private var html: String, private var name: String, v
     }
 
     private fun takeScreenshot(view: View) {
-        val path = FileUtils.saveImageToGallery(requireContext(), FileUtils.takeScreenShot(view), "Card QR")
-        val intent: Intent = Intent().apply {
-            val uriPath = FileProvider.getUriForFile(
-                requireActivity(),
-                requireActivity().applicationContext.packageName + ".my.package.name.provider",
-                File(path)
-            )
-            setDataAndType(uriPath, "image/*")
-            action = Intent.ACTION_VIEW
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        val pdfDocument = PdfDocument()
+        val pageInfo = PdfDocument.PageInfo.Builder(bitmap.width, bitmap.height, 1).create()
+        val page = pdfDocument.startPage(pageInfo)
+        page.canvas.drawBitmap(bitmap, 0f, 0f, null)
+        pdfDocument.finishPage(page)
+        val pdfFile = File(requireContext().getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS), "universal$name.pdf")
+        pdfFile.outputStream().use { pdfDocument.writeTo(it) }
+        pdfDocument.close()
+
+        val uri = FileProvider.getUriForFile(
+            requireActivity(),
+            requireActivity().applicationContext.packageName + ".my.package.name.provider",
+            pdfFile
+        )
+
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            setDataAndType(uri, "application/pdf")
             flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
-        startActivity(intent)
+
+      startActivity(intent)
     }
 
     private fun share(view: View) {
@@ -154,116 +168,11 @@ class BottomReceiptsDialog(private var html: String, private var name: String, v
         startActivity(Intent.createChooser(shareIntent, "Send to"))
     }
 
-//    val printAdapter = object : PrintDocumentAdapter() {
-//        override fun onLayout(
-//            oldAttributes: PrintAttributes?,
-//            newAttributes: PrintAttributes?,
-//            cancellationSignal: CancellationSignal?,
-//            callback: LayoutResultCallback,
-//            metadata: Bundle?
-//        ) {
-//            val printerInfo = printManager.print("screenshot", printAdapter, PrintAttributes.Builder().build())
-//
-//            if (printerInfo == null) {
-//                // Printer mavjud emas
-//                // Foydalanuvchiga printer tanlashni taklif qilish
-//                Toast.makeText(requireContext(), "Printer topilmadi!", Toast.LENGTH_SHORT).show()
-//                return
-//            }
-//
-//            // Printer topilsa, chop etish jarayonini davom ettirish
-//            callback.onLayoutFinished(
-//                PrintDocumentInfo.Builder("screenshot.png")
-//                    .setContentType(PrintDocumentInfo.CONTENT_TYPE_PHOTO)
-//                    .build(),
-//                oldAttributes == newAttributes
-//            )
-//        }
-//
-//        override fun onWrite(
-//            pages: Array<out PageRange>?,
-//            destination: ParcelFileDescriptor?,
-//            cancellationSignal: CancellationSignal?,
-//            callback: WriteResultCallback
-//        ) {
-//            destination?.let {
-//                val bitmap = captureWebView(binding.webView) // Rasmni olish funksiyasi
-//                val outputStream = FileOutputStream(it.fileDescriptor)
-//                bitmap!!.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-//                outputStream.flush()
-//                outputStream.close()
-//
-//                callback.onWriteFinished(arrayOf(PageRange.ALL_PAGES))
-//            }
-//        }
-//    }
 
-    private fun startPrintImage() {
 
-//        val printJob = printManager.print(
-//            "screenshot",
-//            printAdapter,
-//            PrintAttributes.Builder().build()
-//        )
-//        val bitmap=captureWebView(binding.webView)
-//        if (bitmap!=null){
-//        val uri = saveBitmapToDownloads(requireContext(), bitmap)
-//        if (uri != null) {
-//            val printIntent = Intent(Intent.ACTION_VIEW).apply {
-//                setDataAndType(uri, "image/*")  // Fayl turi (rasm yoki boshqa fayl turini tanlang)
-//                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)  // Uri'ga ruxsat berish
-//            }
-//
-//            startActivity(printIntent)
-//        } else {
-//            Toast.makeText(context, "Image save failed!", Toast.LENGTH_SHORT).show()
-//        }
-//        }
-    }
-    fun saveBitmapToDownloads(context: Context, bitmap: Bitmap): Uri? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val contentValues = ContentValues().apply {
-                put(MediaStore.Images.Media.DISPLAY_NAME, "screenshot.png")
-                put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-                put(MediaStore.Images.Media.RELATIVE_PATH, Environment.DIRECTORY_PICTURES) // "Pictures" papkasiga saqlash
-            }
 
-            val contentUri: Uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            val resolver = context.contentResolver
-            val imageUri: Uri? = resolver.insert(contentUri, contentValues)
 
-            imageUri?.let {
-                resolver.openOutputStream(it).use { outputStream ->
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream!!)
-                    outputStream?.flush()
-                }
-            }
-            imageUri
-        } else {
-            val file = File(context.getExternalFilesDir(Environment.DIRECTORY_PICTURES), "screenshot.png")
-            val outputStream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-            outputStream.flush()
-            outputStream.close()
 
-            // File va Uri ni qaytarish
-            Uri.fromFile(file)
-        }
-    }
-
-    private fun captureWebView(webView: WebView): Bitmap? {
-        try {
-            val bitmap = Bitmap.createBitmap(
-                webView.width, webView.height, Bitmap.Config.ARGB_8888
-            )
-            val canvas = Canvas(bitmap)
-            webView.draw(canvas)
-            return bitmap
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        return null
-    }
 
     override fun onClick(p0: View?) {
         when (p0?.id) {
@@ -277,10 +186,6 @@ class BottomReceiptsDialog(private var html: String, private var name: String, v
                 dismiss()
             }
 
-            R.id.print_qr_code -> {
-                startPrintImage()
-                dismiss()
-            }
 
             R.id.receipt_block, R.id.web_view -> {
                 Log.d("TAG", "onClick: ")

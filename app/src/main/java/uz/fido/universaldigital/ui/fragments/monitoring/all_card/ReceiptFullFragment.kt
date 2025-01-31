@@ -31,14 +31,13 @@ class ReceiptFullFragment : SimpleAbstractFragment<FragmentReceiptFullBinding>(F
 
     private fun loadView() {
         val displayWidth = getScreenWidth(requireActivity())
+
         binding.webView.settings.javaScriptEnabled = true
         binding.webView.settings.builtInZoomControls = true
-        binding.webView.settings.useWideViewPort = true
-        binding.webView.settings.displayZoomControls = false
         binding.webView.settings.loadWithOverviewMode = true
+        binding.webView.settings.textZoom = 150
         binding.webView.overScrollMode = WebView.OVER_SCROLL_NEVER
-       binding.webView.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
-
+        binding.webView.scrollBarStyle = View.SCROLLBARS_INSIDE_OVERLAY
         binding.webView.setInitialScale(if (displayWidth != 0) (displayWidth * 0.14).toInt() else 100)
         binding.webView.settings.displayZoomControls = false
 
@@ -55,7 +54,7 @@ class ReceiptFullFragment : SimpleAbstractFragment<FragmentReceiptFullBinding>(F
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val windowMetrics = activity.windowManager.currentWindowMetrics
             val insets: Insets = windowMetrics.windowInsets
-                .getInsetsIgnoringVisibility(WindowInsets.Type.systemBars())
+                .getInsets(WindowInsets.Type.systemBars())
             windowMetrics.bounds.width() - insets.left - insets.right
         } else {
             val displayMetrics = DisplayMetrics()
