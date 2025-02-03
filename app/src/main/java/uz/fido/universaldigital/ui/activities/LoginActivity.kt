@@ -23,7 +23,6 @@ import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
-import uz.fido.utils.security.SecurityCheck
 import uz.fido.utils.security.SecurityCheck.isPhoneRooted
 import uz.fido.utils.security.SecurityCheck.isRunningOnEmulator
 
@@ -73,6 +72,7 @@ class LoginActivity : BaseActivity() {
 
     private fun checkForDeepLink() {
         if (intent.data != null) {
+            println("intent data" + intent.data.toString())
             FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnSuccessListener(this) { pendingDynamicLinkData ->
                 pendingDynamicLinkData?.link?.let {
                     val objectValue = it.getQueryParameter("cardNumber")

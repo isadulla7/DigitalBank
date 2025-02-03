@@ -18,11 +18,28 @@ import uz.fido.utils.log.Logger
 
 class NotificationService : FirebaseMessagingService() {
 
+    companion object {
+        const val NOTIFICATION_TYPE_P2P = "P2P"
+        const val NOTIFICATION_TYPE_NEWS = "NEWS"
+        const val NOTIFICATION_HANDLE_KEY = "type"
+    }
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         remoteMessage.notification.let { notification ->
+            if (remoteMessage.data.isNotEmpty()) {
+                initNotificationOperations(remoteMessage.data)
+            }
             notification?.let {
                 sendNotification(notification.title, notification.body)
             }
+        }
+    }
+
+    private fun initNotificationOperations(data: Map<String, String>) {
+        when (data[NOTIFICATION_HANDLE_KEY]) {
+            NOTIFICATION_TYPE_P2P -> {}
+            NOTIFICATION_TYPE_NEWS -> {}
+            else -> {}
         }
     }
 
@@ -39,7 +56,7 @@ class NotificationService : FirebaseMessagingService() {
             .setSmallIcon(R.drawable.ic_universal_logo_white)
             .setContentTitle(messageTitle ?: getString(R.string.app_name))
             .setContentText(messageBody ?: getString(R.string.new_message))
-            .setAutoCancel(true)
+            .setAutoCancel(false)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setSound(defaultSoundUri)
@@ -52,10 +69,7 @@ class NotificationService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        notificationManager.notify(
-            System.currentTimeMillis().hashCode(),
-            notificationBuilder.build()
-        )
+        notificationManager.notify(System.currentTimeMillis().hashCode(), notificationBuilder.build())
     }
 
     override fun onNewToken(p0: String) {
