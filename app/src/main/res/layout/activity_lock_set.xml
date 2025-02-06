@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white">
 
-    <LinearLayout
+    <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="vertical"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@string/data_security_function"
             android:textColor="@color/mainTextColor"
-            android:textSize="30sp" />
+            android:textSize="30dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/tv_description"
@@ -28,9 +28,9 @@
             android:layout_marginTop="24dp"
             android:text="@string/emulator_is_not_allowed"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
-        <LinearLayout
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center">
@@ -44,9 +44,9 @@
                 app:lottie_fileName="anim_warning.json"
                 app:lottie_loop="true" />
 
-        </LinearLayout>
+        </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </LinearLayout>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/button_continue"
@@ -58,7 +58,7 @@
         android:enabled="true"
         android:text="@string/continue_text"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:visibility="gone"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toTopOf="@+id/button_open_settings" />
@@ -68,12 +68,12 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_marginVertical="16dp"
-        android:layout_marginStart="6dp"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:enabled="true"
         android:text="@string/exit"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 

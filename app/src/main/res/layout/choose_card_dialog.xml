@@ -24,7 +24,7 @@
         android:layout_marginEnd="16sp"
         android:text="@string/choose_card"
         android:textColor="@color/mainTextColor"
-        android:textSize="20sp" />
+        android:textSize="20dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/card_list"

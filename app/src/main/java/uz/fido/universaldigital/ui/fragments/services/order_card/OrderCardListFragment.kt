@@ -173,8 +173,8 @@ class OrderCardListFragment : BaseFragment<FragmentOrderCardListBinding, OrderCa
 
     override fun selectedCardWithOperation(priceItem: ProductType, operation: String) {
         super.selectedCardWithOperation(priceItem, operation)
-        val signInResponse = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
-        if (priceItem.is_allowed_user_types.contains(signInResponse?.user_type_id)) {
+        val userTypeId = Paper.book().read<Int>(Const.PAPER_CLIENT_USER_TYPE_ID)
+        if (priceItem.is_allowed_user_types.contains(userTypeId)) {
             val bundle = bundleOf(
                 Constants.PRICE_ITEM.text to Gson().toJson(priceItem),
                 Constants.CODE.text to priceItem.code,

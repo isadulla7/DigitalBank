@@ -45,7 +45,7 @@
         android:layout_margin="16dp"
         android:text="@string/open_deposit"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 

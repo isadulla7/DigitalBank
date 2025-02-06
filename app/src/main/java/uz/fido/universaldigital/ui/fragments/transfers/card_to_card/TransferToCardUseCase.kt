@@ -48,9 +48,9 @@ class TransferToCardUseCaseImpl @Inject constructor(
     override suspend fun getTransferInfo(clientToken: String, p2PInfoRequest: P2PInfoRequest): P2PInfoDto {
         val response = p2PRepository.p2pInfo(clientToken, p2PInfoRequest)
         return if (response.status == Status.SUCCESS) {
-            response.data?.mapToDto() ?: P2PInfoDto(isSuccess = false)
+            response.data?.mapToDto() ?: P2PInfoDto(isSuccess = true)
         } else {
-            P2PInfoDto(isSuccess = false, errorMessage = response.message)
+            response.data?.mapToDto() ?: P2PInfoDto(isSuccess = false, errorMessage = response.message)
         }
     }
 

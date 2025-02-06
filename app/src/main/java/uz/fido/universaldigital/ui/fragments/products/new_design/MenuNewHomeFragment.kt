@@ -17,7 +17,10 @@ import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMenuNewHomeBinding
+import uz.fido.universaldigital.ui.activities.seasons.Season
 import uz.fido.universaldigital.ui.fragments.products.adapter.NewHomeCardsAdapter
+import uz.fido.universaldigital.ui.fragments.profile.settings.NewDesignOnboardingPage
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.home_utils.initRefreshLayout
 import uz.fido.universaldigital.ui.utils.home_utils.loadCardsFromPaper
@@ -64,6 +67,49 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
     private fun initDefaultStates() {
         loadProfileImage()
         setUserDetails()
+        setSeasonAnimation()
+    }
+
+    private fun setSeasonAnimation() {
+        val currentSeason = getFromPaper(Const.CURRENT_SEASON, Season.DEFAULT)
+        when (currentSeason) {
+            Season.WINTER -> {
+                binding.homeAnimView.apply {
+                    setSnowflakeImage(R.drawable.blue_snowflake)
+                    setSnowflakeSpeedMin(1)
+                    setSnowflakeSpeedMax(1)
+                    setSnowflakesNum(50)
+                    setSnowflakeSizeMax(24)
+                    setSnowflakeSizeMin(16)
+                }
+            }
+
+            Season.AUTUMN -> {
+                binding.homeAnimView.apply {
+                    setSnowflakeImage(R.drawable.maple_leaf)
+                    setSnowflakeSpeedMin(1)
+                    setSnowflakeSpeedMax(1)
+                    setSnowflakesNum(16)
+                    setSnowflakeSizeMax(36)
+                    setSnowflakeSizeMin(20)
+                }
+            }
+
+            Season.SPRING -> {
+                binding.homeAnimView.apply {
+                    setSnowflakeImage(R.drawable.sakura)
+                    setSnowflakeSpeedMin(1)
+                    setSnowflakeSpeedMax(2)
+                    setSnowflakesNum(30)
+                    setSnowflakeSizeMax(30)
+                    setSnowflakeSizeMin(16)
+                }
+            }
+
+            else -> {
+                binding.homeAnimView.visibility = View.GONE
+            }
+        }
     }
 
     private fun initTotalBalance() {
@@ -75,6 +121,7 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
             binding.userCardsLayout.isVisible = currentCards.isNotEmpty()
             Paper.book().write(Const.PAPER_CLIENT_CARDS, currentCards)
             initUserCards()
+            initBalanceVisibility()
         }
     }
 
@@ -158,10 +205,35 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
     private fun initSetOnClickListeners() {
         binding.chat.setOnClickListener { goto(R.id.menuChatFragment) }
         binding.userName.setOnClickListener { goto(R.id.menuProfileFragment) }
-        binding.btnShowMore.setOnClickListener { goto(R.id.myCardsListFragment) }
+        binding.btnAllCards.setOnClickListener { goto(R.id.myCardsListFragment) }
         binding.userAvatar.setOnClickListener { goto(R.id.menuProfileFragment) }
-        binding.notifications.setOnClickListener { goto(R.id.notificationsFragment) }
+        binding.notifications.setOnClickListener { goto(R.id.mainNewsFragment) }
         binding.addCardLayout.setOnClickListener { goto(R.id.addCardFragment) }
+        binding.backToOldDesign.setOnClickListener { NewDesignOnboardingPage().show(childFragmentManager, "") }
+        binding.hideBalance.setOnClickListener { changeBalanceVisibility() }
+    }
+
+    private fun initBalanceVisibility() {
+        if (Paper.book().read<Boolean>(Const.BALANCE_VISIBILITY) != false) {
+            binding.hideBalance.setImageResource(R.drawable.ic_eye)
+        } else {
+            binding.hideBalance.setImageResource(R.drawable.ic_eye_close)
+        }
+    }
+
+    private fun changeBalanceVisibility() {
+        if (Paper.book().read<Boolean>(Const.BALANCE_VISIBILITY) != false) {
+            binding.apply {
+                hideBalance.setImageResource(R.drawable.ic_eye_close)
+            }
+            Paper.book().write(Const.BALANCE_VISIBILITY, false)
+        } else {
+            binding.apply {
+                hideBalance.setImageResource(R.drawable.ic_eye)
+            }
+            Paper.book().write(Const.BALANCE_VISIBILITY, true)
+        }
+        homeCardsAdapter?.notifyDataSetChanged()
     }
 
     private fun initUserCards() {

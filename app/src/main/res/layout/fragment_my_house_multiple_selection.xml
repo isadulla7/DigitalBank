@@ -36,7 +36,7 @@
             android:layout_marginStart="16dp"
             android:text="@string/to_payment"
             android:textColor="@color/brandBlueColor_60"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/amount"
@@ -46,7 +46,7 @@
             android:layout_marginHorizontal="16dp"
             android:layout_marginTop="4dp"
             android:textColor="@color/brandBlueColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

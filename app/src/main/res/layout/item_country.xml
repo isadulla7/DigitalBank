@@ -10,6 +10,6 @@
     android:paddingEnd="16dp"
     tools:text="Uzbekistan"
     android:textColor="@color/mainTextColor"
-    android:textSize="15sp">
+    android:textSize="15dp">
 
 </uz.fido.utils.view.custom_text_view.TextViewRegular>

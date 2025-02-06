@@ -31,8 +31,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, MenuProfileViewMo
     }
 
     private fun getNotificationState(): Boolean {
-        val sharedPref: SharedPreferences =
-            requireContext().getSharedPreferences(NOTIFICATION_STATE, Context.MODE_PRIVATE)
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences(NOTIFICATION_STATE, Context.MODE_PRIVATE)
         return sharedPref.getBoolean(STATE, true)
     }
 
@@ -40,6 +39,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, MenuProfileViewMo
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.changeLanguage.setOnClickListener { gotoWithSlide(R.id.changeLanguageFragmentSettings) }
         binding.appTheme.setOnClickListener { gotoWithSlide(R.id.appThemeFragment) }
+        binding.actions.setOnClickListener { gotoWithSlide(R.id.actionsFragment) }
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
             if (!isChecked) changeNotificationState(STATE_PASSIVE) else changeNotificationState(
                 STATE_ACTIVE

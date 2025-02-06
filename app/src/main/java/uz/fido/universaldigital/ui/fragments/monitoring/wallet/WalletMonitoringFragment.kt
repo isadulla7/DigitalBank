@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
-import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.monitoring.AccountHistoriesRequest
@@ -26,6 +25,7 @@ import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoring
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.WalletMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
+import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
@@ -34,6 +34,7 @@ import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.sticky.StickyHeaderDecoration
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.user.getClientToken
+import uz.fido.utils.view.custom_text_view.TextViewMedium
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -119,13 +120,13 @@ class WalletMonitoringFragment :
                     else -> 0
                 }
 
-                val info = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
+                val filialCode = getFromPaper(Const.PAPER_CLIENT_FILIAL_CODE)
                 val model = AccountHistoriesRequest(
                     pageNumber = "1",
                     pageSize = "20",
                     type = operationType.toString(),
                     account = walletList[0],
-                    codeFilial = info?.filial_code,
+                    codeFilial = filialCode,
                     dateClose = dateEnd,
                     dateBegin = dateBegin
                 )
@@ -149,7 +150,7 @@ class WalletMonitoringFragment :
                 }
             }
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::getFilterWalletList.name)
         }
     }
 
@@ -196,7 +197,7 @@ class WalletMonitoringFragment :
             binding.shimmerView.visibility = View.GONE
             binding.rec.visibility = View.GONE
             binding.layoutEmpty.visibility = View.VISIBLE
-            binding.layoutEmpty.title.text = getString(R.string.card_list_no)
+            binding.layoutEmpty.findViewById<TextViewMedium>(R.id.title).text = getString(R.string.card_list_no)
         }
     }
 
@@ -273,13 +274,13 @@ class WalletMonitoringFragment :
     }
 
     private fun createModel(page: Int): AccountHistoriesRequest {
-        val info = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
+        val filialCode = getFromPaper(Const.PAPER_CLIENT_FILIAL_CODE)
         val model = AccountHistoriesRequest(
             pageNumber = page.toString(),
             pageSize = "20",
             type = operationType.toString(),
             account = walletList[0],
-            codeFilial = info?.filial_code,
+            codeFilial = filialCode,
             dateClose = dateEnd,
             dateBegin = dateBegin
         )

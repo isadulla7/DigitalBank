@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:textColor="@color/hintColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -28,7 +28,7 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="4dp"
             android:textColor="@color/mainTextColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

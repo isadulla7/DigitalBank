@@ -32,7 +32,7 @@
         android:includeFontPadding="false"
         android:maxLines="2"
         android:textColor="@color/brandBlueColor"
-        android:textSize="16sp"
+        android:textSize="16dp"
         tools:text="@string/common_signin_button_text_long" />
 
     <ImageView

@@ -78,7 +78,7 @@ class ConfirmMoneyTransferFragment :
             )
             initCards()
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::initUI.name)
         }
     }
 

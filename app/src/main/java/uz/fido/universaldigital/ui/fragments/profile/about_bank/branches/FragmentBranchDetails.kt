@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.profile.about_bank.branches
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
@@ -16,9 +17,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.domain.model.branches.Branches
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
@@ -28,9 +29,9 @@ import uz.fido.universaldigital.ui.utils.extensions.bitmapDescriptorFromVector
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.utility.fragment.pop
 
-class FragmentBranchDetails :
-    BaseSimpleFragment<FragmentBranchDetailsBinding>(FragmentBranchDetailsBinding::inflate),
-    BaseInterface, OnMapReadyCallback, LocationListener,
+@SuppressLint("SetTextI18n")
+@AndroidEntryPoint
+class FragmentBranchDetails : BaseSimpleFragment<FragmentBranchDetailsBinding>(FragmentBranchDetailsBinding::inflate), BaseInterface, OnMapReadyCallback, LocationListener,
     GoogleMap.OnMarkerClickListener {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -55,19 +56,20 @@ class FragmentBranchDetails :
 
     private fun initBranchDetails() {
         branch = this.requireArguments().serializable<Branches>("branch") as Branches
-        binding.name.text = branch.name
-        if (!branch.address.isNullOrBlank()) {
-            binding.address.text = branch.address
-        }
-        if (branch.admission_days!!.isNotEmpty() || branch.working_time!!.isNotEmpty()) {
-            binding.workingTime.text = branch.admission_days + "\n" + branch.working_time
+        binding.apply {
+            name.text = branch.name
+            address.text = branch.address.orEmpty() + "\n" + branch.transport.orEmpty()
+            workingTime.text = branch.admission_days.orEmpty() + "\n" + branch.working_time.orEmpty()
+            helpline.text = branch.helpline.orEmpty()
         }
     }
 
     private fun initSetOnClickListeners() {
-        binding.locate.setOnClickListener { drawRouteBetweenTwoLocations() }
-        binding.call.setOnClickListener { callToBranch() }
-        binding.appBar.setOnBackButtonClickListener { pop() }
+        binding.apply {
+            locate.setOnClickListener { drawRouteBetweenTwoLocations() }
+            call.setOnClickListener { callToBranch() }
+            appBar.setOnBackButtonClickListener { pop() }
+        }
     }
 
     override fun onStart() {
@@ -80,7 +82,6 @@ class FragmentBranchDetails :
         map.uiSettings.isZoomControlsEnabled = true
         map.uiSettings.isCompassEnabled = false
         map.uiSettings.isMyLocationButtonEnabled = false
-        setMapStyle()
         addBottomPaddingToMap()
         branchesMarker()
         map.setOnMarkerClickListener(this)
@@ -94,28 +95,9 @@ class FragmentBranchDetails :
                 true
             )
         ) {
-            actionBarHeight =
-                TypedValue.complexToDimensionPixelSize(TypedValue().data, resources.displayMetrics)
+            actionBarHeight = TypedValue.complexToDimensionPixelSize(TypedValue().data, resources.displayMetrics)
         }
         map.setPadding(0, 0, 0, actionBarHeight)
-    }
-
-    private fun setMapStyle() {
-        if (isCurrentThemeDark()) {
-            map.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                    requireActivity(),
-                    R.raw.map_style
-                )
-            )
-        } else {
-            map.setMapStyle(
-                MapStyleOptions.loadRawResourceStyle(
-                    requireActivity(),
-                    R.raw.map_style_retro
-                )
-            )
-        }
     }
 
     override fun onLocationChanged(p0: Location) {}
@@ -137,31 +119,13 @@ class FragmentBranchDetails :
         super.onPause()
     }
 
-    companion object {
-        lateinit var map: GoogleMap
-
-        fun newInstance(
-            name: String
-        ): FragmentBranchDetails {
-            val infoPage = FragmentBranchDetails()
-            val bundle = Bundle()
-            bundle.putString("name", name)
-            infoPage.arguments = bundle
-            return infoPage
-        }
-
-    }
-
     private fun drawRouteBetweenTwoLocations() {
         val branchLocationX = branch.x_coordinate
         val branchLocationY = branch.y_coordinate
         val currentLocationX = MainBranchesFragment.currentLatLng?.latitude
         val currentLocationY = MainBranchesFragment.currentLatLng?.longitude
-        val uri = Uri.parse(
-            "geo:" + branchLocationX.toString() + "," + branchLocationY.toString() + "?q=" + Uri.encode(
-                currentLocationX.toString() + "," + currentLocationY.toString()
-            ) + "(" + branch.name + ")"
-        )
+        val uri =
+            Uri.parse("geo:" + branchLocationX.toString() + "," + branchLocationY.toString() + "?q=" + Uri.encode(currentLocationX.toString() + "," + currentLocationY.toString()) + "(" + branch.name + ")")
         val intent = Intent(Intent.ACTION_VIEW, uri)
         startActivity(intent)
     }
@@ -199,6 +163,21 @@ class FragmentBranchDetails :
             )
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 14f))
         }
+    }
+
+    companion object {
+        lateinit var map: GoogleMap
+
+        fun newInstance(
+            name: String
+        ): FragmentBranchDetails {
+            val infoPage = FragmentBranchDetails()
+            val bundle = Bundle()
+            bundle.putString("name", name)
+            infoPage.arguments = bundle
+            return infoPage
+        }
+
     }
 
 }

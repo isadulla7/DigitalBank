@@ -7,12 +7,12 @@
 
     <ImageView
         android:id="@+id/design_image"
-        android:layout_width="256dp"
+        android:layout_width="300dp"
         android:layout_height="0dp"
         android:layout_marginTop="16dp"
-        android:layout_marginBottom="-100dp"
+        android:layout_marginBottom="-120dp"
         android:scaleType="fitCenter"
-        android:src="@drawable/new_design_s22"
+        android:src="@drawable/new_design_s23"
         app:layout_constraintBottom_toTopOf="@id/background_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -36,7 +36,7 @@
         android:paddingTop="32dp"
         android:text="@string/new_design_title"
         android:textColor="@color/brandBlueColor"
-        android:textSize="18sp"
+        android:textSize="18dp"
         app:layout_constraintBottom_toTopOf="@id/description"
         app:lineHeight="28sp" />
 
@@ -48,7 +48,7 @@
         android:layout_marginBottom="40dp"
         android:text="@string/new_design_description"
         android:textColor="@color/brandBlueColor_40"
-        android:textSize="14sp"
+        android:textSize="14dp"
         app:layout_constraintBottom_toTopOf="@id/switch_new_design"
         app:lineHeight="18sp" />
 
@@ -62,7 +62,7 @@
         android:shadowColor="@color/brandRedColor"
         android:text="@string/switch_new_design"
         android:textColor="@color/white"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:cornerRadius="16dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 

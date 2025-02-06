@@ -19,7 +19,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/brandBlueColor"
-        android:textSize="16sp"
+        android:textSize="16dp"
         tools:text="My Deposit" />
 
     <uz.fido.utils.view.custom_text_view.TextViewSemiBold
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:textColor="@color/brandBlueColor"
-        android:textSize="20sp"
+        android:textSize="20dp"
         tools:text="215 000 000 UZS" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -42,7 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
             android:id="@+id/tv_deposit_duration"
@@ -50,7 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <com.google.android.material.progressindicator.LinearProgressIndicator

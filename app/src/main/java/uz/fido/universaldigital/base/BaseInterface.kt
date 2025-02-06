@@ -1,5 +1,6 @@
 package uz.fido.universaldigital.base
 
+import android.widget.ImageView
 import uz.fido.network.domain.model.amount_requests.RmList
 import uz.fido.network.domain.model.applications.OrderCardApp
 import uz.fido.network.domain.model.branches.Branches
@@ -18,6 +19,7 @@ import uz.fido.network.domain.model.monitoring.filter.UserPayedService
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
 import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
 import uz.fido.network.domain.model.my_house.MyHouseGroup
+import uz.fido.network.domain.model.news.News
 import uz.fido.network.domain.model.news.Notification
 import uz.fido.network.domain.model.payment.AllServiceLists
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
@@ -38,7 +40,7 @@ interface BaseInterface {
     fun openInfoMib(mibDetail: MibDetail) {}
     fun openLocalPayment(localPayment: LocalPayment) {}
     fun selectedCardWithOperation(priceItem: ProductType, operation: String) {}
-
+    fun openNews(item: News, transitionName: String) {}
     fun selectedCardBg(imageName: String) {}
     fun selectedBranch(country: Branches) {}
     fun selectedCard(card: CardResponse) {}

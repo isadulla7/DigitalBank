@@ -27,6 +27,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentTransferToCardBinding
 import uz.fido.universaldigital.ui.dialogs.ChooseScanCardOptionDialog
+import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.cards.card_operations.add_card.AddCardFragment
 import uz.fido.universaldigital.ui.fragments.transfers.over_my_cards.OverMyCardsAdapter
@@ -67,6 +68,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
     private var cardInfoDto: CardInfoDto? = null
     private var p2PInfoDto: P2PInfoDto? = null
     private var senderCard: CardResponse? = null
+    private var deepLinkObjId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -94,6 +96,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
             if (requireArguments().getString(PopularTransfersFragment.DATA) != null) {
                 binding.etCardNumber.setText(requireArguments().getString(PopularTransfersFragment.DATA))
             }
+            getDateFromDeepLink(arguments)
         }
         setFragmentResultListener(PopularTransfersFragment.REQUEST_KEY) { _, bundle ->
             val cardNumber = bundle.getString(PopularTransfersFragment.DATA)
@@ -389,8 +392,22 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
                     }
                 }
             } catch (e: Exception) {
-                recordException(e)
+                recordException(e, ::tryToGetClipboardData.name)
             }
+        }
+    }
+
+    private fun getDateFromDeepLink(arguments: Bundle? = null) {
+        if (arguments == null) return
+        val cardNumber = arguments.getString(PassCodeFragment.DEEP_LINK_OBJECT_VALUE)
+        val amount = arguments.getString(PassCodeFragment.DEEP_LINK_AMOUNT)
+        deepLinkObjId = requireArguments().getString(PassCodeFragment.DEEP_LINK_OBJECT_ID)
+        cardNumber?.let {
+            binding.etCardNumber.setText(it)
+            viewModel.getCardInfo(it.replace(" ", ""), deepLinkObjId)
+        }
+        amount?.let {
+            binding.etAmount.setText(Format.formatAmountFromTiynToInteger(it))
         }
     }
 }

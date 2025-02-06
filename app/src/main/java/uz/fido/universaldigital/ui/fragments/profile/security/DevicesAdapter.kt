@@ -22,7 +22,7 @@ class DevicesAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: UserDevices) {
             binding.apply {
-                deviceName.text = if (item.device_name == "") context.getString(R.string.nameless) else item.device_name
+                deviceName.text = if (item.device_name == "") context.getString(R.string.unknown) else item.device_name
                 lastSeen.text = item.last_seen_date
                 lastState.text = if (item.status == "A") context.getString(R.string.activ) else context.getString(R.string.ne_active)
                 if (item.online == "true") {

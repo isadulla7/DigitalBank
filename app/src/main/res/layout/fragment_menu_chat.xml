@@ -80,7 +80,7 @@
                 android:paddingEnd="56dp"
                 android:textColor="@color/brandBlueColor"
                 android:textColorHint="@color/brandBlueColor_60"
-                android:textSize="16sp"
+                android:textSize="16dp"
                 app:layout_constraintBottom_toBottomOf="parent" />
 
             <ImageView

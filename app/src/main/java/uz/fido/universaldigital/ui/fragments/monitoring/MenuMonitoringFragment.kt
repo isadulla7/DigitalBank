@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.monitoring
 
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager
 import dagger.hilt.android.AndroidEntryPoint
@@ -46,7 +47,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
             position = arguments?.getInt("position", 0) ?: 0
             selectedCard = arguments?.serializable(Const.CARD)
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::onCreate.name)
         }
     }
 
@@ -75,16 +76,6 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
                     gotoWithSlide(R.id.monitoringWalletFilterFragment)
                     menuMonitoringViewModel.isFilterWindows = true
                 }
-
-                /*if (cardCurrencyList.isNotEmpty()) {
-                gotoWithSlide(R.id.monitoringVisaFilterFragment)
-                menuMonitoringViewModel.isFilterWindows = true
-            }*/
-
-//                4 -> if (cardWalledList.isNotEmpty()) {
-//                    gotoWithSlide(R.id.monitoringWalletFilterFragment)
-//                    menuMonitoringViewModel.isFilterWindows = true
-//                }
 
                 else -> if (isFilter) gotoWithSlide(R.id.monitoringFilterFragment)
             }
@@ -138,7 +129,6 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
         adapter.addFragment(LocalMonitoringFragment())
         adapter.addFragment(UzcardMonitoringFragment())
         adapter.addFragment(HumoMonitoringFragment())
-//        adapter.addFragment(VisaMonitoringFragment())
         adapter.addFragment(WalletMonitoringFragment())
         binding.viewPager.apply {
             offscreenPageLimit = 1
@@ -155,7 +145,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
                 override fun onPageSelected(position: Int) {
                     this@MenuMonitoringFragment.position = position
                     filterIconCheck(position)
-//                    binding.chart.isVisible = position == 0
+                    binding.chart.isVisible = position == 0
                 }
 
                 override fun onPageScrollStateChanged(state: Int) {}
@@ -184,19 +174,10 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
             }
 
             3 -> {
-//                if (menuMonitoringViewModel.visaFilter)
-//                    binding.filter.setImageResource(R.drawable.ic_filter_yes)
-//                else binding.filter.setImageResource(R.drawable.ic_filter_frame)
                 if (menuMonitoringViewModel.walletFilter)
                     binding.filter.setImageResource(R.drawable.ic_filter_yes)
                 else binding.filter.setImageResource(R.drawable.ic_filter_frame)
             }
-
-//            4 -> {
-//                if (menuMonitoringViewModel.walletFilter)
-//                    binding.filter.setImageResource(R.drawable.ic_filter_yes)
-//                else binding.filter.setImageResource(R.drawable.ic_filter_frame)
-//            }
         }
     }
 

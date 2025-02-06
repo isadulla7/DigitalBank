@@ -35,7 +35,7 @@
             android:gravity="center|start"
             android:text="@string/push_notification"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ProgressBar
             android:id="@+id/progress"
@@ -71,7 +71,7 @@
             android:gravity="center|start"
             android:text="@string/change_language"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
 
         <ImageView
             android:layout_width="24dp"
@@ -100,7 +100,37 @@
             android:gravity="center|start"
             android:text="@string/app_theme"
             android:textColor="@color/brandBlueColor"
-            android:textSize="14sp" />
+            android:textSize="14dp" />
+
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/arrow_right_icon"
+            app:tint="@color/brandBlueColor_30"
+            tools:ignore="ContentDescription" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/actions"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/cornered_bg_12dp"
+        android:gravity="center"
+        android:paddingHorizontal="16dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/profile">
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="@string/actions"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="14dp" />
 
         <ImageView
             android:layout_width="24dp"

@@ -16,7 +16,7 @@ fun Fragment.saveToPaper(key: String, value: String?) {
             Paper.book().write(key, encryptedValue)
         }
     } catch (e: Exception) {
-        recordException(e)
+        recordException(e, ::saveToPaper.name)
     }
 }
 

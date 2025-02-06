@@ -31,7 +31,7 @@
         android:layout_marginTop="6dp"
         android:background="@drawable/shimmer_bg_2"
         android:ellipsize="end"
-        android:textSize="12sp" />
+        android:textSize="12dp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewRegular
         android:id="@+id/template_description"
@@ -43,6 +43,6 @@
         android:background="@drawable/shimmer_bg_2"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textSize="10sp" />
+        android:textSize="10dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

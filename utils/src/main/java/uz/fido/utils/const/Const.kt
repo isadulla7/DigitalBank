@@ -19,9 +19,10 @@ object Const {
     const val MAIN_WIDGETS_VERSION = 6
     const val TOTAL_BALANCE_TYPE = "balance_type"
     const val PAPER_CLIENT_TOKEN = "client_token"
+    const val PAPER_CLIENT_FILIAL_CODE = "client_filial_code"
+    const val PAPER_CLIENT_USER_TYPE_ID = "client_type_id"
     const val PAPER_PAYMENT_VERSION = "payment_version"
     const val PAPER_PAYMENT_VERSION_DB = "payment_version_db"
-    const val PAPER_CLIENT_INFO = "client_info"
     const val PAPER_CLIENT_PHONE = "client_phone"
     const val PAPER_CLIENT_ID = "client_id"
     const val PAPER_CLIENT_FULL_NAME = "client_full_name"
@@ -86,6 +87,9 @@ object Const {
     const val HOME_TEMPLATES_EXPANDED = "HOME_TEMPLATES_EXPANDED"
     const val HOME_MY_HOUSE_EXPANDED = "HOME_MY_HOUSE_EXPANDED"
     const val FIREBASE_APP_ICON_NAME = "app_icon"
+    const val SHAKING_ACTION_STATE = "shaking_action_state"
+    const val SELECTED_OPTION = "selected_option"
+    const val SELECTED_FRAGMENT = "selected_fragment"
 
     var request_id = ""
 

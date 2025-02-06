@@ -14,10 +14,10 @@ object ErrorUtils {
                 val code = jsonObject.getInt("code")
                 var message: String? = jsonObject.getString("msg")
                 if (message == null) {
-                    message = "Unknown error&"
+                    message = "Неизвестная ошибка_"
                 }
                 if ((message.contains("502 Bad"))) {
-                    message = "$message Unknown error*"
+                    message = "$message ошибка подключения к серверу"
                 }
                 APIError(
                     code,
@@ -25,29 +25,51 @@ object ErrorUtils {
                     response.errorBody()!!.string()
                 )
             } catch (e: Exception) {
-                if (response.code() == ServerCode.TOKEN_EXPIRED.code) {
-                    APIError(
-                        ServerCode.TOKEN_EXPIRED.code,
-                        "Token expired"
-                    )
-                } else {
-                    APIError(
-                        ServerCode.BAD_REQUEST.code,
-                        "Unknown error#"
-                    )
+                when (response.code()) {
+                    ServerCode.TECHNICAL_WORKS.code -> {
+                        APIError(
+                            ServerCode.TECHNICAL_WORKS.code,
+                            "Ошибка подключения к серверу"
+                        )
+                    }
+
+                    ServerCode.TOKEN_EXPIRED.code -> {
+                        APIError(
+                            ServerCode.TOKEN_EXPIRED.code,
+                            "Срок действия токена истек"
+                        )
+                    }
+
+                    ServerCode.SERVER_ERROR.code -> {
+                        APIError(
+                            ServerCode.SERVER_ERROR.code,
+                            "Внутренняя ошибка сервера"
+                        )
+                    }
+
+                    ServerCode.SERVICE_UNAVAILABLE.code -> {
+                        APIError(
+                            ServerCode.SERVICE_UNAVAILABLE.code,
+                            "Сервер временно недоступен"
+                        )
+                    }
+
+                    else -> {
+                        APIError(
+                            ServerCode.BAD_REQUEST.code,
+                            "Неизвестная ошибка"
+                        )
+                    }
                 }
             }
         }
         return if (response.code() == ServerCode.TOKEN_EXPIRED.code) {
             APIError(
                 ServerCode.TOKEN_EXPIRED.code,
-                "Token expired"
+                "Срок действия токена истек"
             )
         } else {
-            APIError(
-                ServerCode.BAD_REQUEST.code,
-                "Unknown error$"
-            )
+            APIError(ServerCode.BAD_REQUEST.code, "Неизвестная ошибка")
         }
     }
 

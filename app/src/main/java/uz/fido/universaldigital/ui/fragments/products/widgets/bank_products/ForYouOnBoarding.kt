@@ -103,7 +103,7 @@ class ForYouOnBoarding(private var currentItem: Int) : DialogFragment() {
             }
             countDownTimer.start()
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::initStoriesTimer.name)
         }
     }
 

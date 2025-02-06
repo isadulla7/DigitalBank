@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.payment.my_home.add_service
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -44,10 +45,10 @@ class ServiceFragment : BaseFragment<FragmentAddServiceBinding, MyHomeViewModel>
         binding.btnPaymentList.isEnabled(true)
         createRecyclerView()
         initList()
-        onClickView()
+        initSetOnClickListeners()
     }
 
-    private fun onClickView() {
+    private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
             templateList = ArrayList()
@@ -65,6 +66,12 @@ class ServiceFragment : BaseFragment<FragmentAddServiceBinding, MyHomeViewModel>
             }
             goto(R.id.myHouseMultipleAmountFragment, bundleOf("list" to newList))
         }
+        binding.appBar.setOnAdditionalBtnClickListener {
+            updateTemplateList()
+        }
+        binding.appBar.setOnAdditionalLongClickListener {
+            Toast.makeText(requireContext(), "Update balance", Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun createRecyclerView() {
@@ -74,30 +81,34 @@ class ServiceFragment : BaseFragment<FragmentAddServiceBinding, MyHomeViewModel>
         }
     }
 
+    private fun updateTemplateList() {
+        viewModel.getUpdatedTemplateList(getClientToken()).observe(viewLifecycleOwner) {
+            initList()
+        }
+    }
+
     private fun initList() {
-        val skeletonScreen =
-            showSkeleton(binding.recyclerView, serviceAdapter, R.layout.shimmer_item_history, 5)
+        val skeletonScreen = showSkeleton(binding.recyclerView, serviceAdapter, R.layout.shimmer_item_history, 5)
         if (myHouseGroup.id.toString() != "0")
             viewModel.getTemplateList(
                 getClientToken(),
                 GetTemplateListRequest(myHouseGroup.id.toString())
-            )
-                .observe(viewLifecycleOwner) { resources ->
-                    skeletonScreen.hide()
-                    when (resources.status) {
-                        Status.SUCCESS -> {
-                            templateList = resources.data!!.templates
-                            templateList.sortBy { item -> item.ord }
-                            serviceAdapter.setList(templateList)
-                            toCheckList()
-                        }
+            ).observe(viewLifecycleOwner) { resources ->
+                skeletonScreen.hide()
+                when (resources.status) {
+                    Status.SUCCESS -> {
+                        templateList = resources.data!!.templates
+                        templateList.sortBy { item -> item.ord }
+                        serviceAdapter.setList(templateList)
+                        toCheckList()
+                    }
 
-                        Status.ERROR -> {
-                            showSnackbar(resources.message.toString())
-                            toCheckList()
-                        }
+                    Status.ERROR -> {
+                        showSnackbar(resources.message.toString())
+                        toCheckList()
                     }
                 }
+            }
     }
 
     override fun myHouseService(template: Template, position: Int) {

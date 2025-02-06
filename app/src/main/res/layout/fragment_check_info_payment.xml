@@ -42,7 +42,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/name"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -52,7 +52,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -82,7 +82,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/date_time"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -92,7 +92,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -110,7 +110,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/choose_card_text"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -120,7 +120,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -137,7 +137,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/commission"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
                     android:id="@+id/commission"
@@ -146,33 +146,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
-            </androidx.appcompat.widget.LinearLayoutCompat>
-
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="8dp"
-                android:orientation="vertical">
-
-                <uz.fido.utils.view.custom_text_view.TextViewRegular
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/status"
-                    android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
-
-
-                <uz.fido.utils.view.custom_text_view.TextViewMedium
-                    android:id="@+id/status"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -188,7 +162,7 @@
                     android:layout_gravity="center_vertical"
                     android:text="@string/amount"
                     android:textColor="@color/hintColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
 
 
                 <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -198,7 +172,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginTop="4dp"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="14sp" />
+                    android:textSize="14dp" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -239,7 +213,7 @@
                 android:gravity="center"
                 android:text="@string/share"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -266,7 +240,7 @@
                 android:gravity="center"
                 android:text="@string/fiscal_check"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
 
@@ -293,7 +267,7 @@
                 android:gravity="center"
                 android:text="@string/receipt"
                 android:textColor="@color/mainTextColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

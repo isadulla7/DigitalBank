@@ -477,7 +477,7 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
             pdfRenderer.close()
             parcelFileDescriptor.close()
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::closePdfRenderer.name)
         }
     }
 

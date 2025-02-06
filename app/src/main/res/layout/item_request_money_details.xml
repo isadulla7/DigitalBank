@@ -26,7 +26,7 @@
             android:gravity="center"
             android:text="HM"
             android:textColor="@color/whiteColor"
-            android:textSize="20sp" />
+            android:textSize="20dp" />
 
     </androidx.cardview.widget.CardView>
 
@@ -39,7 +39,7 @@
         android:gravity="center|start"
         android:text="UzCard"
         android:textColor="@color/mainTextColor"
-        android:textSize="17sp"
+        android:textSize="17dp"
         app:layout_constraintBottom_toTopOf="@id/text_amount"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/card_view"
@@ -54,7 +54,7 @@
         android:gravity="center|start"
         android:text="+50 000 UZS"
         android:textColor="#19B28D"
-        android:textSize="15sp"
+        android:textSize="15dp"
         app:layout_constraintBottom_toBottomOf="@id/card_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/card_view"

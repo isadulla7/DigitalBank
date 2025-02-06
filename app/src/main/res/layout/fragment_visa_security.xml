@@ -20,7 +20,7 @@
         android:layout_marginTop="32sp"
         android:text="@string/safe_mode"
         android:textColor="@color/mainTextColor"
-        android:textSize="15sp"
+        android:textSize="15dp"
         app:layout_constraintEnd_toStartOf="@id/switch_safe_mode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBar" />
@@ -44,7 +44,7 @@
         android:gravity="center"
         android:text="@string/pay_with_3d_secure"
         android:textColor="@color/hintColor"
-        android:textSize="14sp"
+        android:textSize="14dp"
         app:layout_constraintTop_toBottomOf="@id/switch_safe_mode" />
 
 

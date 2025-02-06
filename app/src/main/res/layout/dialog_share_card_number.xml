@@ -42,7 +42,7 @@
             android:paddingEnd="16sp"
             android:text="@string/copy_card_number"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -70,7 +70,7 @@
             android:paddingEnd="16sp"
             android:text="@string/share"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

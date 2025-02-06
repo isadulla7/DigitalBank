@@ -35,7 +35,7 @@
             android:gravity="center|start"
             android:text="@string/my_number"
             android:textColor="@color/brandBlueColor_60"
-            android:textSize="12sp"
+            android:textSize="12dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,7 +51,7 @@
             android:includeFontPadding="false"
             android:maxLines="2"
             android:textColor="@color/brandBlueColor"
-            android:textSize="16sp"
+            android:textSize="16dp"
             app:layout_constraintTop_toBottomOf="@id/tv_my_number"
             tools:text="+998 93 008 88 09" />
 

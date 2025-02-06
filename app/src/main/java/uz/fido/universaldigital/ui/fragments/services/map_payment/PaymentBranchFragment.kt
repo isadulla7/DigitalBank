@@ -14,7 +14,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.maps.android.SphericalUtil
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.base_dialog_delete.dismiss
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.payment.location.LocalPayment
 import uz.fido.network.domain.model.payment.location.LocalPaymentType
@@ -81,7 +80,6 @@ class PaymentBranchFragment : BaseFragment<FragmentPaymentBranchBinding, Payment
                     R.id.localPaymentFragment,
                     bundleOf("local_payment" to local, "type" to newLocalType)
                 )
-                dismiss
             }
             dialog.show(childFragmentManager, "TAG")
         }

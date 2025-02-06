@@ -14,6 +14,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentRestoreWithEmailBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInResponse
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.EMAIL
 import uz.fido.utils.const.Const.PHONE_NUMBER
@@ -114,6 +115,7 @@ class RestoreWithEmailFragment : BaseFragment<FragmentRestoreWithEmailBinding, R
                             if (signInResponse!!.msg.isNullOrEmpty()) {
                                 signInResponse.phone_number = phoneNumber!!
                                 requireContext().saveSignInResponse(signInResponse)
+                                saveToPaper(Const.PASSWORD_ENC, signInResponse.password)
                                 val bundle = Bundle()
                                 bundle.putString(
                                     ChangePasswordFragment.CHANGE_PASSWORD_OPERATION,

@@ -203,7 +203,7 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
                 }
             }
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::preparePaymentBank.name)
         }
     }
 

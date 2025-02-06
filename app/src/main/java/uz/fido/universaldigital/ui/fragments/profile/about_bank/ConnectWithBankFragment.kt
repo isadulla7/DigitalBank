@@ -53,7 +53,6 @@ class ConnectWithBankFragment : BaseFragment<FragmentConnectWithBankBinding, Men
         emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         emailIntent.addFlags(Intent.FLAG_FROM_BACKGROUND)
         startActivity(emailIntent)
-
     }
 
 }

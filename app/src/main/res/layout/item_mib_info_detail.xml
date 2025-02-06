@@ -13,7 +13,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/mib_type"
         android:textColor="@color/brandBlueColor_50"
-        android:textSize="14sp" />
+        android:textSize="14dp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/tv_tip"
@@ -22,7 +22,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="4dp"
         android:textColor="@color/mainTextColor"
-        android:textSize="14sp"
+        android:textSize="14dp"
         tools:text="Бюро принидутельного исполнения" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -9,7 +9,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.log_out_dialog.view.title
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.InParamsResponse
@@ -37,6 +36,7 @@ import uz.fido.universaldigital.ui.fragments.monitoring.dialog.InfoMonitoringDia
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.format.Format
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
@@ -45,6 +45,7 @@ import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
+import uz.fido.utils.view.custom_text_view.TextViewMedium
 import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -84,7 +85,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
             binding.shimmerView.visibility = View.GONE
             binding.rec.visibility = View.GONE
             binding.layoutEmpty.visibility = View.VISIBLE
-            binding.layoutEmpty.title.text = getString(R.string.card_list_no)
+            binding.layoutEmpty.findViewById<TextViewMedium>(R.id.title).text = getString(R.string.card_list_no)
         }
     }
 
@@ -97,7 +98,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     }
 
     private fun checkFilter() {
-        if (saveViewModel.localFilter) getFilterLocalMonitoringList(0, operationType)
+        if (saveViewModel.localFilter) getFilterLocalMonitoringList(1, operationType)
         else checkLocalMonitoringSave()
     }
 
@@ -177,7 +178,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
 
             }
             var skeletonScreen: SkeletonScreen? = null
-            if (page == 0) {
+            if (page == 1) {
                 totalList = arrayListOf()
                 scrollListener.resetState()
                 binding.shimmerView.visibility = View.VISIBLE
@@ -214,7 +215,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
             )
             viewModel.newFilterLocalMonitoring(getClientToken(), newFilter)
                 .observe(viewLifecycleOwner) {
-                    if (page == 0) {
+                    if (page == 1) {
                         skeletonScreen!!.hide()
                         binding.shimmerView.visibility = View.GONE
                         binding.rec.visibility = View.VISIBLE
@@ -352,32 +353,36 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     }
 
     private fun successMonitoringList(response: ArrayList<LocalMonitoring>?, operationType: Int) {
-        val sortedResponse = ArrayList<LocalMonitoring>()
-        val groupedHashMap: HashMap<String, MutableList<LocalMonitoring>> = when (operationType) {
-            0 -> {
-                response?.forEach {
-                    if (it.tran_type == MONITORING_CREDIT) {
-                        sortedResponse.add(it)
+        try {
+            val sortedResponse = ArrayList<LocalMonitoring>()
+            val groupedHashMap: HashMap<String, MutableList<LocalMonitoring>> = when (operationType) {
+                0 -> {
+                    response?.forEach {
+                        if (it.tran_type == MONITORING_CREDIT) {
+                            sortedResponse.add(it)
+                        }
                     }
+                    groupDataIntoHashMap(sortedResponse)
                 }
-                groupDataIntoHashMap(sortedResponse)
-            }
 
-            1 -> {
-                response?.forEach {
-                    if (it.tran_type == MONITORING_DEBIT) {
-                        sortedResponse.add(it)
+                1 -> {
+                    response?.forEach {
+                        if (it.tran_type == MONITORING_DEBIT) {
+                            sortedResponse.add(it)
+                        }
                     }
+                    groupDataIntoHashMap(sortedResponse)
                 }
-                groupDataIntoHashMap(sortedResponse)
-            }
 
-            else -> {
-                groupDataIntoHashMap(response!!)
+                else -> {
+                    groupDataIntoHashMap(response!!)
+                }
             }
+            val sortedMap = groupedHashMap.toSortedMap(compareByDescending { it })
+            addDateMonitoringList(sortedMap)
+        } catch (e: Exception) {
+            recordException(e, ::successMonitoringList.name)
         }
-        val sortedMap = groupedHashMap.toSortedMap(compareByDescending { it })
-        addDateMonitoringList(sortedMap)
     }
 
     private fun addDateMonitoringList(sortedMap: SortedMap<String, MutableList<LocalMonitoring>>) {
@@ -497,7 +502,8 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                                     "details" to response,
                                     "operation" to "local",
                                     "command" to resource.data?.command,
-                                    "data" to resource.data
+                                    "data" to resource.data,
+                                    "name" to localMonitoring.name
                                 )
                             )
                         }

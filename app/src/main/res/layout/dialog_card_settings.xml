@@ -40,7 +40,7 @@
             android:gravity="center|start"
             android:text="@string/safe_mode"
             android:textColor="@color/mainTextColor"
-            android:textSize="15sp"
+            android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@id/ic_safe_mode" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -73,7 +73,7 @@
             android:gravity="center|start"
             android:text="@string/pay_with_3d_secure"
             android:textColor="@color/mainTextColor"
-            android:textSize="15sp"
+            android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@id/ic_3d_secure" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -105,7 +105,7 @@
             android:gravity="center|start"
             android:text="@string/limit_settings"
             android:textColor="@color/mainTextColor"
-            android:textSize="15sp"
+            android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@id/ic_limits" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -136,7 +136,7 @@
             android:gravity="center|start"
             android:text="@string/reset_pin"
             android:textColor="@color/mainTextColor"
-            android:textSize="15sp"
+            android:textSize="15dp"
             app:layout_constraintStart_toEndOf="@id/ic_reset_pin" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

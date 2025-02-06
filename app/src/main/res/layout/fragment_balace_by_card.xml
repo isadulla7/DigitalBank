@@ -15,7 +15,7 @@
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="24dp"
         android:textColor="@color/brandBlueColor"
-        android:textSize="28sp"
+        android:textSize="28dp"
         tools:text="255 545 so'm" />
 
     <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -25,7 +25,7 @@
         android:layout_marginTop="4dp"
         android:text="@string/choose_cards_for_show_in_total_balance"
         android:textColor="@color/brandBlueColor_40"
-        android:textSize="14sp" />
+        android:textSize="14dp" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:text="@string/main_currency"
             android:textColor="@color/brandBlueColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/switch_main_balance"
@@ -57,7 +57,7 @@
         android:gravity="center"
         android:text="@string/no_currency_cards"
         android:textColor="@color/hintColor"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView

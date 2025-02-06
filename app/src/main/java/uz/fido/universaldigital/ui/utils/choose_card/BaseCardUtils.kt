@@ -138,7 +138,7 @@ object BaseCardUtils {
                 "860030", "986018", "40978402" -> R.drawable.ic_bank_trast
                 "860038" -> R.drawable.ic_bank_turkiston
                 "860051", "986025", "42943400" -> R.drawable.ic_bank_davr
-                "860048", "986023" -> R.drawable.ic_bank_universal
+                "860048", "986023", "561468", "626283", "978048" -> R.drawable.ic_bank_universal
                 "860050", "986024" -> R.drawable.ic_bank_ravnaq
                 "860057", "986027" -> R.drawable.ic_bank_ofb
                 "860008", "986014", "55553687", "55553688", "55553689" -> R.drawable.ic_bank_savdogar

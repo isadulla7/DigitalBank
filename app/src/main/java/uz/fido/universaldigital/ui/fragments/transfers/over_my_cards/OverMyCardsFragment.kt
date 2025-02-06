@@ -131,7 +131,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 binding.etAmount.setText(getAvailableAmount())
                 continueButtonState()
             } catch (e: Exception) {
-                recordException(e)
+                recordException(e, ::initSetOnClickListeners.name)
             }
         }
     }
@@ -286,6 +286,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
         )
         binding.commissionProgress.visibility = View.GONE
         binding.tvCommission.text = msg ?: getString(uz.fido.utils.R.string.unkknown_error)
+        binding.tvMinAmount.visibility = View.GONE
     }
 
     private fun initAmountTextWatcher() {
@@ -326,6 +327,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
         val totalAmount = formattedAmount + (formattedAmount.divide(100.toBigDecimal())) * percent
         when {
             senderCard == null || receiverCard == null -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 Log.d("TAG", "continueButtonState: ${senderCard == null}")
                 hideCommissionBlock()
@@ -333,6 +335,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             senderCard == receiverCard -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text = requireContext().getString(R.string.sender_and_receiver_the_same)
                 hideCommissionBlock()
@@ -340,6 +343,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             senderCard!!.isNotActive() -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text = requireContext().getString(R.string.sender_card_is_not_active)
                 hideCommissionBlock()
@@ -347,6 +351,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             receiverCard!!.isNotActive() -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text = requireContext().getString(R.string.receiver_card_is_not_active)
                 hideCommissionBlock()
@@ -354,6 +359,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             formattedAmount < minAmount -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 binding.tvMinAmount.text =
                     getString(R.string.min_amount) + " ${Format.formatAmount((minAmount).toString())} ${getString(R.string.sum_text)}"
@@ -361,6 +367,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             formattedAmount > maxAmount -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text =
                     getString(R.string.max_amount) + " ${Format.formatAmount((maxAmount).toString())} ${getString(R.string.sum_text)}"
@@ -368,12 +375,14 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             }
 
             totalAmount > senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text = getString(R.string.insufficient_amount)
                 return false
             }
 
             totalAmount > minAmount && totalAmount <= senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 binding.tvMinAmount.text =
                     getString(R.string.min_amount) + " ${Format.formatAmount((minAmount).toString())} ${getString(R.string.sum_text)}"

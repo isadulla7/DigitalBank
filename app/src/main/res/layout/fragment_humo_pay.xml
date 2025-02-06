@@ -23,7 +23,7 @@
         android:includeFontPadding="false"
         android:text="@string/write_off_card"
         android:textColor="@color/brandBlueColor"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBar" />
@@ -56,7 +56,7 @@
         android:enabled="true"
         android:text="@string/add_card"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
@@ -69,7 +69,7 @@
         android:layout_weight="1"
         android:text="@string/pay"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         android:visibility="gone"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent" />

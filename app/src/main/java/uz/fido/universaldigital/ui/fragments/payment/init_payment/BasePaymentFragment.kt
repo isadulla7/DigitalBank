@@ -12,7 +12,6 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.text.InputType
 import android.text.method.DigitsKeyListener
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -58,8 +57,7 @@ import java.util.Calendar
 import java.util.Locale
 
 @SuppressLint("SetTextI18n")
-abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseInterface,
-    PermissionInterface {
+abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseInterface, PermissionInterface {
 
     private lateinit var phoneViewBinding: ViewPaymentPhoneNumberBinding
     private lateinit var myCalendar: Calendar
@@ -274,12 +272,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
                 if (tiLayout == null || tiLayout.error != null) {
                     return false
                 }
-                if (editText == null || !Format.checkForPhoneNumber(
-                        editText.text.toString().replace("+", "").trim()
-                    )
-                ) {
-                    return false
-                }
+                if (editText == null) return false
             }
         }
         if (paymentHashMap["AMOUNT"] != null) {
@@ -589,7 +582,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
                 editTextPhone.setText("+998")
                 editTextPhone.setOnKeyListener { _, _, event -> event.keyCode == KeyEvent.KEYCODE_DEL && editTextPhone.text.toString().length == 4 }
             }
-            editTextPhone.setPrefix(paymentParams.prefix)
+//            editTextPhone.setPrefix(paymentParams.prefix)
             editTextPhone.addTextChangedListener { s ->
                 if (s.toString().length > 4) {
                     if (pastedToView == null) {

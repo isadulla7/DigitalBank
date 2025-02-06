@@ -4,10 +4,10 @@ import java.io.Serializable
 
 data class News(
     val content: String,
-    val date: String,
-    val is_display: String,
-    val img_url: String,
-    val title: String,
+    val id: String,
     var is_read: String,
-    val id: String
+    val date: String,
+    val display: String,
+    val img_url: String,
+    val title: String
 ) : Serializable

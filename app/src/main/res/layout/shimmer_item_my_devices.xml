@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shimmer_bg"
         android:textColor="@color/brandBlueColor"
-        android:textSize="14sp" />
+        android:textSize="14dp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewRegular
         android:id="@+id/last_seen"
@@ -21,6 +21,6 @@
         android:layout_marginTop="4dp"
         android:background="@drawable/shimmer_bg"
         android:textColor="@color/brandBlueColor_40"
-        android:textSize="14sp" />
+        android:textSize="14dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

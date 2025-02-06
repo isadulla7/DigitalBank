@@ -30,7 +30,7 @@
             android:paddingBottom="16dp"
             android:text="@string/operation_with_card"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp" />
+            android:textSize="16dp" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/delete_card"
@@ -54,7 +54,7 @@
                 android:gravity="center|start"
                 android:text="@string/delete_card"
                 android:textColor="@color/brandRedColor"
-                android:textSize="16sp" />
+                android:textSize="16dp" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 

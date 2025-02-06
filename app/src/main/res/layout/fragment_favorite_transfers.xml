@@ -35,7 +35,7 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/saved_receivers"
                 android:textColor="@color/mainTextColor"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/favorite_transfers"
@@ -72,7 +72,7 @@
                     android:paddingEnd="16dp"
                     android:text="@string/add_favorite_receivers"
                     android:textColor="@color/brandBlueColor"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -83,7 +83,7 @@
                 android:layout_marginTop="20dp"
                 android:text="@string/others"
                 android:textColor="@color/mainTextColor"
-                android:textSize="20sp" />
+                android:textSize="20dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/non_favorite_transfers"

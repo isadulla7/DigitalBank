@@ -418,7 +418,7 @@
         android:label="PinCodeFragment" />
     <fragment
         android:id="@+id/notificationsFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.NotificationsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.notifications.NotificationsFragment"
         android:label="NotificationsFragment" />
     <fragment
         android:id="@+id/searchEveryWhereFragment"
@@ -490,7 +490,7 @@
         android:label="OpenWalletFragment" />
     <fragment
         android:id="@+id/readNotificationFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.ReadNotificationFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.notifications.ReadNotificationFragment"
         android:label="ReadNotificationFragment" />
     <fragment
         android:id="@+id/fastAccessControlFragment"
@@ -733,4 +733,20 @@
         android:id="@+id/menuNewHomeFragment"
         android:name="uz.fido.universaldigital.ui.fragments.products.new_design.MenuNewHomeFragment"
         android:label="MenuNewHomeFragment" />
+    <fragment
+        android:id="@+id/mainNewsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.MainNewsFragment"
+        android:label="MainNewsFragment" />
+    <fragment
+        android:id="@+id/mainNewsViewFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.news.MainNewsViewFragment"
+        android:label="MainNewsViewFragment" />
+    <fragment
+        android:id="@+id/actionsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.settings.ActionsFragment"
+        android:label="ActionsFragment" />
+    <fragment
+        android:id="@+id/receiptFullFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.all_card.ReceiptFullFragment"
+        android:label="ActionsFragment" />
 </navigation>

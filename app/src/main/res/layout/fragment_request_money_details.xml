@@ -36,7 +36,7 @@
             android:gravity="center"
             android:text="@string/empty_request_money"
             android:textColor="@color/mainTextColor"
-            android:textSize="17sp" />
+            android:textSize="17dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

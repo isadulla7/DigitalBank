@@ -21,6 +21,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -170,7 +171,6 @@ fun Fragment.showSnackbar(
     title: String? = null,
     buttonText: String? = null
 ) {
-
     val message = getMeaningFulMessage(snackbarText)
     if (message.isNotEmpty() && view != null) {
         val dialog = BaseInfoDialog(title ?: getString(R.string.error), message, buttonText)
@@ -337,9 +337,9 @@ fun limitRange(): CalendarConstraints.Builder {
 }
 
 fun isUserIdentified(): Boolean {
-    val signInResponse = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
-    return if (signInResponse != null) {
-        signInResponse.user_type_id == 1 || signInResponse.user_type_id == 2
+    val userTypeId = Paper.book().read<Int>(Const.PAPER_CLIENT_USER_TYPE_ID)
+    return if (userTypeId != null) {
+        userTypeId == 1 || userTypeId == 2
     } else false
 }
 
@@ -419,30 +419,40 @@ fun String.capitalizeFirstChar(): String {
     return this.replaceFirstChar { it.uppercase() }
 }
 
-fun recordException(e: Exception, activity: Activity) {
+fun recordException(e: Exception, activity: Activity, functionName: String? = "") {
     FirebaseCrashlytics.getInstance().apply {
         setCustomKey("class_name", activity.javaClass.simpleName)
+        setCustomKey("function_name", functionName.orEmpty())
         recordException(e)
     }
 }
 
-fun Activity.recordException(e: Exception) {
+fun Activity.recordException(e: Exception, functionName: String? = "") {
     FirebaseCrashlytics.getInstance().apply {
         setCustomKey("class_name", this@recordException.javaClass.simpleName)
+        setCustomKey("function_name", functionName.orEmpty())
         recordException(e)
     }
 }
 
-fun recordException(e: Exception, fragment: Fragment) {
+fun recordException(e: Exception, fragment: Fragment, functionName: String? = "") {
     FirebaseCrashlytics.getInstance().apply {
         setCustomKey("class_name", fragment.javaClass.simpleName)
+        setCustomKey("function_name", functionName.orEmpty())
         recordException(e)
     }
 }
 
-fun Fragment.recordException(e: Exception) {
+fun Fragment.recordException(e: Exception, functionName: String? = "") {
     FirebaseCrashlytics.getInstance().apply {
         setCustomKey("class_name", this@recordException.javaClass.simpleName)
+        setCustomKey("function_name", functionName.orEmpty())
         recordException(e)
+    }
+}
+
+fun RadioGroup.setChildrenEnable(enable: Boolean) {
+    for (i in 0 until this.childCount) {
+        this.getChildAt(i).isEnabled = enable
     }
 }

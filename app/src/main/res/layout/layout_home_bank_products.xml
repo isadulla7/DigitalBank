@@ -12,7 +12,7 @@
         android:paddingVertical="4dp"
         android:text="@string/for_you"
         android:textColor="@color/brandBlueColor"
-        android:textSize="16sp" />
+        android:textSize="16dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_bank_products"

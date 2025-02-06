@@ -13,7 +13,7 @@
         android:background="@drawable/shimmer_circle"
         android:gravity="center"
         android:textColor="@color/brandRedColor"
-        android:textSize="20sp" />
+        android:textSize="20dp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:layout_width="56dp"
@@ -27,7 +27,7 @@
         android:lineSpacingExtra="1.8dp"
         android:maxLines="2"
         android:textColor="@color/brandBlueColor"
-        android:textSize="12sp" />
+        android:textSize="12dp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:layout_width="40dp"
@@ -37,6 +37,6 @@
         android:background="@drawable/shimmer_bg"
         android:gravity="center"
         android:textColor="@color/brandBlueColor"
-        android:textSize="12sp" />
+        android:textSize="12dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

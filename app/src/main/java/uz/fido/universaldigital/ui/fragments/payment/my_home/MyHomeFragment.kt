@@ -73,8 +73,7 @@ class MyHomeFragment : DownloadPayment(), BaseInterface {
     }
 
     private fun getMyHouseList() {
-        val skeletonScreen =
-            showSkeleton(binding.recyclerView, adapterGroup, R.layout.shimmer_item_my_home, 4)
+        val skeletonScreen = showSkeleton(binding.recyclerView, adapterGroup, R.layout.shimmer_item_my_home, 4)
         viewModel.getTemplateGroups(getClientToken()).observe(viewLifecycleOwner) { resource ->
             skeletonScreen.hide()
             when (resource.status) {
@@ -83,25 +82,22 @@ class MyHomeFragment : DownloadPayment(), BaseInterface {
                     response.sortBy { it.order }
                     list = response
                     setList(list)
-                   saveHomeList(list)
-
+                    saveHomeList(list)
                 }
 
                 Status.ERROR -> {
-                    ///showSnackbar(it.message.toString())
                     initEmptyView()
-
                 }
             }
         }
     }
 
     private fun saveHomeList(list: ArrayList<MyHouseGroup>) {
-        val newlist= arrayListOf<MyHouseGroup>()
+        val newList = arrayListOf<MyHouseGroup>()
         val first = MyHouseGroup("0", getString(R.string.add_your_home), 0)
-        newlist.add(first)
-        newlist.addAll(list)
-        utilsViewModel.updateMyHouse(newlist)
+        newList.add(first)
+        newList.addAll(list)
+        utilsViewModel.updateMyHouse(newList)
     }
 
     private fun setList(list: java.util.ArrayList<MyHouseGroup>) {

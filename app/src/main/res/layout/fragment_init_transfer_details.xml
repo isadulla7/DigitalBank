@@ -443,7 +443,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textColor="@color/hintColor"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:visibility="visible"
                 android:layout_marginBottom="64dp"
                 app:layout_constraintBottom_toBottomOf="parent"

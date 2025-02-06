@@ -38,7 +38,7 @@
                 android:paddingVertical="16dp"
                 android:text="Your order has been placed!"
                 android:textColor="@color/whiteColor"
-                android:textSize="15sp" />
+                android:textSize="15dp" />
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.cardview.widget.CardView>
 

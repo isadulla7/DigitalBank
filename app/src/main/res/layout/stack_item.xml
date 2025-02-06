@@ -18,7 +18,7 @@
         android:layout_marginHorizontal="16dp"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textSize="17sp"
+        android:textSize="17dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="HUMO VAQTINCHALIK" />
@@ -42,7 +42,7 @@
         android:ellipsize="end"
         android:maxLines="2"
         android:textColor="@color/brandBlueColor"
-        android:textSize="14sp"
+        android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/notification_title"
         tools:text="Humo tizimi vaqtinchalik ishlfaoliyatida emas qaytadan urinib kuring" />

@@ -27,7 +27,7 @@
         android:paddingEnd="16sp"
         android:text="@string/card_damaged"
         android:textColor="@color/mainTextColor"
-        android:textSize="15sp" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/cause_2"
@@ -39,7 +39,7 @@
         android:paddingEnd="16sp"
         android:text="@string/name_changed"
         android:textColor="@color/mainTextColor"
-        android:textSize="15sp" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/cause_3"
@@ -51,7 +51,7 @@
         android:paddingEnd="16sp"
         android:text="@string/card_lost"
         android:textColor="@color/mainTextColor"
-        android:textSize="15sp" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/cause_4"
@@ -63,7 +63,7 @@
         android:paddingEnd="16sp"
         android:text="@string/card_expired"
         android:textColor="@color/mainTextColor"
-        android:textSize="15sp" />
+        android:textSize="15dp" />
 
     <TextView
         android:id="@+id/cause_5"
@@ -76,6 +76,6 @@
         android:paddingEnd="16sp"
         android:text="@string/other_cause"
         android:textColor="@color/mainTextColor"
-        android:textSize="15sp" />
+        android:textSize="15dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

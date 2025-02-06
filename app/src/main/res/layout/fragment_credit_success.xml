@@ -32,7 +32,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp"
+            android:textSize="16dp"
             tools:text="Кредит микрозайм успешно открыт" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -42,7 +42,7 @@
             android:layout_marginTop="4dp"
             android:gravity="center"
             android:textColor="@color/mainTextColor"
-            android:textSize="12sp"
+            android:textSize="12dp"
             tools:text="18.05.2023 * 10:25" />
 
         <uz.fido.utils.view.custom_text_view.TextViewBold
@@ -52,7 +52,7 @@
             android:layout_marginTop="12dp"
             android:gravity="center"
             android:textColor="@color/mainTextColor"
-            android:textSize="24sp"
+            android:textSize="24dp"
             android:visibility="gone"
             tools:text="68 600 сум" />
 
@@ -65,7 +65,7 @@
         android:layout_margin="16dp"
         android:text="@string/to_main_page"
         android:textColor="@color/frozenWhite"
-        android:textSize="16sp"
+        android:textSize="16dp"
         app:cornerRadius="12dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/cornered_bg_12dp"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/currency_icon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="start|center_vertical"
+            android:src="@drawable/home_rate_usd"
+            tools:ignore="ContentDescription" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/currency_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_weight="1"
+            android:gravity="start"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="17dp"
+            tools:text="USD" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/buy"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="12dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/buying_rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|start"
+                android:textColor="@color/brandBlueColor"
+                android:textSize="16dp"
+                tools:text="11590 UZS" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/sell"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="12dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/sell_rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|start"
+                android:textColor="@color/brandBlueColor"
+                android:textSize="16dp"
+                tools:text="11590 UZS" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/central_bank"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="12dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/central_bank"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center|start"
+                android:textColor="@color/brandBlueColor"
+                android:textSize="16dp"
+                tools:text="11590 UZS" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

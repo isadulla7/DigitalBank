@@ -15,7 +15,7 @@
         android:layout_weight="1"
         tools:text="yanvar"
         android:textColor="@color/mainTextColor"
-        android:textSize="15sp" />
+        android:textSize="15dp" />
 
 
     <ImageView

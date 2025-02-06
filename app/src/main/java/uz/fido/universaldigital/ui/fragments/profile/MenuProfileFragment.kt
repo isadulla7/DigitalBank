@@ -64,7 +64,7 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
         binding.version.text = getString(R.string.version, BuildConfig.VERSION_NAME) + "(${BuildConfig.VERSION_CODE})" + if (BuildConfig.DEBUG) "-DEBUG" else ""
         storage = FirebaseStorage.getInstance()
         storageReference = storage!!.reference
-        binding.newDesignSwitch.isChecked = getFromPaper(Const.NEW_DESIGN, "N") == "Y"
+        binding.appMode.text = if (getFromPaper(Const.NEW_DESIGN, "N") == "Y") "Pro" else "Lite"
     }
 
     private fun initUserIdentifyStatus() {

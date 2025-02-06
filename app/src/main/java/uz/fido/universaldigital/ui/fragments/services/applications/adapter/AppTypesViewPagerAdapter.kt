@@ -30,7 +30,7 @@ class AppTypesViewPagerAdapter(private var context: Context, fm: FragmentManager
     override fun getPageTitle(position: Int): CharSequence {
         return when (position) {
             0 -> context.getString(R.string.all)
-            1 -> context.getString(R.string.successfully)
+            1 -> context.getString(R.string.successful)
             2 -> context.getString(R.string.returned)
             else -> ""
         }

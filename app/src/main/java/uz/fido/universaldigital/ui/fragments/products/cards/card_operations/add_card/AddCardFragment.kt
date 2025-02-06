@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
-import com.ocnyang.pagetransformerhelp.cardtransformer.AlphaAndScalePageTransformer
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.AddCardRequest
@@ -86,6 +85,9 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
     private fun init() {
         binding.cardNumber.addTextChangedListener { checkEditTexts() }
         binding.cardExpire.addTextChangedListener { checkEditTexts() }
+        binding.makeMain.setOnCheckedChangeListener { _, isChecked ->
+            isMain = if (isChecked) "Y" else "N"
+        }
     }
 
     private fun checkEditTexts() {
@@ -126,13 +128,6 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
         }
     }
 
-    private fun isMain(): String {
-        binding.makeMain.setOnCheckedChangeListener { _, isChecked ->
-            isMain = if (isChecked) "Y" else "N"
-        }
-        return isMain
-    }
-
     private fun checkCardRequest() {
         val cardNumber = binding.cardNumber.editableText.toString().replace(" ", "")
         val expireDate =
@@ -159,7 +154,7 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
                             phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE),
                             object_name = cardName,
                             sms_code = "",
-                            is_main = isMain(),
+                            is_main = isMain,
                             bg_icon_name = "bg_1",
                             otp_id = it.data?.otp_id ?: "",
                             string_line = ""
@@ -235,7 +230,6 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
         val cardBgAdapter = CardBackgroundAdapter(requireContext(), getCardBackgroundList(), this)
         binding.viewPager.adapter = cardBgAdapter
         binding.dotsIndicator.setViewPager(binding.viewPager)
-        binding.viewPager.setPageTransformer(true, AlphaAndScalePageTransformer())
     }
 
     private fun isValid(cardNumber: String): Boolean {

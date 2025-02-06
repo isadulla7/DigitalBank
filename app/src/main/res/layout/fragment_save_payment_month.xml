@@ -127,7 +127,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@string/auto_payment_info"
                         android:textColor="@color/hintColor"
-                        android:textSize="13sp"
+                        android:textSize="13dp"
                         android:visibility="gone" />
 
                     <androidx.appcompat.widget.LinearLayoutCompat
@@ -185,7 +185,7 @@
                             android:layout_weight="1"
                             android:text="@string/monthly"
                             android:textColor="?attr/colorAccent"
-                            android:textSize="16sp" />
+                            android:textSize="16dp" />
 
                         <androidx.appcompat.widget.SwitchCompat
                             android:id="@+id/sswitch_monthly"

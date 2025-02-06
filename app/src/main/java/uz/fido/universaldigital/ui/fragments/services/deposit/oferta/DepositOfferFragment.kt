@@ -23,12 +23,11 @@ class DepositOfferFragment : BaseSimpleFragment<FragmentDepositOfertaBinding>
         arguments?.let {
             deposit = it.serializable<Deposit>("deposit") as Deposit
         }
-        init()
-        onClickView()
-
+        initOffers()
+        initSetOnClickListeners()
     }
 
-    private fun onClickView() {
+    private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
             gotoWithSlide(
@@ -44,14 +43,16 @@ class DepositOfferFragment : BaseSimpleFragment<FragmentDepositOfertaBinding>
         }
     }
 
-    private fun init() {
+    private fun initOffers() {
         binding.webView.settings.builtInZoomControls = true
         val website = when (deposit.dep_id) {
             1874 -> "https://ibank.ubank.uz/cib/sarmoya-25.html"
             1674 -> "https://ibank.ubank.uz/cib/qulay_daromad.html"
             1694 -> "https://ibank.ubank.uz/cib/yubiley.html"
             1753 -> "https://ibank.ubank.uz/cib/yuksalish.html"
-            else -> "https://universalbank.uz/juristic"
+            1915 -> "https://ibank.ubank.uz/cib/foydali-hamyon18.html"
+            1916 -> "https://ibank.ubank.uz/cib/foydali-hamyon24.html"
+            else -> "https://ibank.ubank.uz/cib/defaultdig.html"
         }
         binding.webView.loadUrl(website)
     }

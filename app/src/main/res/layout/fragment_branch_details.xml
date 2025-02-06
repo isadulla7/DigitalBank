@@ -64,7 +64,7 @@
             android:gravity="center"
             android:text="@string/not_mentioned"
             android:textColor="@color/mainTextColor"
-            android:textSize="16sp"
+            android:textSize="16dp"
             android:transitionName="name" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -79,8 +79,7 @@
                 android:gravity="center|start"
                 android:text="@string/placed_location"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/icon" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/address"
@@ -90,15 +89,15 @@
                 android:layout_weight="1"
                 android:gravity="center|end"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/icon" />
+                android:textSize="14dp" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="20dp">
+            android:layout_marginTop="16dp">
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="wrap_content"
@@ -106,8 +105,7 @@
                 android:gravity="center|start"
                 android:text="@string/working_time"
                 android:textColor="@color/brandBlueColor_40"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/icon" />
+                android:textSize="14dp" />
 
             <uz.fido.utils.view.custom_text_view.TextViewMedium
                 android:id="@+id/working_time"
@@ -117,8 +115,34 @@
                 android:layout_weight="1"
                 android:gravity="center|end"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/icon" />
+                android:textSize="14dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|start"
+                android:text="@string/phone_number"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/helpline"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_weight="1"
+                android:gravity="center|end"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14dp" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
@@ -146,7 +170,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/call"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -170,7 +194,7 @@
                     android:gravity="center"
                     android:text="@string/show_direction"
                     android:textColor="@color/mainTextColor"
-                    android:textSize="16sp" />
+                    android:textSize="16dp" />
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

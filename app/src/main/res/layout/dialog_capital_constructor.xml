@@ -26,7 +26,7 @@
         android:paddingEnd="16dp"
         android:text="@string/extra_option"
         android:textColor="@color/mainTextColor"
-        android:textSize="16sp" />
+        android:textSize="16dp" />
 
 
     <androidx.appcompat.widget.LinearLayoutCompat
@@ -55,7 +55,7 @@
             android:layout_weight="1"
             android:text="@string/replenishment"
             android:textColor="@color/mainTextColor"
-            android:textSize="15sp" />
+            android:textSize="15dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -85,7 +85,7 @@
             android:layout_weight="1"
             android:text="@string/interest_payment"
             android:textColor="@color/mainTextColor"
-            android:textSize="15sp" />
+            android:textSize="15dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -115,7 +115,7 @@
             android:layout_weight="1"
             android:text="@string/capitalization"
             android:textColor="@color/mainTextColor"
-            android:textSize="15sp" />
+            android:textSize="15dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -145,7 +145,7 @@
             android:layout_weight="1"
             android:text="@string/partial_withdrawal"
             android:textColor="@color/mainTextColor"
-            android:textSize="15sp" />
+            android:textSize="15dp" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

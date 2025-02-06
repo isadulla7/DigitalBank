@@ -38,7 +38,7 @@
                 android:text="Пополнения счета"
                 android:layout_weight="1"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp"/>
+                android:textSize="14dp"/>
 
 
 
@@ -61,7 +61,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/mainTextColor"
-                android:textSize="14sp"/>
+                android:textSize="14dp"/>
 
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:id="@+id/time"
@@ -71,7 +71,7 @@
                 android:layout_weight="1"
                 android:gravity="end"
                 android:textColor="@color/brandBlueColor_50"
-                android:textSize="12sp"/>
+                android:textSize="12dp"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.appcompat.widget.LinearLayoutCompat>

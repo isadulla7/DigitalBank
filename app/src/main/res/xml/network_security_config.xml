@@ -3,10 +3,10 @@
 
     <base-config cleartextTrafficPermitted="false" />
 
-    <domain-config>
+    <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">https://ra.ubank.uz</domain>
         <pin-set>
-            <pin digest="SHA-256">47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU=</pin>
+            <pin digest="SHA-256">nhwFdtQQBT48b3nlYu8XKRq2RIp6Vuo89WSnbHAEZo0=</pin>
         </pin-set>
     </domain-config>
 
@@ -20,21 +20,18 @@
     </domain-config>
 
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">87.237.237.230:8181</domain>
-        <domain includeSubdomains="true">87.237.237.230</domain>
-        <domain includeSubdomains="true">ip-api.com</domain>
         <domain includeSubdomains="true">requestid.universalbank.uz</domain>
         <domain includeSubdomains="true">requestid.universalbank.uz/api</domain>
         <domain includeSubdomains="true">requestid.universalbank.uz/api/request</domain>
         <domain includeSubdomains="true">requestid.universalbank.uz/api/request/identify</domain>
         <domain includeSubdomains="true">https://requestid.universalbank.uz/api/request/identify</domain>
-        <domain includeSubdomains="true">https://requestid.universalbank.uz/api/request/identify/192.168.20.148</domain>
         <domain includeSubdomains="true">universaldigitalbank.uz</domain>
         <domain includeSubdomains="true">my.fido.uz</domain>
         <domain includeSubdomains="true">universaldigitalbank</domain>
         <domain includeSubdomains="true">universaldigitalbank.page</domain>
         <domain includeSubdomains="true">universaldigitalbank.page.link</domain>
         <domain includeSubdomains="true">universaldigitalbank.page.link/qrcard</domain>
+        <domain includeSubdomains="true">ra.ubank.uz</domain>
     </domain-config>
 
 </network-security-config>

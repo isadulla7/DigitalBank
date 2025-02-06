@@ -111,7 +111,11 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        operation = requireArguments().getString(Const.OPERATION).toString()
+        try {
+            operation = requireArguments().getString(Const.OPERATION).toString()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -609,6 +613,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                     Status.SUCCESS -> {
                         val signInResponse = it.data!!
                         requireContext().saveSignInResponse(signInResponse)
+                        saveToPaper(Const.PASSWORD_ENC, signInResponse.password)
                         gotoWithSlide(
                             R.id.changePasswordFragment2, bundleOf(
                                 ChangePasswordFragment.CHANGE_PASSWORD_OPERATION to ChangePasswordFragment.CHANGE_PASSWORD_SIGNUP

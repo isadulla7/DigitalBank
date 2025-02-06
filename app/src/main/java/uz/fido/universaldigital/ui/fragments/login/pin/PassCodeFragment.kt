@@ -81,9 +81,13 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
-            arguments?.let { operation = it.getString(Const.OPERATION, "") }
+            if (arguments != null) {
+                if (arguments?.getString(Const.OPERATION, "") != null) {
+                    operation = requireArguments().getString(Const.OPERATION, "")
+                }
+            }
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::onCreate.name)
         }
     }
 
@@ -204,19 +208,17 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     private fun fingerAuth() {
         val executor = Executors.newSingleThreadExecutor()
-        val biometricPrompt =
-            BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    requireActivity().runOnUiThread {
-                        fillDots()
-                        pin = getDecodedString(getFromPaper(Const.PAPER_CLIENT_PIN))
-                        swapKeys()
-                    }
+        val biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                requireActivity().runOnUiThread {
+                    fillDots()
+                    pin = getDecodedString(getFromPaper(Const.PAPER_CLIENT_PIN))
+                    swapKeys()
                 }
+            }
 
-            })
+        })
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(getString(R.string.enter_app_with_touch_id))
             .setNegativeButtonText(getString(R.string.cancel)).build()
@@ -497,7 +499,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 binding.errorText.text = ""
             }, 1000)
         } catch (e: Exception) {
-            recordException(e)
+            recordException(e, ::errorPin.name)
         }
         setWrongPinCounter()
     }

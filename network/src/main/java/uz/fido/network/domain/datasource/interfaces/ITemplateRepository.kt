@@ -35,6 +35,10 @@ interface ITemplateRepository {
         token: String, getTemplateListRequest: GetTemplateListRequest
     ): Resource<GetTemplateListResponse>
 
+    suspend fun getUpdatedTemplateList(
+        token: String
+    ): Resource<GetTemplateListResponse>
+
     suspend fun getTemplate(
         token: String, getTemplateRequest: GetTemplateRequest
     ): Resource<GetTemplateResponse>
