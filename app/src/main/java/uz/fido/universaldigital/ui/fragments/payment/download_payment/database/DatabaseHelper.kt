@@ -10,11 +10,10 @@ import uz.fido.network.domain.model.payment.PaymentGroup
 import uz.fido.network.domain.model.payment.PaymentParams
 import uz.fido.network.domain.model.payment.PaymentReference
 import uz.fido.network.domain.model.payment.PaymentService
+import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
 import uz.fido.utils.const.Const
 import uz.fido.utils.log.Logger
-import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
 import java.sql.SQLException
-import kotlin.collections.ArrayList
 
 class DatabaseHelper(
     private val context: Context,
@@ -372,8 +371,7 @@ class DatabaseHelper(
 
     @Throws(SQLException::class)
     fun getServiceList(serviceGroupCode: String): ArrayList<PaymentService> {
-        val query =
-            "select * from " + PaymentService.TABLE_NAME + " where ${PaymentService.SERVICE_GROUP_CODE} = '" + serviceGroupCode + "' "
+        val query = "select * from " + PaymentService.TABLE_NAME + " where ${PaymentService.SERVICE_GROUP_CODE} = '" + serviceGroupCode + "' "
         val cursor = this.readableDatabase.rawQuery(query, null)
         val services = ArrayList<PaymentService>()
         val nls = LocaleHelper.getSelectedLang(context)
