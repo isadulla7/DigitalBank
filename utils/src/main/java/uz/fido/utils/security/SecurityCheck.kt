@@ -1,12 +1,12 @@
 package uz.fido.utils.security
 
 import android.app.Activity
-import android.os.Build
+import com.google.firebase.crashlytics.internal.common.CommonUtils
+import com.scottyab.rootbeer.RootBeer
 import java.io.File
 import java.net.NetworkInterface
 import java.net.SocketException
 import java.util.Collections
-import com.google.firebase.crashlytics.internal.common.CommonUtils;
 
 
 object SecurityCheck {
@@ -26,9 +26,11 @@ object SecurityCheck {
         return false
     }
 
-    fun Activity.isRunningOnEmulator(): Boolean =EmulatorCheck(this).isProbablyAnEmulator()
+    fun Activity.isRunningOnEmulator(): Boolean = EmulatorCheck(this).isProbablyAnEmulator()
 
-    fun Activity.isPhoneRooted() = checkRootedFiles() || canExecuteSu() || isMagiskPresent() || canWriteToSystem() || checkRootProps() || CommonUtils.isRooted(this)
+    fun Activity.isPhoneRooted(): Boolean {
+        return checkRootedFiles() || canExecuteSu() || isMagiskPresent() || canWriteToSystem() || checkRootProps() || CommonUtils.isRooted(this) || RootBeer(this).isRooted
+    }
 
     private fun checkRootedFiles(): Boolean {
         val paths = arrayOf(

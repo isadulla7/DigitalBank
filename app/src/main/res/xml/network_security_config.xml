@@ -13,7 +13,6 @@
     <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">127.0.0.1</domain>
         <domain includeSubdomains="true">firebasestorage.googleapis.com</domain>
-        <domain includeSubdomains="true">koronapay.com</domain>
         <domain includeSubdomains="true">195.158.30.142</domain>
         <domain includeSubdomains="true">myid.uz</domain>
         <domain includeSubdomains="true">10.50.50.166</domain>

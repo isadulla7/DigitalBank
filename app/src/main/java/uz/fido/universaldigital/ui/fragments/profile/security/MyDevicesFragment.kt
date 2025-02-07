@@ -36,12 +36,11 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
     FragmentMyDevicesBinding::inflate, MyDevicesViewModel::class.java
 ), BaseInterface {
 
+    private lateinit var devicesAdapter: DevicesAdapter
     private lateinit var deviceDialog: DeviceDialog
 
-    private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
     private var list = ArrayList<UserDevices>()
-    private var devicesAdapter: DevicesAdapter? = null
-    private var userDevices: UserDevices? = null
+    private var userDevice: UserDevices? = null
 
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
@@ -49,7 +48,7 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
             if (list.isNotEmpty()) {
                 val first = list[0]
                 first.my_device_code = requireActivity().getDeviceIds()
-                terminateSessionRequest(first, "deleteAll")
+                terminateSessionRequest(first, OPERATION_DELETE_ALL)
             }
         }
     }
@@ -68,7 +67,7 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
             adapter = devicesAdapter
         }
         binding.deviceName.text = android.os.Build.MODEL
-        binding.lastSeen.text = dateFormat.format(Calendar.getInstance().time)
+        binding.lastSeen.text = SimpleDateFormat("dd.MM.yyyy HH:mm", Locale.getDefault()).format(Calendar.getInstance().time)
     }
 
     override fun terminateSessionType(type: String) {
@@ -80,7 +79,8 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
         binding.myDevice.visibility = View.GONE
         binding.myDeviceTitle.visibility = View.GONE
         binding.otherDeviceTitle.visibility = View.GONE
-        val skeleton = showSkeleton(binding.trustedDevices, devicesAdapter!!, R.layout.shimmer_item_my_devices, 4)
+        binding.deleteAll.visibility = View.GONE
+        val skeleton = showSkeleton(binding.trustedDevices, devicesAdapter, R.layout.shimmer_item_my_devices, 4)
         viewModel.getActiveSessions(getClientToken(), GetUserDevicesRequest(user_id = getClientId())).observe(viewLifecycleOwner) { it ->
             skeleton.hide()
             binding.currentDevice.visibility = View.VISIBLE
@@ -89,6 +89,7 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
                     binding.myDevice.visibility = View.VISIBLE
                     binding.myDeviceTitle.visibility = View.VISIBLE
                     binding.otherDeviceTitle.visibility = View.VISIBLE
+                    binding.deleteAll.visibility = View.VISIBLE
                     val data = it.data?.user_devices
                     list.clear()
                     data?.forEach {
@@ -114,9 +115,10 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
         showProgress()
         viewModel.checkDevice(
             getClientToken(), CheckDeviceRequest(
-                device_type = item.device_type, user_id = getClientId(),
+                user_id = getClientId(),
                 app_key_hash = AppSignatureHelper(requireContext()).appKeyHash,
-                phone_number = getClientPhoneNumber()
+                phone_number = getClientPhoneNumber(),
+                current_device_code = requireActivity().getDeviceIds()
             )
         ).observe(viewLifecycleOwner) {
             when (it.status) {
@@ -141,30 +143,39 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
     }
 
     override fun terminateSession(item: UserDevices) {
-        userDevices = item
-        userDevices?.my_device_code = requireActivity().getDeviceIds()
+        userDevice = item
+        userDevice?.my_device_code = requireActivity().getDeviceIds()
         super<BaseFragment>.terminateSession(item)
         deviceDialog = DeviceDialog(item, object : BaseInterface {
             override fun deviceDelete() {
                 super.deviceDelete()
                 deviceDialog.dismiss()
-                terminateSessionRequest(userDevices!!, "delete")
+                terminateSessionRequest(userDevice!!, OPERATION_DELETE)
             }
 
             override fun deviceState() {
                 super.deviceState()
                 deviceDialog.dismiss()
-                val state = if (item.status == "A") "deactivate" else "activate"
-                terminateSessionRequest(userDevices!!, state)
+                val state = if (item.status == "A") OPERATION_DEACTIVATE else OPERATION_ACTIVATE
+                terminateSessionRequest(userDevice!!, state)
             }
 
             override fun deviceDeleteAll() {
                 super.deviceDeleteAll()
                 deviceDialog.dismiss()
-                terminateSessionRequest(userDevices!!, "deleteAll")
+                terminateSessionRequest(userDevice!!, OPERATION_DELETE_ALL)
             }
         })
         deviceDialog.show(childFragmentManager, "")
+    }
+
+
+    companion object {
+        const val OPERATION_DELETE = "delete"
+        const val OPERATION_DELETE_ALL = "deleteAll"
+        const val OPERATION_ACTIVATE = "activate"
+        const val OPERATION_DEACTIVATE = "deactivate"
+
     }
 
 }

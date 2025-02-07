@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -24,7 +24,6 @@ import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.security.SecurityCheck.isPhoneRooted
-import uz.fido.utils.security.SecurityCheck.isRunningOnEmulator
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
@@ -59,10 +58,10 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkForDeviceLock() {
-        if (this.isRunningOnEmulator()) {
+       /* if (this.isRunningOnEmulator()) {
             openLockActivity()
             return
-        } else if (this.isPhoneRooted()) {
+        } else*/ if (this.isPhoneRooted()) {
             openRootedDeviceWarning()
             return
         } else {
@@ -95,7 +94,7 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun setStartDestination(bundle: Bundle? = null) {
-        val navController = Navigation.findNavController(this, R.id.nav_host_login)
+        val navController = findNavController(this, R.id.nav_host_login)
         val navGraph = navController.navInflater.inflate(R.navigation.navigation_login)
         navGraph.setStartDestination(getStartDestination())
         navController.setGraph(navGraph, bundle)

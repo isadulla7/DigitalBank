@@ -1,11 +1,13 @@
 package uz.fido.universaldigital.ui.fragments.chat.socket_client
 
+import android.os.Build
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import uz.fido.network.BuildConfig
 import uz.fido.network.R
 import uz.fido.network.di.Keys
 import uz.fido.network.domain.datasource.services.SocketInterface
@@ -25,7 +27,7 @@ object SocketClient {
     private val loggingInterceptor = run {
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         httpLoggingInterceptor.apply {
-            httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+            if (BuildConfig.DEBUG) httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         }
     }
 
@@ -63,7 +65,7 @@ object SocketClient {
 
     private val sslContext: SSLContext = kotlin.run {
         val keyStore = KeyStore.getInstance("PKCS12")
-        val password = "223377".toCharArray()
+        val password = Keys.getCertFilePassword().toCharArray()
         try {
             keyStore.load(caFileInputStream, password)
         } catch (e: Exception) {
@@ -71,7 +73,11 @@ object SocketClient {
         }
         val keyManagerFactory = KeyManagerFactory.getInstance("X509")
         keyManagerFactory.init(keyStore, password)
-        val sslContext = SSLContext.getInstance("TLSv1.2")
+        val sslContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            SSLContext.getInstance("TLSv1.3")
+        } else {
+            SSLContext.getInstance("TLSv1.2")
+        }
         sslContext.init(keyManagerFactory.keyManagers, null, SecureRandom())
         return@run sslContext
     }
@@ -81,8 +87,7 @@ object SocketClient {
     private val client: OkHttpClient =
         OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager() as X509TrustManager)
             .addInterceptor(Interceptor {
-                val request: Request = it.request().newBuilder()
-                    .build()
+                val request: Request = it.request().newBuilder().build()
                 return@Interceptor it.proceed(request)
             })
             .addInterceptor(baseInterceptor)
