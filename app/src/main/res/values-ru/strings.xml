@@ -198,7 +198,7 @@
     <string name="delete_title">Удалить лица</string>
     <string name="permission">Разрешение</string>
     <string name="enter_settings">Войти в настройки</string>
-    <string name="location_permission_description">Для дальшего продолжения, пожалуйста, дайте доступ на определение геолокации</string>
+    <string name="location_permission_description">Чтобы определить точное местоположение, предоставьте доступ к геолокации</string>
     <string name="payment_on_the_spot">Оплата на местах</string>
     <string name="search">Поиск</string>
     <string name="all">Все</string>
@@ -247,7 +247,7 @@
     <string name="control_amount">Контрольная сумма</string>
     <string name="unique_qr_of_payment_system">Уникальный идентификатор QR кода в платёжной системе</string>
     <string name="qr_not_supported">Данный формат QR код не поддерживается</string>
-    <string name="contact_permission_description">Для дальшего продолжения, пожалуйста, дайте доступ к контактам</string>
+    <string name="contact_permission_description">Разрешите доступ контактам, чтобы упростить ввод данных</string>
     <string name="camera_permission_description">Для дальшего продолжения, пожалуйста, дайте доступ к камере устройства</string>
     <string name="summ">Сумовые</string>
     <string name="currency">Валютные</string>
@@ -337,7 +337,7 @@
     <string name="summa">сум</string>
     <string name="text_empty_loan">Кредит пока недоступен</string>
     <string name="by_phone_number">По номеру телефона</string>
-    <string name="saved_receivers">Избранные получатели</string>
+    <string name="saved_receivers">Выбранные фильтры</string>
     <string name="card_not_found">Карта не найдена</string>
     <string name="transfer">Перевод</string>
     <string name="by_wallet_number">По номеру кошелька</string>
@@ -401,7 +401,7 @@
     <string name="fill_the_gaps">Заполните поля</string>
     <string name="my_cards">Мои карты</string>
     <string name="you_dont_have_card">У вас нет карт</string>
-    <string name="no_card_description">Добавьте карту для отслеживая расходов, доходов а также для мониторинга баланса</string>
+    <string name="no_card_description">Добавьте карту для отслеживания расходов, доходов, а также для мониторинга баланса</string>
     <string name="currency_cards">Валютные карты</string>
     <string name="wallets">Кошельки</string>
     <string name="cards">Карты</string>
@@ -508,8 +508,8 @@
     <string name="usd">USD</string>
     <string name="filter">Фильтр</string>
     <string name="select_period">Выбрать период</string>
-    <string name="period">Период</string>
-    <string name="funds_flow">Движение средсвт</string>
+    <string name="period">Параметры фильтра </string>
+    <string name="funds_flow">Движение средств</string>
     <string name="card">Карты</string>
     <string name="status">Статус</string>
     <string name="activ">Актив</string>
@@ -688,7 +688,7 @@
     <string name="auto_payment_no">Автоплатежей пока нет</string>
     <string name="auto_payment_no_title">Создайте автоплатеж для оплачивания по установленному вами времени</string>
     <string name="active">Активный</string>
-    <string name="ne_active">Неактивный</string>
+    <string name="ne_active">Деактивировать</string>
     <string name="daily">По дням</string>
     <string name="monthly_2">Месячный</string>
     <string name="wallet_settings">Настройка кошелька</string>

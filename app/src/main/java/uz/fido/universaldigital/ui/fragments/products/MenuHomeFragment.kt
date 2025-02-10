@@ -3,12 +3,14 @@ package uz.fido.universaldigital.ui.fragments.products
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -198,13 +200,16 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     }
 
     private fun setNotificationAdapter() {
-        notificationsAdapter = CardStackAdapter(requireContext(), notificationList) {
-            removeNotificationItem(it)
-        }
+        notificationsAdapter = CardStackAdapter(requireContext(), notificationList,
+            remove = { removeNotificationItem(it,"remove") },
+            onCLick = {
+                removeNotificationItem(it,"read")
+
+            })
         val manager = CardStackLayoutManager(requireContext()) { _, _ ->
             try {
                 if (notificationList.isNotEmpty()) {
-                    removeNotificationItem(notificationList[0])
+                    removeNotificationItem(notificationList[0],"remove")
                 }
             } finally {
             }
@@ -229,7 +234,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         binding.notificationItem.text = notificationList.size.toString()
     }
 
-    private fun removeNotificationItem(notification: Notification) {
+    private fun removeNotificationItem(notification: Notification,type:String) {
         val list = ArrayList<String>()
         list.add(notification.notification_id)
         menuProductsViewModel.updateNotificationStatus(
@@ -243,9 +248,11 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
                         binding.notificationItem.visibility = View.INVISIBLE
                         binding.consNotification.visibility = View.GONE
                     }
-                    //setNotificationAdapter()
                     binding.notificationItem.text = notificationList.size.toString()
                     notificationsAdapter.setList(notification)
+                    if (type=="read"){
+                        goto(R.id.readNotificationFragment, bundleOf("item" to notification))
+                    }
                 }
 
                 Status.ERROR -> {

@@ -10,7 +10,8 @@ import uz.fido.universaldigital.databinding.StackItemBinding
 class CardStackAdapter(
     private val context: Context,
     private val list: ArrayList<Notification>,
-    private val onCLick: (Notification) -> Unit
+    private val remove: (Notification) -> Unit,
+    private val onCLick: (Notification) -> Unit,
 ) : RecyclerView.Adapter<CardStackAdapter.VhStack>() {
 
     inner class VhStack(private val view: StackItemBinding) : RecyclerView.ViewHolder(view.root) {
@@ -19,6 +20,9 @@ class CardStackAdapter(
             view.notificationText.text = item.text.trim()
             view.notificationTitle.text = item.title.trim()
             view.notificationHide.setOnClickListener {
+                remove(item)
+            }
+            view.layout.setOnClickListener {
                 onCLick(item)
             }
         }

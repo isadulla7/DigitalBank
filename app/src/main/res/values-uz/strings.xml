@@ -236,9 +236,9 @@
     <string name="control_amount">Tekshiruv summasi</string>
     <string name="unique_qr_of_payment_system">To‘lov tizimidagi QR-kodning yagona identifikatori</string>
     <string name="qr_not_supported">Bu QR kod formati qo‘llab-quvvatlanmaydi</string>
-    <string name="contact_permission_description">Davom etish uchun kontaktlarga ruxsat bering</string>
+    <string name="contact_permission_description">Ma\'lumotlarni kiritishni soddalashtirish uchun kontaktlarga kirishga ruxsat bering</string>
     <string name="camera_permission_description">Davom etish uchun qurilma kamerasidan foydalanishga ruxsat bering</string>
-    <string name="location_permission_description">Davom etish uchun geolokatsiyaga ruxsat bering</string>
+    <string name="location_permission_description">Joylashuvingizni aniqlash uchun geolokatsiyaga ruxsat bering</string>
     <string name="enter_settings">Sozlamalarga kirish</string>
     <string name="permission">Ruxsat berish</string>
     <string name="payment_on_the_spot">Joylarda to‘lovlar</string>
@@ -336,7 +336,7 @@
     <string name="summa">so‘m</string>
     <string name="text_empty_loan">Kredit vaqtincha mavjud emas</string>
     <string name="by_phone_number">Telefon raqami orqali</string>
-    <string name="saved_receivers">Tanlangan qabul qiluvchilar</string>
+    <string name="saved_receivers">Tanlangan filtrlar</string>
     <string name="card_not_found">Karta topilmadi</string>
     <string name="transfer">O’tkazma</string>
     <string name="by_wallet_number">Hamyon raqami orqali</string>
@@ -505,7 +505,7 @@
     <string name="usd">USD</string>
     <string name="filter">Filtr</string>
     <string name="select_period">Davrni tanlang</string>
-    <string name="period">Davr</string>
+    <string name="period">Filtr opsiyalari</string>
     <string name="funds_flow">Mablag‘lar oqimi</string>
     <string name="card">Kartalar</string>
     <string name="status">Holat</string>

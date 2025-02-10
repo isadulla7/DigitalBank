@@ -237,7 +237,7 @@
     <string name="control_amount">Checksum</string>
     <string name="unique_qr_of_payment_system">Unique identifier of the QR code in the payment system</string>
     <string name="qr_not_supported">This QR code format is not supported</string>
-    <string name="contact_permission_description">To continue further, please grant access to contacts</string>
+    <string name="contact_permission_description">Allow access to contacts to make data entry easier</string>
     <string name="camera_permission_description">To continue further, please grant access to the device camera</string>
     <string name="location_permission_description">To continue further, please give access to determine geolocation</string>
     <string name="permission">Permission</string>
@@ -335,7 +335,7 @@
     <string name="summa">sum</string>
     <string name="text_empty_loan">Credit not yet available</string>
     <string name="by_phone_number">By phone number</string>
-    <string name="saved_receivers">Selected recipients</string>
+    <string name="saved_receivers">Selected filters</string>
     <string name="card_not_found">Card not found</string>
     <string name="transfer">Transfer</string>
     <string name="by_wallet_number">By wallet number</string>
@@ -507,7 +507,7 @@
     <string name="amount_range">from %1$s UZS to %2$s UZS</string>
     <string name="filter">Filter</string>
     <string name="select_period">Select period</string>
-    <string name="period">Period</string>
+    <string name="period">Filter parameters</string>
     <string name="funds_flow">Vehicle movement</string>
     <string name="card">Cards</string>
     <string name="status">State of affairs</string>

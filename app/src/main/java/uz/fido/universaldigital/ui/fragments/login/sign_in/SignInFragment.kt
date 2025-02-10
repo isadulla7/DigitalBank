@@ -2,12 +2,16 @@ package uz.fido.universaldigital.ui.fragments.login.sign_in
 
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.text.InputFilter
+import android.text.TextWatcher
+import android.text.method.DigitsKeyListener
 import android.text.method.LinkMovementMethod
 import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
+import com.redmadrobot.inputmask.MaskedTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
@@ -24,6 +28,8 @@ import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
+import uz.fido.universaldigital.ui.utils.home_utils.DoAfterTextWatcher
+import uz.fido.universaldigital.ui.utils.home_utils.applyMask
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.Const
@@ -42,24 +48,62 @@ import uz.fido.utils.utility.language.Utility.getDeviceName
 class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     FragmentSignInBinding::inflate, SignInViewModel::class.java
 ) {
-
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
+        setMask()
         initSetOnClickListeners()
         setTermsOfUseColor()
-        setPhonePrefix()
         initTextChangeListeners()
         initMyAccount()
     }
 
-    private fun setPhonePrefix() {
-        binding.etPhoneNumber.filters = arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter { it.isDigit() || it == '+' } })
-        binding.etPhoneNumber.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus && binding.etPhoneNumber.text.toString().isEmpty()) binding.etPhoneNumber.setText(getString(R.string.phone_number_prefix))
+    private fun setMask() {
+        binding.etPhoneNumber.setText("+998")
+       binding.etPhoneNumber.addTextChangedListener(object :TextWatcher{
+           private var isEditing = false
+           private var lastText = ""
+           override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+               lastText = s.toString()
+           }
+
+           override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
+               if (isEditing || text == null) return
+               isEditing = true
+               var currentText = text.toString().replace(Regex("[^0-9+]"), "")
+               if (!currentText.startsWith("+998")) {
+                   currentText = "+998"
+               }
+               val formattedText = formatPhoneNumber(currentText)
+               binding.etPhoneNumber.removeTextChangedListener(this)
+               binding.etPhoneNumber.setText(formattedText)
+               binding.etPhoneNumber.setSelection(formattedText.length) // Kursorni oxiriga qo‘yish
+               binding.etPhoneNumber.addTextChangedListener(this)
+               binding.btnContinue.isEnabled(text.toString().length == 17 && passwordFormatted().length > 7)
+               isEditing = false
+           }
+
+           override fun afterTextChanged(s: Editable?) {
+           }
+       })
+    }
+
+    fun formatPhoneNumber(text: String): String {
+        val digits = text.replace(Regex("[^0-9]"), "")
+        val builder = StringBuilder("+998 ")
+        if (digits.length > 3) {
+            builder.append(digits.substring(3, minOf(5, digits.length))) // XX
         }
-        binding.etPhoneNumber.setOnKeyListener { _, _, event ->
-            event.keyCode == KeyEvent.KEYCODE_DEL && binding.etPhoneNumber.text.toString().length == 4
+        if (digits.length > 5) {
+            builder.append(" ").append(digits.substring(5, minOf(8, digits.length))) // XXX
         }
+        if (digits.length > 8) {
+            builder.append(" ").append(digits.substring(8, minOf(10, digits.length))) // XX
+        }
+        if (digits.length > 10) {
+            builder.append(" ").append(digits.substring(10, minOf(12, digits.length))) // XX
+        }
+
+        return builder.toString()
     }
 
     private fun initSetOnClickListeners() {
@@ -73,9 +117,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun initTextChangeListeners() {
-        binding.etPhoneNumber.addTextChangedListener { phone ->
-            binding.btnContinue.isEnabled(phone.toString().length == 17 && passwordFormatted().length > 7)
-        }
         binding.etPassword.addTextChangedListener { password ->
             binding.btnContinue.isEnabled(password.toString().length > 7 && phoneNumberFormatted().length == 12)
         }
@@ -209,8 +250,8 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun initMyAccount() {
         if (BuildConfig.DEBUG) {
-            binding.etPhoneNumber.setText("+998930088809")
-            binding.etPassword.setText("Qwerty2398@")
+//            binding.etPhoneNumber.setText("+998930088809")
+//            binding.etPassword.setText("Qwerty2398@")
         }
     }
 

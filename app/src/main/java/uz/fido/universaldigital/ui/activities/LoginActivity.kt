@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.Navigation
@@ -88,8 +89,20 @@ class LoginActivity : BaseActivity() {
                         )
                     )
                 }
-            }.addOnFailureListener(this) { setStartDestination() }
+            }.addOnFailureListener(this) {
+                setStartDestination()
+            }
         } else {
+            checkNotification()
+        }
+    }
+
+    private fun checkNotification() {
+        val notification = intent.getStringExtra(PassCodeFragment.NOTIFICATION_OPERATION)
+        if (notification!=null){
+            val bundle = bundleOf(PassCodeFragment.NOTIFICATION_OPERATION to notification)
+            setStartDestination(bundle)
+        }else{
             setStartDestination()
         }
     }
@@ -100,6 +113,7 @@ class LoginActivity : BaseActivity() {
         navGraph.setStartDestination(getStartDestination())
         navController.setGraph(navGraph, bundle)
     }
+
 
     private fun isUserLogged() = Paper.book().read(USER_LOGGED, false) == false
 

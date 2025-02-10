@@ -469,13 +469,14 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                     }
 
                     Status.ERROR -> {
-                        dialogInfo = InfoMonitoringDialog(
-                            localMonitoring,
-                            null,
-                            object : BaseInterface {
-
-                            })
-                        dialogInfo.show(childFragmentManager, "")
+                        showSnackbar(it.message.toString(),"Error")
+//                        dialogInfo = InfoMonitoringDialog(
+//                            localMonitoring,
+//                            null,
+//                            object : BaseInterface {
+//
+//                            })
+//                        dialogInfo.show(childFragmentManager, "")
                     }
                 }
             }

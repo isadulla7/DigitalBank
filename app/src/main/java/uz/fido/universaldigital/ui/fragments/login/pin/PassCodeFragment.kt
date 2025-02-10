@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.biometric.BiometricPrompt
@@ -67,6 +68,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         const val DEEP_LINK_OBJECT_ID = "DEEP_LINK_OBJECT_ID"
         const val DEEP_LINK_AMOUNT = "DEEP_LINK_AMOUNT"
         const val DEEP_LINK_COMMENT = "DEEP_LINK_COMMENT"
+        const val NOTIFICATION_OPERATION="notification_operation"
     }
 
     private var operation: String = ""
@@ -450,7 +452,12 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                         )
                     )
                 }
+               if (!requireArguments().getString(NOTIFICATION_OPERATION).isNullOrEmpty()){
+                   intent.putExtra(NOTIFICATION_OPERATION,"notification")
+                   intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+               }
             }
+
             startActivity(intent)
             requireActivity().overridePendingTransition(
                 android.R.anim.fade_in, android.R.anim.fade_out
