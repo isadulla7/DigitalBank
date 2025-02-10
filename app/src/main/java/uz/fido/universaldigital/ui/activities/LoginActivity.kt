@@ -58,10 +58,10 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkForDeviceLock() {
-       /* if (this.isRunningOnEmulator()) {
-            openLockActivity()
-            return
-        } else*/ if (this.isPhoneRooted()) {
+        /* if (this.isRunningOnEmulator()) {
+             openLockActivity()
+             return
+         } else*/ if (this.isPhoneRooted()) {
             openRootedDeviceWarning()
             return
         } else {
