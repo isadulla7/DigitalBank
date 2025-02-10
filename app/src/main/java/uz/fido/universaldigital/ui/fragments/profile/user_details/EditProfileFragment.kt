@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.profile.user_details
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -31,7 +30,7 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientToken
-import java.util.Random
+import java.security.SecureRandom
 
 @AndroidEntryPoint
 class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfileViewModel>(FragmentEditProfileBinding::inflate, MenuProfileViewModel::class.java) {
@@ -121,7 +120,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
 
     private fun uploadImageToFirebase(filePath: Uri) {
         try {
-            val photoId = "profile_photo_${getClientId()}_${(Random().nextInt(99999 - 10000) + 10000)}"
+            val photoId = "profile_photo_${getClientId()}_${(SecureRandom().nextInt(99999 - 10000) + 10000)}"
             binding.progressBar.visibility = View.VISIBLE
             binding.profileImage.alpha = 0.8f
             val ref = storageReference.child("images/$photoId")

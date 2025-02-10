@@ -1,10 +1,12 @@
 package uz.fido.universaldigital.ui.fragments.payment.download_payment.database
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
-import android.util.Log
+import uz.fido.network.domain.model.payment.LanguageUtils
 import uz.fido.network.domain.model.payment.PaymentCashback
 import uz.fido.network.domain.model.payment.PaymentGroup
 import uz.fido.network.domain.model.payment.PaymentParams
@@ -35,13 +37,13 @@ class DatabaseHelper(
 
     init {
         try {
-            createTables()
+            createPaymentTables()
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    private fun createTables() {
+    private fun createPaymentTables() {
         val database = this.writableDatabase
         database?.execSQL(
             "CREATE TABLE IF NOT EXISTS " +
@@ -136,36 +138,44 @@ class DatabaseHelper(
         clearCashbackTable()
     }
 
-    private fun dropTables() {
+    private fun clearGroupListTable() {
         try {
-            this.writableDatabase?.execSQL("DROP TABLE IF EXISTS ${PaymentGroup.TABLE_NAME}")
-            this.writableDatabase?.execSQL("DROP TABLE IF EXISTS ${PaymentService.TABLE_NAME}")
-            this.writableDatabase?.execSQL("DROP TABLE IF EXISTS ${PaymentReference.TABLE_NAME}")
-            this.writableDatabase?.execSQL("DROP TABLE IF EXISTS ${PaymentParams.TABLE_NAME}")
-            this.writableDatabase?.execSQL("DROP TABLE IF EXISTS ${PaymentCashback.TABLE_NAME}")
+            writableDatabase.execSQL("DELETE FROM " + PaymentGroup.TABLE_NAME)
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
-    private fun clearGroupListTable() {
-        this.writableDatabase!!.execSQL("DELETE from " + PaymentGroup.TABLE_NAME)
-    }
-
     private fun clearServiceListTable() {
-        this.writableDatabase!!.execSQL("DELETE from " + PaymentService.TABLE_NAME)
+        try {
+            writableDatabase.execSQL("DELETE FROM " + PaymentService.TABLE_NAME)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun clearPaymentDetailTable() {
-        this.writableDatabase.execSQL("DELETE from " + PaymentParams.TABLE_NAME)
+        try {
+            writableDatabase.execSQL("DELETE FROM " + PaymentParams.TABLE_NAME)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun clearRefParamTable() {
-        this.writableDatabase!!.execSQL("DELETE from " + PaymentReference.TABLE_NAME)
+        try {
+            writableDatabase.execSQL("DELETE FROM " + PaymentReference.TABLE_NAME)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun clearCashbackTable() {
-        this.writableDatabase!!.execSQL("DELETE from " + PaymentCashback.TABLE_NAME)
+        try {
+            writableDatabase.execSQL("DELETE FROM " + PaymentCashback.TABLE_NAME)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun insertServiceGroups(groupList: List<PaymentGroup>) {
@@ -187,7 +197,7 @@ class DatabaseHelper(
                 )
                 db.insert(PaymentGroup.TABLE_NAME, null, values)
             } catch (ex: Exception) {
-                Logger.writeErrorLog(ex.localizedMessage!!)
+                Logger.writeErrorLog(ex.localizedMessage.orEmpty())
             }
         }
         db.close()
@@ -213,7 +223,7 @@ class DatabaseHelper(
     }
 
     fun insertServiceList(serviceList: List<PaymentService>) {
-        val db = this.writableDatabase
+        val db = writableDatabase
         for (service in serviceList) {
             try {
                 val values = ContentValues()
@@ -311,7 +321,7 @@ class DatabaseHelper(
     fun getGroupList(): ArrayList<PaymentGroup> {
         val categoriesResult = ArrayList<PaymentGroup>()
         try {
-            val query = "select distinct " + PaymentGroup.INDEX_NAME_RU +
+            val query = "SELECT DISTINCT " + PaymentGroup.INDEX_NAME_RU +
                     ", " + PaymentGroup.INDEX_NAME_UC +
                     ", " + PaymentGroup.INDEX_NAME_UL +
                     ", " + PaymentGroup.INDEX_NAME_EN +
@@ -319,81 +329,66 @@ class DatabaseHelper(
                     ", " + PaymentGroup.ICON_NAME +
                     ", " + PaymentGroup.ORDER +
                     ", " + PaymentGroup.COLUMN_PARENT_SERVICE +
-                    " from " + PaymentGroup.TABLE_NAME
+                    " FROM " + PaymentGroup.TABLE_NAME
             val cursor = this.readableDatabase.rawQuery(query, null)
             val categories = ArrayList<PaymentGroup>()
-            val nls = LocaleHelper.getSelectedLang(context)
             if (cursor != null && cursor.count > 0) {
                 if (cursor.moveToFirst()) {
                     val serviceGroupCode = cursor.getColumnIndex(PaymentGroup.SERVICE_GROUP_CODE)
                     val iconName = cursor.getColumnIndex(PaymentGroup.ICON_NAME)
                     val order = cursor.getColumnIndex(PaymentGroup.ORDER)
-                    val parentServiceGroupCode =
-                        cursor.getColumnIndex(PaymentGroup.COLUMN_PARENT_SERVICE)
-                    val nameIndex: Int = when (nls) {
-                        0 -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_RU)
-                        1 -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_UC)
-                        2 -> cursor.getColumnIndex(
-                            PaymentGroup.INDEX_NAME_UL
-                        )
-
-                        else -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_EN)
-                    }
-                    Log.d("TAG", "getGroupList:${nameIndex} ")
+                    val parentServiceGroupCode = cursor.getColumnIndex(PaymentGroup.COLUMN_PARENT_SERVICE)
+                    val nameIndex = cursor.getNameIndex()
                     do {
-                        val cat = PaymentGroup()
-                        cat.PaymentGroup(
+                        val paymentGroup = PaymentGroup()
+                        paymentGroup.PaymentGroup(
                             group_code = cursor.getString(serviceGroupCode),
-                            name = cursor.getString(nameIndex),
+                            name = cursor.getPreferredName(nameIndex),
                             icon_name = cursor.getString(iconName),
                             order = cursor.getInt(order),
                             parent_service_group_code = cursor.getString(parentServiceGroupCode)
                         )
-                        categories.add(cat)
+                        categories.add(paymentGroup)
                     } while (cursor.moveToNext())
                     for (i in categories.indices) {
-                        categories[i].service_list = getServiceList(categories[i].group_code!!)
+                        categories[i].service_list = getServiceList(categories[i].group_code.orEmpty())
                     }
                     for (i in categories.indices) {
-                        if (categories[i].service_list!!.size > 0) {
-                            if (categories[i].group_code != "1")
-                                categoriesResult.add(categories[i])
+                        categories[i].service_list?.let { serviceList ->
+                            if (serviceList.size > 0) {
+                                if (categories[i].group_code != "1") {
+                                    categoriesResult.add(categories[i])
+                                }
+                            }
                         }
                     }
                 }
             }
             cursor?.close()
         } catch (e: Exception) {
-            Logger.writeErrorLog(e.localizedMessage!!)
+            Logger.writeErrorLog(e.localizedMessage.orEmpty())
         }
         return categoriesResult
     }
 
     @Throws(SQLException::class)
     fun getServiceList(serviceGroupCode: String): ArrayList<PaymentService> {
-        val query = "select * from " + PaymentService.TABLE_NAME + " where ${PaymentService.SERVICE_GROUP_CODE} = '" + serviceGroupCode + "' "
-        val cursor = this.readableDatabase.rawQuery(query, null)
+        val query = "SELECT * FROM " + PaymentService.TABLE_NAME + " WHERE ${PaymentService.SERVICE_GROUP_CODE} = ? "
+        val cursor = this.readableDatabase.rawQuery(query, arrayOf(serviceGroupCode))
         val services = ArrayList<PaymentService>()
-        val nls = LocaleHelper.getSelectedLang(context)
         if (cursor != null && cursor.count > 0) {
             if (cursor.moveToFirst()) {
                 val iconName = cursor.getColumnIndex(PaymentService.ICON_NAME)
                 val serviceId = cursor.getColumnIndex(PaymentService.SERVICE_ID)
                 val paymentDetailCode = cursor.getColumnIndex(PaymentService.PAYMENT_DETAIL_CODE)
                 val paymentType = cursor.getColumnIndex(PaymentService.PAYMENT_TYPE)
-                val ord = cursor.getColumnIndex(PaymentService.ORDER)
+                val order = cursor.getColumnIndex(PaymentService.ORDER)
                 val minAmount = cursor.getColumnIndex(PaymentService.MIN_AMOUNT)
                 val maxAmount = cursor.getColumnIndex(PaymentService.MAX_AMOUNT)
-                val identificationPaymentMethod =
-                    cursor.getColumnIndex(PaymentService.COLUMN_IDENTIFICATION)
+                val identificationPaymentMethod = cursor.getColumnIndex(PaymentService.COLUMN_IDENTIFICATION)
                 val payRequestMethod = cursor.getColumnIndex(PaymentService.PAY_REQUEST_METHOD)
                 val smsControlLimit = cursor.getColumnIndex(PaymentService.COLUMN_SMS_CONTROL_LIMIT)
-                val nameIndex: Int = when (nls) {
-                    0 -> cursor.getColumnIndex(PaymentService.INDEX_NAME_RU)
-                    1 -> cursor.getColumnIndex(PaymentService.INDEX_NAME_UC)
-                    2 -> cursor.getColumnIndex(PaymentService.INDEX_NAME_UL)
-                    else -> cursor.getColumnIndex(PaymentService.INDEX_NAME_EN)
-                }
+                val nameIndex = cursor.getNameIndex()
                 do {
                     try {
                         val service = PaymentService().PaymentService(
@@ -401,23 +396,17 @@ class DatabaseHelper(
                             service_id = cursor.getInt(serviceId),
                             payment_detail_code = cursor.getString(paymentDetailCode),
                             payment_type = cursor.getString(paymentType),
-                            order = cursor.getInt(ord),
-                            name_index = cursor.getString(nameIndex),
+                            order = cursor.getInt(order),
+                            name_index = cursor.getPreferredName(nameIndex),
                             min_amount = cursor.getString(minAmount),
                             max_amount = cursor.getString(maxAmount),
-                            identification_payment_method = cursor.getString(
-                                identificationPaymentMethod
-                            ),
+                            identification_payment_method = cursor.getString(identificationPaymentMethod),
                             pay_request_method = cursor.getString(payRequestMethod),
-                            sms_control_limit = try {
-                                cursor.getString(smsControlLimit) ?: ""
-                            } catch (e: Exception) {
-                                ""
-                            }
+                            sms_control_limit = cursor.getString(smsControlLimit).orEmpty()
                         )
                         services.add(service)
                     } catch (e: java.lang.Exception) {
-                        Logger.writeErrorLog(e.localizedMessage!!)
+                        Logger.writeErrorLog(e.localizedMessage.orEmpty())
                     }
                 } while (cursor.moveToNext())
             }
@@ -428,15 +417,12 @@ class DatabaseHelper(
 
     @Throws(SQLException::class)
     fun getPaymentDetails(paymentDetailCode: String): ArrayList<PaymentParams> {
-        val query =
-            "select * from ${PaymentParams.TABLE_NAME} where ${PaymentParams.COLUMN_PAYMENT_DETAIL_CODE} = '$paymentDetailCode' order by ord "
-        val cursor = this.readableDatabase.rawQuery(query, null)
+        val query = "SELECT * FROM ${PaymentParams.TABLE_NAME} WHERE ${PaymentParams.COLUMN_PAYMENT_DETAIL_CODE} = ? ORDER BY ord"
+        val cursor = this.readableDatabase.rawQuery(query, arrayOf(paymentDetailCode))
         val paymentParamsList = ArrayList<PaymentParams>()
-        val nls = LocaleHelper.getSelectedLang(context)
         if (cursor != null && cursor.count > 0) {
             if (cursor.moveToFirst()) {
-                val paymentDetailCode =
-                    cursor.getColumnIndex(PaymentParams.COLUMN_PAYMENT_DETAIL_CODE)
+                val detailCodeIndex = cursor.getColumnIndex(PaymentParams.COLUMN_PAYMENT_DETAIL_CODE)
                 val isVisible = cursor.getColumnIndex(PaymentParams.COLUMN_IS_VISIBLE)
                 val paramType = cursor.getColumnIndex(PaymentParams.COLUMN_PARAM_TYPE)
                 val ord = cursor.getColumnIndex(PaymentParams.COLUMN_ORDER)
@@ -454,29 +440,11 @@ class DatabaseHelper(
                 val prefix = cursor.getColumnIndex(PaymentParams.COLUMN_PREFIX)
                 val settlement = cursor.getColumnIndex(PaymentParams.COLUMN_SETTLEMENT)
                 val mask = cursor.getColumnIndex(PaymentParams.COLUMN_MASK)
-                var nameIndex: Int = when (nls) {
-                    0 -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_RU)
-                    1 -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_UC)
-                    2 -> cursor.getColumnIndex(
-                        PaymentGroup.INDEX_NAME_UL
-                    )
-
-                    else -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_EN)
-                }
-                if (cursor.getString(nameIndex).isEmpty()) nameIndex =
-                    cursor.getColumnIndex(PaymentGroup.INDEX_NAME_RU)
-                val hintIndex: Int = when (nls) {
-                    0 -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_RU)
-                    1 -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_UC)
-                    2 -> cursor.getColumnIndex(
-                        PaymentGroup.INDEX_NAME_UL
-                    )
-
-                    else -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_EN)
-                }
+                val nameIndex = cursor.getNameIndex()
+                val hintIndex = cursor.getNameIndex()
                 do {
                     val paymentParams = PaymentParams().PaymentParams(
-                        payment_detail_code = cursor.getString(paymentDetailCode),
+                        payment_detail_code = cursor.getString(detailCodeIndex),
                         is_visible = cursor.getString(isVisible),
                         param_type = cursor.getString(paramType),
                         ord = cursor.getString(ord),
@@ -489,7 +457,7 @@ class DatabaseHelper(
                         def_value = cursor.getString(defValue),
                         icon_name = cursor.getString(iconName),
                         level_position = cursor.getString(levelPosition),
-                        name = cursor.getString(nameIndex),
+                        name = cursor.getPreferredName(nameIndex),
                         hint = cursor.getString(hintIndex),
                         ref_code = cursor.getString(refCode),
                         regular_exp_mask = cursor.getString(regularExpMask),
@@ -507,11 +475,9 @@ class DatabaseHelper(
 
     @Throws(SQLException::class)
     fun getServiceByContractId(contractId: String): PaymentService? {
-        val query =
-            "select * from " + PaymentService.TABLE_NAME + " where service_id= " + contractId + " "
-        val cursor = this.readableDatabase.rawQuery(query, null)
+        val query = "SELECT * FROM " + PaymentService.TABLE_NAME + " WHERE service_id= ? "
+        val cursor = this.readableDatabase.rawQuery(query, arrayOf(contractId))
         var service: PaymentService? = null
-        val nls = LocaleHelper.getSelectedLang(context)
         if (cursor != null && cursor.count > 0) {
             if (cursor.moveToFirst()) {
                 val iconName = cursor.getColumnIndex(PaymentService.ICON_NAME)
@@ -521,21 +487,10 @@ class DatabaseHelper(
                 val ord = cursor.getColumnIndex(PaymentService.ORDER)
                 val maxAmount = cursor.getColumnIndex(PaymentService.MAX_AMOUNT)
                 val minAmount = cursor.getColumnIndex(PaymentService.MIN_AMOUNT)
-                val identificationPaymentMethod =
-                    cursor.getColumnIndex(PaymentService.COLUMN_IDENTIFICATION)
+                val identificationPaymentMethod = cursor.getColumnIndex(PaymentService.COLUMN_IDENTIFICATION)
                 val payRequestMethod = cursor.getColumnIndex(PaymentService.PAY_REQUEST_METHOD)
                 val smsControlLimit = cursor.getColumnIndex(PaymentService.COLUMN_SMS_CONTROL_LIMIT)
-                var nameIndex: Int
-                nameIndex =
-                    when (nls) {
-                        0 -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_RU)
-                        1 -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_UC)
-                        2 -> cursor.getColumnIndex(
-                            PaymentGroup.INDEX_NAME_UL
-                        )
-
-                        else -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_EN)
-                    }
+                val nameIndex = cursor.getNameIndex()
                 do {
                     service = PaymentService().PaymentService(
                         icon_name = cursor.getString(iconName),
@@ -543,21 +498,13 @@ class DatabaseHelper(
                         payment_detail_code = cursor.getString(paymentDetailCode),
                         payment_type = cursor.getString(paymentType),
                         order = cursor.getInt(ord),
-                        name_index = cursor.getString(nameIndex),
+                        name_index = cursor.getPreferredName(nameIndex),
                         min_amount = cursor.getString(minAmount),
                         max_amount = cursor.getString(maxAmount),
                         identification_payment_method = cursor.getString(identificationPaymentMethod),
                         pay_request_method = cursor.getString(payRequestMethod),
-                        sms_control_limit = try {
-                            cursor.getString(smsControlLimit) ?: ""
-                        } catch (e: Exception) {
-                            ""
-                        }
+                        sms_control_limit = cursor.getString(smsControlLimit).orEmpty()
                     )
-                    if (service.nameIndex!!.isEmpty()) {
-                        nameIndex = cursor.getColumnIndex("name_ru")
-                        service.nameIndex = cursor.getString(nameIndex)
-                    }
                 } while (cursor.moveToNext())
             }
         }
@@ -567,35 +514,31 @@ class DatabaseHelper(
 
     @Throws(SQLException::class)
     fun getRefParamList(refCode: String, likeCode: String?): ArrayList<PaymentReference> {
-        val query: String = if (likeCode == null) {
-            "select * from ${PaymentReference.TABLE_NAME} t where t.ref_code = '$refCode'  order by t.ord "
+        val args: MutableList<String> = mutableListOf()
+        val query: String
+        if (likeCode == null) {
+            query = "SELECT * FROM ${PaymentReference.TABLE_NAME} t WHERE t.ref_code = ?  ORDER BY t.ord "
+            args.add(refCode)
         } else {
-            "select * from ${PaymentReference.TABLE_NAME} t where t.ref_code = '$refCode' and t.code like '$likeCode%' order by t.ord "
+            query = "SELECT * FROM ${PaymentReference.TABLE_NAME} t WHERE t.ref_code = ? AND t.code LIKE ? ORDER BY t.ord "
+            args.add(refCode)
+            args.add("$likeCode%")
         }
-        val cursor = this.readableDatabase.rawQuery(query, null)
+        val cursor = this.readableDatabase.rawQuery(query, args.toTypedArray())
         val refParamList = ArrayList<PaymentReference>()
-        val nls = LocaleHelper.getSelectedLang(context)
         if (cursor != null && cursor.count > 0) {
             if (cursor.moveToFirst()) {
-                val refCode = cursor.getColumnIndex(PaymentReference.COLUMN_REF_CODE)
+                val refCodeIndex = cursor.getColumnIndex(PaymentReference.COLUMN_REF_CODE)
                 val code = cursor.getColumnIndex(PaymentReference.COLUMN_CODE)
                 val order = cursor.getColumnIndex(PaymentReference.COLUMN_ORDER)
                 val flag = cursor.getColumnIndex(PaymentReference.COLUMN_FLAG)
-                val nameIndex: Int = when (nls) {
-                    0 -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_RU)
-                    1 -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_UC)
-                    2 -> cursor.getColumnIndex(
-                        PaymentGroup.INDEX_NAME_UL
-                    )
-
-                    else -> cursor.getColumnIndex(PaymentGroup.INDEX_NAME_EN)
-                }
+                val nameIndex = cursor.getNameIndex()
                 do {
                     val refParam = PaymentReference().PaymentReference(
-                        ref_code = cursor.getString(refCode),
+                        ref_code = cursor.getString(refCodeIndex),
                         code = cursor.getString(code),
                         order = cursor.getInt(order),
-                        name = cursor.getString(nameIndex),
+                        name = cursor.getPreferredName(nameIndex),
                         flag = cursor.getString(flag)
                     )
                     refParamList.add(refParam)
@@ -604,5 +547,25 @@ class DatabaseHelper(
         }
         cursor?.close()
         return refParamList
+    }
+
+    private fun Cursor.getNameIndex(): Int {
+        val selectedLanguage = LocaleHelper.getSelectedLang(context)
+        return when (selectedLanguage) {
+            0 -> getColumnIndex(LanguageUtils.INDEX_NAME_RU)
+            1 -> getColumnIndex(LanguageUtils.INDEX_NAME_UC)
+            2 -> getColumnIndex(LanguageUtils.INDEX_NAME_UL)
+            3 -> getColumnIndex(LanguageUtils.INDEX_NAME_EN)
+            else -> getColumnIndex(LanguageUtils.INDEX_NAME_RU)
+        }
+    }
+
+    @SuppressLint("Range")
+    private fun Cursor.getPreferredName(nameIndex: Int): String {
+        return if (getString(nameIndex).isNullOrEmpty()) {
+            getString(getColumnIndex(LanguageUtils.INDEX_NAME_RU))
+        } else {
+            getString(nameIndex)
+        }
     }
 }

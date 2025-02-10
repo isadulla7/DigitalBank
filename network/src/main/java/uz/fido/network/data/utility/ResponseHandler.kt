@@ -38,7 +38,7 @@ fun <T : Any> handleException(e: Exception): Resource<T> {
                     )
                 }
 
-                1525 -> {
+                1525, -777 -> {
                     Resource.error(
                         message = "LOG_OUT", data = null, errorBody = error
                     )
