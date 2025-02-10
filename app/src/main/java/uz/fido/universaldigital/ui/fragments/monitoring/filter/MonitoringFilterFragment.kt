@@ -160,10 +160,10 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
     private fun localFilterDone() {
         if (filterSaveVh!!.startDate != "") {
             startDate = filterSaveVh!!.startDate
-            endDate = filterSaveVh!!.startDate
+            endDate = filterSaveVh!!.endDate
             addFilterList(
                 "date",
-                "${filterSaveVh!!.startDate} - ${filterSaveVh!!.startDate}",
+                "${filterSaveVh!!.startDate} - ${filterSaveVh!!.endDate}",
                 false
             )
             dateCurrent = true

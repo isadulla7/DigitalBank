@@ -17,13 +17,6 @@ class MonitoringAmountDialog(private val onClick:(String,String)->Unit): BottomS
 
   private lateinit var binding:DialogMonitoringAmountBinding
 
-
-  /*  override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, uz.fido.utils.R.style.DialogStyle)
-
-    }*/
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -59,7 +52,7 @@ class MonitoringAmountDialog(private val onClick:(String,String)->Unit): BottomS
         if (min.isNotEmpty() && max.isNotEmpty()){
             val minAmount=min.toString().replace(" ","").toBigDecimal()
             val maxAmount=max.toString().replace(" ","").toBigDecimal()
-        if (minAmount> BigDecimal(1000) && maxAmount< BigDecimal(50000000) && minAmount<maxAmount){
+        if (minAmount>= BigDecimal(0) && maxAmount< BigDecimal(5000000000) && minAmount<maxAmount){
             return true
            }
         }

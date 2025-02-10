@@ -100,6 +100,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             binding.btnContact.setImageResource(R.drawable.ic_contact)
             binding.imageType.setImageResource(R.drawable.all_cards)
             binding.title.setText(R.string.mobile_network)
+
             binding.phoneNumberLayout.setHint(R.string.phone_number)
         }
         binding.phoneCard.setOnClickListener {
@@ -107,8 +108,8 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                 typeCurrent = false
                 binding.btnContact.setImageResource(R.drawable.ic_contact)
                 binding.imageType.setImageResource(R.drawable.all_cards)
-                binding.etPhoneNumber.setText("")
                 binding.title.setText(R.string.mobile_network)
+                binding.etPhoneNumber.setText("+998")
                 binding.phoneNumberLayout.setHint(R.string.phone_number)
             } else {
                 typeCurrent = true

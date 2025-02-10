@@ -102,9 +102,16 @@ class MainActivity : BaseActivity() {
         checkUpdate()
         askNotificationPermission()
         checkForDeepLink()
+        checkNotification()
         bottomNavSheet()
         listenForSeasonChanges()
         initSensorEventListener()
+    }
+
+    private fun checkNotification() {
+        if (!intent.getStringExtra(PassCodeFragment.NOTIFICATION_OPERATION).isNullOrEmpty()){
+            openPage(R.id.mainNewsFragment)
+        }
     }
 
     private fun listenForSeasonChanges() {
