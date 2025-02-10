@@ -73,4 +73,7 @@
     <color name="link_color">#0000EE</color>
     <color name="home_card_description_color">#848E9D</color>
 
+    //my id colors
+    <color name="myidColorPrimary">@color/brandRedColor</color>
+    <color name="myidPrimaryButtonColor">@color/brandRedColor</color>
 </resources>

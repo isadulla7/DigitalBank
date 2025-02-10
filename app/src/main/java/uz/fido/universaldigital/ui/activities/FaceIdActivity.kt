@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
@@ -33,6 +34,7 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_App_SplashScreen)
         getArgs()
         startMyId()
     }

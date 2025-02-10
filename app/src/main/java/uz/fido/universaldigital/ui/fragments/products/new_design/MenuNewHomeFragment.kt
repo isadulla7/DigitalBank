@@ -97,12 +97,14 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
 
             Season.SPRING -> {
                 binding.homeAnimView.apply {
+                    alpha = 0.85f
                     setSnowflakeImage(R.drawable.sakura)
                     setSnowflakeSpeedMin(1)
                     setSnowflakeSpeedMax(2)
-                    setSnowflakesNum(30)
-                    setSnowflakeSizeMax(30)
-                    setSnowflakeSizeMin(16)
+                    setSnowflakesNum(25)
+                    setSnowflakeSizeMax(24)
+                    setSnowflakeSizeMin(12)
+                    setSnowflakeAngle(-45)
                 }
             }
 
