@@ -301,6 +301,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                         textWatchers()
                     } else {
                         binding.createMobileDv.visibility = View.VISIBLE
+                        binding.chooseCardLayout.visibility = View.GONE
                     }
                 }
             } else {
