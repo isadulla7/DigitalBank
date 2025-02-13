@@ -1049,6 +1049,6 @@
     <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
     <string name="rooted_device_not_allowed">To prevent any fraud and keep your data safe, the app is not allowed to be used on this device! The device may be rooted</string>
     <string name="google_api_key_for_map">AIzaSyAz12HO8DlLFz34dNvuNwQ9Rzhw3hpUZGQ</string>
-    <string name="you_can_close_deposit_only_dv_cards">Siz depositni faqatgina \"Mobil DV\" hisobiga yopa olasiz. Uni \"Deposit ochish\" bo\'limida tekinga ochish mumkin.</string>
-    <string name="create_mobile_dv">Mobile DV hisobini ochish</string>
+    <string name="you_can_close_deposit_only_dv_cards">You can only close a deposit to a "Mobile DV" account. It can be opened for free in the "Open a Deposit" section.</string>
+    <string name="create_mobile_dv">Create a Mobile DV</string>
 </resources>

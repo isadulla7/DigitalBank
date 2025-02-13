@@ -1051,6 +1051,6 @@
     <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
     <string name="rooted_device_not_allowed">Во избежание мошенничества и обеспечения безопасности ваших данных использование приложения на этом устройстве запрещено! Устройство может быть рутировано</string>
     <string name="google_api_key_for_map">AIzaSyAz12HO8DlLFz34dNvuNwQ9Rzhw3hpUZGQ</string>
-    <string name="you_can_close_deposit_only_dv_cards">Siz depositni faqatgina \"Mobil DV\" hisobiga yopa olasiz. Uni \"Deposit ochish\" bo\'limida tekinga ochish mumkin.</string>
-    <string name="create_mobile_dv">Mobile DV hisobini ochish</string>
+    <string name="you_can_close_deposit_only_dv_cards">Вы можете закрыть депозит только на счет "Мобильный ДВ". Его можно открыть бесплатно в разделе «Открыть вклад».</string>
+    <string name="create_mobile_dv">Создать Mobile DV</string>
 </resources>
