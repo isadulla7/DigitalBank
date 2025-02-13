@@ -71,7 +71,6 @@ class LoginActivity : BaseActivity() {
 
     private fun checkForDeepLink() {
         if (intent.data != null) {
-            println("intent data" + intent.data.toString())
             FirebaseDynamicLinks.getInstance().getDynamicLink(intent).addOnSuccessListener(this) { pendingDynamicLinkData ->
                 pendingDynamicLinkData?.link?.let {
                     val objectValue = it.getQueryParameter("cardNumber")
