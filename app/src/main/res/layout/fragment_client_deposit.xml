@@ -213,7 +213,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:layout_weight="1"
-
                 android:background="@drawable/cornered_bg_12dp_stroke"
                 android:orientation="vertical">
 
@@ -259,8 +258,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@color/backgroundColor"
-            />
+            android:background="@color/backgroundColor" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

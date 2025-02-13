@@ -78,10 +78,51 @@ class ChooseCardLayout(context: Context, attr: AttributeSet) : ConstraintLayout(
     fun getUniversalCards(
         cards: ArrayList<CardResponse>,
         minAmount: String? = null,
-        currencyChar: String? = null,
         scrollListener: (CardResponse?) -> Unit
     ) {
-        val sortedCardList = getUniversalCards(currencyChar, cards)
+        val sortedCardList = getUniversalCards(cards)
+        if (sortedCardList.isNotEmpty()) {
+            binding.noCards.visibility = View.GONE
+            val snapHelper: SnapHelper = PagerSnapHelper()
+            val linearLayoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            binding.cards.apply {
+                adapter = ChooseCardAdapter(sortedCardList, minAmount)
+                layoutManager = linearLayoutManager
+                onFlingListener = null
+                snapHelper.attachToRecyclerView(this)
+                scrollListener.invoke(sortedCardList[0])
+
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            try {
+                                snapHelper.findSnapView(linearLayoutManager)?.let { view ->
+                                    linearLayoutManager.getPosition(view).let { position ->
+                                        vibrateTick(context)
+                                        scrollListener.invoke(sortedCardList[position])
+                                    }
+                                }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                        }
+                    }
+                })
+            }
+        } else {
+            binding.noCards.visibility = View.VISIBLE
+            scrollListener.invoke(null)
+        }
+    }
+
+    fun getUniversalDvCards(
+        cards: ArrayList<CardResponse>,
+        minAmount: String? = null,
+        scrollListener: (CardResponse?) -> Unit
+    ) {
+        val sortedCardList = getDvCards(cards)
         if (sortedCardList.isNotEmpty()) {
             binding.noCards.visibility = View.GONE
             val snapHelper: SnapHelper = PagerSnapHelper()
@@ -133,17 +174,19 @@ class ChooseCardLayout(context: Context, attr: AttributeSet) : ConstraintLayout(
     }
 
     private fun getUniversalCards(
-        currencyChar: String? = null,
         cardList: ArrayList<CardResponse>
     ): ArrayList<CardResponse> {
         val sortedList = ArrayList<CardResponse>()
-        if (currencyChar == null) return cardList
         cardList.forEach {
-            if (it.currency_char == currencyChar && it.isUniversalCard()) {
+            if (it.isUniversalCard()) {
                 sortedList.add(it)
             }
         }
         return sortedList
+    }
+
+    private fun getDvCards(cardList: ArrayList<CardResponse>): ArrayList<CardResponse> {
+        return cardList.filter { it.is_Dv == "Y" } as ArrayList<CardResponse>
     }
 
 }

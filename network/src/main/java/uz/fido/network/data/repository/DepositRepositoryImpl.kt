@@ -49,10 +49,9 @@ class DepositRepositoryImpl @Inject constructor(private val depositService: Depo
         depositService.createDeposit(token, createCreditRequest)
     }
 
-    override suspend fun getClientDepositList(token: String): Resource<ClientDepositListResponse> =
-        getResult {
-            depositService.getClientDepositList(token)
-        }
+    override suspend fun getClientDepositList(token: String): Resource<ClientDepositListResponse> = getResult {
+        depositService.getClientDepositList(token)
+    }
 
 
     override suspend fun partialWithdrawMoney(
@@ -95,11 +94,9 @@ class DepositRepositoryImpl @Inject constructor(private val depositService: Depo
     override suspend fun renameDeposit(
         token: String,
         request: RenameDepositRequest
-    ): Resource<BaseResponse> =
-        getResult {
-            depositService.renameDeposit(token, request)
-        }
-
+    ): Resource<BaseResponse> = getResult {
+        depositService.renameDeposit(token, request)
+    }
 
     override suspend fun calculateDepositAuto(
         token: String,

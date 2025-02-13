@@ -33,5 +33,6 @@ data class CardResponse(
     var error_message: String? = "",
     var isVirtual: String? = "N",
     var overdraft_limit: String? = "0",
-    var object_status: String? = ""
+    var object_status: String? = "",
+    var is_Dv: String? = null
 ) : BaseResponse(), Serializable

@@ -9,6 +9,7 @@ import androidx.fragment.app.setFragmentResultListener
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
+import uz.fido.network.domain.model.deposits.GetDepositListRequest
 import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
 import uz.fido.network.domain.model.deposits.operations.EarlyClosureRequest
 import uz.fido.network.domain.model.deposits.operations.InvestMoneyToDepositRequest
@@ -23,10 +24,9 @@ import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
-import uz.fido.utils.const.CurrencyConst
-import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_UZS
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientToken
@@ -36,10 +36,9 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     FragmentDepositFillingBinding::inflate, ClientDepositViewModel::class.java
 ) {
 
-    val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
+    private val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
     private lateinit var chosenCard: CardResponse
     private lateinit var deposit: ClientDeposit
-    private var depositType: String = ""
     private var operation = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,11 +46,10 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         arguments?.let {
             deposit = it.serializable<ClientDeposit>("deposit") as ClientDeposit
             operation = it.serializable<String>(Const.OPERATION) as String
-            depositType = it.serializable<String>("card_type") as String
         }
         setFragmentResultListener(ConfirmSmsFragment.SMS_OPERATION_PAYMENT_KEY) { _, bundle ->
             val stringLine = bundle.getString("string_line").orEmpty()
-            if (operation == "top_up") {
+            if (operation == ClientDepositFragment.TOP_UP_DEPOSIT) {
                 investMoney(stringLine)
             }
         }
@@ -68,11 +66,15 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
             when (operation) {
-                "top_up" -> smsCheck()
-                "delete" -> closeDeposit()
-                "with_draw_percent" -> withDrawPercent()
-                "with_draw" -> withDrawPercent()
+                ClientDepositFragment.TOP_UP_DEPOSIT -> smsCheck()
+                ClientDepositFragment.EARLY_CLOSE_DEPOSIT -> earlyCloseDeposit()
+                ClientDepositFragment.CLOSE_DEPOSIT -> closeDeposit()
+                ClientDepositFragment.WITH_DRAW_PERCENT -> withDrawPercent()
             }
+        }
+        binding.createMobileDv.setOnClickListener {
+            showProgress()
+            getDepositProducts()
         }
     }
 
@@ -94,12 +96,49 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
-                    getDeposits(amount)
+                    getClientDeposits(amount)
                 }
 
                 Status.ERROR -> {
                     showSnackbar(it.message.toString())
                 }
+            }
+        }
+    }
+
+    private fun earlyCloseDeposit() {
+        if (this::chosenCard.isInitialized) {
+            try {
+                val amount = deposit.sumDep
+                binding.btnContinue.setProgress(true)
+                viewModel.earlyCloseDeposit(
+                    getClientToken(),
+                    EarlyClosureRequest(
+                        command = if (chosenCard.object_type == WALLET) "dep&purse" else "dep&card",
+                        to_object_value = chosenCard.object_value,
+                        to_object_id = chosenCard.object_id,
+                        to_object_expire = chosenCard.object_expiry,
+                        savDepId = deposit.savDepId.orEmpty(),
+                        credit_amount = (amount ?: "0").replace(",", "."),
+                        client_id = getClientId(),
+                        service_id = "-8",
+                        status = deposit.status.orEmpty(),
+                        closing_date = deposit.closingDate.orEmpty()
+                    )
+                ).observe(viewLifecycleOwner) {
+                    binding.btnContinue.setProgress(false)
+                    when (it.status) {
+                        Status.SUCCESS -> {
+                            getClientDeposits("0")
+                        }
+
+                        Status.ERROR -> {
+                            showSnackbar(it.message.toString())
+                        }
+                    }
+                }
+            } catch (e: Exception) {
+                recordException(e, ::initCards.name)
             }
         }
     }
@@ -127,7 +166,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                     binding.btnContinue.setProgress(false)
                     when (it.status) {
                         Status.SUCCESS -> {
-                            getDeposits("0")
+                            getClientDeposits("0")
                         }
 
                         Status.ERROR -> {
@@ -136,7 +175,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                     }
                 }
             } catch (e: Exception) {
-                recordException(e,::initCards.name)
+                recordException(e, ::initCards.name)
             }
         }
     }
@@ -177,7 +216,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
             binding.btnContinue.isEnabled(false)
             when (it.status) {
                 Status.SUCCESS -> {
-                    getDeposits(amount)
+                    getClientDeposits(amount)
                 }
 
                 Status.ERROR -> {
@@ -189,19 +228,10 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
 
     private fun textWatchers() {
         when (operation) {
-            "top_up" -> setAmount()
-            "delete" -> removeDeposit()
-            "with_draw_percent" -> percentWithDraw()
-            "with_draw" -> withDraw()
-        }
-    }
-
-    private fun withDraw() {
-        binding.appBar.setTitle(getString(R.string.take_off))
-        binding.etAmount.addTextChangedListener { s ->
-            val balanceTiyn = (deposit.sumDep ?: "0").replace(" ", "").toBigDecimal()
-            val amountTiyn = Format.formatAmountToTiyn(s.toString().replace(" ", "")).toBigDecimal()
-            binding.btnContinue.isEnabled(balanceTiyn >= amountTiyn)
+            ClientDepositFragment.TOP_UP_DEPOSIT -> setAmount()
+            ClientDepositFragment.EARLY_CLOSE_DEPOSIT -> removeDeposit()
+            ClientDepositFragment.CLOSE_DEPOSIT -> close()
+            ClientDepositFragment.WITH_DRAW_PERCENT -> percentWithDraw()
         }
     }
 
@@ -218,7 +248,17 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     }
 
     private fun removeDeposit() {
+        binding.appBar.setTitle(getString(R.string.early_closing_of_the_deposit))
+        binding.info.visibility = View.VISIBLE
+        binding.etAmount.isLongClickable = false
+        binding.etAmount.isFocusable = false
+        binding.etAmount.setText(Format.formatAmount(((deposit.sumDep ?: "0").toDouble() / 100).toString()))
+        binding.btnContinue.isEnabled(true)
+    }
+
+    private fun close() {
         binding.appBar.setTitle(getString(R.string.close_deposit))
+        binding.info.visibility = View.VISIBLE
         binding.etAmount.isLongClickable = false
         binding.etAmount.isFocusable = false
         binding.etAmount.setText(Format.formatAmount(((deposit.sumDep ?: "0").toDouble() / 100).toString()))
@@ -226,6 +266,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     }
 
     private fun setAmount() {
+        binding.appBar.setTitle(getString(R.string.top_up))
         checkItem(binding.etAmount.text.toString().replace(" ", ""))
         binding.etAmount.addTextChangedListener {
             val amount = it.toString().replace(" ", "")
@@ -244,36 +285,38 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     }
 
     private fun initCards() {
-        var type = ""
         var minAmount = ""
         when (operation) {
-            "top_up" -> minAmount = "100"
-            "delete" -> minAmount = "0"
-            "with_draw_percent" -> minAmount = "0"
-            "with_draw" -> minAmount = "0"
-        }
-        type = when (depositType) {
-            CURRENCY_CODE_UZS -> {
-                CurrencyConst.CURRENCY_CHAR_UZS
-            }
-
-            else -> {
-                CurrencyConst.CURRENCY_CHAR_USD
-            }
+            ClientDepositFragment.TOP_UP_DEPOSIT -> minAmount = "100"
+            ClientDepositFragment.EARLY_CLOSE_DEPOSIT, ClientDepositFragment.CLOSE_DEPOSIT -> minAmount = "0"
+            ClientDepositFragment.WITH_DRAW_PERCENT -> minAmount = "0"
         }
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {
-            binding.chooseCardLayout.getUniversalCards(
-                it as ArrayList<CardResponse>, minAmount, type
-            ) { cardResponse ->
-                cardResponse?.let { card ->
-                    chosenCard = cardResponse
-                    textWatchers()
+            if (operation == ClientDepositFragment.EARLY_CLOSE_DEPOSIT || operation == ClientDepositFragment.CLOSE_DEPOSIT) {
+                binding.chooseCardLayout.getUniversalDvCards(
+                    it as ArrayList<CardResponse>, minAmount
+                ) { cardResponse ->
+                    if (cardResponse != null) {
+                        chosenCard = cardResponse
+                        textWatchers()
+                    } else {
+                        binding.createMobileDv.visibility = View.VISIBLE
+                    }
+                }
+            } else {
+                binding.chooseCardLayout.getUniversalCards(
+                    it as ArrayList<CardResponse>, minAmount
+                ) { cardResponse ->
+                    cardResponse?.let { card ->
+                        chosenCard = cardResponse
+                        textWatchers()
+                    }
                 }
             }
         }
     }
 
-    private fun getDeposits(amount: String) {
+    private fun getClientDeposits(amount: String) {
         viewModel.getClientDepositList(getClientToken()).observe(viewLifecycleOwner) {
             hideProgress()
             when (it.status) {
@@ -281,7 +324,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                     if (it.data?.data != null) {
                         menuProductsViewModel.updateClientDepositList(it.data!!.data)
                         when (operation) {
-                            "top_up" -> {
+                            ClientDepositFragment.TOP_UP_DEPOSIT -> {
                                 goto(
                                     R.id.basicSuccessFragment, bundleOf(
                                         Const.OPERATION to BasicSuccessFragment.DEPOSIT_FILLING,
@@ -290,14 +333,14 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                                 )
                             }
 
-                            "delete" -> {
+                            ClientDepositFragment.EARLY_CLOSE_DEPOSIT, ClientDepositFragment.CLOSE_DEPOSIT -> {
                                 goto(
                                     R.id.basicSuccessFragment,
                                     bundleOf(Const.OPERATION to BasicSuccessFragment.DEPOSIT_CLOSE)
                                 )
                             }
 
-                            "with_draw_percent", "with_draw" -> {
+                            ClientDepositFragment.WITH_DRAW_PERCENT -> {
                                 goto(
                                     R.id.basicSuccessFragment, bundleOf(
                                         Const.OPERATION to BasicSuccessFragment.DEPOSIT_WITH_DRAW_PERCENT,
@@ -314,6 +357,38 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                 }
             }
         }
+    }
+
+    private fun getDepositProducts() {
+        menuProductsViewModel.getDeposits(getClientToken(), GetDepositListRequest("dep"))
+            .observe(viewLifecycleOwner) {
+                hideProgress()
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        menuProductsViewModel.updateDepositProducts(
+                            it.data?.deposit_types ?: ArrayList()
+                        )
+                        it.data?.deposit_types?.let {
+                            val mobileDv = it.find { it.dep_id == 853 }
+                            if (mobileDv != null) {
+                                gotoWithSlide(
+                                    R.id.openDepositStepFirst, bundleOf(
+                                        "deposit" to mobileDv,
+                                        "operation" to "deposit",
+                                        "isSum" to true
+                                    )
+                                )
+                            } else {
+                                goto(R.id.uzsDepositFragment)
+                            }
+                        }
+                    }
+
+                    Status.ERROR -> {
+                        goto(R.id.uzsDepositFragment)
+                    }
+                }
+            }
     }
 
 }
