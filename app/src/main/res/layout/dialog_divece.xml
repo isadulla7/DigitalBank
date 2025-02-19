@@ -31,7 +31,7 @@
         android:background="@color/whiteColor"
         android:padding="16dp"
         android:gravity="start"
-        android:text="@string/delete"
+        android:text="@string/end_session"
         android:textColor="@color/blackColor"
         android:textSize="16dp" />
 

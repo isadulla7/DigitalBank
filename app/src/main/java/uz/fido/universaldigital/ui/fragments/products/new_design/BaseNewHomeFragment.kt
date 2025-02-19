@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.Editable
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -150,6 +151,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             }
         }
         val maskTextWatcher = object : DoAfterTextWatcher() {
+
             private var isUpdating = false
             override fun afterTextChanged(s: Editable?) {
                 if (isUpdating) return
@@ -179,16 +181,15 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                     binding.etPhoneNumber.setSelection(selectionIndex)
                     binding.etPhoneNumber.addTextChangedListener(this)
                     isUpdating = false
-
                     if (typeCurrent) {
-                        if (text.startsWith("+998") && text.length == 17) {
+                        if (text.startsWith("+998") && text.replace(" ","").length == 13) {
                             goto(R.id.transferByPhoneFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ", "")))
                             binding.etPhoneNumber.setText("")
-                        } else if (text.length == 19) {
+                        } else if (text.replace(" ","").length == 16 ) {
                             goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ", "")))
                             binding.etPhoneNumber.setText("")
                         }
-                    } else if (text.length == 17) {
+                    } else if (text.replace(" ","").length == 13) {
                        mobilePayment(text)
                     }
                 }

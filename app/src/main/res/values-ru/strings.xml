@@ -144,7 +144,7 @@
     <string name="verification">Подтверждение</string>
     <string name="you_may_change_later">Если это не ваше данные, пройдите идентификацию заново </string>
     <string name="not_me">Это не мои данные</string>
-    <string name="i_am">Верно это я</string>
+    <string name="i_am">Верно, это я</string>
     <string name="citizenship">Гражданство</string>
     <string name="passport_no">Серия и номер документа</string>
     <string name="date_of_issue">Дата выдачи</string>
@@ -1055,4 +1055,5 @@
     <string name="transfer_t0_wallet">Перевод на кашелек</string>
     <string name="select_phone_from_contact">Выберите номер телефона из контактов</string>
     <string name="scan_card_number">Сканировать номер карты</string>
+    <string name="end_session">Завершить сеанс</string>
 </resources>
