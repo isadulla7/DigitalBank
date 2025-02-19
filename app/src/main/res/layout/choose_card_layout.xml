@@ -15,7 +15,7 @@
         android:ellipsize="end"
         android:gravity="start"
         android:includeFontPadding="false"
-        android:text="@string/write_off_card"
+        android:text="@string/card_for_credit"
         android:textColor="@color/brandBlueColor"
         android:textSize="20dp"
         app:layout_constraintStart_toStartOf="parent"

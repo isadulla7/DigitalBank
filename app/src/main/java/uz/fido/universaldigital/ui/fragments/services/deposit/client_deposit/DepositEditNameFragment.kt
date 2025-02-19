@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
@@ -32,6 +33,7 @@ class DepositEditNameFragment : BaseFragment<DialogClientDepositEditNameBinding,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        checkButton()
         binding.appBar.setOnBackButtonClickListener { pop() }
         deposit = requireArguments().serializable<ClientDeposit>(EDIT_NAME) as ClientDeposit
         binding.etName.setText(deposit.depName)
@@ -51,6 +53,12 @@ class DepositEditNameFragment : BaseFragment<DialogClientDepositEditNameBinding,
                 }
 
             }
+        }
+    }
+
+    private fun checkButton() {
+        binding.etName.addTextChangedListener {
+            binding.btnEnter.isEnabled=it.toString().replace(" ","").isNotEmpty()
         }
     }
 

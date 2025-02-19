@@ -1,6 +1,8 @@
 package uz.fido.universaldigital.ui.fragments.login.sign_up
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
 import android.view.KeyEvent
 import android.view.View
@@ -45,9 +47,61 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
         super.onInit(savedInstanceState)
         setTermsOfUseColor()
         initSetOnClickListeners()
-        initTextChangeListener()
+      //  initTextChangeListener()
         setPhonePrefix()
+        setMask()
         initRecoverPasswordDescription()
+    }
+
+
+    private fun setMask() {
+        binding.etPhoneNumber.setText("+998")
+        binding.etPhoneNumber.addTextChangedListener(object : TextWatcher {
+            private var isEditing = false
+            private var lastText = ""
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                lastText = s.toString()
+            }
+
+            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
+                if (isEditing || text == null) return
+                isEditing = true
+                var currentText = text.toString().replace(Regex("[^0-9+]"), "")
+                if (!currentText.startsWith("+998")) {
+                    currentText = "+998"
+                }
+                val formattedText = formatPhoneNumber(currentText)
+                binding.etPhoneNumber.removeTextChangedListener(this)
+                binding.etPhoneNumber.setText(formattedText)
+                binding.etPhoneNumber.setSelection(formattedText.length) // Kursorni oxiriga qo‘yish
+                binding.etPhoneNumber.addTextChangedListener(this)
+                binding.btnContinue.isEnabled(text.toString().length == 17)
+                isEditing = false
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+    }
+
+
+    fun formatPhoneNumber(text: String): String {
+        val digits = text.replace(Regex("[^0-9]"), "")
+        val builder = StringBuilder("+998 ")
+        if (digits.length > 3) {
+            builder.append(digits.substring(3, minOf(5, digits.length))) // XX
+        }
+        if (digits.length > 5) {
+            builder.append(" ").append(digits.substring(5, minOf(8, digits.length))) // XXX
+        }
+        if (digits.length > 8) {
+            builder.append(" ").append(digits.substring(8, minOf(10, digits.length))) // XX
+        }
+        if (digits.length > 10) {
+            builder.append(" ").append(digits.substring(10, minOf(12, digits.length))) // XX
+        }
+
+        return builder.toString()
     }
 
     private fun initSetOnClickListeners() {
@@ -82,9 +136,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun initTextChangeListener() {
-        binding.etPhoneNumber.addTextChangedListener { phone ->
+       /* binding.etPhoneNumber.addTextChangedListener { phone ->
             binding.btnContinue.isEnabled(phone.toString().length == 17)
-        }
+        }*/
     }
 
     private fun swapKeysRequest() {

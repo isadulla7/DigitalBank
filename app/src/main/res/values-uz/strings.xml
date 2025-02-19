@@ -139,7 +139,7 @@
     <string name="write_off_card">Chiqim kartasi</string>
     <string name="main_card">Asosiy karta</string>
     <string name="verification">Tasdiqlash</string>
-    <string name="you_may_change_later">Agar biror narsa noto‘g‘ri bo‘lsa,keyinchalik o‘zgartirish mumkin</string>
+    <string name="you_may_change_later">Agar bu sizning ma\'lumotingiz bo\'lmasa, qayta autentifikatsiya qiling.</string>
     <string name="not_me">Ma‘lumotlar noto‘g‘ri</string>
     <string name="i_am">Bu menman</string>
     <string name="citizenship">Fuqarolik</string>
@@ -1048,4 +1048,9 @@
     <string name="enable_shaking_action">Enable shaking action</string>
     <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
     <string name="rooted_device_not_allowed">Har qanday firibgarlikning oldini olish va ma\'lumotlaringizni xavfsiz saqlash uchun ilovadan ushbu qurilmada foydalanishga ruxsat berilmagan! Qurilma root qilingan bo‘lishi mumkin</string>
+    <string name="card_for_credit">"Card for acceptance "</string>
+    <string name="password_success">Muvaffaqiyatli</string>
+    <string name="transfer_t0_wallet">Перевод на кашелек</string>
+    <string name="select_phone_from_contact">Выберите номер телефона из контактов</string>
+    <string name="scan_card_number">Сканировать номер карты</string>
 </resources>

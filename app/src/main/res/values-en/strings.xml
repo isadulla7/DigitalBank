@@ -140,7 +140,7 @@
     <string name="write_off_card">Write-off card</string>
     <string name="main_card">Main card</string>
     <string name="verification">Verification</string>
-    <string name="you_may_change_later">In case something is wrong, you can change</string>
+    <string name="you_may_change_later">If this is not your data, please re-identify.</string>
     <string name="not_me">This is not my data</string>
     <string name="i_am">That\'s right, it\'s me</string>
     <string name="citizenship">Citizenship</string>
@@ -518,7 +518,7 @@
     <string name="all_operation">All operations</string>
     <string name="title_card">By card number</string>
     <string name="from">From</string>
-    <string name="before">Before </string>
+    <string name="before">To</string>
     <string name="my_home">My home</string>
     <string name="auto_payments">Auto payments</string>
     <string name="service_category">Service category</string>
@@ -1048,4 +1048,9 @@
     <string name="enable_shaking_action">Enable shaking action</string>
     <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
     <string name="rooted_device_not_allowed">To prevent any fraud and keep your data safe, the app is not allowed to be used on this device! The device may be rooted</string>
+    <string name="card_for_credit">"Карта для зачесления "</string>
+    <string name="password_success">Successful</string>
+    <string name="transfer_t0_wallet">Перевод на кашелек</string>
+    <string name="select_phone_from_contact">Выберите номер телефона из контактов</string>
+    <string name="scan_card_number">Сканировать номер карты</string>
 </resources>

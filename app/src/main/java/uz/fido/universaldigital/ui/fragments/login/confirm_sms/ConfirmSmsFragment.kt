@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
@@ -54,6 +55,7 @@ import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
+import uz.fido.utils.const.APIServiceConst.profileImageUrl
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.EMAIL
 import uz.fido.utils.const.Const.PHONE_NUMBER
@@ -158,6 +160,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             }
 
             SMS_OPERATION_SIGN_IN -> {
+                Log.d("TAG", "continueButtonClickEvent:____________ ")
                 getUserInfo()
             }
 
@@ -336,6 +339,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                             if (signInResponse?.token != null) {
                                 saveToPaper(Const.STRING_LINE, stringLineEnc)
                                 saveToPaper(Const.PASSWORD_ENC, data.password)
+                                saveToPaper(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
                                 signInResponse.password = encryptPassword(data.password)
                                 requireContext().saveSignInResponse(signInResponse)
                                 requireContext().saveUserSms(smsCode)
@@ -403,7 +407,6 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                     when (it.status) {
                         Status.SUCCESS -> {
                             saveToPaper(Const.STRING_LINE, stringLineEnc)
-
                             if (it.data != null) {
                                 if (operation == SMS_OPERATION_SIGN_UP) {
                                     requireContext().saveUserSms(smsCode)

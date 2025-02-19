@@ -143,7 +143,7 @@
     <string name="write_off_card">Карта списания</string>
     <string name="main_card">Основная карта</string>
     <string name="verification">Подтверждение</string>
-    <string name="you_may_change_later">В случаи если что-то неправильно вы можете изменить</string>
+    <string name="you_may_change_later">Если это не ваше данные, пройдите идентификацию заново </string>
     <string name="not_me">Это не мои данные</string>
     <string name="i_am">Верно это я</string>
     <string name="citizenship">Гражданство</string>
@@ -343,7 +343,7 @@
     <string name="transfer">Перевод</string>
     <string name="by_wallet_number">По номеру кошелька</string>
     <string name="request_money">Запрос средств</string>
-    <string name="by_requisites">По реквезитам</string>
+    <string name="by_requisites">По реквизитам</string>
     <string name="swift_transfer">SWIFT переводы</string>
     <string name="to_card_desc">Перевод на любую банковскую карту</string>
     <string name="over_my_cards_desc">Перевод между вашими картам</string>
@@ -354,7 +354,7 @@
     <string name="swift_transfer_desc">На банковский SWIFT счет</string>
     <string name="wallet_number">Номер кошелька</string>
     <string name="wallet_not_found">Кошелёк не найден</string>
-    <string name="choose_one_of_function">Выберите один из функций</string>
+    <string name="choose_one_of_function">Выберите одну из функций</string>
     <string name="via_camera">Через камеру</string>
     <string name="via_nfc">Через  NFC</string>
     <string name="card_scan_position_card">Поместите карту в рамку так, чтобы был виден номер карты.</string>
@@ -819,7 +819,7 @@
     <string name="top_up_account_for_loan">Пополнение счета для погашение кредита</string>
     <string name="purpose_7">Погашение начисленных пеней по просроченному основному долгу</string>
     <string name="read">Прочитан</string>
-    <string name="unread">Непрочитан</string>
+    <string name="unread">Не прочитано</string>
     <string name="total_balance">Общий баланс</string>
     <string name="main_currency">Основная валюта</string>
     <string name="choose_cards_for_show_in_total_balance">Выберите карты которые будут отображаться в общем балансе</string>
@@ -1050,4 +1050,10 @@
     <string name="actions">Действия</string>
     <string name="enable_shaking_action">Enable shaking action</string>
     <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
-    <string name="rooted_device_not_allowed">Во избежание мошенничества и обеспечения безопасности ваших данных использование приложения на этом устройстве запрещено! Устройство может быть рутировано</string></resources>
+    <string name="rooted_device_not_allowed">Во избежание мошенничества и обеспечения безопасности ваших данных использование приложения на этом устройстве запрещено! Устройство может быть рутировано</string>
+    <string name="card_for_credit">"Qabul qilish uchun karta"</string>
+    <string name="password_success">Успех</string>
+    <string name="transfer_t0_wallet">Перевод на кашелек</string>
+    <string name="select_phone_from_contact">Выберите номер телефона из контактов</string>
+    <string name="scan_card_number">Сканировать номер карты</string>
+</resources>

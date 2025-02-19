@@ -22,6 +22,7 @@ import uz.fido.universaldigital.databinding.FragmentConfirmSmsBinding
 import uz.fido.universaldigital.services.SMSBroadcastReceiver
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsViewModel
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
+import uz.fido.universaldigital.ui.fragments.transfers.utils.getServiceIdInfo
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.security.CryptoUtil
@@ -43,6 +44,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
     private lateinit var transferDto: TransferDto
 
     private var operation: String = ""
+    private var stringLine: String = ""
 
     companion object {
         const val TRANSFER_REQUEST = "transfer_request"
@@ -55,6 +57,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
             transferDto = requireArguments().serializable<TransferDto>(SuccessTransferFragment.TRANSFER_DTO) as TransferDto
             operation = transferDto.operation.toString()
             p2pRequest = requireArguments().serializable<P2PRequest>(TRANSFER_REQUEST) as P2PRequest
+            stringLine = requireArguments().getString(STRING_LINE).toString()
         } catch (e: Exception) {
             recordException(e, ::onCreate.name)
         }
@@ -75,6 +78,24 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
             continueButtonClickEvent()
         }
         binding.resendButton.setOnClickListener {
+            when (operation) {
+                SuccessTransferFragment.TRANSFER_BY_CARD,
+                SuccessTransferFragment.TRANSFER_OVER_MY_CARDS,
+                SuccessTransferFragment.TRANSFER_BY_PHONE,
+                SuccessTransferFragment.TRANSFER_BY_WALLET -> {
+                    checkSms()
+                }
+            }
+        }
+    }
+
+    private fun checkSms() {
+        checkForSms(
+            card = transferDto.senderCard!!,
+            amount = transferDto.transferAmount!!,
+            serviceId = getServiceIdInfo(transferDto.receiverCard?.card_number!!, transferDto.senderCard!!.object_value),
+        ) { needConfirmSms, stringLine ->
+            this.stringLine = stringLine
             resendButtonClickEvent()
         }
     }
@@ -98,7 +119,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
 
     private fun transferRequest() {
         binding.btnContinue.setProgress(true)
-        val stringLine = requireArguments().getString(STRING_LINE).toString()
+        // val stringLine = requireArguments().getString(STRING_LINE).toString()
         p2pRequest.string_line = CryptoUtil.encryptWithoutSalt(
             stringLine,
             binding.etSms.editableText.toString()

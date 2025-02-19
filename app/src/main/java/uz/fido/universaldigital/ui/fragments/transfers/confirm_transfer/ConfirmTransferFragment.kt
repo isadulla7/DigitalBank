@@ -71,6 +71,7 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
             binding.cardBalance.setCardBalance(it)
             binding.cardType.setCardTypeImage(it)
             binding.bankLogo.setBankLogo(it)
+            binding.tvMainCard.text = if (it.is_main=="Y") getString(R.string.main_card) else ""
             binding.cardBackground.load(requireContext().getDrawableFromRes(it.bg_icon_name))
         }
     }

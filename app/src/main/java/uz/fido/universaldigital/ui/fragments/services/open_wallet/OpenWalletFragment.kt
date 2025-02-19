@@ -33,7 +33,7 @@ class OpenWalletFragment : BaseFragment<FragmentOpenWalletBinding, WalletViewMod
             openWalletRequest()
         }
         binding.walletName.addTextChangedListener {
-            binding.openWalletBtn.isEnabled(it.toString().isNotEmpty())
+            binding.openWalletBtn.isEnabled(it.toString().replace(" ","").isNotEmpty())
         }
     }
 

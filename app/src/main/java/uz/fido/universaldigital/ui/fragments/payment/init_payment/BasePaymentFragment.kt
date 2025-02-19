@@ -12,6 +12,7 @@ import android.provider.ContactsContract
 import android.provider.Settings
 import android.text.InputType
 import android.text.method.DigitsKeyListener
+import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -55,6 +56,7 @@ import java.sql.SQLException
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import kotlin.math.min
 
 @SuppressLint("SetTextI18n")
 abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseInterface, PermissionInterface {
@@ -80,6 +82,7 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
     var paymentService: PaymentService? = null
     var operation: Int? = null
     var mobileNumber: String = ""
+    var mobileNumberUpdate=false
     private var paymentAmount = 0.0
     var minAmount = 0.0
     var maxAmount = 0.0
@@ -622,7 +625,9 @@ abstract class BasePaymentFragment : DownloadPayment(), ClipBoardListener, BaseI
                     editTextPhone.setText(arguments?.getString(PaymentFragment.PAYMENT_ARGUMENT_1))
                 }
             }
-            if (mobileNumber.isNotEmpty()) editTextPhone.setText(mobileNumber)
+            if (mobileNumber.isNotEmpty() && !mobileNumberUpdate){
+                editTextPhone.setText(mobileNumber)
+            }
             addViewToMainLayout(root)
         }
     }
