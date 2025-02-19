@@ -80,7 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/profile_image"
             app:layout_constraintTop_toBottomOf="@id/user_name"
-            tools:text="+99893 008 88 09" />
+            tools:text="+998 93 008 88 09" />
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:id="@+id/verified_icon"

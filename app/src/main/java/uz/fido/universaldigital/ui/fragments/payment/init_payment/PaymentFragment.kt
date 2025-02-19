@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.payment.init_payment
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -291,6 +292,7 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
             getClientToken(),
             GetOperationInfoRequest(request_id = localeMonitoring.request_id)
         ).observe(viewLifecycleOwner) {
+            mobileNumberUpdate=true
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {

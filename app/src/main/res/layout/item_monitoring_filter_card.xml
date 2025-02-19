@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/father"
     android:layout_width="match_parent"
-    android:layout_height="52dp"
+    android:layout_height="wrap_content"
     android:layout_marginTop="16dp">
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -19,10 +19,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:orientation="vertical"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/option"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/icon"
         app:layout_constraintTop_toTopOf="parent">
@@ -41,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textColor="@color/brandBlueColor_50"
-            tools:text="Status: activ" />
+            android:text="Status: activ" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

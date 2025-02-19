@@ -4,9 +4,11 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -709,7 +711,7 @@ class PaymentSecondStepFragment :
         if (minAmount > amount || amount > maxAmount) {
             binding.btnContinue.isEnabled(false)
         } else {
-            binding.btnContinue.isEnabled(checkForButton())
+          binding.btnContinue.isEnabled(checkForButton())
         }
     }
 
@@ -728,9 +730,17 @@ class PaymentSecondStepFragment :
             if (amountEditText?.text.toString().isEmpty()) {
                 return false
             }
-            if (amountEditText?.text.toString().startsWith("0")) {
-                return false
+            if (!amountEditText?.text.isNullOrEmpty()){
+                if (amountEditText?.text.toString() == "0") {
+                    return false
+                }
+                if (amountEditText?.text.toString()=="0."){
+                    return false
+                }
             }
+            /*if (amountEditText?.text.toString().startsWith("0") || amountEditText?.text.toString().startsWith("0.")) {
+                return false
+            }*/
         }
         return true
     }

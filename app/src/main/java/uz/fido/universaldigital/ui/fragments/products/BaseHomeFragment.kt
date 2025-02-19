@@ -1,5 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.products
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -7,6 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import android.content.ClipData
+import android.util.Log
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -73,6 +78,7 @@ import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 import java.text.DecimalFormat
+
 
 abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface {
 
@@ -191,8 +197,11 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
 
         }
 
+
         val maskTextWatcher = object : DoAfterTextWatcher() {
             private var isUpdating = false
+
+
             override fun afterTextChanged(s: Editable?) {
                 if (isUpdating) return
                 s?.let {

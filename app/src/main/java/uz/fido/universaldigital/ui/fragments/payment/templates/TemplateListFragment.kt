@@ -170,9 +170,12 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
                             saveTemplate(position)
                         } else {
                             hideProgress()
-                            templateList.removeAt(position)
-                            templatesAdapter!!.notifyItemRemoved(position)
-                            viewModel.updateTemplates(templateList)
+                            try {
+                                templateList.removeAt(position)
+                                templatesAdapter!!.notifyItemRemoved(position)
+                                viewModel.updateTemplates(templateList)
+                            }catch (e:Exception){}
+
                         }
                     }
 

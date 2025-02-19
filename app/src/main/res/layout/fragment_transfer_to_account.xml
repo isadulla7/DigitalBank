@@ -58,6 +58,7 @@
         android:layout_marginTop="16dp"
         android:background="@drawable/cornered_bg_12dp_stroke"
         android:gravity="center"
+        android:visibility="gone"
         android:paddingStart="12dp"
         android:paddingEnd="16dp">
 

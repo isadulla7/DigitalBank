@@ -351,7 +351,7 @@ class Format {
                 )
             }
             if (str.startsWith("998") && str.length == 12) {
-                str = "+" + account.substring(0, 5) + " " + account.substring(
+                str = "+" + account.substring(0,3)+" "+account.substring(3, 5) + " " + account.substring(
                     5, 8
                 ) + " " + account.substring(8, 10) + " " + account.substring(
                     10, account.length

@@ -201,7 +201,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
 
                 else -> {
                     valueView.text = if (paymentParams.def_value.trim().isNotEmpty()) {
-                        paymentParams.def_value
+                        paymentParams.def_value.replace(" ","")
                     } else ""
                 }
             }
