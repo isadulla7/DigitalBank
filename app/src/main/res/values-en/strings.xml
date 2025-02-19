@@ -1050,9 +1050,9 @@
     <string name="rooted_device_not_allowed">To prevent any fraud and keep your data safe, the app is not allowed to be used on this device! The device may be rooted</string>
     <string name="card_for_credit">"Карта для зачесления "</string>
     <string name="password_success">Successful</string>
-    <string name="transfer_t0_wallet">Перевод на кашелек</string>
-    <string name="select_phone_from_contact">Выберите номер телефона из контактов</string>
-    <string name="scan_card_number">Сканировать номер карты</string>
+    <string name="transfer_t0_wallet">Transfer to wallet</string>
+    <string name="select_phone_from_contact">Choose phone number from contacts</string>
+    <string name="scan_card_number">Scan card number</string>
     <string name="end_session">End Session</string>
     <string name="google_api_key_for_map">AIzaSyAz12HO8DlLFz34dNvuNwQ9Rzhw3hpUZGQ</string>
     <string name="you_can_close_deposit_only_dv_cards">You can only close a deposit to a "Mobile DV" account. It can be opened for free in the "Open a Deposit" section.</string>

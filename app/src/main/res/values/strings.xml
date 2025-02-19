@@ -1050,14 +1050,12 @@
     <string name="actions">Действия</string>
     <string name="enable_shaking_action">Enable shaking action</string>
     <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
-    <string name="rooted_device_not_allowed">Во избежание мошенничества и обеспечения безопасности ваших данных использование приложения на этом устройстве запрещено! Устройство может быть рутировано</string>
     <string name="card_for_credit">"Qabul qilish uchun karta"</string>
     <string name="password_success">Успех</string>
     <string name="transfer_t0_wallet">Перевод на кашелек</string>
     <string name="select_phone_from_contact">Выберите номер телефона из контактов</string>
     <string name="scan_card_number">Сканировать номер карты</string>
     <string name="end_session">Завершить сеанс</string>
-</resources>
     <string name="rooted_device_not_allowed">Во избежание мошенничества и обеспечения безопасности ваших данных использование приложения на этом устройстве запрещено! Устройство может быть рутировано</string>
     <string name="google_api_key_for_map">AIzaSyAz12HO8DlLFz34dNvuNwQ9Rzhw3hpUZGQ</string>
     <string name="you_can_close_deposit_only_dv_cards">Вы можете закрыть депозит только на счет "Мобильный ДВ". Его можно открыть бесплатно в разделе «Открыть вклад».</string>
