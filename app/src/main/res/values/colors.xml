@@ -72,7 +72,7 @@
     <color name="view_pager_stroke_color">#E7E9EC</color>
     <color name="link_color">#0000EE</color>
     <color name="home_card_description_color">#848E9D</color>
-
+    <color name="home_gradient_color_1">#FFEBE7</color>
     //my id colors
     <color name="myidColorPrimary">@color/brandRedColor</color>
     <color name="myidPrimaryButtonColor">@color/brandRedColor</color>

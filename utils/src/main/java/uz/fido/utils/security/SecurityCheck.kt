@@ -1,7 +1,6 @@
 package uz.fido.utils.security
 
 import android.app.Activity
-import com.google.firebase.crashlytics.internal.common.CommonUtils
 import com.scottyab.rootbeer.RootBeer
 import java.io.File
 import java.net.NetworkInterface
@@ -29,7 +28,7 @@ object SecurityCheck {
     fun Activity.isRunningOnEmulator(): Boolean = EmulatorCheck(this).isProbablyAnEmulator()
 
     fun Activity.isPhoneRooted(): Boolean {
-        return checkRootedFiles() || canExecuteSu() || isMagiskPresent() || canWriteToSystem() || checkRootProps() || CommonUtils.isRooted(this) || RootBeer(this).isRooted
+        return RootBeer(this).isRooted
     }
 
     private fun checkRootedFiles(): Boolean {

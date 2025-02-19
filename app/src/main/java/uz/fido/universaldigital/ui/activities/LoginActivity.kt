@@ -24,6 +24,7 @@ import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.security.SecurityCheck.isPhoneRooted
+import uz.fido.utils.security.SecurityCheck.isRunningOnEmulator
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
@@ -58,10 +59,10 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkForDeviceLock() {
-        /*if (this.isRunningOnEmulator()) {
+        if (this.isRunningOnEmulator()) {
             openLockActivity()
             return
-        } else */if (this.isPhoneRooted()) {
+        } else if (this.isPhoneRooted()) {
             openRootedDeviceWarning()
             return
         } else {
@@ -110,7 +111,6 @@ class LoginActivity : BaseActivity() {
         navGraph.setStartDestination(getStartDestination())
         navController.setGraph(navGraph, bundle)
     }
-
 
     private fun isUserLogged() = Paper.book().read(USER_LOGGED, false) == false
 
