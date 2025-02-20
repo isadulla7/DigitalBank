@@ -173,7 +173,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     override fun downloadPaymentStart() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             skeletonScreen = showSkeleton(
-                binding.payments, menuPaymentsAdapter, R.layout.shimmer_item_payment_group, 15
+                binding.payments, menuPaymentsAdapter, R.layout.shimmer_item_payment_group, 9
             )
         }
     }
