@@ -7,7 +7,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
 import coil.load
@@ -37,6 +39,13 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
 
     private lateinit var storageReference: StorageReference
     private lateinit var storage: FirebaseStorage
+    val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
+        if (uri != null) {
+            openEditPhotoActivity(uri.toString())
+       } else {
+            Log.d("TAG", "PickMedia:errpt ")
+        }
+    }
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
@@ -57,7 +66,10 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
 
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
-        binding.profileImage.setOnClickListener { requestPermissionForImages() }
+        binding.profileImage.setOnClickListener {
+        pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
+      //   requestPermissionForImages()
+        }
         binding.saveButton.setOnClickListener { if (canEditProfile()) editProfile() else toast(getString(R.string.fill_the_gaps)) }
     }
 
@@ -105,18 +117,18 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
         editPhotoIntent.launch(intent)
     }
 
-    private fun requestPermissionForImages() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
-        } else {
-            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
-        }
-    }
+//    private fun requestPermissionForImages() {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//            requestPermissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES)
+//        } else {
+//            requestPermissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE)
+//        }
+//    }
 
-    private fun pickImage() {
-        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply { type = "image/*" }
-        openGalleryIntent.launch(intent)
-    }
+//    private fun pickImage() {
+//        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI).apply { type = "image/*" }
+//        openGalleryIntent.launch(intent)
+//    }
 
     private fun uploadImageToFirebase(filePath: Uri) {
         try {
@@ -150,14 +162,15 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
         }
     }
 
-    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { approved ->
-        if (approved) {
-            pickImage()
-        }
-    }
+//    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { approved ->
+//        if (approved) {
+//            pickImage()
+//        }
+//    }
 
     private val editPhotoIntent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK && it.data != null) {
+            Log.d("TAG", "Tag:${it.data} ")
             val path = it.data?.getStringExtra(EditPhotoActivity.RESULT_IMAGE)
             saveToPaper(Const.PAPER_USER_PHOTO_PATH, path)
             Picasso.get().load(path).into(binding.profileImage)
@@ -165,11 +178,11 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
         }
     }
 
-    private val openGalleryIntent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK && it.data?.data != null) {
-            val path = it.data?.data.toString()
-            openEditPhotoActivity(path)
-        }
-    }
+//    private val openGalleryIntent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+//        if (it.resultCode == Activity.RESULT_OK && it.data?.data != null) {
+//            val path = it.data?.data.toString()
+//            openEditPhotoActivity(path)
+//        }
+//    }
 
 }
