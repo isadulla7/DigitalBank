@@ -13,10 +13,10 @@ object Const {
     const val FAST_ACCESS = "fast_access"
     const val UPDATE_FAST_ACCESS = "UPDATE_FAST_ACCESS"
     const val MAIN_WIDGETS_VERSION_SAVED = "main_widget_version_saved"
-    const val UPDATE_MAIN_WIDGETS = "false"
+    const val UPDATE_MAIN_WIDGETS = "true"
     const val UPDATE_LANG = "update_lang"
     const val MAIN_WIDGETS = "main_widgets"
-    const val MAIN_WIDGETS_VERSION = 6
+    const val MAIN_WIDGETS_VERSION = 7
     const val TOTAL_BALANCE_TYPE = "balance_type"
     const val PAPER_CLIENT_TOKEN = "client_token"
     const val PAPER_CLIENT_FILIAL_CODE = "client_filial_code"

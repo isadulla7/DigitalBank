@@ -131,7 +131,10 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
             goto(R.id.templateListFragment)
         }
         binding.loanRepayment.setOnClickListener {
-            openLoanRepayment()
+            openPaymentByServiceId("-2")
+        }
+        binding.loanIshonch.setOnClickListener {
+            openPaymentByServiceId("788")
         }
     }
 
@@ -328,8 +331,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         }
     }
 
-    private fun openLoanRepayment() {
-        val serviceId = "-2"
+    private fun openPaymentByServiceId(serviceId: String) {
         val service = DatabaseHelper(requireContext()).getServiceByContractId(serviceId)
         val bundle = Bundle()
         bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, service)

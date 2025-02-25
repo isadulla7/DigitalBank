@@ -1059,4 +1059,5 @@
     <string name="google_api_key_for_map">AIzaSyAz12HO8DlLFz34dNvuNwQ9Rzhw3hpUZGQ</string>
     <string name="you_can_close_deposit_only_dv_cards">Вы можете закрыть депозит только на счет "Мобильный ДВ". Его можно открыть бесплатно в разделе «Открыть вклад».</string>
     <string name="create_mobile_dv">Создать Mobile DV</string>
+    <string name="ishonch">Ishonch</string>
 </resources>

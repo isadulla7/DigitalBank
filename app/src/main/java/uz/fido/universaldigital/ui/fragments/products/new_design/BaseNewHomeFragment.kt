@@ -7,8 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.Editable
-import android.util.Log
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,7 +40,6 @@ import uz.fido.universaldigital.ui.fragments.products.dialog.ScanCardAndWalletDi
 import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
 import uz.fido.universaldigital.ui.fragments.products.widgets.card_phone.CardNumberDialog
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
-import uz.fido.universaldigital.ui.fragments.transfers.utils.checkCardNumber
 import uz.fido.universaldigital.ui.utils.extensions.getFastAccessOperationList
 import uz.fido.universaldigital.ui.utils.extensions.getFormattedContact
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
@@ -70,7 +67,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     var mask = "#### #### #### ####"
     var typeCurrent = true
     var container: ViewGroup? = null
-    private lateinit var operationDialog:ScanCardAndWalletDialog
+    private lateinit var operationDialog: ScanCardAndWalletDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -91,7 +88,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     private fun cardAndPhoneLayout() {
         binding.btnContact.setOnClickListener {
             if (typeCurrent) {
-                 operationDialog = ScanCardAndWalletDialog(
+                operationDialog = ScanCardAndWalletDialog(
                     scanCardClick = {
                         operationDialog.dismiss()
                         openCameraForCardRead()
@@ -103,7 +100,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
 //                        dialogCard.dismiss()
 //                    }
 //                )
-              //  dialogCard.show(childFragmentManager, "")
+                        //  dialogCard.show(childFragmentManager, "")
                         operationDialog.dismiss()
                         fetchPhoneNumber()
                     },
@@ -114,10 +111,9 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                 operationDialog.show(childFragmentManager, "TAG")
 
 
-
             } else {
                 fetchPhoneNumber()
-               // goto(R.id.transferByPhoneFragment, bundleOf("contact" to "open", Const.CARD_NUMBER to ""))
+                // goto(R.id.transferByPhoneFragment, bundleOf("contact" to "open", Const.CARD_NUMBER to ""))
             }
         }
         if (typeCurrent) {
@@ -182,15 +178,15 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                     binding.etPhoneNumber.addTextChangedListener(this)
                     isUpdating = false
                     if (typeCurrent) {
-                        if (text.startsWith("+998") && text.replace(" ","").length == 13) {
+                        if (text.startsWith("+998") && text.replace(" ", "").length == 13) {
                             goto(R.id.transferByPhoneFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ", "")))
                             binding.etPhoneNumber.setText("")
-                        } else if (text.replace(" ","").length == 16 ) {
+                        } else if (text.replace(" ", "").length == 16) {
                             goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ", "")))
                             binding.etPhoneNumber.setText("")
                         }
-                    } else if (text.replace(" ","").length == 13) {
-                       mobilePayment(text)
+                    } else if (text.replace(" ", "").length == 13) {
+                        mobilePayment(text)
                     }
                 }
             }
@@ -198,7 +194,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         binding.etPhoneNumber.addTextChangedListener(maskTextWatcher)
     }
 
-    private fun mobilePayment(text:String){
+    private fun mobilePayment(text: String) {
         val serviceCode = mobileServiceId(text.replace("+", "").replace(" ", ""))
         if (serviceCode == "error") {
             Toast.makeText(
@@ -410,6 +406,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
 
             18 -> goto(R.id.clientDepositListFragment)
             19 -> goto(R.id.clientCreditListFragment)
+            20 -> openPaymentByServiceId("788")
         }
     }
 
@@ -561,8 +558,8 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             if (it.resultCode == Activity.RESULT_OK && it.data != null) {
                 val scanResult = ScanActivity.creditCardFromResult(it.data)
                 val result = scanResult?.number
-                if (result!=null){
-                goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to result.replace(" ", "")))
+                if (result != null) {
+                    goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to result.replace(" ", "")))
                 }
             }
         }
@@ -597,9 +594,9 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                     contactQuery.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
                 phoneNumber = contactQuery.getString(numberIndex)
                 if (getFormattedContact(phoneNumber).isNotEmpty()) {
-                    if (typeCurrent){
-                    goto(R.id.transferByPhoneFragment, bundleOf( Const.CARD_NUMBER to phoneNumber))
-                    }else{
+                    if (typeCurrent) {
+                        goto(R.id.transferByPhoneFragment, bundleOf(Const.CARD_NUMBER to phoneNumber))
+                    } else {
                         mobilePayment(phoneNumber)
                     }
                 } else {
@@ -615,10 +612,19 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             contactQuery?.close()
         }
     }
+
     private fun wrongPhoneNumberFormat() {
         Toast.makeText(
             requireContext(), getString(uz.fido.utils.R.string.wrong_format), Toast.LENGTH_SHORT
         ).show()
+    }
+
+    private fun openPaymentByServiceId(serviceId: String) {
+        val service = DatabaseHelper(requireContext()).getServiceByContractId(serviceId)
+        val bundle = Bundle()
+        bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, service)
+        bundle.putInt(PaymentFragment.PAYMENT_OPERATION, PaymentFragment.PAYMENT_OPERATION_PAYMENT)
+        goto(R.id.paymentFragment, bundle)
     }
 
 }

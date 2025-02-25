@@ -1,7 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.products
 
-import android.content.ClipboardManager
-import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
@@ -9,9 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
-import android.content.ClipData
-import android.util.Log
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -104,10 +99,9 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
     }
 
     fun initWidgets() {
-        if (Const.MAIN_WIDGETS_VERSION > (Paper.book()
-                .read<Int>(Const.MAIN_WIDGETS_VERSION_SAVED, 0) ?: 0) || Paper.book()
-                .read<java.util.ArrayList<MainWidget>>(Const.MAIN_WIDGETS) == null || Paper.book()
-                .read<Boolean>(Const.UPDATE_MAIN_WIDGETS, false) == true
+        if (Const.MAIN_WIDGETS_VERSION > (Paper.book().read<Int>(Const.MAIN_WIDGETS_VERSION_SAVED, 0) ?: 0) ||
+            Paper.book().read<java.util.ArrayList<MainWidget>>(Const.MAIN_WIDGETS) == null ||
+            Paper.book().read<Boolean>(Const.UPDATE_MAIN_WIDGETS, false) == true
         ) {
             mainWidgetsList = java.util.ArrayList()
             val names = resources.getStringArray(R.array.main_widgets)
@@ -644,6 +638,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
 
             18 -> goto(R.id.clientDepositListFragment)
             19 -> goto(R.id.clientCreditListFragment)
+            20 -> openPaymentByServiceId("788")
         }
     }
 
@@ -792,4 +787,11 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
         }
     }
 
+    private fun openPaymentByServiceId(serviceId: String) {
+        val service = DatabaseHelper(requireContext()).getServiceByContractId(serviceId)
+        val bundle = Bundle()
+        bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, service)
+        bundle.putInt(PaymentFragment.PAYMENT_OPERATION, PaymentFragment.PAYMENT_OPERATION_PAYMENT)
+        goto(R.id.paymentFragment, bundle)
+    }
 }

@@ -284,6 +284,13 @@ fun getFastAccessOperationList(context: Context): ArrayList<FastAccessOperation>
             icon = "ic_transfer_swift"
         )
     )
+    operations.add(
+        FastAccessOperation(
+            id = 20,
+            name = context.getString(R.string.ishonch),
+            icon = "ishonch_logo"
+        )
+    )
     return operations
 }
 
