@@ -51,10 +51,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     private lateinit var paymentTemplatesAdapter: PaymentTemplatesAdapter
     private lateinit var menuPaymentsAdapter: MainPaymentsAdapter
     private lateinit var binding: FragmentMenuPaymentsBinding
-
     private val utilsViewModel: UtilsViewModel by activityViewModels()
-
-
     private var templatesSkeleton: SkeletonScreen? = null
     private var skeletonScreen: SkeletonScreen? = null
 
@@ -65,7 +62,6 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         }
         paymentTemplatesAdapter = PaymentTemplatesAdapter(this)
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?

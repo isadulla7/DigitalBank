@@ -96,11 +96,13 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="40dp"
+                            android:layout_width="72dp"
                             android:layout_height="40dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="12dp"
-                            android:src="@drawable/ishonch_logo"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/ishonch_png"
+                            app:tint="@color/status_done"
                             tools:ignore="ContentDescription" />
 
                         <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -112,7 +114,7 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:text="@string/ishonch"
+                            android:text="@string/loan_repayment"
                             android:textColor="@color/brandBlueColor"
                             android:textSize="14dp" />
 
