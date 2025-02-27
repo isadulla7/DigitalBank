@@ -7,7 +7,6 @@ import android.text.method.LinkMovementMethod
 import android.view.KeyEvent
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
@@ -47,12 +46,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
         super.onInit(savedInstanceState)
         setTermsOfUseColor()
         initSetOnClickListeners()
-      //  initTextChangeListener()
         setPhonePrefix()
         setMask()
         initRecoverPasswordDescription()
     }
-
 
     private fun setMask() {
         binding.etPhoneNumber.setText("+998")
@@ -73,7 +70,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
                 val formattedText = formatPhoneNumber(currentText)
                 binding.etPhoneNumber.removeTextChangedListener(this)
                 binding.etPhoneNumber.setText(formattedText)
-                binding.etPhoneNumber.setSelection(formattedText.length) // Kursorni oxiriga qo‘yish
+                binding.etPhoneNumber.setSelection(formattedText.length)
                 binding.etPhoneNumber.addTextChangedListener(this)
                 binding.btnContinue.isEnabled(text.toString().length == 17)
                 isEditing = false
@@ -84,21 +81,20 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
         })
     }
 
-
-    fun formatPhoneNumber(text: String): String {
+    private fun formatPhoneNumber(text: String): String {
         val digits = text.replace(Regex("[^0-9]"), "")
         val builder = StringBuilder("+998 ")
         if (digits.length > 3) {
-            builder.append(digits.substring(3, minOf(5, digits.length))) // XX
+            builder.append(digits.substring(3, minOf(5, digits.length)))
         }
         if (digits.length > 5) {
-            builder.append(" ").append(digits.substring(5, minOf(8, digits.length))) // XXX
+            builder.append(" ").append(digits.substring(5, minOf(8, digits.length)))
         }
         if (digits.length > 8) {
-            builder.append(" ").append(digits.substring(8, minOf(10, digits.length))) // XX
+            builder.append(" ").append(digits.substring(8, minOf(10, digits.length)))
         }
         if (digits.length > 10) {
-            builder.append(" ").append(digits.substring(10, minOf(12, digits.length))) // XX
+            builder.append(" ").append(digits.substring(10, minOf(12, digits.length)))
         }
 
         return builder.toString()
@@ -133,12 +129,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
         binding.etPhoneNumber.setOnKeyListener { _, _, event ->
             event.keyCode == KeyEvent.KEYCODE_DEL && binding.etPhoneNumber.text.toString().length == 4
         }
-    }
-
-    private fun initTextChangeListener() {
-       /* binding.etPhoneNumber.addTextChangedListener { phone ->
-            binding.btnContinue.isEnabled(phone.toString().length == 17)
-        }*/
     }
 
     private fun swapKeysRequest() {

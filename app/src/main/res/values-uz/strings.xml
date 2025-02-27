@@ -1058,4 +1058,5 @@
     <string name="you_can_close_deposit_only_dv_cards">Siz depositni faqatgina \"Mobil DV\" hisobiga yopa olasiz. Uni \"Deposit ochish\" bo\'limida tekinga ochish mumkin.</string>
     <string name="create_mobile_dv">Mobile DV hisobini ochish</string>
     <string name="ishonch">Ishonch</string>
+    <string name="you_dont_have_an_account">Sizning hisob ma\'lumotlaringizni olib bo‘lmadi, siz registratsiyani davom ettirishingiz yoki orqaga qaytishingiz mumkin</string>
 </resources>

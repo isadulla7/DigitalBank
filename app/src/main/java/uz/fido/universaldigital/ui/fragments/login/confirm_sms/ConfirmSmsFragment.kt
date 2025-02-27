@@ -8,7 +8,6 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
@@ -24,7 +23,6 @@ import uz.fido.network.domain.model.abc_base.UserInfo
 import uz.fido.network.domain.model.cards.AddCardRequest
 import uz.fido.network.domain.model.cards.ResetPinCount
 import uz.fido.network.domain.model.home.GlSMSActivateRequest
-import uz.fido.network.domain.model.payment.AllServiceLists
 import uz.fido.network.domain.model.sessions.DeleteUserDeviceRequest
 import uz.fido.network.domain.model.sessions.UserDevices
 import uz.fido.network.domain.model.sign_in.SignInRequestNew
@@ -57,7 +55,6 @@ import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.APIServiceConst.profileImageUrl
 import uz.fido.utils.const.Const
-import uz.fido.utils.const.Const.EMAIL
 import uz.fido.utils.const.Const.PHONE_NUMBER
 import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.security.CryptoUtil
@@ -94,14 +91,14 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private var stringLine = ""
 
     companion object {
-        const val SMS_OPERATION_FORGOT_PASSWORD = "forgot_password"
-        const val SMS_OPERATION_SIGN_UP = "sign_up"
-        const val SMS_OPERATION_SIGN_IN = "sign_in"
-        const val SMS_OPERATION_TERMINATE_SESSION = "terminate_session"
-        const val ADD_CARD = "add_card"
         const val SMS_OPERATION_CONNECT_SMS_INFO = "connect_sms_notification"
+        const val SMS_OPERATION_TERMINATE_SESSION = "terminate_session"
+        const val SMS_OPERATION_FORGOT_PASSWORD = "forgot_password"
         const val SMS_DEPOSIT_OPERATION = "sms_deposit_operation"
         const val SMS_OPERATION_PAYMENT_KEY = "payment_key"
+        const val SMS_OPERATION_SIGN_UP = "sign_up"
+        const val SMS_OPERATION_SIGN_IN = "sign_in"
+        const val ADD_CARD = "add_card"
         const val STRING_LINE = "string_line"
         const val SMS_AMOUNT = "amount"
         const val SMS_SERVICE_ID = "service_id"
@@ -164,7 +161,6 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             }
 
             SMS_OPERATION_SIGN_IN -> {
-                Log.d("TAG", "continueButtonClickEvent:____________ ")
                 getUserInfo()
             }
 
@@ -489,80 +485,33 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     }
 
     private fun initDialog() {
-        var model = AllServiceLists()
-        val list = ArrayList<AllServiceLists>()
-        if (operation != SMS_OPERATION_FORGOT_PASSWORD) {
-            model.name = getString(R.string.number_and_password)
-            model.code = SignInTypes.SIGN_IN.toString()
-            list.add(model)
+        if (operation == SMS_OPERATION_SIGN_UP) {
+            if (checkSmsResponse.is_authenticate == "Y") {
+                YouHaveAccountDialog(openMyId = {
+                    openMyIdActivity()
+                }, continueSignUp = {
+                    continueSignUpOperation()
+                }).show(childFragmentManager, "")
+            }
+        } else if (operation == SMS_OPERATION_FORGOT_PASSWORD) {
+            if (checkSmsResponse.is_authenticate == "Y") {
+                openMyIdActivity()
+            } else {
+                YouDontHaveAccountDialog(cancelOperation = {
+                    pop()
+                }, continueSignUp = {
+                    continueSignUpOperation()
+                }).show(childFragmentManager, "")
+            }
         }
-        if (checkSmsResponse.is_email == "Y") {
-            model = AllServiceLists()
-            model.name = getString(R.string.recover_with_mail)
-            model.code = SignInTypes.EMAIL.toString()
-            list.add(
-                model
-            )
-        }
-        if (checkSmsResponse.is_authenticate == "Y") {
-            model = AllServiceLists()
-            model.name = getString(R.string.recover_with_identification)
-            model.code = SignInTypes.IDENTIFY.toString()
-            list.add(
-                model
-            )
-        }
-        if (checkSmsResponse.is_card_exist == "Y") {
-            model = AllServiceLists()
-            model.name = getString(R.string.recover_with_card_number)
-            model.code = SignInTypes.CARD.toString()
-            list.add(model)
-        }
-        model = AllServiceLists()
-        model.name = getString(R.string.continue_registration)
-        model.code = SignInTypes.SIGN_UP.toString()
-        list.add(model)
-
-        allServicesDialog = AllServicesDialog(
-            baseInterface = this@ConfirmSmsFragment, list = list, title = getString(R.string.you_already_have_account)
-        )
-        if (list.size != 0) allServicesDialog.show(
-            childFragmentManager, ""
-        )
     }
 
-    override fun setToEditText(allServiceLists: AllServiceLists, tag: String) {
-        allServicesDialog.dismiss()
-        val phoneNumber = requireArguments().getString(PHONE_NUMBER).toString().replace(" ", "").replace("+", "")
-        when (allServiceLists.code) {
-            SignInTypes.CARD.toString() -> {
-                gotoWithSlide(R.id.restoreWithCardFragment, bundleOf(PHONE_NUMBER to phoneNumber))
-            }
-
-            SignInTypes.EMAIL.toString() -> {
-                gotoWithSlide(
-                    R.id.restoreWithEmailFragment, bundleOf(PHONE_NUMBER to phoneNumber, EMAIL to checkSmsResponse.email)
-                )
-            }
-
-            SignInTypes.SIGN_UP.toString() -> {
-                continueSignUpOperation()
-            }
-
-            SignInTypes.SIGN_IN.toString() -> {
-                gotoWithSlide(R.id.signInFragment)
-            }
-
-            SignInTypes.IDENTIFY.toString() -> {
-                val intent = Intent(requireActivity(), FaceIdActivity::class.java)
-                intent.putExtra("mode", "strong")
-                intent.putExtra(
-                    FaceIdActivity.CLIENT_PASSPORT, checkSmsResponse.passport_serial + checkSmsResponse.passport_number
-                )
-                intent.putExtra(FaceIdActivity.CLIENT_DATE_OF_BIRTH, checkSmsResponse.birthday)
-                faceIdActivityResult.launch(intent)
-            }
-        }
+    private fun openMyIdActivity() {
+        val intent = Intent(requireActivity(), FaceIdActivity::class.java)
+        intent.putExtra("mode", "strong")
+        intent.putExtra(FaceIdActivity.CLIENT_PASSPORT, checkSmsResponse.passport_serial + checkSmsResponse.passport_number)
+        intent.putExtra(FaceIdActivity.CLIENT_DATE_OF_BIRTH, checkSmsResponse.birthday)
+        faceIdActivityResult.launch(intent)
     }
 
     private fun finishOperation() {
@@ -595,9 +544,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                         requireContext().saveSignInResponse(signInResponse)
                         saveToPaper(Const.PASSWORD_ENC, signInResponse.password)
                         gotoWithSlide(
-                            R.id.changePasswordFragment2, bundleOf(
-                                ChangePasswordFragment.CHANGE_PASSWORD_OPERATION to ChangePasswordFragment.CHANGE_PASSWORD_SIGNUP
-                            )
+                            R.id.changePasswordFragment2, bundleOf(ChangePasswordFragment.CHANGE_PASSWORD_OPERATION to ChangePasswordFragment.CHANGE_PASSWORD_SIGNUP)
                         )
                     }
 

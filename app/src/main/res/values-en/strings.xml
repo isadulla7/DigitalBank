@@ -1058,4 +1058,5 @@
     <string name="you_can_close_deposit_only_dv_cards">You can only close a deposit to a "Mobile DV" account. It can be opened for free in the "Open a Deposit" section.</string>
     <string name="create_mobile_dv">Create a Mobile DV</string>
     <string name="ishonch">Ishonch</string>
+    <string name="you_dont_have_an_account">Your account information could not be retrieved, you can continue registration or go back.</string>
 </resources>
