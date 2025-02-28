@@ -90,6 +90,9 @@ object Const {
     const val SHAKING_ACTION_STATE = "shaking_action_state"
     const val SELECTED_OPTION = "selected_option"
     const val SELECTED_FRAGMENT = "selected_fragment"
+    const val DEVICE_MY_ID_STATE = "device_my_id_state"
+    const val PASSPORT_DATA = "passport_data"
+    const val DATE_OF_BIRTH = "date_of_birth"
 
     var request_id = ""
 

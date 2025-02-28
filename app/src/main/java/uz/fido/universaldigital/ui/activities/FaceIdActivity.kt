@@ -79,6 +79,9 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
 
     override fun onError(exception: MyIdException) {
         Toast.makeText(this, exception.message, Toast.LENGTH_LONG).show()
+        val resultIntent = Intent()
+        resultIntent.putExtra("code", exception.code)
+        setResult(RESULT_OK, resultIntent)
         finish()
     }
 
@@ -104,6 +107,9 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
     companion object {
         const val CLIENT_DATE_OF_BIRTH = "birthday"
         const val CLIENT_PASSPORT = "passport"
+        const val ERROR_CODE_WRONG_PASSPORT_DATA = "2"
+        const val MODE = "mode"
+        const val STRONG = "strong"
         const val LANG_RU = "ru"
         const val LANG_UZ = "uz"
         const val LANG_UZL = "uzl"

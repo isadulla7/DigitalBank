@@ -1,17 +1,14 @@
 package uz.fido.universaldigital.ui.fragments.login.sign_in
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputFilter
 import android.text.TextWatcher
-import android.text.method.DigitsKeyListener
 import android.text.method.LinkMovementMethod
-import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
-import com.redmadrobot.inputmask.MaskedTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
@@ -28,8 +25,6 @@ import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
-import uz.fido.universaldigital.ui.utils.home_utils.DoAfterTextWatcher
-import uz.fido.universaldigital.ui.utils.home_utils.applyMask
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.Const
@@ -54,37 +49,37 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         initSetOnClickListeners()
         setTermsOfUseColor()
         initTextChangeListeners()
-        initMyAccount()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setMask() {
         binding.etPhoneNumber.setText("+998")
-       binding.etPhoneNumber.addTextChangedListener(object :TextWatcher{
-           private var isEditing = false
-           private var lastText = ""
-           override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-               lastText = s.toString()
-           }
+        binding.etPhoneNumber.addTextChangedListener(object : TextWatcher {
+            private var isEditing = false
+            private var lastText = ""
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                lastText = s.toString()
+            }
 
-           override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
-               if (isEditing || text == null) return
-               isEditing = true
-               var currentText = text.toString().replace(Regex("[^0-9+]"), "")
-               if (!currentText.startsWith("+998")) {
-                   currentText = "+998"
-               }
-               val formattedText = formatPhoneNumber(currentText)
-               binding.etPhoneNumber.removeTextChangedListener(this)
-               binding.etPhoneNumber.setText(formattedText)
-               binding.etPhoneNumber.setSelection(formattedText.length) // Kursorni oxiriga qo‘yish
-               binding.etPhoneNumber.addTextChangedListener(this)
-               binding.btnContinue.isEnabled(text.toString().length == 17 && passwordFormatted().length > 7)
-               isEditing = false
-           }
+            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
+                if (isEditing || text == null) return
+                isEditing = true
+                var currentText = text.toString().replace(Regex("[^0-9+]"), "")
+                if (!currentText.startsWith("+998")) {
+                    currentText = "+998"
+                }
+                val formattedText = formatPhoneNumber(currentText)
+                binding.etPhoneNumber.removeTextChangedListener(this)
+                binding.etPhoneNumber.setText(formattedText)
+                binding.etPhoneNumber.setSelection(formattedText.length)
+                binding.etPhoneNumber.addTextChangedListener(this)
+                binding.btnContinue.isEnabled(text.toString().length == 17 && passwordFormatted().length > 7)
+                isEditing = false
+            }
 
-           override fun afterTextChanged(s: Editable?) {
-           }
-       })
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
     }
 
     fun formatPhoneNumber(text: String): String {
@@ -209,7 +204,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
                     Status.SUCCESS -> {
                         getFCMToken()
                         model.string_line = it.data!!.string_line
-                        gotoConfirmSmsFragment(model)
+                        gotoConfirmSmsFragment(model, it.data?.device_myid_state ?: "N")
                     }
 
                     Status.ERROR -> {
@@ -228,12 +223,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         }
     }
 
-    private fun gotoConfirmSmsFragment(model: SignInRequestNew) {
+    private fun gotoConfirmSmsFragment(model: SignInRequestNew, deviceMyIdState: String) {
         saveToPaper(Const.PAPER_PAYMENT_VERSION, model.version)
         val bundle = Bundle().apply {
             putString(Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString())
             putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_IN)
-
+            putString(Const.DEVICE_MY_ID_STATE, deviceMyIdState)
             putSerializable(ConfirmSmsFragment.SIGN_IN_REQUEST, model)
         }
         saveToPaper(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
@@ -246,13 +241,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun passwordFormatted(): String {
         return binding.etPassword.editableText.toString().replace(" ", "")
-    }
-
-    private fun initMyAccount() {
-        if (BuildConfig.DEBUG) {
-//            binding.etPhoneNumber.setText("+998930088809")
-//            binding.etPassword.setText("Qwerty2398@")
-        }
     }
 
 }

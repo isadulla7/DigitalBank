@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
+import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.UserInfo
 import uz.fido.network.domain.model.cards.AddCardRequest
@@ -47,7 +48,6 @@ import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpViewModel
 import uz.fido.universaldigital.ui.fragments.login.sign_up_password.SignUpPasswordFragment
 import uz.fido.universaldigital.ui.fragments.profile.security.MyDevicesFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
-import uz.fido.universaldigital.ui.main_dialogs.AllServicesDialog
 import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
@@ -80,7 +80,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     FragmentConfirmSmsBinding::inflate, ConfirmSmsViewModel::class.java
 ) {
 
-    private lateinit var allServicesDialog: AllServicesDialog
+    private lateinit var checkSmsCodeResponse: Resource<SignInResponse>
     private lateinit var checkSmsResponse: SignInResponse
     private lateinit var countDownTimer: CountDownTimer
 
@@ -330,21 +330,10 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                 it?.let {
                     when (it.status) {
                         Status.SUCCESS -> {
-                            val signInResponse = it.data
-                            if (signInResponse?.token != null) {
-                                saveToPaper(Const.STRING_LINE, stringLineEnc)
-                                saveToPaper(Const.PASSWORD_ENC, data.password)
-                                saveToPaper(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
-                                signInResponse.password = encryptPassword(data.password)
-                                requireContext().saveSignInResponse(signInResponse)
-                                requireContext().saveUserSms(smsCode)
-                                changeKey()
-                                val bundle = Bundle()
-                                bundle.putString(PinCodeFragment.PIN_OPERATION, PinCodeFragment.PIN_OPERATION_SET_PIN)
-                                gotoWithSlide(R.id.action_confirmSmsFragment_to_pinCodeFragment, bundle)
-                            } else {
-                                showSnackbar(it.message.toString())
-                            }
+                            binding.btnContinue.setProgress(false)
+                            checkSmsCodeResponse = it
+                            saveLoginInfo()
+                            validateUserIdentity()
                         }
 
                         Status.ERROR -> {
@@ -694,6 +683,69 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         if (it.resultCode == Activity.RESULT_OK) {
             finishOperation()
         }
+    }
+
+    private fun saveLoginInfo() {
+        val data = requireArguments().serializable<SignInRequestNew>("data") as SignInRequestNew
+        val smsCode = binding.etSms.editableText.toString()
+        val stringLineEnc = CryptoUtil.encryptWithoutSalt(data.string_line.toString().replace(" ", ""), smsCode)
+        val signInResponse = checkSmsCodeResponse.data
+        if (signInResponse?.token != null) {
+            saveToPaper(Const.STRING_LINE, stringLineEnc)
+            saveToPaper(Const.PASSWORD_ENC, data.password)
+            saveToPaper(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
+            signInResponse.password = encryptPassword(data.password)
+            requireContext().saveSignInResponse(signInResponse)
+            requireContext().saveUserSms(smsCode)
+            changeKey()
+        } else {
+            showSnackbar(checkSmsCodeResponse.message.toString())
+        }
+    }
+
+    private fun validateUserIdentity() {
+        val checkSmsCodeData = checkSmsCodeResponse.data
+        val userDeviceState = requireArguments().getString(Const.DEVICE_MY_ID_STATE)
+        val userIdentifyState = checkSmsCodeData?.user_type_id ?: 0
+        val passportData = checkSmsCodeData?.passport_serial + checkSmsCodeData?.passport_number
+        val dateOfBirth = checkSmsCodeData?.birthday
+        when {
+            userIdentifyState == UserIdentifyState.IDENTIFIED_BY_CARD -> {
+                openMyIdInfoPage(passportData, dateOfBirth)
+            }
+
+            userIdentifyState == UserIdentifyState.IDENTIFIED && userDeviceState == DeviceIdentifyState.IDENTIFIED -> {
+                gotoPinCodeFragment()
+            }
+
+            userIdentifyState == UserIdentifyState.NOT_IDENTIFIED && userDeviceState == DeviceIdentifyState.NOT_IDENTIFIED -> {
+                gotoPinCodeFragment()
+            }
+
+            userIdentifyState == UserIdentifyState.NOT_IDENTIFIED && userDeviceState == DeviceIdentifyState.IDENTIFIED -> {
+                openMyIdInfoPage()
+            }
+
+            userIdentifyState == UserIdentifyState.IDENTIFIED && userDeviceState == DeviceIdentifyState.NOT_IDENTIFIED -> {
+                if (passportData.isEmpty() || dateOfBirth.isNullOrEmpty()) {
+                    UnableGetProfileDialog {
+                        pop()
+                    }.show(childFragmentManager, "")
+                } else {
+                    openMyIdInfoPage(passportData, dateOfBirth)
+                }
+            }
+        }
+    }
+
+    private fun gotoPinCodeFragment() {
+        val bundle = bundleOf(PinCodeFragment.PIN_OPERATION to PinCodeFragment.PIN_OPERATION_SET_PIN)
+        gotoWithSlide(R.id.action_confirmSmsFragment_to_pinCodeFragment, bundle)
+    }
+
+    private fun openMyIdInfoPage(passportData: String? = null, dateOfBirth: String? = null) {
+        val bundle = bundleOf(Const.PASSPORT_DATA to passportData.orEmpty(), Const.DATE_OF_BIRTH to dateOfBirth.orEmpty())
+        goto(R.id.mainIdentificationForSignInFragment, bundle)
     }
 
 }
