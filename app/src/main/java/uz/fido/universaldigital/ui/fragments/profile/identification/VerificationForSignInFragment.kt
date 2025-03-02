@@ -1,5 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.profile.identification
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.widget.Toast
@@ -8,6 +9,9 @@ import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.my_id.CheckIdentification
 import uz.fido.network.domain.model.my_id.MyIdGetAccessTokenRequest
@@ -15,8 +19,10 @@ import uz.fido.network.domain.model.my_id.MyIdMeResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentVerificationInfoUserBinding
+import uz.fido.universaldigital.ui.activities.MainActivity
 import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
 import uz.fido.universaldigital.ui.fragments.profile.identification.adapters.CodeAndNameAdapter
+import uz.fido.universaldigital.ui.utils.extensions.pendingTransition
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
@@ -29,15 +35,25 @@ class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserB
 
     private var myIdMe: MyIdMeResponse? = null
     private var fio: String = ""
+    private var isPin: Boolean? = false
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        try {
+            isPin = requireArguments().getBoolean(Const.IS_PIN)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
-        initUI()
+        setupListeners()
         getAccessToken()
         setTermsOfUseColor()
     }
 
-    private fun initUI() {
+    private fun setupListeners() {
         binding.checkBox.setOnCheckedChangeListener { _, isChecked ->
             binding.identificationBtn.isEnabled = isChecked
         }
@@ -70,8 +86,12 @@ class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserB
                 hideProgress()
                 when (it.status) {
                     Status.SUCCESS -> {
-                        val bundle = bundleOf(PinCodeFragment.PIN_OPERATION to PinCodeFragment.PIN_OPERATION_SET_PIN)
-                        gotoWithSlide(R.id.action_confirmSmsFragment_to_pinCodeFragment, bundle)
+                        if (isPin == true) {
+                            openMainActivity()
+                        } else {
+                            val bundle = bundleOf(PinCodeFragment.PIN_OPERATION to PinCodeFragment.PIN_OPERATION_SET_PIN)
+                            gotoWithSlide(R.id.action_verificationForSignInFragment_to_pinCodeFragment, bundle)
+                        }
                     }
 
                     Status.ERROR -> {
@@ -159,4 +179,14 @@ class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserB
             )
         }
     }
+
+    private fun openMainActivity() {
+        CoroutineScope(Dispatchers.Default).launch {
+            val intent = Intent(requireActivity(), MainActivity::class.java)
+            startActivity(intent)
+            requireActivity().pendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            requireActivity().finish()
+        }
+    }
+
 }

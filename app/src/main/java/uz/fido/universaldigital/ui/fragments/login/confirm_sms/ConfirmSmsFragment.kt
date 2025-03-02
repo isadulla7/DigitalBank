@@ -744,7 +744,11 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     }
 
     private fun openMyIdInfoPage(passportData: String? = null, dateOfBirth: String? = null) {
-        val bundle = bundleOf(Const.PASSPORT_DATA to passportData.orEmpty(), Const.DATE_OF_BIRTH to dateOfBirth.orEmpty())
+        val bundle = bundleOf(
+            Const.PASSPORT_DATA to passportData.orEmpty(),
+            Const.DATE_OF_BIRTH to dateOfBirth.orEmpty(),
+            Const.IS_PIN to false
+        )
         goto(R.id.mainIdentificationForSignInFragment, bundle)
     }
 

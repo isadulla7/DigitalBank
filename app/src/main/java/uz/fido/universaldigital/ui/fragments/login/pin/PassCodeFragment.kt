@@ -380,7 +380,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                             pop()
                         } else {
                             PinDotsAnimation.stopPinDotsAnimation()
-                            openMainActivity()
+                            validateUserIdentity()
                         }
                     } else {
                         clearDots()
@@ -616,22 +616,22 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun validateUserIdentity() {
-        val checkSmsCodeData = signInResponseResource.data
-        val userDeviceState = requireArguments().getString(Const.DEVICE_MY_ID_STATE)
-        val userIdentifyState = checkSmsCodeData?.user_type_id ?: 0
-        val passportData = checkSmsCodeData?.passport_serial + checkSmsCodeData?.passport_number
-        val dateOfBirth = checkSmsCodeData?.birthday
+        val signInResponse = signInResponseResource.data
+        val userDeviceState = signInResponse?.device_myid_state ?: "N"
+        val userIdentifyState = signInResponse?.user_type_id ?: 0
+        val passportData = signInResponse?.passport_serial + signInResponse?.passport_number
+        val dateOfBirth = signInResponse?.birthday
         when {
             userIdentifyState == UserIdentifyState.IDENTIFIED_BY_CARD -> {
                 openMyIdInfoPage(passportData, dateOfBirth)
             }
 
             userIdentifyState == UserIdentifyState.IDENTIFIED && userDeviceState == DeviceIdentifyState.IDENTIFIED -> {
-//                gotoPinCodeFragment()
+                openMainActivity()
             }
 
             userIdentifyState == UserIdentifyState.NOT_IDENTIFIED && userDeviceState == DeviceIdentifyState.NOT_IDENTIFIED -> {
-//                gotoPinCodeFragment()
+                openMainActivity()
             }
 
             userIdentifyState == UserIdentifyState.NOT_IDENTIFIED && userDeviceState == DeviceIdentifyState.IDENTIFIED -> {
@@ -640,9 +640,8 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
             userIdentifyState == UserIdentifyState.IDENTIFIED && userDeviceState == DeviceIdentifyState.NOT_IDENTIFIED -> {
                 if (passportData.isEmpty() || dateOfBirth.isNullOrEmpty()) {
-                    UnableGetProfileDialog {
-                        pop()
-                    }.show(childFragmentManager, "")
+                    clearDots()
+                    UnableGetProfileDialog {}.show(childFragmentManager, "")
                 } else {
                     openMyIdInfoPage(passportData, dateOfBirth)
                 }
@@ -651,7 +650,12 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun openMyIdInfoPage(passportData: String? = null, dateOfBirth: String? = null) {
-        val bundle = bundleOf(Const.PASSPORT_DATA to passportData.orEmpty(), Const.DATE_OF_BIRTH to dateOfBirth.orEmpty())
+        clearDots()
+        val bundle = bundleOf(
+            Const.PASSPORT_DATA to passportData.orEmpty(),
+            Const.DATE_OF_BIRTH to dateOfBirth.orEmpty(),
+            Const.IS_PIN to true
+        )
         goto(R.id.mainIdentificationForSignInFragment, bundle)
     }
 }

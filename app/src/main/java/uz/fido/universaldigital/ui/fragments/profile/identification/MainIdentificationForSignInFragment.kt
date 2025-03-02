@@ -23,6 +23,7 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
 
     private var passportData: String? = ""
     private var dateOfBirth: String? = ""
+    private var isPin: Boolean? = false
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
@@ -31,13 +32,14 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
     }
 
     private fun initClickListener() {
-        binding.identificationBtn.setOnClickListener { openFaceIdActivity() }
+        binding.identificationBtn.setOnClickListener { openFaceIdActivity(passportData, dateOfBirth) }
         binding.skipBtn.setOnClickListener { pop() }
     }
 
     private fun initDetails() {
         binding.illustration.load(R.drawable.ic_illustration_identification)
         arguments?.let {
+            isPin = it.getBoolean(Const.IS_PIN)
             passportData = it.getString(Const.PASSPORT_DATA)
             dateOfBirth = it.getString(Const.DATE_OF_BIRTH)
         }
@@ -48,7 +50,7 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
             val myIdResultCode = it.data?.getStringExtra("code")
             gotoWithSlide(
                 R.id.verificationForSignInFragment,
-                bundleOf("code" to myIdResultCode)
+                bundleOf("code" to myIdResultCode, Const.IS_PIN to isPin)
             )
         } else {
             val myIdResultCode = it.data?.getStringExtra("code")

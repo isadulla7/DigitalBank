@@ -93,7 +93,12 @@
     <fragment
         android:id="@+id/verificationForSignInFragment"
         android:name="uz.fido.universaldigital.ui.fragments.profile.identification.VerificationForSignInFragment"
-        android:label="VerificationForSignInFragment" />
+        android:label="VerificationForSignInFragment" >
+        <action
+            android:id="@+id/action_verificationForSignInFragment_to_pinCodeFragment"
+            app:destination="@id/pinCodeFragment"
+            app:popUpTo="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/mainIdentificationForSignInFragment"
         android:name="uz.fido.universaldigital.ui.fragments.profile.identification.MainIdentificationForSignInFragment"

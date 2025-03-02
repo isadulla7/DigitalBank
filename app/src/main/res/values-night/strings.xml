@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="identification_login_desc">Xavfsizlikni oshirish maqsadida ilovaga kirish uchun yuzingizni tasdiqlashingiz kerak bo\\\'ladi</string>
-    <string name="attention">Внимание</string>
-    <string name="unable_to_get_profile_data">Sizning hisob ma\\\'lumotlaringizni olishning iloji bo\\\'lmadi. Iltimos bankka murojaat qiling</string>
-    <string name="unable_to_get_passport_data">Sizning passport ma\'lumotlaringizni olishning ilojisi bo\'lmadi, iltimos boshqattan yuzingiz orqali identifikatsiyadan o\'tib ko\'ring</string>
-</resources>
