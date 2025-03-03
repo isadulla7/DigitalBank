@@ -39,8 +39,18 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentConfirmSmsBinding
 import uz.fido.universaldigital.services.SMSBroadcastReceiver
 import uz.fido.universaldigital.ui.activities.FaceIdActivity
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.dialogs.UnableGetProfileDialog
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.dialogs.YouDontHaveAccountDialog
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.dialogs.YouHaveAccountDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInResponse
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveUserSms
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.DeviceIdentifyState
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.UserIdentifyState
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isFullyIdentified
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isIdentifiedByCard
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isNotIdentified
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isUserIdentifiedButDeviceNot
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isUserNotIdentifiedButDeviceIdentified
 import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
 import uz.fido.universaldigital.ui.fragments.login.restore_profile.ChangePasswordFragment
 import uz.fido.universaldigital.ui.fragments.login.sign_in.SignInViewModel
@@ -64,6 +74,7 @@ import uz.fido.utils.utility.bundle.serializable
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
 import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.fragment.gotoWithPopupSlide
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.Utility.getDeviceName
@@ -705,51 +716,39 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     private fun validateUserIdentity() {
         val checkSmsCodeData = checkSmsCodeResponse.data
-        val userDeviceState = requireArguments().getString(Const.DEVICE_MY_ID_STATE)
-        val userIdentifyState = checkSmsCodeData?.user_type_id ?: 0
+        val userDeviceState = requireArguments().getString(Const.DEVICE_MY_ID_STATE) ?: DeviceIdentifyState.DEFAULT
+        val userIdentifyState = checkSmsCodeData?.user_type_id ?: UserIdentifyState.DEFAULT
         val passportData = checkSmsCodeData?.passport_serial + checkSmsCodeData?.passport_number
         val dateOfBirth = checkSmsCodeData?.birthday
         when {
-            userIdentifyState == UserIdentifyState.IDENTIFIED_BY_CARD -> {
-                openMyIdInfoPage(passportData, dateOfBirth)
-            }
+            isIdentifiedByCard(userIdentifyState) -> openMyIdInfoPage(passportData, dateOfBirth)
 
-            userIdentifyState == UserIdentifyState.IDENTIFIED && userDeviceState == DeviceIdentifyState.IDENTIFIED -> {
-                gotoPinCodeFragment()
-            }
+            isFullyIdentified(userIdentifyState, userDeviceState) -> gotoPinCodeFragment()
 
-            userIdentifyState == UserIdentifyState.NOT_IDENTIFIED && userDeviceState == DeviceIdentifyState.NOT_IDENTIFIED -> {
-                gotoPinCodeFragment()
-            }
+            isNotIdentified(userIdentifyState, userDeviceState) -> gotoPinCodeFragment()
 
-            userIdentifyState == UserIdentifyState.NOT_IDENTIFIED && userDeviceState == DeviceIdentifyState.IDENTIFIED -> {
-                openMyIdInfoPage()
-            }
+            isUserNotIdentifiedButDeviceIdentified(userIdentifyState, userDeviceState) -> openMyIdInfoPage()
 
-            userIdentifyState == UserIdentifyState.IDENTIFIED && userDeviceState == DeviceIdentifyState.NOT_IDENTIFIED -> {
-                if (passportData.isEmpty() || dateOfBirth.isNullOrEmpty()) {
-                    UnableGetProfileDialog {
-                        pop()
-                    }.show(childFragmentManager, "")
-                } else {
-                    openMyIdInfoPage(passportData, dateOfBirth)
-                }
-            }
+            isUserIdentifiedButDeviceNot(userIdentifyState, userDeviceState) -> handleUserNoPassportData(passportData, dateOfBirth)
+        }
+    }
+
+    private fun handleUserNoPassportData(passportData: String?, dateOfBirth: String?) {
+        if (passportData.isNullOrEmpty() || dateOfBirth.isNullOrEmpty()) {
+            UnableGetProfileDialog { pop() }.show(childFragmentManager, "")
+        } else {
+            openMyIdInfoPage(passportData, dateOfBirth)
         }
     }
 
     private fun gotoPinCodeFragment() {
         val bundle = bundleOf(PinCodeFragment.PIN_OPERATION to PinCodeFragment.PIN_OPERATION_SET_PIN)
-        gotoWithSlide(R.id.action_confirmSmsFragment_to_pinCodeFragment, bundle)
+        gotoWithPopupSlide(R.id.action_confirmSmsFragment_to_pinCodeFragment, R.id.signInFragment, bundle)
     }
 
     private fun openMyIdInfoPage(passportData: String? = null, dateOfBirth: String? = null) {
-        val bundle = bundleOf(
-            Const.PASSPORT_DATA to passportData.orEmpty(),
-            Const.DATE_OF_BIRTH to dateOfBirth.orEmpty(),
-            Const.IS_PIN to false
-        )
-        goto(R.id.mainIdentificationForSignInFragment, bundle)
+        val bundle = bundleOf(Const.PASSPORT_DATA to passportData.orEmpty(), Const.DATE_OF_BIRTH to dateOfBirth.orEmpty(), Const.IS_PIN to false)
+        gotoWithPopupSlide(R.id.action_confirmSmsFragmentLogin_to_mainIdentificationForSignInFragment, R.id.signInFragment, bundle)
     }
 
 }

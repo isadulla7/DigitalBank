@@ -20,6 +20,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignInBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.DeviceIdentifyState
 import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
@@ -204,7 +205,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
                     Status.SUCCESS -> {
                         getFCMToken()
                         model.string_line = it.data!!.string_line
-                        gotoConfirmSmsFragment(model, it.data?.device_myid_state ?: "N")
+                        gotoConfirmSmsFragment(model, it.data?.device_myid_state ?: DeviceIdentifyState.DEFAULT)
                     }
 
                     Status.ERROR -> {

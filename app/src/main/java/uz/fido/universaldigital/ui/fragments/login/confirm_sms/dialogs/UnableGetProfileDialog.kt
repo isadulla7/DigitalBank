@@ -1,12 +1,12 @@
-package uz.fido.universaldigital.ui.fragments.login.confirm_sms
+package uz.fido.universaldigital.ui.fragments.login.confirm_sms.dialogs
 
 import android.os.Bundle
 import uz.fido.universaldigital.base.BaseDialogFragment
-import uz.fido.universaldigital.databinding.DialogUnableGetPassportBinding
+import uz.fido.universaldigital.databinding.DialogUnableGetProfileBinding
 
-class UnableGetPassportDataDialog(
+class UnableGetProfileDialog(
     private var okClickListener: () -> Unit
-) : BaseDialogFragment<DialogUnableGetPassportBinding>(DialogUnableGetPassportBinding::inflate) {
+) : BaseDialogFragment<DialogUnableGetProfileBinding>(DialogUnableGetProfileBinding::inflate) {
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
@@ -15,5 +15,4 @@ class UnableGetPassportDataDialog(
             okClickListener.invoke()
         }
     }
-
 }

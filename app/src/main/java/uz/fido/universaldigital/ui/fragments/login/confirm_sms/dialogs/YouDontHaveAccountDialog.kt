@@ -1,28 +1,28 @@
-package uz.fido.universaldigital.ui.fragments.login.confirm_sms
+package uz.fido.universaldigital.ui.fragments.login.confirm_sms.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import uz.fido.universaldigital.databinding.DialogYouHaveAnAccountBinding
+import uz.fido.universaldigital.databinding.DialogYouDontHaveAccountBinding
 
-class YouHaveAccountDialog(
-    private val openMyId: () -> Unit,
+class YouDontHaveAccountDialog(
+    private val cancelOperation: () -> Unit,
     private val continueSignUp: () -> Unit,
 ) : BottomSheetDialogFragment() {
 
-    private lateinit var binding: DialogYouHaveAnAccountBinding
+    private lateinit var binding: DialogYouDontHaveAccountBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        binding = DialogYouHaveAnAccountBinding.inflate(inflater, container, false)
-        binding.openMyid.setOnClickListener {
+        binding = DialogYouDontHaveAccountBinding.inflate(inflater, container, false)
+        binding.cancel.setOnClickListener {
             dismiss()
-            openMyId.invoke()
+            cancelOperation.invoke()
         }
-        binding.continueSignUp.setOnClickListener {
+        binding.doneButton.setOnClickListener {
             dismiss()
             continueSignUp.invoke()
         }

@@ -108,6 +108,7 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
         const val CLIENT_DATE_OF_BIRTH = "birthday"
         const val CLIENT_PASSPORT = "passport"
         const val ERROR_CODE_WRONG_PASSPORT_DATA = "2"
+        const val CODE = "code"
         const val MODE = "mode"
         const val STRONG = "strong"
         const val LANG_RU = "ru"

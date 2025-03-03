@@ -11,7 +11,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMainIdentificationForSignInBinding
 import uz.fido.universaldigital.ui.activities.FaceIdActivity
-import uz.fido.universaldigital.ui.fragments.login.confirm_sms.UnableGetPassportDataDialog
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.dialogs.UnableGetPassportDataDialog
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
@@ -31,13 +31,8 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
         initClickListener()
     }
 
-    private fun initClickListener() {
-        binding.identificationBtn.setOnClickListener { openFaceIdActivity(passportData, dateOfBirth) }
-        binding.skipBtn.setOnClickListener { pop() }
-    }
-
     private fun initDetails() {
-        binding.illustration.load(R.drawable.ic_illustration_identification)
+        binding.illustration.load(R.drawable.ic_user_identification)
         arguments?.let {
             isPin = it.getBoolean(Const.IS_PIN)
             passportData = it.getString(Const.PASSPORT_DATA)
@@ -45,20 +40,16 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
         }
     }
 
-    private val faceIdActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            val myIdResultCode = it.data?.getStringExtra("code")
-            gotoWithSlide(
-                R.id.verificationForSignInFragment,
-                bundleOf("code" to myIdResultCode, Const.IS_PIN to isPin)
-            )
-        } else {
-            val myIdResultCode = it.data?.getStringExtra("code")
-            if (myIdResultCode == FaceIdActivity.ERROR_CODE_WRONG_PASSPORT_DATA) {
-                UnableGetPassportDataDialog {
-                    openFaceIdActivity()
-                }.show(childFragmentManager, "")
-            }
+    private fun initClickListener() {
+        binding.identificationBtn.setOnClickListener { openFaceIdActivity(passportData, dateOfBirth) }
+        binding.skipBtn.setOnClickListener { pop() }
+    }
+
+    private val faceIdActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val myIdResultCode = result.data?.getStringExtra(FaceIdActivity.CODE)
+        when {
+            result.resultCode == Activity.RESULT_OK -> navigateToVerification(myIdResultCode)
+            myIdResultCode == FaceIdActivity.ERROR_CODE_WRONG_PASSPORT_DATA -> showPassportErrorDialog()
         }
     }
 
@@ -68,6 +59,16 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
         intent.putExtra(FaceIdActivity.CLIENT_PASSPORT, passportData.orEmpty())
         intent.putExtra(FaceIdActivity.CLIENT_DATE_OF_BIRTH, dateOfBirth.orEmpty())
         faceIdActivityResult.launch(intent)
+    }
+
+    private fun navigateToVerification(myIdResultCode: String?) {
+        gotoWithSlide(R.id.verificationForSignInFragment, bundleOf(FaceIdActivity.CODE to myIdResultCode, Const.IS_PIN to isPin))
+    }
+
+    private fun showPassportErrorDialog() {
+        UnableGetPassportDataDialog {
+            openFaceIdActivity()
+        }.show(childFragmentManager, "")
     }
 
 }

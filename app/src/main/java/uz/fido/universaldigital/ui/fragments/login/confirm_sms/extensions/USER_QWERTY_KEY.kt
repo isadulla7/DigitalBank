@@ -21,8 +21,6 @@ import uz.fido.utils.utility.context.startActivityWithClearTask
 import java.io.File
 import java.nio.charset.StandardCharsets
 
-const val USER_SMS_KEY = "user_sms_key"
-
 fun Context.saveSignInResponse(signInResponse: SignInResponse) {
     Paper.book().write<Int>(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id)
     saveToPaper(Const.PAPER_CLIENT_FILIAL_CODE, signInResponse.filial_code.orEmpty())

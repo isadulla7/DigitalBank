@@ -7,7 +7,7 @@
     android:background="@drawable/dialog_background_12dp"
     android:elevation="2dp"
     android:minWidth="360dp"
-    android:minHeight="180dp">
+    android:minHeight="160dp">
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/dialog_title"
