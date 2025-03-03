@@ -17,7 +17,6 @@ import uz.fido.universaldigital.ui.dialogs.NearBranchDialog
 import uz.fido.universaldigital.ui.fragments.services.deposit.MainDepositViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.dialog.CalculatorDialog
 import uz.fido.universaldigital.ui.utils.extensions.serializable
-import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -107,7 +106,6 @@ class OpenDepositStepFirst : BaseFragment<FragmentDepositStepFirstBinding, MainD
         binding.minAmount.text = getString(R.string.min_summa) + " " + Format.formatAmount(Format.formatAmountFromTiynToInteger(deposit.min_sum.toString())) + " " + Format().getCurrencyChar(
             deposit.currency_code
         )
-        Logger.writeErrorLog("keepingTime-" + deposit.keeping_time)
         binding.tvTime.text = getString(R.string.time_deposit) + " " + Format().formattedDepositExpire(
             requireContext(), deposit.keeping_time
         )

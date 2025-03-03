@@ -17,7 +17,6 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardNameAn
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardTypeImage
 import uz.fido.universaldigital.ui.utils.extensions.getDrawableFromRes
 import uz.fido.universaldigital.ui.utils.extensions.setCardState
-import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.view.recycler_view_drag.ItemTouchHelperAdapter
 
 class HomeCardsAdapter(
@@ -98,8 +97,6 @@ class HomeCardsAdapter(
 
     }
 
-    override fun onItemDismiss(position: Int) {
-        Logger.writeLog("dismissPos$position")
-    }
+    override fun onItemDismiss(position: Int) {}
 
 }

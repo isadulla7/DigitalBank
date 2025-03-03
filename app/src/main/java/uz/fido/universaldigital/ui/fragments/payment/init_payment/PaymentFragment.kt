@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.payment.init_payment
 
 import android.app.Activity
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +49,6 @@ import uz.fido.universaldigital.ui.utils.extensions.showProgress
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
-import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
@@ -147,7 +145,6 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
             paymentService = (it.serializable(PAYMENT_SERVICE) ?: PaymentService())
             homeId = it.getString(PAYMENT_HOME_ID)
             homeName = it.getString(PAYMENT_HOME_NAME)
-            Logger.writeErrorLog(paymentService.toString())
             templateKeyValueList = (it.serializable(PAYMENT_TEMPLATE_KEY_VALUE_LIST) ?: ArrayList())
 
             when (operation) {

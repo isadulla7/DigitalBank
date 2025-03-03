@@ -5,7 +5,6 @@ import android.content.Context;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-import uz.fido.utils.log.Logger;
 import uz.fido.utils.utility.user.PaperExtKt;
 
 public class DiffieHellman {
@@ -55,7 +54,6 @@ public class DiffieHellman {
         biB = new BigInteger(B);
         biK = biB.modPow(a, p);
         biKString = biK.toString();
-        Logger.writeLog("bik________________________" + biK);
     }
 
     public void setKeyBSwapKey(String B, String additionalText, Context context) {
@@ -67,7 +65,6 @@ public class DiffieHellman {
     }
 
     public String getKeyK() {
-        Logger.writeLog("get_bik________________________" + biK);
         return biKString;
     }
 }

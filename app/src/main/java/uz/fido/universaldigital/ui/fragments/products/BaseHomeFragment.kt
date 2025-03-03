@@ -605,14 +605,13 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
     override fun openHomeOperation(id: Int) {
         when (id) {
             10 -> {
-                uz.fido.utils.log.Logger.writeLog("HomeFragment")
                 goto(R.id.myCardsListFragment)
             }
 
             11 -> goto(R.id.transferToCardFragment)
             121 -> goto(R.id.myHomeFragment)
             13 -> goto(R.id.qrPaymentFragment)
-            14 -> /*goto(R.id.conversionFragment)*/ {
+            14 -> {
                 showSnackbar(
                     getString(R.string.service_under_development),
                     title = getString(R.string.info)
@@ -621,7 +620,6 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
 
             15 -> goto(R.id.transferToAccountFragment)
             16 -> {
-//                goto(R.id.swiftTransferFragment)
                 showSnackbar(
                     getString(R.string.service_under_development),
                     title = getString(R.string.info)
@@ -629,7 +627,6 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
             }
 
             17 -> {
-//                goto(R.id.swiftTransferFragment)
                 showSnackbar(
                     getString(R.string.service_under_development),
                     title = getString(R.string.info)

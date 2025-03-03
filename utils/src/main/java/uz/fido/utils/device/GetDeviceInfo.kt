@@ -10,7 +10,6 @@ import android.telephony.SubscriptionManager
 import android.telephony.TelephonyManager
 import android.util.Log
 import androidx.core.app.ActivityCompat
-import uz.fido.utils.log.Logger
 
 class GetDeviceInfo(var context: Context) {
 
@@ -49,7 +48,6 @@ class GetDeviceInfo(var context: Context) {
                             if (subsInfo != null) {
                                 val simSerialNo = subsInfo.iccId
                                 simSerialArray.add(simSerialNo)
-                                Logger.writeLog("SImSerialNUMBER: $simSerialNo")
                             }
                         }
                     }

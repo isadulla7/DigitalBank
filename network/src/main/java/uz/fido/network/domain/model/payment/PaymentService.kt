@@ -1,5 +1,6 @@
 package uz.fido.network.domain.model.payment
 
+import android.annotation.SuppressLint
 import java.io.Serializable
 
 class PaymentService : Serializable {
@@ -20,12 +21,8 @@ class PaymentService : Serializable {
     var service_group_code: String? = ""
     var pay_request_method: String? = ""
     var sms_control_limit: String? = ""
-    var is_sub_group: String = "N"
     var payment_group: PaymentGroup? = null
-    var paymentCashback: PaymentCashback? = null
     var group_code: String? = null
-
-    var isSelected = false
 
     companion object {
         const val TABLE_NAME = "service_types"
@@ -46,6 +43,7 @@ class PaymentService : Serializable {
         const val COLUMN_SMS_CONTROL_LIMIT = "sms_control_limit"
     }
 
+    @SuppressLint("NotConstructor")
     fun PaymentService(
         icon_name: String,
         service_id: Int,

@@ -7,23 +7,18 @@ import android.net.ConnectivityManager
 import android.net.LinkProperties
 import android.net.Network
 import android.net.NetworkCapabilities
-import android.os.Build
 import android.provider.Settings
 import android.util.Log
 import com.google.android.material.textfield.TextInputLayout
 import uz.fido.utils.R
-import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.language.Utility.getLocalIpAddress
 import uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
 import java.net.Inet4Address
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.UUID
 
 @SuppressLint("HardwareIds")
 fun Context.getDeviceIds(): String {
-    Logger.writeLog("uuid:" + UUID.randomUUID().toString())
-    Logger.writeLog("serial:" + Build.SERIAL)
     return Settings.Secure.getString(
         this.contentResolver, Settings.Secure.ANDROID_ID
     )

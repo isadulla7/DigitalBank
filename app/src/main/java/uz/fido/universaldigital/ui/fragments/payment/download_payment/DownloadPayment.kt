@@ -17,6 +17,7 @@ import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
+import uz.fido.utils.log.Logger
 
 @AndroidEntryPoint
 abstract class DownloadPayment : Fragment() {
@@ -57,12 +58,12 @@ abstract class DownloadPayment : Fragment() {
         ) {
             downloadPaymentInterface.getMutablePaymentList()
         } else {
-            Paper.book().write(Const.UPDATE_LANG, false)
-            if (currentDatabaseVersion == savedDatabaseVersion) {
-                getPaymentsFromLocal()
-            } else {
-                downloadPayments()
-            }
+//            Paper.book().write(Const.UPDATE_LANG, false)
+//            if (currentDatabaseVersion == savedDatabaseVersion) {
+//                getPaymentsFromLocal()
+//            } else {
+            downloadPayments()
+//            }
         }
     }
 
@@ -106,14 +107,22 @@ abstract class DownloadPayment : Fragment() {
             withContext(Dispatchers.Default) {
                 try {
                     databaseHelper?.let { databaseHelper ->
+                        Logger.writeErrorLog("===download payment stared")
                         databaseHelper.insertServiceGroups(payment.service_groups ?: ArrayList())
+                        Logger.writeErrorLog("===service groups inserted")
                         databaseHelper.insertServiceList(payment.service_list ?: ArrayList())
+                        Logger.writeErrorLog("===service lists inserted")
                         databaseHelper.insertPaymentParams(payment.payment_details ?: ArrayList())
+                        Logger.writeErrorLog("===payment details inserted")
                         databaseHelper.insertCashbackList(payment.cashback_list ?: ArrayList())
+                        Logger.writeErrorLog("===cashback list inserted")
                         databaseHelper.insertReferenceList(payment.references_list ?: ArrayList())
+                        Logger.writeErrorLog("===reference list inserted")
                         paymentGroupsList = databaseHelper.getGroupList()
+                        Logger.writeErrorLog("===getting payment group list")
                         withContext(Dispatchers.Main) {
                             downloadPaymentInterface.downloadPaymentSuccess()
+                            Logger.writeErrorLog("===download payment success")
                         }
                         saveToPaper(Const.PAPER_PAYMENT_VERSION_DB, payment.curr_version ?: "0")
                     }

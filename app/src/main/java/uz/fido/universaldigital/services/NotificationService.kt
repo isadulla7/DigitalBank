@@ -15,7 +15,6 @@ import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
-import uz.fido.utils.log.Logger
 
 class NotificationService : FirebaseMessagingService() {
 
@@ -77,7 +76,6 @@ class NotificationService : FirebaseMessagingService() {
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
         saveToPaper(Const.PAPER_FCM_TOKEN, p0)
-        Logger.writeLogByKey(Const.PAPER_FCM_TOKEN, p0)
     }
 
 }

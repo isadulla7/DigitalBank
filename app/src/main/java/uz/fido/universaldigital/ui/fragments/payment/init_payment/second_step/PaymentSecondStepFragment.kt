@@ -4,11 +4,9 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
-import android.text.InputFilter
 import android.text.InputType
 import android.text.TextWatcher
 import android.text.method.DigitsKeyListener
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,7 +51,6 @@ import uz.fido.universaldigital.ui.utils.extensions.delayOnLifecycle
 import uz.fido.universaldigital.ui.utils.extensions.hideSoftKeyboard
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
-import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -157,10 +154,6 @@ class PaymentSecondStepFragment :
         binding.infoLayout.removeAllViews()
         editTextList = ArrayList()
         for (i in paymentParamsArrayList.indices) {
-            Logger.writeLog(
-                "\n${paymentParamsArrayList[i].code}\n${paymentParamsArrayList[i].is_read_only}\n${paymentParamsArrayList[i].is_required}\n" +
-                        "${paymentParamsArrayList[i].param_type}"
-            )
             if (paymentParamsArrayList[i].is_read_only != "Y" && paymentParamsArrayList[i].is_required == "Y") {
                 if (paymentParamsArrayList[i].code == "AMOUNT") {
                     drawAmountView(paymentParamsArrayList[i])

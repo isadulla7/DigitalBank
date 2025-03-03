@@ -14,7 +14,6 @@ import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_RUB
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_USD
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_UZS
 import uz.fido.utils.const.CurrencyConst.DOLLAR_SIGN
-import uz.fido.utils.log.Logger
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -212,7 +211,6 @@ class Format {
             if (newAmountStr.contains(".")) {
                 newAmountStr = newAmountStr.substring(0, newAmountStr.indexOf("."))
             }
-            Logger.writeErrorLog(newAmountStr)
             return newAmountStr
         }
 
@@ -351,7 +349,7 @@ class Format {
                 )
             }
             if (str.startsWith("998") && str.length == 12) {
-                str = "+" + account.substring(0,3)+" "+account.substring(3, 5) + " " + account.substring(
+                str = "+" + account.substring(0, 3) + " " + account.substring(3, 5) + " " + account.substring(
                     5, 8
                 ) + " " + account.substring(8, 10) + " " + account.substring(
                     10, account.length

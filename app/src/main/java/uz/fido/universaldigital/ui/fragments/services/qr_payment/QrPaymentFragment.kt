@@ -28,7 +28,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentQrPaymentBinding
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
-import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import java.io.StringReader
@@ -187,13 +186,9 @@ class QrPaymentFragment : BaseSimpleFragment<FragmentQrPaymentBinding>(
                 this, cameraSelector!!, analysisUseCase
             )
         } catch (illegalStateException: IllegalStateException) {
-            uz.fido.utils.log.Logger.writeLogByKey(
-                Const.QR_PAYMENT, illegalStateException.message.toString()
-            )
+            illegalStateException.printStackTrace()
         } catch (illegalArgumentException: IllegalArgumentException) {
-            uz.fido.utils.log.Logger.writeLogByKey(
-                Const.QR_PAYMENT, illegalArgumentException.message.toString()
-            )
+            illegalArgumentException.printStackTrace()
         }
     }
 
@@ -241,7 +236,6 @@ class QrPaymentFragment : BaseSimpleFragment<FragmentQrPaymentBinding>(
                         }
                     }
                 }
-                uz.fido.utils.log.Logger.writeLogByKey("===values", list.toString())
                 try {
                     barcodeScanner?.close()
                     imageProxy?.close()
