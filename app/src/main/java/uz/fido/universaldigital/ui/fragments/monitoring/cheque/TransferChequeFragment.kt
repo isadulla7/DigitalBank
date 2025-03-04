@@ -161,7 +161,6 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
             // Open the first page
             openPage()
         } catch (e: Exception) {
-            println("heyyyy$e")
             e.printStackTrace()
         }
     }
@@ -433,7 +432,6 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
         try {
             pdfDocument.writeTo(FileOutputStream(file))
         } catch (e: IOException) {
-            println("heyyyy$e")
             e.printStackTrace()
         }
 

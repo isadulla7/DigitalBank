@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.payment.download_payment.database
 
 import android.annotation.SuppressLint
-import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -26,10 +25,8 @@ class DatabaseHelper(
 ) : SQLiteOpenHelper(context, name, factory, version) {
 
     constructor(context: Context) : this(
-        context = context,
-        name = "universal_digital_payment",
-        factory = null,
-        version = Const.DB_HELPER_VERSION
+        context = context, name = "universal_digital_payment",
+        factory = null, version = Const.DB_HELPER_VERSION
     )
 
     override fun onCreate(db: SQLiteDatabase?) {}
@@ -181,46 +178,76 @@ class DatabaseHelper(
 
     fun insertServiceGroups(groupList: List<PaymentGroup>) {
         val db = this.writableDatabase
-        groupList.sortedBy { it.order }
-        for (paymentGroup in groupList) {
-            try {
-                val values = ContentValues()
-                values.put(PaymentGroup.SERVICE_GROUP_CODE, paymentGroup.service_group_code)
-                values.put(PaymentGroup.INDEX_NAME_RU, paymentGroup.name_ru)
-                values.put(PaymentGroup.INDEX_NAME_UC, paymentGroup.name_uzc)
-                values.put(PaymentGroup.INDEX_NAME_UL, paymentGroup.name_uzl)
-                values.put(PaymentGroup.INDEX_NAME_EN, paymentGroup.name_en)
-                values.put(PaymentGroup.ICON_NAME, paymentGroup.icon_name)
-                values.put(PaymentGroup.ORDER, paymentGroup.order)
-                values.put(
-                    PaymentGroup.COLUMN_PARENT_SERVICE,
-                    paymentGroup.parent_service_group_code
-                )
-                db.insert(PaymentGroup.TABLE_NAME, null, values)
-            } catch (ex: Exception) {
-                Logger.writeErrorLog(ex.localizedMessage.orEmpty())
+        db.beginTransaction()
+        try {
+            val statement = db.compileStatement(
+                "INSERT INTO ${PaymentGroup.TABLE_NAME} (" +
+                        "${PaymentGroup.SERVICE_GROUP_CODE}, " +
+                        "${PaymentGroup.INDEX_NAME_RU}, " +
+                        "${PaymentGroup.INDEX_NAME_UC}, " +
+                        "${PaymentGroup.INDEX_NAME_UL}, " +
+                        "${PaymentGroup.INDEX_NAME_EN}, " +
+                        "${PaymentGroup.ICON_NAME}, " +
+                        "${PaymentGroup.ORDER}, " +
+                        "${PaymentGroup.COLUMN_PARENT_SERVICE}) " +
+                        "VALUES (?,?,?,?,?,?,?,?)"
+            )
+
+            for (paymentGroup in groupList.sortedBy { it.order }) {
+                statement.clearBindings()
+                statement.bindStringOrNull(1, paymentGroup.service_group_code)
+                statement.bindStringOrNull(2, paymentGroup.name_ru)
+                statement.bindStringOrNull(3, paymentGroup.name_uzc)
+                statement.bindStringOrNull(4, paymentGroup.name_uzl)
+                statement.bindStringOrNull(5, paymentGroup.name_en)
+                statement.bindStringOrNull(6, paymentGroup.icon_name)
+                statement.bindLong(7, paymentGroup.order?.toLong() ?: 0)
+                statement.bindStringOrNull(8, paymentGroup.parent_service_group_code)
+
+                statement.executeInsert()
             }
+
+            db.setTransactionSuccessful()
+        } catch (ex: Exception) {
+            Logger.writeErrorLog("Error inserting service groups: ${ex.localizedMessage}")
+        } finally {
+            db.endTransaction()
+            db.close()
         }
-        db.close()
     }
 
     fun insertCashbackList(list: List<PaymentCashback>) {
         val db = this.writableDatabase
-        for (paymentCashback in list) {
-            try {
-                val values = ContentValues()
-                values.put(PaymentCashback.COLUMN_GL_PERCENT, paymentCashback.gl_percent)
-                values.put(PaymentCashback.COLUMN_SERVICE_ID, paymentCashback.service_id)
-                values.put(PaymentCashback.COLUMN_STATE, paymentCashback.state)
-                values.put(PaymentCashback.COLUMN_SV_PERCENT, paymentCashback.sv_percent)
-                values.put(PaymentCashback.COLUMN_TET_PERCENT, paymentCashback.tet_percent)
-                values.put(PaymentCashback.COLUMN_KL_PERCENT, paymentCashback.kl_percent)
-                db.insert(PaymentCashback.TABLE_NAME, null, values)
-            } catch (ex: Exception) {
-                Logger.writeErrorLog("Error inserting cashback list " + ex.localizedMessage.orEmpty())
+        db.beginTransaction()
+        try {
+            val statement = db.compileStatement(
+                "INSERT INTO ${PaymentCashback.TABLE_NAME} (" +
+                        "${PaymentCashback.COLUMN_GL_PERCENT}, " +
+                        "${PaymentCashback.COLUMN_SERVICE_ID}, " +
+                        "${PaymentCashback.COLUMN_STATE}, " +
+                        "${PaymentCashback.COLUMN_SV_PERCENT}, " +
+                        "${PaymentCashback.COLUMN_TET_PERCENT}, " +
+                        "${PaymentCashback.COLUMN_KL_PERCENT}) " +
+                        "VALUES (?,?,?,?,?,?)"
+            )
+
+            for (paymentCashback in list) {
+                statement.clearBindings()
+                statement.bindStringOrNull(1, paymentCashback.gl_percent)
+                statement.bindStringOrNull(2, paymentCashback.service_id)
+                statement.bindStringOrNull(3, paymentCashback.state)
+                statement.bindStringOrNull(4, paymentCashback.sv_percent)
+                statement.bindStringOrNull(5, paymentCashback.tet_percent)
+                statement.bindStringOrNull(6, paymentCashback.kl_percent)
+                statement.executeInsert()
             }
+            db.setTransactionSuccessful()
+        } catch (ex: Exception) {
+            Logger.writeErrorLog("Error inserting cashback list: ${ex.localizedMessage}")
+        } finally {
+            db.endTransaction()
+            db.close()
         }
-        db.close()
     }
 
     fun insertServiceList(serviceList: List<PaymentService>) {

@@ -53,7 +53,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingHorizontal="12dp"
-                    android:paddingVertical="16dp">
+                    android:paddingTop="8dp"
+                    android:paddingBottom="16dp">
 
                     <androidx.appcompat.widget.LinearLayoutCompat
                         android:id="@+id/loan_repayment"
@@ -96,11 +97,10 @@
                         android:orientation="vertical">
 
                         <ImageView
-                            android:layout_width="72dp"
+                            android:layout_width="56dp"
                             android:layout_height="40dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="12dp"
-                            android:scaleType="centerCrop"
                             android:src="@drawable/ishonch_png"
                             app:tint="@color/status_done"
                             tools:ignore="ContentDescription" />
@@ -216,6 +216,7 @@
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+
             </HorizontalScrollView>
 
             <androidx.appcompat.widget.LinearLayoutCompat
@@ -226,11 +227,12 @@
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="4dp">
 
-                <uz.fido.utils.view.custom_text_view.TextViewBold
+                <uz.fido.utils.view.custom_text_view.TextViewSemiBold
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center|start"
+                    android:includeFontPadding="false"
                     android:text="@string/saved_payments"
                     android:textColor="@color/brandBlueColor"
                     android:textSize="20dp" />
@@ -253,14 +255,16 @@
                 android:clipToPadding="false"
                 android:nestedScrollingEnabled="false"
                 android:paddingHorizontal="12dp"
-                android:paddingVertical="16dp"
+                android:paddingVertical="8dp"
                 tools:listitem="@layout/item_payment_group" />
 
-            <uz.fido.utils.view.custom_text_view.TextViewBold
+            <uz.fido.utils.view.custom_text_view.TextViewSemiBold
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
                 android:gravity="center|start"
+                android:includeFontPadding="false"
                 android:text="@string/service_category"
                 android:textColor="@color/brandBlueColor"
                 android:textSize="20dp" />
@@ -273,7 +277,7 @@
                 android:clipToPadding="false"
                 android:nestedScrollingEnabled="false"
                 android:paddingHorizontal="12dp"
-                android:paddingVertical="16dp"
+                android:paddingVertical="12dp"
                 tools:listitem="@layout/item_payment_group" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>

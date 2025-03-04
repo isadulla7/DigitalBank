@@ -38,7 +38,6 @@ import uz.fido.universaldigital.ui.fragments.products.adapter.NewFastAccessOpera
 import uz.fido.universaldigital.ui.fragments.products.adapter.NewHomeTemplatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.dialog.ScanCardAndWalletDialog
 import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
-import uz.fido.universaldigital.ui.fragments.products.widgets.card_phone.CardNumberDialog
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFastAccessOperationList
 import uz.fido.universaldigital.ui.utils.extensions.getFormattedContact
@@ -58,16 +57,14 @@ import java.text.DecimalFormat
 
 abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterface {
 
-    lateinit var binding: FragmentMenuNewHomeBinding
+    private lateinit var operationDialog: ScanCardAndWalletDialog
     private lateinit var databaseHelper: DatabaseHelper
-    val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
+    lateinit var binding: FragmentMenuNewHomeBinding
     private val utilsViewModel: UtilsViewModel by activityViewModels()
-    private lateinit var dialogCard: CardNumberDialog
-
+    val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
     var mask = "#### #### #### ####"
     var typeCurrent = true
     var container: ViewGroup? = null
-    private lateinit var operationDialog: ScanCardAndWalletDialog
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -95,12 +92,6 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
 
                     },
                     contactClick = {
-//                    dialogCard = CardNumberDialog(onClick = {
-//                        goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to it.replace(" ", "")))
-//                        dialogCard.dismiss()
-//                    }
-//                )
-                        //  dialogCard.show(childFragmentManager, "")
                         operationDialog.dismiss()
                         fetchPhoneNumber()
                     },
@@ -113,7 +104,6 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
 
             } else {
                 fetchPhoneNumber()
-                // goto(R.id.transferByPhoneFragment, bundleOf("contact" to "open", Const.CARD_NUMBER to ""))
             }
         }
         if (typeCurrent) {

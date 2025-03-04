@@ -287,7 +287,7 @@ fun getFastAccessOperationList(context: Context): ArrayList<FastAccessOperation>
     operations.add(
         FastAccessOperation(
             id = 20,
-            name = context.getString(R.string.ishonch),
+            name = context.getString(R.string.loan_repayment),
             icon = "ishonch_png"
         )
     )

@@ -1064,5 +1064,5 @@
     <string name="identification_login_desc">Для дополнительной безопасности вам необходимо будет подтвердить свое лицо, чтобы получить доступ к приложению.</string>
     <string name="attention">Внимание</string>
     <string name="unable_to_get_profile_data">Не удалось получить ваши учетные данные. Пожалуйста, свяжитесь с банком \n+998712001110.</string>
-    <string name="unable_to_get_passport_data">Не удалось получить паспортные данные. Повторите попытку распознавания лица.</string>
+    <string name="unable_to_get_passport_data">Не удалось получить паспортные данные. Повторите попытку распознавания лица</string>
 </resources>

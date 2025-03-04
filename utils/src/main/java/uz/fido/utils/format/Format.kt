@@ -140,7 +140,6 @@ object Format {
     }
 
     private fun formatWithoutDot2(amount: String): String {
-        println("AMOUNT" + amount.substring(amount.length - 3, amount.length))
         try {
             return if (amount.substring(amount.length - 3, amount.length) == ".00")
                 amount.replace(".00", "")

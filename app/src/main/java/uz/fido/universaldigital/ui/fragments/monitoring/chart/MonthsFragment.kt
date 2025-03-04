@@ -99,7 +99,6 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
             pieChart.transparentCircleRadius = 60f
             pieChart.setOnChartValueSelectedListener(object : OnChartValueSelectedListener {
                 override fun onValueSelected(e: Entry?, h: Highlight?) {
-                    println("entryData:" + e?.y?.toString())
                 }
 
                 override fun onNothingSelected() {

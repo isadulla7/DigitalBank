@@ -56,25 +56,21 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
     override fun onStart() {
         super.onStart()
         viewLifecycleOwner.lifecycleScope.launch {
-            if (list.isEmpty()){
+            if (list.isEmpty()) {
                 viewModel.setItemList(requireContext())
             }
-
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.uiState.collect{
-                if (list.isEmpty()){
+            viewModel.uiState.collect {
+                if (list.isEmpty()) {
                     list.addAll(it)
                 }
-
-
             }
         }
-
     }
 
 
@@ -132,7 +128,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
     }
 
     private fun searchByQuery(query: String) {
-        var filteredList = ArrayList<SearchItem>()
+        var filteredList: ArrayList<SearchItem>
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
             if (query.isEmpty()) {
                 withContext(Dispatchers.Main) {
@@ -146,11 +142,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
                     }
                 }
             } else {
-               // list = SearchList.searchList
-                filteredList = list.filter {
-                    it.name.orEmpty().lowercase(Locale.getDefault())
-                        .contains(query.lowercase(Locale.getDefault()))
-                } as ArrayList<SearchItem>
+                filteredList = list.filter { it.name.orEmpty().lowercase(Locale.getDefault()).contains(query.lowercase(Locale.getDefault())) } as ArrayList<SearchItem>
                 withContext(Dispatchers.Main) {
                     binding.emptyView.isVisible = filteredList.isEmpty()
                     operationsList = filteredList

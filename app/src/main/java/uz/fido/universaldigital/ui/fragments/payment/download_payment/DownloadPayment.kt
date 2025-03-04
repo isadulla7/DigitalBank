@@ -17,7 +17,6 @@ import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
-import uz.fido.utils.log.Logger
 
 @AndroidEntryPoint
 abstract class DownloadPayment : Fragment() {
@@ -58,29 +57,24 @@ abstract class DownloadPayment : Fragment() {
         ) {
             downloadPaymentInterface.getMutablePaymentList()
         } else {
-//            Paper.book().write(Const.UPDATE_LANG, false)
-//            if (currentDatabaseVersion == savedDatabaseVersion) {
-//                getPaymentsFromLocal()
-//            } else {
-            downloadPayments()
-//            }
+            Paper.book().write(Const.UPDATE_LANG, false)
+            if (currentDatabaseVersion == savedDatabaseVersion) {
+                getPaymentsFromLocal()
+            } else {
+                downloadPayments()
+            }
         }
     }
 
     private fun getPaymentsFromLocal() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Default) {
-            databaseHelper?.let { databaseHelper ->
-                if (databaseHelper.getGroupList().size != 0) {
-                    paymentGroupsList = databaseHelper.getGroupList()
-                    paymentGroupsList.sortBy { it.order }
-                    withContext(Dispatchers.Main) {
-                        downloadPaymentInterface.fetchCompleteFromDB()
-                    }
-                } else {
-                    withContext(Dispatchers.Main) {
-                        downloadPayments()
-                    }
+            databaseHelper?.getGroupList()?.takeIf { it.isNotEmpty() }?.let { groups ->
+                paymentGroupsList = ArrayList(groups.sortedBy { it.order })
+                withContext(Dispatchers.Main) {
+                    downloadPaymentInterface.fetchCompleteFromDB()
                 }
+            } ?: withContext(Dispatchers.Main) {
+                downloadPayments()
             }
         }
     }
@@ -103,32 +97,22 @@ abstract class DownloadPayment : Fragment() {
     }
 
     private fun setToStorage(payment: Payment) {
-        viewLifecycleOwner.lifecycleScope.launch {
-            withContext(Dispatchers.Default) {
-                try {
-                    databaseHelper?.let { databaseHelper ->
-                        Logger.writeErrorLog("===download payment stared")
-                        databaseHelper.insertServiceGroups(payment.service_groups ?: ArrayList())
-                        Logger.writeErrorLog("===service groups inserted")
-                        databaseHelper.insertServiceList(payment.service_list ?: ArrayList())
-                        Logger.writeErrorLog("===service lists inserted")
-                        databaseHelper.insertPaymentParams(payment.payment_details ?: ArrayList())
-                        Logger.writeErrorLog("===payment details inserted")
-                        databaseHelper.insertCashbackList(payment.cashback_list ?: ArrayList())
-                        Logger.writeErrorLog("===cashback list inserted")
-                        databaseHelper.insertReferenceList(payment.references_list ?: ArrayList())
-                        Logger.writeErrorLog("===reference list inserted")
-                        paymentGroupsList = databaseHelper.getGroupList()
-                        Logger.writeErrorLog("===getting payment group list")
-                        withContext(Dispatchers.Main) {
-                            downloadPaymentInterface.downloadPaymentSuccess()
-                            Logger.writeErrorLog("===download payment success")
-                        }
-                        saveToPaper(Const.PAPER_PAYMENT_VERSION_DB, payment.curr_version ?: "0")
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                databaseHelper?.let { databaseHelper ->
+                    databaseHelper.insertServiceGroups(payment.service_groups ?: ArrayList())
+                    databaseHelper.insertServiceList(payment.service_list ?: ArrayList())
+                    databaseHelper.insertPaymentParams(payment.payment_details ?: ArrayList())
+                    databaseHelper.insertCashbackList(payment.cashback_list ?: ArrayList())
+                    databaseHelper.insertReferenceList(payment.references_list ?: ArrayList())
+                    paymentGroupsList = databaseHelper.getGroupList()
+                    withContext(Dispatchers.Main) {
+                        downloadPaymentInterface.downloadPaymentSuccess()
                     }
-                } catch (e: Exception) {
-                    recordException(e, ::setToStorage.name)
+                    saveToPaper(Const.PAPER_PAYMENT_VERSION_DB, payment.curr_version ?: "0")
                 }
+            } catch (e: Exception) {
+                recordException(e, ::setToStorage.name)
             }
         }
     }
