@@ -45,19 +45,14 @@ import java.text.DecimalFormat
 @AndroidEntryPoint
 class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInterface {
 
-    private lateinit var paymentTemplatesAdapter: PaymentTemplatesAdapter
-    private lateinit var menuPaymentsAdapter: MainPaymentsAdapter
     private lateinit var binding: FragmentMenuPaymentsBinding
     private val utilsViewModel: UtilsViewModel by activityViewModels()
     private var templatesSkeleton: SkeletonScreen? = null
     private var skeletonScreen: SkeletonScreen? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        menuPaymentsAdapter = MainPaymentsAdapter {
-            goto(R.id.paymentListFragment, bundleOf(PaymentListFragment.PAYMENT_GROUP to it))
-        }
-        paymentTemplatesAdapter = PaymentTemplatesAdapter(this)
+    private val paymentTemplatesAdapter by lazy { PaymentTemplatesAdapter(this) }
+    private val menuPaymentsAdapter by lazy {
+        MainPaymentsAdapter { goto(R.id.paymentListFragment, bundleOf(PaymentListFragment.PAYMENT_GROUP to it)) }
     }
 
     override fun onCreateView(
@@ -109,23 +104,13 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     }
 
     private fun initSetOnClickListeners() {
-        binding.search.setOnClickListener {
-            goto(R.id.searchEveryWhereFragment)
-        }
+        binding.search.setOnClickListener { goto(R.id.searchEveryWhereFragment) }
         binding.autopayments.setOnClickListener { goto(R.id.autoPaymentFragment) }
         binding.paymentByQr.setOnClickListener { handleCameraPermission() }
-        binding.myHome.setOnClickListener {
-            goto(R.id.myHomeFragment)
-        }
-        binding.llTemplates.setOnClickListener {
-            goto(R.id.templateListFragment)
-        }
-        binding.loanRepayment.setOnClickListener {
-            openPaymentByServiceId(LOAN_PAYMENT)
-        }
-        binding.loanIshonch.setOnClickListener {
-            openPaymentByServiceId(ISHONCH_SERVICE_ID)
-        }
+        binding.myHome.setOnClickListener { goto(R.id.myHomeFragment) }
+        binding.llTemplates.setOnClickListener { goto(R.id.templateListFragment) }
+        binding.loanRepayment.setOnClickListener { openPaymentByServiceId(LOAN_PAYMENT) }
+        binding.loanIshonch.setOnClickListener { openPaymentByServiceId(ISHONCH_SERVICE_ID) }
     }
 
     private fun drawViews() {

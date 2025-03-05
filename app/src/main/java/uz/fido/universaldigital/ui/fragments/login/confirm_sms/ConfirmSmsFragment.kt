@@ -287,8 +287,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                 }
 
                 Status.ERROR -> {
-                    setFragmentResult(SMS_OPERATION_PAYMENT_KEY, bundleOf("sms_code" to smsCode))
-                    findNavController().navigateUp()
+                    showSnackbar(it.message.toString())
                 }
             }
         }

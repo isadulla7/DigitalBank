@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipChildren="false">
 
     <uz.fido.utils.view.custom_app_bar.MainAppBar
@@ -13,12 +13,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:s_title="@string/top_up" />
 
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_bar">
+
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -45,21 +45,19 @@
                 android:paddingStart="16dp"
                 android:paddingEnd="8dp" />
 
-
             <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
                 android:id="@+id/sender_indicator"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="10dp"
                 android:layout_gravity="center"
                 android:layout_marginTop="12dp"
                 app:dotsColor="@color/brandBlueColor_10"
-                app:dotsCornerRadius="6dp"
-                app:dotsSize="6dp"
-                app:dotsSpacing="8dp"
+                app:dotsCornerRadius="8dp"
+                app:dotsSize="8dp"
+                app:dotsSpacing="4dp"
                 app:dotsWidthFactor="1"
                 app:progressMode="false"
                 app:selectedDotColor="@color/brandBlueColor_90" />
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/amount_layout"
@@ -97,7 +95,9 @@
                 android:text="@string/min_amount_1000"
                 android:textColor="@color/brandBlueColor_50"
                 android:textSize="14dp" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
+
     </androidx.core.widget.NestedScrollView>
 
     <uz.fido.utils.view.custom_circle_button.CustomFAButton
@@ -108,4 +108,5 @@
         android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

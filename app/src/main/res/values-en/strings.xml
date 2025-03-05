@@ -335,7 +335,7 @@
     <string name="summa">sum</string>
     <string name="text_empty_loan">Credit not yet available</string>
     <string name="by_phone_number">By phone number</string>
-    <string name="saved_receivers">Selected filters</string>
+    <string name="saved_receivers">Selected recipients</string>
     <string name="card_not_found">Card not found</string>
     <string name="transfer">Transfer</string>
     <string name="by_wallet_number">By wallet number</string>

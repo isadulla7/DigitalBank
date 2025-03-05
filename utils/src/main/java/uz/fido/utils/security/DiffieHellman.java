@@ -30,7 +30,6 @@ public class DiffieHellman {
     }
 
     private DiffieHellman() {
-//        Random randomGenerator = new Random();
         SecureRandom randomGenerator = new SecureRandom();
         a = new BigInteger(bitLength, randomGenerator);
         g = new BigInteger(bitLength, randomGenerator);

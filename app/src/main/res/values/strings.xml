@@ -338,7 +338,7 @@
     <string name="summa">сум</string>
     <string name="text_empty_loan">Кредит пока недоступен</string>
     <string name="by_phone_number">По номеру телефона</string>
-    <string name="saved_receivers">Выбранные фильтры</string>
+    <string name="saved_receivers">Избранные получатели</string>
     <string name="card_not_found">Карта не найдена</string>
     <string name="transfer">Перевод</string>
     <string name="by_wallet_number">По номеру кошелька</string>

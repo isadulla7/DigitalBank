@@ -3,9 +3,6 @@ package uz.fido.utils.internet_checker
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.Network
-import android.net.NetworkCapabilities
-import android.net.NetworkRequest
-import android.os.Build
 import androidx.lifecycle.LiveData
 
 /**
@@ -20,11 +17,7 @@ class InternetConnectionChecker(context: Context) : LiveData<Boolean>() {
     override fun onActive() {
         super.onActive()
         try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                connectivityManager.registerDefaultNetworkCallback(getNetworkCallback())
-            } else {
-                connectivityManager.registerNetworkCallback(getNetworkRequest(), getNetworkCallback())
-            }
+            connectivityManager.registerDefaultNetworkCallback(getNetworkCallback())
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -51,6 +44,4 @@ class InternetConnectionChecker(context: Context) : LiveData<Boolean>() {
         }
     }
 
-    private fun getNetworkRequest() = NetworkRequest.Builder().addTransportType(NetworkCapabilities.TRANSPORT_WIFI).addTransportType(NetworkCapabilities.TRANSPORT_CELLULAR)
-        .addTransportType(NetworkCapabilities.TRANSPORT_ETHERNET).addCapability(NetworkCapabilities.NET_CAPABILITY_VALIDATED).build()
 }

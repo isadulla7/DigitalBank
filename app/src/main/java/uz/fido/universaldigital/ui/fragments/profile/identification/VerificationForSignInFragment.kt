@@ -80,7 +80,8 @@ class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserB
                 doc_serial = myIdMeResponse.profile.doc_data.pass_data.substring(0, 2),
                 doc_number = myIdMeResponse.profile.doc_data.pass_data.substring(2),
                 birthday = myIdMeResponse.profile.common_data.birth_date,
-                doc_type = myIdMeResponse.profile.doc_data.doc_type_id
+                doc_type = myIdMeResponse.profile.doc_data.doc_type_id,
+                pnfl = myIdMeResponse.profile.common_data.pinfl
             )
             viewModel.identification(getClientToken(), checkIdentification).observe(viewLifecycleOwner) {
                 hideProgress()
@@ -130,7 +131,7 @@ class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserB
         myIdMe?.let {
             val commonData = it.profile.common_data
             val docData = it.profile.doc_data
-            val fio = "${commonData.first_name} ${commonData.last_name} ${commonData.middle_name}"
+            val fio = "${commonData.first_name} ${commonData.last_name} ${commonData.middle_name}".replace("?", "‘")
             this.fio = fio
 
             val details = mapOf(

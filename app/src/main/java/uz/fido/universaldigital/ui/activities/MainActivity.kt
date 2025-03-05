@@ -21,6 +21,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.database.DataSnapshot
@@ -52,6 +53,7 @@ import uz.fido.universaldigital.ui.fragments.transfers.by_phone.TransferByPhoneF
 import uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferFragment
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.isActive
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
@@ -109,7 +111,7 @@ class MainActivity : BaseActivity() {
     }
 
     private fun checkNotification() {
-        if (!intent.getStringExtra(PassCodeFragment.NOTIFICATION_OPERATION).isNullOrEmpty()){
+        if (!intent.getStringExtra(PassCodeFragment.NOTIFICATION_OPERATION).isNullOrEmpty()) {
             openPage(R.id.mainNewsFragment)
         }
     }
@@ -253,18 +255,19 @@ class MainActivity : BaseActivity() {
 
     private fun internetListener() {
         try {
-            InternetConnectionChecker(this).observeForever { isConnected ->
-
+            InternetConnectionChecker(this).observe(this) { isConnected ->
                 if (isConnected) {
-                    if (!isDestroyed && !isFinishing) {
+                    if (isActive()) {
                         if (noConnectionDialog != null) {
                             noConnectionDialog?.dismiss()
                             noConnectionDialog = null
                         }
                     }
-                } else if (!this@MainActivity.isStop && !isDestroyed && !isFinishing) {
-                    noConnectionDialog = NoConnectionDialog()
-                    noConnectionDialog?.show(supportFragmentManager, "")
+                } else if (!this@MainActivity.isStop && isActive()) {
+                    if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                        noConnectionDialog = NoConnectionDialog()
+                        noConnectionDialog?.show(supportFragmentManager, "")
+                    }
                 }
             }
         } catch (e: Exception) {
@@ -371,7 +374,6 @@ class MainActivity : BaseActivity() {
             override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
         }
     }
-
 
     private fun onShakeDetected() {
         if (getFromPaper(Const.SHAKING_ACTION_STATE, "N") == "Y") {

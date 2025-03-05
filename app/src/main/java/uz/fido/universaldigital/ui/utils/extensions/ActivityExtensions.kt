@@ -11,3 +11,7 @@ fun Activity.pendingTransition(enterAnim: Int, exitAnim: Int) {
         overridePendingTransition(enterAnim, exitAnim)
     }
 }
+
+fun Activity.isActive(): Boolean {
+    return !isDestroyed && !isFinishing
+}
