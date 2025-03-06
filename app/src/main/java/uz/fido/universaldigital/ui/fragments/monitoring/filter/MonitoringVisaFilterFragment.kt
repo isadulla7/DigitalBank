@@ -126,10 +126,10 @@ class MonitoringVisaFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
                 Status.SUCCESS -> {
                     val response = resource.data?.user_objects ?: ArrayList()
                     val newList = arrayListOf<FilterCard>()
-                    response.forEach {
-                        if (it.object_type == CURRENCY_CARD) {
-                            if (!newList.map { it.object_value }.contains(it.object_value)) {
-                                newList.add(it)
+                    response.forEach { filterCard ->
+                        if (filterCard.object_type == CURRENCY_CARD) {
+                            if (!newList.map { it.object_value }.contains(filterCard.object_value)) {
+                                newList.add(filterCard)
                             }
                         }
                     }

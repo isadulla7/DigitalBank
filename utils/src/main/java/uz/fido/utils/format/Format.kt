@@ -224,7 +224,6 @@ object Format {
 
     }
 
-
     fun formatAmountToTiyn(amount: String?): String {
         if (amount.isNullOrBlank()) {
             return "0"

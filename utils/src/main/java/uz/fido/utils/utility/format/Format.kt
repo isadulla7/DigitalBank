@@ -121,7 +121,7 @@ class Format {
 
         fun conversionFormat(amount: Double): String {
             val plainText = amount.toBigDecimal().toPlainString().toDouble()
-            val secondForm = String.format("%.2f", plainText)
+            val secondForm = String.format(Locale.getDefault(), "%.2f", plainText)
             return formatAmount(secondForm)
         }
 
@@ -132,7 +132,7 @@ class Format {
             val builder = SpannableStringBuilder()
             val filteredAmount = amount?.replace(" ", "")?.replace(",", ".")
             val newAmount =
-                String.format("%.2f", filteredAmount?.toDouble()!! / 100).replace(",", ".")
+                String.format(Locale.getDefault(), "%.2f", filteredAmount?.toDouble()!! / 100).replace(",", ".")
             val roundedAmount = formatAmountRounded(
                 newAmount.substring(0, newAmount.lastIndexOf(".")).replace(" ", "")
             )

@@ -23,13 +23,6 @@ import uz.fido.utils.view.imagezoomcrop.photoview.IGetImageBounds;
  */
 public class CropOverlayView extends View implements IGetImageBounds {
 
-    //Defaults
-    private final boolean DEFAULT_GUIDELINES = true;
-    private final int DEFAULT_MARGINTOP = 100;
-    private final int DEFAULT_MARGINSIDE = 50;
-    private final int DEFAULT_MIN_WIDTH = 500;
-    private final int DEFAULT_MAX_WIDTH = 700;
-
     // we are cropping square image so width and height will always be equal
     private final int DEFAULT_CROPWIDTH = 600;
     private static final int DEFAULT_CORNER_RADIUS = 6;
@@ -73,10 +66,16 @@ public class CropOverlayView extends View implements IGetImageBounds {
         mContext = context;
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.CropOverlayView, 0, 0);
         try {
+            //Defaults
+            boolean DEFAULT_GUIDELINES = true;
             mGuidelines = ta.getBoolean(R.styleable.CropOverlayView_guideLines, DEFAULT_GUIDELINES);
+            int DEFAULT_MARGINTOP = 100;
             mMarginTop = ta.getDimensionPixelSize(R.styleable.CropOverlayView_marginTop, DEFAULT_MARGINTOP);
+            int DEFAULT_MARGINSIDE = 50;
             mMarginSide = ta.getDimensionPixelSize(R.styleable.CropOverlayView_marginSide, DEFAULT_MARGINSIDE);
+            int DEFAULT_MIN_WIDTH = 500;
             mMinWidth = ta.getDimensionPixelSize(R.styleable.CropOverlayView_minWidth, DEFAULT_MIN_WIDTH);
+            int DEFAULT_MAX_WIDTH = 700;
             mMaxWidth = ta.getDimensionPixelSize(R.styleable.CropOverlayView_maxWidth, DEFAULT_MAX_WIDTH);
             final float defaultRadius = TypedValue.applyDimension(
                     TypedValue.COMPLEX_UNIT_DIP, DEFAULT_CORNER_RADIUS, mContext.getResources().getDisplayMetrics());

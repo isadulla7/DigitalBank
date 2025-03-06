@@ -37,13 +37,13 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
     private lateinit var visaMonitoringItem: CurrencyCardMonitoringItem
     private lateinit var dialogReceipt: BottomReceiptsDialog
     private var searchDataResponse: SearchDataResponse? = null
-    private var paymentName=""
+    private var paymentName = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             try {
-                paymentName=it.getString("name").toString()
+                paymentName = it.getString("name").toString()
                 operation = it.getString("operation").toString()
                 command = it.getString("command").toString()
                 when (operation) {
@@ -74,12 +74,11 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
             }
             buttonReceipt.setOnClickListener {
                 dialogReceipt = BottomReceiptsDialog(
-                    printChequeResponse.html.toString(), printChequeResponse.monitoring_info?.name.toString(),
-                    {
-                        goto(R.id.receiptFullFragment, bundle = bundleOf("html" to printChequeResponse.html.toString()))
-                        dialogReceipt.dismiss()
-                    }
-                )
+                    printChequeResponse.html.toString(), printChequeResponse.monitoring_info?.name.toString()
+                ) {
+                    goto(R.id.receiptFullFragment, bundle = bundleOf("html" to printChequeResponse.html.toString()))
+                    dialogReceipt.dismiss()
+                }
                 dialogReceipt.show(childFragmentManager, "TAG")
             }
         }
@@ -147,12 +146,12 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
     private fun initLocal() {
         val item = printChequeResponse.monitoring_info!!
         transactId = item.request_id
-        addView(getString(R.string.service),paymentName)
+        addView(getString(R.string.service), paymentName)
         searchDataResponse?.params?.get("FIO")?.let { addView(getString(R.string.fio), it) }
         searchDataResponse?.params?.get("FIO_ABONENT")?.let { addView(getString(R.string.fio), it) }
         searchDataResponse?.params?.get("ADDRESS")?.let { addView(getString(R.string.address), it) }
         addView(getString(R.string.date_time), item.created_date)
-        if(searchDataResponse?.service_id=="-4"){
+        if (searchDataResponse?.service_id == "-4") {
             printChequeResponse.details.forEach {
                 if (checkList(it.key)) {
                     addView(it.key_description, it.value)

@@ -4,9 +4,7 @@ import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
-import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.network.domain.model.wallet.CreateWalletRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment

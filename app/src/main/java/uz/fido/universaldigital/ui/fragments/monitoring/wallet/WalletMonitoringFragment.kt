@@ -6,7 +6,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.monitoring.AccountHistoriesRequest
@@ -14,7 +13,6 @@ import uz.fido.network.domain.model.monitoring.AccountHistory
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.WalletHistoryItem
-import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface

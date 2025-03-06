@@ -5,7 +5,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import java.io.File
 import java.net.NetworkInterface
-import java.net.SocketException
 
 open class EmulatorCheck(private val context: Context) {
 

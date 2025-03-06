@@ -22,7 +22,7 @@ class RatesWidgetProvider : AppWidgetProvider() {
         doUpdate(context, RatesRepository(), WidgetView())
     }
 
-    fun doUpdate(context: Context?, repository: Repository, view: View): ListenableWorker.Result {
+    private fun doUpdate(context: Context?, repository: Repository, view: View): ListenableWorker.Result {
         context ?: return ListenableWorker.Result.failure()
         var hasFailed = true
         repository.getData {

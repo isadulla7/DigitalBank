@@ -15,7 +15,6 @@
     <string name="widget_4">Сохраненные платежи</string>
     <string name="widget_5">Курсы валют</string>
     <string name="widget_7">Вклад</string>
-    <string name="widget_8">Трансферы</string>
 
     <integer-array name="main_widgets_ids">
         <item>100</item>

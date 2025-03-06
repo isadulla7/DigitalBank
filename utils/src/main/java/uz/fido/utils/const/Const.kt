@@ -93,6 +93,7 @@ object Const {
     const val DEVICE_MY_ID_STATE = "device_my_id_state"
     const val PASSPORT_DATA = "passport_data"
     const val DATE_OF_BIRTH = "date_of_birth"
+    const val PINFL = "pinfl"
     const val IS_PIN = "is_pin"
 
     var request_id = ""

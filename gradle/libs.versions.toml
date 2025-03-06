@@ -172,13 +172,4 @@ firebase-database-ktx = { group = "com.google.firebase", name = "firebase-databa
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlyticsVersion" }
 
 [plugins]
-org-jetbrains-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "org-jetbrains-kotlin-android" }
-com-android-application = { id = "com.android.application", version.ref = "agp" }
-com-android-tools-build-gradle = { id = "com.android.tools.build.gradle", version.ref = "gradle" }
-org-jetbrains-kotlin-kotlin-gradle-plugin = { id = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
-com-google-gms-google-services = { id = "com.google.gms:google-services", version.ref = "googleServices" }
-com-google-dagger-hilt-android-gradle-plugin = { id = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "daggerHilt" }
-com-google-firebase-firebase-crashlytics-gradle = { id = "com.google.firebase:firebase-crashlytics-gradle", version.ref = "firebaseCrashlytics" }
-jitpack-io = { id = "https://jitpack.io" }
-uzinfocom-myid = { id = "https://storage.uzinfocom.uz/libs/android/myid" }
-flutter-io-myid-lib = { id = "https://storage.googleapis.com/download.flutter.io" }
+

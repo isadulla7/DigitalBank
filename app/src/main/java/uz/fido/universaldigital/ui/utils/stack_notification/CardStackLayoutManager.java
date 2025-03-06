@@ -46,9 +46,7 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
         update(recycler);
         if (s.didStructureChange()) {
             View topView = getTopView();
-            if (topView != null) {
-                //   listener.onCardAppeared(getTopView(), state.topPosition);
-            }
+            //   listener.onCardAppeared(getTopView(), state.topPosition);
         }
     }
 
@@ -346,9 +344,7 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
             }
         }
 
-        if (state.status.isDragging()) {
-            // listener.onCardDragging(state.getDirection(), state.getRatio());
-        }
+        // listener.onCardDragging(state.getDirection(), state.getRatio());
     }
 
     private void updateTranslation(View view) {
@@ -541,9 +537,7 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
 
     private void smoothScrollToPrevious(int position) {
         View topView = getTopView();
-        if (topView != null) {
-            // listener.onCardDisappeared(getTopView(), state.topPosition);
-        }
+        // listener.onCardDisappeared(getTopView(), state.topPosition);
 
         state.proportion = 0.0f;
         state.targetPosition = position;

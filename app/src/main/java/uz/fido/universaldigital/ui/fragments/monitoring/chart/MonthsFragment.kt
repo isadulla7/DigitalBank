@@ -142,8 +142,8 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
                 val response = resource?.data?.local_transactions ?: arrayListOf()
                 val groupList = mobileDBHelper.getGroupList()
                 val items = response.groupBy { it.service_id }.map { (serviceId, items) ->
-                    val group = groupList.find {
-                        val serviceIdList = it.service_list?.map { it.service_id.toString() }
+                    val group = groupList.find { paymentGroup ->
+                        val serviceIdList = paymentGroup.service_list?.map { it.service_id.toString() }
                         serviceIdList?.contains(serviceId) ?: false
                     }
                     ChartData(

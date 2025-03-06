@@ -613,6 +613,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         val userIdentifyState = signInResponse?.user_type_id ?: UserIdentifyState.DEFAULT
         val passportData = signInResponse?.passport_serial + signInResponse?.passport_number
         val dateOfBirth = signInResponse?.birthday
+        val pinfl = signInResponse?.pnfl
         when {
             isIdentifiedByCard(userIdentifyState) -> openMyIdPage(passportData, dateOfBirth)
 
@@ -622,16 +623,19 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
             isUserNotIdentifiedButDeviceIdentified(userIdentifyState, userDeviceState) -> openMyIdPage()
 
-            isUserIdentifiedButDeviceNot(userIdentifyState, userDeviceState) -> handleUserNoPassportData(passportData, dateOfBirth)
+            isUserIdentifiedButDeviceNot(userIdentifyState, userDeviceState) -> handleUserNoPassportData(passportData, dateOfBirth, pinfl)
         }
     }
 
-    private fun handleUserNoPassportData(passportData: String?, dateOfBirth: String?) {
-        if (passportData.isNullOrEmpty() || dateOfBirth.isNullOrEmpty()) {
-            clearDots()
-            showUnableGetProfileDialog()
+    private fun handleUserNoPassportData(passportData: String?, dateOfBirth: String?, pinfl: String?) {
+        if ((passportData.isNullOrEmpty() || dateOfBirth.isNullOrEmpty())) {
+            if (pinfl.isNullOrEmpty()) {
+                showUnableGetProfileDialog()
+            } else {
+                openMyIdPage(pinfl)
+            }
         } else {
-            openMyIdPage(passportData, dateOfBirth)
+            openMyIdPage(passportData, dateOfBirth, pinfl)
         }
     }
 
@@ -639,9 +643,9 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         UnableGetProfileDialog {}.show(childFragmentManager, "")
     }
 
-    private fun openMyIdPage(passportData: String? = null, dateOfBirth: String? = null) {
+    private fun openMyIdPage(passportData: String? = null, dateOfBirth: String? = null, pinfl: String? = null) {
         clearDots()
-        val bundle = bundleOf(Const.PASSPORT_DATA to passportData.orEmpty(), Const.DATE_OF_BIRTH to dateOfBirth.orEmpty(), Const.IS_PIN to true)
+        val bundle = bundleOf(Const.PASSPORT_DATA to passportData.orEmpty(), Const.DATE_OF_BIRTH to dateOfBirth.orEmpty(), Const.PINFL to pinfl.orEmpty(), Const.IS_PIN to true)
         gotoWithSlide(R.id.mainIdentificationForSignInFragment, bundle)
     }
 }

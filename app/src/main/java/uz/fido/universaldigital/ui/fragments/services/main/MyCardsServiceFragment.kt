@@ -32,7 +32,6 @@ import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.ShareCardNum
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.WalletOperationsDialog
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getLayoutManager
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getSpanCount
-import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.goto

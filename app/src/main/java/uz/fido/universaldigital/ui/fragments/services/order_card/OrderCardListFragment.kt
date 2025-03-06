@@ -12,7 +12,6 @@ import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.OrderCardTypeRequest
 import uz.fido.network.domain.model.cards.OrderCardTypeResponse
 import uz.fido.network.domain.model.cards.ProductType
-import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentOrderCardListBinding

@@ -47,7 +47,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.payment.PaymentParams
-import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog

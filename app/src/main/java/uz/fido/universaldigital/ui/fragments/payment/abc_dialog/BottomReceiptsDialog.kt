@@ -2,38 +2,23 @@ package uz.fido.universaldigital.ui.fragments.payment.abc_dialog
 
 import android.app.Activity
 import android.app.Dialog
-import android.content.ContentValues
-import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Insets
 import android.graphics.pdf.PdfDocument
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.os.CancellationSignal
 import android.os.Environment
-import android.os.ParcelFileDescriptor
-import android.print.PageRange
-import android.print.PrintAttributes
-import android.print.PrintDocumentAdapter
-import android.print.PrintDocumentInfo
-import android.print.PrintJob
-import android.print.PrintManager
-import android.provider.MediaStore
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
-import android.webkit.JavascriptInterface
-import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -42,7 +27,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogBottomReceiptsBinding
 import uz.fido.universaldigital.ui.utils.file.FileUtils
 import java.io.File
-import java.io.FileOutputStream
 
 class BottomReceiptsDialog(private var html: String,
                            private var name: String, val webViewClick: () -> Unit = {}) : BottomSheetDialogFragment(),

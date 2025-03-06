@@ -22,7 +22,7 @@ public class NMS {
          */
 
         float iou;
-        Float[] prob = probs.toArray(new Float[probs.size()]);
+        Float[] prob = probs.toArray(new Float[0]);
         ArrayIndexComparator comparator = new ArrayIndexComparator(prob);
         Integer[] indexes = comparator.createIndexArray();
         Arrays.sort(indexes, comparator);

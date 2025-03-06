@@ -362,15 +362,15 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
 
     private fun getDepositProducts() {
         menuProductsViewModel.getDeposits(getClientToken(), GetDepositListRequest("dep"))
-            .observe(viewLifecycleOwner) {
+            .observe(viewLifecycleOwner) { resource ->
                 hideProgress()
-                when (it.status) {
+                when (resource.status) {
                     Status.SUCCESS -> {
                         menuProductsViewModel.updateDepositProducts(
-                            it.data?.deposit_types ?: ArrayList()
+                            resource.data?.deposit_types ?: ArrayList()
                         )
-                        it.data?.deposit_types?.let {
-                            val mobileDv = it.find { it.dep_id == 853 }
+                        resource.data?.deposit_types?.let { deposits ->
+                            val mobileDv = deposits.find { it.dep_id == 853 }
                             if (mobileDv != null) {
                                 gotoWithSlide(
                                     R.id.openDepositStepFirst, bundleOf(

@@ -719,25 +719,34 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         val userIdentifyState = checkSmsCodeData?.user_type_id ?: UserIdentifyState.DEFAULT
         val passportData = checkSmsCodeData?.passport_serial + checkSmsCodeData?.passport_number
         val dateOfBirth = checkSmsCodeData?.birthday
+        val pinfl = checkSmsCodeData?.pnfl
         when {
-            isIdentifiedByCard(userIdentifyState) -> openMyIdInfoPage(passportData, dateOfBirth)
+            isIdentifiedByCard(userIdentifyState) -> openMyIdPage(passportData, dateOfBirth)
 
             isFullyIdentified(userIdentifyState, userDeviceState) -> gotoPinCodeFragment()
 
             isNotIdentified(userIdentifyState, userDeviceState) -> gotoPinCodeFragment()
 
-            isUserNotIdentifiedButDeviceIdentified(userIdentifyState, userDeviceState) -> openMyIdInfoPage()
+            isUserNotIdentifiedButDeviceIdentified(userIdentifyState, userDeviceState) -> openMyIdPage()
 
-            isUserIdentifiedButDeviceNot(userIdentifyState, userDeviceState) -> handleUserNoPassportData(passportData, dateOfBirth)
+            isUserIdentifiedButDeviceNot(userIdentifyState, userDeviceState) -> handleUserNoPassportData(passportData, dateOfBirth, pinfl)
         }
     }
 
-    private fun handleUserNoPassportData(passportData: String?, dateOfBirth: String?) {
-        if (passportData.isNullOrEmpty() || dateOfBirth.isNullOrEmpty()) {
-            UnableGetProfileDialog { pop() }.show(childFragmentManager, "")
+    private fun handleUserNoPassportData(passportData: String?, dateOfBirth: String?, pinfl: String?) {
+        if ((passportData.isNullOrEmpty() || dateOfBirth.isNullOrEmpty())) {
+            if (pinfl.isNullOrEmpty()) {
+                showUnableGetProfileDialog()
+            } else {
+                openMyIdPage(pinfl)
+            }
         } else {
-            openMyIdInfoPage(passportData, dateOfBirth)
+            openMyIdPage(passportData, dateOfBirth, pinfl)
         }
+    }
+
+    private fun showUnableGetProfileDialog() {
+        UnableGetProfileDialog {}.show(childFragmentManager, "")
     }
 
     private fun gotoPinCodeFragment() {
@@ -745,8 +754,8 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         gotoWithPopupSlide(R.id.action_confirmSmsFragment_to_pinCodeFragment, R.id.signInFragment, bundle)
     }
 
-    private fun openMyIdInfoPage(passportData: String? = null, dateOfBirth: String? = null) {
-        val bundle = bundleOf(Const.PASSPORT_DATA to passportData.orEmpty(), Const.DATE_OF_BIRTH to dateOfBirth.orEmpty(), Const.IS_PIN to false)
+    private fun openMyIdPage(passportData: String? = null, dateOfBirth: String? = null, pinfl: String? = null) {
+        val bundle = bundleOf(Const.PASSPORT_DATA to passportData.orEmpty(), Const.DATE_OF_BIRTH to dateOfBirth.orEmpty(), Const.PINFL to pinfl.orEmpty(), Const.IS_PIN to false)
         gotoWithPopupSlide(R.id.action_confirmSmsFragmentLogin_to_mainIdentificationForSignInFragment, R.id.signInFragment, bundle)
     }
 

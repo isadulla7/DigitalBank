@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import kotlinx.coroutines.Dispatchers
-import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentAppThemeBinding
-import uz.fido.universaldigital.ui.fragments.profile.MenuProfileViewModel
 import uz.fido.universaldigital.ui.utils.extensions.delayOnLifecycle
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.pop

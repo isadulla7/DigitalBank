@@ -53,14 +53,14 @@ open class CubicBezierInterpolator(start: PointF, end: PointF) : Interpolator {
         return getBezierCoordinateY(getXForTime(time))
     }
 
-    protected fun getBezierCoordinateY(time: Float): Float {
+    private fun getBezierCoordinateY(time: Float): Float {
         c.y = 3 * start.y
         b.y = 3 * (end.y - start.y) - c.y
         a.y = 1 - c.y - b.y
         return time * (c.y + time * (b.y + time * a.y))
     }
 
-    protected fun getXForTime(time: Float): Float {
+    private fun getXForTime(time: Float): Float {
         var x = time
         var z: Float
         for (i in 1..13) {

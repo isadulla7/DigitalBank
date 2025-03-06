@@ -1,6 +1,5 @@
 package uz.fido.universaldigital.base
 
-import android.widget.ImageView
 import uz.fido.network.domain.model.amount_requests.RmList
 import uz.fido.network.domain.model.applications.OrderCardApp
 import uz.fido.network.domain.model.branches.Branches

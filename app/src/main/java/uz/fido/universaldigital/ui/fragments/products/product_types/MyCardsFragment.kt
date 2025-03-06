@@ -91,15 +91,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         refreshCards()
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-    }
-
 
     private fun refreshCards() {
         try {

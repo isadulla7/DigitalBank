@@ -125,8 +125,8 @@ class OpenDepositStepFirst : BaseFragment<FragmentDepositStepFirstBinding, MainD
             when (resources.status) {
                 Status.SUCCESS -> {
                     bxmList.clear()
-                    resources.data?.list?.let {
-                        it.forEach {
+                    resources.data?.list?.let { bxmCodeAndNames ->
+                        bxmCodeAndNames.forEach {
                             if (it.bxm_code != "01186") {
                                 bxmList.add(it)
                             }

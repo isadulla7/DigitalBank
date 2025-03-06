@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.databinding.DialogScanCardBinding
 import uz.fido.universaldigital.databinding.DialogScanCardWalletBinding
 
 class ScanCardAndWalletDialog(

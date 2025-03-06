@@ -144,7 +144,7 @@ class QrPaymentFragment : BaseSimpleFragment<FragmentQrPaymentBinding>(
         }
         previewUseCase = Preview.Builder().setTargetAspectRatio(screenAspectRatio)
             .setTargetRotation(binding.previewView.display.rotation).build()
-            .also { it.setSurfaceProvider(binding.previewView.surfaceProvider) }
+            .also { it.surfaceProvider = binding.previewView.surfaceProvider }
         try {
             cameraProvider!!.bindToLifecycle(
                 this, cameraSelector!!, previewUseCase

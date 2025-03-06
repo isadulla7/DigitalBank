@@ -23,6 +23,7 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
 
     private var passportData: String? = ""
     private var dateOfBirth: String? = ""
+    private var pinfl: String? = ""
     private var isPin: Boolean? = false
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -36,12 +37,12 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
         arguments?.let {
             isPin = it.getBoolean(Const.IS_PIN)
             passportData = it.getString(Const.PASSPORT_DATA)
-            dateOfBirth = it.getString(Const.DATE_OF_BIRTH)
+            pinfl = it.getString(Const.PINFL)
         }
     }
 
     private fun initClickListener() {
-        binding.identificationBtn.setOnClickListener { openFaceIdActivity(passportData, dateOfBirth) }
+        binding.identificationBtn.setOnClickListener { openFaceIdActivity(passportData, dateOfBirth, pinfl) }
         binding.skipBtn.setOnClickListener { pop() }
     }
 
@@ -53,10 +54,10 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
         }
     }
 
-    private fun openFaceIdActivity(passportData: String? = null, dateOfBirth: String? = null) {
+    private fun openFaceIdActivity(passportData: String? = null, dateOfBirth: String? = null, pinfl: String? = null) {
         val intent = Intent(requireActivity(), FaceIdActivity::class.java)
         intent.putExtra(FaceIdActivity.MODE, FaceIdActivity.STRONG)
-        intent.putExtra(FaceIdActivity.CLIENT_PASSPORT, passportData.orEmpty())
+        intent.putExtra(FaceIdActivity.CLIENT_PASSPORT, passportData ?: pinfl.orEmpty())
         intent.putExtra(FaceIdActivity.CLIENT_DATE_OF_BIRTH, dateOfBirth.orEmpty())
         faceIdActivityResult.launch(intent)
     }
