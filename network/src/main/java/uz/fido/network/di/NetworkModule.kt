@@ -117,7 +117,6 @@ object NetworkModule {
         return httpLoggingInterceptor
     }
 
-
     @BaseOkhttpClient
     @Provides
     fun provideOkhttpClient(
@@ -127,13 +126,13 @@ object NetworkModule {
         loggingInterceptor: HttpLoggingInterceptor,
         swapKeyService: SwapKeyApiInterface,
         apiInterface: dagger.Lazy<UserApiInterface>,
-    ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager(keyStore) as X509TrustManager).addInterceptor(HeaderInterceptor(context = appContext))
+    ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager(keyStore) as X509TrustManager)
+        .addInterceptor(HeaderInterceptor(context = appContext))
         .addInterceptor(loggingInterceptor)
-        .addInterceptor(
-            AuthInterceptor(
-                swapKeyService = swapKeyService, context = appContext, apiInterface
-            )
-        ).addInterceptor(EncryptionInterceptor(appContext)).addInterceptor(DecryptionInterceptor(appContext)).readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
+        .addInterceptor(AuthInterceptor(swapKeyService = swapKeyService, context = appContext, apiInterface)
+        ).addInterceptor(EncryptionInterceptor(appContext))
+        .addInterceptor(DecryptionInterceptor(appContext))
+        .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS).build()
 
     @SimpleClientRetrofit

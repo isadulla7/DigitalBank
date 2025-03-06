@@ -13,7 +13,7 @@
         android:layout_marginTop="16dp"
         android:clipToPadding="false"
         android:orientation="vertical"
-        android:overScrollMode="never"
+        android:overScrollMode="always"
         android:paddingBottom="48dp"
         app:layout_constraintTop_toTopOf="parent" />
 

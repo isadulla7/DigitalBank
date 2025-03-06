@@ -55,7 +55,7 @@ rxbinding = "4.0.0"
 viewpagerdotsindicator = "4.2"
 qrGenerator = "2.0.0-alpha01"
 commonLangs = "3.12.0"
-animatedProgressBar = "0.1.0"
+animatedProgressBar = "1.0.0"
 rxrelay = "2.1.1"
 paperdb = "2.7.2"
 mPAndroidChart = "v3.1.0"
@@ -156,7 +156,7 @@ com-jakewharton-rxbinding4-rxbinding = { group = "com.jakewharton.rxbinding4", n
 com-tbuonomo-andrui-viewpagerdotsindicator = { group = "com.tbuonomo", name = "dotsindicator", version.ref = "viewpagerdotsindicator" }
 com-github-alexzhirkevich-custom-qr-generator = { group = "com.github.alexzhirkevich", name = "custom-qr-generator", version.ref = "qrGenerator" }
 org-apache-commons-commons-lang3 = { group = "org.apache.commons", name = "commons-lang3", version.ref = "commonLangs" }
-com-github-mckrpk-animatedProgressBar = { group = "com.github.mckrpk", name = "AnimatedProgressBar", version.ref = "animatedProgressBar" }
+com-github-mckrpk-animatedProgressBar = { group = "io.github.mckrpk", name = "AnimatedProgressBar", version.ref = "animatedProgressBar" }
 com-jakewharton-rxrelay2-rxrelay = { group = "com.jakewharton.rxrelay2", name = "rxrelay", version.ref = "rxrelay" }
 io-github-pilgr-paperdb = { group = "io.github.pilgr", name = "paperdb", version.ref = "paperdb" }
 io-supercharge-shimmerlayout = { group = "io.supercharge", name = "shimmerlayout", version.ref = "shimmerLayout" }

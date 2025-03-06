@@ -118,11 +118,11 @@ object BaseCardUtils {
         return userCardList
     }
 
-    private fun getBankLogo(cardNumber: String): Int {
+    private fun getBankLogo(cardNumber: String, isOurBank: String? = null): Int {
         if (cardNumber.isNotEmpty() && cardNumber.length > 6) {
             return when (cardNumber.substring(0, 6)) {
                 "860055", "986009", "626272", "49169905" -> R.drawable.ic_bank_aab
-                "860002", "986012", "561468" -> R.drawable.ic_bank_nbu
+                "860002", "986012" -> R.drawable.ic_bank_nbu
                 "860006", "626291", "409783", "419813", "986008" -> R.drawable.ic_bank_xalq
                 "860013", "986004", "55553664" -> R.drawable.ic_bank_asaka
                 "860033", "986001", "479092", "55553630" -> R.drawable.ic_bank_ipoteka
@@ -138,7 +138,7 @@ object BaseCardUtils {
                 "860030", "986018", "40978402" -> R.drawable.ic_bank_trast
                 "860038" -> R.drawable.ic_bank_turkiston
                 "860051", "986025", "42943400" -> R.drawable.ic_bank_davr
-                "860048", "986023", "561468", "626283", "978048" -> R.drawable.ic_bank_universal
+                "860048", "986023", "626283", "978048" -> R.drawable.ic_bank_universal
                 "860050", "986024" -> R.drawable.ic_bank_ravnaq
                 "860057", "986027" -> R.drawable.ic_bank_ofb
                 "860008", "986014", "55553687", "55553688", "55553689" -> R.drawable.ic_bank_savdogar
@@ -146,9 +146,10 @@ object BaseCardUtils {
                 "860034", "986020", "41878300" -> R.drawable.ic_bank_kdb
                 "986060", "55553660", "55553661", "55553662" -> R.drawable.ic_bank_anor
                 "986035" -> R.drawable.ic_bank_tbc
-
                 else -> {
-                    if (cardNumber.startsWith("AUZ") || cardNumber.startsWith("DV")) R.drawable.ic_bank_universal else 0
+                    if (isOurBank == "Y" || cardNumber.startsWith("AUZ") || cardNumber.startsWith("DV")) {
+                        R.drawable.ic_bank_universal
+                    } else 0
                 }
             }
         } else {
@@ -181,9 +182,9 @@ object BaseCardUtils {
     }
 
     fun ImageView.setBankLogo(card: CardResponse) {
-        if (getBankLogo(card.object_value) != 0) {
+        if (getBankLogo(card.object_value, card.is_our_bank) != 0) {
             this.visibility = View.VISIBLE
-            this.load(getBankLogo(card.object_value))
+            this.load(getBankLogo(card.object_value, card.is_our_bank))
         } else this.visibility = View.GONE
     }
 

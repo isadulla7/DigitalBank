@@ -41,6 +41,6 @@
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:overScrollMode="never" />
+        android:overScrollMode="always" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

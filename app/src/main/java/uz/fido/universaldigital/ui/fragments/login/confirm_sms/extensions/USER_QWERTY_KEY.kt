@@ -25,7 +25,6 @@ fun Context.saveSignInResponse(signInResponse: SignInResponse) {
     Paper.book().write<Int>(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id)
     saveToPaper(Const.PAPER_CLIENT_FILIAL_CODE, signInResponse.filial_code.orEmpty())
     saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
-    saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
     saveToPaper(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
     saveToPaper(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
     saveToPaper(Const.PAPER_CLIENT_ID, signInResponse.user_id)
