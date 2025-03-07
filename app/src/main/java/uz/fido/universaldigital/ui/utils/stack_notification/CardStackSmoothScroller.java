@@ -118,20 +118,14 @@ public class CardStackSmoothScroller extends RecyclerView.SmoothScroller {
 
     @Override
     protected void onStop() {
-        CardStackListener listener = manager.getCardStackListener();
         switch (type) {
             case AutomaticSwipe:
-                // Notify callback from CardStackLayoutManager
                 break;
             case AutomaticRewind:
-              //  listener.onCardRewound();
-              //  listener.onCardAppeared(manager.getTopView(), manager.getTopPosition());
                 break;
             case ManualSwipe:
-                // Notify callback from CardStackLayoutManager
                 break;
             case ManualCancel:
-              //  listener.onCardCanceled();
                 break;
         }
     }

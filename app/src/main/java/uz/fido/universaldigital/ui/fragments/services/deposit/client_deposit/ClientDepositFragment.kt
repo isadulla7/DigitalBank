@@ -53,7 +53,6 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
 
     companion object {
         const val CLIENT_DEPOSIT_MODEL = "model"
-        const val DEPOSIT_OPERATION = "deposit_operation"
         const val CLOSE_DEPOSIT = "close_deposit"
         const val EARLY_CLOSE_DEPOSIT = "early_close_deposit"
         const val WITH_DRAW_PERCENT = "with_draw_percent"

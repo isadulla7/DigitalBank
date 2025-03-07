@@ -10,8 +10,8 @@ import android.graphics.drawable.Drawable;
 import java.io.ByteArrayOutputStream;
 
 public class BitmapHelper {
-    public static Bitmap byteArrayToBitmap(byte[] b) {
-        return BitmapFactory.decodeByteArray(b, 0, b.length);
+    public static void byteArrayToBitmap(byte[] b) {
+        BitmapFactory.decodeByteArray(b, 0, b.length);
     }
     public static Drawable byteArrayToDrawable(Resources resources, byte[] b) {
         return new BitmapDrawable(resources,BitmapFactory.decodeByteArray(b, 0, b.length));

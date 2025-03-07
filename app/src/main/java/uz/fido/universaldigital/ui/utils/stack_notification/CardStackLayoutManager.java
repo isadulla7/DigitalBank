@@ -68,12 +68,7 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
 
         switch (state.status) {
             case Idle:
-                if (setting.swipeableMethod.canSwipeManually()) {
-                    state.dx -= dx;
-                    update(recycler);
-                    return dx;
-                }
-                break;
+            case ManualSwipeAnimating:
             case Dragging:
                 if (setting.swipeableMethod.canSwipeManually()) {
                     state.dx -= dx;
@@ -93,14 +88,6 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
                 }
                 break;
             case AutomaticSwipeAnimated:
-                break;
-            case ManualSwipeAnimating:
-                if (setting.swipeableMethod.canSwipeManually()) {
-                    state.dx -= dx;
-                    update(recycler);
-                    return dx;
-                }
-                break;
             case ManualSwipeAnimated:
                 break;
         }
@@ -116,13 +103,8 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
 
         switch (state.status) {
             case Idle:
-                if (setting.swipeableMethod.canSwipeManually()) {
-                    state.dy -= dy;
-                    update(recycler);
-                    return dy;
-                }
-                break;
             case Dragging:
+            case ManualSwipeAnimating:
                 if (setting.swipeableMethod.canSwipeManually()) {
                     state.dy -= dy;
                     update(recycler);
@@ -141,14 +123,6 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
                 }
                 break;
             case AutomaticSwipeAnimated:
-                break;
-            case ManualSwipeAnimating:
-                if (setting.swipeableMethod.canSwipeManually()) {
-                    state.dy -= dy;
-                    update(recycler);
-                    return dy;
-                }
-                break;
             case ManualSwipeAnimated:
                 break;
         }
@@ -301,15 +275,8 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
              *         at com.android.internal.os.Zygote$MethodAndArgsCaller.run(Zygote.java:240)
              *         at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:767)
              */
-            new Handler().post(new Runnable() {
-                @Override
-                public void run() {
-                /*    listener.onCardSwiped(direction);
-                    View topView = getTopView();
-                    if (topView != null) {
-                        listener.onCardAppeared(getTopView(), state.topPosition);
-                    }*/
-                }
+            new Handler().post(() -> {
+
             });
         }
 
@@ -328,7 +295,6 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
             resetTranslation(child);
             resetScale(child);
             resetRotation(child);
-            resetOverlay(child);
 
             if (i == state.topPosition) {
                 updateTranslation(child);
@@ -340,7 +306,6 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
                 updateTranslation(child, currentIndex);
                 updateScale(child, currentIndex);
                 resetRotation(child);
-                resetOverlay(child);
             }
         }
 
@@ -499,26 +464,6 @@ public class CardStackLayoutManager extends RecyclerView.LayoutManager implement
                 break;
         }
     }
-
-    private void resetOverlay(View view) {
-       /* View leftOverlay = view.findViewById(R.id.left_overlay);
-        if (leftOverlay != null) {
-            leftOverlay.setAlpha(0.0f);
-        }
-        View rightOverlay = view.findViewById(R.id.right_overlay);
-        if (rightOverlay != null) {
-            rightOverlay.setAlpha(0.0f);
-        }
-        View topOverlay = view.findViewById(R.id.top_overlay);
-        if (topOverlay != null) {
-            topOverlay.setAlpha(0.0f);
-        }
-        View bottomOverlay = view.findViewById(R.id.bottom_overlay);
-        if (bottomOverlay != null) {
-            bottomOverlay.setAlpha(0.0f);
-        }*/
-    }
-
     private void smoothScrollToPosition(int position) {
         if (state.topPosition < position) {
             smoothScrollToNext(position);

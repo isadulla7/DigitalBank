@@ -353,11 +353,6 @@ public abstract class ScanBaseActivity extends Activity implements Camera.Previe
         startCamera();
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
     public void setViewIds(int flashlightId, int cardRectangleId, int overlayId, int textureId,
                            int cardNumberId, int expiryId) {
         mFlashlightId = flashlightId;

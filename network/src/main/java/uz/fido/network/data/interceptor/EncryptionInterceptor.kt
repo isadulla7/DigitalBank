@@ -37,8 +37,9 @@ class EncryptionInterceptor(val context: Context) : Interceptor {
         return chain.proceed(request)
     }
 
+    private var language = context.getFromPaper(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN).uppercase(Locale.ROOT)
+
     private fun getRequest(request: Request, requestBody: RequestBody? = null): Request {
-        val language = getLang()
         return if (request.method == "GET") {
             request.newBuilder()
                 .header(HEADER_APP_LANGUAGE, language).build()
@@ -48,17 +49,6 @@ class EncryptionInterceptor(val context: Context) : Interceptor {
                 .header(HEADER_APP_LANGUAGE, language).method(request.method, requestBody).build()
         }
     }
-
-    private fun getLang(): String {
-        return when (context.getFromPaper(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN)) {
-            "uz" -> "UZL"
-            "en" -> "EN"
-            else -> "RU"
-        }
-    }
-
-
-    private var language = context.getFromPaper(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN).uppercase(Locale.ROOT)
 
     private companion object {
         const val HEADER_CONTENT_TYPE = "Content-Type"

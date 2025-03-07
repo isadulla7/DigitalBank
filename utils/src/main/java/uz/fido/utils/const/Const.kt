@@ -9,7 +9,6 @@ object Const {
     const val DB_HELPER_VERSION = 1
 
     const val APP_THEME = "app_theme"
-    const val USER_QWERTY_KEY = "user_qwerty_key"
     const val FAST_ACCESS = "fast_access"
     const val UPDATE_FAST_ACCESS = "UPDATE_FAST_ACCESS"
     const val MAIN_WIDGETS_VERSION_SAVED = "main_widget_version_saved"
@@ -57,7 +56,6 @@ object Const {
     const val EXTRA_PARAMS = "EXTRA_PAYMENT_PARAMS"
     const val TRANSACTION_ID = "transactId"
     const val RANDOM_TEXT = "random_text"
-    const val QR_PAYMENT = "QR_PAYMENT"
     const val ORDER_CARD = "order_card"
     const val LAYOUT_MANAGER_GRID = "LAYOUT_MANAGER_GRID"
     const val CARD = "card"

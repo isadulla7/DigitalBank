@@ -321,10 +321,6 @@ class WalletMonitoringFragment :
         }
     }
 
-    fun fetchWalletMonitoring(page: Int, operationType: Int) {
-
-    }
-
     override fun invoke(item: AccountHistory) {
         walletMonitoringDetailsDialog =
             WalletMonitoringDetailsDialog(item, object : BaseInterface {})

@@ -214,39 +214,6 @@ class Format {
             return newAmountStr
         }
 
-        fun checkForPhoneNumber(phoneNumber: String): Boolean {
-            val phone = phoneNumber.replace(" ", "")
-            val prefixList = arrayOf(
-                "99897",
-                "99888",
-                "99894",
-                "99893",
-                "99850",
-                "99890",
-                "99891",
-                "99895",
-                "99898",
-                "99899",
-                "99877",
-                "99833",
-                "79903",
-                "79905",
-                "79906",
-                "79909",
-                "79687"
-            )
-            var noError = false
-            if (phone.length != 12) {
-                return false
-            }
-            prefixList.forEach {
-                if (phone.startsWith(it)) {
-                    noError = true
-                }
-            }
-            return noError
-        }
-
         fun checkForMinMaxAmount(minAmount: String, maxAmount: String, amount: String): Boolean {
             val minAmountInt = if (minAmount.contains(".") || minAmount.contains(",")) {
                 var minAmountStr = minAmount.replace(",", ".").replace(" ", "")
