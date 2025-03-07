@@ -628,15 +628,15 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun handleUserNoPassportData(passportData: String?, dateOfBirth: String?, pinfl: String?) {
-        if ((passportData.isNullOrEmpty() || dateOfBirth.isNullOrEmpty())) {
-            if (pinfl.isNullOrEmpty()) {
-                showUnableGetProfileDialog()
-            } else {
-                openMyIdPage(pinfl)
-            }
-        } else {
+        if (isValidUserData(passportData, pinfl, dateOfBirth)) {
             openMyIdPage(passportData, dateOfBirth, pinfl)
+        } else {
+            showUnableGetProfileDialog()
         }
+    }
+
+    private fun isValidUserData(passportData: String?, pinfl: String?, dateOfBirth: String?): Boolean {
+        return (!passportData.isNullOrBlank() || !pinfl.isNullOrBlank()) && !dateOfBirth.isNullOrBlank()
     }
 
     private fun showUnableGetProfileDialog() {
