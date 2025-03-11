@@ -12,6 +12,7 @@ def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
+    namespace ConfigData.APPLICATION_ID
     defaultConfig {
         applicationId ConfigData.APPLICATION_ID
         minSdkVersion ConfigData.MIN_SDK_VERSION
@@ -51,6 +52,7 @@ android {
             minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             ndk {
+                //noinspection ChromeOsAbiSupport
                 abiFilters "arm64-v8a", "armeabi-v7a"
             }
             signingConfig signingConfigs.production

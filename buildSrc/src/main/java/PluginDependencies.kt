@@ -8,4 +8,5 @@ object PluginDependencies {
     const val jitPackIo = "https://jitpack.io"
     const val uzInfoComMyId = "https://storage.uzinfocom.uz/libs/android/myid"
     const val flutterIo = "https://storage.googleapis.com/download.flutter.io"
+    const val androidToolsR8 = "com.android.tools:r8:8.5.35"
 }
