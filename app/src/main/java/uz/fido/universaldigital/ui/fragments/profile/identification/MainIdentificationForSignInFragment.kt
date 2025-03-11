@@ -36,6 +36,7 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
         binding.illustration.load(R.drawable.ic_user_identification)
         arguments?.let {
             isPin = it.getBoolean(Const.IS_PIN)
+            dateOfBirth = it.getString(Const.DATE_OF_BIRTH)
             passportData = it.getString(Const.PASSPORT_DATA)
             pinfl = it.getString(Const.PINFL)
         }

@@ -298,7 +298,6 @@ class WalletMonitoringFragment :
     private fun recylerViewScroll() {
         scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                fetchWalletMonitoring(page, operationType)
             }
         }
     }

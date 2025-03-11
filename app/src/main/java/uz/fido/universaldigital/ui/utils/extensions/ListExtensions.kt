@@ -284,13 +284,13 @@ fun getFastAccessOperationList(context: Context): ArrayList<FastAccessOperation>
             icon = "ic_transfer_swift"
         )
     )
-    operations.add(
-        FastAccessOperation(
-            id = 20,
-            name = context.getString(R.string.loan_repayment),
-            icon = "ishonch_png"
-        )
-    )
+//    operations.add(
+//        FastAccessOperation(
+//            id = 20,
+//            name = context.getString(R.string.loan_repayment),
+//            icon = "ishonch_png"
+//        )
+//    )
     return operations
 }
 

@@ -71,7 +71,7 @@ class WalletFirstMonitoringFragment :
         super.onViewCreated(view, savedInstanceState)
         linearLayoutManager = LinearLayoutManager(requireContext())
         setImageFirst()
-        recylerViewScroll()
+        recyclerViewScroll()
         getCardList()
         setTime()
         createMonitoringAdapter()
@@ -312,10 +312,9 @@ class WalletFirstMonitoringFragment :
         } else binding.layoutEmpty.visibility = View.GONE
     }
 
-    private fun recylerViewScroll() {
+    private fun recyclerViewScroll() {
         scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                fetchWalletMonitoring(page, operationType)
             }
         }
     }

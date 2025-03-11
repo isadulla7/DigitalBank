@@ -94,7 +94,8 @@
                         android:layout_height="104dp"
                         android:layout_margin="4dp"
                         android:background="@drawable/transfer_type_ripple_bg"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
                         <ImageView
                             android:layout_width="56dp"

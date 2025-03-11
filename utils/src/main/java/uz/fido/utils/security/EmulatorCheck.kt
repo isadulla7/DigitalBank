@@ -3,16 +3,14 @@ package uz.fido.utils.security
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
+import uz.fido.utils.device.logToCrashlytics
+import uz.fido.utils.utility.language.Utility
 import java.io.File
-import java.net.NetworkInterface
 
 open class EmulatorCheck(private val context: Context) {
 
     fun isProbablyAnEmulator(): Boolean {
-        return checkDockerEnvironment()
-                || isEmulator()
-                || checkForEmulatorFiles()
-                || checkEmulatorSoftware()
+        return isEmulator() || checkForEmulatorFiles() || checkEmulatorSoftware() || checkForMEmu() || checkForLDPlayer() || checkForNoxPlayer() || checkForGenymotion() || checkForKoPlayer()
     }
 
     private fun checkForEmulatorFiles(): Boolean {
@@ -23,6 +21,8 @@ open class EmulatorCheck(private val context: Context) {
             "/sys/qemu_trace",
             "/system/bin/qemu-props"
         )
+        val result = knownFiles.firstOrNull { File(it).exists() }
+        if (result != null) tryToLogCrashlytics(result)
         return knownFiles.any { File(it).exists() }
     }
 
@@ -30,13 +30,15 @@ open class EmulatorCheck(private val context: Context) {
         val knownEmulatorPackages = arrayOf(
             "com.bluestacks",
             "com.bignox.app",
+            "com.noxgroup.app",
             "com.bluestacks.home",
             "com.koplayer"
         )
         val pm = context.packageManager
         return knownEmulatorPackages.any { packageName ->
             try {
-                pm.getPackageInfo(packageName, 0)
+                val result = pm.getPackageInfo(packageName, 0)
+                tryToLogCrashlytics(result.packageName)
                 true
             } catch (e: PackageManager.NameNotFoundException) {
                 false
@@ -45,57 +47,55 @@ open class EmulatorCheck(private val context: Context) {
     }
 
     private fun isEmulator(): Boolean {
-        return (
-                (Build.FINGERPRINT.startsWith("google/sdk_gphone_")
-                        && Build.FINGERPRINT.endsWith(":user/release-keys")
-                        && Build.MANUFACTURER == "Google"
-                        && Build.PRODUCT.startsWith("sdk_gphone_")
-                        && Build.BRAND == "google"
-                        && Build.MODEL.startsWith("sdk_gphone_"))
-                        || Build.FINGERPRINT.startsWith("generic")
-                        || Build.FINGERPRINT.startsWith("unknown")
-                        || Build.MODEL.contains("google_sdk")
-                        || Build.MODEL.contains("Emulator")
-                        || Build.MODEL.contains("Android SDK built for x86")
-                        || Build.MANUFACTURER.contains("Genymotion")
-                        || Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
-                        || Build.PRODUCT == "google_sdk"
-                        || Build.HOST == "Build2"
-                        || Build.BRAND == "generic"
-                        || Build.HARDWARE == "goldfish"
-                        || Build.HARDWARE == "ranchu"
-                        || Build.HARDWARE == "vbox86"
-                        || Build.PRODUCT == "sdk"
-                        || Build.PRODUCT == "sdk_x86"
-                        || Build.PRODUCT == "sdk_google"
-                        || Build.PRODUCT == "Andy"
-                        || Build.PRODUCT == "Droid4X"
-                        || Build.PRODUCT == "nox"
-                        || Build.PRODUCT == "vbox86p"
-                        || Build.MANUFACTURER.contains("Andy")
-                        || Build.MANUFACTURER.contains("Bluestacks")
-                        || Build.MANUFACTURER.contains("BigNox")
-                        || Build.MANUFACTURER.contains("Genymotion")
-                        || Build.BOARD == "QC_Reference_Phone"
-                        || Build.HOST.startsWith("Build")
-                        || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
-                        || Build.PRODUCT == "google_sdk")
-                || checkForMEmu()
-                || checkForLDPlayer()
-                || checkForNoxPlayer()
-                || checkForGenymotion()
-                || checkForKoPlayer()
+        val result = (Build.FINGERPRINT.startsWith("google/sdk_gphone_")
+                && Build.FINGERPRINT.endsWith(":user/release-keys")
+                && Build.MANUFACTURER == "Google"
+                && Build.PRODUCT.startsWith("sdk_gphone_")
+                && Build.BRAND == "google"
+                && Build.MODEL.startsWith("sdk_gphone_"))
+                || Build.FINGERPRINT.startsWith("generic")
+                || Build.FINGERPRINT.startsWith("unknown")
+                || Build.MODEL.contains("google_sdk")
+                || Build.MODEL.contains("Emulator")
+                || Build.MODEL.contains("Android SDK built for x86")
+                || Build.MANUFACTURER.contains("Genymotion")
+                || Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
+                || Build.HOST == "Build2"
+                || Build.BRAND == "generic"
+                || Build.HARDWARE == "goldfish"
+                || Build.HARDWARE == "ranchu"
+                || Build.HARDWARE == "vbox86"
+                || Build.PRODUCT == "sdk"
+                || Build.PRODUCT == "sdk_x86"
+                || Build.PRODUCT == "sdk_google"
+                || Build.PRODUCT == "Andy"
+                || Build.PRODUCT == "Droid4X"
+                || Build.PRODUCT == "nox"
+                || Build.PRODUCT == "vbox86p"
+                || Build.MANUFACTURER.contains("Andy")
+                || Build.MANUFACTURER.contains("Bluestacks")
+                || Build.MANUFACTURER.contains("BigNox")
+                || Build.MANUFACTURER.contains("Genymotion")
+                || Build.BOARD == "QC_Reference_Phone"
+                || Build.HOST.startsWith("Build")
+                || (Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic"))
+                || Build.PRODUCT == "google_sdk"
+        if (result) tryToLogCrashlytics("isEmulator")
+        return result
     }
-
 
     private fun checkForMEmu(): Boolean {
         val productModel = Build.MODEL
-        return productModel.contains("MEmu")
+        val result = productModel.contains("MEmu")
+        if (result) tryToLogCrashlytics("MEmu")
+        return result
     }
 
     private fun checkForLDPlayer(): Boolean {
         val productModel = Build.MODEL
-        return productModel.contains("LDPlayer")
+        val result = productModel.contains("LDPlayer")
+        if (result) tryToLogCrashlytics("LDPlayer")
+        return result
     }
 
     private fun checkForNoxPlayer(): Boolean {
@@ -104,6 +104,7 @@ open class EmulatorCheck(private val context: Context) {
         return knownPackages.any { packageName ->
             try {
                 pm.getPackageInfo(packageName, 0)
+                tryToLogCrashlytics("com.noxgroup.app")
                 true
             } catch (e: PackageManager.NameNotFoundException) {
                 false
@@ -113,7 +114,9 @@ open class EmulatorCheck(private val context: Context) {
 
     private fun checkForGenymotion(): Boolean {
         val model = Build.MODEL
-        return model.contains("Genymotion") || model.contains("google_sdk")
+        val result = model.contains("Genymotion") || model.contains("google_sdk")
+        if (result) tryToLogCrashlytics("Genymotion or google_sdk")
+        return result
     }
 
     private fun checkForKoPlayer(): Boolean {
@@ -122,6 +125,7 @@ open class EmulatorCheck(private val context: Context) {
         return knownPackages.any { packageName ->
             try {
                 pm.getPackageInfo(packageName, 0)
+                tryToLogCrashlytics("checkForKoPlayer")
                 true
             } catch (e: PackageManager.NameNotFoundException) {
                 false
@@ -129,19 +133,12 @@ open class EmulatorCheck(private val context: Context) {
         }
     }
 
-    private fun checkDockerEnvironment(): Boolean {
-        val dockerEnvFile = File("/.dockerenv")
-        if (dockerEnvFile.exists()) {
-            return true
-        }
-
-        return try {
-            val interfaces = NetworkInterface.getNetworkInterfaces().asSequence().toList()
-            interfaces.any { networkInterface ->
-                networkInterface.name.startsWith("eth") && networkInterface.name != "eth0"
-            }
+    private fun tryToLogCrashlytics(message: String? = null) {
+        try {
+            logToCrashlytics("Emulator Check", Utility.getDeviceName() + "failed function: " + message.orEmpty())
         } catch (e: Exception) {
-            false
+            e.printStackTrace()
         }
     }
+
 }

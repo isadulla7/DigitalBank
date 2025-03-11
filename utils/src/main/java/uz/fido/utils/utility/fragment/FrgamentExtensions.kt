@@ -52,7 +52,7 @@ fun Fragment.gotoWithSlide(id: Int, bundle: Bundle) {
 fun Fragment.gotoWithPopupSlide(targetFragmentId: Int, popupFragmentId: Int, bundle: Bundle) {
     if (view == null) return
     if (findNavController().currentDestination?.id != targetFragmentId) {
-        findNavController().navigate(targetFragmentId, bundle, getNavOptions(popupFragmentId))
+        findNavController().navigate(targetFragmentId, bundle, popUpNavOptions(popupFragmentId))
     }
 }
 
