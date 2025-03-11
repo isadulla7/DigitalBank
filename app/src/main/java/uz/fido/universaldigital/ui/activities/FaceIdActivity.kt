@@ -41,7 +41,7 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
 
     /**
      * This is main function of this activity, this function calls MY_ID, in this function:
-     * client_id is unique id of bank in MY_ID
+     * client_id is unique id of client in MY_ID
      * there are 2 types of EntryType: AUTH and FACE
      * there are 2 types of BuildMode: PRODUCTION and DEBUG
      * organization details is optional*
@@ -64,12 +64,12 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
 
     /**
      * MY ID result is successful
-     * You can go back now
+     * You can go back now with RESULT_OK
      */
     override fun onSuccess(result: MyIdResult) {
         try {
             val resultIntent = Intent()
-            resultIntent.putExtra("code", result.code)
+            resultIntent.putExtra(CODE, result.code)
             setResult(RESULT_OK, resultIntent)
             onBackPressed()
         } catch (e: Exception) {
@@ -77,14 +77,21 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
         }
     }
 
+    /**
+     * MY ID result isn't successful
+     * You can get exception code and back
+     */
     override fun onError(exception: MyIdException) {
         Toast.makeText(this, exception.message, Toast.LENGTH_LONG).show()
         val resultIntent = Intent()
-        resultIntent.putExtra("code", exception.code)
-        setResult(RESULT_OK, resultIntent)
+        resultIntent.putExtra(EXCEPTION_CODE, exception.code)
+        setResult(RESULT_CANCELED, resultIntent)
         finish()
     }
 
+    /**
+     * When user exited just finish activity
+     */
     override fun onUserExited() {
         finish()
     }
@@ -105,9 +112,11 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
     }
 
     companion object {
+        const val ERROR_CODE_OLD_PASSPORT_DATA = 34
+        const val ERROR_CODE_WRONG_PASSPORT_DATA = 2
         const val CLIENT_DATE_OF_BIRTH = "birthday"
         const val CLIENT_PASSPORT = "passport"
-        const val ERROR_CODE_WRONG_PASSPORT_DATA = "2"
+        const val EXCEPTION_CODE = "exception_code"
         const val CODE = "code"
         const val MODE = "mode"
         const val STRONG = "strong"

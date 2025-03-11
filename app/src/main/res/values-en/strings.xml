@@ -1062,5 +1062,5 @@
     <string name="identification_login_desc">For increased security, you will need to verify your face to access the app.</string>
     <string name="attention">Attention</string>
     <string name="unable_to_get_profile_data">We were unable to retrieve your account information. Please contact your bank \n+998712001110</string>
-    <string name="unable_to_get_passport_data">We were unable to retrieve your passport information, please try face authentication again</string>
+    <string name="unable_to_get_passport_data">We were unable to retrieve your passport information. Please try again by entering your passport information.</string>
 </resources>

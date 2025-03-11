@@ -49,9 +49,10 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
 
     private val faceIdActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         val myIdResultCode = result.data?.getStringExtra(FaceIdActivity.CODE)
+        val myIdExceptionCode = result.data?.getIntExtra(FaceIdActivity.EXCEPTION_CODE, 0)
         when {
             result.resultCode == Activity.RESULT_OK -> navigateToVerification(myIdResultCode)
-            myIdResultCode == FaceIdActivity.ERROR_CODE_WRONG_PASSPORT_DATA -> showPassportErrorDialog()
+            result.resultCode == Activity.RESULT_CANCELED && (myIdExceptionCode == FaceIdActivity.ERROR_CODE_WRONG_PASSPORT_DATA || myIdExceptionCode == FaceIdActivity.ERROR_CODE_OLD_PASSPORT_DATA) -> showPassportErrorDialog()
         }
     }
 
