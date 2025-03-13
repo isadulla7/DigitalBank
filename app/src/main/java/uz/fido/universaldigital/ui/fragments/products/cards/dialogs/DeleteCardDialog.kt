@@ -24,10 +24,10 @@ class DeleteCardDialog(private val onDeleteClickListener: () -> Unit) : DialogFr
         }
         binding.delete.setOnClickListener {
             onDeleteClickListener.invoke()
-            dismiss()
+            dismissAllowingStateLoss()
         }
         binding.cancel.setOnClickListener {
-            dismiss()
+            dismissAllowingStateLoss()
         }
         return binding.root
     }

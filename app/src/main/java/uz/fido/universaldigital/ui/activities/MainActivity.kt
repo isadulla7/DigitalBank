@@ -199,7 +199,7 @@ class MainActivity : BaseActivity() {
             if (pausedMillis != 0L && pausedMillis > 5000) {
                 if (pausedMillis > 180000) {
                     pausedMillis = 0
-                    noConnectionDialog?.dismiss()
+                    noConnectionDialog?.dismissAllowingStateLoss()
                     startActivityWithClearTask(LoginActivity::class.java)
                 } else {
                     openPage(R.id.passCodeFragment2, bundleOf(Const.OPERATION to PassCodeFragment.PASS_OPERATION_POP))
@@ -259,7 +259,7 @@ class MainActivity : BaseActivity() {
                 if (isConnected) {
                     if (isActive()) {
                         if (noConnectionDialog != null) {
-                            noConnectionDialog?.dismiss()
+                            noConnectionDialog?.dismissAllowingStateLoss()
                             noConnectionDialog = null
                         }
                     }

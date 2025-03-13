@@ -20,7 +20,6 @@ import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
 import uz.fido.network.domain.model.abc_base.SwapKeysResponse
 import uz.fido.network.domain.model.abc_base.UserInfo
-import uz.fido.network.domain.model.profile.LogOutRequest
 import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.BuildConfig
@@ -62,8 +61,6 @@ import uz.fido.utils.utility.context.startActivityWithClearTask
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.Utility.getDeviceName
-import uz.fido.utils.utility.user.getClientId
-import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.view.custom_text_view.TextViewMedium
 import java.util.Calendar
 import java.util.concurrent.Executors
@@ -500,8 +497,10 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         binding.errorText.text = getString(R.string.wrong_pin)
         try {
             Handler(Looper.getMainLooper()).postDelayed({
-                clearDots()
-                binding.errorText.text = ""
+                if (isAdded && binding != null) {
+                    clearDots()
+                    binding.errorText.text = ""
+                }
             }, 1000)
         } catch (e: Exception) {
             recordException(e, ::errorPin.name)
@@ -561,30 +560,9 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         }
     }
 
-    private fun logOutRequest() {
-        showProgress()
-        val device = GetDeviceInfo(context = requireContext()).deviceInfo
-        viewModel.logOutRequest(
-            token = getClientToken(), logOutRequest = LogOutRequest(
-                device_code = requireContext().getDeviceIds(),
-                device_type = "A",
-                fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
-                phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE),
-                sim_iccd = device.simCcd,
-                network_state = device.networkState,
-                imei_data = device.imeiData,
-                os_system_version_api = device.osSystemVersionApi,
-                client_id = getClientId()
-            )
-        ).observe(viewLifecycleOwner) {
-            hideProgress()
-            requireActivity().logOut()
-        }
-    }
-
     private fun showLogOutDialog() {
         LogOutDialog {
-            logOutRequest()
+            requireActivity().logOut()
         }.show(childFragmentManager, "")
     }
 

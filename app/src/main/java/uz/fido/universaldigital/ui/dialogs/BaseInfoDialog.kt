@@ -1,12 +1,13 @@
 package uz.fido.universaldigital.ui.dialogs
 
 import android.os.Bundle
+import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseDialogFragment
 import uz.fido.universaldigital.databinding.BaseDialogInfoBinding
 
 class BaseInfoDialog(
-    private var title: String,
-    private var subtitle: String,
+    private var title: String? = null,
+    private var subtitle: String? = null,
     private var buttonText: String? = null,
     private var onClickListener: (() -> Unit)? = null
 ) : BaseDialogFragment<BaseDialogInfoBinding>(BaseDialogInfoBinding::inflate) {
@@ -23,8 +24,8 @@ class BaseInfoDialog(
 
     private fun initDialogDetails() {
         binding.apply {
-            title.text = this@BaseInfoDialog.title
-            subtitle.text = this@BaseInfoDialog.subtitle
+            title.text = this@BaseInfoDialog.title ?: getString(R.string.attention)
+            subtitle.text = this@BaseInfoDialog.subtitle ?: getString(R.string.unknown)
             buttonText?.let {
                 ok.text = it
             }
@@ -36,7 +37,7 @@ class BaseInfoDialog(
             if (onClickListener != null) {
                 onClickListener!!.invoke()
             } else {
-                dismiss()
+                dismissAllowingStateLoss()
             }
         }
     }

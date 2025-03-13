@@ -1,12 +1,11 @@
 package uz.fido.universaldigital.ui.fragments.products.widgets.bank_products
 
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.fragment.app.DialogFragment
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.databinding.FragmentAppFunctionsBinding
@@ -81,7 +80,7 @@ class ForYouOnBoarding(private var currentItem: Int) : DialogFragment() {
                 )
             }
         }
-        binding.videoView.setVideoURI(Uri.parse(uri))
+        binding.videoView.setVideoURI(uri.toUri())
         binding.videoView.start()
     }
 
@@ -90,15 +89,11 @@ class ForYouOnBoarding(private var currentItem: Int) : DialogFragment() {
             val countDownTimer = object : CountDownTimer(length, 100) {
                 override fun onFinish() {
                     cancel()
-                    dismiss()
+                    dismissAllowingStateLoss()
                 }
 
                 override fun onTick(p0: Long) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        binding.storiesWheel.setProgress(((length - p0) / (length / 100)).toInt(), true)
-                    } else {
-                        binding.storiesWheel.progress = ((length - p0) / (length / 100)).toInt()
-                    }
+                    binding.storiesWheel.setProgress(((length - p0) / (length / 100)).toInt(), true)
                 }
             }
             countDownTimer.start()

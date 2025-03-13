@@ -12,7 +12,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
 import uz.fido.network.domain.model.search.SearchDataResponse
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.DialogInfoMonitoringBinding
 import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
 import uz.fido.universaldigital.ui.utils.extensions.recordException
@@ -21,7 +20,9 @@ import uz.fido.utils.format.Format
 class InfoMonitoringDialog(
     private val localMonitoring: LocalMonitoring,
     private val searchDateResponse: SearchDataResponse? = null,
-    private val baseInterface: BaseInterface
+    private val fullInfo: (localeMonitoring: LocalMonitoring) -> Unit,
+    private val repeatPayment: (localeMonitoring: LocalMonitoring) -> Unit,
+    private val returnPayment: (localeMonitoring: LocalMonitoring) -> Unit,
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: DialogInfoMonitoringBinding
@@ -58,15 +59,15 @@ class InfoMonitoringDialog(
                 if (localMonitoring.tran_type == "credit") {
                     if (searchDateResponse != null)
                         if (searchDateResponse.request_code == "P2P") {
-                            baseInterface.returnPayment(localMonitoring)
+                            returnPayment.invoke(localMonitoring)
                         } else {
                             return@setOnClickListener
                         }
-                } else baseInterface.repeatPayment(localMonitoring)
+                } else repeatPayment.invoke(localMonitoring)
             }
         }
         binding.allInfo.setOnClickListener {
-            baseInterface.fullInfo(localMonitoring)
+            fullInfo.invoke(localMonitoring)
         }
     }
 
@@ -118,7 +119,7 @@ class InfoMonitoringDialog(
     }
 
     private fun initViews(isRequired: Boolean, isPayment: Boolean) {
-        addView(getString(R.string.service),localMonitoring.name)
+        addView(getString(R.string.service), localMonitoring.name)
         searchDateResponse?.params?.get("FIO")?.let { addView(getString(R.string.fio), it) }
         searchDateResponse?.params?.get("FIO_ABONENT")?.let { addView(getString(R.string.fio), it) }
         searchDateResponse?.params?.get("ADDRESS")?.let { addView(getString(R.string.address), it) }
@@ -166,8 +167,7 @@ class InfoMonitoringDialog(
     }
 
     private fun addView(name: String, value: String) {
-        val viewDepositCreateBinding =
-            ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
+        val viewDepositCreateBinding = ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
         viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)

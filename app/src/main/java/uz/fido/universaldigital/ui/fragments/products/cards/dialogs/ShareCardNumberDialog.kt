@@ -31,11 +31,11 @@ class ShareCardNumberDialog(
         }
         binding.layoutCopyCardNumber.setOnClickListener {
             baseInterface.copyCardNumber()
-            dismiss()
+            dismissAllowingStateLoss()
         }
         binding.layoutShare.setOnClickListener {
             baseInterface.shareCardNumber()
-            dismiss()
+            dismissAllowingStateLoss()
         }
     }
 }

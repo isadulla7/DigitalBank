@@ -29,13 +29,8 @@ class MainNewsViewFragment : BaseSimpleFragment<FragmentNewsViewBinding>(Fragmen
         news?.let { news ->
             val imageUrl = "${Keys.paynetPhotoUrl()}${news.img_url}"
             binding.newsImage.loadImage(requireContext(), imageUrl, R.drawable.cornered_bg_white_10dp)
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                binding.newsTitle.text = Html.fromHtml(news.title, Html.FROM_HTML_MODE_LEGACY)
-                binding.description.text = Html.fromHtml(news.content, Html.FROM_HTML_MODE_LEGACY)
-            } else {
-                binding.description.text = news.content
-                binding.newsTitle.text = news.title
-            }
+            binding.newsTitle.text = Html.fromHtml(news.title, Html.FROM_HTML_MODE_LEGACY)
+            binding.description.text = Html.fromHtml(news.content, Html.FROM_HTML_MODE_LEGACY)
             binding.date.text = news.date
         }
     }

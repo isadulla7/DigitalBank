@@ -238,24 +238,15 @@ class PaymentHistoryDialog(private val paymentServiceId: String, private val per
                         dialogInfo = InfoMonitoringDialog(
                             localMonitoring,
                             it.data,
-                            object : BaseInterface {
-                                override fun repeatPayment(localeMonitoring: LocalMonitoring) {
-                                    super.repeatPayment(localeMonitoring)
-                                    getOperationParams(1, localeMonitoring)
-                                }
-
-                                override fun returnPayment(localeMonitoring: LocalMonitoring) {
-                                    super.returnPayment(localeMonitoring)
-                                    getOperationParams(2, localeMonitoring)
-
-                                }
-
-                                override fun fullInfo(localeMonitoring: LocalMonitoring) {
-                                    super.fullInfo(localeMonitoring)
-                                    dialogInfo.dismiss()
-                                    printCheque(localMonitoring, it)
-
-                                }
+                            fullInfo = { localMonitoring ->
+                                dialogInfo.dismiss()
+                                printCheque(localMonitoring, it)
+                            },
+                            repeatPayment = { localMonitoring ->
+                                getOperationParams(1, localMonitoring)
+                            },
+                            returnPayment = { localMonitoring ->
+                                getOperationParams(2, localMonitoring)
                             })
                         dialogInfo.show(childFragmentManager, "")
                     }
@@ -264,9 +255,8 @@ class PaymentHistoryDialog(private val paymentServiceId: String, private val per
                         dialogInfo = InfoMonitoringDialog(
                             localMonitoring,
                             null,
-                            object : BaseInterface {
-
-                            })
+                            fullInfo = {}, repeatPayment = {}, returnPayment = {}
+                        )
                         dialogInfo.show(childFragmentManager, "")
                     }
                 }

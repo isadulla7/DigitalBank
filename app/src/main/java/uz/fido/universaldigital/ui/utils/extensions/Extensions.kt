@@ -81,30 +81,18 @@ fun getFormattedContact(phoneNumber: String): String {
 }
 
 fun TextView.setHtmlText(text: String) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        this.text = Html.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
-    } else {
-        this.text = Html.fromHtml(text)
-    }
+    this.text = Html.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 }
 
 fun TextInputLayout.setHtmlHint(text: String) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        this.hint = Html.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
-    } else {
-        this.hint = Html.fromHtml(text)
-    }
+    this.hint = Html.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 }
 
 fun TextInputLayout.setPaymentHint(paymentParams: PaymentParams) {
     val hint = if (paymentParams.hint.toString()
             .isNotEmpty()
     ) paymentParams.hint else paymentParams.name
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        this.hint = Html.fromHtml(hint, HtmlCompat.FROM_HTML_MODE_LEGACY)
-    } else {
-        this.hint = Html.fromHtml(hint)
-    }
+    this.hint = Html.fromHtml(hint, HtmlCompat.FROM_HTML_MODE_LEGACY)
 }
 
 fun Fragment.hideSoftKeyboard() {

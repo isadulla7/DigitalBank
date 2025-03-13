@@ -10,12 +10,12 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.InParamsResponse
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.GeneralItem
+import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.payment.PaymentService
 import uz.fido.network.domain.model.payment.PrintChequeRequest
 import uz.fido.network.domain.model.payment.TemplateKeyValue
@@ -26,13 +26,12 @@ import uz.fido.network.domain.model.search.GetOperationInfoRequest
 import uz.fido.network.domain.model.search.SearchDataResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
-import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentRequisitesHistoryBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.LocalMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.InfoMonitoringDialog
-import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
+import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
@@ -244,24 +243,15 @@ class PaymentHistoryFragment :
                         dialogInfo = InfoMonitoringDialog(
                             localMonitoring,
                             it.data,
-                            object : BaseInterface {
-                                override fun repeatPayment(localeMonitoring: LocalMonitoring) {
-                                    super.repeatPayment(localeMonitoring)
-                                    getOperationParams(1, localeMonitoring)
-                                }
-
-                                override fun returnPayment(localeMonitoring: LocalMonitoring) {
-                                    super.returnPayment(localeMonitoring)
-                                    getOperationParams(2, localeMonitoring)
-
-                                }
-
-                                override fun fullInfo(localeMonitoring: LocalMonitoring) {
-                                    super.fullInfo(localeMonitoring)
-                                    dialogInfo.dismiss()
-                                    printCheque(localMonitoring, it)
-
-                                }
+                            fullInfo = { localMonitoring ->
+                                dialogInfo.dismiss()
+                                printCheque(localMonitoring, it)
+                            },
+                            repeatPayment = { localMonitoring ->
+                                getOperationParams(1, localMonitoring)
+                            },
+                            returnPayment = { localMonitoring ->
+                                getOperationParams(2, localMonitoring)
                             })
                         dialogInfo.show(childFragmentManager, "")
                     }
@@ -270,9 +260,7 @@ class PaymentHistoryFragment :
                         dialogInfo = InfoMonitoringDialog(
                             localMonitoring,
                             null,
-                            object : BaseInterface {
-
-                            })
+                            fullInfo = {}, repeatPayment = {}, returnPayment = {})
                         dialogInfo.show(childFragmentManager, "")
                     }
                 }

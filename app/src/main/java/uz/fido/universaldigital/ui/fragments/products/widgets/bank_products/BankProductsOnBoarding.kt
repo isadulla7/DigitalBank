@@ -49,15 +49,11 @@ class BankProductsOnBoarding(private var currentItem: Int) : DialogFragment() {
         val countDownTimer = object : CountDownTimer(7000L, 100) {
             override fun onFinish() {
                 cancel()
-                dismiss()
+                dismissAllowingStateLoss()
             }
 
             override fun onTick(p0: Long) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    binding.storiesWheel.setProgress(((7000L - p0) / 70L).toInt(), true)
-                } else {
-                    binding.storiesWheel.progress = ((7000L - p0) / 70L).toInt()
-                }
+                binding.storiesWheel.setProgress(((7000L - p0) / 70L).toInt(), true)
             }
         }
         countDownTimer.start()
