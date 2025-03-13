@@ -48,10 +48,9 @@ import java.util.Locale
 import java.util.SortedMap
 
 @AndroidEntryPoint
-class PaymentHistoryFragment :
-    BaseFragment<FragmentRequisitesHistoryBinding, LocalMonitoringViewModel>(
-        FragmentRequisitesHistoryBinding::inflate, LocalMonitoringViewModel::class.java
-    ) {
+class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, LocalMonitoringViewModel>(
+    FragmentRequisitesHistoryBinding::inflate, LocalMonitoringViewModel::class.java
+) {
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var localMonitoringAdapter: LocalMonitoringAdapter
@@ -74,7 +73,7 @@ class PaymentHistoryFragment :
         arguments?.let {
             paymentService = it.serializable("item") as PaymentService?
             serviceId = if (paymentService != null) {
-                paymentService!!.service_id.toString()
+                paymentService?.service_id.toString()
             } else {
                 it.getString(SERVICE_ID)
             }
@@ -90,12 +89,11 @@ class PaymentHistoryFragment :
     }
 
     private fun initEndlessScrollListener() {
-        scrollListener =
-            object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
-                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                    getLocalMonitoringListScroll(page)
-                }
+        scrollListener = object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                getLocalMonitoringListScroll(page)
             }
+        }
     }
 
     private fun initHistoriesRv() {
@@ -105,6 +103,7 @@ class PaymentHistoryFragment :
         binding.histories.apply {
             adapter = localMonitoringAdapter
             layoutManager = LinearLayoutManager(requireContext())
+            setHasFixedSize(true)
             addOnScrollListener(scrollListener)
             addItemDecoration(StickyHeaderDecoration(localMonitoringAdapter))
         }
