@@ -97,7 +97,7 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
     }
 
     private fun initLanguage(): String {
-        return when (getFromPaper(Const.APP_LANGUAGE, "ru").lowercase(Locale.getDefault())) {
+        return when (getFromPaper(Const.APP_LANGUAGE, LANG_RU).lowercase(Locale.getDefault())) {
             LANG_UZ, LANG_UZL -> LANG_UZ
             LANG_RU -> LANG_RU
             else -> LANG_EN

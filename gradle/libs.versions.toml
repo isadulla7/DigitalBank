@@ -70,13 +70,6 @@ okhttp = "4.10.0"
 roomRuntime = "2.6.1"
 espressoIdling = "3.4.0"
 tenserFlow = "2.9.0"
-gradle = "7.4.2"
-kotlinGradlePlugin = "1.9.10"
-googleServices = "4.4.0"
-daggerHilt = "2.42"
-firebaseCrashlytics = "2.9.9"
-agp = "8.4.2"
-org-jetbrains-kotlin-android = "1.8.0"
 firebaseCrashlyticsVersion = "17.3.1"
 
 [libraries]
