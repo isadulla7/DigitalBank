@@ -9,4 +9,5 @@ object PluginDependencies {
     const val uzInfoComMyId = "https://storage.uzinfocom.uz/libs/android/myid"
     const val flutterIo = "https://storage.googleapis.com/download.flutter.io"
     const val androidToolsR8 = "com.android.tools:r8:8.5.35"
+    const val firebasePerf = "com.google.firebase:perf-plugin:1.4.2"
 }

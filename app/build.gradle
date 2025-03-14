@@ -5,6 +5,7 @@ plugins {
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.firebase.firebase-perf'
 }
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -21,8 +22,7 @@ android {
         versionCode ConfigData.VERSION_CODE
         versionName ConfigData.RELEASE_VERSION_NAME
         archivesBaseName = ConfigData.ARCHIVES_BASE_NAME
-
-        vectorDrawables.useSupportLibrary = true
+        vectorDrawables.useSupportLibrary true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
@@ -70,8 +70,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
 
     }
     kotlinOptions {
@@ -140,6 +140,7 @@ dependencies {
     implementation(libs.com.google.firebase.firebase.dynamic.links.ktx)
     implementation(libs.com.google.firebase.firebase.messaging.ktx)
     implementation(libs.com.google.firebase.firebase.firestore.ktx)
+    implementation(libs.com.google.firebase.firebase.perf)
 
     //retrofit
     implementation(libs.com.squareup.retrofit2.retrofit)
