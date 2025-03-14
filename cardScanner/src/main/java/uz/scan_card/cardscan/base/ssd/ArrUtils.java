@@ -35,9 +35,9 @@ public class ArrUtils {
         final float[][] result = new float[r][c];
         int newR = 0;
         int newC = 0;
-        for (int i = 0; i < nums.length; i++) {
-            for (int j = 0; j < nums[i].length; j++) {
-                result[newR][newC] = nums[i][j];
+        for (float[] num : nums) {
+            for (float v : num) {
+                result[newR][newC] = v;
                 newC++;
                 if (newC == c) {
                     newC = 0;

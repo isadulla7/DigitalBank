@@ -24,11 +24,11 @@ class SearchViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<ArrayList<SearchItem>>(arrayListOf())
     val uiState: StateFlow<ArrayList<SearchItem>> = _uiState
 
-    suspend fun setItemList(context: Context) {
+    fun setItemList(context: Context) {
         viewModelScope.launch(Dispatchers.Default) {
             SearchList.searchList = arrayListOf()
             _uiState.emit(arrayListOf())
-            var databaseHelper = DatabaseHelper(context)
+            val databaseHelper = DatabaseHelper(context)
             SearchList.fillSearchList(context)
             val searchList = SearchList.searchList
             databaseHelper.getGroupList().forEach { paymentGroup ->

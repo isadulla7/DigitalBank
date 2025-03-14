@@ -51,7 +51,6 @@ import uz.fido.universaldigital.ui.utils.extensions.delayOnLifecycle
 import uz.fido.universaldigital.ui.utils.extensions.hideSoftKeyboard
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
-import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -155,10 +154,6 @@ class PaymentSecondStepFragment :
         binding.infoLayout.removeAllViews()
         editTextList = ArrayList()
         for (i in paymentParamsArrayList.indices) {
-            Logger.writeLog(
-                "\n${paymentParamsArrayList[i].code}\n${paymentParamsArrayList[i].is_read_only}\n${paymentParamsArrayList[i].is_required}\n" +
-                        "${paymentParamsArrayList[i].param_type}"
-            )
             if (paymentParamsArrayList[i].is_read_only != "Y" && paymentParamsArrayList[i].is_required == "Y") {
                 if (paymentParamsArrayList[i].code == "AMOUNT") {
                     drawAmountView(paymentParamsArrayList[i])
@@ -709,7 +704,7 @@ class PaymentSecondStepFragment :
         if (minAmount > amount || amount > maxAmount) {
             binding.btnContinue.isEnabled(false)
         } else {
-            binding.btnContinue.isEnabled(checkForButton())
+          binding.btnContinue.isEnabled(checkForButton())
         }
     }
 
@@ -728,9 +723,17 @@ class PaymentSecondStepFragment :
             if (amountEditText?.text.toString().isEmpty()) {
                 return false
             }
-            if (amountEditText?.text.toString().startsWith("0")) {
-                return false
+            if (!amountEditText?.text.isNullOrEmpty()){
+                if (amountEditText?.text.toString() == "0") {
+                    return false
+                }
+                if (amountEditText?.text.toString()=="0."){
+                    return false
+                }
             }
+            /*if (amountEditText?.text.toString().startsWith("0") || amountEditText?.text.toString().startsWith("0.")) {
+                return false
+            }*/
         }
         return true
     }

@@ -5,7 +5,6 @@ import android.content.Context
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import androidx.core.text.isDigitsOnly
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.p2p.P2PInfoDto

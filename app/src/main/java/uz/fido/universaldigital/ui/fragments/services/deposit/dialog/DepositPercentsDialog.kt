@@ -12,6 +12,7 @@ import uz.fido.network.domain.model.monitoring.AccountHistory
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.DialogDepositPercentBinding
+import uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.ClientDepositFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.ClientDepositViewModel
 import uz.fido.universaldigital.ui.fragments.services.loan.adapter.AccountHistoriesAdapter
 import uz.fido.universaldigital.ui.utils.extensions.serializable
@@ -63,7 +64,7 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
         binding.btnEnter.setOnClickListener {
             if (clientDeposit.withdrawInterest == "Y") {
                 val bundle = Bundle()
-                bundle.putString(Const.OPERATION, "with_draw_percent")
+                bundle.putString(Const.OPERATION, ClientDepositFragment.WITH_DRAW_PERCENT)
                 bundle.putSerializable("deposit", clientDeposit)
                 bundle.putString("card_type", clientDeposit.currencyCode)
                 goto(R.id.depositFillingFragment, bundle)

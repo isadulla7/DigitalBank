@@ -3,7 +3,6 @@ package uz.fido.network.data.interceptor
 import android.content.Context
 import android.os.Build
 import android.widget.Toast
-import io.paperdb.Paper
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -180,7 +179,6 @@ fun tryMakeToast(message: String, context: Context) {
 }
 
 fun saveSignInPinResponse(context: Context, signInResponse: SignInResponse) {
-    Paper.book().write(Const.PAPER_CLIENT_INFO, signInResponse)
     context.run {
         saveToPaper(Const.FIRST_NAME, signInResponse.name)
         saveToPaper(Const.PAPER_CLIENT_ID, signInResponse.user_id)

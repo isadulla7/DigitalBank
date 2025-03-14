@@ -47,13 +47,10 @@ class CameraThread extends Thread {
 
         final Camera resultCamera = camera;
         Handler handler = new Handler(Looper.getMainLooper());
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                listener.onCameraOpen(resultCamera);
-                CameraThread.this.listener.clear();
-                CameraThread.this.listener = null;
-            }
+        handler.post(() -> {
+            listener.onCameraOpen(resultCamera);
+            CameraThread.this.listener.clear();
+            CameraThread.this.listener = null;
         });
     }
 

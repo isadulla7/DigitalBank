@@ -14,7 +14,6 @@ import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_RUB
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_USD
 import uz.fido.utils.const.CurrencyConst.CURRENCY_CODE_UZS
 import uz.fido.utils.const.CurrencyConst.DOLLAR_SIGN
-import uz.fido.utils.log.Logger
 import java.math.BigDecimal
 import java.math.RoundingMode
 import java.text.DecimalFormat
@@ -122,7 +121,7 @@ class Format {
 
         fun conversionFormat(amount: Double): String {
             val plainText = amount.toBigDecimal().toPlainString().toDouble()
-            val secondForm = String.format("%.2f", plainText)
+            val secondForm = String.format(Locale.getDefault(), "%.2f", plainText)
             return formatAmount(secondForm)
         }
 
@@ -133,7 +132,7 @@ class Format {
             val builder = SpannableStringBuilder()
             val filteredAmount = amount?.replace(" ", "")?.replace(",", ".")
             val newAmount =
-                String.format("%.2f", filteredAmount?.toDouble()!! / 100).replace(",", ".")
+                String.format(Locale.getDefault(), "%.2f", filteredAmount?.toDouble()!! / 100).replace(",", ".")
             val roundedAmount = formatAmountRounded(
                 newAmount.substring(0, newAmount.lastIndexOf(".")).replace(" ", "")
             )
@@ -212,40 +211,7 @@ class Format {
             if (newAmountStr.contains(".")) {
                 newAmountStr = newAmountStr.substring(0, newAmountStr.indexOf("."))
             }
-            Logger.writeErrorLog(newAmountStr)
             return newAmountStr
-        }
-
-        fun checkForPhoneNumber(phoneNumber: String): Boolean {
-            val phone = phoneNumber.replace(" ", "")
-            val prefixList = arrayOf(
-                "99897",
-                "99888",
-                "99894",
-                "99893",
-                "99890",
-                "99891",
-                "99895",
-                "99898",
-                "99899",
-                "99877",
-                "99833",
-                "79903",
-                "79905",
-                "79906",
-                "79909",
-                "79687"
-            )
-            var noError = false
-            if (phone.length != 12) {
-                return false
-            }
-            prefixList.forEach {
-                if (phone.startsWith(it)) {
-                    noError = true
-                }
-            }
-            return noError
         }
 
         fun checkForMinMaxAmount(minAmount: String, maxAmount: String, amount: String): Boolean {
@@ -350,7 +316,7 @@ class Format {
                 )
             }
             if (str.startsWith("998") && str.length == 12) {
-                str = "+" + account.substring(0, 5) + " " + account.substring(
+                str = "+" + account.substring(0, 3) + " " + account.substring(3, 5) + " " + account.substring(
                     5, 8
                 ) + " " + account.substring(8, 10) + " " + account.substring(
                     10, account.length

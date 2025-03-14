@@ -25,7 +25,6 @@ import uz.fido.network.domain.model.search.GetOperationInfoRequest
 import uz.fido.network.domain.model.search.SearchDataResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
-import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentLocalMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.LocalMonitoringAdapter
@@ -447,35 +446,22 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                         dialogInfo = InfoMonitoringDialog(
                             localMonitoring,
                             it.data,
-                            object : BaseInterface {
-                                override fun repeatPayment(localeMonitoring: LocalMonitoring) {
-                                    super.repeatPayment(localeMonitoring)
-                                    getOperationParams(1, it, localeMonitoring)
-                                }
-
-                                override fun returnPayment(localeMonitoring: LocalMonitoring) {
-                                    super.returnPayment(localeMonitoring)
-                                    getOperationParams(2, it, localeMonitoring)
-
-                                }
-
-                                override fun fullInfo(localeMonitoring: LocalMonitoring) {
-                                    super.fullInfo(localeMonitoring)
-                                    dialogInfo.dismiss()
-                                    printCheque(localMonitoring, it)
-                                }
-                            })
+                            fullInfo = { localMonitoring ->
+                                dialogInfo.dismiss()
+                                printCheque(localMonitoring, it)
+                            },
+                            repeatPayment = { localMonitoring ->
+                                getOperationParams(1, it, localMonitoring)
+                            },
+                            returnPayment = { localMonitoring ->
+                                getOperationParams(2, it, localMonitoring)
+                            }
+                        )
                         dialogInfo.show(childFragmentManager, "")
                     }
 
                     Status.ERROR -> {
-                        dialogInfo = InfoMonitoringDialog(
-                            localMonitoring,
-                            null,
-                            object : BaseInterface {
-
-                            })
-                        dialogInfo.show(childFragmentManager, "")
+                        showSnackbar(it.message.toString(), "Error")
                     }
                 }
             }
@@ -502,7 +488,8 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                                     "details" to response,
                                     "operation" to "local",
                                     "command" to resource.data?.command,
-                                    "data" to resource.data
+                                    "data" to resource.data,
+                                    "name" to localMonitoring.name
                                 )
                             )
                         }

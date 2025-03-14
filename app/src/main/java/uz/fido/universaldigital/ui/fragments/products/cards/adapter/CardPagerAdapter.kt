@@ -3,7 +3,6 @@ package uz.fido.universaldigital.ui.fragments.products.cards.adapter
 import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import uz.fido.universaldigital.R
 

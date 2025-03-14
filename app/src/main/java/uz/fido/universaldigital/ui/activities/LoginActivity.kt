@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -24,6 +24,8 @@ import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.security.SecurityCheck
+import uz.fido.utils.security.SecurityCheck.isPhoneRooted
+import uz.fido.utils.security.SecurityCheck.isRunningOnEmulator
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
@@ -58,8 +60,12 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkForDeviceLock() {
+        this.isRunningOnEmulator()
         if (SecurityCheck.isFromEmulator()) {
             openLockActivity()
+            return
+        } else if (this.isPhoneRooted()) {
+            openRootedDeviceWarning()
             return
         } else {
             checkForDeepLink()
@@ -83,14 +89,26 @@ class LoginActivity : BaseActivity() {
                         )
                     )
                 }
-            }.addOnFailureListener(this) { setStartDestination() }
+            }.addOnFailureListener(this) {
+                setStartDestination()
+            }
+        } else {
+            checkNotification()
+        }
+    }
+
+    private fun checkNotification() {
+        val notification = intent.getStringExtra(PassCodeFragment.NOTIFICATION_OPERATION)
+        if (notification != null) {
+            val bundle = bundleOf(PassCodeFragment.NOTIFICATION_OPERATION to notification)
+            setStartDestination(bundle)
         } else {
             setStartDestination()
         }
     }
 
     private fun setStartDestination(bundle: Bundle? = null) {
-        val navController = Navigation.findNavController(this, R.id.nav_host_login)
+        val navController = findNavController(this, R.id.nav_host_login)
         val navGraph = navController.navInflater.inflate(R.navigation.navigation_login)
         navGraph.setStartDestination(getStartDestination())
         navController.setGraph(navGraph, bundle)
@@ -104,6 +122,12 @@ class LoginActivity : BaseActivity() {
 
     private fun openLockActivity() {
         val intent = Intent(this, LockSetActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun openRootedDeviceWarning() {
+        val intent = Intent(this, RootedDeviceActivity::class.java)
         startActivity(intent)
         finish()
     }

@@ -1,5 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.payment.abc_success
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -150,6 +151,7 @@ class CheckInfoPaymentFragment :
             OPERATION_PAYMENT -> {
                 binding.senderCardLayout.visibility = View.GONE
                 binding.commissionLayout.visibility = View.GONE
+                binding.paymentName.text = getString(R.string.payment)
             }
         }
     }
@@ -165,6 +167,7 @@ class CheckInfoPaymentFragment :
         return dfTime.format(Calendar.getInstance().time)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setTextResponse(response: java.util.ArrayList<Cheque>?) {
         response?.forEach {
             if (it.key.isNotEmpty() && it.value.isNotEmpty()) {

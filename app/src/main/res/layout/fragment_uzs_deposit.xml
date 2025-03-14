@@ -5,15 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/backgroundColor"
-    android:clipChildren="false"
     android:fillViewport="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:translationZ="@dimen/elevation_8dp">
 
     <uz.fido.utils.view.custom_app_bar.MainAppBar
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/whiteColor"
+        android:outlineSpotShadowColor="@color/appBarShadowColor"
+        android:translationZ="@dimen/elevation_8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:s_title="@string/open_deposit" />
 

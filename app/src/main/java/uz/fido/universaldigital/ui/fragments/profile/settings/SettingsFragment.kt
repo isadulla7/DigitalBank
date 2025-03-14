@@ -39,6 +39,7 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, MenuProfileViewMo
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.changeLanguage.setOnClickListener { gotoWithSlide(R.id.changeLanguageFragmentSettings) }
         binding.appTheme.setOnClickListener { gotoWithSlide(R.id.appThemeFragment) }
+        binding.actions.setOnClickListener { gotoWithSlide(R.id.actionsFragment) }
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
             if (!isChecked) changeNotificationState(STATE_PASSIVE) else changeNotificationState(
                 STATE_ACTIVE

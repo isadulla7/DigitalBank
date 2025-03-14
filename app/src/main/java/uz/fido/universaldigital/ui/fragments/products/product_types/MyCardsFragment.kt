@@ -5,11 +5,8 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
@@ -24,7 +21,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentAllCardsBinding
-import uz.fido.universaldigital.databinding.FragmentMyCardsListBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.cards.adapter.CardsListAdapter
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.AddCardDialog
@@ -38,7 +34,6 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getLayoutMana
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getSpanCount
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
-import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
 
@@ -59,11 +54,8 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         initCardsRv(getLayoutManager())
     }
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initCards()
         binding.addCardBtn.setOnClickListener {
             AddCardDialog {
@@ -75,7 +67,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
             }.show(parentFragmentManager, "")
         }
     }
-
 
 
     private fun initCards() {
@@ -98,15 +89,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
 
     override fun switchList() {
         refreshCards()
-    }
-
-    override fun onPause() {
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
     }
 
 

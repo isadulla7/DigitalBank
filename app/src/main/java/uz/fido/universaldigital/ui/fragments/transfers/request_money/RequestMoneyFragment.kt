@@ -51,7 +51,10 @@ class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, Req
             binding.chooseCardLayout.initCards(
                 it as ArrayList<CardResponse>,
                 (0).toString(),
-                CurrencyConst.CURRENCY_CHAR_UZS
+                CurrencyConst.CURRENCY_CHAR_UZS,
+                addCard = {
+                    goto(R.id.addCardFragment)
+                }
             ) { cardResponse ->
                 cardResponse?.let { card ->
                     receiverCard = card
@@ -79,6 +82,7 @@ class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, Req
     }
 
     private fun initSetOnClickListeners() {
+
         binding.btnContinue.setOnClickListener {
             binding.btnContinue.setProgress(true)
             val url = "https://universaldigitalbank.page.link/qrcard?cardNumber=${receiverCard?.object_value}&amount=${
@@ -102,7 +106,7 @@ class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, Req
                 val shortLink = result.shortLink
                 goto(R.id.requestMoneySuccessFragment, bundleOf("url" to shortLink.toString()))
             }.addOnFailureListener {
-                toast(it.localizedMessage.toString())
+                toast(it.localizedMessage.orEmpty())
                 binding.btnContinue.setProgress(false)
             }
         }

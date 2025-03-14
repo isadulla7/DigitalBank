@@ -9,11 +9,11 @@
     <style name="ProtoLayoutFallbackTextAppearance">
     
     <item name="android:fontFamily">sans-serif</item>
-    <item name="android:textSize">18dp</item>
+    <item name="android:textSize">18sp</item>
   </style>
     <style name="TilesFallbackTextAppearance">
     
     <item name="android:fontFamily">sans-serif</item>
-    <item name="android:textSize">18dp</item>
+    <item name="android:textSize">18sp</item>
   </style>
 </resources>

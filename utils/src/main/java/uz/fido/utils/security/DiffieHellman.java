@@ -3,9 +3,8 @@ package uz.fido.utils.security;
 import android.content.Context;
 
 import java.math.BigInteger;
-import java.util.Random;
+import java.security.SecureRandom;
 
-import uz.fido.utils.log.Logger;
 import uz.fido.utils.utility.user.PaperExtKt;
 
 public class DiffieHellman {
@@ -31,7 +30,7 @@ public class DiffieHellman {
     }
 
     private DiffieHellman() {
-        Random randomGenerator = new Random();
+        SecureRandom randomGenerator = new SecureRandom();
         a = new BigInteger(bitLength, randomGenerator);
         g = new BigInteger(bitLength, randomGenerator);
         p = new BigInteger(bitLength, randomGenerator);
@@ -54,7 +53,6 @@ public class DiffieHellman {
         biB = new BigInteger(B);
         biK = biB.modPow(a, p);
         biKString = biK.toString();
-        Logger.writeLog("bik________________________" + biK);
     }
 
     public void setKeyBSwapKey(String B, String additionalText, Context context) {
@@ -66,7 +64,6 @@ public class DiffieHellman {
     }
 
     public String getKeyK() {
-        Logger.writeLog("get_bik________________________" + biK);
         return biKString;
     }
 }

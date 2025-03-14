@@ -1,6 +1,7 @@
 package uz.fido.network.di
 
 import android.content.Context
+import android.os.Build
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -8,11 +9,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.ConnectionSpec
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
-import okhttp3.TlsVersion
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -60,7 +59,7 @@ object NetworkModule {
     fun provideKeyStore(caFileInputStream: InputStream): KeyStore = kotlin.run {
         val keyStore = KeyStore.getInstance("PKCS12")
         try {
-            val password = "223377".toCharArray()
+            val password = Keys.getCertFilePassword().toCharArray()
             keyStore.load(caFileInputStream, password)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -72,7 +71,7 @@ object NetworkModule {
     @Singleton
     fun provideKeyManagerFactory(keyStore: KeyStore): KeyManagerFactory = kotlin.run {
         val keyFactory = KeyManagerFactory.getInstance("X509")
-        keyFactory.init(keyStore, "223377".toCharArray())
+        keyFactory.init(keyStore, Keys.getCertFilePassword().toCharArray())
         return@run keyFactory
     }
 
@@ -80,7 +79,11 @@ object NetworkModule {
     @Singleton
     fun provideSslContext(keyStore: KeyStore, keyManagerFactory: KeyManagerFactory): SSLContext =
         kotlin.run {
-            val sslContext = SSLContext.getInstance("TLSv1.3")
+            val sslContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                SSLContext.getInstance("TLSv1.3")
+            } else {
+                SSLContext.getInstance("TLSv1.2")
+            }
             val tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm()
             val tmf = TrustManagerFactory.getInstance(tmfAlgorithm)
             tmf.init(keyStore)
@@ -114,8 +117,6 @@ object NetworkModule {
         return httpLoggingInterceptor
     }
 
-    private val modernTlsSpec = ConnectionSpec.Builder(ConnectionSpec.MODERN_TLS).tlsVersions(TlsVersion.TLS_1_3, TlsVersion.TLS_1_2).build()
-
     @BaseOkhttpClient
     @Provides
     fun provideOkhttpClient(
@@ -125,14 +126,13 @@ object NetworkModule {
         loggingInterceptor: HttpLoggingInterceptor,
         swapKeyService: SwapKeyApiInterface,
         apiInterface: dagger.Lazy<UserApiInterface>,
-    ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager(keyStore) as X509TrustManager).addInterceptor(HeaderInterceptor(context = appContext))
+    ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager(keyStore) as X509TrustManager)
+        .addInterceptor(HeaderInterceptor(context = appContext))
         .addInterceptor(loggingInterceptor)
-        .connectionSpecs(listOf(modernTlsSpec))
-        .addInterceptor(
-            AuthInterceptor(
-                swapKeyService = swapKeyService, context = appContext, apiInterface
-            )
-        ).addInterceptor(EncryptionInterceptor(appContext)).addInterceptor(DecryptionInterceptor(appContext)).readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
+        .addInterceptor(AuthInterceptor(swapKeyService = swapKeyService, context = appContext, apiInterface)
+        ).addInterceptor(EncryptionInterceptor(appContext))
+        .addInterceptor(DecryptionInterceptor(appContext))
+        .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS).build()
 
     @SimpleClientRetrofit

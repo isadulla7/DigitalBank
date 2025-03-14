@@ -69,18 +69,6 @@ class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 
     private boolean mAllowParentInterceptOnEdge = true;
 
-    private static void checkZoomLevels(float minZoom, float midZoom, float maxZoom) {
-
-        //TODO : Commenting this check for now. Loading image with different dimension causes this exception
-//        if (minZoom >= midZoom) {
-//            throw new IllegalArgumentException(
-//                    "MinZoom has to be less than MidZoom");
-//        } else if (midZoom >= maxZoom) {
-//            throw new IllegalArgumentException(
-//                    "MidZoom has to be less than MaxZoom");
-//        }
-    }
-
     /**
      * @return true if the ImageView exists, and it's Drawable existss
      */
@@ -525,7 +513,6 @@ class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 
     @Override
     public void setMinimumScale(float minimumScale) {
-        checkZoomLevels(minimumScale, mMidScale, mMaxScale);
         mMinScale = minimumScale;
     }
 
@@ -557,7 +544,6 @@ class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 
     @Override
     public void setMediumScale(float mediumScale) {
-        checkZoomLevels(mMinScale, mediumScale, mMaxScale);
         mMidScale = mediumScale;
     }
 
@@ -569,7 +555,6 @@ class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 
     @Override
     public void setMaximumScale(float maximumScale) {
-        checkZoomLevels(mMinScale, mMidScale, maximumScale);
         mMaxScale = maximumScale;
     }
 
@@ -738,9 +723,6 @@ class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
         } else {
             return new Rect(getImageViewWidth(getImageView()), 0, 0, getImageViewHeight(getImageView()));
         }
-//        int cropHeight = 500;
-//        int cropWidth = 500;
-//        DisplayMetrics displayMetrics = getImageView().getContext().getResources().getDisplayMetrics();
 //        int h = displayMetrics.heightPixels;
 //        int w = displayMetrics.widthPixels;
 //        int edgeT = Math.round(h/2) - Math.round(cropHeight/2);
@@ -845,19 +827,11 @@ class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
         if (imageView == null) {
             return null;
         }
-        Bitmap visibleBitmap = getBitmapFromView(imageView);
-//        if (visibleBitmap == null || visibleBitmap.toString().equals("")) {
-//
-//        }
-//        visibleBitmap = Bitmap.createBitmap(imageView.getWidth(), imageView.getHeight(), Bitmap.Config.RGB_565);
-//        Canvas c = new Canvas(visibleBitmap);
-//        imageView.draw(c);
 
-        return visibleBitmap;
+        return getBitmapFromView(imageView);
     }
 
-    public Bitmap getBitmapFromView(View view)
-    {
+    public Bitmap getBitmapFromView(View view) {
         Bitmap bitmap = Bitmap.createBitmap(view.getWidth(), view.getHeight(), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(bitmap);
         view.draw(canvas);

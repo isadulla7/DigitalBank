@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import androidx.core.os.bundleOf
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringItem
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
 import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
@@ -21,6 +22,7 @@ import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.format.Format
 import uz.fido.utils.format.Format.takeScreenShot
 import uz.fido.utils.format.FormatUtilsKt
+import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import java.io.File
 
@@ -35,11 +37,13 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
     private lateinit var visaMonitoringItem: CurrencyCardMonitoringItem
     private lateinit var dialogReceipt: BottomReceiptsDialog
     private var searchDataResponse: SearchDataResponse? = null
+    private var paymentName = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         arguments?.let {
             try {
+                paymentName = it.getString("name").toString()
                 operation = it.getString("operation").toString()
                 command = it.getString("command").toString()
                 when (operation) {
@@ -71,7 +75,10 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
             buttonReceipt.setOnClickListener {
                 dialogReceipt = BottomReceiptsDialog(
                     printChequeResponse.html.toString(), printChequeResponse.monitoring_info?.name.toString()
-                )
+                ) {
+                    goto(R.id.receiptFullFragment, bundle = bundleOf("html" to printChequeResponse.html.toString()))
+                    dialogReceipt.dismiss()
+                }
                 dialogReceipt.show(childFragmentManager, "TAG")
             }
         }
@@ -139,9 +146,21 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
     private fun initLocal() {
         val item = printChequeResponse.monitoring_info!!
         transactId = item.request_id
+        addView(getString(R.string.service), paymentName)
+        searchDataResponse?.params?.get("FIO")?.let { addView(getString(R.string.fio), it) }
+        searchDataResponse?.params?.get("FIO_ABONENT")?.let { addView(getString(R.string.fio), it) }
+        searchDataResponse?.params?.get("ADDRESS")?.let { addView(getString(R.string.address), it) }
         addView(getString(R.string.date_time), item.created_date)
+        if (searchDataResponse?.service_id == "-4") {
+            printChequeResponse.details.forEach {
+                if (checkList(it.key)) {
+                    addView(it.key_description, it.value)
+                }
+            }
+        }
         if (item.terminal_id.isNotEmpty()) addView(getString(R.string.terminal_id), item.terminal_id)
         addView(getString(R.string.transaction_number), item.request_id)
+
         if (item.partner_obj.isNotEmpty()) {
             if (item.to_obj_name.isNotEmpty()) {
                 if (item.partner_obj.startsWith("AUZ")) {
@@ -194,6 +213,12 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
         if (printChequeResponse.html != null && printChequeResponse.html!!.isNotEmpty()) {
             binding.buttonReceipt.visibility = View.VISIBLE
         }
+
+
+    }
+
+    private fun checkList(key: String): Boolean {
+        return key != "TERMINAL_ID" && key != "AMOUNT"
     }
 
     private fun initHumo() {

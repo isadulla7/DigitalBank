@@ -9,19 +9,19 @@ object Const {
     const val DB_HELPER_VERSION = 1
 
     const val APP_THEME = "app_theme"
-    const val USER_QWERTY_KEY = "user_qwerty_key"
     const val FAST_ACCESS = "fast_access"
     const val UPDATE_FAST_ACCESS = "UPDATE_FAST_ACCESS"
     const val MAIN_WIDGETS_VERSION_SAVED = "main_widget_version_saved"
-    const val UPDATE_MAIN_WIDGETS = "false"
+    const val UPDATE_MAIN_WIDGETS = "true"
     const val UPDATE_LANG = "update_lang"
     const val MAIN_WIDGETS = "main_widgets"
-    const val MAIN_WIDGETS_VERSION = 6
+    const val MAIN_WIDGETS_VERSION = 7
     const val TOTAL_BALANCE_TYPE = "balance_type"
     const val PAPER_CLIENT_TOKEN = "client_token"
+    const val PAPER_CLIENT_FILIAL_CODE = "client_filial_code"
+    const val PAPER_CLIENT_USER_TYPE_ID = "client_type_id"
     const val PAPER_PAYMENT_VERSION = "payment_version"
     const val PAPER_PAYMENT_VERSION_DB = "payment_version_db"
-    const val PAPER_CLIENT_INFO = "client_info"
     const val PAPER_CLIENT_PHONE = "client_phone"
     const val PAPER_CLIENT_ID = "client_id"
     const val PAPER_CLIENT_FULL_NAME = "client_full_name"
@@ -56,7 +56,6 @@ object Const {
     const val EXTRA_PARAMS = "EXTRA_PAYMENT_PARAMS"
     const val TRANSACTION_ID = "transactId"
     const val RANDOM_TEXT = "random_text"
-    const val QR_PAYMENT = "QR_PAYMENT"
     const val ORDER_CARD = "order_card"
     const val LAYOUT_MANAGER_GRID = "LAYOUT_MANAGER_GRID"
     const val CARD = "card"
@@ -86,6 +85,14 @@ object Const {
     const val HOME_TEMPLATES_EXPANDED = "HOME_TEMPLATES_EXPANDED"
     const val HOME_MY_HOUSE_EXPANDED = "HOME_MY_HOUSE_EXPANDED"
     const val FIREBASE_APP_ICON_NAME = "app_icon"
+    const val SHAKING_ACTION_STATE = "shaking_action_state"
+    const val SELECTED_OPTION = "selected_option"
+    const val SELECTED_FRAGMENT = "selected_fragment"
+    const val DEVICE_MY_ID_STATE = "device_my_id_state"
+    const val PASSPORT_DATA = "passport_data"
+    const val DATE_OF_BIRTH = "date_of_birth"
+    const val PINFL = "pinfl"
+    const val IS_PIN = "is_pin"
 
     var request_id = ""
 

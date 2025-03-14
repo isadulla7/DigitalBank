@@ -20,15 +20,15 @@ class LockSetActivity : BaseActivity() {
     }
 
     private fun initDetails() {
-        binding.tvTitle.text = getString(R.string.data_security_function)
-        binding.tvDescription.text = getString(R.string.emulator_is_not_allowed)
-        binding.buttonOpenSettings.text = getString(R.string.exit)
-        binding.buttonOpenSettings.setOnClickListener {
-            finishAffinity()
+        binding.apply {
+            tvTitle.text = getString(R.string.data_security_function)
+            tvDescription.text = getString(R.string.emulator_is_not_allowed)
+            buttonOpenSettings.text = getString(R.string.exit)
+            buttonOpenSettings.setOnClickListener {
+                finishAffinity()
+            }
         }
     }
-
-
 
     override fun onBackPressed() {
         if (onBackPress) {

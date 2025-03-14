@@ -49,28 +49,21 @@ class AppSignatureHelper(context: Context) : ContextWrapper(context) {
 
     companion object {
         val TAG: String = AppSignatureHelper::class.java.simpleName
-
         private const val HASH_TYPE = "SHA-256"
         private const val NUM_HASHED_BYTES = 9
         private const val NUM_BASE64_CHAR = 11
-
         private fun hash(packageName: String, signature: String): String? {
             val appInfo = "$packageName $signature"
             try {
                 val messageDigest = MessageDigest.getInstance(HASH_TYPE)
                 messageDigest.update(appInfo.toByteArray(Charset.forName("UTF-8")))
                 var hashSignature = messageDigest.digest()
-
-                // truncated into NUM_HASHED_BYTES
                 hashSignature = Arrays.copyOfRange(hashSignature, 0, NUM_HASHED_BYTES)
-                // encode into Base64
                 var base64Hash = encodeToString(hashSignature, NO_PADDING or NO_WRAP)
                 base64Hash = base64Hash.substring(0, NUM_BASE64_CHAR)
-
-                Log.d(TAG, String.format("pkg: %s -- hash: %s", packageName, base64Hash))
                 return base64Hash
             } catch (e: NoSuchAlgorithmException) {
-                Log.e(TAG, "hash:NoSuchAlgorithm", e)
+                e.printStackTrace()
             }
 
             return null

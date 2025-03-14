@@ -1,32 +1,26 @@
 package uz.fido.utils.security
 
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
+import android.annotation.SuppressLint
+import android.app.Activity
 import android.os.Build
+import com.scottyab.rootbeer.RootBeer
+import java.io.BufferedReader
+import java.io.File
+import java.io.IOException
+import java.io.InputStreamReader
+import java.lang.reflect.Method
 import java.net.NetworkInterface
 import java.net.SocketException
 import java.util.Collections
 
 object SecurityCheck {
 
-    fun isVpnActive(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val network = connectivityManager.activeNetwork
-        val networkCapabilities = connectivityManager.getNetworkCapabilities(network)
-        return networkCapabilities?.hasTransport(NetworkCapabilities.TRANSPORT_VPN) ?: false
-    }
-
-    fun isFromVpn(): Boolean {
+    fun isVpnActive(): Boolean {
         var interfaceName = ""
         try {
             for (networkInterface in Collections.list(NetworkInterface.getNetworkInterfaces())) {
                 if (networkInterface.isUp) interfaceName = networkInterface.name
-                if (
-                    interfaceName.contains("tun") ||
-                    interfaceName.contains("ppp") ||
-                    interfaceName.contains("pptp")
-                ) {
+                if (interfaceName.contains("tun") || interfaceName.contains("ppp") || interfaceName.contains("pptp")) {
                     return true
                 }
             }
@@ -37,14 +31,11 @@ object SecurityCheck {
     }
 
     fun isFromEmulator(): Boolean {
-        return (
-                Build.FINGERPRINT.startsWith("google/sdk_gphone_")
-                        && Build.FINGERPRINT.endsWith(":user/release-keys")
-                        && Build.MANUFACTURER == "Google"
-                        && Build.PRODUCT.startsWith("sdk_gphone_")
-                        && Build.BRAND == "google"
-                        && Build.MODEL.startsWith("sdk_gphone_")
-                ) || Build.FINGERPRINT.startsWith("generic")
+        return (Build.FINGERPRINT.startsWith("google/sdk_gphone_")
+                && Build.FINGERPRINT.endsWith(":user/release-keys")
+                && Build.MANUFACTURER == "Google" && Build.PRODUCT.startsWith("sdk_gphone_") && Build.BRAND == "google"
+                && Build.MODEL.startsWith("sdk_gphone_"))
+                || Build.FINGERPRINT.startsWith("generic")
                 || Build.FINGERPRINT.startsWith("unknown")
                 || Build.MODEL.contains("google_sdk")
                 || Build.MODEL.contains("Emulator")
@@ -53,6 +44,110 @@ object SecurityCheck {
                 || Build.HOST == "Build2" //MSI App Player
                 || Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
                 || Build.PRODUCT == "google_sdk"
+                || SystemProperties.getProp("ro.kernel.qemu") == "1"
+    }
+
+    fun Activity.isRunningOnEmulator(): Boolean = EmulatorCheck(this).isProbablyAnEmulator()
+
+    fun Activity.isPhoneRooted(): Boolean {
+        return RootBeer(this).isRooted
+    }
+
+    private fun checkRootedFiles(): Boolean {
+        val paths = arrayOf(
+            "/system/app/Superuser.apk",
+            "/sbin/su",
+            "/system/bin/su",
+            "/system/xbin/su",
+            "/data/local/xbin/su",
+            "/data/local/bin/su",
+            "/system/sd/xbin/su",
+            "/system/bin/failsafe/su",
+            "/data/local/su"
+        )
+        for (path in paths) {
+            if (File(path).exists()) return true
+        }
+        return false
+    }
+
+    private fun canExecuteSu(): Boolean {
+        return try {
+            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "whoami"))
+            val output = process.inputStream.bufferedReader().readLine()
+            output != null && output.contains("root")
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private fun isMagiskPresent(): Boolean {
+        try {
+            val paths = listOf(
+                "/sbin/.magisk",
+                "/cache/.disable_magisk",
+                "/system/etc/init/magisk.rc"
+            )
+            for (path in paths) {
+                if (File(path).exists()) {
+                    return true
+                }
+            }
+            return false
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
+    private fun canWriteToSystem(): Boolean {
+        return try {
+            val file = File("/system/test_root_check")
+            val success = file.createNewFile()
+            if (success) file.delete()
+            success
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    private fun checkRootProps(): Boolean {
+        return try {
+            val process = Runtime.getRuntime().exec("getprop ro.build.tags")
+            val output = process.inputStream.bufferedReader().readLine()
+            output != null && output.contains("test-keys")
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    object SystemProperties {
+        private var failedUsingReflection = false
+        private var getPropMethod: Method? = null
+
+        @SuppressLint("PrivateApi")
+        fun getProp(propName: String, defaultResult: String = ""): String {
+            if (!failedUsingReflection) try {
+                if (getPropMethod == null) {
+                    val clazz = Class.forName("android.os.SystemProperties")
+                    getPropMethod = clazz.getMethod("get", String::class.java, String::class.java)
+                }
+                return getPropMethod!!.invoke(null, propName, defaultResult) as String? ?: defaultResult
+            } catch (e: Exception) {
+                getPropMethod = null
+                failedUsingReflection = true
+            }
+            var process: Process? = null
+            try {
+                process = Runtime.getRuntime().exec("getprop \"$propName\" \"$defaultResult\"")
+                val reader = BufferedReader(InputStreamReader(process.inputStream))
+                return reader.readLine()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            } finally {
+                process?.destroy()
+            }
+            return defaultResult
+        }
     }
 
 }

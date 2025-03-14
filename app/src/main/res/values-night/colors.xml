@@ -72,5 +72,9 @@
     <color name="alert_dialog_background">#2D2D2D</color>
     <color name="link_color">#0000EE</color>
     <color name="home_card_description_color">#FFFFFF</color>
+    <color name="home_gradient_color_1">#FFEBE7</color>
 
+    //my id colors
+    <color name="myidColorPrimary">@color/brandRedColor</color>
+    <color name="myidPrimaryButtonColor">@color/brandRedColor</color>
 </resources>

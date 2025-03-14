@@ -1,7 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.login.pin
 
+import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -9,18 +9,17 @@ import android.os.Looper
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.biometric.BiometricPrompt
+import androidx.core.net.toUri
+import androidx.core.os.bundleOf
 import coil.load
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
 import uz.fido.network.domain.model.abc_base.SwapKeysResponse
 import uz.fido.network.domain.model.abc_base.UserInfo
-import uz.fido.network.domain.model.profile.LogOutRequest
 import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.BuildConfig
@@ -30,11 +29,20 @@ import uz.fido.universaldigital.databinding.FragmentPassCodeBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.activities.MainActivity
 import uz.fido.universaldigital.ui.dialogs.LogOutDialog
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.dialogs.UnableGetProfileDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInPinResponse
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.DeviceIdentifyState
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.UserIdentifyState
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isFullyIdentified
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isIdentifiedByCard
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isNotIdentified
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isUserIdentifiedButDeviceNot
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isUserNotIdentifiedButDeviceIdentified
 import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAndOutAnim
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
+import uz.fido.universaldigital.ui.utils.extensions.pendingTransition
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
@@ -50,10 +58,9 @@ import uz.fido.utils.utility.activity.insertStringBetween
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
 import uz.fido.utils.utility.context.startActivityWithClearTask
+import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.Utility.getDeviceName
-import uz.fido.utils.utility.user.getClientId
-import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.view.custom_text_view.TextViewMedium
 import java.util.Calendar
 import java.util.concurrent.Executors
@@ -67,8 +74,10 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         const val DEEP_LINK_OBJECT_ID = "DEEP_LINK_OBJECT_ID"
         const val DEEP_LINK_AMOUNT = "DEEP_LINK_AMOUNT"
         const val DEEP_LINK_COMMENT = "DEEP_LINK_COMMENT"
+        const val NOTIFICATION_OPERATION = "notification_operation"
     }
 
+    private lateinit var signInResponseResource: Resource<SignInResponse>
     private var operation: String = ""
     private var incorrectPinCount = 0
     private var secondPin: String = ""
@@ -81,7 +90,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         try {
-            arguments?.let { operation = it.getString(Const.OPERATION, "") }
+            operation = arguments?.getString(Const.OPERATION, "").orEmpty()
         } catch (e: Exception) {
             recordException(e, ::onCreate.name)
         }
@@ -138,7 +147,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 clearDots()
             }
         } else {
-            Handler(Looper.myLooper()!!).postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
                 errorPin()
             }, 50)
         }
@@ -149,7 +158,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             fillDots()
             swapKeys()
         } else {
-            Handler(Looper.myLooper()!!).postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
                 errorPin()
             }, 50)
         }
@@ -204,19 +213,17 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     private fun fingerAuth() {
         val executor = Executors.newSingleThreadExecutor()
-        val biometricPrompt =
-            BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
-
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
-                    requireActivity().runOnUiThread {
-                        fillDots()
-                        pin = getDecodedString(getFromPaper(Const.PAPER_CLIENT_PIN))
-                        swapKeys()
-                    }
+        val biometricPrompt = BiometricPrompt(this, executor, object : BiometricPrompt.AuthenticationCallback() {
+            override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
+                super.onAuthenticationSucceeded(result)
+                requireActivity().runOnUiThread {
+                    fillDots()
+                    pin = getDecodedString(getFromPaper(Const.PAPER_CLIENT_PIN))
+                    swapKeys()
                 }
+            }
 
-            })
+        })
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
             .setTitle(getString(R.string.enter_app_with_touch_id))
             .setNegativeButtonText(getString(R.string.cancel)).build()
@@ -363,13 +370,14 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             when (it.status) {
                 Status.SUCCESS -> {
                     val signInResponse = it.data
+                    signInResponseResource = it
                     if (signInResponse?.token != null) {
                         saveSignInResponse(signInResponse)
                         if (requireActivity() is MainActivity) {
                             pop()
                         } else {
                             PinDotsAnimation.stopPinDotsAnimation()
-                            openMainActivity()
+                            validateUserIdentity()
                         }
                     } else {
                         clearDots()
@@ -423,37 +431,33 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun openMainActivity() {
-        CoroutineScope(Dispatchers.Default).launch {
-            val intent = Intent(requireActivity(), MainActivity::class.java)
-            if (arguments != null) {
-                if (!requireArguments().getString(DEEP_LINK_OBJECT_VALUE).isNullOrEmpty()) {
-                    intent.putExtra(
-                        DEEP_LINK_OBJECT_VALUE, requireArguments().getString(
-                            DEEP_LINK_OBJECT_VALUE
-                        )
-                    )
-                    intent.putExtra(
-                        DEEP_LINK_OBJECT_ID, requireArguments().getString(
-                            DEEP_LINK_OBJECT_ID
-                        )
-                    )
-                    intent.putExtra(
-                        DEEP_LINK_AMOUNT, requireArguments().getString(
-                            DEEP_LINK_AMOUNT
-                        )
-                    )
-                    intent.putExtra(
-                        DEEP_LINK_COMMENT, requireArguments().getString(
-                            DEEP_LINK_COMMENT
-                        )
-                    )
-                }
+        val intent = Intent(requireActivity(), MainActivity::class.java).apply {
+            addDeepLinkExtras(this)
+            addNotificationExtras(this)
+        }
+        startActivity(intent)
+        requireActivity().apply {
+            pendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            finish()
+        }
+    }
+
+    private fun addDeepLinkExtras(intent: Intent) {
+        arguments?.let {
+            val deepLinkValue = it.getString(DEEP_LINK_OBJECT_VALUE)
+            if (!deepLinkValue.isNullOrEmpty()) {
+                intent.putExtra(DEEP_LINK_OBJECT_VALUE, deepLinkValue)
+                intent.putExtra(DEEP_LINK_OBJECT_ID, it.getString(DEEP_LINK_OBJECT_ID))
+                intent.putExtra(DEEP_LINK_AMOUNT, it.getString(DEEP_LINK_AMOUNT))
+                intent.putExtra(DEEP_LINK_COMMENT, it.getString(DEEP_LINK_COMMENT))
             }
-            startActivity(intent)
-            requireActivity().overridePendingTransition(
-                android.R.anim.fade_in, android.R.anim.fade_out
-            )
-            requireActivity().finish()
+        }
+    }
+
+    private fun addNotificationExtras(intent: Intent) {
+        arguments?.getString(NOTIFICATION_OPERATION)?.takeIf { it.isNotEmpty() }?.let {
+            intent.putExtra(NOTIFICATION_OPERATION, "notification")
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
         }
     }
 
@@ -493,8 +497,10 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         binding.errorText.text = getString(R.string.wrong_pin)
         try {
             Handler(Looper.getMainLooper()).postDelayed({
-                clearDots()
-                binding.errorText.text = ""
+                if (isAdded && binding != null) {
+                    clearDots()
+                    binding.errorText.text = ""
+                }
             }, 1000)
         } catch (e: Exception) {
             recordException(e, ::errorPin.name)
@@ -538,6 +544,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setGreetingText() {
         val calendar = Calendar.getInstance()
         val partOfDay = when (calendar.get(Calendar.HOUR_OF_DAY)) {
@@ -553,37 +560,16 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         }
     }
 
-    private fun logOutRequest() {
-        showProgress()
-        val device = GetDeviceInfo(context = requireContext()).deviceInfo
-        viewModel.logOutRequest(
-            token = getClientToken(), logOutRequest = LogOutRequest(
-                device_code = requireContext().getDeviceIds(),
-                device_type = "A",
-                fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
-                phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE),
-                sim_iccd = device.simCcd,
-                network_state = device.networkState,
-                imei_data = device.imeiData,
-                os_system_version_api = device.osSystemVersionApi,
-                client_id = getClientId()
-            )
-        ).observe(viewLifecycleOwner) {
-            hideProgress()
-            requireActivity().logOut()
-        }
-    }
-
     private fun showLogOutDialog() {
         LogOutDialog {
-            logOutRequest()
+            requireActivity().logOut()
         }.show(childFragmentManager, "")
     }
 
     private fun callToBank() {
         val phone = "tel: +998712001110"
         val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse(phone)
+        intent.data = phone.toUri()
         startActivity(intent)
     }
 
@@ -597,5 +583,47 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
         } else {
             binding.userAvatar.load(R.drawable.ic_profile_image_empty)
         }
+    }
+
+    private fun validateUserIdentity() {
+        val signInResponse = signInResponseResource.data
+        val userDeviceState = signInResponse?.device_myid_state ?: DeviceIdentifyState.DEFAULT
+        val userIdentifyState = signInResponse?.user_type_id ?: UserIdentifyState.DEFAULT
+        val passportData = signInResponse?.passport_serial + signInResponse?.passport_number
+        val dateOfBirth = signInResponse?.birthday
+        val pinfl = signInResponse?.pnfl
+        when {
+            isIdentifiedByCard(userIdentifyState) -> openMyIdPage(passportData, dateOfBirth)
+
+            isFullyIdentified(userIdentifyState, userDeviceState) -> openMainActivity()
+
+            isNotIdentified(userIdentifyState, userDeviceState) -> openMainActivity()
+
+            isUserNotIdentifiedButDeviceIdentified(userIdentifyState, userDeviceState) -> openMyIdPage()
+
+            isUserIdentifiedButDeviceNot(userIdentifyState, userDeviceState) -> handleUserNoPassportData(passportData, dateOfBirth, pinfl)
+        }
+    }
+
+    private fun handleUserNoPassportData(passportData: String?, dateOfBirth: String?, pinfl: String?) {
+        if (isValidUserData(passportData, pinfl, dateOfBirth)) {
+            openMyIdPage(passportData, dateOfBirth, pinfl)
+        } else {
+            showUnableGetProfileDialog()
+        }
+    }
+
+    private fun isValidUserData(passportData: String?, pinfl: String?, dateOfBirth: String?): Boolean {
+        return (!passportData.isNullOrBlank() || !pinfl.isNullOrBlank()) && !dateOfBirth.isNullOrBlank()
+    }
+
+    private fun showUnableGetProfileDialog() {
+        UnableGetProfileDialog {}.show(childFragmentManager, "")
+    }
+
+    private fun openMyIdPage(passportData: String? = null, dateOfBirth: String? = null, pinfl: String? = null) {
+        clearDots()
+        val bundle = bundleOf(Const.PASSPORT_DATA to passportData.orEmpty(), Const.DATE_OF_BIRTH to dateOfBirth.orEmpty(), Const.PINFL to pinfl.orEmpty(), Const.IS_PIN to true)
+        gotoWithSlide(R.id.mainIdentificationForSignInFragment, bundle)
     }
 }

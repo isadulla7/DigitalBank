@@ -40,10 +40,8 @@ class RecognizedDigits {
     }
 
     ArrayList<Integer> nonMaxSuppression() {
-        ArrayList<Integer> digits = new ArrayList<>();
-        ArrayList<Float> confidence = new ArrayList<>();
-        digits.addAll(this.digits);
-        confidence.addAll(this.confidence);
+        ArrayList<Integer> digits = new ArrayList<>(this.digits);
+        ArrayList<Float> confidence = new ArrayList<>(this.confidence);
 
         // greedy non max suppression
         for (int idx = 0; idx < (kNumPredictions - 1); idx++) {
@@ -63,26 +61,26 @@ class RecognizedDigits {
 
     String debugString() {
         ArrayList<Integer> digits = nonMaxSuppression();
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Integer digit : digits) {
             if (digit != kBackgroundClass) {
-                result += digit;
+                result.append(digit);
             } else {
-                result += "-";
+                result.append("-");
             }
         }
-        return result;
+        return result.toString();
     }
 
     String stringResult() {
         ArrayList<Integer> digits = nonMaxSuppression();
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (Integer digit : digits) {
             if (digit != kBackgroundClass) {
-                result += digit;
+                result.append(digit);
             }
         }
-        return result;
+        return result.toString();
     }
 
     String four() {

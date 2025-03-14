@@ -17,98 +17,75 @@
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:textSize="16dp"
         android:layout_marginTop="6dp"
         android:gravity="center"
         android:text="@string/deposit"
         android:textColor="@color/mainTextColor"
-        android:layout_height="wrap_content"/>
-
-    <uz.fido.utils.view.custom_text_view.TextViewSemiBold
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:textSize="18dp"
-        android:visibility="gone" />
-
+        android:textSize="16dp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/edit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
         android:layout_marginTop="16dp"
-        android:drawablePadding="16dp"
         android:drawableStart="@drawable/ic_edit_house"
-        android:paddingStart="16dp"
+        android:drawablePadding="16dp"
         android:paddingVertical="16dp"
+        android:paddingStart="16dp"
         android:text="@string/deposit_edit"
-        android:textColor="@color/mainTextColor"/>
+        android:textColor="@color/mainTextColor"
+        android:textSize="16dp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/with_draw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:drawablePadding="16dp"
         android:drawableStart="@drawable/percentage_black"
-        android:paddingStart="16dp"
+        android:drawablePadding="16dp"
         android:paddingVertical="16dp"
+        android:paddingStart="16dp"
         android:text="@string/percents"
-        android:textColor="@color/mainTextColor"/>
-
-    <uz.fido.utils.view.custom_text_view.TextViewMedium
-        android:id="@+id/with_draw_percent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:drawablePadding="16dp"
-        android:drawableStart="@drawable/outcome"
-        android:paddingStart="16dp"
-        android:visibility="gone"
-        android:paddingVertical="16dp"
-        android:text="@string/percents_withdraw"
-        android:textColor="@color/mainTextColor"/>
-
-    <uz.fido.utils.view.custom_text_view.TextViewMedium
-        android:id="@+id/cansel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:visibility="gone"
-        android:drawablePadding="16dp"
-        android:drawableStart="@drawable/close"
-        android:paddingStart="16dp"
-        android:paddingVertical="16dp"
-        android:text="@string/early_closing_of_the_deposit"
-        android:textColor="@color/mainTextColor"/>
+        android:textColor="@color/mainTextColor"
+        android:textSize="16dp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:drawablePadding="16dp"
         android:drawableStart="@drawable/ic_info_client_deposit"
-        android:paddingStart="16dp"
+        android:drawablePadding="16dp"
         android:paddingVertical="16dp"
+        android:paddingStart="16dp"
         android:text="@string/information_about_the_deposit"
-        android:textColor="@color/mainTextColor"/>
+        android:textColor="@color/mainTextColor"
+        android:textSize="16dp" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
-        android:id="@+id/delete"
+        android:id="@+id/ealry_close"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16dp"
-        android:layout_marginBottom="16dp"
-        android:drawablePadding="16dp"
         android:drawableStart="@drawable/close"
-        android:paddingStart="16dp"
+        android:drawablePadding="16dp"
         android:paddingVertical="16dp"
+        android:paddingStart="16dp"
         android:text="@string/early_closing_of_the_deposit"
-        android:textColor="@color/mainTextColor"/>
+        android:textColor="@color/mainTextColor"
+        android:textSize="16dp" />
 
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:drawableStart="@drawable/close"
+        android:drawablePadding="16dp"
+        android:drawableTint="@color/brandRedColor"
+        android:paddingVertical="16dp"
+        android:paddingStart="16dp"
+        android:text="@string/close_deposit"
+        android:textColor="@color/brandRedColor"
+        android:textSize="16dp" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

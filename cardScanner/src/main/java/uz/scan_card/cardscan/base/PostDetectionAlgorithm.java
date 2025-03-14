@@ -186,14 +186,12 @@ class PostDetectionAlgorithm {
         for (int idx = 0; idx < words.size(); idx++) {
             DetectedBox word = words.get(idx);
             if (useHorizontalPredicate && horizontalPredicate(currentWord, word)) {
-                ArrayList<DetectedBox> newCurrentLine = new ArrayList<>();
-                newCurrentLine.addAll(currentLine);
+                ArrayList<DetectedBox> newCurrentLine = new ArrayList<>(currentLine);
                 newCurrentLine.add(word);
                 findNumbers(newCurrentLine, dropFirst(words, idx + 1), true,
                         numberOfBoxes, lines);
             } else if (verticalPredicate(currentWord, word)) {
-                ArrayList<DetectedBox> newCurrentLine = new ArrayList<>();
-                newCurrentLine.addAll(currentLine);
+                ArrayList<DetectedBox> newCurrentLine = new ArrayList<>(currentLine);
                 newCurrentLine.add(word);
                 findNumbers(newCurrentLine, dropFirst(words, idx + 1), useHorizontalPredicate,
                         numberOfBoxes, lines);

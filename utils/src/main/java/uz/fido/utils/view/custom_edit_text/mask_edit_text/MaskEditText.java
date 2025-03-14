@@ -142,8 +142,6 @@ public class MaskEditText extends TextInputEditText {
 
     public void setMask(String mask) {
         this.mask = mask;
-//        MaskedFormatter maskedFormatter = new MaskedFormatter(mask.toString());
-//        addTextChangedListener(new MaskedWatcher(maskedFormatter, this));
         if (hasMask()) {
             setMaxLength(mask.length());
             addTextChangedListener(new MaskFormatter());
@@ -155,8 +153,6 @@ public class MaskEditText extends TextInputEditText {
     public void setMask(String mask, String regex) {
         this.mask = mask;
         this.regex = regex;
-//        MaskedFormatter maskedFormatter = new MaskedFormatter(mask.toString());
-//        addTextChangedListener(new MaskedWatcher(maskedFormatter, this));
         if (hasMask()) {
             setMaxLength(mask.length());
             addTextChangedListener(new MaskFormatter());

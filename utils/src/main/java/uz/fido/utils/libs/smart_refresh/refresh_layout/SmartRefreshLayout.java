@@ -1147,9 +1147,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
      */
     protected boolean startFlingIfNeed(float flingVelocity) {
         float velocity = flingVelocity == 0 ? mCurrentVelocity : flingVelocity;
-//        //现在去掉了这个修复，反而有了回弹
-//        if (Build.VERSION.SDK_INT > 27 && mRefreshContent != null) {
-//            /*
 //             * 修复 API 27 以上【上下颠倒模式】没有回弹效果的bug
 //             */
 //            float scaleY = getScaleY();
@@ -1263,18 +1260,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
     protected void setStateDirectLoading(boolean triggerLoadMoreEvent) {
         if (mState != RefreshState.Loading) {
             mLastOpenTime = currentTimeMillis();
-//            if (mState != RefreshState.LoadReleased) {
-//                if (mState != RefreshState.ReleaseToLoad) {
-//                    if (mState != RefreshState.PullUpToLoad) {
-//                        mKernel.setState(RefreshState.PullUpToLoad);
-//                    }
-//                    mKernel.setState(RefreshState.ReleaseToLoad);
-//                }
-//                notifyStateChanged(RefreshState.LoadReleased);
-//                if (mRefreshFooter != null) {
-//                    mRefreshFooter.onReleased(this, mFooterHeight, (int) (mFooterMaxDragRate * mFooterHeight));
-//                }
-//            }
             mFooterLocked = true;//Footer 正在loading 的时候是否锁住 列表不能向上滚动
             notifyStateChanged(RefreshState.Loading);
             if (mLoadMoreListener != null) {
@@ -1391,20 +1376,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             listener.onAnimationEnd(null);
         }
     }
-
-//    /**
-//     * 重置状态
-//     */
-//    protected void resetStatus() {
-//        if (mState != RefreshState.None) {
-//            if (mSpinner == 0) {
-//                notifyStateChanged(RefreshState.None);
-//            }
-//        }
-//        if (mSpinner != 0) {
-//            mKernel.animSpinner(0);
-//        }
-//    }
 
     /**
      * 设置 副状态
@@ -1868,24 +1839,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         return Math.round((float) originSpinner);
     }
 
-    //</editor-fold>
-
-    //<editor-fold desc="布局参数 LayoutParams">
-
-//    protected boolean checkLayoutParams(ViewGroup.LayoutParams p) {
-//        return p instanceof LayoutParams;
-//    }
-//
-//    @Override
-//    protected LayoutParams generateDefaultLayoutParams() {
-//        return new LayoutParams(MATCH_PARENT, MATCH_PARENT);
-//    }
-//
-//    @Override
-//    protected LayoutParams generateLayoutParams(ViewGroup.LayoutParams p) {
-//        return new LayoutParams(p);
-//    }
-
     @Override
     public ViewGroup.LayoutParams generateLayoutParams(AttributeSet attrs) {
         final View thisView = this;
@@ -1908,22 +1861,10 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
             super(width, height);
         }
 
-//        public LayoutParams(MarginLayoutParams source) {
-//            super(source);
-//        }
-//
-//        public LayoutParams(ViewGroup.LayoutParams source) {
-//            super(source);
-//        }
-
         public int backgroundColor = 0;
         public SpinnerStyle spinnerStyle = null;
     }
-    //</editor-fold>
 
-    //<editor-fold desc="嵌套滚动 NestedScrolling">
-
-    //<editor-fold desc="NestedScrollingParent">
     @Override
     public int getNestedScrollAxes() {
         return mNestedParent.getNestedScrollAxes();
@@ -2631,27 +2572,6 @@ public class SmartRefreshLayout extends ViewGroup implements RefreshLayout, Nest
         this.mFooterTranslationViewId = id;
         return this;
     }
-
-//    /**
-//     * Sets whether to enable pure nested scrolling mode
-//     * Smart scrolling supports both [nested scrolling] and [traditional scrolling] modes
-//     * With nested scrolling enabled, traditional mode also works when necessary
-//     * However, sometimes interference and conflict can occur. If you find this conflict, you can try to turn on [pure nested scrolling] mode and [traditional mode] off
-//     * 设置是否开启【纯嵌套滚动】模式
-//     * Smart 的滚动支持 【嵌套滚动】 + 【传统滚动】 两种模式
-//     * 在开启 【嵌套滚动】 的情况下，【传统模式】也会在必要的时候发挥作用
-//     * 但是有时候也会发生干扰和冲突，如果您发现了这个冲突，可以尝试开启 【纯嵌套滚动】模式，【传统模式】关闭
-//     * @param enabled 是否启用
-//     * @return RefreshLayout
-//     */
-//    @Override
-//    public RefreshLayout setEnableNestedScrollOnly(boolean enabled) {
-//        if (enabled && !mNestedChild.isNestedScrollingEnabled()) {
-//            mNestedChild.setNestedScrollingEnabled(true);
-//        }
-//        mEnableNestedScrollingOnly = enabled;
-//        return this;
-//    }
 
     /**
      * Set whether to enable the action content view when refreshing.

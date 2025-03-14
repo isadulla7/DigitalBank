@@ -741,4 +741,20 @@
         android:id="@+id/mainNewsViewFragment"
         android:name="uz.fido.universaldigital.ui.fragments.products.widgets.notifications.news.MainNewsViewFragment"
         android:label="MainNewsViewFragment" />
+    <fragment
+        android:id="@+id/actionsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.settings.ActionsFragment"
+        android:label="ActionsFragment" />
+    <fragment
+        android:id="@+id/receiptFullFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.all_card.ReceiptFullFragment"
+        android:label="ActionsFragment" />
+    <fragment
+        android:id="@+id/mainIdentificationForSignInFragment2"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.identification.MainIdentificationForSignInFragment"
+        android:label="MainIdentificationForSignInFragment" />
+    <fragment
+        android:id="@+id/verificationForSignInFragment2"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.identification.VerificationForSignInFragment"
+        android:label="VerificationForSignInFragment" />
 </navigation>

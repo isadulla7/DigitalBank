@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2">
+<resources xmlns:ns1="urn:oasis:names:tc:xliff:document:1.2" xmlns:ns2="http://schemas.android.com/tools">
+    <plurals name="mtrl_badge_content_description">
+    <item quantity="one">%d новое уведомление</item>
+    <item quantity="few">%d новых уведомления</item>
+    <item quantity="many">%d новых уведомлений</item>
+    <item quantity="other">%d нового уведомления</item>
+  </plurals>
     <plurals formatted="false" msgid="3878057769320887026" name="time_difference_short_days">
       <item quantity="one"><ns1:g id="NUMBER_OF_DAYS_1">%d</ns1:g> дн.</item>
       <item quantity="few"><ns1:g id="NUMBER_OF_DAYS_1">%d</ns1:g> дн.</item>
@@ -66,6 +72,17 @@
     <string msgid="8875138169939072951" name="abc_shareactionprovider_share_with">"Поделиться с помощью"</string>
     <string msgid="9055268688411532828" name="abc_shareactionprovider_share_with_application">"Поделиться с помощью <ns1:g id="APPLICATION_NAME">%s</ns1:g>"</string>
     <string msgid="1656852541809559762" name="abc_toolbar_collapse_description">"Свернуть"</string>
+    <string name="accural_of_interest">Начисление процентов</string>
+    <string name="accured_interest">Текущие проценты</string>
+    <string name="accured_interest_deposit">Начисленный проценты</string>
+    <string name="bank_service">Услуга банка</string>
+    <string msgid="2102429900219199821" name="biometric_or_screen_lock_prompt_message">"Чтобы продолжить, разблокируйте экран с помощью биометрических данных или другого способа."</string>
+    <string msgid="1160635338192065472" name="biometric_prompt_message">"Чтобы продолжить, используйте биометрические данные."</string>
+    <string name="bottomsheet_action_collapse">Свернуть нижний экран</string>
+    <string name="bottomsheet_action_expand">Развернуть нижний экран</string>
+    <string name="bottomsheet_action_expand_halfway">Развернуть наполовину</string>
+    <string name="bottomsheet_drag_handle_clicked">Двойное нажатие на маркер перемещения</string>
+    <string name="bottomsheet_drag_handle_content_description">Маркер перемещения</string>
     <string msgid="881409763997275156" name="call_notification_answer_action">"Ответить"</string>
     <string msgid="8793775615905189152" name="call_notification_answer_video_action">"Видео"</string>
     <string msgid="3229508546291798546" name="call_notification_decline_action">"Отклонить"</string>
@@ -73,6 +90,12 @@
     <string msgid="6107532579223922871" name="call_notification_incoming_text">"Входящий вызов"</string>
     <string msgid="8623827134497363134" name="call_notification_ongoing_text">"Текущий вызов"</string>
     <string msgid="59049573811482460" name="call_notification_screening_text">"Фильтрация входящего вызова"</string>
+    <string name="cancel">Отменить</string>
+    <string name="capitalization_of_interest">Зачисление процентов</string>
+    <string name="card">Карта</string>
+    <string name="character_counter_content_description">Введено символов: %1$d из %2$d</string>
+    <string name="character_counter_overflowed_content_description">Превышено ограничение на количество символов (%1$d из %2$d)</string>
+    <string name="clear_text_end_icon_content_description">Очистить текстовое поле</string>
     <string msgid="406453423630273620" name="close_drawer">"Закрыть меню навигации"</string>
     <string msgid="7573152094250666567" name="close_sheet">"Закрыть лист"</string>
     <string msgid="2523291102206661146" name="common_google_play_services_enable_button">Включить</string>
@@ -93,36 +116,179 @@
     <string name="common_open_on_phone">Открыть на телефоне</string>
     <string name="common_signin_button_text">Войти</string>
     <string name="common_signin_button_text_long">Войти через аккаунт Google</string>
+    <string msgid="5912733858573823945" name="confirm_device_credential_password">"Ввести пароль"</string>
     <string msgid="6412144553299494336" name="confirmation_overlay_a11y_description_fail">"Ошибка"</string>
     <string msgid="8809042819843332546" name="confirmation_overlay_a11y_description_phone">"Открыто на телефоне"</string>
     <string msgid="2936753235333429892" name="confirmation_overlay_a11y_description_success">"Готово"</string>
-    <string msgid="3209159573327985035" name="copy">"Копировать"</string>
+    <string msgid="6083905920877235314" name="copy">"Копировать"</string>
+    <string name="correctional_operations">Исправительная операция</string>
+    <string name="day">день</string>
+    <string name="days">дней</string>
     <string msgid="8038256446254964252" name="default_error_message">"Неправильный ввод"</string>
+    <string msgid="4776854077120974966" name="default_error_msg">"Неизвестная ошибка"</string>
     <string msgid="6312721426453364202" name="default_popup_window_title">"Всплывающее окно"</string>
+    <string name="deposit_min_amount">от %s</string>
+    <string name="deposit_replenishment">Пополнение вклада</string>
+    <string name="deposit_withdrawal">Снятие с вклада</string>
     <string msgid="1890207353314751437" name="dropdown_menu">"Раскрывающееся меню"</string>
-    <string msgid="1234962710353108940" name="expand_button_title">"Дополнительно"</string>
+    <string name="empty_list">Ничего не нашлось</string>
+    <string name="error_a11y_label">Ошибка: недопустимое значение</string>
+    <string name="error_icon_content_description">Ошибка</string>
+    <string name="error_no_internet_connection">Проблема с подключением к интернету, проверьте соединение</string>
+    <string name="error_security_connection">Не удалось установить безопасное соединение с сервером</string>
+    <string name="excees_interests_returned">Возвращено превышение проценты</string>
+    <string msgid="2427401033573778270" name="expand_button_title">"Дополнительно"</string>
+    <string name="exposed_dropdown_menu_content_description">Показать раскрывающееся меню</string>
+    <string msgid="4562557128765735254" name="face_or_screen_lock_prompt_message">"Чтобы продолжить, используйте фейсконтроль или другой способ разблокировки экрана."</string>
+    <string msgid="2282389249605674226" name="face_prompt_message">"Чтобы продолжить, используйте фейсконтроль."</string>
+    <string msgid="5462024216548165325" name="fingerprint_dialog_icon_description">"Значок отпечатка пальца"</string>
+    <string msgid="1072308044213194243" name="fingerprint_dialog_touch_sensor">"Коснитесь сканера отпечатков."</string>
+    <string msgid="8216738333501875566" name="fingerprint_error_hw_not_available">"Сканер отпечатков пальцев недоступен."</string>
+    <string msgid="6306988885793029438" name="fingerprint_error_hw_not_present">"На этом устройстве нет сканера отпечатков пальцев."</string>
+    <string msgid="7291787166416782245" name="fingerprint_error_lockout">"Слишком много попыток входа. Попробуйте ещё раз позже."</string>
+    <string msgid="7520712796891883488" name="fingerprint_error_no_fingerprints">"Нет отсканированных отпечатков пальцев."</string>
+    <string msgid="7627716295344353987" name="fingerprint_error_user_canceled">"Операция с отпечатком пальца отменена пользователем."</string>
+    <string msgid="3873359464293253009" name="fingerprint_not_recognized">"Не распознано"</string>
+    <string msgid="8382576858490514495" name="fingerprint_or_screen_lock_prompt_message">"Чтобы продолжить, используйте отпечаток пальца или другой способ разблокировки экрана."</string>
+    <string msgid="7449360011861769080" name="fingerprint_prompt_message">"Чтобы продолжить, прикоснитесь пальцем к сканеру."</string>
+    <string name="five_year">лет</string>
+    <string name="fri">Пт</string>
+    <string name="from_card">С карты</string>
+    <string msgid="3791785319221634505" name="generic_error_no_device_credential">"Не заданы PIN-код, пароль или графический ключ."</string>
+    <string msgid="1807436368654974044" name="generic_error_no_keyguard">"На этом устройстве не поддерживаются PIN-код, графический ключ и пароль."</string>
+    <string msgid="7309881387583143581" name="generic_error_user_canceled">"Аутентификация отменена пользователем."</string>
+    <string name="icon_content_description">Значок диалогового окна</string>
     <string msgid="6827826412747255547" name="in_progress">"Выполняется"</string>
+    <string name="indefinite">Бессрочный</string>
     <string msgid="7933458017204019916" name="indeterminate">"Отмечено частично"</string>
+    <string name="interest_withdrawal">Снятие процентов</string>
+    <string name="item_view_role_description">Вкладка</string>
+    <string name="main_card">Main card</string>
+    <string name="material_clock_toggle_content_description">Выберите AM (до полудня) или PM (после полудня)</string>
+    <string name="material_hour_24h_suffix">%1$s ч.</string>
+    <string name="material_hour_selection">Выберите час</string>
+    <string name="material_hour_suffix">%1$s ч.</string>
+    <string name="material_minute_selection">Выберите минуты</string>
+    <string name="material_minute_suffix">%1$s мин.</string>
+    <string name="material_timepicker_am">AM</string>
+    <string name="material_timepicker_clock_mode_description">Чтобы ввести время, перейдите в режим часов.</string>
+    <string name="material_timepicker_hour">Час</string>
+    <string name="material_timepicker_minute">Минуты</string>
+    <string name="material_timepicker_pm">PM</string>
+    <string name="material_timepicker_select_time">Выбор времени</string>
+    <string name="material_timepicker_text_input_mode_description">Чтобы ввести время, перейдите в режим ввода текста.</string>
+    <string name="mon">Пн</string>
+    <string name="month">месяц</string>
+    <string name="months">месяцев</string>
+    <string name="mtrl_badge_numberless_content_description">Новое уведомление</string>
+    <string name="mtrl_checkbox_state_description_checked">Флажок установлен.</string>
+    <string name="mtrl_checkbox_state_description_indeterminate">Флажки установлены частично.</string>
+    <string name="mtrl_checkbox_state_description_unchecked">Флажок не установлен.</string>
+    <string name="mtrl_chip_close_icon_content_description">Удалить \"%1$s\"</string>
+    <string name="mtrl_exceed_max_badge_number_content_description" ns2:ignore="PluralsCandidate">Новых уведомлений больше %1$d</string>
+    <string name="mtrl_picker_a11y_next_month">Перейти к следующему месяцу</string>
+    <string name="mtrl_picker_a11y_prev_month">Перейти к предыдущему месяцу</string>
+    <string name="mtrl_picker_announce_current_range_selection">Выбранная дата начала: %1$s. Выбранная дата окончания: %2$s.</string>
+    <string name="mtrl_picker_announce_current_selection">Выбранный элемент: %1$s</string>
+    <string name="mtrl_picker_announce_current_selection_none">нет</string>
+    <string name="mtrl_picker_cancel">Отмена</string>
+    <string name="mtrl_picker_confirm">ОК</string>
+    <string name="mtrl_picker_date_header_selected">%1$s</string>
+    <string name="mtrl_picker_date_header_title">Выберите дату</string>
+    <string name="mtrl_picker_date_header_unselected">Выбранная дата</string>
+    <string name="mtrl_picker_day_of_week_column_header">%1$s</string>
+    <string name="mtrl_picker_end_date_description">Дата окончания: %1$s</string>
+    <string name="mtrl_picker_invalid_format">Недействительный формат.</string>
+    <string name="mtrl_picker_invalid_format_example">Пример: %1$s</string>
+    <string name="mtrl_picker_invalid_format_use">Используйте: %1$s</string>
+    <string name="mtrl_picker_invalid_range">Недопустимый диапазон.</string>
+    <string name="mtrl_picker_navigate_to_current_year_description">Перейти к текущему году: %1$d</string>
+    <string name="mtrl_picker_navigate_to_year_description">Перейти к %1$d году</string>
+    <string name="mtrl_picker_out_of_range">Вне диапазона: %1$s</string>
+    <string name="mtrl_picker_range_header_only_end_selected">Дата начала – %1$s</string>
+    <string name="mtrl_picker_range_header_only_start_selected">%1$s – дата окончания</string>
+    <string name="mtrl_picker_range_header_selected">%1$s – %2$s</string>
+    <string name="mtrl_picker_range_header_title">Выберите диапазон дат</string>
+    <string name="mtrl_picker_range_header_unselected">Дата начала – дата окончания</string>
+    <string name="mtrl_picker_save">Сохранить</string>
+    <string name="mtrl_picker_start_date_description">Дата начала: %1$s</string>
+    <string name="mtrl_picker_text_input_date_hint">Дата</string>
+    <string name="mtrl_picker_text_input_date_range_end_hint">Дата окончания</string>
+    <string name="mtrl_picker_text_input_date_range_start_hint">Дата начала</string>
+    <string name="mtrl_picker_text_input_day_abbr">д</string>
+    <string name="mtrl_picker_text_input_month_abbr">м</string>
+    <string name="mtrl_picker_text_input_year_abbr">г</string>
+    <string name="mtrl_picker_today_description">Сегодня: %1$s</string>
+    <string name="mtrl_picker_toggle_to_calendar_input_mode">Перейти в режим выбора дней</string>
+    <string name="mtrl_picker_toggle_to_day_selection">Нажмите, чтобы перейти к Календарю</string>
+    <string name="mtrl_picker_toggle_to_text_input_mode">Перейти в режим ввода текста</string>
+    <string name="mtrl_picker_toggle_to_year_selection">Нажмите, чтобы выбрать год</string>
+    <string name="mtrl_timepicker_cancel">Отмена</string>
+    <string name="mtrl_timepicker_confirm">ОК</string>
+    <string msgid="6301633601645100427" name="nav_app_bar_navigate_up_description">"Перейти вверх"</string>
+    <string msgid="7456070600745802113" name="nav_app_bar_open_drawer_description">"Открыть панель навигации"</string>
     <string msgid="542007171693138492" name="navigation_menu">"Меню навигации"</string>
+    <string name="no_card">На карту</string>
     <string msgid="6610465462668679431" name="not_selected">"Не выбрано"</string>
-    <string msgid="478774118347071097" name="not_set">"Не указано"</string>
+    <string msgid="6573031135582639649" name="not_set">"Не указано"</string>
     <string msgid="875452955155264703" name="off">"Отключено"</string>
     <string msgid="8655164131929253426" name="on">"Включено"</string>
-    <string msgid="7961817945132860002" name="preference_copied">"Текст \"<ns1:g id="SUMMARY">%1$s</ns1:g>\" скопирован в буфер обмена"</string>
+    <string name="one_year">год</string>
+    <string name="password_toggle_content_description">Показать пароль</string>
+    <string name="please_log_out">Из-за изменений в безопасности приложения просим вас войти в приложение заново для безопасности ваших данных. Просим прощение за неудобство</string>
+    <string name="please_try_again_later">Неизвестная ошибка, попробуйте через некоторое время</string>
+    <string msgid="6685851473431805375" name="preference_copied">"Текст \"<ns1:g id="SUMMARY">%1$s</ns1:g>\" скопирован в буфер обмена"</string>
     <string msgid="5941395253238309765" name="range_end">"Конец диапазона"</string>
     <string msgid="7097486360902471446" name="range_start">"Начало диапазона"</string>
+    <string name="re_calculate_percents">Пересчет процентов</string>
+    <string name="re_registration_deposit">Переоформления вклада</string>
+    <string name="reopen">Перезагрузить</string>
+    <string name="sat">Сб</string>
+    <string msgid="5659570757430909869" name="screen_lock_prompt_message">"Чтобы продолжить, введите данные для разблокировки экрана."</string>
     <string msgid="6264217191555673260" name="search_menu_title">"Поиск"</string>
+    <string name="searchview_clear_text_content_description">Очистить текстовое поле</string>
+    <string name="searchview_navigation_content_description">Назад</string>
     <string msgid="6043586758067023" name="selected">"Выбрано"</string>
+    <string name="side_sheet_accessibility_pane_title">Боковая панель</string>
+    <string name="slow_internet_connection">Пожалуйста, проверьте интернет соединение</string>
     <string msgid="6277540029070332960" name="status_bar_notification_info_overflow">">999"</string>
-    <string msgid="5190123168583152844" name="summary_collapsed_preference_list">"<ns1:g id="CURRENT_ITEMS">%1$s</ns1:g>, <ns1:g id="ADDED_ITEMS">%2$s</ns1:g>"</string>
+    <string name="sum">сум</string>
+    <string msgid="9167775378838880170" name="summary_collapsed_preference_list">"<ns1:g id="CURRENT_ITEMS">%1$s</ns1:g>, <ns1:g id="ADDED_ITEMS">%2$s</ns1:g>"</string>
+    <string name="sun">Вс</string>
     <string msgid="2561197295334830845" name="switch_role">"Переключатель"</string>
     <string msgid="1672349317127674378" name="tab">"Вкладка"</string>
+    <string name="tech_works">Ведутся технические работы\nПожалуйста, попробуйте позже</string>
     <string msgid="5946805113151406391" name="template_percent">"Процентов: <ns1:g id="PERCENTAGE">%1$d</ns1:g>."</string>
+    <string name="thu">Чт</string>
     <string msgid="2068359133884605223" name="time_difference_now">"Сейчас"</string>
     <string msgid="2384500200491672870" name="time_difference_short_days_and_hours">"<ns1:g id="SHORT_DAYS">%1$s</ns1:g> <ns1:g id="SHORT_HOURS">%2$s</ns1:g>"</string>
     <string msgid="8030280938566792191" name="time_difference_short_hours_and_minutes">"<ns1:g id="SHORT_HOURS">%1$s</ns1:g> <ns1:g id="SHORT_MINUTES">%2$s</ns1:g>"</string>
-    <string msgid="5138405918326871307" name="v7_preference_off">"ВЫКЛ."</string>
-    <string msgid="27351710992731591" name="v7_preference_on">"ВКЛ."</string>
+    <string name="today">Сегодня</string>
+    <string name="transferrred_to_inactivity">Спящие</string>
+    <string name="tue">Вт</string>
+    <string name="two_three_four_day">дня</string>
+    <string name="two_three_four_month">месяца</string>
+    <string name="two_three_four_year">года</string>
+    <string name="unkknown_error">Неизвестная ошибка</string>
+    <string name="update">Обновить</string>
+    <string name="update_downloaded">Обновление скачано</string>
+    <string msgid="6524145989441579428" name="use_biometric_label">"Использовать биометрию"</string>
+    <string msgid="5385448280139639016" name="use_biometric_or_screen_lock_label">"Использовать биометрию или другие данные для разблокировки"</string>
+    <string msgid="6533512708069459542" name="use_face_label">"Использовать фейсконтроль"</string>
+    <string msgid="2116180187159450292" name="use_face_or_screen_lock_label">"Использовать фейсконтроль или другой способ разблокировки"</string>
+    <string msgid="6961788485681412417" name="use_fingerprint_label">"Использовать отпечаток пальца"</string>
+    <string msgid="7577690399303139443" name="use_fingerprint_or_screen_lock_label">"Использовать отпечаток пальца или другой способ разблокировки"</string>
+    <string msgid="5459869335976243512" name="use_screen_lock_label">"Использовать пароль, графический ключ или PIN-код"</string>
+    <string msgid="3140233346420563315" name="v7_preference_off">"ВЫКЛ."</string>
+    <string msgid="89551595707643515" name="v7_preference_on">"ВКЛ."</string>
+    <string name="wed">Ср</string>
+    <string name="wrong_card_expire_date">Введите правильный срок действия карты</string>
+    <string name="wrong_format">Неправильный формат</string>
     <string msgid="8863821639144537553" name="ws_action_drawer_content_description">"Панель действий"</string>
     <string msgid="777117228299084604" name="ws_navigation_drawer_content_description">"Панель навигации"</string>
+    <string name="year">год</string>
+    <string name="years">годы</string>
+    <string name="yesterday">Ночь</string>
+    <string name="you_have_no_internet">У вас нет интернета</string>
+    <string name="you_have_no_internet_desc">Нет подключения к интернету. Повторите попытку или попробуйте позже</string>
 </resources>

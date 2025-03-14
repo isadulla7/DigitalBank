@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "uz.fido.wearable-mergeDebugResources-86:/values-v27/values-v27.xml",
+            "outputFile": "uz.fido.wearable-mergeDebugResources-113:/values-v27/values-v27.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\user\\.gradle\\caches\\transforms-3\\871091845664723bd1eb329b8c51012b\\transformed\\jetified-core-splashscreen-1.0.1\\res\\values-v27\\values-v27.xml",
+                    "source": "C:\\Users\\husniddin.madaminov\\.gradle\\caches\\transforms-4\\590f05d06a819e75abe4b6fb9585bc35\\transformed\\jetified-core-splashscreen-1.0.1\\res\\values-v27\\values-v27.xml",
                     "from": {
                         "startLines": "2,3,4,7",
                         "startColumns": "4,4,4,4",

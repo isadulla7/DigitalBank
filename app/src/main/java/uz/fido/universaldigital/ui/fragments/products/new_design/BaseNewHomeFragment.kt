@@ -1,13 +1,18 @@
 package uz.fido.universaldigital.ui.fragments.products.new_design
 
+import android.app.Activity
+import android.content.Intent
+import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.text.Editable
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -31,10 +36,11 @@ import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.products.adapter.MainMyHouseAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.NewFastAccessOperationAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.NewHomeTemplatesAdapter
+import uz.fido.universaldigital.ui.fragments.products.dialog.ScanCardAndWalletDialog
 import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
-import uz.fido.universaldigital.ui.fragments.products.widgets.card_phone.CardNumberDialog
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFastAccessOperationList
+import uz.fido.universaldigital.ui.utils.extensions.getFormattedContact
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
@@ -46,16 +52,16 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
+import uz.scan_card.cardscan.ScanActivity
 import java.text.DecimalFormat
 
 abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterface {
 
-    lateinit var binding: FragmentMenuNewHomeBinding
+    private lateinit var operationDialog: ScanCardAndWalletDialog
     private lateinit var databaseHelper: DatabaseHelper
-    val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
+    lateinit var binding: FragmentMenuNewHomeBinding
     private val utilsViewModel: UtilsViewModel by activityViewModels()
-    private lateinit var dialogCard: CardNumberDialog
-
+    val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
     var mask = "#### #### #### ####"
     var typeCurrent = true
     var container: ViewGroup? = null
@@ -79,15 +85,25 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     private fun cardAndPhoneLayout() {
         binding.btnContact.setOnClickListener {
             if (typeCurrent) {
-                dialogCard = CardNumberDialog(
-                    onClick = {
-                        goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to it.replace(" ", "")))
-                        dialogCard.dismiss()
-                    }
-                )
-                dialogCard.show(childFragmentManager, "")
+                operationDialog = ScanCardAndWalletDialog(
+                    scanCardClick = {
+                        operationDialog.dismiss()
+                        openCameraForCardRead()
+
+                    },
+                    contactClick = {
+                        operationDialog.dismiss()
+                        fetchPhoneNumber()
+                    },
+                    walletClick = {
+                        goto(R.id.transferByWalletFragment)
+                        operationDialog.dismiss()
+                    })
+                operationDialog.show(childFragmentManager, "TAG")
+
+
             } else {
-                goto(R.id.transferByPhoneFragment, bundleOf("contact" to "open", Const.CARD_NUMBER to ""))
+                fetchPhoneNumber()
             }
         }
         if (typeCurrent) {
@@ -100,6 +116,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             binding.btnContact.setImageResource(R.drawable.ic_contact)
             binding.imageType.setImageResource(R.drawable.all_cards)
             binding.title.setText(R.string.mobile_network)
+
             binding.phoneNumberLayout.setHint(R.string.phone_number)
         }
         binding.phoneCard.setOnClickListener {
@@ -107,8 +124,8 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                 typeCurrent = false
                 binding.btnContact.setImageResource(R.drawable.ic_contact)
                 binding.imageType.setImageResource(R.drawable.all_cards)
-                binding.etPhoneNumber.setText("")
                 binding.title.setText(R.string.mobile_network)
+                binding.etPhoneNumber.setText("+998")
                 binding.phoneNumberLayout.setHint(R.string.phone_number)
             } else {
                 typeCurrent = true
@@ -120,6 +137,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             }
         }
         val maskTextWatcher = object : DoAfterTextWatcher() {
+
             private var isUpdating = false
             override fun afterTextChanged(s: Editable?) {
                 if (isUpdating) return
@@ -149,31 +167,34 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                     binding.etPhoneNumber.setSelection(selectionIndex)
                     binding.etPhoneNumber.addTextChangedListener(this)
                     isUpdating = false
-
                     if (typeCurrent) {
-                        if (text.startsWith("+998") && text.length == 17) {
+                        if (text.startsWith("+998") && text.replace(" ", "").length == 13) {
                             goto(R.id.transferByPhoneFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ", "")))
                             binding.etPhoneNumber.setText("")
-                        } else if (text.length == 19) {
+                        } else if (text.replace(" ", "").length == 16) {
                             goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to text.replace(" ", "")))
                             binding.etPhoneNumber.setText("")
                         }
-                    } else if (text.length == 17) {
-                        val serviceCode = mobileServiceId(text.replace("+", "").replace(" ", ""))
-                        if (serviceCode == "error") {
-                            Toast.makeText(
-                                requireContext(),
-                                getString(R.string.wrong_format),
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        } else {
-                            gotoMobilePayments(serviceCode, text, binding.etPhoneNumber)
-                        }
+                    } else if (text.replace(" ", "").length == 13) {
+                        mobilePayment(text)
                     }
                 }
             }
         }
         binding.etPhoneNumber.addTextChangedListener(maskTextWatcher)
+    }
+
+    private fun mobilePayment(text: String) {
+        val serviceCode = mobileServiceId(text.replace("+", "").replace(" ", ""))
+        if (serviceCode == "error") {
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.wrong_format),
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            gotoMobilePayments(serviceCode, text, binding.etPhoneNumber)
+        }
     }
 
     private fun gotoMobilePayments(
@@ -342,14 +363,13 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     override fun openHomeOperation(id: Int) {
         when (id) {
             10 -> {
-                uz.fido.utils.log.Logger.writeLog("HomeFragment")
                 goto(R.id.myCardsListFragment)
             }
 
             11 -> goto(R.id.transferToCardFragment)
             121 -> goto(R.id.myHomeFragment)
             13 -> goto(R.id.qrPaymentFragment)
-            14 -> /*goto(R.id.conversionFragment)*/ {
+            14 -> {
                 showSnackbar(
                     getString(R.string.service_under_development),
                     title = getString(R.string.info)
@@ -358,7 +378,6 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
 
             15 -> goto(R.id.transferToAccountFragment)
             16 -> {
-//                goto(R.id.swiftTransferFragment)
                 showSnackbar(
                     getString(R.string.service_under_development),
                     title = getString(R.string.info)
@@ -366,7 +385,6 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             }
 
             17 -> {
-//                goto(R.id.swiftTransferFragment)
                 showSnackbar(
                     getString(R.string.service_under_development),
                     title = getString(R.string.info)
@@ -375,6 +393,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
 
             18 -> goto(R.id.clientDepositListFragment)
             19 -> goto(R.id.clientCreditListFragment)
+            20 -> openPaymentByServiceId("788")
         }
     }
 
@@ -512,6 +531,87 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                 }
             }
         }
+    }
+
+    private fun openCameraForCardRead() {
+        val intent = ScanActivity.buildIntent(
+            requireActivity(), true, null, R.string.card_scan_position_card, null, null
+        )
+        getActivityResult.launch(intent)
+    }
+
+    private val getActivityResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
+                val scanResult = ScanActivity.creditCardFromResult(it.data)
+                val result = scanResult?.number
+                if (result != null) {
+                    goto(R.id.transferToCardFragment, bundleOf(Const.CARD_NUMBER to result.replace(" ", "")))
+                }
+            }
+        }
+
+    private fun fetchPhoneNumber() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.setDataAndType(
+            ContactsContract.Contacts.CONTENT_URI,
+            ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE
+        )
+        activityForContacts.launch(intent)
+    }
+
+    private val activityForContacts =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                it.data?.let { intent ->
+                    val contactUri = intent.data as Uri
+                    val contactQuery = requireActivity().contentResolver.query(
+                        contactUri, null, null, null, null
+                    ) as Cursor
+                    pickPhoneNumberFromContact(contactQuery)
+                }
+            }
+        }
+
+    private fun pickPhoneNumberFromContact(contactQuery: Cursor?) {
+        try {
+            val phoneNumber: String
+            if (contactQuery != null && contactQuery.moveToFirst()) {
+                val numberIndex: Int =
+                    contactQuery.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+                phoneNumber = contactQuery.getString(numberIndex)
+                if (getFormattedContact(phoneNumber).isNotEmpty()) {
+                    if (typeCurrent) {
+                        goto(R.id.transferByPhoneFragment, bundleOf(Const.CARD_NUMBER to phoneNumber))
+                    } else {
+                        mobilePayment(phoneNumber)
+                    }
+                } else {
+                    wrongPhoneNumberFormat()
+                }
+            } else {
+                wrongPhoneNumberFormat()
+            }
+        } catch (exception: Exception) {
+            contactQuery?.close()
+            wrongPhoneNumberFormat()
+        } finally {
+            contactQuery?.close()
+        }
+    }
+
+    private fun wrongPhoneNumberFormat() {
+        Toast.makeText(
+            requireContext(), getString(uz.fido.utils.R.string.wrong_format), Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun openPaymentByServiceId(serviceId: String) {
+        val service = DatabaseHelper(requireContext()).getServiceByContractId(serviceId)
+        val bundle = Bundle()
+        bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, service)
+        bundle.putInt(PaymentFragment.PAYMENT_OPERATION, PaymentFragment.PAYMENT_OPERATION_PAYMENT)
+        goto(R.id.paymentFragment, bundle)
     }
 
 }

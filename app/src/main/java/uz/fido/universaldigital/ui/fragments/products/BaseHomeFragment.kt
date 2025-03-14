@@ -74,6 +74,7 @@ import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 import java.text.DecimalFormat
 
+
 abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface {
 
     val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
@@ -98,10 +99,9 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
     }
 
     fun initWidgets() {
-        if (Const.MAIN_WIDGETS_VERSION > (Paper.book()
-                .read<Int>(Const.MAIN_WIDGETS_VERSION_SAVED, 0) ?: 0) || Paper.book()
-                .read<java.util.ArrayList<MainWidget>>(Const.MAIN_WIDGETS) == null || Paper.book()
-                .read<Boolean>(Const.UPDATE_MAIN_WIDGETS, false) == true
+        if (Const.MAIN_WIDGETS_VERSION > (Paper.book().read<Int>(Const.MAIN_WIDGETS_VERSION_SAVED, 0) ?: 0) ||
+            Paper.book().read<java.util.ArrayList<MainWidget>>(Const.MAIN_WIDGETS) == null ||
+            Paper.book().read<Boolean>(Const.UPDATE_MAIN_WIDGETS, false) == true
         ) {
             mainWidgetsList = java.util.ArrayList()
             val names = resources.getStringArray(R.array.main_widgets)
@@ -191,8 +191,11 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
 
         }
 
+
         val maskTextWatcher = object : DoAfterTextWatcher() {
             private var isUpdating = false
+
+
             override fun afterTextChanged(s: Editable?) {
                 if (isUpdating) return
                 s?.let {
@@ -602,14 +605,13 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
     override fun openHomeOperation(id: Int) {
         when (id) {
             10 -> {
-                uz.fido.utils.log.Logger.writeLog("HomeFragment")
                 goto(R.id.myCardsListFragment)
             }
 
             11 -> goto(R.id.transferToCardFragment)
             121 -> goto(R.id.myHomeFragment)
             13 -> goto(R.id.qrPaymentFragment)
-            14 -> /*goto(R.id.conversionFragment)*/ {
+            14 -> {
                 showSnackbar(
                     getString(R.string.service_under_development),
                     title = getString(R.string.info)
@@ -618,7 +620,6 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
 
             15 -> goto(R.id.transferToAccountFragment)
             16 -> {
-//                goto(R.id.swiftTransferFragment)
                 showSnackbar(
                     getString(R.string.service_under_development),
                     title = getString(R.string.info)
@@ -626,7 +627,6 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
             }
 
             17 -> {
-//                goto(R.id.swiftTransferFragment)
                 showSnackbar(
                     getString(R.string.service_under_development),
                     title = getString(R.string.info)
@@ -635,6 +635,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
 
             18 -> goto(R.id.clientDepositListFragment)
             19 -> goto(R.id.clientCreditListFragment)
+            20 -> openPaymentByServiceId("788")
         }
     }
 
@@ -783,4 +784,11 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
         }
     }
 
+    private fun openPaymentByServiceId(serviceId: String) {
+        val service = DatabaseHelper(requireContext()).getServiceByContractId(serviceId)
+        val bundle = Bundle()
+        bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, service)
+        bundle.putInt(PaymentFragment.PAYMENT_OPERATION, PaymentFragment.PAYMENT_OPERATION_PAYMENT)
+        goto(R.id.paymentFragment, bundle)
+    }
 }

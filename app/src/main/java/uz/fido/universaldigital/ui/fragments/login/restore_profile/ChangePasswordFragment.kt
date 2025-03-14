@@ -105,7 +105,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
-                    showSnackbar(getString(R.string.success_change_password))
+                    showSnackbar(snackbarText = getString(R.string.success_change_password), title = getString(R.string.password_success))
                     Handler(Looper.getMainLooper()).postDelayed(
                         { requireActivity().logOut() }, 1500
                     )

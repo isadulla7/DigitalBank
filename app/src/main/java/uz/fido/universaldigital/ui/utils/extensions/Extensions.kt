@@ -21,6 +21,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
@@ -46,7 +47,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.payment.PaymentParams
-import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
@@ -81,30 +81,18 @@ fun getFormattedContact(phoneNumber: String): String {
 }
 
 fun TextView.setHtmlText(text: String) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        this.text = Html.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
-    } else {
-        this.text = Html.fromHtml(text)
-    }
+    this.text = Html.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 }
 
 fun TextInputLayout.setHtmlHint(text: String) {
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        this.hint = Html.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
-    } else {
-        this.hint = Html.fromHtml(text)
-    }
+    this.hint = Html.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 }
 
 fun TextInputLayout.setPaymentHint(paymentParams: PaymentParams) {
     val hint = if (paymentParams.hint.toString()
             .isNotEmpty()
     ) paymentParams.hint else paymentParams.name
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-        this.hint = Html.fromHtml(hint, HtmlCompat.FROM_HTML_MODE_LEGACY)
-    } else {
-        this.hint = Html.fromHtml(hint)
-    }
+    this.hint = Html.fromHtml(hint, HtmlCompat.FROM_HTML_MODE_LEGACY)
 }
 
 fun Fragment.hideSoftKeyboard() {
@@ -336,9 +324,9 @@ fun limitRange(): CalendarConstraints.Builder {
 }
 
 fun isUserIdentified(): Boolean {
-    val signInResponse = Paper.book().read<SignInResponse>(Const.PAPER_CLIENT_INFO)
-    return if (signInResponse != null) {
-        signInResponse.user_type_id == 1 || signInResponse.user_type_id == 2
+    val userTypeId = Paper.book().read<Int>(Const.PAPER_CLIENT_USER_TYPE_ID)
+    return if (userTypeId != null) {
+        userTypeId == 1 || userTypeId == 2
     } else false
 }
 
@@ -426,6 +414,10 @@ fun recordException(e: Exception, activity: Activity, functionName: String? = ""
     }
 }
 
+fun logToCrashlytics(tag: String, message: String) {
+    FirebaseCrashlytics.getInstance().log("$tag: $message")
+}
+
 fun Activity.recordException(e: Exception, functionName: String? = "") {
     FirebaseCrashlytics.getInstance().apply {
         setCustomKey("class_name", this@recordException.javaClass.simpleName)
@@ -447,5 +439,11 @@ fun Fragment.recordException(e: Exception, functionName: String? = "") {
         setCustomKey("class_name", this@recordException.javaClass.simpleName)
         setCustomKey("function_name", functionName.orEmpty())
         recordException(e)
+    }
+}
+
+fun RadioGroup.setChildrenEnable(enable: Boolean) {
+    for (i in 0 until this.childCount) {
+        this.getChildAt(i).isEnabled = enable
     }
 }

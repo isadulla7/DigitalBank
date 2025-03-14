@@ -2,7 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/navigation_login">
+    android:id="@+id/navigation_login"
+    app:startDestination="@id/verificationForSignInFragment">
 
     <fragment
         android:id="@+id/signInFragment"
@@ -33,6 +34,11 @@
             app:destination="@id/pinCodeFragment"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="false" />
+        <action
+            android:id="@+id/action_confirmSmsFragmentLogin_to_mainIdentificationForSignInFragment"
+            app:destination="@id/mainIdentificationForSignInFragment"
+            app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -89,5 +95,18 @@
         android:id="@+id/changePasswordFragment2"
         android:name="uz.fido.universaldigital.ui.fragments.login.restore_profile.ChangePasswordFragment"
         android:label="ChangePasswordFragment" />
+    <fragment
+        android:id="@+id/verificationForSignInFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.identification.VerificationForSignInFragment"
+        android:label="VerificationForSignInFragment">
+        <action
+            android:id="@+id/action_verificationForSignInFragment_to_pinCodeFragment"
+            app:destination="@id/pinCodeFragment"
+            app:popUpTo="@id/signInFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mainIdentificationForSignInFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.profile.identification.MainIdentificationForSignInFragment"
+        android:label="MainIdentificationForSignInFragment" />
 
 </navigation>

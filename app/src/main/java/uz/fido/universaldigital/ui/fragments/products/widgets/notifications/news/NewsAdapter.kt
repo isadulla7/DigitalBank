@@ -35,13 +35,8 @@ class NewsAdapter(
     inner class ViewHolder(private val binding: ItemNewsBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: News) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                binding.description.text = Html.fromHtml(item.content, Html.FROM_HTML_MODE_LEGACY)
-                binding.title.text = Html.fromHtml(item.title, Html.FROM_HTML_MODE_LEGACY)
-            } else {
-                binding.description.text = item.content
-                binding.title.text = item.title
-            }
+            binding.description.text = Html.fromHtml(item.content, Html.FROM_HTML_MODE_LEGACY)
+            binding.title.text = Html.fromHtml(item.title, Html.FROM_HTML_MODE_LEGACY)
             binding.date.text = item.date
             binding.father.setOnClickListener {
                 baseInterface.openNews(item, item.img_url)

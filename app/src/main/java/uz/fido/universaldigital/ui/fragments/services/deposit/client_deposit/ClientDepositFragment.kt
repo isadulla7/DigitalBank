@@ -1,5 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
@@ -34,6 +35,7 @@ import java.util.concurrent.TimeUnit
 class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientDepositViewModel>(
     FragmentClientDepositBinding::inflate, ClientDepositViewModel::class.java
 ), View.OnClickListener {
+
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var linearLayoutManager: LinearLayoutManager
     private lateinit var dialog: DepositOperationDialog
@@ -49,12 +51,14 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
     private var list = ArrayList<AccountHistory>()
     private var serviceId: String = ""
 
-    private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
-    private val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
-    private val newDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
-
     companion object {
         const val CLIENT_DEPOSIT_MODEL = "model"
+        const val CLOSE_DEPOSIT = "close_deposit"
+        const val EARLY_CLOSE_DEPOSIT = "early_close_deposit"
+        const val WITH_DRAW_PERCENT = "with_draw_percent"
+        const val TOP_UP_DEPOSIT = "top_up_deposit"
+        const val RENAME_DEPOSIT = "rename_deposit"
+        const val DEPOSIT_INFO = "deposit_info"
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -76,24 +80,32 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
             dialog = DepositOperationDialog {
                 dialog.dismiss()
                 when (it) {
-                    "edit" -> {
+                    RENAME_DEPOSIT -> {
                         goto(
-                            R.id.action_clientDepositFragment_to_depositEditNameFragment,
+                            R.id.depositEditNameFragment,
                             bundleOf(DepositEditNameFragment.EDIT_NAME to clientDeposit)
                         )
                     }
 
-                    "delete" -> {
+                    EARLY_CLOSE_DEPOSIT -> {
                         goto(
                             R.id.depositFillingFragment, bundleOf(
                                 "deposit" to clientDeposit,
-                                Const.OPERATION to "delete",
-                                "card_type" to clientDeposit.currencyCode
+                                Const.OPERATION to EARLY_CLOSE_DEPOSIT
                             )
                         )
                     }
 
-                    "info" -> {
+                    CLOSE_DEPOSIT -> {
+                        goto(
+                            R.id.depositFillingFragment, bundleOf(
+                                "deposit" to clientDeposit,
+                                Const.OPERATION to CLOSE_DEPOSIT
+                            )
+                        )
+                    }
+
+                    DEPOSIT_INFO -> {
                         val loanDetailsDialog = DialogInfoMonitoring(
                             null,
                             clientDeposit, "info"
@@ -101,7 +113,7 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
                         loanDetailsDialog.show(childFragmentManager, "")
                     }
 
-                    "with_draw" -> {
+                    WITH_DRAW_PERCENT -> {
                         goto(
                             R.id.depositPercentsDialog,
                             bundleOf("client_deposit" to clientDeposit)
@@ -183,6 +195,8 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
     }
 
     private fun addDateView(list: ArrayList<AccountHistory>) {
+        val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
+        val newDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         list.forEach {
             if (dateSortList.isEmpty()) {
                 val accountHistory = AccountHistory(
@@ -207,12 +221,9 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
                 )
                 dateSortList.add(accountHistory)
             }
-
-            val newlistDate =
-                newDateFormat.format(simpleDateFormat.parse(dateSortList[dateSortList.size - 1].dateExecute).time)
-            val listDate = newDateFormat.format(simpleDateFormat.parse(it.dateExecute).time)
-
-            if (newlistDate != listDate) {
+            val newListDate = newDateFormat.format(simpleDateFormat.parse(dateSortList[dateSortList.size - 1].dateExecute.toString())?.time ?: "")
+            val listDate = newDateFormat.format(simpleDateFormat.parse(it.dateExecute.toString())?.time ?: "")
+            if (newListDate != listDate) {
                 val accountHistory = AccountHistory(
                     "",
                     "",
@@ -237,36 +248,30 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
             }
             dateSortList.add(it)
         }
-
         accountHistoryAdapter!!.setNewList(dateSortList)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun setDate() {
-        binding.linearOut.visibility = if (clientDeposit.partialWrite == "Y") View.VISIBLE
-        else View.INVISIBLE
-
+        binding.linearOut.visibility = if (clientDeposit.partialWrite == "Y") View.VISIBLE else View.INVISIBLE
         serviceId = clientDeposit.status.orEmpty()
         binding.depositNumber.text = if (clientDeposit.savDepId.orEmpty().length > 4) "•• ${
             clientDeposit.savDepId.orEmpty().substring(
                 clientDeposit.savDepId.orEmpty().length - 4,
                 clientDeposit.savDepId.orEmpty().length
             )
-        }"
-        else "•• ${clientDeposit.savDepId}"
+        }" else "•• ${clientDeposit.savDepId}"
         binding.depositName.text = clientDeposit.depName
         binding.appBar.setTitle(clientDeposit.depName.orEmpty())
-        binding.amount.text =
-            Format.formatAmount(((clientDeposit.sumDep ?: "0").toDouble() / 100).toString()) + " ${clientDeposit.currencyChar}"
+        binding.amount.text = Format.formatAmount(((clientDeposit.sumDep ?: "0").toDouble() / 100).toString()) + " ${clientDeposit.currencyChar}"
         binding.depositPercent.text =
             "${getString(R.string.profit_per_year)} " + clientDeposit.percent + " %"
         binding.depositMonth.text = clientDeposit.depTemp
-        binding.progressIndicator.progress =
-            if (calculatePercentage() > 0) calculatePercentage().toInt() else 2
+        binding.progressIndicator.progress = if (calculatePercentage() > 0) calculatePercentage().toInt() else 2
         clientDeposit.persSum?.let {
             binding.amountPercent.text =
                 "${Format.formatAmount(Format.convertFromTiynDivide(it))} ${clientDeposit.currencyChar}"
         }
-        // binding.progressIndicatorPercent.progress = if (calculatePercentage() > 0) calculatePercentage().toInt() else 1
         binding.depositPercentDay.text = clientDeposit.closingDate
     }
 
@@ -298,6 +303,7 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
     }
 
     private fun initDate() {
+        val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
         val calendarStart = Calendar.getInstance()
         val calendarEnd = Calendar.getInstance()
         currentDate = df.format(calendarEnd.time)
@@ -312,8 +318,7 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
                 goto(
                     R.id.depositFillingFragment, bundleOf(
                         "deposit" to clientDeposit,
-                        Const.OPERATION to "top_up",
-                        "card_type" to clientDeposit.currencyCode
+                        Const.OPERATION to TOP_UP_DEPOSIT
                     )
                 )
             }
@@ -321,13 +326,11 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
             R.id.linear_out -> {
                 if (clientDeposit.partialWrite == "Y") {
                     val bundle = Bundle()
-                    bundle.putString(Const.OPERATION, "with_draw")
+                    bundle.putString(Const.OPERATION, WITH_DRAW_PERCENT)
                     bundle.putSerializable("deposit", clientDeposit)
-                    bundle.putString("card_type", clientDeposit.currencyCode)
                     goto(R.id.depositFillingFragment, bundle)
                 }
             }
-
         }
     }
 }

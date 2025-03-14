@@ -43,9 +43,14 @@ class ClientDepositViewModel @Inject constructor(
             emit(depositRepository.investMoneyToDeposit(token, investMoneyToDepositRequest))
         }
 
-    fun closeDeposit(token: String, earlyClosureRequest: EarlyClosureRequest) =
+    fun earlyCloseDeposit(token: String, earlyClosureRequest: EarlyClosureRequest) =
         liveData(Dispatchers.IO) {
             emit(depositRepository.earlyClosure(token, earlyClosureRequest))
+        }
+
+    fun closeDeposit(token: String, earlyClosureRequest: EarlyClosureRequest) =
+        liveData(Dispatchers.IO) {
+            emit(depositRepository.closeDeposit(token, earlyClosureRequest))
         }
 
     fun partialWithDraw(

@@ -1,10 +1,11 @@
 package uz.fido.universaldigital.ui.fragments.login.sign_in
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import android.text.InputFilter
+import android.text.Editable
+import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
-import android.view.KeyEvent
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
@@ -19,6 +20,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignInBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.DeviceIdentifyState
 import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
@@ -42,24 +44,62 @@ import uz.fido.utils.utility.language.Utility.getDeviceName
 class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     FragmentSignInBinding::inflate, SignInViewModel::class.java
 ) {
-
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
+        setMask()
         initSetOnClickListeners()
         setTermsOfUseColor()
-        setPhonePrefix()
         initTextChangeListeners()
-        initMyAccount()
     }
 
-    private fun setPhonePrefix() {
-        binding.etPhoneNumber.filters = arrayOf(InputFilter { source, _, _, _, _, _ -> source.filter { it.isDigit() || it == '+' } })
-        binding.etPhoneNumber.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus && binding.etPhoneNumber.text.toString().isEmpty()) binding.etPhoneNumber.setText(getString(R.string.phone_number_prefix))
+    @SuppressLint("SetTextI18n")
+    private fun setMask() {
+        binding.etPhoneNumber.setText("+998")
+        binding.etPhoneNumber.addTextChangedListener(object : TextWatcher {
+            private var isEditing = false
+            private var lastText = ""
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                lastText = s.toString()
+            }
+
+            override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
+                if (isEditing || text == null) return
+                isEditing = true
+                var currentText = text.toString().replace(Regex("[^0-9+]"), "")
+                if (!currentText.startsWith("+998")) {
+                    currentText = "+998"
+                }
+                val formattedText = formatPhoneNumber(currentText)
+                binding.etPhoneNumber.removeTextChangedListener(this)
+                binding.etPhoneNumber.setText(formattedText)
+                binding.etPhoneNumber.setSelection(formattedText.length)
+                binding.etPhoneNumber.addTextChangedListener(this)
+                binding.btnContinue.isEnabled(text.toString().length == 17 && passwordFormatted().length > 7)
+                isEditing = false
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+    }
+
+    fun formatPhoneNumber(text: String): String {
+        val digits = text.replace(Regex("[^0-9]"), "")
+        val builder = StringBuilder("+998 ")
+        if (digits.length > 3) {
+            builder.append(digits.substring(3, minOf(5, digits.length))) // XX
         }
-        binding.etPhoneNumber.setOnKeyListener { _, _, event ->
-            event.keyCode == KeyEvent.KEYCODE_DEL && binding.etPhoneNumber.text.toString().length == 4
+        if (digits.length > 5) {
+            builder.append(" ").append(digits.substring(5, minOf(8, digits.length))) // XXX
         }
+        if (digits.length > 8) {
+            builder.append(" ").append(digits.substring(8, minOf(10, digits.length))) // XX
+        }
+        if (digits.length > 10) {
+            builder.append(" ").append(digits.substring(10, minOf(12, digits.length))) // XX
+        }
+
+        return builder.toString()
     }
 
     private fun initSetOnClickListeners() {
@@ -73,9 +113,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun initTextChangeListeners() {
-        binding.etPhoneNumber.addTextChangedListener { phone ->
-            binding.btnContinue.isEnabled(phone.toString().length == 17 && passwordFormatted().length > 7)
-        }
         binding.etPassword.addTextChangedListener { password ->
             binding.btnContinue.isEnabled(password.toString().length > 7 && phoneNumberFormatted().length == 12)
         }
@@ -168,7 +205,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
                     Status.SUCCESS -> {
                         getFCMToken()
                         model.string_line = it.data!!.string_line
-                        gotoConfirmSmsFragment(model)
+                        gotoConfirmSmsFragment(model, it.data?.device_myid_state ?: DeviceIdentifyState.DEFAULT)
                     }
 
                     Status.ERROR -> {
@@ -187,12 +224,12 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
         }
     }
 
-    private fun gotoConfirmSmsFragment(model: SignInRequestNew) {
+    private fun gotoConfirmSmsFragment(model: SignInRequestNew, deviceMyIdState: String) {
         saveToPaper(Const.PAPER_PAYMENT_VERSION, model.version)
         val bundle = Bundle().apply {
             putString(Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString())
             putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_IN)
-
+            putString(Const.DEVICE_MY_ID_STATE, deviceMyIdState)
             putSerializable(ConfirmSmsFragment.SIGN_IN_REQUEST, model)
         }
         saveToPaper(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
@@ -205,13 +242,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
 
     private fun passwordFormatted(): String {
         return binding.etPassword.editableText.toString().replace(" ", "")
-    }
-
-    private fun initMyAccount() {
-        if (BuildConfig.DEBUG) {
-            binding.etPhoneNumber.setText("+998930088809")
-            binding.etPassword.setText("Qwerty2398@")
-        }
     }
 
 }

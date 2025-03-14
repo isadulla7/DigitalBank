@@ -90,9 +90,7 @@ class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBindin
     private fun onClickView() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
-            //    if (binding.checkBox.isChecked) {
             forSmsCheck()
-            //   } else showSnackbar(getString(R.string.please_accept_privacy))
         }
     }
 
@@ -100,52 +98,54 @@ class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBindin
         if (deposit.percent == "0") {
             createDeposit()
         } else if (isCard) {
-            if (!checkForPaymentSms(
-                    card = card!!, smsControlLimit = "-1", amount = Format.formatAmountToTiyn(amount)
-                )
-            ) {
-                createDeposit()
-            } else {
-                checkForSms(card!!, amount, "-5", this)
+            card?.let { selectedCard ->
+                if (!checkForPaymentSms(
+                        card = selectedCard, smsControlLimit = "-1", amount = Format.formatAmountToTiyn(amount)
+                    )
+                ) {
+                    createDeposit()
+                } else {
+                    checkForSms(selectedCard, amount, "-5", this)
+                }
             }
         }
     }
-
 
     private fun createDeposit() {
-        val createCreditRequest = CreateCreditRequest(
-            command = if (deposit.percent != "0") {
-                if (card!!.object_type == WALLET) "purse&dep" else "card&dep"
-            } else "dep",
-            amount = Format.formatAmountToTiyn(amount),
-            from_object_id = if (deposit.percent != "0") card!!.object_id else null,
-            depId = deposit.dep_id.toString(),
-            service_id = "-5",
-            depType = deposit.dep_type.toString(),
-            pay_to_card = deposit.pay_to_card,
-            pay_to_card_number = deposit.pay_to_card_number,
-            sms_code = smsCode,
-            bxm_code = requireArguments().getString("bxm_code")
-        )
-        binding.btnContinue.setProgress(true)
-        viewModel.createDeposit(getClientToken(), createCreditRequest).observe(viewLifecycleOwner) { resources ->
-            binding.btnContinue.setProgress(false)
-            when (resources.status) {
-                Status.SUCCESS -> {
-                    goto(
-                        R.id.basicSuccessFragment, bundleOf(
-                            Const.OPERATION to BasicSuccessFragment.DEPOSIT_OPEN, "amount" to amount
+        card?.let { selectedCard ->
+            val createCreditRequest = CreateCreditRequest(
+                command = if (deposit.percent != "0") {
+                    if (selectedCard.object_type == WALLET) "purse&dep" else "card&dep"
+                } else "dep",
+                amount = Format.formatAmountToTiyn(amount),
+                from_object_id = if (deposit.percent != "0") selectedCard.object_id else null,
+                depId = deposit.dep_id.toString(),
+                service_id = "-5",
+                depType = deposit.dep_type.toString(),
+                pay_to_card = deposit.pay_to_card,
+                pay_to_card_number = deposit.pay_to_card_number,
+                sms_code = smsCode,
+                bxm_code = requireArguments().getString("bxm_code")
+            )
+            binding.btnContinue.setProgress(true)
+            viewModel.createDeposit(getClientToken(), createCreditRequest).observe(viewLifecycleOwner) { resources ->
+                binding.btnContinue.setProgress(false)
+                when (resources.status) {
+                    Status.SUCCESS -> {
+                        goto(
+                            R.id.basicSuccessFragment, bundleOf(
+                                Const.OPERATION to BasicSuccessFragment.DEPOSIT_OPEN, "amount" to amount
+                            )
                         )
-                    )
-                }
+                    }
 
-                Status.ERROR -> {
-                    showSnackbar(resources.message.toString())
+                    Status.ERROR -> {
+                        showSnackbar(resources.message.toString())
+                    }
                 }
             }
         }
     }
-
 
     private fun init() {
         val cal: Calendar = Calendar.getInstance()
@@ -181,7 +181,6 @@ class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBindin
 
     }
 
-
     private fun addView(name: String, value: String) {
         val viewDepositCreateBinding = ViewDepositCreateBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
@@ -198,12 +197,12 @@ class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBindin
                 cardResponse?.let { card ->
                     if (card.balance.toBigDecimal().divide(100.toBigDecimal()).compareTo(amount.toBigDecimal()) == -1) {
                         isCard = false
+                        this.card = card
                         binding.btnContinue.isEnabled(false)
                     } else {
                         binding.btnContinue.isEnabled(true)
                         this.card = card
                         isCard = true
-
                     }
                 }
             }

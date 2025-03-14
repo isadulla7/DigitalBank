@@ -23,7 +23,6 @@ import uz.fido.universaldigital.databinding.FragmentDepositConstructorBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.ConstructorCapitalDialog
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.LoanMonthDialog
-import uz.fido.utils.log.Logger
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
@@ -127,7 +126,6 @@ class DepositConstructFragment :
 
     override fun onResume() {
         super.onResume()
-        Logger.writeLog(binding.edMonth.text.toString())
         if (binding.edDay.text!!.isNotEmpty() || binding.edMonth.text!!.isNotEmpty() || binding.edYear.text!!.isNotEmpty()) {
             getDepositConstructorPercents()
         } else {

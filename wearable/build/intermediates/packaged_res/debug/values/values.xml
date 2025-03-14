@@ -15,8 +15,8 @@
     <string name="tile_label">Example tile</string>
     <string name="total_balance">Total balance</string>
     <style name="HomeActivityTheme.Starting" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@android:color/black</item>
-        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
-        <item name="postSplashScreenTheme">@android:style/Theme.DeviceDefault</item>
+
+
+
     </style>
 </resources>

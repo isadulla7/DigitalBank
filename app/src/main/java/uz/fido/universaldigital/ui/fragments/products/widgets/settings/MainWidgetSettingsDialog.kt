@@ -13,7 +13,6 @@ import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -160,8 +159,6 @@ class MainWidgetSettingsDialog(private val baseInterface: BaseInterface) :
         (context as Activity?)!!.windowManager.defaultDisplay.getMetrics(displayMetrics)
         return displayMetrics.heightPixels
     }
-
-    override fun onStartDrag(viewHolder: RecyclerView.ViewHolder?) {}
 
     override fun updateWidgetList(list: ArrayList<MainWidget>) {}
 

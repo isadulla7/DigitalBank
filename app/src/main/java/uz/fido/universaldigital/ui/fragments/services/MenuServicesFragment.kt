@@ -18,49 +18,42 @@ class MenuServicesFragment :
     BaseSimpleFragment<FragmentMenuServicesBinding>(FragmentMenuServicesBinding::inflate),
     PermissionInterface {
 
-    private lateinit var menuServicesAdapter: MenuServicesAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        initServicesList()
+    private val menuServicesAdapter by lazy {
+        MenuServicesAdapter { serviceId -> initServiceItemClickEvent(serviceId) }
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
-        initServices()
-        initSetOnClickListeners()
+        setupRecyclerView()
+        setupClickListeners()
     }
 
-    private fun initServices() {
-        val gridLayoutManager = GridLayoutManager(requireContext(), 6, RecyclerView.VERTICAL, false)
-        gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return when (menuServicesAdapter.getItemViewType(position)) {
-                    MenuServicesAdapter.ITEM_TYPE_HEADER -> 6
-                    MenuServicesAdapter.ITEM_TYPE_BANK_PRODUCT -> 3
-                    MenuServicesAdapter.ITEM_TYPE_SERVICE -> 2
-                    else -> 1
-                }
-            }
-        }
+    private fun setupRecyclerView() {
         binding.services.apply {
-            layoutManager = gridLayoutManager
+            layoutManager = createGridLayoutManager()
             adapter = menuServicesAdapter
             itemAnimator?.changeDuration = 0
-        }
-    }
-
-    private fun initServicesList() {
-        menuServicesAdapter = MenuServicesAdapter { serviceId ->
-            initServiceItemClickEvent(serviceId)
         }
         menuServicesAdapter.submitList(getServiceList())
     }
 
-    private fun initSetOnClickListeners() {
-        binding.search.setOnClickListener {
-            goto(R.id.searchEveryWhereFragment)
+    private fun createGridLayoutManager(): GridLayoutManager {
+        return GridLayoutManager(requireContext(), 6, RecyclerView.VERTICAL, false).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return when (menuServicesAdapter.getItemViewType(position)) {
+                        MenuServicesAdapter.ITEM_TYPE_HEADER -> 6
+                        MenuServicesAdapter.ITEM_TYPE_BANK_PRODUCT -> 3
+                        MenuServicesAdapter.ITEM_TYPE_SERVICE -> 2
+                        else -> 1
+                    }
+                }
+            }
         }
+    }
+
+    private fun setupClickListeners() {
+        binding.search.setOnClickListener { goto(R.id.searchEveryWhereFragment) }
     }
 
     private fun initServiceItemClickEvent(serviceId: Int) {

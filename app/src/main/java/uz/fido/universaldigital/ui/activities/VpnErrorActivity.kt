@@ -27,7 +27,7 @@ class VpnErrorActivity : BaseActivity() {
 
     private fun setOnClickListener() {
         binding.update.setOnClickListener {
-            if (!SecurityCheck.isFromVpn()) {
+            if (!SecurityCheck.isVpnActive()) {
                 finish()
             }
         }

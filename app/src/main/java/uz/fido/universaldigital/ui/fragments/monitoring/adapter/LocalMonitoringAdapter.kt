@@ -19,6 +19,7 @@ import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.format.Format
 import uz.fido.utils.sticky.StickyHeaderInterface
 import java.math.BigDecimal
+import java.math.RoundingMode
 
 class LocalMonitoringAdapter(
     private var context: Context, private var consolidatedList: ArrayList<ListItem>, private val onClick: (LocalMonitoring) -> Unit
@@ -97,7 +98,8 @@ class LocalMonitoringAdapter(
 
             val sum = BigDecimal(100)
             binding.tvAmount.text = "$symbol ${
-                Format.formatAmount((monitoringItem.amount.toBigDecimal() / sum).toString()).replace(".0", "")
+                Format.formatAmount(/*(monitoringItem.amount.toBigDecimal() / sum)*/
+                    monitoringItem.amount.toBigDecimal().divide(sum, 2, RoundingMode.HALF_UP).toString())
             } ${Format.currencyCode(monitoringItem.currency_code)}"
         }
     }

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.LinearInterpolator
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -133,12 +134,14 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
 
             Season.SPRING -> {
                 binding.homeAnimView.apply {
+                    alpha = 0.85f
                     setSnowflakeImage(R.drawable.sakura)
                     setSnowflakeSpeedMin(1)
                     setSnowflakeSpeedMax(2)
-                    setSnowflakesNum(30)
-                    setSnowflakeSizeMax(30)
-                    setSnowflakeSizeMin(16)
+                    setSnowflakesNum(25)
+                    setSnowflakeSizeMax(24)
+                    setSnowflakeSizeMin(12)
+                    setSnowflakeAngle(-45)
                 }
             }
 
@@ -198,13 +201,17 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     }
 
     private fun setNotificationAdapter() {
-        notificationsAdapter = CardStackAdapter(requireContext(), notificationList) {
-            removeNotificationItem(it)
-        }
+        notificationsAdapter = CardStackAdapter(
+            requireContext(), notificationList,
+            remove = { removeNotificationItem(it, "remove") },
+            onCLick = {
+                removeNotificationItem(it, "read")
+
+            })
         val manager = CardStackLayoutManager(requireContext()) { _, _ ->
             try {
                 if (notificationList.isNotEmpty()) {
-                    removeNotificationItem(notificationList[0])
+                    removeNotificationItem(notificationList[0], "remove")
                 }
             } finally {
             }
@@ -229,7 +236,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         binding.notificationItem.text = notificationList.size.toString()
     }
 
-    private fun removeNotificationItem(notification: Notification) {
+    private fun removeNotificationItem(notification: Notification, type: String) {
         val list = ArrayList<String>()
         list.add(notification.notification_id)
         menuProductsViewModel.updateNotificationStatus(
@@ -243,9 +250,11 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
                         binding.notificationItem.visibility = View.INVISIBLE
                         binding.consNotification.visibility = View.GONE
                     }
-                    //setNotificationAdapter()
                     binding.notificationItem.text = notificationList.size.toString()
                     notificationsAdapter.setList(notification)
+                    if (type == "read") {
+                        goto(R.id.readNotificationFragment, bundleOf("item" to notification))
+                    }
                 }
 
                 Status.ERROR -> {

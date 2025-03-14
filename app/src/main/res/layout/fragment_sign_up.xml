@@ -23,13 +23,15 @@
         android:hint="@string/phone_number"
         app:layout_constraintTop_toBottomOf="@id/app_bar">
 
-        <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+        <EditText
             android:id="@+id/et_phone_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:digits="1234567890 "
             android:imeOptions="actionDone"
             android:inputType="phone"
+            android:maxLength="17"
+            android:maxLines="1"
             android:theme="@style/DefaultEditTextTheme"
             app:met_mask="+998 ## ### ## ##" />
 

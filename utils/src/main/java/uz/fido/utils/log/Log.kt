@@ -2,9 +2,11 @@ package uz.fido.utils.log
 
 import android.content.Context
 import android.util.Log
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import uz.fido.utils.BuildConfig
 
 object Log {
+
     fun Context.i(message: String) {
         i("Info: ${this.javaClass.simpleName}-", message)
     }
@@ -15,7 +17,7 @@ object Log {
 
     fun i(tag: String, message: String) {
         Log.i(tag, message)
-        crashlyticsLog(tag,message)
+        crashlyticsLog(tag, message)
     }
 
     fun i(message: String, throwable: Throwable) {
@@ -36,7 +38,7 @@ object Log {
 
     fun v(tag: String, message: String) {
         Log.v(tag, message)
-        crashlyticsLog(tag,message)
+        crashlyticsLog(tag, message)
     }
 
     fun e(message: String, throwable: Throwable) {
@@ -76,10 +78,10 @@ object Log {
     private fun crashlyticsLog(
         tag: String,
         message: String,
-        force:Boolean = false
+        force: Boolean = false
     ) {
         if (debugMode || force) {
-//            FirebaseCrashlytics.getInstance().log("${tag}: ${message}")
+            FirebaseCrashlytics.getInstance().log("${tag}: $message")
         }
     }
 

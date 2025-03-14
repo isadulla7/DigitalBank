@@ -35,7 +35,6 @@ import uz.fido.universaldigital.ui.fragments.transfers.over_my_cards.OverMyCards
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
 import uz.fido.universaldigital.ui.fragments.transfers.transfer_history.P2PHistoryAdapter
 import uz.fido.universaldigital.ui.fragments.transfers.transfer_history.TransferHistoriesFragment
-import uz.fido.universaldigital.ui.fragments.transfers.utils.capitalizeWord
 import uz.fido.universaldigital.ui.fragments.transfers.utils.setMinMaxAmount
 import uz.fido.universaldigital.ui.fragments.transfers.utils.showTransferSkeleton
 import uz.fido.universaldigital.ui.utils.extensions.cardMiniLogoByType

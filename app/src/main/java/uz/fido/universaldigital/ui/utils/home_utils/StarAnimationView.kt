@@ -59,7 +59,7 @@ class StarAnimationView : View {
 
     private fun init() {
         mDrawable = ContextCompat.getDrawable(context, R.drawable.ic_group_1)
-        mBaseSize = Math.max(mDrawable!!.intrinsicWidth, mDrawable!!.intrinsicHeight) / 2f
+        mBaseSize = mDrawable!!.intrinsicWidth.coerceAtLeast(mDrawable!!.intrinsicHeight) / 2f
         mBaseSpeed = BASE_SPEED_DP_PER_S * resources.displayMetrics.density
     }
 

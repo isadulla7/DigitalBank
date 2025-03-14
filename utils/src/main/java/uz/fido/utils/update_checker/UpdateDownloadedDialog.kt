@@ -17,6 +17,8 @@ import uz.fido.utils.databinding.DialogInAppUpdateBinding
 
 class UpdateDownloadedDialog(private var installClickListener: () -> Unit) : DialogFragment() {
 
+    constructor() : this({})
+
     private lateinit var binding: DialogInAppUpdateBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

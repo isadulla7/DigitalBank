@@ -1,0 +1,7 @@
+-keep class uz.fido.utils.update_checker.UpdateDownloadedDialog { *; }
+-keep class uz.fido.utils.update_checker.UpdateChecker { *; }
+-keep class uz.fido.utils.internet_checker.InternetConnectionChecker { *; }
+-keep class uz.fido.utils.internet_checker.NoConnectionDialog{*;}
+-keep class kotlinx.coroutines.** { *; }
+-keepnames class kotlinx.** { *; }
+-dontwarn kotlinx.coroutines.**

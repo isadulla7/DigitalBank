@@ -110,26 +110,36 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
         onClickListener: (() -> Unit)? = null,
     ) {
         hideProgress()
-        var message = snackbarText
-        if (message == ERROR_CODE_VPN) {
-            //open vpn error activity
-            openVpnErrorActivity()
-        } else if (message == NEED_IDENTIFIED) {
-            //open identify fragment
-            openIdentifyFragment(snackbarText, title, buttonText, onClickListener)
-        } else if (message == LOG_OUT) {
-            //show dialog and log out from app
-            message = getMeaningFulMessage(message)
-            if (message.isNotEmpty() && view != null) {
-                showBaseInfoDialog(title, buttonText, message) {
-                    requireActivity().logOut()
-                }
+        when (snackbarText) {
+            ERROR_CODE_VPN -> openVpnErrorActivity() // Open VPN error activity directly
+            NEED_IDENTIFIED -> openIdentifyFragment(snackbarText, title, buttonText, onClickListener) // Open identify fragment
+            LOG_OUT -> handleLogoutMessage(title, buttonText, snackbarText)
+            else -> handleGeneralMessage(title, buttonText, snackbarText, onClickListener)
+        }
+    }
+
+    private fun handleLogoutMessage(
+        title: String?,
+        buttonText: String?,
+        message: String
+    ) {
+        val meaningfulMessage = getMeaningFulMessage(message)
+        if (meaningfulMessage.isNotEmpty() && view != null) {
+            showBaseInfoDialog(title, buttonText, meaningfulMessage) {
+                requireActivity().logOut()
             }
-        } else {
-            message = getMeaningFulMessage(message)
-            if (message.isNotEmpty() && view != null) {
-                showBaseInfoDialog(title, buttonText, message, onClickListener)
-            }
+        }
+    }
+
+    private fun handleGeneralMessage(
+        title: String?,
+        buttonText: String?,
+        message: String,
+        onClickListener: (() -> Unit)?
+    ) {
+        val meaningfulMessage = getMeaningFulMessage(message)
+        if (meaningfulMessage.isNotEmpty() && view != null) {
+            showBaseInfoDialog(title, buttonText, meaningfulMessage, onClickListener)
         }
     }
 

@@ -1,290 +1,290 @@
 [
     {
-        "merged": "uz.fido.wearable-merged_res-88:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "uz.fido.wearable-main-90:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_product_illustration_4.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_product_illustration_4.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_davr.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_davr.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_9.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_9.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_ofb.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_ofb.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_euro_24px.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/euro_24px.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_14.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_14.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/font_navigo_bold.ttf.flat",
+        "source": "uz.fido.wearable-main-117:/font/navigo_bold.ttf"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_asaka.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_asaka.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_ofb.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_ofb.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_humo_white_24.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_humo_white_24.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_tenge.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_tenge.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/font_inter_medium.ttf.flat",
-        "source": "uz.fido.wearable-main-90:/font/inter_medium.ttf"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_aloqa.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_aloqa.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_sqb.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_sqb.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_1.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_1.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_mikrokredit.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_mikrokredit.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_trast.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_trast.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_attach_money_24px.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/attach_money_24px.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_6.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_6.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_credit_card_24px.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/credit_card_24px.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_hamkor.png.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_hamkor.png"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_htb.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_htb.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable-round_tile_preview.png.flat",
+        "source": "uz.fido.wearable-main-117:/drawable-round/tile_preview.png"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "uz.fido.wearable-main-90:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_12.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_12.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/font_inter_regular.ttf.flat",
-        "source": "uz.fido.wearable-main-90:/font/inter_regular.ttf"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_kapital.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_kapital.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_master_card_white_24.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_master_card_white_24.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "uz.fido.wearable-main-117:/mipmap-xhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "uz.fido.wearable-main-90:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_humo_white_24.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_humo_white_24.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_turkiston.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_turkiston.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_ravnaq.png.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_ravnaq.png"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_tenge.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_tenge.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_uzcard_white_24.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_uzcard_white_24.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_8.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_8.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_list_24px.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/list_24px.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_ziraat.png.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_ziraat.png"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_tile_preview.png.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/tile_preview.png"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_currency_ruble_24px.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/currency_ruble_24px.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_universal.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_universal.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_4.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_4.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_sqb.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_sqb.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_12.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_12.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_4.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_4.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_ipakyoli.png.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_ipakyoli.png"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_visa_white_24.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_visa_white_24.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_agrobank.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_agrobank.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_product_illustration_2.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_product_illustration_2.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_wear_card_bg_1.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/wear_card_bg_1.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_asia.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_asia.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_potaxt.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_potaxt.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_master_card_white_24.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_master_card_white_24.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_7.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_7.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_qqb.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_qqb.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable-round_tile_preview.png.flat",
-        "source": "uz.fido.wearable-main-90:/drawable-round/tile_preview.png"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_turon.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_turon.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_anor.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_anor.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_attach_money_24px.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/attach_money_24px.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_5.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_5.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_3.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_3.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_11.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_11.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_credit_card_24px.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/credit_card_24px.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/font_navigo_bold.ttf.flat",
-        "source": "uz.fido.wearable-main-90:/font/navigo_bold.ttf"
+        "merged": "uz.fido.wearable-merged_res-115:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "uz.fido.wearable-main-117:/mipmap-xxxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_asia.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_asia.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_logo_anorbank.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_logo_anorbank.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_qqb.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_qqb.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_10.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_10.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_product_illustration_1.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_product_illustration_1.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_ipoteka.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_ipoteka.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_trast.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_trast.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "uz.fido.wearable-main-117:/mipmap-mdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_6.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_6.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_product_illustration_1.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_product_illustration_1.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_aab.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_aab.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_asaka.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_asaka.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_card_type_wallet.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_card_type_wallet.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_htb.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_htb.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_uzcard_white_24.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_uzcard_white_24.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_kdb.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_kdb.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_logo_anorbank.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_logo_anorbank.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_agrobank.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_agrobank.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_9.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_9.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_2.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_2.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_list_24px.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/list_24px.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_11.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_11.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_product_illustration_2.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_product_illustration_2.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_xalq.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_xalq.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_ravnaq.png.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_ravnaq.png"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_5.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_5.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "uz.fido.wearable-main-90:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_ipakyoli.png.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_ipakyoli.png"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "uz.fido.wearable-main-90:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_currency_ruble_24px.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/currency_ruble_24px.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_ipoteka.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_ipoteka.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_anor.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_anor.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_visa_white_24.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_visa_white_24.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_aab.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_aab.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_3.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_3.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/font_inter_regular.ttf.flat",
+        "source": "uz.fido.wearable-main-117:/font/inter_regular.ttf"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_turon.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_turon.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_savdogar.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_savdogar.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_savdogar.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_savdogar.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_davr.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_davr.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_13.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_13.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_mikrokredit.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_mikrokredit.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_infin.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_infin.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_product_illustration_3.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_product_illustration_3.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_kdb.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_kdb.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_7.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_7.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_10.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_10.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_0.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_0.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_hamkor.png.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_hamkor.png"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_card_type_wallet.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_card_type_wallet.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_0.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_0.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_ziraat.png.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_ziraat.png"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_qr_code_24px.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/qr_code_24px.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_nbu.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_nbu.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_universal.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_universal.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_tbc.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_tbc.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_kapital.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_kapital.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_13.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_13.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_product_illustration_3.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_product_illustration_3.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/font_inter_medium.ttf.flat",
+        "source": "uz.fido.wearable-main-117:/font/inter_medium.ttf"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_nbu.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_nbu.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_infin.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_infin.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_tile_preview.png.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/tile_preview.png"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_8.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_8.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_1.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_1.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_turkiston.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_turkiston.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_xalq.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_xalq.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_qr_code_24px.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/qr_code_24px.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_euro_24px.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/euro_24px.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "uz.fido.wearable-main-117:/mipmap-xxhdpi/ic_launcher_round.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_product_illustration_4.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_product_illustration_4.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_bg_14.webp.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/bg_14.webp"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_aloqa.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_aloqa.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_ic_bank_potaxt.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/ic_bank_potaxt.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_ic_bank_tbc.xml.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/ic_bank_tbc.xml"
+        "merged": "uz.fido.wearable-merged_res-115:/drawable_wear_card_bg_1.xml.flat",
+        "source": "uz.fido.wearable-main-117:/drawable/wear_card_bg_1.xml"
     },
     {
-        "merged": "uz.fido.wearable-merged_res-88:/drawable_bg_2.webp.flat",
-        "source": "uz.fido.wearable-main-90:/drawable/bg_2.webp"
+        "merged": "uz.fido.wearable-merged_res-115:/mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "uz.fido.wearable-main-117:/mipmap-hdpi/ic_launcher_round.webp"
     }
 ]

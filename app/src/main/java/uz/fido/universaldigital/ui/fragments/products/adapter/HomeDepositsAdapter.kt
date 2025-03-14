@@ -55,11 +55,7 @@ class HomeDepositsAdapter(
                 tvDepositDuration.text = item.depTemp
                 val realPercentage =
                     if (calculatePercentage(item) > 0) calculatePercentage(item).toInt() else 2
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    progressView.setProgress(realPercentage, true)
-                } else {
-                    progressView.progress = realPercentage
-                }
+                progressView.setProgress(realPercentage, true)
             }
             itemView.setOnClickListener {
                 baseInterface.openDepositDetails(item)

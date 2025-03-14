@@ -76,8 +76,8 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     private fun localFilterDone() {
         if (filterSaveVh!!.startDate != "") {
             startDate = filterSaveVh!!.startDate
-            endDate = filterSaveVh!!.startDate
-            addFilterList("date", "${filterSaveVh!!.startDate} - ${filterSaveVh!!.startDate}", false)
+            endDate = filterSaveVh!!.endDate
+            addFilterList("date", "${filterSaveVh!!.startDate} - ${filterSaveVh!!.endDate}", false)
             dateCurrent = true
             binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
             binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
@@ -126,10 +126,10 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
                 Status.SUCCESS -> {
                     val response = resource.data?.user_objects ?: ArrayList()
                     val newList = arrayListOf<FilterCard>()
-                    response.forEach {
-                        if (it.object_type == WALLET) {
-                            if (!newList.map { it.object_value }.contains(it.object_value)) {
-                                newList.add(it)
+                    response.forEach { filterCard ->
+                        if (filterCard.object_type == WALLET) {
+                            if (!newList.map { it.object_value }.contains(filterCard.object_value)) {
+                                newList.add(filterCard)
                             }
                         }
                     }

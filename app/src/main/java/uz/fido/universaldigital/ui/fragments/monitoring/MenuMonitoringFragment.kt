@@ -54,7 +54,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         initMonitoringViewPager()
-        filterIconCheck(position)
+        updateFilterIcon(position)
         getCardList()
         initSetOnClickListeners()
     }
@@ -144,7 +144,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
 
                 override fun onPageSelected(position: Int) {
                     this@MenuMonitoringFragment.position = position
-                    filterIconCheck(position)
+                    updateFilterIcon(position)
                     binding.chart.isVisible = position == 0
                 }
 
@@ -153,32 +153,17 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
         }
     }
 
-    private fun filterIconCheck(position: Int) {
-        when (position) {
-            0 -> {
-                if (menuMonitoringViewModel.localFilter)
-                    binding.filter.setImageResource(R.drawable.ic_filter_yes)
-                else binding.filter.setImageResource(R.drawable.ic_filter_frame)
-            }
+    private fun updateFilterIcon(position: Int) {
+        val filterStatus = listOf(
+            menuMonitoringViewModel.localFilter,
+            menuMonitoringViewModel.uzCardFilter,
+            menuMonitoringViewModel.humoFilter,
+            menuMonitoringViewModel.walletFilter
+        )
 
-            1 -> {
-                if (menuMonitoringViewModel.uzCardFilter)
-                    binding.filter.setImageResource(R.drawable.ic_filter_yes)
-                else binding.filter.setImageResource(R.drawable.ic_filter_frame)
-            }
-
-            2 -> {
-                if (menuMonitoringViewModel.humoFilter)
-                    binding.filter.setImageResource(R.drawable.ic_filter_yes)
-                else binding.filter.setImageResource(R.drawable.ic_filter_frame)
-            }
-
-            3 -> {
-                if (menuMonitoringViewModel.walletFilter)
-                    binding.filter.setImageResource(R.drawable.ic_filter_yes)
-                else binding.filter.setImageResource(R.drawable.ic_filter_frame)
-            }
-        }
+        binding.filter.setImageResource(
+            if (filterStatus.getOrNull(position) == true) R.drawable.ic_filter_yes
+            else R.drawable.ic_filter_frame
+        )
     }
-
 }

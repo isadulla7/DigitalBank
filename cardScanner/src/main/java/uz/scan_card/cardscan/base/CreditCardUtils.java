@@ -65,12 +65,12 @@ public class CreditCardUtils {
     }
 
     private static String prefix(String s, int n) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         while (result.length() < n) {
-            result += s.charAt(result.length());
+            result.append(s.charAt(result.length()));
         }
 
-        return result;
+        return result.toString();
     }
 
     public static boolean isAmex(String number) {
@@ -108,7 +108,7 @@ public class CreditCardUtils {
             return false;
         }
 
-        return prefix2 >= 86 || prefix2 >= 98 || prefix2 >= 51 && prefix2 <= 55 || prefix4 >= 2221 && prefix4 <= 2720;
+        return prefix2 >= 86 || prefix2 >= 51 && prefix2 <= 55 || prefix4 >= 2221 && prefix4 <= 2720;
     }
 
     public static boolean isVisa(String number) {

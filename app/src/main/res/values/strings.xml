@@ -15,7 +15,6 @@
     <string name="widget_4">Сохраненные платежи</string>
     <string name="widget_5">Курсы валют</string>
     <string name="widget_7">Вклад</string>
-    <string name="widget_8">Трансферы</string>
 
     <integer-array name="main_widgets_ids">
         <item>100</item>
@@ -143,9 +142,9 @@
     <string name="write_off_card">Карта списания</string>
     <string name="main_card">Основная карта</string>
     <string name="verification">Подтверждение</string>
-    <string name="you_may_change_later">В случаи если что-то неправильно вы можете изменить</string>
+    <string name="you_may_change_later">Если это не ваше данные, пройдите идентификацию заново </string>
     <string name="not_me">Это не мои данные</string>
-    <string name="i_am">Верно это я</string>
+    <string name="i_am">Верно,это я</string>
     <string name="citizenship">Гражданство</string>
     <string name="passport_no">Серия и номер документа</string>
     <string name="date_of_issue">Дата выдачи</string>
@@ -199,7 +198,7 @@
     <string name="delete_title">Удалить лица</string>
     <string name="permission">Разрешение</string>
     <string name="enter_settings">Войти в настройки</string>
-    <string name="location_permission_description">Для дальшего продолжения, пожалуйста, дайте доступ на определение геолокации</string>
+    <string name="location_permission_description">Чтобы определить точное местоположение, предоставьте доступ к геолокации</string>
     <string name="payment_on_the_spot">Оплата на местах</string>
     <string name="search">Поиск</string>
     <string name="all">Все</string>
@@ -248,7 +247,7 @@
     <string name="control_amount">Контрольная сумма</string>
     <string name="unique_qr_of_payment_system">Уникальный идентификатор QR кода в платёжной системе</string>
     <string name="qr_not_supported">Данный формат QR код не поддерживается</string>
-    <string name="contact_permission_description">Для дальшего продолжения, пожалуйста, дайте доступ к контактам</string>
+    <string name="contact_permission_description">Разрешите доступ контактам, чтобы упростить ввод данныхм</string>
     <string name="camera_permission_description">Для дальшего продолжения, пожалуйста, дайте доступ к камере устройства</string>
     <string name="summ">Сумовые</string>
     <string name="currency">Валютные</string>
@@ -343,7 +342,7 @@
     <string name="transfer">Перевод</string>
     <string name="by_wallet_number">По номеру кошелька</string>
     <string name="request_money">Запрос средств</string>
-    <string name="by_requisites">По реквезитам</string>
+    <string name="by_requisites">По реквизитам</string>
     <string name="swift_transfer">SWIFT переводы</string>
     <string name="to_card_desc">Перевод на любую банковскую карту</string>
     <string name="over_my_cards_desc">Перевод между вашими картам</string>
@@ -354,7 +353,7 @@
     <string name="swift_transfer_desc">На банковский SWIFT счет</string>
     <string name="wallet_number">Номер кошелька</string>
     <string name="wallet_not_found">Кошелёк не найден</string>
-    <string name="choose_one_of_function">Выберите один из функций</string>
+    <string name="choose_one_of_function">Выберите одну из функций</string>
     <string name="via_camera">Через камеру</string>
     <string name="via_nfc">Через  NFC</string>
     <string name="card_scan_position_card">Поместите карту в рамку так, чтобы был виден номер карты.</string>
@@ -402,7 +401,7 @@
     <string name="fill_the_gaps">Заполните поля</string>
     <string name="my_cards">Мои карты</string>
     <string name="you_dont_have_card">У вас нет карт</string>
-    <string name="no_card_description">Добавьте карту для отслеживая расходов, доходов а также для мониторинга баланса</string>
+    <string name="no_card_description">Добавьте карту для отслеживания расходов, доходов, а также для мониторинга баланса</string>
     <string name="currency_cards">Валютные карты</string>
     <string name="wallets">Кошельки</string>
     <string name="cards">Карты</string>
@@ -509,8 +508,8 @@
     <string name="usd">USD</string>
     <string name="filter">Фильтр</string>
     <string name="select_period">Выбрать период</string>
-    <string name="period">Период</string>
-    <string name="funds_flow">Движение средсвт</string>
+    <string name="period">Параметры фильтра</string>
+    <string name="funds_flow">Движение средств</string>
     <string name="card">Карты</string>
     <string name="status">Статус</string>
     <string name="activ">Актив</string>
@@ -689,7 +688,7 @@
     <string name="auto_payment_no">Автоплатежей пока нет</string>
     <string name="auto_payment_no_title">Создайте автоплатеж для оплачивания по установленному вами времени</string>
     <string name="active">Активный</string>
-    <string name="ne_active">Неактивный</string>
+    <string name="ne_active">Деактивировать</string>
     <string name="daily">По дням</string>
     <string name="monthly_2">Месячный</string>
     <string name="wallet_settings">Настройка кошелька</string>
@@ -819,7 +818,7 @@
     <string name="top_up_account_for_loan">Пополнение счета для погашение кредита</string>
     <string name="purpose_7">Погашение начисленных пеней по просроченному основному долгу</string>
     <string name="read">Прочитан</string>
-    <string name="unread">Непрочитан</string>
+    <string name="unread">Не прочитано</string>
     <string name="total_balance">Общий баланс</string>
     <string name="main_currency">Основная валюта</string>
     <string name="choose_cards_for_show_in_total_balance">Выберите карты которые будут отображаться в общем балансе</string>
@@ -1047,4 +1046,23 @@
     <string name="central_bank">Курс ЦБ</string>
     <string name="successful">Успешно</string>
     <string name="news">Новости</string>
+    <string name="actions">Действия</string>
+    <string name="enable_shaking_action">Enable shaking action</string>
+    <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
+    <string name="card_for_credit">"Qabul qilish uchun karta"</string>
+    <string name="password_success">Успех</string>
+    <string name="transfer_t0_wallet">Перевод на кашелек</string>
+    <string name="select_phone_from_contact">Выберите номер телефона из контактов</string>
+    <string name="scan_card_number">Сканировать номер карты</string>
+    <string name="end_session">Завершить сеанс</string>
+    <string name="rooted_device_not_allowed">Во избежание мошенничества и обеспечения безопасности ваших данных использование приложения на этом устройстве запрещено! Устройство может быть рутировано</string>
+    <string name="google_api_key_for_map">AIzaSyAz12HO8DlLFz34dNvuNwQ9Rzhw3hpUZGQ</string>
+    <string name="you_can_close_deposit_only_dv_cards">Вы можете закрыть депозит только на счет "Мобильный ДВ". Его можно открыть бесплатно в разделе «Открыть вклад».</string>
+    <string name="create_mobile_dv">Создать Mobile DV</string>
+    <string name="ishonch">Ishonch</string>
+    <string name="you_dont_have_an_account">Не удалось получить данные вашей учетной записи. Вы можете продолжить или вернуться к регистрации.</string>
+    <string name="identification_login_desc">Для дополнительной безопасности вам необходимо будет подтвердить свое лицо, чтобы получить доступ к приложению.</string>
+    <string name="attention">Внимание</string>
+    <string name="unable_to_get_profile_data">Не удалось получить ваши учетные данные. Пожалуйста, свяжитесь с банком \n+998712001110.</string>
+    <string name="unable_to_get_passport_data">Не удалось получить ваши паспортные данные. Попробуйте войти еще раз, используя свои паспортные данные.</string>
 </resources>

@@ -140,7 +140,6 @@ object Format {
     }
 
     private fun formatWithoutDot2(amount: String): String {
-        println("AMOUNT" + amount.substring(amount.length - 3, amount.length))
         try {
             return if (amount.substring(amount.length - 3, amount.length) == ".00")
                 amount.replace(".00", "")
@@ -224,7 +223,6 @@ object Format {
         return secondFormat.format(newFormat).toString()
 
     }
-
 
     fun formatAmountToTiyn(amount: String?): String {
         if (amount.isNullOrBlank()) {

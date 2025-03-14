@@ -41,7 +41,6 @@ class InitTransferDetailsFragment : BaseFragment<FragmentInitTransferDetailsBind
         const val BANK_TRANSFER_OPERATION = "BANK_TRANSFER_OPERATION"
         const val BANK_OPERATION_CREATE = 1
         const val BANK_OPERATION_CHANGE = 2
-        const val CREATE_TEMPLATE = 3
         const val TRANSFER_EURO = "EUR"
         const val TRANSFER_DOLLAR = "USD"
         const val TRANSFER_CURRENCY = "TRANSFER_CURRENCY"
@@ -245,7 +244,7 @@ class InitTransferDetailsFragment : BaseFragment<FragmentInitTransferDetailsBind
                 )
             }
         } else {
-            if (checkForError()) saveTemplate()
+//            if (checkForError()) saveTemplate()
         }
     }
 
@@ -290,66 +289,6 @@ class InitTransferDetailsFragment : BaseFragment<FragmentInitTransferDetailsBind
             ),
             bicorbei_57a = binding.etBicName57a.text.toString()
         )
-    }
-
-    private fun saveTemplate() {
-////        val templateGroupId = PaymentFragment.TemplateGroups.DEFAULT_TEMPLATES.toString()
-////        val templateType = TemplateTypes.SWIFT_TRANSFER.templateType
-//        params["AMOUNT"] = amount.toString()
-//        params["CUSTOMER_NAME"] = binding.etCustomerName.text.toString()
-//        params["CARD_NUMBER"] = selectedCard!!.object_value
-//        params["PASS_SERIAL"] = binding.passportSerial.text.toString()
-//        params["PASS_NUMBER"] = binding.passportNumber.text.toString()
-//        params["PASS_RECEIVE_DATE"] = binding.receiveDatePassport.text.toString()
-//        params["CUSTOMER_COUNTRY"] = binding.etCustomerCountry.text.toString()
-//        params["BIC_CODE"] = bic
-//        params["REMITTANCE_INFO"] = binding.etRemittanceInfo.text.toString()
-//        params["ACCOUNT_59"] = binding.bicAccountOnly59.text.toString()
-//        params["BICORBEI_56A"] = binding.etBic56a.text.toString()
-//        params["BENEFICIARY_NAME"] = binding.etBeneficiaryAccountNameFio.text.toString()
-//        params["BENEFICIARY_ADDRESS"] = binding.etBeneficiaryAccountNameAddress.text.toString()
-//        params["BICORBEI_57A"] = binding.etBicName57a.text.toString()
-//        params["CURRENCY_CODE"] = selectedCard!!.currency_code
-//        collectData()
-//        addTemplateDialog =
-//            AddTemplateDialog(binding.etBeneficiaryAccountNameFio.text.toString(), object :
-//                BaseInterface {
-//                override fun addTemplateName(name: String) {
-//                    val model = CreateTemplateRequest(
-//                        name = name,
-//                        template_type = templateType,
-//                        service_type = "SWIFT_TRANSFER",
-//                        service_id = "-22",
-////                    template_id = if (operation == BANK_OPERATION_CHANGE) tempId.toInt() else null,
-//                        template_group_id = templateGroupId,
-//                        payment_details = params
-//                    )
-//                    showProgress()
-//                    paymentViewModel.createTemplate(getClientToken(), model)
-//                        .observe(viewLifecycleOwner) {
-//                            addTemplateDialog.dismiss()
-//                            hideProgress()
-//                            when (it.status) {
-//                                Status.SUCCESS -> {
-//                                    addTemplate = false
-//                                    gotoWithSlide(
-//                                        R.id.successTemplateFragment, bundleOf(
-//                                            SuccessTemplateFragment.PAYMENT_SERVICE to requestModel,
-//                                            SuccessTemplateFragment.KEY_VALUES to params,
-//                                            SuccessTemplateFragment.TEMPLATE_TYPE to Const.SWIFT_TRANSFER,
-//                                            SuccessTemplateFragment.TEMPLATE_NAME to name
-//                                        )
-//                                    )
-//                                }
-//
-//                                Status.ERROR -> {
-//                                    showSnackbar(it.message.toString())
-//                                }
-//                            }
-//                        }
-//                }
-//            })
-//        addTemplateDialog.show(childFragmentManager, "TAG")
     }
 
     private fun collectEditTexts() {

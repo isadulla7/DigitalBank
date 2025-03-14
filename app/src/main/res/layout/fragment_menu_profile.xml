@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -79,7 +80,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/profile_image"
             app:layout_constraintTop_toBottomOf="@id/user_name"
-            tools:text="+99893 008 88 09" />
+            tools:text="+998 93 008 88 09" />
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:id="@+id/verified_icon"
@@ -147,7 +148,7 @@
                         android:gravity="center|start"
                         android:text="@string/app_name"
                         android:textColor="@color/brandBlueColor"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
 
                     <uz.fido.utils.view.custom_text_view.TextViewMedium
                         android:id="@+id/app_mode"
@@ -159,7 +160,7 @@
                         android:gravity="center|start"
                         android:text="Lite"
                         android:textColor="@color/brandRedColor"
-                        android:textSize="16dp" />
+                        android:textSize="14dp" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 

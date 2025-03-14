@@ -110,8 +110,6 @@ class PaymentListFragment :
     private fun openPaymentItem(paymentService: PaymentService) {
         val bundle = Bundle()
         bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, paymentService)
-        println("===minAmount" + paymentService.min_amount.toString())
-        println("===maxAmount" + paymentService.max_amount.toString())
         bundle.putString(PaymentFragment.PAYMENT_HOME_ID, homeId)
         bundle.putString(PaymentFragment.PAYMENT_HOME_NAME, homeName)
 

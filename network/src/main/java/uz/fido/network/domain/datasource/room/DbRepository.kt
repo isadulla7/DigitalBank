@@ -4,13 +4,11 @@ import uz.fido.network.domain.model.payment.location.LocalPayment
 import uz.fido.network.domain.model.payment.location.LocalPaymentType
 import uz.fido.network.room.LocalPaymentDao
 import uz.fido.network.room.LocalPaymentTypeDao
-import uz.fido.network.room.LocalSearchDao
 import javax.inject.Inject
 
 class DbRepository @Inject constructor(
     private val dao: LocalPaymentDao,
-    private val daoType: LocalPaymentTypeDao,
-    private val searchDao:LocalSearchDao
+    private val daoType: LocalPaymentTypeDao
 ) {
 
     suspend fun saveLocalPayment(localPaymentRoom: LocalPayment) =

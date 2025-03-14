@@ -64,7 +64,7 @@ internal class Snowflake(
 
         val speed = ((size - params.sizeMinInPx).toFloat() / (params.sizeMaxInPx - params.sizeMinInPx) *
                 (params.speedMax - params.speedMin) + params.speedMin)
-        val angle = toRadians(randomizer.randomDouble(params.angleMax) * randomizer.randomSignum())
+        val angle = toRadians(randomizer.randomDouble(params.angleMax) * randomizer.randomSignedNum())
         speedX = speed * kotlin.math.sin(angle)
         speedY = speed * kotlin.math.cos(angle)
 

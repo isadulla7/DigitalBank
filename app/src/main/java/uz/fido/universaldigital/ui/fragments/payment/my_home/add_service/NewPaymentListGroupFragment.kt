@@ -23,11 +23,12 @@ import uz.fido.utils.utility.fragment.pop
 
 class NewPaymentListGroupFragment : DownloadPayment(), DownloadPaymentInterface {
 
-    private var homeId: String? = null
-    private var homeName: String? = null
-    private var templateType: Int? = null
-    private lateinit var menuPaymentsAdapter: MainPaymentsAdapter
     private lateinit var binding: FragmentListGroupPaymentBinding
+    private lateinit var menuPaymentsAdapter: MainPaymentsAdapter
+    private var templateType: Int? = null
+    private var homeName: String? = null
+    private var homeId: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getArgument()
@@ -57,7 +58,6 @@ class NewPaymentListGroupFragment : DownloadPayment(), DownloadPaymentInterface 
         initAdapter()
         setPaymentStatusListener(this)
         checkPaymentForDownload()
-
         initPaymentListRv()
     }
 
@@ -93,7 +93,6 @@ class NewPaymentListGroupFragment : DownloadPayment(), DownloadPaymentInterface 
             layoutManager = GridLayoutManager(requireContext(), 3)
             adapter = menuPaymentsAdapter
         }
-
     }
 
     private fun drawViews() {

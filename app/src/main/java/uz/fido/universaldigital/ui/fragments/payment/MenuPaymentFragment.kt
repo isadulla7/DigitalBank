@@ -34,7 +34,6 @@ import uz.fido.universaldigital.ui.fragments.payment.payment_list.PaymentListFra
 import uz.fido.universaldigital.ui.fragments.payment.templates.TemplateTypes
 import uz.fido.universaldigital.ui.fragments.payment.templates.adapter.PaymentTemplatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
-import uz.fido.universaldigital.ui.fragments.products.widgets.search.SearchList
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.libs.skeleton.SkeletonScreen
@@ -42,30 +41,19 @@ import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
 import java.text.DecimalFormat
-import java.util.concurrent.ExecutorService
-import java.util.concurrent.Executors
 
 @AndroidEntryPoint
 class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInterface {
 
-    private lateinit var paymentTemplatesAdapter: PaymentTemplatesAdapter
-    private lateinit var menuPaymentsAdapter: MainPaymentsAdapter
     private lateinit var binding: FragmentMenuPaymentsBinding
-
     private val utilsViewModel: UtilsViewModel by activityViewModels()
-
-
     private var templatesSkeleton: SkeletonScreen? = null
     private var skeletonScreen: SkeletonScreen? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        menuPaymentsAdapter = MainPaymentsAdapter {
-            goto(R.id.paymentListFragment, bundleOf(PaymentListFragment.PAYMENT_GROUP to it))
-        }
-        paymentTemplatesAdapter = PaymentTemplatesAdapter(this)
+    private val paymentTemplatesAdapter by lazy { PaymentTemplatesAdapter(this) }
+    private val menuPaymentsAdapter by lazy {
+        MainPaymentsAdapter { goto(R.id.paymentListFragment, bundleOf(PaymentListFragment.PAYMENT_GROUP to it)) }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -79,7 +67,6 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         initPaymentTemplatesRv()
         initSetOnClickListeners()
         checkForPaymentTemplates()
-
         return binding.root
     }
 
@@ -89,7 +76,6 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
             paymentGroupsList = ArrayList()
             paymentGroupsList.addAll(it)
             menuPaymentsAdapter.submitList(paymentGroupsList)
-
         }
     }
 
@@ -112,31 +98,22 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
             paymentTemplatesAdapter.submitList(it as ArrayList<Template>)
         }
         binding.savedPayments.apply {
-            layoutManager =
-                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+            layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
             adapter = paymentTemplatesAdapter
         }
     }
 
     private fun initSetOnClickListeners() {
-        binding.search.setOnClickListener {
-            goto(R.id.searchEveryWhereFragment)
-        }
+        binding.search.setOnClickListener { goto(R.id.searchEveryWhereFragment) }
         binding.autopayments.setOnClickListener { goto(R.id.autoPaymentFragment) }
         binding.paymentByQr.setOnClickListener { handleCameraPermission() }
-        binding.myHome.setOnClickListener {
-            goto(R.id.myHomeFragment)
-        }
-        binding.llTemplates.setOnClickListener {
-            goto(R.id.templateListFragment)
-        }
-        binding.loanRepayment.setOnClickListener {
-            openLoanRepayment()
-        }
+        binding.myHome.setOnClickListener { goto(R.id.myHomeFragment) }
+        binding.llTemplates.setOnClickListener { goto(R.id.templateListFragment) }
+        binding.loanRepayment.setOnClickListener { openPaymentByServiceId(LOAN_PAYMENT) }
+        binding.loanIshonch.setOnClickListener { openPaymentByServiceId(ISHONCH_SERVICE_ID) }
     }
 
     private fun drawViews() {
-        paymentGroupsList.sortBy { it.order }
         downloadPaymentViewModel.paymentGroupMutableList.postValue(paymentGroupsList)
     }
 
@@ -153,13 +130,6 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                 skeletonScreen?.hide()
                 drawViews()
-                val executor: ExecutorService = Executors.newSingleThreadExecutor()
-                executor.execute {
-                    val searchListSize = SearchList.getSearchList(requireActivity()).size
-                    if (searchListSize < 50) {
-                        //  fillSearchList()
-                    }
-                }
             }
         } catch (e: IllegalStateException) {
             e.printStackTrace()
@@ -173,7 +143,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     override fun downloadPaymentStart() {
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
             skeletonScreen = showSkeleton(
-                binding.payments, menuPaymentsAdapter, R.layout.shimmer_item_payment_group, 15
+                binding.payments, menuPaymentsAdapter, R.layout.shimmer_item_payment_group, 9
             )
         }
     }
@@ -198,11 +168,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     }
 
     override fun addTemplate() {
-        goto(
-            R.id.newPaymentGroupListFragment, bundleOf(
-                PaymentFragment.PAYMENT_OPERATION to PaymentFragment.PAYMENT_OPERATION_SAVE_TEMPLATE
-            )
-        )
+        goto(R.id.newPaymentGroupListFragment, bundleOf(PaymentFragment.PAYMENT_OPERATION to PaymentFragment.PAYMENT_OPERATION_SAVE_TEMPLATE))
     }
 
     override fun openTemplate(template: Template) {
@@ -328,8 +294,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         }
     }
 
-    private fun openLoanRepayment() {
-        val serviceId = "-2"
+    private fun openPaymentByServiceId(serviceId: String) {
         val service = DatabaseHelper(requireContext()).getServiceByContractId(serviceId)
         val bundle = Bundle()
         bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, service)
@@ -352,17 +317,21 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         }
     }
 
-    private val cameraPermissionRequestLauncher: ActivityResultLauncher<String> =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
-            if (isGranted) {
-                goto(R.id.qrPaymentFragment)
-            } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Go to settings and enable camera permission to use this feature",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
+    private val cameraPermissionRequestLauncher: ActivityResultLauncher<String> = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+        if (isGranted) {
+            goto(R.id.qrPaymentFragment)
+        } else {
+            Toast.makeText(
+                requireContext(),
+                "Go to settings and enable camera permission to use this feature",
+                Toast.LENGTH_SHORT
+            ).show()
         }
+    }
+
+    companion object {
+        private const val ISHONCH_SERVICE_ID = "788"
+        private const val LOAN_PAYMENT = "-2"
+    }
 
 }

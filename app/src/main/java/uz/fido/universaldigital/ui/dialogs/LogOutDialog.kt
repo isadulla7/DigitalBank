@@ -10,10 +10,10 @@ class LogOutDialog(
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
-        binding.cancel.setOnClickListener { dismiss() }
+        binding.cancel.setOnClickListener { dismissAllowingStateLoss() }
         binding.logOut.setOnClickListener {
             okClickListener.invoke()
-            dismiss()
+            dismissAllowingStateLoss()
         }
     }
 

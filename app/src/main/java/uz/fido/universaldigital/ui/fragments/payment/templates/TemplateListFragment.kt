@@ -33,7 +33,6 @@ import uz.fido.utils.utility.user.getClientToken
 import uz.fido.utils.utility.view.recycler_view_drag.EditItemTouchHelperCallbackWidgets
 import java.text.DecimalFormat
 
-
 @AndroidEntryPoint
 class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsViewModel>(
     FragmentTemplateListBinding::inflate, UtilsViewModel::class.java
@@ -170,9 +169,14 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
                             saveTemplate(position)
                         } else {
                             hideProgress()
-                            templateList.removeAt(position)
-                            templatesAdapter!!.notifyItemRemoved(position)
-                            viewModel.updateTemplates(templateList)
+                            try {
+                                templateList.removeAt(position)
+                                templatesAdapter!!.notifyItemRemoved(position)
+                                viewModel.updateTemplates(templateList)
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+
                         }
                     }
 

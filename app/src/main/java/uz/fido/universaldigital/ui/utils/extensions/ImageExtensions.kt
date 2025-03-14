@@ -5,28 +5,12 @@ import android.widget.ImageView
 import coil.ImageLoader
 import coil.load
 import coil.request.CachePolicy
-import com.squareup.picasso.Picasso
-import io.paperdb.Paper
 import okhttp3.OkHttpClient
-import uz.fido.universaldigital.R
-import uz.fido.utils.const.Const
 import java.security.SecureRandom
 import javax.net.ssl.SSLContext
 import javax.net.ssl.SSLSocketFactory
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
-
-fun ImageView.loadUserImage() {
-    if ((Paper.book().read(Const.PAPER_USER_PHOTO_PATH, "") ?: "").isNotEmpty()) {
-        Picasso.get()
-            .load(Paper.book().read(Const.PAPER_USER_PHOTO_PATH, ""))
-            .placeholder(R.drawable.ic_user)
-            .error(R.drawable.ic_user)
-            .into(this)
-    } else {
-        this.setImageResource(R.drawable.ic_user)
-    }
-}
 
 fun ImageView.loadImage(context: Context, imageUrl: String, placeHolder: Int) {
     if (imageUrl.isNotEmpty()) {

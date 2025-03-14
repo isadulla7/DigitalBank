@@ -12,22 +12,40 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.ui.activities.LoginActivity
+import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
-import uz.fido.utils.log.Logger
 
 class NotificationService : FirebaseMessagingService() {
 
+    companion object {
+        const val NOTIFICATION_TYPE_P2P = "P2P"
+        const val NOTIFICATION_TYPE_NEWS = "NEWS"
+        const val NOTIFICATION_HANDLE_KEY = "type"
+    }
+
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         remoteMessage.notification.let { notification ->
+            if (remoteMessage.data.isNotEmpty()) {
+                initNotificationOperations(remoteMessage.data)
+            }
             notification?.let {
                 sendNotification(notification.title, notification.body)
             }
         }
     }
 
+    private fun initNotificationOperations(data: Map<String, String>) {
+        when (data[NOTIFICATION_HANDLE_KEY]) {
+            NOTIFICATION_TYPE_P2P -> {}
+            NOTIFICATION_TYPE_NEWS -> {}
+            else -> {}
+        }
+    }
+
     private fun sendNotification(messageTitle: String?, messageBody: String?) {
         val intent = Intent(this, LoginActivity::class.java)
+        intent.putExtra(PassCodeFragment.NOTIFICATION_OPERATION, "notification")
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
 
         val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
@@ -39,7 +57,7 @@ class NotificationService : FirebaseMessagingService() {
             .setSmallIcon(R.drawable.ic_universal_logo_white)
             .setContentTitle(messageTitle ?: getString(R.string.app_name))
             .setContentText(messageBody ?: getString(R.string.new_message))
-            .setAutoCancel(true)
+            .setAutoCancel(false)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
             .setSound(defaultSoundUri)
@@ -52,16 +70,12 @@ class NotificationService : FirebaseMessagingService() {
             notificationManager.createNotificationChannel(channel)
         }
 
-        notificationManager.notify(
-            System.currentTimeMillis().hashCode(),
-            notificationBuilder.build()
-        )
+        notificationManager.notify(System.currentTimeMillis().hashCode(), notificationBuilder.build())
     }
 
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
         saveToPaper(Const.PAPER_FCM_TOKEN, p0)
-        Logger.writeLogByKey(Const.PAPER_FCM_TOKEN, p0)
     }
 
 }

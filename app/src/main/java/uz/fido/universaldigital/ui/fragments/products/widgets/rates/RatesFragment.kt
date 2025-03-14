@@ -11,7 +11,6 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentCurrencyRatesBinding
 import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
-import uz.fido.universaldigital.ui.fragments.products.adapter.HomeRatesAdapter
 import uz.fido.universaldigital.ui.fragments.products.adapter.RatesAdapter
 import uz.fido.utils.utility.fragment.pop
 

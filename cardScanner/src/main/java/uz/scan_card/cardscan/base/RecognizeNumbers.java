@@ -22,7 +22,7 @@ class RecognizeNumbers {
 
     String number(RecognizedDigitsModel model, ArrayList<ArrayList<DetectedBox>> lines) {
         for (ArrayList<DetectedBox> line : lines) {
-            String candidateNumber = "";
+            StringBuilder candidateNumber = new StringBuilder();
 
             for (DetectedBox word : line) {
                 RecognizedDigits recognized = this.cachedDigits(model, word);
@@ -30,17 +30,17 @@ class RecognizeNumbers {
                     return null;
                 }
 
-                candidateNumber += recognized.four();
+                candidateNumber.append(recognized.four());
             }
 
-            if (candidateNumber.length() == 16 && CreditCardUtils.luhnCheck(candidateNumber)) {
-                this.number = candidateNumber;
-                this.numberBoxes = new ArrayList<CGRect>();
+            if (candidateNumber.length() == 16 && CreditCardUtils.luhnCheck(candidateNumber.toString())) {
+                this.number = candidateNumber.toString();
+                this.numberBoxes = new ArrayList<>();
                 for (DetectedBox box : line) {
                     this.numberBoxes.add(box.rect);
                 }
 
-                return candidateNumber;
+                return candidateNumber.toString();
             }
         }
 
@@ -85,15 +85,15 @@ class RecognizeNumbers {
             }
         }
 
-        String candidateNumber = "";
+        StringBuilder candidateNumber = new StringBuilder();
         for (Integer digit : digits) {
             if (digit != 10) {
-                candidateNumber += digit;
+                candidateNumber.append(digit);
             }
         }
 
-        if (candidateNumber.length() == 15 && CreditCardUtils.luhnCheck(candidateNumber)) {
-            return candidateNumber;
+        if (candidateNumber.length() == 15 && CreditCardUtils.luhnCheck(candidateNumber.toString())) {
+            return candidateNumber.toString();
         }
 
         return null;

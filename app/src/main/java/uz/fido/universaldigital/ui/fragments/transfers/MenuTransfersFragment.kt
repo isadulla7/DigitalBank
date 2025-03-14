@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.transfers
 
 import android.os.Bundle
+import android.view.View
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
@@ -14,21 +15,26 @@ import uz.fido.utils.utility.fragment.gotoWithSlide
 class MenuTransfersFragment :
     BaseSimpleFragment<FragmentMenuTransfersBinding>(FragmentMenuTransfersBinding::inflate) {
 
-    private lateinit var transferTypesAdapter: MenuTransfersAdapter
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        transferTypesAdapter = MenuTransfersAdapter(requireContext(), getTransferTypes()) {
-            initSetOnClickListeners(it)
+    private val transferTypesAdapter by lazy {
+        MenuTransfersAdapter(requireContext(), getTransferTypes()) { transferType ->
+            initSetOnClickListeners(transferType)
         }
     }
 
-    override fun onInit(savedInstanceState: Bundle?) {
-        super.onInit(savedInstanceState)
-        initTransferTypes()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupTransferTypes()
+        setupClickListeners()
+    }
+
+    private fun setupClickListeners() {
         binding.search.setOnClickListener {
             gotoWithSlide(R.id.searchEveryWhereFragment)
         }
+    }
+
+    private fun setupTransferTypes() {
+        binding.transferTypes.adapter = transferTypesAdapter
     }
 
     private fun initSetOnClickListeners(transferTypeId: Int) {
@@ -40,10 +46,6 @@ class MenuTransfersFragment :
             500 -> goto(R.id.transferToAccountFragment)
             600 -> goto(R.id.requestMoneyFragment)
         }
-    }
-
-    private fun initTransferTypes() {
-        binding.transferTypes.adapter = transferTypesAdapter
     }
 
 }

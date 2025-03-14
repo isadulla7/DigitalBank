@@ -8,6 +8,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,6 +21,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.database.DataSnapshot
@@ -25,8 +30,10 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.AndroidEntryPoint
+import io.paperdb.Paper
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
+import uz.fido.universaldigital.base.ShakeActions
 import uz.fido.universaldigital.databinding.ActivityMainBinding
 import uz.fido.universaldigital.services.AudioModeService
 import uz.fido.universaldigital.ui.activities.seasons.Season
@@ -46,6 +53,7 @@ import uz.fido.universaldigital.ui.fragments.transfers.by_phone.TransferByPhoneF
 import uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferFragment
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.isActive
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
@@ -57,15 +65,20 @@ import uz.fido.utils.utility.context.startActivityWithClearTask
 import uz.fido.utils.view.bottom_menu_anim.hideAnimWithSlideDown
 import uz.fido.utils.view.bottom_menu_anim.showAnimWithSlideUp
 import java.util.Calendar
+import kotlin.math.sqrt
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var updateChecker: UpdateChecker
-    private var noConnectionDialog: NoConnectionDialog? = null
-    private var isStop = false
     private lateinit var database: DatabaseReference
+    private lateinit var sensorEventListener: SensorEventListener
+    private lateinit var sensorManager: SensorManager
+    private var noConnectionDialog: NoConnectionDialog? = null
+    private var accelerometer: Sensor? = null
+    private var isStop = false
+    private var lastShakeTime: Long = 0
 
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -84,13 +97,23 @@ class MainActivity : BaseActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         database = FirebaseDatabase.getInstance().getReference("season")
         setContentView(binding.root)
+        sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
         initBottomNavigationMenuItems()
         initBottomNavigationMenu()
         checkUpdate()
         askNotificationPermission()
         checkForDeepLink()
+        checkNotification()
         bottomNavSheet()
         listenForSeasonChanges()
+        initSensorEventListener()
+    }
+
+    private fun checkNotification() {
+        if (!intent.getStringExtra(PassCodeFragment.NOTIFICATION_OPERATION).isNullOrEmpty()) {
+            openPage(R.id.mainNewsFragment)
+        }
     }
 
     private fun listenForSeasonChanges() {
@@ -110,6 +133,7 @@ class MainActivity : BaseActivity() {
         try {
             unregisterReceiver(broadcastReceiver)
             stopService(Intent(this, AudioModeService::class.java))
+            sensorManager.unregisterListener(sensorEventListener)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -131,6 +155,7 @@ class MainActivity : BaseActivity() {
         internetListener()
         try {
             startService(Intent(this, AudioModeService::class.java))
+            sensorManager.registerListener(sensorEventListener, accelerometer, SensorManager.SENSOR_DELAY_UI)
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 registerReceiver(
                     broadcastReceiver, IntentFilter("ACTION_OPEN_ACTIVITY"), Context.RECEIVER_EXPORTED
@@ -174,7 +199,7 @@ class MainActivity : BaseActivity() {
             if (pausedMillis != 0L && pausedMillis > 5000) {
                 if (pausedMillis > 180000) {
                     pausedMillis = 0
-                    noConnectionDialog?.dismiss()
+                    noConnectionDialog?.dismissAllowingStateLoss()
                     startActivityWithClearTask(LoginActivity::class.java)
                 } else {
                     openPage(R.id.passCodeFragment2, bundleOf(Const.OPERATION to PassCodeFragment.PASS_OPERATION_POP))
@@ -209,7 +234,7 @@ class MainActivity : BaseActivity() {
     private fun checkForDeepLink() {
         if (!intent.getStringExtra(PassCodeFragment.DEEP_LINK_OBJECT_VALUE).isNullOrEmpty()) {
             openPage(
-                R.id.requestMoneyPaymentFragment,
+                R.id.transferToCardFragment,
                 bundleOf(
                     PassCodeFragment.DEEP_LINK_OBJECT_VALUE to intent.getStringExtra(
                         PassCodeFragment.DEEP_LINK_OBJECT_VALUE
@@ -229,22 +254,24 @@ class MainActivity : BaseActivity() {
     }
 
     private fun internetListener() {
-        InternetConnectionChecker(this).observeForever { isConnected ->
-            try {
+        try {
+            InternetConnectionChecker(this).observe(this) { isConnected ->
                 if (isConnected) {
-                    if (!isDestroyed && !isFinishing) {
+                    if (isActive()) {
                         if (noConnectionDialog != null) {
-                            noConnectionDialog?.dismiss()
+                            noConnectionDialog?.dismissAllowingStateLoss()
                             noConnectionDialog = null
                         }
                     }
-                } else if (!this@MainActivity.isStop && !isDestroyed && !isFinishing) {
-                    noConnectionDialog = NoConnectionDialog()
-                    noConnectionDialog?.show(supportFragmentManager, "")
+                } else if (!this@MainActivity.isStop && isActive()) {
+                    if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                        noConnectionDialog = NoConnectionDialog()
+                        noConnectionDialog?.show(supportFragmentManager, "")
+                    }
                 }
-            } catch (e: Exception) {
-                recordException(e, ::internetListener.name)
             }
+        } catch (e: Exception) {
+            recordException(e, ::internetListener.name)
         }
     }
 
@@ -323,6 +350,55 @@ class MainActivity : BaseActivity() {
         if (requestCode == UpdateChecker.UPDATE_CODE) {
             if (resultCode == Activity.RESULT_OK) {
                 updateChecker.appUpdateManager.registerListener(updateChecker.updateListener)
+            }
+        }
+    }
+
+    private fun initSensorEventListener() {
+        sensorEventListener = object : SensorEventListener {
+            override fun onSensorChanged(event: SensorEvent?) {
+                if (event == null) return
+                val x = event.values[0]
+                val y = event.values[1]
+                val z = event.values[2]
+                val acceleration = sqrt(x * x + y * y + z * z)
+                val currentTime = System.currentTimeMillis()
+                if (acceleration > 24) {
+                    if (currentTime - lastShakeTime > 1000) {
+                        lastShakeTime = currentTime
+                        onShakeDetected()
+                    }
+                }
+            }
+
+            override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+        }
+    }
+
+    private fun onShakeDetected() {
+        if (getFromPaper(Const.SHAKING_ACTION_STATE, "N") == "Y") {
+            when (Paper.book().read<String>(Const.SELECTED_FRAGMENT)) {
+                ShakeActions.ACTION_MY_CARDS -> {
+                    openPage(R.id.myCardsServiceFragment)
+                }
+
+                ShakeActions.ACTION_MY_CREDITS -> {
+                    openPage(R.id.myCreditsServiceFragment)
+                }
+
+                ShakeActions.ACTION_MY_DEPOSITS -> {
+                    openPage(R.id.myDepositsServiceFragment)
+                }
+
+                ShakeActions.ACTION_RATES -> {
+                    openPage(R.id.ratesFragment)
+                }
+
+                ShakeActions.ACTION_TRANSFER -> {
+                    openPage(R.id.transferToCardFragment)
+                }
+
+                else -> {}
             }
         }
     }
