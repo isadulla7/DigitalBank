@@ -388,7 +388,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                                     requireContext().saveUserSms(smsCode)
                                 }
                                 checkSmsResponse = it.data!!
-                                if (checkSmsResponse.user_exist == "Y") {
+                                if (checkSmsResponse.user_exist == "Y" && checkSmsResponse.is_authenticate == "Y") {
                                     initDialog()
                                 } else {
                                     continueSignUpOperation()

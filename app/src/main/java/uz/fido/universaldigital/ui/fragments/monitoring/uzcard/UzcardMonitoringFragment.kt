@@ -3,9 +3,9 @@ package uz.fido.universaldigital.ui.fragments.monitoring.uzcard
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -14,14 +14,13 @@ import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.UzcardItem
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringRequest
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringItem
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentUzcardMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.SvMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.UzCardMonitoringDetailsDialog
@@ -40,83 +39,103 @@ import java.util.Locale
 import java.util.SortedMap
 
 @AndroidEntryPoint
-class UzcardMonitoringFragment :
-    BaseFragment<FragmentUzcardMonitoringBinding, LocalMonitoringViewModel>(
-        FragmentUzcardMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
-    ), (SVMonitoringItem) -> Unit {
+class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, LocalMonitoringViewModel>(
+    FragmentUzcardMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
+), (UzcardMonitoringItem) -> Unit {
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
-    private lateinit var dialogInfo: UzCardMonitoringDetailsDialog
     private var operationType = 2
     private var dateBegin: String = ""
     private var dateEnd: String = ""
     private var totalList: ArrayList<ListItem> = ArrayList()
-    private val svMonitoringAdapter by lazy {
-        SvMonitoringAdapter(
-            requireContext(),
+    private val menuMonitoringViewModel by activityViewModels<MenuMonitoringViewModel>()
+    private var cardList = arrayListOf<String>()
+    private val uzcardMonitoringAdapter by lazy {
+        UzcardMonitoringAdapter(
             totalList,
             this
         )
     }
-    private var linearLayoutManager: LinearLayoutManager? = null
-    private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
-    private val df = SimpleDateFormat("yyyyMMdd", Locale.US)
-    private val menuMonitoringViewModel by activityViewModels<MenuMonitoringViewModel>()
-    private var cardList = arrayListOf<String>()
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        linearLayoutManager = LinearLayoutManager(requireContext())
         totalList.clear()
-        getCardList()
-        setTime()
-        recylerViewScroll()
-        createMonitoringAdapter()
-        checkFilter()
-        onClickView()
-
+        initializeUzcardList()
+        initMonitoringDate()
+        initScrollListener()
+        setupMonitoringRecyclerView()
+        checkForFilter()
+        initSetOnClickListeners()
     }
 
-
-
-    private fun checkFilter() {
-        if (saveViewModel.uzCardFilter)
-            getFilterUzCardMonitoringList(1, operationType)
-        else {
-            checkSaveItem()
-        }
-
+    private fun initializeUzcardList() {
+        cardList = menuMonitoringViewModel.uzcardList.value ?: arrayListOf()
     }
 
-    private fun checkSaveItem() {
-        getUzCardMonitoringList(1, operationType)
+    private fun initMonitoringDate() {
+        val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+        val calendarEnd = Calendar.getInstance()
+        dateBegin = ""
+        dateEnd = dateFormat.format(calendarEnd.time)
     }
 
-
-    private fun getFilterUzCardMonitoringList(page: Int, operationType: Int) {
-        saveViewModel.uzCardMonitoringFilter.observe(viewLifecycleOwner) { it ->
-            val card = arrayListOf<String>()
-            it.cardList.forEach { item->
-                if (!item.is_selected_monitoring)
-                    card.add(item.object_id.toString())
+    private fun initScrollListener() {
+        scrollListener = object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+                if (menuMonitoringViewModel.uzCardFilter)
+                    getFilteredMonitoringList(page)
+                else getUzCardMonitoringListScroll(page, operationType)
             }
+        }
+    }
+
+    private fun setupMonitoringRecyclerView() {
+        binding.monitoringList.apply {
+            adapter = uzcardMonitoringAdapter
+            setHasFixedSize(true)
+            layoutManager = LinearLayoutManager(requireContext())
+            addOnScrollListener(scrollListener)
+            addItemDecoration(StickyHeaderDecoration(uzcardMonitoringAdapter))
+        }
+    }
+
+    private fun checkForFilter() {
+        if (menuMonitoringViewModel.uzCardFilter)
+            getFilteredMonitoringList(1)
+        else {
+            getUzCardMonitoringList(operationType)
+        }
+    }
+
+    private fun initSetOnClickListeners() {
+        binding.refreshButton.setOnClickListener {
+            totalList = ArrayList()
+            binding.consError.visibility = View.GONE
+            binding.shimmerView.visibility = View.VISIBLE
+            getUzCardMonitoringList(operationType)
+        }
+    }
+
+    private fun getFilteredMonitoringList(page: Int) {
+        val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+        menuMonitoringViewModel.uzCardMonitoringFilter.observe(viewLifecycleOwner) { it ->
+            val card = it.cardList.filter { !it.is_selected_monitoring }.map { it.object_id.toString() }
             val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             if (it.startDate != "") {
-                dateEnd = df.format(format.parse(it.endDate).time)
-                dateBegin = df.format(format.parse(it.startDate).time)
-            } else setTime()
+                dateEnd = dateFormat.format(format.parse(it.endDate)?.time ?: "")
+                dateBegin = dateFormat.format(format.parse(it.startDate)?.time ?: "")
+            } else initMonitoringDate()
             val type = when (it.plusMinus) {
                 getString(R.string.enrollments) -> 0
                 getString(R.string.write_offs) -> 1
                 else -> 2
             }
-            val model = SVMonitoringRequest(
-                start_date = dateBegin,
-                end_date = dateEnd,
-                page_number = page.toString(),
-                page_item_size = LocalMonitoringFragment.PAGE_SIZE,
-                from_object_ids = card
+            val model = UzcardMonitoringRequest(
+                startDate = dateBegin,
+                endDate = dateEnd,
+                pageNumber = page.toString(),
+                pageItemSize = LocalMonitoringFragment.PAGE_SIZE,
+                selectedCards = card as ArrayList<String>,
             )
             var skeletonScreen: SkeletonScreen? = null
             if (page == 1) {
@@ -133,9 +152,7 @@ class UzcardMonitoringFragment :
             }
             viewModel.getUzcardMonitoringOld(getClientToken(), model).observe(viewLifecycleOwner) {
                 if (page == 1) {
-                    skeletonScreen!!.hide()
-                    binding.shimmerView.visibility = View.GONE
-                    binding.rec.visibility = View.VISIBLE
+                    skeletonScreen?.hide()
                 } else {
                     binding.progress.visibility = View.GONE
                 }
@@ -146,60 +163,15 @@ class UzcardMonitoringFragment :
                     }
 
                     Status.ERROR -> {
-                        svMonitoringAdapter.removeList()
+                        uzcardMonitoringAdapter.removeList()
                         binding.consError.visibility = View.VISIBLE
                     }
                 }
             }
-
-        }
-
-
-    }
-
-    private fun onClickView() {
-        binding.gotoMainPage.setOnClickListener {
-            totalList = ArrayList()
-            binding.consError.visibility = View.GONE
-            binding.shimmerView.visibility = View.VISIBLE
-            getUzCardMonitoringList(page = 1, operationType)
-
         }
     }
 
-    private fun getCardList() {
-        cardList = menuMonitoringViewModel.uzcardList.value ?: arrayListOf()
-
-    }
-
-    private fun recylerViewScroll() {
-        scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                if (saveViewModel.uzCardFilter)
-                    getFilterUzCardMonitoringList(page, operationType)
-                else getUzCardMonitoringListScroll(page, operationType)
-            }
-        }
-    }
-
-    private fun setTime() {
-        val calendarEnd = Calendar.getInstance()
-        dateBegin = ""
-        dateEnd = df.format(calendarEnd.time)
-    }
-
-    private fun createMonitoringAdapter() {
-        binding.rec.apply {
-            adapter = svMonitoringAdapter
-            setHasFixedSize(true)
-            layoutManager = linearLayoutManager
-            addOnScrollListener(scrollListener)
-            addItemDecoration(StickyHeaderDecoration(svMonitoringAdapter))
-
-        }
-    }
-
-    private fun getUzCardMonitoringList(page: Int, operationType: Int) {
+    private fun getUzCardMonitoringList(operationType: Int) {
         if (cardList.isNotEmpty()) {
             val skeletonScreen = showSkeleton(
                 binding.shimmerView,
@@ -208,20 +180,17 @@ class UzcardMonitoringFragment :
                 1
             )
             scrollListener.resetState()
-
             viewModel.getUzcardMonitoringOld(
                 token = getClientToken(),
-                SVMonitoringRequest(
-                    start_date = dateBegin,
-                    end_date = dateEnd,
-                    page_number = page.toString(),
-                    page_item_size = "2",
-                    from_object_ids = cardList
+                UzcardMonitoringRequest(
+                    startDate = dateBegin,
+                    endDate = dateEnd,
+                    pageNumber = "1",
+                    pageItemSize = "20",
+                    selectedCards = cardList
                 )
             ).observe(viewLifecycleOwner) { resources ->
                 skeletonScreen.hide()
-                binding.shimmerView.visibility = View.GONE
-                binding.rec.visibility = View.VISIBLE
                 when (resources.status) {
                     Status.SUCCESS -> {
                         val response = resources?.data?.transactions ?: ArrayList()
@@ -229,7 +198,7 @@ class UzcardMonitoringFragment :
                     }
 
                     Status.ERROR -> {
-                        svMonitoringAdapter.removeList()
+                        uzcardMonitoringAdapter.removeList()
                         binding.consError.visibility = View.VISIBLE
                     }
                 }
@@ -237,12 +206,8 @@ class UzcardMonitoringFragment :
         } else {
             Handler(Looper.getMainLooper()).postDelayed({
                 if (isVisible) {
-                    // skeletonScreen.hide()
-                    binding.shimmerView.visibility = View.GONE
-                    binding.rec.visibility = View.GONE
                     binding.layoutEmpty.visibility = View.VISIBLE
                     binding.layoutEmpty.findViewById<TextViewMedium>(R.id.title).text = getString(R.string.card_list_no)
-
                 }
             }, 500)
         }
@@ -252,16 +217,15 @@ class UzcardMonitoringFragment :
         binding.progress.visibility = View.VISIBLE
         viewModel.getUzcardMonitoringOld(
             token = getClientToken(),
-            SVMonitoringRequest(
-                start_date = dateBegin,
-                end_date = dateEnd,
-                page_number = page.toString(),
-                page_item_size = LocalMonitoringFragment.PAGE_SIZE,
-                from_object_ids = cardList
+            UzcardMonitoringRequest(
+                startDate = dateBegin,
+                endDate = dateEnd,
+                pageNumber = page.toString(),
+                pageItemSize = LocalMonitoringFragment.PAGE_SIZE,
+                selectedCards = cardList
             )
         ).observe(viewLifecycleOwner) { resources ->
             binding.progress.visibility = View.GONE
-
             when (resources.status) {
                 Status.SUCCESS -> {
                     val response = resources?.data?.transactions
@@ -269,21 +233,19 @@ class UzcardMonitoringFragment :
                 }
 
                 Status.ERROR -> {
-                    svMonitoringAdapter.removeList()
+                    uzcardMonitoringAdapter.removeList()
                     binding.consError.visibility = View.VISIBLE
                 }
             }
         }
     }
 
-    private fun successMonitoringList(response: ArrayList<SVMonitoringItem>?, operationType: Int) {
-        val sortedResponse = ArrayList<SVMonitoringItem>()
-        Log.d("TAG", "successMonitoringList:${operationType} ")
-        val groupedHashMap: HashMap<String, MutableList<SVMonitoringItem>> = when (operationType) {
+    private fun successMonitoringList(response: ArrayList<UzcardMonitoringItem>?, operationType: Int) {
+        val sortedResponse = ArrayList<UzcardMonitoringItem>()
+        val groupedHashMap: HashMap<String, MutableList<UzcardMonitoringItem>> = when (operationType) {
             0 -> {
                 response?.forEach {
-                    Log.d("TAG", "successMonitoringList:${it.tran_type} ")
-                    if (it.tran_type == LocalMonitoringFragment.MONITORING_CREDIT) {
+                    if (it.transactionType == LocalMonitoringFragment.MONITORING_CREDIT) {
                         sortedResponse.add(it)
                     }
                 }
@@ -292,7 +254,7 @@ class UzcardMonitoringFragment :
 
             1 -> {
                 response?.forEach {
-                    if (it.tran_type == LocalMonitoringFragment.MONITORING_DEBIT) {
+                    if (it.transactionType == LocalMonitoringFragment.MONITORING_DEBIT) {
                         sortedResponse.add(it)
                     }
                 }
@@ -307,46 +269,39 @@ class UzcardMonitoringFragment :
         addDateMonitoringList(sortedMap)
     }
 
-    private fun addDateMonitoringList(sortedMap: SortedMap<String, MutableList<SVMonitoringItem>>) {
+    private fun addDateMonitoringList(sortedMap: SortedMap<String, MutableList<UzcardMonitoringItem>>) {
         for (date in sortedMap.keys) {
             val dateItem = DateItem()
             dateItem.date = date
             if (totalList.isEmpty()) {
                 totalList.add(dateItem)
             } else {
-                if (dateItem.date != Format.newDateFormat((totalList.last() as UzcardItem).svMonitoringItem!!.tran_date)
-                        .substring(
-                            0,
-                            10
-                        )
-                ) totalList.add(dateItem)
+                if (dateItem.date != Format.newDateFormat((totalList.last() as UzcardItem).uzcardMonitoringItem!!.transactionDate).substring(0, 10)) totalList.add(dateItem)
             }
             for (svMonitoringItem in sortedMap[date]!!) {
                 val uzcardItem = UzcardItem()
-                uzcardItem.svMonitoringItem = svMonitoringItem
+                uzcardItem.uzcardMonitoringItem = svMonitoringItem
                 totalList.add(uzcardItem)
             }
         }
-        setAdapter(totalList)
-
+        updateListItems(totalList)
     }
 
-    private fun setAdapter(totalList: ArrayList<ListItem>) {
-        svMonitoringAdapter.setListAdapter(totalList)
-        binding.rec.scheduleLayoutAnimation()
-        emptyView()
-
+    private fun updateListItems(totalList: ArrayList<ListItem>) {
+        uzcardMonitoringAdapter.setListAdapter(totalList)
+        binding.monitoringList.scheduleLayoutAnimation()
+        handleEmptyState()
     }
 
-    private fun groupDataIntoHashMap(svMonitoringList: List<SVMonitoringItem>): HashMap<String, MutableList<SVMonitoringItem>> {
-        svMonitoringList.sortedBy { it.tran_date }
-        val groupedHashMap: HashMap<String, MutableList<SVMonitoringItem>> = HashMap()
+    private fun groupDataIntoHashMap(svMonitoringList: List<UzcardMonitoringItem>): HashMap<String, MutableList<UzcardMonitoringItem>> {
+        svMonitoringList.sortedBy { it.transactionDate }
+        val groupedHashMap: HashMap<String, MutableList<UzcardMonitoringItem>> = HashMap()
         for (svMonitoring in svMonitoringList) {
-            val hashMapKey: String = Format.newDateFormat(svMonitoring.tran_date.substring(0, 10))
+            val hashMapKey: String = Format.newDateFormat(svMonitoring.transactionDate.substring(0, 10))
             if (groupedHashMap.containsKey(hashMapKey)) {
                 groupedHashMap[hashMapKey]!!.add(svMonitoring)
             } else {
-                val list: MutableList<SVMonitoringItem> = ArrayList()
+                val list: MutableList<UzcardMonitoringItem> = ArrayList()
                 list.add(svMonitoring)
                 groupedHashMap[hashMapKey] = list
             }
@@ -354,26 +309,21 @@ class UzcardMonitoringFragment :
         return groupedHashMap
     }
 
-    private fun emptyView() {
-        if (totalList.isEmpty()) {
-            binding.layoutEmpty.visibility = View.VISIBLE
-        } else binding.layoutEmpty.visibility = View.GONE
+    private fun handleEmptyState() {
+        binding.layoutEmpty.isVisible = totalList.isEmpty()
     }
 
-    override fun invoke(item: SVMonitoringItem) {
-        dialogInfo = UzCardMonitoringDetailsDialog(item, object : BaseInterface {
-            override fun uzCardInfo(svMonitoringItem: SVMonitoringItem) {
-                super.uzCardInfo(svMonitoringItem)
-                dialogInfo.dismiss()
+    override fun invoke(item: UzcardMonitoringItem) {
+        val dialogInfo = UzCardMonitoringDetailsDialog(item, object : BaseInterface {
+            override fun uzCardInfo(uzcardMonitoringItem: UzcardMonitoringItem) {
+                super.uzCardInfo(uzcardMonitoringItem)
                 gotoWithSlide(
                     R.id.checkInfoPaymentFragment,
                     bundleOf("uzcard" to item, "operation" to "uzcard")
                 )
-
             }
         })
         dialogInfo.show(childFragmentManager, "")
     }
-
 
 }

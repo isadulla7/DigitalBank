@@ -26,8 +26,7 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
 
 @AndroidEntryPoint
-class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuMonitoringViewModel>
-    (FragmentMenuMonitoringBinding::inflate, MenuMonitoringViewModel::class.java) {
+class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuMonitoringViewModel>(FragmentMenuMonitoringBinding::inflate, MenuMonitoringViewModel::class.java) {
 
     private val menuMonitoringViewModel by activityViewModels<MenuMonitoringViewModel>()
     private val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
@@ -131,7 +130,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
         adapter.addFragment(HumoMonitoringFragment())
         adapter.addFragment(WalletMonitoringFragment())
         binding.viewPager.apply {
-            offscreenPageLimit = 1
+            offscreenPageLimit = 3
             this.adapter = adapter
             binding.tabLayout.setupWithViewPager(this)
             addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -160,7 +159,6 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
             menuMonitoringViewModel.humoFilter,
             menuMonitoringViewModel.walletFilter
         )
-
         binding.filter.setImageResource(
             if (filterStatus.getOrNull(position) == true) R.drawable.ic_filter_yes
             else R.drawable.ic_filter_frame

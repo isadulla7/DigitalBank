@@ -58,7 +58,7 @@
         tools:text="12 000 000" />
 
     <uz.fido.utils.view.custom_text_view.TextViewRegular
-        android:id="@+id/tv_cansel"
+        android:id="@+id/tv_cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="4dp"

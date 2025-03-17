@@ -11,7 +11,7 @@ import uz.fido.network.domain.model.monitoring.AccountHistoriesRequest
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringRequest
 import uz.fido.network.domain.model.monitoring.filter.NewFilterMonitoringFilterRequest
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringRequest
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringRequest
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringRequest
 import uz.fido.network.domain.model.payment.PrintChequeRequest
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoringRequest
 import uz.fido.network.domain.model.search.GetInfoRequest
@@ -33,9 +33,9 @@ class LocalMonitoringViewModel @Inject constructor(
             emit(monitoringRepository.getLocalMonitoring(token, localMonitoringRequest))
         }
 
-    fun getUzcardMonitoringOld(token: String, svMonitoringRequest: SVMonitoringRequest) =
+    fun getUzcardMonitoringOld(token: String, uzcardMonitoringRequest: UzcardMonitoringRequest) =
         liveData(Dispatchers.IO) {
-            emit(monitoringRepository.getUzcardMonitoringOld(token, svMonitoringRequest))
+            emit(monitoringRepository.getUzcardMonitoringOld(token, uzcardMonitoringRequest))
         }
 
     fun getHumoMonitoring(token: String, getHumoMonitoringRequest: HumoMonitoringRequest) =
