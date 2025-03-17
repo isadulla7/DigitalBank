@@ -23,8 +23,8 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentUzcardFirstMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.UzCardMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter

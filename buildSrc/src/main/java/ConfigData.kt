@@ -4,7 +4,7 @@ object ConfigData {
     const val COMPILE_SDK_VERSION = 34
     const val TARGET_SDK_VERSION = 34
     const val BUILD_TOOLS_VERSION: String = "34.0.0"
-    const val VERSION_CODE = 135
+    const val VERSION_CODE = 136
     const val RELEASE_VERSION_NAME = "1.0.37"
     const val ARCHIVES_BASE_NAME = "Universalbank($VERSION_CODE)"
 }

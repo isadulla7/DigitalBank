@@ -18,8 +18,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentWalletMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.WalletMonitoringAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.WalletMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
@@ -58,7 +57,6 @@ class WalletMonitoringFragment :
     private var totalList: ArrayList<ListItem> = ArrayList()
     private val walletMonitoringAdapter by lazy {
         WalletMonitoringAdapter(
-            requireContext(),
             totalList,
             this
         )
@@ -112,7 +110,7 @@ class WalletMonitoringFragment :
                     dateEnd = df.format(format.parse(filterSaveVh.endDate)?.time ?: "")
                     dateBegin = df.format(format.parse(filterSaveVh.startDate)?.time ?: "")
                 } else setTime()
-                val type = when (filterSaveVh.plusMinus) {
+                val type = when (filterSaveVh.operationType) {
                     getString(R.string.enrollments) -> 2
                     getString(R.string.write_offs) -> 1
                     else -> 0
@@ -207,7 +205,7 @@ class WalletMonitoringFragment :
         val groupedHashMap: HashMap<String, MutableList<AccountHistory>> = when (operationType) {
             2 -> {
                 response.forEach {
-                    if (it.debit == "0") {
+                    if (it.debitAmount == "0") {
                         sortedResponse.add(it)
                     }
                 }
@@ -216,7 +214,7 @@ class WalletMonitoringFragment :
 
             1 -> {
                 response.forEach {
-                    if (it.credit == "0") {
+                    if (it.creditAmount == "0") {
                         sortedResponse.add(it)
                     }
                 }

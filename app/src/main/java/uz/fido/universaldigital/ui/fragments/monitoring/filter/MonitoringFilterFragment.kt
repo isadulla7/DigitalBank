@@ -6,11 +6,13 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.flexbox.AlignItems
 import com.google.android.flexbox.FlexDirection
 import com.google.android.flexbox.FlexWrap
 import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CheckCardRequestP2p
 import uz.fido.network.domain.model.cards.CheckCardResponse
@@ -91,14 +93,16 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
 
     private fun doneFilter() {
         if (saveViewModel.localFilter) {
-            saveViewModel.localMonitoringFilter.observe(viewLifecycleOwner) {
-                if (allOperationFilter.isEmpty()) {
-                    filterSaveVh = it
-                    cardResponseError = true
-                    localFilterDone()
-                    cardSave()
-                    getCardFilterList()
-                    getSaveFilter()
+            lifecycleScope.launch {
+                saveViewModel.localMonitoringFilter.collect {
+                    if (allOperationFilter.isEmpty()) {
+                        filterSaveVh = it
+                        cardResponseError = true
+                        localFilterDone()
+                        cardSave()
+                        getCardFilterList()
+                        getSaveFilter()
+                    }
                 }
             }
         } else {
@@ -192,9 +196,9 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
             )
             buttonClickVisibility()
         }
-        if (filterSaveVh!!.plusMinus != "") {
-            choose = filterSaveVh!!.plusMinus
-            addFilterList("choose", filterSaveVh!!.plusMinus, false)
+        if (filterSaveVh!!.operationType != "") {
+            choose = filterSaveVh!!.operationType
+            addFilterList("choose", filterSaveVh!!.operationType, false)
             chooseCurrent = true
             binding.minPlus.background =
                 ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
@@ -452,7 +456,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
 
     private fun filterChooseSave() {
         saveViewModel.localFilter = true
-        val isServiceCurrent = false
         val carNumber = binding.etCardNumber.text.toString().replace(" ", "").replace("+", "")
         val filter = FilterSaveVh(
             startDate,

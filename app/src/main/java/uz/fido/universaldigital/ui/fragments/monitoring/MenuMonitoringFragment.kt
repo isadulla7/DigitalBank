@@ -10,9 +10,9 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMenuMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringPagerAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.chart.MonitoringChartFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringFragment
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
@@ -107,7 +107,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
                     }
                 }
             }
-            menuMonitoringViewModel.allCardList.value = isFilter
+            menuMonitoringViewModel.userHasCard(isFilter)
             menuMonitoringViewModel.uzcardList.value = cardUzCardList
             menuMonitoringViewModel.humoList.value = cardHumoList
             menuMonitoringViewModel.currencyList.value = cardCurrencyList

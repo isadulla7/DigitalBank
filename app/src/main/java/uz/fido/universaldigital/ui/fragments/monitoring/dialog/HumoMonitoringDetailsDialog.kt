@@ -56,13 +56,13 @@ class HumoMonitoringDetailsDialog(
     }
 
     private fun initViews() {
-        addView(getString(R.string.terminal_id), item.terminal_id)
-        addView(getString(R.string.name), item.merchant_name)
-        addView(getString(R.string.date_time), item.tran_date)
-        addView(getString(R.string.card_number), Format.formatCardNumber(item.card_num))
+        addView(getString(R.string.terminal_id), item.terminalId)
+        addView(getString(R.string.name), item.merchantName)
+        addView(getString(R.string.date_time), item.transactionDate)
+        addView(getString(R.string.card_number), Format.formatCardNumber(item.cardNumber))
         if (item.address.isNotEmpty()) addView(getString(R.string.address), item.address)
-        addView(getString(R.string.operation_type), if (item.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome))
-        addView(getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(item.tran_amount)) + " UZS")
+        addView(getString(R.string.operation_type), if (item.transactionType == "credit") getString(R.string.income) else getString(R.string.outcome))
+        addView(getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(item.transactionAmount)) + " UZS")
     }
 
     private fun addView(name: String, value: String) {

@@ -19,7 +19,7 @@ import uz.fido.network.domain.model.payment.local_history.LocalMonitoringRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentMonthsBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.user.getClientToken

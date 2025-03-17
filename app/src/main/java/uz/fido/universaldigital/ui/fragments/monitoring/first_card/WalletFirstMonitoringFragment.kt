@@ -19,8 +19,8 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentWalletFirstMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.WalletMonitoringAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
+import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringAdapter
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.WalletMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
@@ -61,7 +61,6 @@ class WalletFirstMonitoringFragment :
     private var totalList: ArrayList<ListItem> = ArrayList()
     private val walletMonitoringAdapter by lazy {
         WalletMonitoringAdapter(
-            requireContext(),
             totalList,
             this
         )
@@ -146,7 +145,8 @@ class WalletFirstMonitoringFragment :
                 dateBegin = inputFormat.format(formatStartDate)
                 dateEnd = inputFormat.format(formatEndDate)
             }
-            filterDialog = MonitoringAllCardDialog(choose, dateBegin, dateEnd, timeType,
+            filterDialog = MonitoringAllCardDialog(
+                choose, dateBegin, dateEnd, timeType,
                 onClickItem = { choose, startDate, endDate, type ->
                     this.choose = choose
                     dateBegin = startDate

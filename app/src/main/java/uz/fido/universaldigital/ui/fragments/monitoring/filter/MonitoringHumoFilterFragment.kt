@@ -91,9 +91,9 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
             binding.amount.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
             binding.amount.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
         }
-        if (filterSaveVh!!.plusMinus != "") {
-            choose = filterSaveVh!!.plusMinus
-            addFilterList("choose", filterSaveVh!!.plusMinus, false)
+        if (filterSaveVh!!.operationType != "") {
+            choose = filterSaveVh!!.operationType
+            addFilterList("choose", filterSaveVh!!.operationType, false)
             chooseCurrent = true
             binding.minPlus.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
             binding.minPlus.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))

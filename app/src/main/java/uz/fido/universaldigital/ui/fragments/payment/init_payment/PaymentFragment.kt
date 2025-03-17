@@ -34,7 +34,7 @@ import uz.fido.network.domain.model.template.CreateTemplateRequest
 import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.PaymentFragmentBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.payment.MenuPaymentViewModel
 import uz.fido.universaldigital.ui.fragments.payment.abc_adapter.PopularPaymentsAdapter
 import uz.fido.universaldigital.ui.fragments.payment.abc_confirm.ConfirmPaymentFragment

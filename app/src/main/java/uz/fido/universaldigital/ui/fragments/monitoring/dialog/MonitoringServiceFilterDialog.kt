@@ -17,7 +17,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.DialogMonitoringFilterBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.ServiceFilterAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.user.getClientToken
 import java.text.SimpleDateFormat

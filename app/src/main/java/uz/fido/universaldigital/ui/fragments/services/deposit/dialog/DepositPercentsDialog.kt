@@ -138,7 +138,7 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
     private fun addDateView(list: ArrayList<AccountHistory>) {
         list.forEach {
             if (dateSortList.isEmpty()) {
-                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", "", 1)
+                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "",  "", "", "", "", "", 1)
                 dateSortList.add(accountHistory)
             }
 
@@ -146,7 +146,7 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
             val listDate = newDateFormat.format(simpleDateFormat.parse(it.dateExecute).time)
 
             if (newlistDate != listDate) {
-                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", "", 1)
+                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", 1)
                 dateSortList.add(accountHistory)
             }
             dateSortList.add(it)

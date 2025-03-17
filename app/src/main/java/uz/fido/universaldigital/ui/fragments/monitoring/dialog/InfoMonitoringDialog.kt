@@ -48,41 +48,44 @@ class InfoMonitoringDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        onClickView()
-        checkBtn()
+        checkForButton()
+        initSetOnClickListeners()
         init()
     }
 
-    private fun onClickView() {
+    private fun initSetOnClickListeners() {
         binding.repeat.setOnClickListener {
-            if (!isBadServiceIds(localMonitoring)) {
-                if (localMonitoring.tran_type == "credit") {
-                    if (searchDateResponse != null)
-                        if (searchDateResponse.request_code == "P2P") {
-                            returnPayment.invoke(localMonitoring)
-                        } else {
-                            return@setOnClickListener
-                        }
-                } else repeatPayment.invoke(localMonitoring)
+            if (localMonitoring.tran_type == "credit") {
+                if (searchDateResponse != null)
+                    if (searchDateResponse.request_code == "P2P") {
+                        dismiss()
+                        returnPayment.invoke(localMonitoring)
+                    } else {
+                        return@setOnClickListener
+                    }
+            } else {
+                dismiss()
+                repeatPayment.invoke(localMonitoring)
             }
         }
         binding.allInfo.setOnClickListener {
+            dismiss()
             fullInfo.invoke(localMonitoring)
         }
     }
 
-    private fun checkBtn() {
+    private fun checkForButton() {
         if (isBadServiceIds(localMonitoring)) {
             binding.repeat.visibility = View.GONE
         }
         if (localMonitoring.tran_type == "credit") {
-            if (searchDateResponse != null)
+            if (searchDateResponse != null) {
                 if (searchDateResponse.request_code == "P2P") {
                     binding.tvRepeat.text = getString(R.string.return_text)
                 } else {
-                    binding.repeat.alpha = 0.3f
                     binding.repeat.visibility = View.GONE
                 }
+            }
         }
     }
 

@@ -18,9 +18,9 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentHumoFirstMonitoringBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.HumoMonitoringAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
+import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringAdapter
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.HumoMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
@@ -251,7 +251,7 @@ class FirstHumoMonitoringFragment :
             when (operationType) {
                 0 -> {
                     response?.forEach {
-                        if (it.tran_type == LocalMonitoringFragment.MONITORING_CREDIT) {
+                        if (it.transactionType == LocalMonitoringFragment.MONITORING_CREDIT) {
                             sortedResponse.add(it)
                         }
                     }
@@ -260,7 +260,7 @@ class FirstHumoMonitoringFragment :
 
                 1 -> {
                     response?.forEach {
-                        if (it.tran_type == LocalMonitoringFragment.MONITORING_DEBIT) {
+                        if (it.transactionType == LocalMonitoringFragment.MONITORING_DEBIT) {
                             sortedResponse.add(it)
                         }
                     }
@@ -282,7 +282,7 @@ class FirstHumoMonitoringFragment :
             if (totalList.isEmpty()) {
                 totalList.add(dateItem)
             } else {
-                if (dateItem.date != Format.newDateFormat((totalList.last() as HumoItem).humoMonitoringItem!!.tran_date)
+                if (dateItem.date != Format.newDateFormat((totalList.last() as HumoItem).humoMonitoringItem!!.transactionDate)
                         .substring(
                             0,
                             10
@@ -304,11 +304,11 @@ class FirstHumoMonitoringFragment :
     }
 
     private fun groupDataIntoHashMap(glMonitoringList: List<HumoMonitoringItem>): HashMap<String, MutableList<HumoMonitoringItem>> {
-        glMonitoringList.sortedBy { it.tran_date }
+        glMonitoringList.sortedBy { it.transactionDate }
         val groupedHashMap: HashMap<String, MutableList<HumoMonitoringItem>> = HashMap()
         for (humoMonitoringItem in glMonitoringList) {
             val hashMapKey: String =
-                Format.newDateFormat(humoMonitoringItem.tran_date.substring(0, 10))
+                Format.newDateFormat(humoMonitoringItem.transactionDate.substring(0, 10))
             if (groupedHashMap.containsKey(hashMapKey)) {
                 groupedHashMap[hashMapKey]!!.add(humoMonitoringItem)
             } else {
