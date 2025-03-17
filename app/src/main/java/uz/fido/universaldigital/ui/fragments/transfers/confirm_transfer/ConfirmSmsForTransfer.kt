@@ -94,7 +94,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
             card = transferDto.senderCard!!,
             amount = transferDto.transferAmount!!,
             serviceId = getServiceIdInfo(transferDto.receiverCard?.card_number!!, transferDto.senderCard!!.object_value),
-        ) { needConfirmSms, stringLine ->
+        ) { _, stringLine ->
             this.stringLine = stringLine
             resendButtonClickEvent()
         }
@@ -226,6 +226,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
             countDownTimer.cancel()
             requireActivity().unregisterReceiver(smsBroadcastReceiver)
         } catch (ignored: Exception) {
+            ignored.printStackTrace()
         }
         super.onDestroyView()
     }
