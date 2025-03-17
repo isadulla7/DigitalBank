@@ -16,7 +16,7 @@ import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitor
 import uz.fido.network.domain.model.monitoring.filter.FilterCard
 import uz.fido.network.domain.model.monitoring.filter.UserPayedService
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringItem
 import uz.fido.network.domain.model.my_house.MyHouseGroup
 import uz.fido.network.domain.model.news.News
 import uz.fido.network.domain.model.news.Notification
@@ -63,7 +63,7 @@ interface BaseInterface {
     fun repeatPayment(localeMonitoring: LocalMonitoring) {}
     fun returnPayment(localeMonitoring: LocalMonitoring) {}
     fun fullInfo(localeMonitoring: LocalMonitoring) {}
-    fun uzCardInfo(svMonitoringItem: SVMonitoringItem) {}
+    fun uzCardInfo(uzcardMonitoringItem: UzcardMonitoringItem) {}
     fun humoInfoPaymentMonitoring(item: HumoMonitoringItem) {}
     fun visaInfoPaymentMonitoring(item: CurrencyCardMonitoringItem) {}
     fun walletInfoPaymentMonitoring(item: AccountHistory) {}

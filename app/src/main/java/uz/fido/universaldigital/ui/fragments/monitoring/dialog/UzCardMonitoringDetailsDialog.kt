@@ -9,7 +9,7 @@ import android.widget.FrameLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringItem
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.DialogUzcardInfoMonitoringBinding
@@ -17,7 +17,7 @@ import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
 import uz.fido.utils.format.Format
 
 class UzCardMonitoringDetailsDialog(
-    private val item: SVMonitoringItem,
+    private val item: UzcardMonitoringItem,
     private val baseInterface: BaseInterface
 ) : BottomSheetDialogFragment() {
 
@@ -51,20 +51,21 @@ class UzCardMonitoringDetailsDialog(
 
     private fun onClickView() {
         binding.allInfo.setOnClickListener {
+            dismiss()
             baseInterface.uzCardInfo(item)
         }
     }
 
     private fun initViews() {
-        addView(getString(R.string.name), item.merchant_name)
-        addView(getString(R.string.terminal_id), item.terminal_id)
-        addView(getString(R.string.card_number), item.card_num)
+        addView(getString(R.string.name), item.merchantName)
+        addView(getString(R.string.terminal_id), item.terminalId)
+        addView(getString(R.string.card_number), item.cardNumber)
         if (item.address.isNotEmpty() && item.address != "0") addView(getString(R.string.address), item.address)
-        addView(getString(R.string.operation_type), if (item.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome))
-        addView(getString(R.string.date_time), item.tran_date.substring(0, 10) + " " + item.tran_date.substring(10, item.tran_date.length))
+        addView(getString(R.string.operation_type), if (item.transactionType == "credit") getString(R.string.income) else getString(R.string.outcome))
+        addView(getString(R.string.date_time), item.transactionDate.substring(0, 10) + " " + item.transactionDate.substring(10, item.transactionDate.length))
         addView(
             getString(R.string.amount),
-            Format.formatAmount(Format.convertFromTiynDivide(item.tran_amount)) + " UZS"
+            Format.formatAmount(Format.convertFromTiynDivide(item.transactionAmount)) + " UZS"
         )
     }
 

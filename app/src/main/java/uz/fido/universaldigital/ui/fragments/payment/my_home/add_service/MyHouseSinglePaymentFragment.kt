@@ -251,18 +251,18 @@ class MyHouseSinglePaymentFragment :
 
 
     private fun fetchMinMaxAmount() {
-        var min = paymentService!!.min_amount
-        var max = paymentService!!.max_amount
-        if (min != null && min.contains(".")) {
+        var min = paymentService?.min_amount ?: "500"
+        var max = paymentService?.max_amount ?: "50000000"
+        if (min.contains(".")) {
             min = min.substring(0, min.indexOf("."))
         }
-        if (max != null && max.contains(".")) {
+        if (max.contains(".")) {
             max = max.substring(0, max.indexOf("."))
         }
-        if (min.isNullOrEmpty()) {
+        if (min.isEmpty()) {
             min = "500"
         }
-        if (max.isNullOrEmpty()) {
+        if (max.isEmpty()) {
             max = "50000000"
         }
         minAmount = min

@@ -20,8 +20,8 @@ import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringResponse
 import uz.fido.network.domain.model.monitoring.local.GetLocalHistoryRequest
 import uz.fido.network.domain.model.monitoring.local.LocalHistoryResponse
 import uz.fido.network.domain.model.monitoring.local.NewMonitoringFilterRequest
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringRequest
-import uz.fido.network.domain.model.monitoring.uzcard.SvMonitoringOldResponse
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringRequest
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringResponse
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoringRequest
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoringResponse
 import javax.inject.Inject
@@ -31,9 +31,9 @@ class MonitoringRepositoryImpl @Inject constructor(private val monitoringApiServ
 
     override suspend fun getUzcardMonitoringOld(
         token: String,
-        svMonitoringRequest: SVMonitoringRequest
-    ): Resource<SvMonitoringOldResponse> = getResult {
-        monitoringApiService.getUzcardMonitoringOld(token, svMonitoringRequest)
+        uzcardMonitoringRequest: UzcardMonitoringRequest
+    ): Resource<UzcardMonitoringResponse> = getResult {
+        monitoringApiService.getUzcardMonitoringOld(token, uzcardMonitoringRequest)
     }
 
     override suspend fun getHumoMonitoring(

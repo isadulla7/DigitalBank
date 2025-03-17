@@ -9,7 +9,7 @@ import androidx.core.content.FileProvider
 import androidx.core.os.bundleOf
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringItem
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringItem
 import uz.fido.network.domain.model.payment.PrintChequeResponse
 import uz.fido.network.domain.model.search.SearchDataResponse
 import uz.fido.universaldigital.R
@@ -32,7 +32,7 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
     private var command = ""
     private lateinit var operation: String
     private lateinit var printChequeResponse: PrintChequeResponse
-    private lateinit var svMonitoringItem: SVMonitoringItem
+    private lateinit var uzcardMonitoringItem: UzcardMonitoringItem
     private lateinit var humoMonitoringItem: HumoMonitoringItem
     private lateinit var visaMonitoringItem: CurrencyCardMonitoringItem
     private lateinit var dialogReceipt: BottomReceiptsDialog
@@ -52,7 +52,7 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
                         searchDataResponse = it.serializable<SearchDataResponse>("data")
                     }
 
-                    "uzcard" -> svMonitoringItem = it.serializable<SVMonitoringItem>("uzcard") as SVMonitoringItem
+                    "uzcard" -> uzcardMonitoringItem = it.serializable<UzcardMonitoringItem>("uzcard") as UzcardMonitoringItem
                     "humo" -> humoMonitoringItem = it.serializable<HumoMonitoringItem>("humo") as HumoMonitoringItem
                     "visa" -> visaMonitoringItem = it.serializable<CurrencyCardMonitoringItem>("visa") as CurrencyCardMonitoringItem
                     else -> return
@@ -85,16 +85,16 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
     }
 
     private fun initUzCard() {
-        addView(getString(R.string.name), svMonitoringItem.merchant_name)
-        addView(getString(R.string.date_time), svMonitoringItem.tran_date)
-        addView(getString(R.string.terminal_id), svMonitoringItem.terminal_id)
-        addView(getString(R.string.card_number), svMonitoringItem.card_num)
-        if (svMonitoringItem.address.isNotEmpty() && svMonitoringItem.address != "0") addView(getString(R.string.address), svMonitoringItem.address)
+        addView(getString(R.string.name), uzcardMonitoringItem.merchantName)
+        addView(getString(R.string.date_time), uzcardMonitoringItem.transactionDate)
+        addView(getString(R.string.terminal_id), uzcardMonitoringItem.terminalId)
+        addView(getString(R.string.card_number), uzcardMonitoringItem.cardNumber)
+        if (uzcardMonitoringItem.address.isNotEmpty() && uzcardMonitoringItem.address != "0") addView(getString(R.string.address), uzcardMonitoringItem.address)
         addView(
-            getString(R.string.operation_type), if (svMonitoringItem.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome)
+            getString(R.string.operation_type), if (uzcardMonitoringItem.transactionType == "credit") getString(R.string.income) else getString(R.string.outcome)
         )
         addView(
-            getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(svMonitoringItem.tran_amount)) + " UZS"
+            getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(uzcardMonitoringItem.transactionAmount)) + " UZS"
         )
     }
 

@@ -12,8 +12,8 @@ import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringRequest
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringResponse
 import uz.fido.network.domain.model.monitoring.local.GetLocalHistoryRequest
 import uz.fido.network.domain.model.monitoring.local.LocalHistoryResponse
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringRequest
-import uz.fido.network.domain.model.monitoring.uzcard.SvMonitoringOldResponse
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringRequest
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringResponse
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoringRequest
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoringResponse
 import retrofit2.http.Body
@@ -30,8 +30,8 @@ interface MonitoringApiInterface {
     @POST("GET_SV_CARD_TRAN_HIS")
     suspend fun getUzcardMonitoringOld(
         @Header("Authorization") token: String,
-        @Body svMonitoringRequest: SVMonitoringRequest
-    ): SvMonitoringOldResponse
+        @Body uzcardMonitoringRequest: UzcardMonitoringRequest
+    ): UzcardMonitoringResponse
 
     @POST("GET_HUMO_MONITORING")
     suspend fun getHumoMonitoring(

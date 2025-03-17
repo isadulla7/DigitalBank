@@ -15,14 +15,14 @@ import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.UzcardItem
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringRequest
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringItem
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentUzcardFirstMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.SvMonitoringAdapter
+import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
@@ -47,7 +47,7 @@ import java.util.SortedMap
 @AndroidEntryPoint
 class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBinding, LocalMonitoringViewModel>(
     FragmentUzcardFirstMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
-), (SVMonitoringItem) -> Unit {
+), (UzcardMonitoringItem) -> Unit {
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var dialogInfo: UzCardMonitoringDetailsDialog
@@ -58,9 +58,8 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
     private var timeType=""
     private var filter:Boolean=false
     private var totalList: ArrayList<ListItem> = ArrayList()
-    private val svMonitoringAdapter by lazy {
-        SvMonitoringAdapter(
-            requireContext(),
+    private val uzcardMonitoringAdapter by lazy {
+        UzcardMonitoringAdapter(
             totalList,
             this
         )
@@ -123,12 +122,12 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
             binding.progress.visibility = View.VISIBLE
         }
         val type = choose
-        val model = SVMonitoringRequest(
-            start_date = dateBegin,
-            end_date = dateEnd,
-            page_number = page.toString(),
-            page_item_size = LocalMonitoringFragment.PAGE_SIZE,
-            from_object_ids = cardList
+        val model = UzcardMonitoringRequest(
+            startDate = dateBegin,
+            endDate = dateEnd,
+            pageNumber = page.toString(),
+            pageItemSize = LocalMonitoringFragment.PAGE_SIZE,
+            selectedCards = cardList
         )
 
         viewModel.getUzcardMonitoringOld(getClientToken(), model).observe(viewLifecycleOwner) {
@@ -146,7 +145,7 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
                 }
 
                 Status.ERROR -> {
-                    svMonitoringAdapter.removeList()
+                    uzcardMonitoringAdapter.removeList()
                     binding.consError.visibility = View.VISIBLE
                 }
             }
@@ -217,11 +216,11 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
 
     private fun createMonitoringAdapter() {
         binding.rec.apply {
-            adapter = svMonitoringAdapter
+            adapter = uzcardMonitoringAdapter
             setHasFixedSize(true)
             layoutManager = linearLayoutManager
             addOnScrollListener(scrollListener)
-            addItemDecoration(StickyHeaderDecoration(svMonitoringAdapter))
+            addItemDecoration(StickyHeaderDecoration(uzcardMonitoringAdapter))
 
         }
     }
@@ -238,12 +237,12 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
 
             viewModel.getUzcardMonitoringOld(
                 token = getClientToken(),
-                SVMonitoringRequest(
-                    start_date = dateBegin,
-                    end_date = dateEnd,
-                    page_number = page.toString(),
-                    page_item_size = "2",
-                    from_object_ids = cardList
+                UzcardMonitoringRequest(
+                    startDate = dateBegin,
+                    endDate = dateEnd,
+                    pageNumber = page.toString(),
+                    pageItemSize = "2",
+                    selectedCards = cardList
                 )
             ).observe(viewLifecycleOwner) { resources ->
                 skeletonScreen.hide()
@@ -256,7 +255,7 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
                     }
 
                     Status.ERROR -> {
-                        svMonitoringAdapter.removeList()
+                        uzcardMonitoringAdapter.removeList()
                         binding.consError.visibility = View.VISIBLE
                     }
                 }
@@ -279,12 +278,12 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
         binding.progress.visibility = View.VISIBLE
         viewModel.getUzcardMonitoringOld(
             token = getClientToken(),
-            SVMonitoringRequest(
-                start_date = dateBegin,
-                end_date = dateEnd,
-                page_number = page.toString(),
-                page_item_size = LocalMonitoringFragment.PAGE_SIZE,
-                from_object_ids = cardList
+            UzcardMonitoringRequest(
+                startDate = dateBegin,
+                endDate = dateEnd,
+                pageNumber = page.toString(),
+                pageItemSize = LocalMonitoringFragment.PAGE_SIZE,
+                selectedCards = cardList
             )
         ).observe(viewLifecycleOwner) { resources ->
             binding.progress.visibility = View.GONE
@@ -296,21 +295,21 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
                 }
 
                 Status.ERROR -> {
-                    svMonitoringAdapter.removeList()
+                    uzcardMonitoringAdapter.removeList()
                     binding.consError.visibility = View.VISIBLE
                 }
             }
         }
     }
 
-    private fun successMonitoringList(response: ArrayList<SVMonitoringItem>?, operationType: Int) {
-        val sortedResponse = ArrayList<SVMonitoringItem>()
+    private fun successMonitoringList(response: ArrayList<UzcardMonitoringItem>?, operationType: Int) {
+        val sortedResponse = ArrayList<UzcardMonitoringItem>()
         Log.d("TAG", "successMonitoringList:${operationType} ")
-        val groupedHashMap: HashMap<String, MutableList<SVMonitoringItem>> = when (operationType) {
+        val groupedHashMap: HashMap<String, MutableList<UzcardMonitoringItem>> = when (operationType) {
             0 -> {
                 response?.forEach {
-                    Log.d("TAG", "successMonitoringList:${it.tran_type} ")
-                    if (it.tran_type == LocalMonitoringFragment.MONITORING_CREDIT) {
+                    Log.d("TAG", "successMonitoringList:${it.transactionType} ")
+                    if (it.transactionType == LocalMonitoringFragment.MONITORING_CREDIT) {
                         sortedResponse.add(it)
                     }
                 }
@@ -319,7 +318,7 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
 
             1 -> {
                 response?.forEach {
-                    if (it.tran_type == LocalMonitoringFragment.MONITORING_DEBIT) {
+                    if (it.transactionType == LocalMonitoringFragment.MONITORING_DEBIT) {
                         sortedResponse.add(it)
                     }
                 }
@@ -334,14 +333,14 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
         addDateMonitoringList(sortedMap)
     }
 
-    private fun addDateMonitoringList(sortedMap: SortedMap<String, MutableList<SVMonitoringItem>>) {
+    private fun addDateMonitoringList(sortedMap: SortedMap<String, MutableList<UzcardMonitoringItem>>) {
         for (date in sortedMap.keys) {
             val dateItem = DateItem()
             dateItem.date = date
             if (totalList.isEmpty()) {
                 totalList.add(dateItem)
             } else {
-                if (dateItem.date != Format.newDateFormat((totalList.last() as UzcardItem).svMonitoringItem!!.tran_date)
+                if (dateItem.date != Format.newDateFormat((totalList.last() as UzcardItem).uzcardMonitoringItem!!.transactionDate)
                         .substring(
                             0,
                             10
@@ -350,7 +349,7 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
             }
             for (svMonitoringItem in sortedMap[date]!!) {
                 val uzcardItem = UzcardItem()
-                uzcardItem.svMonitoringItem = svMonitoringItem
+                uzcardItem.uzcardMonitoringItem = svMonitoringItem
                 totalList.add(uzcardItem)
             }
         }
@@ -359,21 +358,21 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
     }
 
     private fun setAdapter(totalList: ArrayList<ListItem>) {
-        svMonitoringAdapter.setListAdapter(totalList)
+        uzcardMonitoringAdapter.setListAdapter(totalList)
         binding.rec.scheduleLayoutAnimation()
         emptyView()
 
     }
 
-    private fun groupDataIntoHashMap(svMonitoringList: List<SVMonitoringItem>): HashMap<String, MutableList<SVMonitoringItem>> {
-        svMonitoringList.sortedBy { it.tran_date }
-        val groupedHashMap: HashMap<String, MutableList<SVMonitoringItem>> = HashMap()
+    private fun groupDataIntoHashMap(svMonitoringList: List<UzcardMonitoringItem>): HashMap<String, MutableList<UzcardMonitoringItem>> {
+        svMonitoringList.sortedBy { it.transactionDate }
+        val groupedHashMap: HashMap<String, MutableList<UzcardMonitoringItem>> = HashMap()
         for (svMonitoring in svMonitoringList) {
-            val hashMapKey: String = Format.newDateFormat(svMonitoring.tran_date.substring(0, 10))
+            val hashMapKey: String = Format.newDateFormat(svMonitoring.transactionDate.substring(0, 10))
             if (groupedHashMap.containsKey(hashMapKey)) {
                 groupedHashMap[hashMapKey]!!.add(svMonitoring)
             } else {
-                val list: MutableList<SVMonitoringItem> = ArrayList()
+                val list: MutableList<UzcardMonitoringItem> = ArrayList()
                 list.add(svMonitoring)
                 groupedHashMap[hashMapKey] = list
             }
@@ -387,10 +386,10 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
         } else binding.layoutEmpty.visibility = View.GONE
     }
 
-    override fun invoke(item: SVMonitoringItem) {
+    override fun invoke(item: UzcardMonitoringItem) {
         dialogInfo = UzCardMonitoringDetailsDialog(item, object : BaseInterface {
-            override fun uzCardInfo(svMonitoringItem: SVMonitoringItem) {
-                super.uzCardInfo(svMonitoringItem)
+            override fun uzCardInfo(uzcardMonitoringItem: UzcardMonitoringItem) {
+                super.uzCardInfo(uzcardMonitoringItem)
                 dialogInfo.dismiss()
                 gotoWithSlide(
                     R.id.checkInfoPaymentFragment,

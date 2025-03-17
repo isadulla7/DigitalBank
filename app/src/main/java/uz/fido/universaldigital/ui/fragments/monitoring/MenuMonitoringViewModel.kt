@@ -26,7 +26,6 @@ class MenuMonitoringViewModel @Inject constructor(
     val saveLocalMonitoring = MutableLiveData<ArrayList<LocalMonitoring>>()
     var isFilterWindows = false
 
-    //filter yes no
     var localFilter = false
     var uzCardFilter = false
     var humoFilter = false
