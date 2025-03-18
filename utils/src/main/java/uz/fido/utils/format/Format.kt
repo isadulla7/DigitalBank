@@ -40,7 +40,7 @@ object Format {
             cardNumber.substring(0, 4) + " " + cardNumber.substring(
                 4,
                 6
-            ) + "•• •••• " + cardNumber.substring(12, cardNumber.length)
+            ) + " •• •••• " + cardNumber.substring(12, cardNumber.length)
         } else {
             cardNumber
         }
@@ -213,15 +213,16 @@ object Format {
     }
 
     fun monitoringDate(date: String): String {
-        val calendar = Calendar.getInstance()
-        val today = calendar.time
-        calendar.add(Calendar.DATE, -1)
-        val yesterday = calendar.time
         val df = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val secondFormat = SimpleDateFormat("dd MMMM, EEEE", Locale.getDefault())
-        val newFormat: Date = df.parse(date)
-        return secondFormat.format(newFormat).toString()
-
+        val currentYear = Calendar.getInstance().get(Calendar.YEAR)
+        val parsedDate: Date = df.parse(date) as Date
+        val calendar = Calendar.getInstance().apply { time = parsedDate }
+        val formatPattern = if (calendar.get(Calendar.YEAR) == currentYear) {
+            "dd MMMM, EEEE"
+        } else {
+            "dd MMMM, yyyy"
+        }
+        return SimpleDateFormat(formatPattern, Locale.getDefault()).format(parsedDate)
     }
 
     fun formatAmountToTiyn(amount: String?): String {

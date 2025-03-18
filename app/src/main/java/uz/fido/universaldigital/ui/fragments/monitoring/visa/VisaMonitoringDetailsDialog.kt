@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.dialog
+package uz.fido.universaldigital.ui.fragments.monitoring.visa
 
 import android.app.Dialog
 import android.os.Bundle
@@ -9,19 +9,20 @@ import android.widget.FrameLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
+import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringItem
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.DialogUzcardInfoMonitoringBinding
 import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
 import uz.fido.utils.format.Format
 
-class HumoMonitoringDetailsDialog(
-    private val item: HumoMonitoringItem,
+class VisaMonitoringDetailsDialog(
+    private val item: CurrencyCardMonitoringItem,
     private val baseInterface: BaseInterface
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: DialogUzcardInfoMonitoringBinding
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener {
@@ -42,7 +43,6 @@ class HumoMonitoringDetailsDialog(
         return binding.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
@@ -51,18 +51,18 @@ class HumoMonitoringDetailsDialog(
 
     private fun onClickView() {
         binding.allInfo.setOnClickListener {
-            baseInterface.humoInfoPaymentMonitoring(item)
+            baseInterface.visaInfoPaymentMonitoring(item)
         }
     }
 
     private fun initViews() {
-        addView(getString(R.string.terminal_id), item.terminalId)
-        addView(getString(R.string.name), item.merchantName)
-        addView(getString(R.string.date_time), item.transactionDate)
-        addView(getString(R.string.card_number), Format.formatCardNumber(item.cardNumber))
+        addView(getString(R.string.date_time), item.tran_date)
+        addView(getString(R.string.card_number), Format.formatCardNumber(item.card_num))
         if (item.address.isNotEmpty()) addView(getString(R.string.address), item.address)
-        addView(getString(R.string.operation_type), if (item.transactionType == "credit") getString(R.string.income) else getString(R.string.outcome))
-        addView(getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(item.transactionAmount)) + " UZS")
+        addView(getString(R.string.operation_type), if (item.tran_type == "credit") getString(R.string.income) else getString(R.string.outcome))
+        addView(
+            getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(item.tran_amount)) + item.currency
+        )
     }
 
     private fun addView(name: String, value: String) {

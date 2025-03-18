@@ -20,7 +20,6 @@ import uz.fido.universaldigital.databinding.FragmentVisaMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.VisaMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.utils.format.Format
 import uz.fido.utils.sticky.StickyHeaderDecoration

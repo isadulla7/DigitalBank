@@ -30,9 +30,9 @@ import uz.fido.network.domain.model.search.SearchDataResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentRequisitesHistoryBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.LocalMonitoringAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.InfoMonitoringDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringAdapter
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
@@ -94,7 +94,7 @@ class PaymentHistoryDialog(private val paymentServiceId: String, private val per
     }
 
     private fun initHistoriesRv() {
-        localMonitoringAdapter = LocalMonitoringAdapter(requireContext(), totalList) {
+        localMonitoringAdapter = LocalMonitoringAdapter(totalList) {
             getSearchItem(it)
         }
         binding.histories.apply {
@@ -175,7 +175,7 @@ class PaymentHistoryDialog(private val paymentServiceId: String, private val per
             if (totalList.isEmpty()) {
                 totalList.add(dateItem)
             } else {
-                if (dateItem.date != Format.newDateFormat((totalList.last() as GeneralItem).svMonitoringItem!!.created_date)
+                if (dateItem.date != Format.newDateFormat((totalList.last() as GeneralItem).localMonitoringItem!!.createdDate)
                         .substring(
                             0, 10
                         )
@@ -183,7 +183,7 @@ class PaymentHistoryDialog(private val paymentServiceId: String, private val per
             }
             for (svMonitoringItem in sortedMap[date]!!) {
                 val generalItem = GeneralItem()
-                generalItem.svMonitoringItem = svMonitoringItem
+                generalItem.localMonitoringItem = svMonitoringItem
                 totalList.add(generalItem)
             }
         }
@@ -197,11 +197,11 @@ class PaymentHistoryDialog(private val paymentServiceId: String, private val per
     }
 
     private fun groupDataIntoHashMap(svMonitoringList: List<LocalMonitoring>): HashMap<String, MutableList<LocalMonitoring>> {
-        svMonitoringList.sortedBy { it.created_date }
+        svMonitoringList.sortedBy { it.createdDate }
         val groupedHashMap: HashMap<String, MutableList<LocalMonitoring>> = HashMap()
         for (svMonitoring in svMonitoringList) {
             val hashMapKey: String =
-                Format.newDateFormat(svMonitoring.created_date.substring(0, 10))
+                Format.newDateFormat(svMonitoring.createdDate.substring(0, 10))
             if (groupedHashMap.containsKey(hashMapKey)) {
                 groupedHashMap[hashMapKey]!!.add(svMonitoring)
             } else {
@@ -230,7 +230,7 @@ class PaymentHistoryDialog(private val paymentServiceId: String, private val per
 
     private fun getSearchItem(localMonitoring: LocalMonitoring) {
         showProgress(requireActivity())
-        viewModel.getSearchData(getClientToken(), GetInfoRequest(localMonitoring.request_id))
+        viewModel.getSearchData(getClientToken(), GetInfoRequest(localMonitoring.requestId))
             .observe(viewLifecycleOwner) {
                 hideProgress(requireActivity())
                 when (it.status) {
@@ -268,7 +268,7 @@ class PaymentHistoryDialog(private val paymentServiceId: String, private val per
         resource: Resource<SearchDataResponse>
     ) {
         showProgress(requireActivity())
-        viewModel.printCheque(getClientToken(), PrintChequeRequest(localMonitoring.request_id))
+        viewModel.printCheque(getClientToken(), PrintChequeRequest(localMonitoring.requestId))
             .observe(viewLifecycleOwner) {
                 hideProgress(requireActivity())
                 when (it.status) {
@@ -299,7 +299,7 @@ class PaymentHistoryDialog(private val paymentServiceId: String, private val per
     ) {
         viewModel.getOperationParams(
             getClientToken(),
-            GetOperationInfoRequest(request_id = localeMonitoring.request_id)
+            GetOperationInfoRequest(request_id = localeMonitoring.requestId)
         ).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {

@@ -6,7 +6,7 @@ class Logger {
 
     companion object {
 
-        private const val DEBUG = false
+        private const val DEBUG = true
 
         @JvmStatic
         fun writeLogByKey(key: String, text: String) {

@@ -145,12 +145,12 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
 
     private fun initLocal() {
         val item = printChequeResponse.monitoring_info!!
-        transactId = item.request_id
+        transactId = item.requestId
         addView(getString(R.string.service), paymentName)
         searchDataResponse?.params?.get("FIO")?.let { addView(getString(R.string.fio), it) }
         searchDataResponse?.params?.get("FIO_ABONENT")?.let { addView(getString(R.string.fio), it) }
         searchDataResponse?.params?.get("ADDRESS")?.let { addView(getString(R.string.address), it) }
-        addView(getString(R.string.date_time), item.created_date)
+        addView(getString(R.string.date_time), item.createdDate)
         if (searchDataResponse?.service_id == "-4") {
             printChequeResponse.details.forEach {
                 if (checkList(it.key)) {
@@ -158,30 +158,30 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
                 }
             }
         }
-        if (item.terminal_id.isNotEmpty()) addView(getString(R.string.terminal_id), item.terminal_id)
-        addView(getString(R.string.transaction_number), item.request_id)
+        if (item.terminalId.isNotEmpty()) addView(getString(R.string.terminal_id), item.terminalId)
+        addView(getString(R.string.transaction_number), item.requestId)
 
-        if (item.partner_obj.isNotEmpty()) {
-            if (item.to_obj_name.isNotEmpty()) {
-                if (item.partner_obj.startsWith("AUZ")) {
+        if (item.partnerObj.isNotEmpty()) {
+            if (item.receiverCardName.isNotEmpty()) {
+                if (item.partnerObj.startsWith("AUZ")) {
                     addView(
-                        getString(R.string.wallet_number), if (item.object_value.length == 16) Format.formatCardNumber(item.partner_obj) else item.partner_obj
+                        getString(R.string.wallet_number), if (item.senderCard.length == 16) Format.formatCardNumber(item.partnerObj) else item.partnerObj
                     )
                 } else {
                     addView(
-                        item.to_obj_name, if (item.object_value.length == 16) Format.formatCardNumber(item.partner_obj) else item.partner_obj
+                        item.receiverCardName, if (item.senderCard.length == 16) Format.formatCardNumber(item.partnerObj) else item.partnerObj
                     )
                 }
             } else {
                 addView(
-                    getString(R.string.personal_account), if (item.object_value.length == 16) Format.formatCardNumber(item.partner_obj) else item.partner_obj
+                    getString(R.string.personal_account), if (item.senderCard.length == 16) Format.formatCardNumber(item.partnerObj) else item.partnerObj
                 )
             }
         }
-        if (item.object_value.isNotEmpty() && item.partner_obj.length != 16 && !item.partner_obj.startsWith("AUZ")) {
+        if (item.senderCard.isNotEmpty() && item.partnerObj.length != 16 && !item.partnerObj.startsWith("AUZ")) {
             addView(
-                getString(R.string.choose_card_text), if (item.object_value.length == 16) Format.formatCardNumber(item.object_value) else Format.formatWalletNumber(
-                    item.object_value
+                getString(R.string.choose_card_text), if (item.senderCard.length == 16) Format.formatCardNumber(item.senderCard) else Format.formatWalletNumber(
+                    item.senderCard
                 )
             )
         }
@@ -192,17 +192,17 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
                 }
             }
         }
-        val state = if (item.state_id == "1") {
+        val state = if (item.stateId == "1") {
             getString(R.string.successfully)
         } else {
             getString(R.string.waiting)
         }
-        if (item.fee_amount.isNotEmpty() && item.fee_percent.isNotEmpty()) {
-            addView(getString(R.string.commission), "${item.fee_amount.toDouble() / 100.toDouble()} UZS (${item.fee_percent}%)")
+        if (item.feeAmount.isNotEmpty() && item.feePercent.isNotEmpty()) {
+            addView(getString(R.string.commission), "${item.feeAmount.toDouble() / 100.toDouble()} UZS (${item.feePercent}%)")
         }
         addView(getString(R.string.status), state)
         addView(
-            getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(item.amount)) + when (item.currency_code) {
+            getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(item.amount)) + when (item.currencyCode) {
                 "000" -> " UZS"
                 "840" -> " $"
                 "978" -> " EUR"

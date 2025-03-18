@@ -21,7 +21,7 @@ import uz.fido.universaldigital.databinding.FragmentHumoFirstMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.HumoMonitoringDetailsDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.recordException

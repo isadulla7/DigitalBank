@@ -21,7 +21,7 @@ import uz.fido.universaldigital.ui.fragments.monitoring.visa.VisaMonitoringAdapt
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.VisaMonitoringDetailsDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.visa.VisaMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const

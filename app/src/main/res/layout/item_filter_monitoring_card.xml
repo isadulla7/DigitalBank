@@ -2,6 +2,7 @@
 <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
+
     <uz.fido.utils.view.custom_text_view.TextViewSemiBold
         android:id="@+id/card_text"
         android:layout_width="match_parent"
@@ -14,4 +15,5 @@
         android:text="@string/card"
         android:textColor="@color/mainTextColor"
         android:textSize="20dp" />
+
 </androidx.appcompat.widget.LinearLayoutCompat>

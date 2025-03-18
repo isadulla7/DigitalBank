@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.dialog
+package uz.fido.universaldigital.ui.fragments.monitoring.uzcard
 
 import android.app.Dialog
 import android.os.Bundle
@@ -22,6 +22,7 @@ class UzCardMonitoringDetailsDialog(
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: DialogUzcardInfoMonitoringBinding
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener {
@@ -70,8 +71,7 @@ class UzCardMonitoringDetailsDialog(
     }
 
     private fun addView(name: String, value: String) {
-        val viewDepositCreateBinding =
-            ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
+        val viewDepositCreateBinding = ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
         viewDepositCreateBinding.value.text = value
         binding.linAdd.addView(viewDepositCreateBinding.root)

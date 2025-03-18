@@ -18,7 +18,7 @@ import uz.fido.network.domain.model.abc_base.InParamsResponse
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.GeneralItem
 import uz.fido.network.domain.model.monitoring.ListItem
-import uz.fido.network.domain.model.monitoring.filter.NewFilterMonitoringFilterRequest
+import uz.fido.network.domain.model.monitoring.filter.LocalMonitoringFilterRequest
 import uz.fido.network.domain.model.payment.PrintChequeRequest
 import uz.fido.network.domain.model.payment.TemplateKeyValue
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
@@ -30,7 +30,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentLocalMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.LocalMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.Companion.CHEQUE_MODEL
 import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.Companion.OPERATION_MONITORING
 import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeModel
@@ -60,13 +59,16 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
 ), (LocalMonitoring) -> Unit {
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    private lateinit var layoutManager: LinearLayoutManager
+    private lateinit var skeletonScreen: SkeletonScreen
+
     private var operationType = 2
     private var dateBegin: String = ""
     private var dateEnd: String = ""
     private var newTotalList = arrayListOf<LocalMonitoring>()
     private var totalList: ArrayList<ListItem> = ArrayList()
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
-    private val localMonitoringAdapter by lazy { LocalMonitoringAdapter(requireContext(), totalList, this) }
+    private val localMonitoringAdapter by lazy { LocalMonitoringAdapter(totalList, this) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -74,10 +76,9 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     }
 
     private fun checkUserCards() {
-        lifecycleScope.launch {
-            saveViewModel.userHasCard.collect { hasCard ->
-                if (hasCard) initUI()
-                else showEmptyState()
+        viewLifecycleOwner.lifecycleScope.launch {
+            saveViewModel.userHasCard.collect {
+                if (it) initUI() else showEmptyState()
             }
         }
     }
@@ -98,10 +99,11 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     }
 
     private fun initScrollListener() {
-        scrollListener = object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
+        layoutManager = LinearLayoutManager(requireContext())
+        scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
                 if (saveViewModel.localFilter) getFilteredMonitoringList(page)
-                else getMonitoringListWhenScrolled(page, operationType)
+                else getMonitoringList(page, operationType)
             }
         }
     }
@@ -110,7 +112,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
         binding.monitoringList.apply {
             adapter = localMonitoringAdapter
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = this@LocalMonitoringFragment.layoutManager
             addOnScrollListener(scrollListener)
             addItemDecoration(StickyHeaderDecoration(localMonitoringAdapter))
         }
@@ -127,7 +129,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
             binding.consError.visibility = View.GONE
             binding.shimmerView.visibility = View.VISIBLE
             if (saveViewModel.localFilter) getFilteredMonitoringList(0)
-            else getMonitoringListFirstPage(operationType)
+            else getMonitoringList(1, operationType)
         }
     }
 
@@ -139,7 +141,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     }
 
     private fun getFilteredMonitoringList(page: Int) {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             saveViewModel.localMonitoringFilter.collectLatest { filter ->
                 setMonitoringDate(filter.startDate, filter.endDate)
                 var skeletonScreen: SkeletonScreen? = null
@@ -152,16 +154,16 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                 } else {
                     binding.progress.visibility = View.VISIBLE
                 }
-                val newFilter = NewFilterMonitoringFilterRequest(
-                    start_date = if (filter.startDate.isNotEmpty()) dateBegin else null,
-                    end_date = if (filter.endDate.isNotEmpty()) dateEnd else null,
-                    page_number = page,
-                    page_item_size = 20,
-                    service_ids = filter.getServiceIdsAndPartnerObj().first,
-                    object_ids = filter.getSelectedCards(),
-                    to_object_value = filter.getServiceIdsAndPartnerObj().second,
-                    max_amount = filter.getMaxAmount(),
-                    min_amount = filter.getMinMinAmount()
+                val newFilter = LocalMonitoringFilterRequest(
+                    startDate = if (filter.startDate.isNotEmpty()) dateBegin else null,
+                    endDate = if (filter.endDate.isNotEmpty()) dateEnd else null,
+                    pageNumber = page,
+                    pageItemSize = 20,
+                    serviceIds = filter.getServiceIdsAndPartnerObj().first,
+                    objectIds = filter.getSelectedCards(),
+                    toObjectValue = filter.getServiceIdsAndPartnerObj().second,
+                    maxAmount = filter.getMaxAmount(),
+                    minAmount = filter.getMinMinAmount()
                 )
                 viewModel.newFilterLocalMonitoring(getClientToken(), newFilter).observe(viewLifecycleOwner) {
                     if (page == 1) {
@@ -188,30 +190,71 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     }
 
     private fun checkSavedMonitoringList() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             saveViewModel.saveLocalMonitoring.collect { localMonitoring ->
                 if (localMonitoring.isNotEmpty()) {
                     localMonitoringAdapter.removeList()
                     newTotalList = localMonitoring
                     successMonitoringList(localMonitoring, 2)
-                    getFreshMonitoringList()
+                    getMonitoringListFirstPage()
                     binding.shimmerView.visibility = View.GONE
                 } else {
-                    getMonitoringListFirstPage(operationType)
+                    getMonitoringList(1, operationType)
                 }
             }
         }
     }
 
-    private fun getMonitoringListFirstPage(operationType: Int) {
-        val skeletonScreen = showSkeleton(
-            binding.shimmerView,
-            MibDetailsAdapter(requireContext(), this),
-            R.layout.shimmer_item_monitoring,
-            1
-        )
-        totalList = arrayListOf()
-        scrollListener.resetState()
+    private fun getMonitoringList(page: Int, operationType: Int) {
+        val isFirstPage = page == 1
+        if (isFirstPage) {
+            skeletonScreen = showSkeleton(
+                binding.shimmerView,
+                MibDetailsAdapter(requireContext(), this),
+                R.layout.shimmer_item_monitoring,
+                1
+            )
+            totalList = arrayListOf()
+            scrollListener.resetState()
+        } else {
+            binding.progress.visibility = View.VISIBLE
+        }
+        viewModel.getLocalMonitoring(
+            getClientToken(),
+            LocalMonitoringRequest(
+                start_date = dateBegin,
+                end_date = dateEnd,
+                page_number = page.toString(),
+                page_item_size = PAGE_SIZE,
+                object_ids = arrayListOf()
+            )
+        ).observe(viewLifecycleOwner) { resource ->
+            if (isFirstPage && this::skeletonScreen.isInitialized) {
+                skeletonScreen.hide()
+                binding.shimmerView.visibility = View.GONE
+            } else {
+                binding.progress.visibility = View.GONE
+            }
+            val response = resource?.data?.local_transactions ?: arrayListOf()
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    binding.consError.visibility = View.GONE
+                    successMonitoringList(response, operationType)
+                    if (isFirstPage) {
+                        saveViewModel.saveLocalMonitoring(response)
+                        saveViewModel.saveLocalMonitoringCurrent = true
+                    }
+                }
+
+                Status.ERROR -> {
+                    binding.consError.visibility = View.VISIBLE
+                    localMonitoringAdapter.removeList()
+                }
+            }
+        }
+    }
+
+    private fun getMonitoringListFirstPage() {
         viewModel.getLocalMonitoring(
             getClientToken(),
             LocalMonitoringRequest(
@@ -222,41 +265,10 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                 object_ids = arrayListOf()
             )
         ).observe(viewLifecycleOwner) { resource ->
-            skeletonScreen.hide()
-            binding.shimmerView.visibility = View.GONE
-            when (resource.status) {
-                Status.SUCCESS -> {
-                    binding.consError.visibility = View.GONE
-                    val response = resource?.data?.local_transactions ?: arrayListOf()
-                    saveViewModel.saveLocalMonitoring(response)
-                    saveViewModel.saveLocalMonitoringCurrent = true
-                    successMonitoringList(response, operationType)
-                }
-
-                Status.ERROR -> {
-                    binding.consError.visibility = View.VISIBLE
-                    localMonitoringAdapter.removeList()
-                }
-
-            }
-        }
-    }
-
-    private fun getFreshMonitoringList() {
-        viewModel.getLocalMonitoring(
-            getClientToken(),
-            LocalMonitoringRequest(
-                start_date = dateBegin,
-                end_date = dateEnd,
-                page_number = "1",
-                page_item_size = PAGE_SIZE,
-                object_ids = ArrayList()
-            )
-        ).observe(viewLifecycleOwner) { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
                     val response = resource?.data?.local_transactions ?: arrayListOf()
-                    if (!(newTotalList.containsAll(response) && response.containsAll(newTotalList))) {
+                    if (newTotalList.toSet() != response.toSet()) {
                         totalList.clear()
                         successMonitoringList(response, operationType)
                     }
@@ -270,61 +282,14 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
         }
     }
 
-    private fun getMonitoringListWhenScrolled(page: Int, operationType: Int) {
-        binding.progress.visibility = View.VISIBLE
-        viewModel.getLocalMonitoring(
-            getClientToken(),
-            LocalMonitoringRequest(
-                start_date = dateBegin,
-                end_date = dateEnd,
-                page_number = page.toString(),
-                page_item_size = PAGE_SIZE,
-                object_ids = arrayListOf()
-            )
-        ).observe(viewLifecycleOwner) { resource ->
-            binding.progress.visibility = View.GONE
-            when (resource.status) {
-                Status.SUCCESS -> {
-                    binding.consError.visibility = View.GONE
-                    val response = resource?.data?.local_transactions
-                    successMonitoringList(response, operationType)
-                }
-
-                Status.ERROR -> {
-                    binding.consError.visibility = View.VISIBLE
-                    localMonitoringAdapter.removeList()
-                }
-
-            }
-        }
-    }
-
     private fun successMonitoringList(response: ArrayList<LocalMonitoring>?, operationType: Int) {
         try {
-            val sortedResponse = ArrayList<LocalMonitoring>()
-            val groupedHashMap: HashMap<String, MutableList<LocalMonitoring>> = when (operationType) {
-                0 -> {
-                    response?.forEach {
-                        if (it.tran_type == MONITORING_CREDIT) {
-                            sortedResponse.add(it)
-                        }
-                    }
-                    groupDataIntoHashMap(sortedResponse)
-                }
-
-                1 -> {
-                    response?.forEach {
-                        if (it.tran_type == MONITORING_DEBIT) {
-                            sortedResponse.add(it)
-                        }
-                    }
-                    groupDataIntoHashMap(sortedResponse)
-                }
-
-                else -> {
-                    groupDataIntoHashMap(response!!)
-                }
-            }
+            val filteredResponse = when (operationType) {
+                0 -> response?.filter { it.transactionType == MONITORING_CREDIT }
+                1 -> response?.filter { it.transactionType == MONITORING_DEBIT }
+                else -> response
+            } ?: emptyList()
+            val groupedHashMap = groupDataIntoHashMap(filteredResponse)
             val sortedMap = groupedHashMap.toSortedMap(compareByDescending { it })
             addDateMonitoringList(sortedMap)
         } catch (e: Exception) {
@@ -333,23 +298,17 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     }
 
     private fun addDateMonitoringList(sortedMap: SortedMap<String, MutableList<LocalMonitoring>>) {
-        for (date in sortedMap.keys) {
-            val dateItem = DateItem()
-            dateItem.date = date
-            if (totalList.isEmpty()) {
-                totalList.add(dateItem)
-            } else {
-                if (dateItem.date != Format.newDateFormat((totalList.last() as GeneralItem).svMonitoringItem!!.created_date)
-                        .substring(
-                            0,
-                            10
-                        )
-                ) totalList.add(dateItem)
+        var lastDate: String? = null
+        sortedMap.forEach { (date, monitoringItems) ->
+            val formattedLastDate = lastDate?.let {
+                Format.newDateFormat((totalList.last() as GeneralItem).localMonitoringItem!!.createdDate).substring(0, 10)
             }
-            for (svMonitoringItem in sortedMap[date]!!) {
-                val generalItem = GeneralItem()
-                generalItem.svMonitoringItem = svMonitoringItem
-                totalList.add(generalItem)
+            if (formattedLastDate != date) {
+                totalList.add(DateItem().apply { this.date = date })
+                lastDate = date
+            }
+            monitoringItems.forEach { svMonitoringItem ->
+                totalList.add(GeneralItem().apply { this.localMonitoringItem = svMonitoringItem })
             }
         }
         setAdapter(totalList)
@@ -358,24 +317,13 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     private fun setAdapter(totalList: ArrayList<ListItem>) {
         localMonitoringAdapter.setListAdapter(totalList)
         binding.monitoringList.scheduleLayoutAnimation()
-        emptyView()
+        handleEmptyState()
     }
 
-    private fun groupDataIntoHashMap(svMonitoringList: List<LocalMonitoring>): HashMap<String, MutableList<LocalMonitoring>> {
-        svMonitoringList.sortedBy { it.created_date }
-        val groupedHashMap: HashMap<String, MutableList<LocalMonitoring>> = HashMap()
-        for (svMonitoring in svMonitoringList) {
-            val hashMapKey: String =
-                Format.newDateFormat(svMonitoring.created_date.substring(0, 10))
-            if (groupedHashMap.containsKey(hashMapKey)) {
-                groupedHashMap[hashMapKey]!!.add(svMonitoring)
-            } else {
-                val list: MutableList<LocalMonitoring> = java.util.ArrayList()
-                list.add(svMonitoring)
-                groupedHashMap[hashMapKey] = list
-            }
-        }
-        return groupedHashMap
+    private fun groupDataIntoHashMap(monitoringList: List<LocalMonitoring>): HashMap<String, MutableList<LocalMonitoring>> {
+        return monitoringList.sortedBy { it.createdDate }
+            .groupByTo(HashMap()) { Format.newDateFormat(it.createdDate.substring(0, 10)) }
+            .mapValues { it.value.toMutableList() } as HashMap<String, MutableList<LocalMonitoring>>
     }
 
     override fun invoke(localMonitoring: LocalMonitoring) {
@@ -384,32 +332,31 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
 
     private fun getSearchItem(localMonitoring: LocalMonitoring) {
         showProgress()
-        viewModel.getSearchData(getClientToken(), GetInfoRequest(localMonitoring.request_id))
-            .observe(viewLifecycleOwner) {
-                hideProgress()
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        val dialogInfo = InfoMonitoringDialog(
-                            localMonitoring,
-                            it.data,
-                            fullInfo = { localMonitoring ->
-                                printCheque(localMonitoring, it)
-                            },
-                            repeatPayment = { localMonitoring ->
-                                getOperationParams(1, it, localMonitoring)
-                            },
-                            returnPayment = { localMonitoring ->
-                                getOperationParams(2, it, localMonitoring)
-                            }
-                        )
-                        dialogInfo.show(childFragmentManager, "")
-                    }
+        viewModel.getSearchData(getClientToken(), GetInfoRequest(localMonitoring.requestId)).observe(viewLifecycleOwner) {
+            hideProgress()
+            when (it.status) {
+                Status.SUCCESS -> {
+                    val dialogInfo = InfoMonitoringDialog(
+                        localMonitoring,
+                        it.data,
+                        fullInfo = { localMonitoring ->
+                            printCheque(localMonitoring, it)
+                        },
+                        repeatPayment = { localMonitoring ->
+                            getOperationParams(1, localMonitoring)
+                        },
+                        returnPayment = { localMonitoring ->
+                            getOperationParams(2, localMonitoring)
+                        }
+                    )
+                    dialogInfo.show(childFragmentManager, "")
+                }
 
-                    Status.ERROR -> {
-                        showSnackbar(it.message.toString(), "Error")
-                    }
+                Status.ERROR -> {
+                    showSnackbar(it.message.toString(), "Error")
                 }
             }
+        }
     }
 
     private fun printCheque(
@@ -417,45 +364,44 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
         resource: Resource<SearchDataResponse>
     ) {
         showProgress()
-        viewModel.printCheque(getClientToken(), PrintChequeRequest(localMonitoring.request_id))
-            .observe(viewLifecycleOwner) {
-                hideProgress()
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        val response = it.data!!
-                        response.monitoring_info = localMonitoring
-                        if (resource.data?.request_code == "P2P") {
-                            resource.data?.let { it1 -> drawTransferCheque(localMonitoring, it1) }
-                        } else {
-                            gotoWithSlide(
-                                R.id.checkInfoPaymentFragment,
-                                bundleOf(
-                                    "details" to response,
-                                    "operation" to "local",
-                                    "command" to resource.data?.command,
-                                    "data" to resource.data,
-                                    "name" to localMonitoring.name
-                                )
+        viewModel.printCheque(getClientToken(), PrintChequeRequest(localMonitoring.requestId)).observe(viewLifecycleOwner) {
+            hideProgress()
+            when (it.status) {
+                Status.SUCCESS -> {
+                    val response = it.data!!
+                    response.monitoring_info = localMonitoring
+                    if (resource.data?.request_code == "P2P") {
+                        resource.data?.let { it1 -> drawTransferCheque(localMonitoring, it1) }
+                    } else {
+                        gotoWithSlide(
+                            R.id.checkInfoPaymentFragment,
+                            bundleOf(
+                                "details" to response,
+                                "operation" to "local",
+                                "command" to resource.data?.command,
+                                "data" to resource.data,
+                                "name" to localMonitoring.name
                             )
-                        }
-                    }
-
-                    Status.ERROR -> {
-                        showSnackbar(it.message.toString())
+                        )
                     }
                 }
+
+                Status.ERROR -> {
+                    showSnackbar(it.message.toString())
+                }
             }
+        }
     }
 
     private fun drawTransferCheque(
         localMonitoring: LocalMonitoring,
         data: SearchDataResponse
     ) {
-        val percent = localMonitoring.fee_percent
-        val commissionAmount = localMonitoring.fee_amount.toBigDecimal().divide(BigDecimal(100))
+        val percent = localMonitoring.feePercent
+        val commissionAmount = localMonitoring.feeAmount.toBigDecimal().divide(BigDecimal(100))
         val totalAmount = localMonitoring.amount.toBigDecimal().divide(BigDecimal(100))
         val model = TransferChequeModel(
-            transactionDate = localMonitoring.created_date,
+            transactionDate = localMonitoring.createdDate,
             transactionAmount = Format.formatAmount((data.amount?.toDouble()?.div(100)).toString()) + " " + getString(
                 R.string.sum_text
             ),
@@ -480,13 +426,9 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
 
     private fun getOperationParams(
         operationType: Int,
-        resource: Resource<SearchDataResponse>,
         localeMonitoring: LocalMonitoring
     ) {
-        viewModel.getOperationParams(
-            getClientToken(),
-            GetOperationInfoRequest(request_id = localeMonitoring.request_id)
-        ).observe(viewLifecycleOwner) {
+        viewModel.getOperationParams(getClientToken(), GetOperationInfoRequest(localeMonitoring.requestId)).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
                     val response = it.data
@@ -504,7 +446,6 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                 }
             }
         }
-
     }
 
     private fun repeat(inParams: InParamsResponse, operationType: Int) {
@@ -550,7 +491,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
         }
     }
 
-    private fun emptyView() {
+    private fun handleEmptyState() {
         binding.layoutEmpty.isVisible = totalList.isEmpty()
     }
 

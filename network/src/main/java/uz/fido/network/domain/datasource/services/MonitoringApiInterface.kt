@@ -22,7 +22,7 @@ import retrofit2.http.Header
 import retrofit2.http.POST
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.monitoring.filter.MonitoringFilterCardResponse
-import uz.fido.network.domain.model.monitoring.filter.NewFilterMonitoringFilterRequest
+import uz.fido.network.domain.model.monitoring.filter.LocalMonitoringFilterRequest
 import uz.fido.network.domain.model.monitoring.local.NewMonitoringFilterRequest
 
 interface MonitoringApiInterface {
@@ -98,7 +98,7 @@ interface MonitoringApiInterface {
 
     @POST("GET_LOCAL_TRANS_BY_DATA")
     suspend fun newFilterMonitoringFilter(
-        @Header("Authorization") token: String, @Body request: NewFilterMonitoringFilterRequest
+        @Header("Authorization") token: String, @Body request: LocalMonitoringFilterRequest
     ): LocalMonitoringResponse
 
 }

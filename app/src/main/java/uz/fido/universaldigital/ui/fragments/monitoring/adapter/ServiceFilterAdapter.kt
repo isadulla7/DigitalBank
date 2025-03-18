@@ -20,22 +20,20 @@ class ServiceFilterAdapter(
     inner class VhService(val binding: ItemServiceChooseFilterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: LocalMonitoring) {
             binding.tipName.text = item.name
-            binding.status.text = if (item.partner_obj == "16") {
-                Format.formatCardNumberMonitoring(context, item.partner_obj)
-            } else item.partner_obj
+            binding.status.text = if (item.partnerObj.length == 16) {
+                Format.formatCardNumber(item.partnerObj)
+            } else item.partnerObj
 
-            if (item.icon_name != "")
+            if (item.iconName != "")
                 Picasso.get()
-                    .load(Keys.paynetPhotoUrl() + item.icon_name)
+                    .load(Keys.paynetPhotoUrl() + item.iconName)
                     .error(R.drawable.ic_payments_placeholder)
                     .into(binding.image)
             else binding.image.setImageResource(R.drawable.ic_payments_placeholder)
 
             if (item.isChecked) {
                 binding.option.setImageResource(R.drawable.check_construktor)
-
             } else binding.option.setImageResource(R.drawable.check_box_color)
-
             binding.father.setOnClickListener {
                 onClick.invoke(item)
             }

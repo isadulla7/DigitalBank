@@ -17,8 +17,10 @@ class MenuMonitoringViewModel @Inject constructor(
 
     private var _userHasCard = MutableStateFlow(false)
     val userHasCard: StateFlow<Boolean> = _userHasCard
+
     private var _saveLocalMonitoring = MutableStateFlow<ArrayList<LocalMonitoring>>(arrayListOf())
     val saveLocalMonitoring: StateFlow<ArrayList<LocalMonitoring>> = _saveLocalMonitoring
+
     private var _localMonitoringFilter = MutableStateFlow(FilterSaveVh())
     val localMonitoringFilter: StateFlow<FilterSaveVh> = _localMonitoringFilter
 

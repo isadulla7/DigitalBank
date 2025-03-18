@@ -24,10 +24,10 @@ import uz.fido.network.domain.model.search.SearchDataResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentFirstCardLocalMonitoringBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.LocalMonitoringAdapter
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringAdapter
+import uz.fido.universaldigital.ui.fragments.monitoring.dialog.InfoMonitoringDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.InfoMonitoringDialog
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
@@ -60,7 +60,6 @@ class FirstCardLocalMonitoringFragment :
     private var listCard = arrayListOf<String>()
     private val localMonitoringAdapter by lazy {
         LocalMonitoringAdapter(
-            requireContext(),
             totalList,
             this
         )
@@ -153,7 +152,7 @@ class FirstCardLocalMonitoringFragment :
         val groupedHashMap: HashMap<String, MutableList<LocalMonitoring>> = when (operationType) {
             0 -> {
                 response?.forEach {
-                    if (it.tran_type == LocalMonitoringFragment.MONITORING_CREDIT) {
+                    if (it.transactionType == LocalMonitoringFragment.MONITORING_CREDIT) {
                         sortedResponse.add(it)
                     }
                 }
@@ -162,7 +161,7 @@ class FirstCardLocalMonitoringFragment :
 
             1 -> {
                 response?.forEach {
-                    if (it.tran_type == LocalMonitoringFragment.MONITORING_DEBIT) {
+                    if (it.transactionType == LocalMonitoringFragment.MONITORING_DEBIT) {
                         sortedResponse.add(it)
                     }
                 }
@@ -184,7 +183,7 @@ class FirstCardLocalMonitoringFragment :
             if (totalList.isEmpty()) {
                 totalList.add(dateItem)
             } else {
-                if (dateItem.date != Format.newDateFormat((totalList.last() as GeneralItem).svMonitoringItem!!.created_date)
+                if (dateItem.date != Format.newDateFormat((totalList.last() as GeneralItem).localMonitoringItem!!.createdDate)
                         .substring(
                             0,
                             10
@@ -193,7 +192,7 @@ class FirstCardLocalMonitoringFragment :
             }
             for (svMonitoringItem in sortedMap[date]!!) {
                 val generalItem = GeneralItem()
-                generalItem.svMonitoringItem = svMonitoringItem
+                generalItem.localMonitoringItem = svMonitoringItem
                 totalList.add(generalItem)
             }
         }
@@ -215,11 +214,11 @@ class FirstCardLocalMonitoringFragment :
     }
 
     private fun groupDataIntoHashMap(svMonitoringList: List<LocalMonitoring>): HashMap<String, MutableList<LocalMonitoring>> {
-        svMonitoringList.sortedBy { it.created_date }
+        svMonitoringList.sortedBy { it.createdDate }
         val groupedHashMap: HashMap<String, MutableList<LocalMonitoring>> = HashMap()
         for (svMonitoring in svMonitoringList) {
             val hashMapKey: String =
-                Format.newDateFormat(svMonitoring.created_date.substring(0, 10))
+                Format.newDateFormat(svMonitoring.createdDate.substring(0, 10))
             if (groupedHashMap.containsKey(hashMapKey)) {
                 groupedHashMap[hashMapKey]!!.add(svMonitoring)
             } else {
@@ -243,7 +242,7 @@ class FirstCardLocalMonitoringFragment :
 
     private fun getSearchItem(localMonitoring: LocalMonitoring) {
         showProgress()
-        viewModel.getSearchData(getClientToken(), GetInfoRequest(localMonitoring.request_id))
+        viewModel.getSearchData(getClientToken(), GetInfoRequest(localMonitoring.requestId))
             .observe(viewLifecycleOwner) {
                 hideProgress()
                 when (it.status) {
@@ -281,7 +280,7 @@ class FirstCardLocalMonitoringFragment :
     ) {
         viewModel.getOperationParams(
             getClientToken(),
-            GetOperationInfoRequest(request_id = localeMonitoring.request_id)
+            GetOperationInfoRequest(request_id = localeMonitoring.requestId)
         ).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
@@ -365,7 +364,7 @@ class FirstCardLocalMonitoringFragment :
         resource: Resource<SearchDataResponse>
     ) {
         showProgress()
-        viewModel.printCheque(getClientToken(), PrintChequeRequest(localMonitoring.request_id))
+        viewModel.printCheque(getClientToken(), PrintChequeRequest(localMonitoring.requestId))
             .observe(viewLifecycleOwner) {
                 hideProgress()
                 when (it.status) {

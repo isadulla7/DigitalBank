@@ -9,7 +9,7 @@ import uz.fido.network.domain.datasource.interfaces.IPaymentRepository
 import uz.fido.network.domain.datasource.interfaces.IUtilsRepository
 import uz.fido.network.domain.model.monitoring.AccountHistoriesRequest
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringRequest
-import uz.fido.network.domain.model.monitoring.filter.NewFilterMonitoringFilterRequest
+import uz.fido.network.domain.model.monitoring.filter.LocalMonitoringFilterRequest
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringRequest
 import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringRequest
 import uz.fido.network.domain.model.payment.PrintChequeRequest
@@ -55,7 +55,7 @@ class LocalMonitoringViewModel @Inject constructor(
 
     fun newFilterLocalMonitoring(
         token: String,
-        filerMonitoringRequest: NewFilterMonitoringFilterRequest
+        filerMonitoringRequest: LocalMonitoringFilterRequest
     ) = liveData(Dispatchers.IO) {
         emit(monitoringRepository.newFilterLocalMonitoring(token, filerMonitoringRequest))
     }

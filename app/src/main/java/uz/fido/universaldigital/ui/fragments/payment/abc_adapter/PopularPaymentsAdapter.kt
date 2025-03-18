@@ -15,7 +15,7 @@ class PopularPaymentsAdapter(
     class ViewHolder(private val binding: ItemPopularPaymentBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: LocalMonitoring) {
-            binding.tvName.text = item.partner_obj
+            binding.tvName.text = item.partnerObj
         }
     }
 

@@ -24,9 +24,11 @@ class MonitoringChooseDialog(private val onClick: (String) -> Unit) : BottomShee
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.enrollments.setOnClickListener {
+            dismiss()
             onClick.invoke(getString(R.string.enrollments))
         }
         binding.writeOffs.setOnClickListener {
+            dismiss()
             onClick.invoke(getString(R.string.write_offs))
         }
     }

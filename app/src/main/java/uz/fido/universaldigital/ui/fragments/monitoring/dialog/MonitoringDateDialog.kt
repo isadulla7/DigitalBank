@@ -1,12 +1,10 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.dialog
 
 import android.app.DatePickerDialog
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogMonitoringDateBinding
@@ -14,15 +12,16 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-
-class MonitoringDateDialog(private val onClick: (String, String) -> Unit) : BottomSheetDialogFragment(),
+class MonitoringDateDialog(
+    private val onClick: (String, String) -> Unit
+) : BottomSheetDialogFragment(),
     View.OnClickListener {
 
     private lateinit var binding: DialogMonitoringDateBinding
     private var startDate = ""
     private var endDate = ""
-    val c: Calendar = Calendar.getInstance()
-    var format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+    private val c: Calendar = Calendar.getInstance()
+    private var format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
     private var startOnclickCurrent = false
 
     override fun onCreateView(
@@ -34,23 +33,20 @@ class MonitoringDateDialog(private val onClick: (String, String) -> Unit) : Bott
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        onCLickView()
-
+        initSetOnClickListeners()
         binding.btnContinue.setOnClickListener {
+            dismiss()
             onClick.invoke(startDate, endDate)
         }
     }
 
-    private fun onCLickView() {
+    private fun initSetOnClickListeners() {
         binding.edDate.setOnClickListener(this)
         binding.start.setOnClickListener(this)
         binding.edDateUpTo.setOnClickListener(this)
         binding.endIcon.setOnClickListener(this)
-
     }
 
     private fun itemStartDate() {

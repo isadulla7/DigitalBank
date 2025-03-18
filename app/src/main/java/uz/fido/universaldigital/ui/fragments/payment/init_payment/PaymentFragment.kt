@@ -250,12 +250,11 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
         val calendarStart = Calendar.getInstance()
         val calendarEnd = Calendar.getInstance()
         calendarStart[Calendar.DAY_OF_YEAR] = 1
-        val dateBegin = dateFormat.format(calendarStart.time)
         val dateEnd = dateFormat.format(calendarEnd.time)
         val model = LocalMonitoringRequest(
             page_item_size = "20",
             page_number = "1",
-            start_date = dateBegin,
+            start_date = "",
             end_date = dateEnd,
             service_id = paymentService!!.service_id.toString()
         )
@@ -266,11 +265,11 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
                     list.forEach { localMonitoring ->
                         var exist = false
                         popularPaymentsList.forEach { popularTransfer ->
-                            if (localMonitoring.partner_obj == popularTransfer.partner_obj) {
+                            if (localMonitoring.partnerObj == popularTransfer.partnerObj) {
                                 exist = true
                             }
                         }
-                        if (!exist && localMonitoring.partner_obj.isNotEmpty()) {
+                        if (!exist && localMonitoring.partnerObj.isNotEmpty()) {
                             popularPaymentsList.add(localMonitoring)
                         }
                     }
@@ -287,9 +286,9 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
         binding.btnContinue.setProgress(true)
         menuPaymentsViewModel.getOperationParams(
             getClientToken(),
-            GetOperationInfoRequest(request_id = localeMonitoring.request_id)
+            GetOperationInfoRequest(request_id = localeMonitoring.requestId)
         ).observe(viewLifecycleOwner) {
-            mobileNumberUpdate=true
+            mobileNumberUpdate = true
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {

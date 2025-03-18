@@ -55,7 +55,7 @@ class InfoMonitoringDialog(
 
     private fun initSetOnClickListeners() {
         binding.repeat.setOnClickListener {
-            if (localMonitoring.tran_type == "credit") {
+            if (localMonitoring.transactionType == "credit") {
                 if (searchDateResponse != null)
                     if (searchDateResponse.request_code == "P2P") {
                         dismiss()
@@ -78,7 +78,7 @@ class InfoMonitoringDialog(
         if (isBadServiceIds(localMonitoring)) {
             binding.repeat.visibility = View.GONE
         }
-        if (localMonitoring.tran_type == "credit") {
+        if (localMonitoring.transactionType == "credit") {
             if (searchDateResponse != null) {
                 if (searchDateResponse.request_code == "P2P") {
                     binding.tvRepeat.text = getString(R.string.return_text)
@@ -91,6 +91,7 @@ class InfoMonitoringDialog(
 
     private fun init() {
         try {
+            addView(getString(R.string.service), localMonitoring.name)
             if (searchDateResponse != null) {
                 when (searchDateResponse.request_code) {
                     "P2P", "CONVERSION" -> {
@@ -122,49 +123,48 @@ class InfoMonitoringDialog(
     }
 
     private fun initViews(isRequired: Boolean, isPayment: Boolean) {
-        addView(getString(R.string.service), localMonitoring.name)
         searchDateResponse?.params?.get("FIO")?.let { addView(getString(R.string.fio), it) }
         searchDateResponse?.params?.get("FIO_ABONENT")?.let { addView(getString(R.string.fio), it) }
         searchDateResponse?.params?.get("ADDRESS")?.let { addView(getString(R.string.address), it) }
-        addView(getString(R.string.date_time), localMonitoring.created_date)
-        addView(getString(R.string.transaction_number), localMonitoring.request_id)
-        if (isRequired && localMonitoring.partner_obj.isNotEmpty()) {
-            if (localMonitoring.to_obj_name.isNotEmpty()) {
-                if (localMonitoring.partner_obj.startsWith("AUZ")) {
+        addView(getString(R.string.date_time), localMonitoring.createdDate)
+        addView(getString(R.string.transaction_number), localMonitoring.requestId)
+        if (isRequired && localMonitoring.partnerObj.isNotEmpty()) {
+            if (localMonitoring.receiverCardName.isNotEmpty()) {
+                if (localMonitoring.partnerObj.startsWith("AUZ")) {
                     addView(
                         getString(R.string.wallet_number),
-                        if (localMonitoring.object_value.length == 16) Format.formatCardNumber(localMonitoring.partner_obj) else localMonitoring.partner_obj
+                        if (localMonitoring.senderCard.length == 16) Format.formatCardNumber(localMonitoring.partnerObj) else localMonitoring.partnerObj
                     )
                 } else {
                     addView(
-                        localMonitoring.to_obj_name, if (localMonitoring.object_value.length == 16) Format.formatCardNumber(localMonitoring.partner_obj) else localMonitoring.partner_obj
+                        localMonitoring.receiverCardName, if (localMonitoring.senderCard.length == 16) Format.formatCardNumber(localMonitoring.partnerObj) else localMonitoring.partnerObj
                     )
                 }
             } else {
                 addView(
                     getString(R.string.personal_account),
-                    if (localMonitoring.object_value.length == 16) Format.formatCardNumber(localMonitoring.partner_obj) else localMonitoring.partner_obj
+                    if (localMonitoring.senderCard.length == 16) Format.formatCardNumber(localMonitoring.partnerObj) else localMonitoring.partnerObj
                 )
             }
         }
 
-        if (isPayment && localMonitoring.object_value.isNotEmpty() && !localMonitoring.partner_obj.startsWith("AUZ")) {
+        if (isPayment && localMonitoring.senderCard.isNotEmpty() && !localMonitoring.partnerObj.startsWith("AUZ")) {
             addView(
                 getString(R.string.choose_card_text),
-                if (localMonitoring.object_value.length == 16) Format.formatCardNumber(localMonitoring.object_value) else Format.formatWalletNumber(
-                    localMonitoring.object_value
+                if (localMonitoring.senderCard.length == 16) Format.formatCardNumber(localMonitoring.senderCard) else Format.formatWalletNumber(
+                    localMonitoring.senderCard
                 )
             )
         }
 
-        addView(getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(localMonitoring.amount)) + " ${Format.currencyCode(localMonitoring.currency_code)}")
-        val state = if (localMonitoring.state_id == "1") {
+        addView(getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(localMonitoring.amount)) + " ${Format.currencyCode(localMonitoring.currencyCode)}")
+        val state = if (localMonitoring.stateId == "1") {
             getString(R.string.successfully)
         } else {
             getString(R.string.waiting)
         }
-        if (localMonitoring.fee_amount.isNotEmpty() && localMonitoring.fee_percent.isNotEmpty())
-            addView(getString(R.string.commission), "${localMonitoring.fee_amount.toDouble() / 100.toDouble()} UZS (${localMonitoring.fee_percent}%)")
+        if (localMonitoring.feeAmount.isNotEmpty() && localMonitoring.feePercent.isNotEmpty())
+            addView(getString(R.string.commission), "${localMonitoring.feeAmount.toDouble() / 100.toDouble()} UZS (${localMonitoring.feePercent}%)")
 
         addView(getString(R.string.status), state)
     }
@@ -177,7 +177,7 @@ class InfoMonitoringDialog(
     }
 
     private fun isBadServiceIds(localMonitoring: LocalMonitoring): Boolean {
-        return when (localMonitoring.service_id) {
+        return when (localMonitoring.serviceId) {
             "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9", "-10", "-11", "-19" -> true
             else -> false
         }

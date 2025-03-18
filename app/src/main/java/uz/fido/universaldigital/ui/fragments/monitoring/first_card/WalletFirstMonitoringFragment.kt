@@ -22,7 +22,7 @@ import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.WalletMonitoringDetailsDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.serializable

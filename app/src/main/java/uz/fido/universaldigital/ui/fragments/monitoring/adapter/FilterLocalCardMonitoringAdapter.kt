@@ -13,10 +13,10 @@ import uz.fido.utils.const.CardConst.HUMO_CARD
 import uz.fido.utils.const.CardConst.UZCARD
 
 class FilterLocalCardMonitoringAdapter(
-    var list: ArrayList<FilterCard>,
+    private var list: ArrayList<FilterCard>,
     private val baseInterface: BaseInterface
-) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == 0) {
             VH(ItemMonitoringFilterCardBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -43,7 +43,6 @@ class FilterLocalCardMonitoringAdapter(
         list = response
         notifyDataSetChanged()
     }
-
 
     inner class VHText(private val binding: ItemFilterMonitoringCardBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(filterCard: FilterCard) {

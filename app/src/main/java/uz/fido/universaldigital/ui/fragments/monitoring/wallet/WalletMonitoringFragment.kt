@@ -19,7 +19,6 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentWalletMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.WalletMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper

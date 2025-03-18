@@ -152,7 +152,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     }
 
     private fun setNotification() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             menuProductsViewModel.notification.collect { item ->
                 if (item.isEmpty()) {
                     try {

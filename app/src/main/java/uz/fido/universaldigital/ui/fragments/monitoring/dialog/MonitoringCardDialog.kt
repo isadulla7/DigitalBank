@@ -55,6 +55,7 @@ class MonitoringCardDialog(
                 }
             }
             if (sortCardList.isNotEmpty()) {
+                dismiss()
                 sortList.invoke(cardList)
             } else {
                 Toast.makeText(requireContext(), "Не выбирать номер карты", Toast.LENGTH_SHORT).show()

@@ -49,7 +49,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
     }
     private val serviceAdapter by lazy {
         ServiceAllMonitoringAdapter(
-            requireContext(),
             arrayListOf(),
             this
         )
@@ -61,11 +60,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
         )
     }
     private var filterSaveVh: FilterSaveVh? = null
-    private lateinit var monitoringDateDialog: MonitoringDateDialog
-    private lateinit var cardDialog: MonitoringCardDialog
-    private lateinit var monitoringAmountDialog: MonitoringAmountDialog
-    private lateinit var monitoringChooseDialog: MonitoringChooseDialog
-    private lateinit var monitoringServiceFilterDialog: MonitoringServiceFilterDialog
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var allOperationFilter = arrayListOf<MonitoringFilter>()
     private var cardList = arrayListOf<FilterCard>()
@@ -93,7 +87,7 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
 
     private fun doneFilter() {
         if (saveViewModel.localFilter) {
-            lifecycleScope.launch {
+            viewLifecycleOwner.lifecycleScope.launch {
                 saveViewModel.localMonitoringFilter.collect {
                     if (allOperationFilter.isEmpty()) {
                         filterSaveVh = it
@@ -127,8 +121,8 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
                 service.list.forEach {
                     allOperationFilter.add(
                         MonitoringFilter(
-                            it.partner_obj,
-                            it.service_id,
+                            it.partnerObj,
+                            it.serviceId,
                             current = false
                         )
                     )
@@ -406,8 +400,7 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
             }
 
             R.id.new_card -> {
-                cardDialog = MonitoringCardDialog(cardList) { filterCards ->
-                    cardDialog.dismiss()
+                val cardDialog = MonitoringCardDialog(cardList) { filterCards ->
                     cardList = filterCards
                     checkCard()
                     val firstOperation = allOperationFilter.filter { it.type == "card" }
@@ -484,7 +477,7 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
 
     private fun showChoose() {
         if (!chooseCurrent) {
-            monitoringChooseDialog = MonitoringChooseDialog { choose ->
+            val monitoringChooseDialog = MonitoringChooseDialog { choose ->
                 this.choose = choose
                 addFilterList("choose", choose, false)
                 chooseCurrent = true
@@ -497,8 +490,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
                     )
                 )
                 buttonClickVisibility()
-                monitoringChooseDialog.dismiss()
-
             }
             monitoringChooseDialog.show(childFragmentManager, "")
         } else {
@@ -518,7 +509,7 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
 
     private fun showAmountFilter() {
         if (!amountCurrent) {
-            monitoringAmountDialog = MonitoringAmountDialog { min_amount, max_amount ->
+            val monitoringAmountDialog = MonitoringAmountDialog { min_amount, max_amount ->
                 minAmount = min_amount
                 maxAmount = max_amount
                 amountCurrent = true
@@ -532,9 +523,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
                 )
                 addFilterList("amount", "$min_amount - $max_amount", false)
                 buttonClickVisibility()
-
-                monitoringAmountDialog.dismiss()
-
             }
             monitoringAmountDialog.show(childFragmentManager, "")
         } else {
@@ -555,22 +543,14 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
 
     private fun showStartEndDate() {
         if (!dateCurrent) {
-            monitoringDateDialog = MonitoringDateDialog { start, end ->
+            val monitoringDateDialog = MonitoringDateDialog { start, end ->
                 startDate = start
                 endDate = end
                 addFilterList("date", "$start - $end", false)
                 dateCurrent = true
-                binding.time.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
-                binding.time.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.whiteColor
-                    )
-                )
+                binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
+                binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
                 buttonClickVisibility()
-                monitoringDateDialog.dismiss()
-
             }
             monitoringDateDialog.show(childFragmentManager, "")
         } else {
@@ -578,12 +558,7 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
             endDate = ""
             dateCurrent = false
             binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
-            binding.time.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.mainTextColor
-                )
-            )
+            binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
             removeList("date")
         }
     }
@@ -686,7 +661,7 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
                     serviceAdapter.setList(serviceList)
                 } else {
                     val localMonitoring =
-                        item.first().list.find { it.service_id == monitoringFilter.type && it.partner_obj == monitoringFilter.name }
+                        item.first().list.find { it.serviceId == monitoringFilter.type && it.partnerObj == monitoringFilter.name }
                     item.first().list.remove(localMonitoring)
                 }
                 val layoutFlexBox = FlexboxLayoutManager(context).apply {
@@ -711,48 +686,40 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
 
     override fun monitoringPayed(userPayedService: UserPayedService) {
         super.monitoringPayed(userPayedService)
-        monitoringServiceFilterDialog =
-            MonitoringServiceFilterDialog(
-                userPayedService.service_id.toString(),
-                userPayedService
-            ) { item ->
-                val localMonitoringList = allOperationFilter.filter { it.type == userPayedService.service_id.toString() }
-                allOperationFilter.removeAll(localMonitoringList.toSet())
-                item.forEach {
-                    allOperationFilter.add(
-                        MonitoringFilter(
-                            name = it.partner_obj,
-                            type = it.service_id,
-                            false
-                        )
+        val monitoringServiceFilterDialog = MonitoringServiceFilterDialog(userPayedService.service_id.toString(), userPayedService) { item ->
+            val localMonitoringList = allOperationFilter.filter { it.type == userPayedService.service_id.toString() }
+            allOperationFilter.removeAll(localMonitoringList.toSet())
+            item.forEach {
+                allOperationFilter.add(
+                    MonitoringFilter(
+                        name = it.partnerObj,
+                        type = it.serviceId,
+                        false
                     )
-                }
-                serviceList.forEach {
-                    if (it == userPayedService && item.isNotEmpty()) {
-                        it.service_current = true
-                    } else if (it == userPayedService && item.isEmpty()) {
-                        it.service_current = false
-                    }
-                }
-                val layoutFlexBox = FlexboxLayoutManager(context).apply {
-                    flexWrap = FlexWrap.WRAP
-                    flexDirection = FlexDirection.ROW
-                    alignItems = AlignItems.STRETCH
-                }
-                binding.recService.apply {
-                    layoutManager = layoutFlexBox
-                    adapter = serviceAdapter
-                }
-
-
-                userPayedService.list = item
-                serviceAdapter.setList(serviceList)
-                setFilterAdapter(allOperationFilter)
-                monitoringServiceFilterDialog.dismiss()
-                buttonClickVisibility()
+                )
             }
+            serviceList.forEach {
+                if (it == userPayedService && item.isNotEmpty()) {
+                    it.service_current = true
+                } else if (it == userPayedService && item.isEmpty()) {
+                    it.service_current = false
+                }
+            }
+            val layoutFlexBox = FlexboxLayoutManager(context).apply {
+                flexWrap = FlexWrap.WRAP
+                flexDirection = FlexDirection.ROW
+                alignItems = AlignItems.STRETCH
+            }
+            binding.recService.apply {
+                layoutManager = layoutFlexBox
+                adapter = serviceAdapter
+            }
+            userPayedService.list = item
+            serviceAdapter.setList(serviceList)
+            setFilterAdapter(allOperationFilter)
+            buttonClickVisibility()
+        }
         monitoringServiceFilterDialog.show(childFragmentManager, "")
-
     }
 
     private fun editTextView() {

@@ -27,24 +27,24 @@ fun TextViewMedium.setTextColor(context: Context, item: AccountHistory) {
 fun AccountHistory.transactionTypeSymbol() = if (isDebit()) "+" else "-"
 
 fun AccountHistory.currencyChar() = when (debitAccount?.substring(5, 8)) {
-    "000" -> {
-        "UZS"
-    }
-
-    "643" -> {
-        "RUB"
-    }
-
-    else -> {
-        "USD"
-    }
+    "643" -> " RUB"
+    "840" -> " USD"
+    else -> " UZS"
 }
 
 @SuppressLint("SetTextI18n")
 fun TextViewMedium.setTransactionAmount(item: AccountHistory) {
-    text = item.transactionTypeSymbol() + { Format.formatAmount(item.creditAmount.toString()) } + item.currencyChar()
+    text = item.transactionTypeSymbol() + Format.formatAmount(item.creditAmount.toString()) + item.currencyChar()
 }
 
 fun ImageView.setMonitoringImage(item: AccountHistory) {
     setImageResource(if (item.isDebit()) R.drawable.ic_monitoring_plus else R.drawable.icon_monitoring)
+}
+
+fun AccountHistory.getTransactionAmount(): String {
+    return if (debitAmount == "0") {
+        "${Format.formatAmount(creditAmount.toString())} ${currencyChar()}"
+    } else {
+        "${Format.formatAmount(debitAmount)} ${currencyChar()}"
+    }
 }
