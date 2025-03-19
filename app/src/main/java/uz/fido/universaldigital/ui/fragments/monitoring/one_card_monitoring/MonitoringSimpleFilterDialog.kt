@@ -1,5 +1,6 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.dialog
+package uz.fido.universaldigital.ui.fragments.monitoring.one_card_monitoring
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,23 +16,22 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
-class MonitoringAllCardDialog(
+class MonitoringSimpleFilterDialog(
     private val choose: Int,
     private var startDate: String,
     private var endDate: String,
     private var timeType: String,
-    var onClickItem: (Int, String, String, String) -> Unit,
-    val clear: () -> Unit,
+    private var onClickItem: (Int, String, String, String) -> Unit,
+    private val clear: () -> Unit,
 ) : DialogFragment() {
 
     private lateinit var binding: DialogAllCardFilterBinding
-    private var minPlus: Int = 2
     private val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
+    private var minPlus: Int = 2
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NO_TITLE, R.style.AppBottomSheetDialogThemetwo)
-
     }
 
     companion object {
@@ -52,9 +52,7 @@ class MonitoringAllCardDialog(
         binding.appBar.setAdditionalBtnVisibility(true)
         minMaxCheck()
         checkTime()
-        onClick()
-
-
+        initSetOnClickListeners()
     }
 
     private fun minMaxCheck() {
@@ -69,11 +67,13 @@ class MonitoringAllCardDialog(
         }
     }
 
-    private fun onClick() {
+    private fun initSetOnClickListeners() {
         binding.btnEnter.setOnClickListener {
+            dismiss()
             onClickItem(minPlus, startDate, endDate, timeType)
         }
         binding.btnCansel.setOnClickListener {
+            dismiss()
             clear()
         }
         binding.appBar.setOnBackButtonClickListener {
@@ -82,7 +82,6 @@ class MonitoringAllCardDialog(
         binding.month.setOnClickListener {
             showMonthRange()
         }
-
         binding.week.setOnClickListener {
             showWeekRange()
         }
@@ -100,7 +99,6 @@ class MonitoringAllCardDialog(
         }
     }
 
-
     private fun showTimeRangeDialog() {
         val builder = MaterialDatePicker.Builder.dateRangePicker()
         builder.setCalendarConstraints(limitRange().build())
@@ -108,8 +106,8 @@ class MonitoringAllCardDialog(
         val picker = builder.build()
         picker.show(childFragmentManager, picker.toString())
         picker.addOnPositiveButtonClickListener {
-            startDate = Format.getDateFromMilliseconds(it.first!!, "yyyyMMdd")
-            endDate = Format.getDateFromMilliseconds(it.second!!, "yyyyMMdd")
+            startDate = Format.Companion.getDateFromMilliseconds(it.first!!, "yyyyMMdd")
+            endDate = Format.Companion.getDateFromMilliseconds(it.second!!, "yyyyMMdd")
             timeType = DATE_TYPE_PERIOD
             checkTime()
         }
@@ -119,6 +117,7 @@ class MonitoringAllCardDialog(
 
     }
 
+    @SuppressLint("SetTextI18n")
     private fun checkTime() {
         when (timeType) {
             DATE_TYPE_PERIOD -> {
@@ -182,7 +181,6 @@ class MonitoringAllCardDialog(
         timeType = DATE_TYPE_MONTH
         checkTime()
     }
-
 
     private fun outComeClick() {
         binding.outCome.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)

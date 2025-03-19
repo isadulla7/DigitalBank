@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.dialog
+package uz.fido.universaldigital.ui.fragments.monitoring.filter
 
 import android.app.DatePickerDialog
 import android.os.Bundle

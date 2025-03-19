@@ -1065,4 +1065,5 @@
     <string name="attention">Внимание</string>
     <string name="unable_to_get_profile_data">Не удалось получить ваши учетные данные. Пожалуйста, свяжитесь с банком \n+998712001110.</string>
     <string name="unable_to_get_passport_data">Не удалось получить ваши паспортные данные. Попробуйте войти еще раз, используя свои паспортные данные.</string>
+    <string name="selected_filters">Tanlangan filtrlar</string>
 </resources>

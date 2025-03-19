@@ -1,6 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -12,7 +11,6 @@ import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.format.Format
 
 class ServiceFilterAdapter(
-    private val context: Context,
     private var list: ArrayList<LocalMonitoring>,
     private val onClick: (LocalMonitoring) -> Unit
 ) : RecyclerView.Adapter<ServiceFilterAdapter.VhService>() {
@@ -43,7 +41,7 @@ class ServiceFilterAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VhService {
-        return VhService(ItemServiceChooseFilterBinding.inflate(LayoutInflater.from(context), parent, false))
+        return VhService(ItemServiceChooseFilterBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount() = list.size

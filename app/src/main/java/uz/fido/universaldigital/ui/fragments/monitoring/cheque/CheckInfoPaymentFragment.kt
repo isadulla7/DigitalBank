@@ -28,15 +28,16 @@ import java.io.File
 
 class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(FragmentCheckInfoBinding::inflate) {
 
-    private var transactId = ""
-    private var command = ""
     private lateinit var operation: String
     private lateinit var printChequeResponse: PrintChequeResponse
     private lateinit var uzcardMonitoringItem: UzcardMonitoringItem
     private lateinit var humoMonitoringItem: HumoMonitoringItem
     private lateinit var visaMonitoringItem: CurrencyCardMonitoringItem
     private lateinit var dialogReceipt: BottomReceiptsDialog
+
     private var searchDataResponse: SearchDataResponse? = null
+    private var transactId = ""
+    private var command = ""
     private var paymentName = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

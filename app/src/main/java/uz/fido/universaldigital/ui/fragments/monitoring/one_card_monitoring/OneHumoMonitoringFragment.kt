@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.first_card
+package uz.fido.universaldigital.ui.fragments.monitoring.one_card_monitoring
 
 import android.os.Bundle
 import android.os.Handler
@@ -19,10 +19,9 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentHumoFirstMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringAdapter
+import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringDetailsDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
@@ -40,7 +39,7 @@ import java.util.Locale
 import java.util.SortedMap
 
 @AndroidEntryPoint
-class FirstHumoMonitoringFragment :
+class OneHumoMonitoringFragment :
     BaseFragment<FragmentHumoFirstMonitoringBinding, LocalMonitoringViewModel>(
         FragmentHumoFirstMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
     ), (HumoMonitoringItem) -> Unit {
@@ -54,7 +53,7 @@ class FirstHumoMonitoringFragment :
     private var choose: Int = 2
     private var timeType: String = ""
 
-    private lateinit var filterDialog: MonitoringAllCardDialog
+    private lateinit var filterDialog: MonitoringSimpleFilterDialog
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
     private var filter: Boolean = false
     private val humoMonitoringAdapter by lazy {
@@ -151,7 +150,7 @@ class FirstHumoMonitoringFragment :
                 dateBegin = inputFormat.format(formatStartDate)
                 dateEnd = inputFormat.format(formatEndDate)
             }
-            filterDialog = MonitoringAllCardDialog(choose, dateBegin, dateEnd, timeType,
+            filterDialog = MonitoringSimpleFilterDialog(choose, dateBegin, dateEnd, timeType,
                 onClickItem = { choose, startDate, endDate, type ->
                     this.choose = choose
                     dateBegin = startDate

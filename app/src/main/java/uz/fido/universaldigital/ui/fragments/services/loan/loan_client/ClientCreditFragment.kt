@@ -20,7 +20,7 @@ import uz.fido.network.domain.model.monitoring.AccountHistory
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentClientLoanBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringChooseDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.TransactionTypeDialog
 import uz.fido.universaldigital.ui.fragments.services.loan.adapter.AccountHistoriesAdapter
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.CreditOperationDialog
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.LoanDetailsDialog
@@ -57,7 +57,7 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
     private lateinit var dateBegin: String
     private lateinit var dateEnd: String
     private lateinit var loanDetailsDialog: LoanDetailsDialog
-    private lateinit var monitoringChooseDialog: MonitoringChooseDialog
+    private lateinit var transactionTypeDialog: TransactionTypeDialog
     private var accountHistoriesResponse: AccountHistoriesResponse? = null
     private var skeletonScreen: SkeletonScreen? = null
     private var operType = 3
@@ -384,12 +384,12 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
             }
 
             R.id.filter -> {
-                monitoringChooseDialog = MonitoringChooseDialog {
+                transactionTypeDialog = TransactionTypeDialog {
                     binding.filter.setImageResource(R.drawable.ic_filter_yes)
-                    monitoringChooseDialog.dismiss()
+                    transactionTypeDialog.dismiss()
                     getFilterList(it)
                 }
-                monitoringChooseDialog.show(childFragmentManager, "")
+                transactionTypeDialog.show(childFragmentManager, "")
             }
         }
     }

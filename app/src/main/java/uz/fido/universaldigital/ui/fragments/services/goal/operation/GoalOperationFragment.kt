@@ -12,7 +12,7 @@ import uz.fido.network.domain.model.target.GoalModel
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentGoalOperationBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringChooseDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.TransactionTypeDialog
 import uz.fido.universaldigital.ui.fragments.services.goal.GoalViewModel
 import uz.fido.universaldigital.ui.fragments.services.goal.adapter.GoalHistoryAdapter
 import uz.fido.universaldigital.ui.fragments.services.goal.dialog.GoalOperationDialog
@@ -34,7 +34,7 @@ class GoalOperationFragment : BaseFragment<FragmentGoalOperationBinding, GoalVie
     private lateinit var goalModel: GoalModel
     private var skeletonScreen: SkeletonScreen? = null
     private var historiesAdapter: GoalHistoryAdapter? = null
-    private lateinit var monitoringChooseDialog: MonitoringChooseDialog
+    private lateinit var transactionTypeDialog: TransactionTypeDialog
     private lateinit var goalOperationDialog: GoalOperationDialog
     private var list = arrayListOf<GoalHistory>()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -217,12 +217,12 @@ class GoalOperationFragment : BaseFragment<FragmentGoalOperationBinding, GoalVie
             }
 
             R.id.filter -> {
-                monitoringChooseDialog = MonitoringChooseDialog {
+                transactionTypeDialog = TransactionTypeDialog {
                     binding.filter.setImageResource(R.drawable.ic_filter_yes)
                     getFilterList(it)
-                    monitoringChooseDialog.dismiss()
+                    transactionTypeDialog.dismiss()
                 }
-                monitoringChooseDialog.show(childFragmentManager, "")
+                transactionTypeDialog.show(childFragmentManager, "")
             }
 
         }

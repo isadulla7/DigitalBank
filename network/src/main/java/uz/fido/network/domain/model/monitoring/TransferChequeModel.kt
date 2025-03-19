@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.cheque
+package uz.fido.network.domain.model.monitoring
 
 import java.io.Serializable
 

@@ -1063,4 +1063,5 @@
     <string name="attention">Diqqat!</string>
     <string name="unable_to_get_profile_data">Sizning hisob ma\'lumotlaringizni olishning iloji bo‘lmadi. Iltimos bankka murojaat qiling\n+998712001110</string>
     <string name="unable_to_get_passport_data">Sizning passport ma\'lumotlaringizni olishning ilojisi bo‘lmadi, iltimos boshqattan passport ma\'lumotlaringizni kiritgan holda identifikatsiyadan o‘tib ko‘ring</string>
+    <string name="selected_filters">Tanlangan filtrlar</string>
 </resources>

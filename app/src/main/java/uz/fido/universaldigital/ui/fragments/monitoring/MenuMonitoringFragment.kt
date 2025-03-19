@@ -10,7 +10,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMenuMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringPagerAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.chart.MonitoringChartFragment
+import uz.fido.universaldigital.ui.fragments.monitoring.local.chart.MonitoringChartFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringFragment

@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.chart
+package uz.fido.universaldigital.ui.fragments.monitoring.local.chart
 
 import android.graphics.Color
 import android.graphics.Typeface
@@ -50,8 +50,8 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
         getCurrentPeriod()
         mobileDBHelper = DatabaseHelper(requireContext())
         chartDetailsAdapter = ChartDetailsAdapter(arrayListOf()) {
-            val paymentHistoryDialog = PaymentHistoryDialog(it.serviceId, period)
-            paymentHistoryDialog.show(childFragmentManager, "")
+            val paymentHistoryByServiceIdDialog = PaymentHistoryByServiceIdDialog(it.serviceId, period)
+            paymentHistoryByServiceIdDialog.show(childFragmentManager, "")
         }
         initChartDetails()
         getLocalMonitoring(period)

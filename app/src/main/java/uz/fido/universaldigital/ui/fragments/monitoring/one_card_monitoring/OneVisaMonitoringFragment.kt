@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.first_card
+package uz.fido.universaldigital.ui.fragments.monitoring.one_card_monitoring
 
 import android.os.Bundle
 import android.os.Handler
@@ -20,7 +20,6 @@ import uz.fido.universaldigital.databinding.FragmentVisaFirstMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.visa.VisaMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.visa.VisaMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.serializable
@@ -38,7 +37,7 @@ import java.util.Locale
 import java.util.SortedMap
 
 @AndroidEntryPoint
-class FirstVisaMonitoringFragment : BaseFragment<FragmentVisaFirstMonitoringBinding, LocalMonitoringViewModel>(
+class OneVisaMonitoringFragment : BaseFragment<FragmentVisaFirstMonitoringBinding, LocalMonitoringViewModel>(
     FragmentVisaFirstMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
 ), (CurrencyCardMonitoringItem) -> Unit {
     private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
@@ -47,7 +46,7 @@ class FirstVisaMonitoringFragment : BaseFragment<FragmentVisaFirstMonitoringBind
     private var dateEnd: String = ""
     private var choose:Int=2
     private var timeType:String=""
-    private lateinit var filterDialog: MonitoringAllCardDialog
+    private lateinit var filterDialog: MonitoringSimpleFilterDialog
     private lateinit var visaMonitoringDetailsDialog: VisaMonitoringDetailsDialog
     private var currencyList = arrayListOf<String>()
     private var totalList: ArrayList<ListItem> = ArrayList()
@@ -81,7 +80,7 @@ class FirstVisaMonitoringFragment : BaseFragment<FragmentVisaFirstMonitoringBind
                 dateBegin=inputFormat.format(formatStartDate)
                 dateEnd=inputFormat.format(formatEndDate)
             }
-            filterDialog= MonitoringAllCardDialog(choose,dateBegin,dateEnd,timeType,
+            filterDialog= MonitoringSimpleFilterDialog(choose,dateBegin,dateEnd,timeType,
                 onClickItem = { choose,startDate,endDate,type->
                     this.choose=choose
                     dateBegin=startDate

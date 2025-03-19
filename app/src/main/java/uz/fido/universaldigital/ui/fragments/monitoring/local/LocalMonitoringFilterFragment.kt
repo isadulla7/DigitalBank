@@ -1,10 +1,8 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.filter
+package uz.fido.universaldigital.ui.fragments.monitoring.local
 
 import android.os.Bundle
-import android.text.Editable
 import android.view.View
 import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.flexbox.AlignItems
@@ -14,8 +12,6 @@ import com.google.android.flexbox.FlexboxLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
-import uz.fido.network.domain.model.cards.CheckCardRequestP2p
-import uz.fido.network.domain.model.cards.CheckCardResponse
 import uz.fido.network.domain.model.monitoring.filter.FilterCard
 import uz.fido.network.domain.model.monitoring.filter.FilterSaveVh
 import uz.fido.network.domain.model.monitoring.filter.MonitoringFilter
@@ -27,17 +23,17 @@ import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.FilterLocalCardMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringFilterAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.ServiceAllMonitoringAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAmountDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringCardDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringChooseDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringDateDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringServiceFilterDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringAmountDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringDateDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringServiceFilterDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.TransactionTypeDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringFilterViewModel
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, MonitoringFilterViewModel>(
+class LocalMonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, MonitoringFilterViewModel>(
     FragmentMonitoringFilterBinding::inflate, MonitoringFilterViewModel::class.java
 ), View.OnClickListener, (MonitoringFilter) -> Unit {
 
@@ -82,7 +78,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
         filterRecyclerView()
         serviceRecyclerView()
         onCLickView()
-        editTextView()
     }
 
     private fun doneFilter() {
@@ -93,7 +88,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
                         filterSaveVh = it
                         cardResponseError = true
                         localFilterDone()
-                        cardSave()
                         getCardFilterList()
                         getSaveFilter()
                     }
@@ -101,7 +95,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
             }
         } else {
             getCardList()
-
         }
     }
 
@@ -133,21 +126,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
         monitoringFilterAdapter.setList(allOperationFilter)
         filterVisibility()
 
-    }
-
-    private fun cardSave() {
-        if (!filterSaveVh?.cardNumber.isNullOrEmpty()) {
-            if (filterSaveVh?.cardNumber!!.startsWith("998")) {
-                binding.etCardNumber.setMask("#### ## ### ## ##")
-                binding.etCardNumber.setMaxLength(17)
-                binding.cardNumberLayout.hint = getString(R.string.phone_number)
-                binding.etCardNumber.setText("+${filterSaveVh?.cardNumber ?: ""}")
-            } else {
-                binding.etCardNumber.setMask("#### #### #### ####")
-                binding.etCardNumber.setMaxLength(19)
-                binding.etCardNumber.setText(filterSaveVh?.cardNumber ?: "")
-            }
-        }
     }
 
     private fun getCardFilterList() {
@@ -287,8 +265,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
         binding.operationTip.setOnClickListener(this)
         binding.btnEnter.setOnClickListener(this)
         binding.btnCansel.setOnClickListener(this)
-        binding.newCard.setOnClickListener(this)
-        binding.cardAnimation.setOnClickListener(this)
     }
 
     private fun cardRecyclerView() {
@@ -348,14 +324,10 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
                 showStartEndDate()
             }
 
-            R.id.card, R.id.card_animation -> {
+            R.id.card -> {
                 if (binding.expandableCards.isExpanded) {
-                    binding.cardAnimation.animate().rotation(0f).start()
-
                     binding.expandableCards.collapse()
                 } else {
-                    binding.cardAnimation.animate().rotation(180f).start()
-
                     binding.expandableCards.expand()
                 }
             }
@@ -368,76 +340,13 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
                 showChoose()
             }
 
-            R.id.operation_tip -> {
-                /*         monitoringFilterDialog = MonitoringFilterDialog(serviceList) {
-                             newServiceList = arrayListOf()
-
-                             it.forEach { if (it.service_current) newServiceList.add(it) }
-                             serviceAdapter.setList(newServiceList)
-                             var monthList: List<MonitoringFilter> =
-                                 allOperationFilter.filter { it.type in listOf("date", "amount", "choose") }
-                             allOperationFilter = arrayListOf()
-                             allOperationFilter.addAll(monthList)
-                             newServiceList.forEach { monitoringFilter ->
-                                 allOperationFilter.add(
-                                     MonitoringFilter(
-                                         monitoringFilter.service_name.toString(),
-                                         monitoringFilter.service_id.toString(), false
-                                     )
-                                 )
-                             }
-                             setFilterAdapter(allOperationFilter)
-
-                             serviceList = it
-                             buttonClickVisibility()
-                             monitoringFilterDialog.dismiss()
-                         }
-                         monitoringFilterDialog.show(childFragmentManager, "")*/
-            }
-
             R.id.btn_enter -> {
                 filterChooseSave()
-            }
-
-            R.id.new_card -> {
-                val cardDialog = MonitoringCardDialog(cardList) { filterCards ->
-                    cardList = filterCards
-                    checkCard()
-                    val firstOperation = allOperationFilter.filter { it.type == "card" }
-                    if (firstOperation.isEmpty()) {
-                        addFilterList("card", getString(R.string.card), false)
-                    }
-                    buttonClickVisibility()
-                }
-                cardDialog.show(childFragmentManager, "")
             }
 
             R.id.btn_cansel -> {
                 filterBackType()
             }
-        }
-    }
-
-    private fun checkCard() {
-        val checkCard = cardList.filter { it.is_selected_monitoring }
-        if (checkCard.isNotEmpty()) {
-            binding.newCard.background =
-                ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
-            binding.newCard.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.whiteColor
-                )
-            )
-        } else {
-            binding.newCard.background =
-                ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
-            binding.newCard.setTextColor(
-                ContextCompat.getColor(
-                    requireContext(),
-                    R.color.mainTextColor
-                )
-            )
         }
     }
 
@@ -449,14 +358,13 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
 
     private fun filterChooseSave() {
         saveViewModel.localFilter = true
-        val carNumber = binding.etCardNumber.text.toString().replace(" ", "").replace("+", "")
         val filter = FilterSaveVh(
             startDate,
             endDate,
             maxAmount,
             minAmount,
             choose,
-            carNumber,
+            "",
             cardList,
             serviceList
         )
@@ -477,7 +385,7 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
 
     private fun showChoose() {
         if (!chooseCurrent) {
-            val monitoringChooseDialog = MonitoringChooseDialog { choose ->
+            val transactionTypeDialog = TransactionTypeDialog { choose ->
                 this.choose = choose
                 addFilterList("choose", choose, false)
                 chooseCurrent = true
@@ -491,7 +399,7 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
                 )
                 buttonClickVisibility()
             }
-            monitoringChooseDialog.show(childFragmentManager, "")
+            transactionTypeDialog.show(childFragmentManager, "")
         } else {
             this.choose = ""
             chooseCurrent = false
@@ -636,19 +544,10 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
             }
 
             "card" -> {
-                binding.newCard.background =
-                    ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
-                binding.newCard.setTextColor(
-                    ContextCompat.getColor(
-                        requireContext(),
-                        R.color.mainTextColor
-                    )
-                )
                 cardList.forEach {
                     it.is_selected_monitoring = false
                 }
                 buttonClickVisibility()
-
             }
 
             else -> {
@@ -720,67 +619,6 @@ class MonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBinding, M
             buttonClickVisibility()
         }
         monitoringServiceFilterDialog.show(childFragmentManager, "")
-    }
-
-    private fun editTextView() {
-        binding.etCardNumber.addTextChangedListener {
-            if (it.toString().isNotEmpty()) {
-                choicePhoneAndCard(it)
-            }
-        }
-    }
-
-    private fun choicePhoneAndCard(it: Editable?) {
-        val number = it.toString().replace(" ", "")
-        if (number.startsWith("+")) {
-            if (number.length < 2) {
-                binding.etCardNumber.setMask("#### ## ### ## ##")
-                binding.etCardNumber.setMaxLength(17)
-                binding.cardNumberLayout.hint = getString(R.string.phone_number)
-            }
-            phoneNumber(number)
-        } else {
-            if (number.length < 2) {
-                binding.etCardNumber.setMask("#### #### #### ####")
-                binding.etCardNumber.setMaxLength(19)
-            }
-            cardNumber(it)
-        }
-    }
-
-    private fun phoneNumber(number: String) {
-        if (number.isNotEmpty()) {
-            if (number.length == 17)
-                buttonClickVisibility()
-        }
-    }
-
-    private fun cardNumber(it: Editable?) {
-        if (it.toString().replace(" ", "").length == 16) {
-            binding.progress.visibility = View.VISIBLE
-            binding.scanner.visibility = View.GONE
-            viewModel.getCardInfo(
-                getClientToken(), CheckCardRequestP2p(
-                    "card",
-                    it.toString().replace(" ", "")
-                )
-            ).observe(viewLifecycleOwner) {
-                binding.progress.visibility = View.GONE
-                binding.scanner.visibility = View.VISIBLE
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        val response = it.data as CheckCardResponse
-                        binding.ownerName.text = response.empbossed_name
-                        binding.ownerName.visibility = View.VISIBLE
-                        buttonClickVisibility()
-                    }
-
-                    Status.ERROR -> {
-                        showSnackbar(it.message.toString())
-                    }
-                }
-            }
-        }
     }
 
     private fun buttonClickVisibility() {

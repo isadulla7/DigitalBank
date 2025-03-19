@@ -1,7 +1,6 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.first_card
+package uz.fido.universaldigital.ui.fragments.monitoring.one_card_monitoring
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,9 +18,8 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentWalletFirstMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
@@ -39,24 +37,21 @@ import java.util.Calendar
 import java.util.Locale
 
 @AndroidEntryPoint
-class WalletFirstMonitoringFragment :
-    BaseFragment<FragmentWalletFirstMonitoringBinding, LocalMonitoringViewModel>(
-        FragmentWalletFirstMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
-    ), (AccountHistory) -> Unit {
-    private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
-    private var operationType = 0
+class OneFirstMonitoringFragment : BaseFragment<FragmentWalletFirstMonitoringBinding, LocalMonitoringViewModel>(
+    FragmentWalletFirstMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
+), (AccountHistory) -> Unit {
+
+    private lateinit var walletMonitoringDetailsDialog: WalletMonitoringDetailsDialog
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    private lateinit var filterDialog: MonitoringSimpleFilterDialog
+
+    private var operationType = 0
     private var choose: Int = 2
     private var timeType: String = ""
-
     private var dateBegin: String = ""
     private var dateEnd: String = ""
     private var walletList = arrayListOf<String>()
     private var linearLayoutManager: LinearLayoutManager? = null
-    private lateinit var filterDialog: MonitoringAllCardDialog
-
-    private lateinit var walletMonitoringDetailsDialog: WalletMonitoringDetailsDialog
-
     private val menuMonitoringViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var totalList: ArrayList<ListItem> = ArrayList()
     private val walletMonitoringAdapter by lazy {
@@ -74,14 +69,13 @@ class WalletFirstMonitoringFragment :
         getCardList()
         setTime()
         createMonitoringAdapter()
-        getWalletList(1, operationType)
+        getWalletList(1)
         onClickView()
     }
 
     private fun setImageFirst() {
         binding.appBar.setAdditionalIcon(R.drawable.ic_filter_frame)
     }
-
 
     private fun getFilterWalletList() {
         showSkeleton(
@@ -97,7 +91,6 @@ class WalletFirstMonitoringFragment :
         val formatEndDate = inputFormat.parse(dateEnd)
         dateBegin = format.format(formatStartDate)
         dateEnd = format.format(formatEndDate)
-        val type = choose
         val filialCode = getFromPaper(Const.PAPER_CLIENT_FILIAL_CODE)
         val model = AccountHistoriesRequest(
             pageNumber = "1",
@@ -112,8 +105,8 @@ class WalletFirstMonitoringFragment :
             when (it.status) {
                 Status.SUCCESS -> {
                     val response = it.data!!.response
-                    successMonitoringList(response, type)
-                    if (response.size < 1) {
+                    successMonitoringList(response)
+                    if (response.isEmpty()) {
                         binding.layoutEmpty.visibility = View.VISIBLE
                     }
                 }
@@ -130,11 +123,10 @@ class WalletFirstMonitoringFragment :
         binding.gotoMainPage.setOnClickListener {
             binding.consError.visibility = View.GONE
             if (!menuMonitoringViewModel.walletFilter)
-                getWalletList(1, operationType)
+                getWalletList(1)
             else getFilterWalletList()
 
         }
-
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.appBar.setOnClickListener {
             if (dateBegin != "" && dateBegin.contains(".")) {
@@ -145,7 +137,7 @@ class WalletFirstMonitoringFragment :
                 dateBegin = inputFormat.format(formatStartDate)
                 dateEnd = inputFormat.format(formatEndDate)
             }
-            filterDialog = MonitoringAllCardDialog(
+            filterDialog = MonitoringSimpleFilterDialog(
                 choose, dateBegin, dateEnd, timeType,
                 onClickItem = { choose, startDate, endDate, type ->
                     this.choose = choose
@@ -165,7 +157,7 @@ class WalletFirstMonitoringFragment :
                     totalList.clear()
                     setImageFirst()
                     setTime()
-                    getWalletList(1, operationType)
+                    getWalletList(1)
                     filterDialog.dismiss()
                 })
             filterDialog.show(childFragmentManager, "")
@@ -173,8 +165,7 @@ class WalletFirstMonitoringFragment :
         }
     }
 
-    private fun getWalletList(page: Int, operationType: Int) {
-        Log.d("TAG", "getWalletList:$operationType ")
+    private fun getWalletList(page: Int) {
         if (walletList.isNotEmpty()) {
             val skeletonScreen = showSkeleton(
                 binding.shimmerView,
@@ -182,7 +173,6 @@ class WalletFirstMonitoringFragment :
                 R.layout.shimmer_item_monitoring,
                 1
             )
-
             val model = createModel(page)
             viewModel.getAccountHistories(getClientToken(), model).observe(viewLifecycleOwner) {
                 skeletonScreen.hide()
@@ -191,8 +181,8 @@ class WalletFirstMonitoringFragment :
                     Status.SUCCESS -> {
                         totalList = arrayListOf()
                         val response = it.data!!.response
-                        successMonitoringList(response, operationType)
-                        if (response.size < 1) {
+                        successMonitoringList(response)
+                        if (response.isEmpty()) {
                             binding.layoutEmpty.visibility = View.VISIBLE
                         }
                     }
@@ -212,32 +202,9 @@ class WalletFirstMonitoringFragment :
     }
 
     private fun successMonitoringList(
-        response: java.util.ArrayList<AccountHistory>,
-        operationType: Int
+        response: java.util.ArrayList<AccountHistory>
     ) {
-        val sortedResponse = java.util.ArrayList<AccountHistory>()
-
-        val groupedHashMap: HashMap<String, MutableList<AccountHistory>> = groupDataIntoHashMap(response)/*when (operationType) {
-            2 -> {
-                response.forEach {
-                    if (it.debit == "0") {
-                        sortedResponse.add(it)
-                    }
-                }
-                groupDataIntoHashMap(sortedResponse)
-            }
-
-            1 -> {
-                response.forEach {
-                    if (it.credit == "0") {
-                        sortedResponse.add(it)
-                    }
-                }
-                groupDataIntoHashMap(sortedResponse)
-            }
-
-            else -> groupDataIntoHashMap(response)
-        }*/
+        val groupedHashMap: HashMap<String, MutableList<AccountHistory>> = groupDataIntoHashMap(response)
         val sortedMap = groupedHashMap.toSortedMap(compareByDescending { it })
         for (date in sortedMap.keys) {
             val dateItem = DateItem()
@@ -263,7 +230,6 @@ class WalletFirstMonitoringFragment :
         setListAdapter(totalList)
         emptyView()
     }
-
 
     private fun setListAdapter(totalList: ArrayList<ListItem>) {
         walletMonitoringAdapter.setListAdapter(totalList)
@@ -299,11 +265,10 @@ class WalletFirstMonitoringFragment :
         return model
     }
 
-
     private fun getCardList() {
         val card = arguments?.serializable<CardResponse>(Const.CARD)
         walletList = arrayListOf()
-        walletList.add(card?.object_id ?: "")
+        walletList.add(card?.account_code ?: "")
     }
 
     private fun emptyView() {
@@ -320,6 +285,7 @@ class WalletFirstMonitoringFragment :
     }
 
     private fun setTime() {
+        val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
         val calendarStart = Calendar.getInstance()
         val calendarEnd = Calendar.getInstance()
         calendarStart.add(Calendar.DAY_OF_MONTH, -60)
@@ -333,7 +299,6 @@ class WalletFirstMonitoringFragment :
             layoutManager = linearLayoutManager
             addOnScrollListener(scrollListener)
             addItemDecoration(StickyHeaderDecoration(walletMonitoringAdapter))
-
         }
     }
 

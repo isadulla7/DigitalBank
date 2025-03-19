@@ -27,9 +27,9 @@ import uz.fido.network.domain.model.search.SearchDataResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentRequisitesHistoryBinding
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringDetailsDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.InfoMonitoringDialog
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
@@ -54,7 +54,7 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var localMonitoringAdapter: LocalMonitoringAdapter
-    private lateinit var dialogInfo: InfoMonitoringDialog
+    private lateinit var dialogInfo: LocalMonitoringDetailsDialog
 
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
     private var totalList: ArrayList<ListItem> = ArrayList()
@@ -239,7 +239,7 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
                 hideProgress()
                 when (it.status) {
                     Status.SUCCESS -> {
-                        dialogInfo = InfoMonitoringDialog(
+                        dialogInfo = LocalMonitoringDetailsDialog(
                             localMonitoring,
                             it.data,
                             fullInfo = { localMonitoring ->
@@ -248,18 +248,13 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
                             },
                             repeatPayment = { localMonitoring ->
                                 getOperationParams(1, localMonitoring)
-                            },
-                            returnPayment = { localMonitoring ->
-                                getOperationParams(2, localMonitoring)
-                            })
+                            }
+                        )
                         dialogInfo.show(childFragmentManager, "")
                     }
 
                     Status.ERROR -> {
-                        dialogInfo = InfoMonitoringDialog(
-                            localMonitoring,
-                            null,
-                            fullInfo = {}, repeatPayment = {}, returnPayment = {})
+                        dialogInfo = LocalMonitoringDetailsDialog(localMonitoring)
                         dialogInfo.show(childFragmentManager, "")
                     }
                 }

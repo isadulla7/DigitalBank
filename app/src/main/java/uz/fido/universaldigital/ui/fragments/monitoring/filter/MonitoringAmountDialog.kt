@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.dialog
+package uz.fido.universaldigital.ui.fragments.monitoring.filter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.jakewharton.rxbinding4.widget.textChanges
+import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.functions.BiFunction
 import uz.fido.universaldigital.databinding.DialogMonitoringAmountBinding
 import java.math.BigDecimal
@@ -33,7 +34,7 @@ class MonitoringAmountDialog(private val itemClickListener: (String, String) -> 
     }
 
     private fun rxBinding() {
-        io.reactivex.rxjava3.core.Observable.combineLatest(
+        Observable.combineLatest(
             binding.etAmountMin.textChanges(),
             binding.etMaxAmount.textChanges(),
             BiFunction(this::isCorrect)

@@ -18,6 +18,7 @@ import uz.fido.network.domain.model.abc_base.InParamsResponse
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.GeneralItem
 import uz.fido.network.domain.model.monitoring.ListItem
+import uz.fido.network.domain.model.monitoring.TransferChequeModel
 import uz.fido.network.domain.model.monitoring.filter.LocalMonitoringFilterRequest
 import uz.fido.network.domain.model.payment.PrintChequeRequest
 import uz.fido.network.domain.model.payment.TemplateKeyValue
@@ -32,8 +33,6 @@ import uz.fido.universaldigital.databinding.FragmentLocalMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.Companion.CHEQUE_MODEL
 import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.Companion.OPERATION_MONITORING
-import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.InfoMonitoringDialog
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
@@ -94,8 +93,8 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     private fun setMonitoringDate(startDate: String? = null, endDate: String? = null) {
         val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
         val calendarEnd = Calendar.getInstance()
-        dateBegin = endDate.orEmpty()
-        dateEnd = startDate ?: dateFormat.format(calendarEnd.time)
+        dateBegin = startDate.orEmpty()
+        dateEnd = endDate ?: dateFormat.format(calendarEnd.time)
     }
 
     private fun initScrollListener() {
@@ -154,7 +153,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                 } else {
                     binding.progress.visibility = View.VISIBLE
                 }
-                val newFilter = LocalMonitoringFilterRequest(
+                val filterRequest = LocalMonitoringFilterRequest(
                     startDate = if (filter.startDate.isNotEmpty()) dateBegin else null,
                     endDate = if (filter.endDate.isNotEmpty()) dateEnd else null,
                     pageNumber = page,
@@ -165,7 +164,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                     maxAmount = filter.getMaxAmount(),
                     minAmount = filter.getMinMinAmount()
                 )
-                viewModel.newFilterLocalMonitoring(getClientToken(), newFilter).observe(viewLifecycleOwner) {
+                viewModel.newFilterLocalMonitoring(getClientToken(), filterRequest).observe(viewLifecycleOwner) {
                     if (page == 1) {
                         skeletonScreen?.hide()
                         binding.shimmerView.visibility = View.GONE
@@ -336,7 +335,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
             hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {
-                    val dialogInfo = InfoMonitoringDialog(
+                    val dialogInfo = LocalMonitoringDetailsDialog(
                         localMonitoring,
                         it.data,
                         fullInfo = { localMonitoring ->
@@ -344,9 +343,6 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                         },
                         repeatPayment = { localMonitoring ->
                             getOperationParams(1, localMonitoring)
-                        },
-                        returnPayment = { localMonitoring ->
-                            getOperationParams(2, localMonitoring)
                         }
                     )
                     dialogInfo.show(childFragmentManager, "")

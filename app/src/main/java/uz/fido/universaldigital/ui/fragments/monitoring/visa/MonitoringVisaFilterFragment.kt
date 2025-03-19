@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.filter
+package uz.fido.universaldigital.ui.fragments.monitoring.visa
 
 import android.os.Bundle
 import android.os.Handler
@@ -17,16 +17,17 @@ import uz.fido.universaldigital.databinding.FragmentMonitoringUzcardFilterBindin
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.FilterCardMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringFilterAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAmountDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringChooseDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringDateDialog
-import uz.fido.utils.const.CardConst.UZCARD
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringAmountDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringDateDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.TransactionTypeDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringFilterViewModel
+import uz.fido.utils.const.CardConst
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilterBinding, MonitoringFilterViewModel>
+class MonitoringVisaFilterFragment : BaseFragment<FragmentMonitoringUzcardFilterBinding, MonitoringFilterViewModel>
     (FragmentMonitoringUzcardFilterBinding::inflate, MonitoringFilterViewModel::class.java),
     View.OnClickListener, (MonitoringFilter) -> Unit {
 
@@ -35,7 +36,7 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     private var filterSaveVh: FilterSaveVh? = null
     private lateinit var monitoringDateDialog: MonitoringDateDialog
     private lateinit var monitoringAmountDialog: MonitoringAmountDialog
-    private lateinit var monitoringChooseDialog: MonitoringChooseDialog
+    private lateinit var transactionTypeDialog: TransactionTypeDialog
 
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var allOperationFilter = arrayListOf<MonitoringFilter>()
@@ -59,8 +60,8 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     }
 
     private fun checkFilter() {
-        if (saveViewModel.uzCardFilter) {
-            saveViewModel.uzCardMonitoringFilter.observe(viewLifecycleOwner) {
+        if (saveViewModel.visaFilter) {
+            saveViewModel.visaMonitoringFilter.observe(viewLifecycleOwner) {
                 filterSaveVh = it
                 createRecyclerView()
                 localFilterDone()
@@ -127,11 +128,14 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
                     val response = resource.data?.user_objects ?: ArrayList()
                     val newList = arrayListOf<FilterCard>()
                     response.forEach { filterCard ->
-                        if (filterCard.object_type == UZCARD) {
+                        if (filterCard.object_type == CardConst.CURRENCY_CARD) {
                             if (!newList.map { it.object_value }.contains(filterCard.object_value)) {
                                 newList.add(filterCard)
                             }
                         }
+                    }
+                    if (newList.isNotEmpty()) newList.forEachIndexed { index, card ->
+                        if (index != 0) card.is_selected_monitoring = true
                     }
                     cardList = newList
                     successCardList(cardList)
@@ -203,7 +207,7 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     }
 
     private fun filterBackType() {
-        saveViewModel.uzCardFilter = false
+        saveViewModel.visaFilter = false
         pop()
     }
 
@@ -212,8 +216,8 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
         cardList.forEach { if (!it.is_selected_monitoring) isCurrent = true }
         if (isCurrent) {
             val filter = FilterSaveVh(startDate, endDate, maxAmount, minAmount, choose, "", cardList, arrayListOf())
-            saveViewModel.setUzCardMonitoringFilter(filter)
-            saveViewModel.uzCardFilter = true
+            saveViewModel.setVisaMonitoringFilter(filter)
+            saveViewModel.visaFilter = true
             pop()
         } else Toast.makeText(requireContext(), requireContext().getString(R.string.select_card), Toast.LENGTH_SHORT).show()
     }
@@ -284,16 +288,16 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
 
     private fun showChoose() {
         if (!chooseCurrent) {
-            monitoringChooseDialog = MonitoringChooseDialog { choose ->
+            transactionTypeDialog = TransactionTypeDialog { choose ->
                 this.choose = choose
                 addFilterList("choose", choose, false)
                 chooseCurrent = true
                 binding.minPlus.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
                 binding.minPlus.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
-                monitoringChooseDialog.dismiss()
+                transactionTypeDialog.dismiss()
 
             }
-            monitoringChooseDialog.show(childFragmentManager, "")
+            transactionTypeDialog.show(childFragmentManager, "")
         } else {
             this.choose = ""
             chooseCurrent = false
@@ -337,6 +341,8 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
         cardList.forEach {
             if (it.object_value == filterCard.object_value) {
                 it.is_selected_monitoring = !it.is_selected_monitoring
+            } else {
+                it.is_selected_monitoring = true
             }
         }
         cardAdapter.submitList(cardList)

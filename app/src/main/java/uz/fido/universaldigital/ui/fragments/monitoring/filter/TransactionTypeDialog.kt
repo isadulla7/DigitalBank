@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.dialog
+package uz.fido.universaldigital.ui.fragments.monitoring.filter
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogMonitoringChooseBinding
 
-class MonitoringChooseDialog(private val onClick: (String) -> Unit) : BottomSheetDialogFragment() {
+class TransactionTypeDialog(private val onClick: (String) -> Unit) : BottomSheetDialogFragment() {
 
     private lateinit var binding: DialogMonitoringChooseBinding
 

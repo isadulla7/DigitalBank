@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.dialog
+package uz.fido.universaldigital.ui.fragments.monitoring.local
 
 import android.app.Dialog
 import android.os.Bundle
@@ -6,23 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
+import com.google.android.material.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
 import uz.fido.network.domain.model.search.SearchDataResponse
-import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogInfoMonitoringBinding
 import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.format.Format
 
-class InfoMonitoringDialog(
+class LocalMonitoringDetailsDialog(
     private val localMonitoring: LocalMonitoring,
     private val searchDateResponse: SearchDataResponse? = null,
-    private val fullInfo: (localeMonitoring: LocalMonitoring) -> Unit,
-    private val repeatPayment: (localeMonitoring: LocalMonitoring) -> Unit,
-    private val returnPayment: (localeMonitoring: LocalMonitoring) -> Unit,
+    private val fullInfo: ((localeMonitoring: LocalMonitoring) -> Unit)? = null,
+    private val repeatPayment: ((localeMonitoring: LocalMonitoring) -> Unit)? = null
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: DialogInfoMonitoringBinding
@@ -30,7 +30,7 @@ class InfoMonitoringDialog(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener {
-            val bottomSheet = bottomSheetDialog.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+            val bottomSheet = bottomSheetDialog.findViewById<FrameLayout>(R.id.design_bottom_sheet)
             val behavior: BottomSheetBehavior<*> = BottomSheetBehavior.from(bottomSheet!!)
             behavior.setState(BottomSheetBehavior.STATE_EXPANDED)
         }
@@ -55,56 +55,39 @@ class InfoMonitoringDialog(
 
     private fun initSetOnClickListeners() {
         binding.repeat.setOnClickListener {
-            if (localMonitoring.transactionType == "credit") {
-                if (searchDateResponse != null)
-                    if (searchDateResponse.request_code == "P2P") {
-                        dismiss()
-                        returnPayment.invoke(localMonitoring)
-                    } else {
-                        return@setOnClickListener
-                    }
-            } else {
-                dismiss()
-                repeatPayment.invoke(localMonitoring)
-            }
+            dismiss()
+            repeatPayment?.invoke(localMonitoring)
         }
         binding.allInfo.setOnClickListener {
             dismiss()
-            fullInfo.invoke(localMonitoring)
+            fullInfo?.invoke(localMonitoring)
         }
     }
 
     private fun checkForButton() {
+        binding.repeat.isVisible = repeatPayment != null
+        binding.allInfo.isVisible = fullInfo != null
         if (isBadServiceIds(localMonitoring)) {
             binding.repeat.visibility = View.GONE
-        }
-        if (localMonitoring.transactionType == "credit") {
-            if (searchDateResponse != null) {
-                if (searchDateResponse.request_code == "P2P") {
-                    binding.tvRepeat.text = getString(R.string.return_text)
-                } else {
-                    binding.repeat.visibility = View.GONE
-                }
-            }
         }
     }
 
     private fun init() {
         try {
-            addView(getString(R.string.service), localMonitoring.name)
+            addView(getString(uz.fido.universaldigital.R.string.service), localMonitoring.name)
             if (searchDateResponse != null) {
                 when (searchDateResponse.request_code) {
                     "P2P", "CONVERSION" -> {
                         if (searchDateResponse.from_object_value != null) {
-                            addView(getString(R.string.sender_card), Format.formatCardNumberForCheque(searchDateResponse.from_object_value.orEmpty()))
+                            addView(getString(uz.fido.universaldigital.R.string.sender_card), Format.formatCardNumberForCheque(searchDateResponse.from_object_value.orEmpty()))
                             if (!searchDateResponse.from_embossed_name.isNullOrEmpty()) {
-                                addView(getString(R.string.sender_name), searchDateResponse.from_embossed_name.orEmpty())
+                                addView(getString(uz.fido.universaldigital.R.string.sender_name), searchDateResponse.from_embossed_name.orEmpty())
                             }
                         }
                         if (searchDateResponse.to_object_value != null) {
-                            addView(getString(R.string.receiver_card), Format.formatCardNumberForCheque(searchDateResponse.to_object_value.orEmpty()))
+                            addView(getString(uz.fido.universaldigital.R.string.receiver_card), Format.formatCardNumberForCheque(searchDateResponse.to_object_value.orEmpty()))
                             if (!searchDateResponse.to_embossed_name.isNullOrEmpty()) {
-                                addView(getString(R.string.receiver_name), searchDateResponse.to_embossed_name.orEmpty())
+                                addView(getString(uz.fido.universaldigital.R.string.receiver_name), searchDateResponse.to_embossed_name.orEmpty())
                             }
                         }
                         initViews(isRequired = false, isPayment = false)
@@ -123,16 +106,16 @@ class InfoMonitoringDialog(
     }
 
     private fun initViews(isRequired: Boolean, isPayment: Boolean) {
-        searchDateResponse?.params?.get("FIO")?.let { addView(getString(R.string.fio), it) }
-        searchDateResponse?.params?.get("FIO_ABONENT")?.let { addView(getString(R.string.fio), it) }
-        searchDateResponse?.params?.get("ADDRESS")?.let { addView(getString(R.string.address), it) }
-        addView(getString(R.string.date_time), localMonitoring.createdDate)
-        addView(getString(R.string.transaction_number), localMonitoring.requestId)
+        searchDateResponse?.params?.get("FIO")?.let { addView(getString(uz.fido.universaldigital.R.string.fio), it) }
+        searchDateResponse?.params?.get("FIO_ABONENT")?.let { addView(getString(uz.fido.universaldigital.R.string.fio), it) }
+        searchDateResponse?.params?.get("ADDRESS")?.let { addView(getString(uz.fido.universaldigital.R.string.address), it) }
+        addView(getString(uz.fido.universaldigital.R.string.date_time), localMonitoring.createdDate)
+        addView(getString(uz.fido.universaldigital.R.string.transaction_number), localMonitoring.requestId)
         if (isRequired && localMonitoring.partnerObj.isNotEmpty()) {
             if (localMonitoring.receiverCardName.isNotEmpty()) {
                 if (localMonitoring.partnerObj.startsWith("AUZ")) {
                     addView(
-                        getString(R.string.wallet_number),
+                        getString(uz.fido.universaldigital.R.string.wallet_number),
                         if (localMonitoring.senderCard.length == 16) Format.formatCardNumber(localMonitoring.partnerObj) else localMonitoring.partnerObj
                     )
                 } else {
@@ -142,31 +125,29 @@ class InfoMonitoringDialog(
                 }
             } else {
                 addView(
-                    getString(R.string.personal_account),
+                    getString(uz.fido.universaldigital.R.string.personal_account),
                     if (localMonitoring.senderCard.length == 16) Format.formatCardNumber(localMonitoring.partnerObj) else localMonitoring.partnerObj
                 )
             }
         }
-
         if (isPayment && localMonitoring.senderCard.isNotEmpty() && !localMonitoring.partnerObj.startsWith("AUZ")) {
             addView(
-                getString(R.string.choose_card_text),
+                getString(uz.fido.universaldigital.R.string.choose_card_text),
                 if (localMonitoring.senderCard.length == 16) Format.formatCardNumber(localMonitoring.senderCard) else Format.formatWalletNumber(
                     localMonitoring.senderCard
                 )
             )
         }
-
-        addView(getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(localMonitoring.amount)) + " ${Format.currencyCode(localMonitoring.currencyCode)}")
+        addView(getString(uz.fido.universaldigital.R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(localMonitoring.amount)) + " ${Format.currencyCode(localMonitoring.currencyCode)}")
         val state = if (localMonitoring.stateId == "1") {
-            getString(R.string.successfully)
+            getString(uz.fido.universaldigital.R.string.successfully)
         } else {
-            getString(R.string.waiting)
+            getString(uz.fido.universaldigital.R.string.waiting)
         }
-        if (localMonitoring.feeAmount.isNotEmpty() && localMonitoring.feePercent.isNotEmpty())
-            addView(getString(R.string.commission), "${localMonitoring.feeAmount.toDouble() / 100.toDouble()} UZS (${localMonitoring.feePercent}%)")
-
-        addView(getString(R.string.status), state)
+        if (localMonitoring.feeAmount.isNotEmpty() && localMonitoring.feePercent.isNotEmpty()) {
+            addView(getString(uz.fido.universaldigital.R.string.commission), "${localMonitoring.feeAmount.toDouble() / 100.toDouble()} UZS (${localMonitoring.feePercent}%)")
+        }
+        addView(getString(uz.fido.universaldigital.R.string.status), state)
     }
 
     private fun addView(name: String, value: String) {

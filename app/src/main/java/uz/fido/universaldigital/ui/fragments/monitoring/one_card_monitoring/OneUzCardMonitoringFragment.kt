@@ -1,11 +1,11 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.first_card
+package uz.fido.universaldigital.ui.fragments.monitoring.one_card_monitoring
 
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -22,11 +22,10 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentUzcardFirstMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAllCardDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzCardMonitoringDetailsDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
@@ -45,7 +44,7 @@ import java.util.Locale
 import java.util.SortedMap
 
 @AndroidEntryPoint
-class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBinding, LocalMonitoringViewModel>(
+class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBinding, LocalMonitoringViewModel>(
     FragmentUzcardFirstMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
 ), (UzcardMonitoringItem) -> Unit {
 
@@ -54,9 +53,9 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
     private var operationType = 2
     private var dateBegin: String = ""
     private var dateEnd: String = ""
-    private var choose:Int=2
-    private var timeType=""
-    private var filter:Boolean=false
+    private var choose: Int = 2
+    private var timeType = ""
+    private var filter: Boolean = false
     private var totalList: ArrayList<ListItem> = ArrayList()
     private val uzcardMonitoringAdapter by lazy {
         UzcardMonitoringAdapter(
@@ -68,8 +67,6 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private val df = SimpleDateFormat("yyyyMMdd", Locale.US)
     private var cardList = arrayListOf<String>()
-    private lateinit var filterDialog:MonitoringAllCardDialog
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -78,7 +75,7 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
         totalList.clear()
         getCardList()
         setTime()
-        recylerViewScroll()
+        initScrollListener()
         createMonitoringAdapter()
         checkSaveItem()
         //checkFilter()
@@ -90,26 +87,15 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
         binding.appBar.setAdditionalIcon(R.drawable.ic_filter_frame)
     }
 
-
-   /* private fun checkFilter() {
-        if (filter)
-            getFilterUzCardMonitoringList(1, operationType)
-        else {
-            checkSaveItem()
-        }
-
-    }*/
-
     private fun checkSaveItem() {
         getUzCardMonitoringList(1, operationType)
     }
 
-
-    private fun getFilterUzCardMonitoringList(page: Int, operationType: Int) {
+    private fun getFilterUzCardMonitoringList(page: Int) {
         var skeletonScreen: SkeletonScreen? = null
         if (page == 1) {
-            binding.rec.visibility=View.GONE
-            binding.shimmerView.visibility=View.VISIBLE
+            binding.rec.visibility = View.GONE
+            binding.shimmerView.visibility = View.VISIBLE
             totalList = arrayListOf()
             skeletonScreen = showSkeleton(
                 binding.shimmerView,
@@ -155,33 +141,32 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
     private fun onClickView() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.appBar.setOnClickListener {
-            filterDialog=MonitoringAllCardDialog(choose,dateBegin,dateEnd,timeType,
-                onClickItem = {newChoose,startDate,endDate,type->
-                    choose=newChoose
-                    dateBegin=startDate
-                    dateEnd=endDate
-                    timeType=type
-                    filter=true
-                    getFilterUzCardMonitoringList(1, operationType)
+            val filterDialog = MonitoringSimpleFilterDialog(
+                choose, dateBegin, dateEnd, timeType,
+                onClickItem = { newChoose, startDate, endDate, type ->
+                    choose = newChoose
+                    dateBegin = startDate
+                    dateEnd = endDate
+                    timeType = type
+                    filter = true
+                    getFilterUzCardMonitoringList(1)
                     binding.appBar.setAdditionalIcon(R.drawable.ic_filter_yes)
-                    filterDialog.dismiss()
                 },
                 clear = {
-                    choose=2
-                    dateBegin=""
-                    dateEnd=""
-                    timeType=""
-                    filter=false
+                    choose = 2
+                    dateBegin = ""
+                    dateEnd = ""
+                    timeType = ""
+                    filter = false
                     setTime()
                     totalList.clear()
                     setAdapter(totalList)
-                    binding.shimmerView.visibility=View.VISIBLE
+                    binding.shimmerView.visibility = View.VISIBLE
                     checkSaveItem()
                     setImageFirst()
-                    filterDialog.dismiss()
                 }
             )
-            filterDialog.show(childFragmentManager,"")
+            filterDialog.show(childFragmentManager, "")
         }
         binding.gotoMainPage.setOnClickListener {
             totalList = ArrayList()
@@ -194,15 +179,13 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
 
     private fun getCardList() {
         val card = arguments?.serializable<CardResponse>(Const.CARD)
-        cardList.add(card?.object_id?:"")
-
+        cardList.add(card?.object_id ?: "")
     }
 
-    private fun recylerViewScroll() {
+    private fun initScrollListener() {
         scrollListener = object : EndlessRecyclerViewScrollListener(linearLayoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                if (saveViewModel.uzCardFilter)
-                    getFilterUzCardMonitoringList(page, operationType)
+                if (saveViewModel.uzCardFilter) getFilterUzCardMonitoringList(page)
                 else getUzCardMonitoringListScroll(page, operationType)
             }
         }
@@ -221,7 +204,6 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
             layoutManager = linearLayoutManager
             addOnScrollListener(scrollListener)
             addItemDecoration(StickyHeaderDecoration(uzcardMonitoringAdapter))
-
         }
     }
 
@@ -234,7 +216,6 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
                 1
             )
             scrollListener.resetState()
-
             viewModel.getUzcardMonitoringOld(
                 token = getClientToken(),
                 UzcardMonitoringRequest(
@@ -263,12 +244,10 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
         } else {
             Handler(Looper.getMainLooper()).postDelayed({
                 if (isVisible) {
-                    // skeletonScreen.hide()
                     binding.shimmerView.visibility = View.GONE
                     binding.rec.visibility = View.GONE
                     binding.layoutEmpty.visibility = View.VISIBLE
                     binding.layoutEmpty.findViewById<TextViewMedium>(R.id.title).text = getString(R.string.card_list_no)
-
                 }
             }, 500)
         }
@@ -287,7 +266,6 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
             )
         ).observe(viewLifecycleOwner) { resources ->
             binding.progress.visibility = View.GONE
-
             when (resources.status) {
                 Status.SUCCESS -> {
                     val response = resources?.data?.transactions
@@ -304,11 +282,9 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
 
     private fun successMonitoringList(response: ArrayList<UzcardMonitoringItem>?, operationType: Int) {
         val sortedResponse = ArrayList<UzcardMonitoringItem>()
-        Log.d("TAG", "successMonitoringList:${operationType} ")
         val groupedHashMap: HashMap<String, MutableList<UzcardMonitoringItem>> = when (operationType) {
             0 -> {
                 response?.forEach {
-                    Log.d("TAG", "successMonitoringList:${it.transactionType} ")
                     if (it.transactionType == LocalMonitoringFragment.MONITORING_CREDIT) {
                         sortedResponse.add(it)
                     }
@@ -354,7 +330,6 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
             }
         }
         setAdapter(totalList)
-
     }
 
     private fun setAdapter(totalList: ArrayList<ListItem>) {
@@ -381,9 +356,7 @@ class FirstUzCardMonitoringFragment:BaseFragment<FragmentUzcardFirstMonitoringBi
     }
 
     private fun emptyView() {
-        if (totalList.isEmpty()) {
-            binding.layoutEmpty.visibility = View.VISIBLE
-        } else binding.layoutEmpty.visibility = View.GONE
+        binding.layoutEmpty.isVisible = totalList.isEmpty()
     }
 
     override fun invoke(item: UzcardMonitoringItem) {

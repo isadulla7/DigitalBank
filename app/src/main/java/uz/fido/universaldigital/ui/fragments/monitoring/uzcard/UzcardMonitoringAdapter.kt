@@ -67,14 +67,12 @@ class UzcardMonitoringAdapter(
     }
 
     override fun headerPositionForItem(itemPosition: Int): Int {
-        var headerPosition = 0
         for (i in itemPosition downTo 1) {
             if (isHeader(i)) {
-                headerPosition = i
-                return headerPosition
+                return i
             }
         }
-        return headerPosition
+        return 0
     }
 
     override fun headerLayout(headerPosition: Int): Int = R.layout.item_histories_header

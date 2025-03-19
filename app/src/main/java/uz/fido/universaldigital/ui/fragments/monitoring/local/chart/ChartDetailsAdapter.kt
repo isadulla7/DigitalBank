@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.chart
+package uz.fido.universaldigital.ui.fragments.monitoring.local.chart
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

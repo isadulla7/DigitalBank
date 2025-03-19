@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.dialog
+package uz.fido.universaldigital.ui.fragments.monitoring.filter
 
 import android.os.Bundle
 import android.os.Handler
@@ -32,11 +32,8 @@ class MonitoringServiceFilterDialog(
 ) : DialogFragment(), BaseInterface, (LocalMonitoring) -> Unit {
 
     private lateinit var binding: DialogMonitoringFilterBinding
-    private val serviceAdapter by lazy {
-        ServiceFilterAdapter(
-            requireContext(), arrayListOf(), this
-        )
-    }
+
+    private val serviceAdapter by lazy { ServiceFilterAdapter(arrayListOf(), this) }
     private val localMonitoringViewModel by activityViewModels<LocalMonitoringViewModel>()
     private var dateEnd: String? = null
     private var currentDate: String? = null

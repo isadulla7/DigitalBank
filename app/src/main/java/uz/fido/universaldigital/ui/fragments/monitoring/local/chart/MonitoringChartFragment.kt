@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.chart
+package uz.fido.universaldigital.ui.fragments.monitoring.local.chart
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,7 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.databinding.FragmentMonitoringChartsBinding
 import uz.fido.universaldigital.ui.fragments.transfers.utils.capitalizeWord
+import uz.fido.utils.R
 import java.text.DateFormatSymbols
 import java.util.Calendar
 
@@ -20,7 +21,7 @@ class MonitoringChartFragment : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, uz.fido.utils.R.style.FullScreenDialogStyle)
+        setStyle(STYLE_NORMAL, R.style.FullScreenDialogStyle)
     }
 
     override fun onCreateView(

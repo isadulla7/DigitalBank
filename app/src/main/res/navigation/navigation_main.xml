@@ -317,7 +317,7 @@
         android:label="PaymentFragment" />
     <fragment
         android:id="@+id/monitoringFilterFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringFilterFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFilterFragment"
         android:label="MonitoringFilterFragment" />
     <fragment
         android:id="@+id/requestMoneyFragment"
@@ -333,19 +333,19 @@
         android:label="ConfirmPaymentFragment" />
     <fragment
         android:id="@+id/monitoringUzCardFilterFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringUzCardFilterFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.uzcard.MonitoringUzCardFilterFragment"
         android:label="MonitoringUzCardFilterFragment" />
     <fragment
         android:id="@+id/monitoringHumoFilterFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringHumoFilterFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.humo.MonitoringHumoFilterFragment"
         android:label="MonitoringHumoFilterFragment" />
     <fragment
         android:id="@+id/monitoringVisaFilterFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringVisaFilterFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.visa.MonitoringVisaFilterFragment"
         android:label="MonitoringVisaFilterFragment" />
     <fragment
         android:id="@+id/monitoringWalletFilterFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringWalletFilterFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.wallet.MonitoringWalletFilterFragment"
         android:label="MonitoringWalletFilterFragment" />
     <fragment
         android:id="@+id/paymentSecondStepFragment"
@@ -512,24 +512,20 @@
         android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.edit_payment.SaveAutoPaymentMonthFragment"
         android:label="SaveAutoPaymentMonthFragment" />
     <fragment
-        android:id="@+id/firstCardLocalMonitoringFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.monitoring.first_card.FirstCardLocalMonitoringFragment"
-        android:label="FirstCardLocalMonitoringFragment" />
-    <fragment
         android:id="@+id/uzCardMonitoringFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.monitoring.first_card.FirstUzCardMonitoringFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.one_card_monitoring.OneUzCardMonitoringFragment"
         android:label="UzcardMonitoringFragment" />
     <fragment
         android:id="@+id/humoMonitoringFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.monitoring.first_card.FirstHumoMonitoringFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.one_card_monitoring.OneHumoMonitoringFragment"
         android:label="UzcardMonitoringFragment" />
     <fragment
         android:id="@+id/visaMonitoringFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.monitoring.first_card.FirstVisaMonitoringFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.one_card_monitoring.OneVisaMonitoringFragment"
         android:label="FirstVisaMonitoringFragment" />
     <fragment
         android:id="@+id/walletMonitoringFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.monitoring.first_card.WalletFirstMonitoringFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.monitoring.one_card_monitoring.OneFirstMonitoringFragment"
         android:label="FirstVisaMonitoringFragment" />
     <fragment
         android:id="@+id/clientCreditFragment"

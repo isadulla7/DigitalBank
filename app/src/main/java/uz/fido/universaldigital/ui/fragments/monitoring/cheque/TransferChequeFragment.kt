@@ -14,6 +14,7 @@ import android.os.Environment
 import android.os.ParcelFileDescriptor
 import android.view.View
 import androidx.core.content.FileProvider
+import uz.fido.network.domain.model.monitoring.TransferChequeModel
 import uz.fido.network.domain.model.p2p.TransferDto
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseSimpleFragment
@@ -34,15 +35,15 @@ import kotlin.math.sqrt
 
 class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBinding>(FragmentTransferPdfChequeBinding::inflate) {
 
-    private lateinit var pdfRenderer: PdfRenderer
-    private lateinit var currentPage: PdfRenderer.Page
     private lateinit var parcelFileDescriptor: ParcelFileDescriptor
+    private lateinit var currentPage: PdfRenderer.Page
+    private lateinit var pdfRenderer: PdfRenderer
     private lateinit var transferDto: TransferDto
+    private lateinit var model: TransferChequeModel
     private lateinit var file: File
     private var childName = ""
     private val dateFormat2 = SimpleDateFormat("ddMMyyyyhhmmss", Locale.getDefault())
     private var operation = ""
-    private lateinit var model: TransferChequeModel
 
     companion object {
         const val OPERATION_MONITORING = "operation_monitoring"

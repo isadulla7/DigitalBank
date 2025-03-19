@@ -1,7 +1,8 @@
-package uz.fido.universaldigital.ui.fragments.monitoring.filter
+package uz.fido.universaldigital.ui.fragments.monitoring.uzcard
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -17,16 +18,17 @@ import uz.fido.universaldigital.databinding.FragmentMonitoringUzcardFilterBindin
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.FilterCardMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringFilterAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringAmountDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringChooseDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringDateDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringAmountDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringDateDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.TransactionTypeDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringFilterViewModel
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilterBinding, MonitoringFilterViewModel>
+class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilterBinding, MonitoringFilterViewModel>
     (FragmentMonitoringUzcardFilterBinding::inflate, MonitoringFilterViewModel::class.java),
     View.OnClickListener, (MonitoringFilter) -> Unit {
 
@@ -35,7 +37,7 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
     private var filterSaveVh: FilterSaveVh? = null
     private lateinit var monitoringDateDialog: MonitoringDateDialog
     private lateinit var monitoringAmountDialog: MonitoringAmountDialog
-    private lateinit var monitoringChooseDialog: MonitoringChooseDialog
+    private lateinit var transactionTypeDialog: TransactionTypeDialog
 
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var allOperationFilter = arrayListOf<MonitoringFilter>()
@@ -59,8 +61,8 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
     }
 
     private fun checkFilter() {
-        if (saveViewModel.humoFilter) {
-            saveViewModel.humoMonitoringFilter.observe(viewLifecycleOwner) {
+        if (saveViewModel.uzCardFilter) {
+            saveViewModel.uzCardMonitoringFilter.observe(viewLifecycleOwner) {
                 filterSaveVh = it
                 createRecyclerView()
                 localFilterDone()
@@ -118,7 +120,7 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
     private fun getCardList() {
         val skeletonScreen = showSkeleton(binding.shimmerView, cardAdapter, R.layout.shimmer_item_card, 3)
         viewModel.getLocalMonitoringCardList(getClientToken()).observe(viewLifecycleOwner) { resource ->
-            Handler().postDelayed({
+            Handler(Looper.getMainLooper()).postDelayed({
                 skeletonScreen.hide()
                 binding.shimmerView.visibility = View.GONE
             }, 500)
@@ -127,14 +129,11 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
                     val response = resource.data?.user_objects ?: ArrayList()
                     val newList = arrayListOf<FilterCard>()
                     response.forEach { filterCard ->
-                        if (filterCard.object_type == CardConst.HUMO_CARD) {
+                        if (filterCard.object_type == CardConst.UZCARD) {
                             if (!newList.map { it.object_value }.contains(filterCard.object_value)) {
                                 newList.add(filterCard)
                             }
                         }
-                    }
-                    if (newList.isNotEmpty()) newList.forEachIndexed { index, card ->
-                        if (index != 0) card.is_selected_monitoring = true
                     }
                     cardList = newList
                     successCardList(cardList)
@@ -206,7 +205,7 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
     }
 
     private fun filterBackType() {
-        saveViewModel.humoFilter = false
+        saveViewModel.uzCardFilter = false
         pop()
     }
 
@@ -215,8 +214,8 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
         cardList.forEach { if (!it.is_selected_monitoring) isCurrent = true }
         if (isCurrent) {
             val filter = FilterSaveVh(startDate, endDate, maxAmount, minAmount, choose, "", cardList, arrayListOf())
-            saveViewModel.setHumoMonitoringFilter(filter)
-            saveViewModel.humoFilter = true
+            saveViewModel.setUzCardMonitoringFilter(filter)
+            saveViewModel.uzCardFilter = true
             pop()
         } else Toast.makeText(requireContext(), requireContext().getString(R.string.select_card), Toast.LENGTH_SHORT).show()
     }
@@ -287,16 +286,16 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
 
     private fun showChoose() {
         if (!chooseCurrent) {
-            monitoringChooseDialog = MonitoringChooseDialog { choose ->
+            transactionTypeDialog = TransactionTypeDialog { choose ->
                 this.choose = choose
                 addFilterList("choose", choose, false)
                 chooseCurrent = true
                 binding.minPlus.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color_click)
                 binding.minPlus.setTextColor(ContextCompat.getColor(requireContext(), R.color.whiteColor))
-                monitoringChooseDialog.dismiss()
+                transactionTypeDialog.dismiss()
 
             }
-            monitoringChooseDialog.show(childFragmentManager, "")
+            transactionTypeDialog.show(childFragmentManager, "")
         } else {
             this.choose = ""
             chooseCurrent = false
@@ -340,8 +339,6 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
         cardList.forEach {
             if (it.object_value == filterCard.object_value) {
                 it.is_selected_monitoring = !it.is_selected_monitoring
-            } else {
-                it.is_selected_monitoring = true
             }
         }
         cardAdapter.submitList(cardList)
