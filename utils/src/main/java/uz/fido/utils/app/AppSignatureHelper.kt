@@ -10,7 +10,6 @@ import android.util.Log
 import java.nio.charset.Charset
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
-import java.util.Arrays
 
 class AppSignatureHelper(context: Context) : ContextWrapper(context) {
 
@@ -58,7 +57,7 @@ class AppSignatureHelper(context: Context) : ContextWrapper(context) {
                 val messageDigest = MessageDigest.getInstance(HASH_TYPE)
                 messageDigest.update(appInfo.toByteArray(Charset.forName("UTF-8")))
                 var hashSignature = messageDigest.digest()
-                hashSignature = Arrays.copyOfRange(hashSignature, 0, NUM_HASHED_BYTES)
+                hashSignature = hashSignature.copyOfRange(0, NUM_HASHED_BYTES)
                 var base64Hash = encodeToString(hashSignature, NO_PADDING or NO_WRAP)
                 base64Hash = base64Hash.substring(0, NUM_BASE64_CHAR)
                 return base64Hash

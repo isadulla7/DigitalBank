@@ -22,7 +22,6 @@ class MainNewsFragment : BaseSimpleFragment<FragmentMainNewsBinding>(
         initViewPager()
     }
 
-
     private fun initViewPager() {
         adapter = NewsPagerAdapter(requireContext(), childFragmentManager)
         adapter.addFragment(NewsFragment())

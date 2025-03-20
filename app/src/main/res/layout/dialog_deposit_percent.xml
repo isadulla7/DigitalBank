@@ -66,7 +66,7 @@
         android:layout_marginBottom="16dp"
         android:layout_weight="1"
         android:elevation="3dp"
-        android:text="@string/apply"
+        android:text="@string/interest_withdrawal"
         android:textColor="@color/frozenWhite"
         android:textSize="16dp"
         app:cornerRadius="12dp"
