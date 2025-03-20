@@ -10,7 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMainIdentificationBinding
-import uz.fido.universaldigital.ui.activities.FaceIdActivity
+import uz.fido.universaldigital.ui.activities.security.FaceIdActivity
 import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop

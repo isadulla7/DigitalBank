@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.activities
+package uz.fido.universaldigital.ui.activities.security
 
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint

@@ -3,7 +3,7 @@ package uz.fido.universaldigital.ui.activities.app_icon_changer
 import android.app.Activity
 import android.content.ComponentName
 import android.content.pm.PackageManager
-import uz.fido.universaldigital.base.AppIcons
+import uz.fido.universaldigital.ui.activities.app_icon_changer.AppIcons
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.const.Const
 

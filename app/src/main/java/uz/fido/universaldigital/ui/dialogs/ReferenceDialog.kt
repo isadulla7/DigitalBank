@@ -10,7 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.network.domain.model.payment.AllServiceLists
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ListBottomSheetBinding
-import uz.fido.universaldigital.ui.main_dialogs.adapters.ServicesAdapter
+import uz.fido.universaldigital.ui.dialogs.adapters.ServicesAdapter
 
 class ReferenceDialog(
     private var baseInterface: BaseInterface,

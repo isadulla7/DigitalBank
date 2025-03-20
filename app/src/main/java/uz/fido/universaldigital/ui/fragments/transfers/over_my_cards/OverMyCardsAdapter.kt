@@ -25,8 +25,7 @@ class OverMyCardsAdapter(
     }
 
     override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val binding =
-            ItemTransferCardBinding.inflate(LayoutInflater.from(context), container, false)
+        val binding = ItemTransferCardBinding.inflate(LayoutInflater.from(context), container, false)
         val item = cards[position]
         binding.senderCardBalance.setCardBalance(item)
         binding.cardBackground.load(context.getDrawableFromRes(item.bg_icon_name))

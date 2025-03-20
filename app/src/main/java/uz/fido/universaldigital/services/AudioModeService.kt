@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.services
 
 import android.app.Service
-import android.content.Context
 import android.content.Intent
 import android.media.AudioManager
 import android.os.Handler
@@ -15,6 +14,11 @@ class AudioModeService : Service() {
     private var isInCallMode = false
     private var isActivityOpened = false
 
+    companion object {
+        const val ACTION_OPEN_ACTIVITY = "ACTION_OPEN_ACTIVITY"
+        const val ACTION_CLOSE_ACTIVITY = "ACTION_CLOSE_ACTIVITY"
+    }
+
     private val checkAudioModeRunnable = object : Runnable {
         override fun run() {
             checkAudioMode()
@@ -24,7 +28,7 @@ class AudioModeService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        audioManager = getSystemService(Context.AUDIO_SERVICE) as AudioManager
+        audioManager = getSystemService(AUDIO_SERVICE) as AudioManager
         handler.post(checkAudioModeRunnable)
     }
 
@@ -34,13 +38,13 @@ class AudioModeService : Service() {
             isInCallMode = true
             if (!isActivityOpened) {
                 isActivityOpened = true
-                sendBroadcast(Intent("ACTION_OPEN_ACTIVITY"))
+                sendBroadcast(Intent(ACTION_OPEN_ACTIVITY))
             }
         } else if (mode == AudioManager.MODE_NORMAL && isInCallMode) {
             isInCallMode = false
             if (isActivityOpened) {
                 isActivityOpened = false
-                sendBroadcast(Intent("ACTION_CLOSE_ACTIVITY"))
+                sendBroadcast(Intent(ACTION_CLOSE_ACTIVITY))
             }
         }
     }

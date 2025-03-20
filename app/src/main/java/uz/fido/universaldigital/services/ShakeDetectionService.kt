@@ -1,0 +1,48 @@
+package uz.fido.universaldigital.services
+
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import kotlin.math.sqrt
+
+class ShakeDetectionService(context: Context, private val listener: OnShakeListener) : SensorEventListener {
+
+    interface OnShakeListener {
+        fun onShakeDetected()
+    }
+
+    private val sensorManager = context.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+    private val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+    private var lastShakeTime: Long = 0
+
+    fun start() {
+        accelerometer?.let {
+            sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_UI)
+        }
+    }
+
+    fun stop() {
+        sensorManager.unregisterListener(this)
+    }
+
+    override fun onSensorChanged(event: SensorEvent?) {
+        if (event == null) return
+        val x = event.values[0]
+        val y = event.values[1]
+        val z = event.values[2]
+        val acceleration = sqrt(x * x + y * y + z * z)
+        val currentTime = System.currentTimeMillis()
+        if (acceleration > 24) {
+            if (currentTime - lastShakeTime > 1000) {
+                lastShakeTime = currentTime
+                listener.onShakeDetected()
+            }
+        }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+
+}
+

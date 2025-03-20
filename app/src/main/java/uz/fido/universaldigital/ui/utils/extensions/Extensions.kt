@@ -414,10 +414,6 @@ fun recordException(e: Exception, activity: Activity, functionName: String? = ""
     }
 }
 
-fun logToCrashlytics(tag: String, message: String) {
-    FirebaseCrashlytics.getInstance().log("$tag: $message")
-}
-
 fun Activity.recordException(e: Exception, functionName: String? = "") {
     FirebaseCrashlytics.getInstance().apply {
         setCustomKey("class_name", this@recordException.javaClass.simpleName)

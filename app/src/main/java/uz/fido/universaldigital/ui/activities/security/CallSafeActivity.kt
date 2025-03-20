@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.activities
+package uz.fido.universaldigital.ui.activities.security
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -33,7 +33,7 @@ class CallSafeActivity : BaseActivity() {
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action) {
-                "ACTION_CLOSE_ACTIVITY" -> finishIfOpen()
+                AudioModeService.Companion.ACTION_CLOSE_ACTIVITY -> finishIfOpen()
             }
         }
     }
@@ -42,11 +42,11 @@ class CallSafeActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         try {
-            val intentFilter = IntentFilter("ACTION_CLOSE_ACTIVITY")
+            val intentFilter = IntentFilter(AudioModeService.Companion.ACTION_CLOSE_ACTIVITY)
             startService(Intent(this, AudioModeService::class.java))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 registerReceiver(
-                    broadcastReceiver, intentFilter, Context.RECEIVER_EXPORTED
+                    broadcastReceiver, intentFilter, RECEIVER_EXPORTED
                 )
             } else {
                 registerReceiver(

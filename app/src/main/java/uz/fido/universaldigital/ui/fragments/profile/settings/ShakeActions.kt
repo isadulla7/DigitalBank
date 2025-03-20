@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.base
+package uz.fido.universaldigital.ui.fragments.profile.settings
 
 object ShakeActions {
     const val ACTION_MY_CARDS = "my_cards"

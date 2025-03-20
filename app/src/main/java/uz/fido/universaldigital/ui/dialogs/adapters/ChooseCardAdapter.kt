@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.main_dialogs.adapters
+package uz.fido.universaldigital.ui.dialogs.adapters
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

@@ -1,17 +1,16 @@
-package uz.fido.universaldigital.ui.main_dialogs
+package uz.fido.universaldigital.ui.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ChooseCardDialogBinding
-import uz.fido.universaldigital.ui.main_dialogs.adapters.ChooseCardAdapter
+import uz.fido.universaldigital.ui.dialogs.adapters.ChooseCardAdapter
 
 class ChooseCardDialog(
     var cards: List<CardResponse>,
@@ -24,7 +23,7 @@ class ChooseCardDialog(
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setStyle(DialogFragment.STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
+        setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
     }
 
     override fun onCreateView(

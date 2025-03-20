@@ -49,69 +49,62 @@ import uz.fido.network.domain.datasource.services.TemplateApiInterface
 import uz.fido.network.domain.datasource.services.UserApiInterface
 import uz.fido.network.domain.datasource.services.UtilsApiInterface
 import uz.fido.network.domain.datasource.services.WalletApiInterface
+import uz.fido.universaldigital.ui.activities.app_icon_changer.AppIconRepository
+import uz.fido.universaldigital.ui.activities.seasons.SeasonRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
 object DomainModule {
 
     @Provides
-    fun provideCardRepository(apiInterface: CardApiInterface): ICardRepository =
-        CardRepositoryImpl(apiInterface)
+    fun provideCardRepository(apiInterface: CardApiInterface): ICardRepository = CardRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideChatRepository(apiInterface: ChatApiInterface): IChatRepository =
-        ChatRepositoryImpl(apiInterface)
+    fun provideChatRepository(apiInterface: ChatApiInterface): IChatRepository = ChatRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideCreditRepository(apiInterface: CreditApiInterface): ICreditRepository =
-        CreditRepositoryImpl(apiInterface)
+    fun provideCreditRepository(apiInterface: CreditApiInterface): ICreditRepository = CreditRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideDepositRepository(apiInterface: DepositApiInterface): IDepositRepository =
-        DepositRepositoryImpl(apiInterface)
+    fun provideDepositRepository(apiInterface: DepositApiInterface): IDepositRepository = DepositRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideMonitoringRepository(apiInterface: MonitoringApiInterface): IMonitoringRepository =
-        MonitoringRepositoryImpl(apiInterface)
+    fun provideMonitoringRepository(apiInterface: MonitoringApiInterface): IMonitoringRepository = MonitoringRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideMyIdRepository(apiInterface: MyIdApiInterface): IMyIdRepository =
-        MyIdRepositoryImpl(apiInterface)
+    fun provideMyIdRepository(apiInterface: MyIdApiInterface): IMyIdRepository = MyIdRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideP2PRepository(apiInterface: P2PApiInterface): IP2PRepository =
-        P2PRepositoryImpl(apiInterface)
+    fun provideP2PRepository(apiInterface: P2PApiInterface): IP2PRepository = P2PRepositoryImpl(apiInterface)
 
     @Provides
-    fun providePaymentRepository(apiInterface: PaymentApiInterface): IPaymentRepository =
-        PaymentRepositoryImpl(apiInterface)
+    fun providePaymentRepository(apiInterface: PaymentApiInterface): IPaymentRepository = PaymentRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideServiceRepository(apiInterface: ServiceApiInterface): IServiceRepository =
-        ServiceRepositoryImpl(apiInterface)
+    fun provideServiceRepository(apiInterface: ServiceApiInterface): IServiceRepository = ServiceRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideSocketRepository(apiInterface: SocketInterface): ISocketRepository =
-        SocketRepositoryImpl(apiInterface)
+    fun provideSocketRepository(apiInterface: SocketInterface): ISocketRepository = SocketRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideSwapKeyRepository(apiInterface: SwapKeyApiInterface): ISwapKeyRepository =
-        SwapKeyRepositoryImpl(apiInterface)
+    fun provideSwapKeyRepository(apiInterface: SwapKeyApiInterface): ISwapKeyRepository = SwapKeyRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideTemplateRepository(apiInterface: TemplateApiInterface): ITemplateRepository =
-        TemplateRepositoryImpl(apiInterface)
+    fun provideTemplateRepository(apiInterface: TemplateApiInterface): ITemplateRepository = TemplateRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideUserRepository(apiInterface: UserApiInterface): IUserRepository =
-        UserRepositoryImpl(apiInterface)
+    fun provideUserRepository(apiInterface: UserApiInterface): IUserRepository = UserRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideUtilsRepository(apiInterface: UtilsApiInterface): IUtilsRepository =
-        UtilsRepositoryImpl(apiInterface)
+    fun provideUtilsRepository(apiInterface: UtilsApiInterface): IUtilsRepository = UtilsRepositoryImpl(apiInterface)
 
     @Provides
-    fun provideWalletRepository(apiInterface: WalletApiInterface): IWalletRepository =
-        WalletRepositoryImpl(apiInterface)
+    fun provideWalletRepository(apiInterface: WalletApiInterface): IWalletRepository = WalletRepositoryImpl(apiInterface)
+
+    @Provides
+    fun provideSeasonRepository(): SeasonRepository = SeasonRepository()
+
+    @Provides
+    fun provideAppIconRepository(): AppIconRepository = AppIconRepository()
 
 }

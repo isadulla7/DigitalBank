@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.base
+package uz.fido.universaldigital.ui.activities.app_icon_changer
 
 object AppIcons {
     const val APP_ICON_SPRING = "spring"

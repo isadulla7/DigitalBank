@@ -221,7 +221,6 @@ object BaseCardUtils {
         }
     }
 
-
     fun TextView.setProcessingStatusIsNotWorking(card: CardResponse) {
         text = when (card.object_type) {
             UZCARD -> context.getString(R.string.uzcard_not_working)
@@ -237,7 +236,6 @@ object BaseCardUtils {
             else -> context.getString(R.string.can_not_receive_balance)
         }
     }
-
 
     fun CardResponse.isNotActive(): Boolean {
         return state != "0" && state != "A"

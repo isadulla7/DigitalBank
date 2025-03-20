@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.activities
+package uz.fido.universaldigital.ui.activities.security
 
 import android.content.Intent
 import android.os.Bundle
@@ -48,7 +48,7 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
      */
 
     private fun startMyId() {
-        val myIdConfig = MyIdConfig.builder(clientId = Keys.getMyIdClientId())
+        val myIdConfig = MyIdConfig.Companion.builder(clientId = Keys.getMyIdClientId())
             .withClientHash(Keys.getMyIdClientHash(), Keys.getMyIdClientHashId())
             .withPassportData(clientPassport).withBirthDate(clientBirthday)
             .withBuildMode(MyIdBuildMode.PRODUCTION).withEntryType(MyIdEntryType.AUTH)

@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.activities
+package uz.fido.universaldigital.ui.activities.security
 
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
@@ -7,7 +7,7 @@ import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityLockSetBinding
 
 @AndroidEntryPoint
-class RootedDeviceActivity : BaseActivity() {
+class LockSetActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLockSetBinding
     private var onBackPress = false
@@ -20,11 +20,13 @@ class RootedDeviceActivity : BaseActivity() {
     }
 
     private fun initDetails() {
-        binding.tvTitle.text = getString(R.string.data_security_function)
-        binding.tvDescription.text = getString(R.string.rooted_device_not_allowed)
-        binding.buttonOpenSettings.text = getString(R.string.exit)
-        binding.buttonOpenSettings.setOnClickListener {
-            finishAffinity()
+        binding.apply {
+            tvTitle.text = getString(R.string.data_security_function)
+            tvDescription.text = getString(R.string.emulator_is_not_allowed)
+            buttonOpenSettings.text = getString(R.string.exit)
+            buttonOpenSettings.setOnClickListener {
+                finishAffinity()
+            }
         }
     }
 

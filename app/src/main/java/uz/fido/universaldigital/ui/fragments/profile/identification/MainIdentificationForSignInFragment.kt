@@ -10,7 +10,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMainIdentificationForSignInBinding
-import uz.fido.universaldigital.ui.activities.FaceIdActivity
+import uz.fido.universaldigital.ui.activities.security.FaceIdActivity
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.dialogs.UnableGetPassportDataDialog
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
