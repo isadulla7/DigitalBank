@@ -176,7 +176,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
     }
 
     private fun updateResendTime(timeInMilliSeconds: Long) {
-        if (context != null) {
+        if (context != null && binding != null) {
             val minute = (timeInMilliSeconds / 1000) / 60
             val seconds = (timeInMilliSeconds / 1000) % 60
             val f: NumberFormat = DecimalFormat("00")
@@ -202,17 +202,18 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
 
     private fun registerSMSReceiver() {
         try {
-            val task: Task<Void> = SmsRetriever.getClient(requireActivity()).startSmsRetriever()
+            val task: Task<Void> = SmsRetriever.getClient(activity ?: return).startSmsRetriever()
             task.addOnSuccessListener {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                    requireActivity().registerReceiver(
-                        smsBroadcastReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION),
-                        Context.RECEIVER_EXPORTED
-                    )
-                } else {
-                    requireActivity().registerReceiver(
-                        smsBroadcastReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
-                    )
+                activity?.let { a ->
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        a.registerReceiver(
+                            smsBroadcastReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION), Context.RECEIVER_EXPORTED
+                        )
+                    } else {
+                        a.registerReceiver(
+                            smsBroadcastReceiver, IntentFilter(SmsRetriever.SMS_RETRIEVED_ACTION)
+                        )
+                    }
                 }
             }
             task.addOnFailureListener {}

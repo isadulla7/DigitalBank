@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.services.order_card
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.text.Annotation
 import android.text.SpannableString
@@ -12,6 +11,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import com.google.gson.Gson
@@ -180,7 +180,7 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
                 try {
                     val website = "https://ibank.ubank.uz/cib/offertaCard.html"
                     val webIntent = Intent(Intent.ACTION_VIEW)
-                    webIntent.data = Uri.parse(website)
+                    webIntent.data = website.toUri()
                     requireActivity().startActivity(webIntent)
                 } catch (e: Exception) {
                     recordException(e, ::initOffer.name)

@@ -110,7 +110,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         binding.myHome.setOnClickListener { goto(R.id.myHomeFragment) }
         binding.llTemplates.setOnClickListener { goto(R.id.templateListFragment) }
         binding.loanRepayment.setOnClickListener { openPaymentByServiceId(LOAN_PAYMENT) }
-        binding.loanIshonch.setOnClickListener { openPaymentByServiceId(ISHONCH_SERVICE_ID) }
+//        binding.loanIshonch.setOnClickListener { openPaymentByServiceId(ISHONCH_SERVICE_ID) }
     }
 
     private fun drawViews() {
@@ -304,13 +304,9 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
 
     private fun handleCameraPermission() {
         when {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED -> {
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
                 goto(R.id.qrPaymentFragment)
             }
-
             else -> {
                 cameraPermissionRequestLauncher.launch(Manifest.permission.CAMERA)
             }
@@ -321,11 +317,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         if (isGranted) {
             goto(R.id.qrPaymentFragment)
         } else {
-            Toast.makeText(
-                requireContext(),
-                "Go to settings and enable camera permission to use this feature",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(requireContext(), "Go to settings and enable camera permission to use this feature", Toast.LENGTH_SHORT).show()
         }
     }
 
