@@ -262,14 +262,14 @@ fun getFastAccessOperationList(context: Context): ArrayList<FastAccessOperation>
             icon = "ic_service_qr_payment"
         )
     )
-    operations.add(
-        FastAccessOperation(
-            id = 14,
-            name = context.getString(R.string.currency_exchange),
-            icon = "ic_conversion_24dp",
-            isVisible = true
-        )
-    )
+//    operations.add(
+//        FastAccessOperation(
+//            id = 14,
+//            name = context.getString(R.string.currency_exchange),
+//            icon = "ic_conversion_24dp",
+//            isVisible = true
+//        )
+//    )
     operations.add(
         FastAccessOperation(
             id = 15,
@@ -277,20 +277,20 @@ fun getFastAccessOperationList(context: Context): ArrayList<FastAccessOperation>
             icon = "ic_transfer_by_requisites"
         )
     )
-    operations.add(
-        FastAccessOperation(
-            id = 16,
-            name = context.getString(R.string.swift_transfer),
-            icon = "ic_transfer_swift"
-        )
-    )
 //    operations.add(
 //        FastAccessOperation(
-//            id = 20,
-//            name = context.getString(R.string.loan_repayment),
-//            icon = "ishonch_png"
+//            id = 16,
+//            name = context.getString(R.string.swift_transfer),
+//            icon = "ic_transfer_swift"
 //        )
 //    )
+    operations.add(
+        FastAccessOperation(
+            id = 20,
+            name = context.getString(R.string.loan_repayment),
+            icon = "ishonch_png"
+        )
+    )
     return operations
 }
 

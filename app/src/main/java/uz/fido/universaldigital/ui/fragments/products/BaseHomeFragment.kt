@@ -117,7 +117,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
             Paper.book().write(Const.MAIN_WIDGETS, mainWidgetsList)
             Paper.book().write(Const.MAIN_WIDGETS_VERSION_SAVED, Const.MAIN_WIDGETS_VERSION)
         } else {
-            if (mainWidgetsList.size == 0) {
+            if (mainWidgetsList.isEmpty()) {
                 val list = Paper.book().read<java.util.ArrayList<MainWidget>>(Const.MAIN_WIDGETS)
                 list?.forEach {
                     if (it.is_visible) {
@@ -291,17 +291,18 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
             LayoutInflater.from(requireContext()), container, false
         )
         var fastAccessOperations = ArrayList<FastAccessOperation>()
-        if (Paper.book()
-                .read<ArrayList<FastAccessOperation>>(Const.FAST_ACCESS) == null || Paper.book()
-                .read(Const.UPDATE_FAST_ACCESS, true) == true ||
-            Paper.book().read(Const.UPDATE_MAIN_WIDGETS, false) == true
+        if (Paper.book().read<ArrayList<FastAccessOperation>>(Const.FAST_ACCESS) == null ||
+            Paper.book().read(Const.UPDATE_FAST_ACCESS, true) == true ||
+            Paper.book().read(Const.UPDATE_MAIN_WIDGETS, false) == true ||
+            Const.MAIN_FAST_ACCESS_VERSION > (Paper.book().read(Const.MAIN_FAST_ACCESS_VERSION_SAVED, 0) ?: 0)
         ) {
             fastAccessOperations = getFastAccessOperationList(requireContext())
             Paper.book().write(Const.FAST_ACCESS, fastAccessOperations)
             Paper.book().write(Const.UPDATE_FAST_ACCESS, false)
             Paper.book().write(Const.UPDATE_MAIN_WIDGETS, false)
+            Paper.book().write(Const.MAIN_FAST_ACCESS_VERSION_SAVED, Const.MAIN_FAST_ACCESS_VERSION)
         } else {
-            if (fastAccessOperations.size == 0) {
+            if (fastAccessOperations.isEmpty()) {
                 val checkList = getFastAccessOperationList(requireContext())
                 val list = Paper.book().read<ArrayList<FastAccessOperation>>(Const.FAST_ACCESS)
                 list?.forEach {

@@ -15,7 +15,9 @@ object Const {
     const val UPDATE_MAIN_WIDGETS = "true"
     const val UPDATE_LANG = "update_lang"
     const val MAIN_WIDGETS = "main_widgets"
-    const val MAIN_WIDGETS_VERSION = 7
+    const val MAIN_WIDGETS_VERSION = 9
+    const val MAIN_FAST_ACCESS_VERSION = 1
+    const val MAIN_FAST_ACCESS_VERSION_SAVED = "main_fast_access_version_saved"
     const val TOTAL_BALANCE_TYPE = "balance_type"
     const val PAPER_CLIENT_TOKEN = "client_token"
     const val PAPER_CLIENT_FILIAL_CODE = "client_filial_code"

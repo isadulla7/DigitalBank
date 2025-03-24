@@ -15,6 +15,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -80,7 +81,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     }
 
     private fun checkPaymentForDownload() {
-        if (paymentGroupsList.size == 0) {
+        if (paymentGroupsList.isEmpty()) {
             checkForPaymentDownload()
         }
     }
@@ -104,13 +105,14 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     }
 
     private fun initSetOnClickListeners() {
+        binding.ishonchLogo.load(R.drawable.ishonch_png)
         binding.search.setOnClickListener { goto(R.id.searchEveryWhereFragment) }
         binding.autopayments.setOnClickListener { goto(R.id.autoPaymentFragment) }
         binding.paymentByQr.setOnClickListener { handleCameraPermission() }
         binding.myHome.setOnClickListener { goto(R.id.myHomeFragment) }
         binding.llTemplates.setOnClickListener { goto(R.id.templateListFragment) }
         binding.loanRepayment.setOnClickListener { openPaymentByServiceId(LOAN_PAYMENT) }
-//        binding.loanIshonch.setOnClickListener { openPaymentByServiceId(ISHONCH_SERVICE_ID) }
+        binding.loanIshonch.setOnClickListener { openPaymentByServiceId(ISHONCH_SERVICE_ID) }
     }
 
     private fun drawViews() {
@@ -307,6 +309,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
             ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
                 goto(R.id.qrPaymentFragment)
             }
+
             else -> {
                 cameraPermissionRequestLauncher.launch(Manifest.permission.CAMERA)
             }
