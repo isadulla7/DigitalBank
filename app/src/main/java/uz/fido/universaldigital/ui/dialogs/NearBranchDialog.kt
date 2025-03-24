@@ -10,7 +10,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.network.domain.model.deposits.constructor.BxmCodeAndName
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.ListBottomSheetBinding
-import uz.fido.universaldigital.ui.main_dialogs.adapters.NearBranchAdapter
+import uz.fido.universaldigital.ui.dialogs.adapters.NearBranchAdapter
 
 class NearBranchDialog(
     private var baseInterface: BaseInterface,

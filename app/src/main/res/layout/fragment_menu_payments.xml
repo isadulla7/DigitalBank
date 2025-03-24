@@ -95,14 +95,14 @@
                         android:layout_margin="4dp"
                         android:background="@drawable/transfer_type_ripple_bg"
                         android:orientation="vertical"
-                        android:visibility="gone">
+                        android:visibility="visible">
 
                         <ImageView
+                            android:id="@+id/ishonch_logo"
                             android:layout_width="56dp"
                             android:layout_height="40dp"
                             android:layout_gravity="center"
                             android:layout_marginTop="12dp"
-                            android:src="@drawable/ishonch_png"
                             app:tint="@color/status_done"
                             tools:ignore="ContentDescription" />
 

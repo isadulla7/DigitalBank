@@ -88,8 +88,10 @@ class ForYouOnBoarding(private var currentItem: Int) : DialogFragment() {
         try {
             val countDownTimer = object : CountDownTimer(length, 100) {
                 override fun onFinish() {
+//                    if (isAdded) {
                     cancel()
                     dismissAllowingStateLoss()
+//                    }
                 }
 
                 override fun onTick(p0: Long) {
@@ -105,6 +107,11 @@ class ForYouOnBoarding(private var currentItem: Int) : DialogFragment() {
     private fun setDetails(title: String, description: String) {
         binding.serviceTitle.text = title
         binding.serviceDescription.text = description
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.videoView.pause()
     }
 
 }

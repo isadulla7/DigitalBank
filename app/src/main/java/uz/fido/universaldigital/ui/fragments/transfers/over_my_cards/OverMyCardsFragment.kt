@@ -2,8 +2,6 @@ package uz.fido.universaldigital.ui.fragments.transfers.over_my_cards
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
@@ -206,45 +204,43 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
 
     private fun getTransferInfo() {
         showCommissionProgress()
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (senderCard == receiverCard) {
-                binding.btnContinue.isEnabled(continueButtonState())
-                return@postDelayed
-            }
-            if (senderCard != null && receiverCard != null && senderCard != receiverCard) {
-                viewModel.p2pInfoRequest(
-                    getClientToken(), P2PInfoRequest(
-                        service_id = getServiceIdInfo(receiverCard!!, senderCard!!),
-                        from_object_id = senderCard!!.object_id,
-                        expire = senderCard!!.object_expiry,
-                        to_object_value = receiverCard!!.object_value,
-                        command = getInfoCommand(receiverCard!!),
-                        to_object_id = receiverCard!!.object_id
-                    )
-                ).observe(viewLifecycleOwner) {
-                    when (it.status) {
-                        Status.SUCCESS -> {
-                            val p2pInfoResponse = it.data as P2PInfoResponse
-                            p2PInfoDto = p2pInfoResponse.mapToDto()
-                            minAmount = p2pInfoResponse.min_amount.toBigDecimal().divide(100.toBigDecimal())
-                            maxAmount = p2pInfoResponse.max_amount.toBigDecimal().divide(100.toBigDecimal()) ?: 15000000.0.toBigDecimal()
-                            receiverName = p2pInfoResponse.empbossed_name.toString()
-                            percent = p2pInfoResponse.percent.toBigDecimal()
-                            setCommission(percent)
-                            binding.btnContinue.isEnabled(continueButtonState())
-                        }
+        if (senderCard == receiverCard) {
+            binding.btnContinue.isEnabled(continueButtonState())
+            return
+        }
+        if (senderCard != null && receiverCard != null && senderCard != receiverCard) {
+            viewModel.p2pInfoRequest(
+                getClientToken(), P2PInfoRequest(
+                    service_id = getServiceIdInfo(receiverCard!!, senderCard!!),
+                    from_object_id = senderCard!!.object_id,
+                    expire = senderCard!!.object_expiry,
+                    to_object_value = receiverCard!!.object_value,
+                    command = getInfoCommand(receiverCard!!),
+                    to_object_id = receiverCard!!.object_id
+                )
+            ).observe(viewLifecycleOwner) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        val p2pInfoResponse = it.data as P2PInfoResponse
+                        p2PInfoDto = p2pInfoResponse.mapToDto()
+                        minAmount = p2pInfoResponse.min_amount.toBigDecimal().divide(100.toBigDecimal())
+                        maxAmount = p2pInfoResponse.max_amount.toBigDecimal().divide(100.toBigDecimal()) ?: 15000000.0.toBigDecimal()
+                        receiverName = p2pInfoResponse.empbossed_name.toString()
+                        percent = p2pInfoResponse.percent.toBigDecimal()
+                        setCommission(percent)
+                        binding.btnContinue.isEnabled(continueButtonState())
+                    }
 
-                        Status.ERROR -> {
-                            setErrorText(it?.message)
-                            binding.btnContinue.isEnabled(false)
-                        }
+                    Status.ERROR -> {
+                        setErrorText(it?.message)
+                        binding.btnContinue.isEnabled(false)
                     }
                 }
-            } else {
-                hideCommissionBlock()
-                binding.btnContinue.isEnabled(false)
             }
-        }, 100)
+        } else {
+            hideCommissionBlock()
+            binding.btnContinue.isEnabled(false)
+        }
     }
 
     private fun setCommission(commission: BigDecimal) {

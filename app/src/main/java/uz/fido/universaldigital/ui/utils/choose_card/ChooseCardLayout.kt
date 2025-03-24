@@ -23,6 +23,7 @@ import uz.fido.utils.device.vibrateTick
 class ChooseCardLayout(context: Context, attr: AttributeSet) : ConstraintLayout(context, attr) {
 
     private val binding: ChooseCardLayoutBinding
+
     init {
         inflate(context, uz.fido.universaldigital.R.layout.choose_card_layout, this)
         binding = ChooseCardLayoutBinding.bind(this)
@@ -30,12 +31,11 @@ class ChooseCardLayout(context: Context, attr: AttributeSet) : ConstraintLayout(
         attributes.recycle()
     }
 
-
     fun initCards(
         cards: ArrayList<CardResponse>,
         minAmount: String? = null,
         currencyChar: String? = null,
-        addCard:()->Unit = {},
+        addCard: () -> Unit = {},
         scrollListener: (CardResponse?) -> Unit
     ) {
         val sortedCardList = filterCardsByCurrency(currencyChar, cards)

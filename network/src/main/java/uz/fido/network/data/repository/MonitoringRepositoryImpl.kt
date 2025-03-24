@@ -12,7 +12,7 @@ import uz.fido.network.domain.model.monitoring.categories.SetCategoryRequest
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringRequest
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringResponse
 import uz.fido.network.domain.model.monitoring.filter.MonitoringFilterCardResponse
-import uz.fido.network.domain.model.monitoring.filter.NewFilterMonitoringFilterRequest
+import uz.fido.network.domain.model.monitoring.filter.LocalMonitoringFilterRequest
 import uz.fido.network.domain.model.monitoring.home.HomeHistoryRequest
 import uz.fido.network.domain.model.monitoring.home.HomeHistoryResponse
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringRequest
@@ -110,7 +110,7 @@ class MonitoringRepositoryImpl @Inject constructor(private val monitoringApiServ
 
     override suspend fun newFilterLocalMonitoring(
         token: String,
-        filterMonitoringModel: NewFilterMonitoringFilterRequest
+        filterMonitoringModel: LocalMonitoringFilterRequest
     ): Resource<LocalMonitoringResponse> =
         getResult {
             monitoringApiService.newFilterMonitoringFilter(token, filterMonitoringModel)

@@ -58,11 +58,11 @@ class LoanDetailsDialog(
             getString(R.string.purpose),
             (if (type == Const.TYPE_LOAN) setCreditPurpose(requireContext(), item.lnType) else item.purpose).toString()
         )
-        addView(getString(R.string.transaction_number), item.NumberTrans)
+        addView(getString(R.string.transaction_number), item.transactionNumber)
         addView(getString(R.string.date_time), item.dateExecute.toString())
         addView(
             getString(R.string.amount),
-            if (item.debit == "0") Format.formatAmount((item.credit!!.toDouble() / 100).toString()) + " UZS" else Format.formatAmount((item.debit.toDouble() / 100).toString()) + " UZS"
+            if (item.debitAmount == "0") Format.formatAmount((item.creditAmount!!.toDouble() / 100).toString()) + " UZS" else Format.formatAmount((item.debitAmount.toDouble() / 100).toString()) + " UZS"
         )
     }
 

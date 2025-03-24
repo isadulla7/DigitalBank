@@ -27,9 +27,9 @@ import uz.fido.network.domain.model.search.SearchDataResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentRequisitesHistoryBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.LocalMonitoringAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.InfoMonitoringDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringDetailsDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringAdapter
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
@@ -54,7 +54,7 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var localMonitoringAdapter: LocalMonitoringAdapter
-    private lateinit var dialogInfo: InfoMonitoringDialog
+    private lateinit var dialogInfo: LocalMonitoringDetailsDialog
 
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
     private var totalList: ArrayList<ListItem> = ArrayList()
@@ -97,7 +97,7 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
     }
 
     private fun initHistoriesRv() {
-        localMonitoringAdapter = LocalMonitoringAdapter(requireContext(), totalList) {
+        localMonitoringAdapter = LocalMonitoringAdapter(totalList) {
             getSearchItem(it)
         }
         binding.histories.apply {
@@ -179,7 +179,7 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
             if (totalList.isEmpty()) {
                 totalList.add(dateItem)
             } else {
-                if (dateItem.date != Format.newDateFormat((totalList.last() as GeneralItem).svMonitoringItem!!.created_date)
+                if (dateItem.date != Format.newDateFormat((totalList.last() as GeneralItem).localMonitoringItem!!.createdDate)
                         .substring(
                             0, 10
                         )
@@ -187,7 +187,7 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
             }
             for (svMonitoringItem in sortedMap[date]!!) {
                 val generalItem = GeneralItem()
-                generalItem.svMonitoringItem = svMonitoringItem
+                generalItem.localMonitoringItem = svMonitoringItem
                 totalList.add(generalItem)
             }
         }
@@ -201,11 +201,11 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
     }
 
     private fun groupDataIntoHashMap(svMonitoringList: List<LocalMonitoring>): HashMap<String, MutableList<LocalMonitoring>> {
-        svMonitoringList.sortedBy { it.created_date }
+        svMonitoringList.sortedBy { it.createdDate }
         val groupedHashMap: HashMap<String, MutableList<LocalMonitoring>> = HashMap()
         for (svMonitoring in svMonitoringList) {
             val hashMapKey: String =
-                Format.newDateFormat(svMonitoring.created_date.substring(0, 10))
+                Format.newDateFormat(svMonitoring.createdDate.substring(0, 10))
             if (groupedHashMap.containsKey(hashMapKey)) {
                 groupedHashMap[hashMapKey]!!.add(svMonitoring)
             } else {
@@ -234,12 +234,12 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
 
     private fun getSearchItem(localMonitoring: LocalMonitoring) {
         showProgress()
-        viewModel.getSearchData(getClientToken(), GetInfoRequest(localMonitoring.request_id))
+        viewModel.getSearchData(getClientToken(), GetInfoRequest(localMonitoring.requestId))
             .observe(viewLifecycleOwner) {
                 hideProgress()
                 when (it.status) {
                     Status.SUCCESS -> {
-                        dialogInfo = InfoMonitoringDialog(
+                        dialogInfo = LocalMonitoringDetailsDialog(
                             localMonitoring,
                             it.data,
                             fullInfo = { localMonitoring ->
@@ -248,18 +248,13 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
                             },
                             repeatPayment = { localMonitoring ->
                                 getOperationParams(1, localMonitoring)
-                            },
-                            returnPayment = { localMonitoring ->
-                                getOperationParams(2, localMonitoring)
-                            })
+                            }
+                        )
                         dialogInfo.show(childFragmentManager, "")
                     }
 
                     Status.ERROR -> {
-                        dialogInfo = InfoMonitoringDialog(
-                            localMonitoring,
-                            null,
-                            fullInfo = {}, repeatPayment = {}, returnPayment = {})
+                        dialogInfo = LocalMonitoringDetailsDialog(localMonitoring)
                         dialogInfo.show(childFragmentManager, "")
                     }
                 }
@@ -271,7 +266,7 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
         resource: Resource<SearchDataResponse>
     ) {
         showProgress()
-        viewModel.printCheque(getClientToken(), PrintChequeRequest(localMonitoring.request_id))
+        viewModel.printCheque(getClientToken(), PrintChequeRequest(localMonitoring.requestId))
             .observe(viewLifecycleOwner) {
                 hideProgress()
                 when (it.status) {
@@ -302,7 +297,7 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
     ) {
         viewModel.getOperationParams(
             getClientToken(),
-            GetOperationInfoRequest(request_id = localeMonitoring.request_id)
+            GetOperationInfoRequest(request_id = localeMonitoring.requestId)
         ).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {

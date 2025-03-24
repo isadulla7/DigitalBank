@@ -37,10 +37,9 @@ import java.math.BigDecimal
 
 @AndroidEntryPoint
 @SuppressLint("SetTextI18n")
-class TransferToUsdAccountFragment :
-    BaseFragment<FragmentTransferToUsdAccountBinding, RequisitesViewModel>(
-        FragmentTransferToUsdAccountBinding::inflate, RequisitesViewModel::class.java
-    ), TextWatcher {
+class TransferToUsdAccountFragment : BaseFragment<FragmentTransferToUsdAccountBinding, RequisitesViewModel>(
+    FragmentTransferToUsdAccountBinding::inflate, RequisitesViewModel::class.java
+), TextWatcher {
 
     private lateinit var dbHelper: DatabaseHelper
     private var editTextForBank = ArrayList<TextInputEditText>()
@@ -49,7 +48,6 @@ class TransferToUsdAccountFragment :
     private var minAmount = BigDecimal(1)
     private var percent = 0.0
     private var templateDetails: ArrayList<TemplateKeyValue>? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

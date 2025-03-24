@@ -55,8 +55,10 @@ class MenuProductsViewModel @Inject constructor(
 
     var cards: LiveData<List<CardResponse>> = cardRepository.cardList
     var isCardPasted: MutableLiveData<Boolean> = MutableLiveData(false)
+
     private val _notification = MutableStateFlow<ArrayList<Notification>>(arrayListOf())
     val notification: StateFlow<ArrayList<Notification>> = _notification
+
     var updateCardState: MutableLiveData<Boolean> = MutableLiveData()
     var creditProduct: MutableLiveData<List<CreditProduct>> = MutableLiveData()
     var clientDeposit: MutableLiveData<ArrayList<ClientDeposit>> = MutableLiveData()

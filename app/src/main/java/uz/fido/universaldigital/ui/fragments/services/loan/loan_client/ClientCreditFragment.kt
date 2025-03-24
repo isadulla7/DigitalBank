@@ -20,7 +20,7 @@ import uz.fido.network.domain.model.monitoring.AccountHistory
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentClientLoanBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.MonitoringChooseDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.TransactionTypeDialog
 import uz.fido.universaldigital.ui.fragments.services.loan.adapter.AccountHistoriesAdapter
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.CreditOperationDialog
 import uz.fido.universaldigital.ui.fragments.services.loan.dialog.LoanDetailsDialog
@@ -57,7 +57,7 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
     private lateinit var dateBegin: String
     private lateinit var dateEnd: String
     private lateinit var loanDetailsDialog: LoanDetailsDialog
-    private lateinit var monitoringChooseDialog: MonitoringChooseDialog
+    private lateinit var transactionTypeDialog: TransactionTypeDialog
     private var accountHistoriesResponse: AccountHistoriesResponse? = null
     private var skeletonScreen: SkeletonScreen? = null
     private var operType = 3
@@ -161,8 +161,8 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
                     )
                     if (resource.data != null) {
                         resource?.data!!.response.forEach {
-                            if (accountList.contains(it.coAcc) && !list.contains(it)) {
-                                if (it.lnType != "" || it.dtAcc!!.startsWith("12503")) list.add(it)
+                            if (accountList.contains(it.creditAccount) && !list.contains(it)) {
+                                if (it.lnType != "" || it.debitAccount!!.startsWith("12503")) list.add(it)
                             }
                         }
                     }
@@ -192,7 +192,7 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
     private fun newDateAddImte(list: ArrayList<AccountHistory>) {
         list.forEach {
             if (dateSortList.isEmpty()) {
-                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", "", 1)
+                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", 1)
                 dateSortList.add(accountHistory)
             }
 
@@ -200,7 +200,7 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
             val listDate = newDateFormat.format(simpleDateFormat.parse(it.dateExecute).time)
 
             if (newlistDate != listDate) {
-                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", "", 1)
+                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", 1)
                 dateSortList.add(accountHistory)
             }
             dateSortList.add(it)
@@ -384,12 +384,12 @@ class ClientCreditFragment : BaseFragment<FragmentClientLoanBinding, ClientLoanV
             }
 
             R.id.filter -> {
-                monitoringChooseDialog = MonitoringChooseDialog {
+                transactionTypeDialog = TransactionTypeDialog {
                     binding.filter.setImageResource(R.drawable.ic_filter_yes)
-                    monitoringChooseDialog.dismiss()
+                    transactionTypeDialog.dismiss()
                     getFilterList(it)
                 }
-                monitoringChooseDialog.show(childFragmentManager, "")
+                transactionTypeDialog.show(childFragmentManager, "")
             }
         }
     }

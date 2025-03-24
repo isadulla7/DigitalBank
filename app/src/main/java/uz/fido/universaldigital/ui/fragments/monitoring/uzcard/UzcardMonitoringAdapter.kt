@@ -12,11 +12,6 @@ import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringItem
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemHistoriesHeaderBinding
 import uz.fido.universaldigital.databinding.ItemMonitoringBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.extensions.setAdditionalInfo
-import uz.fido.universaldigital.ui.fragments.monitoring.extensions.setCancelledInfo
-import uz.fido.universaldigital.ui.fragments.monitoring.extensions.setMonitoringAmount
-import uz.fido.universaldigital.ui.fragments.monitoring.extensions.setMonitoringImage
-import uz.fido.universaldigital.ui.fragments.monitoring.extensions.setTextColor
 import uz.fido.utils.format.Format
 import uz.fido.utils.sticky.StickyHeaderInterface
 
@@ -72,14 +67,12 @@ class UzcardMonitoringAdapter(
     }
 
     override fun headerPositionForItem(itemPosition: Int): Int {
-        var headerPosition = 0
         for (i in itemPosition downTo 1) {
             if (isHeader(i)) {
-                headerPosition = i
-                return headerPosition
+                return i
             }
         }
-        return headerPosition
+        return 0
     }
 
     override fun headerLayout(headerPosition: Int): Int = R.layout.item_histories_header

@@ -15,6 +15,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import coil.load
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -80,7 +81,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     }
 
     private fun checkPaymentForDownload() {
-        if (paymentGroupsList.size == 0) {
+        if (paymentGroupsList.isEmpty()) {
             checkForPaymentDownload()
         }
     }
@@ -104,6 +105,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     }
 
     private fun initSetOnClickListeners() {
+        binding.ishonchLogo.load(R.drawable.ishonch_png)
         binding.search.setOnClickListener { goto(R.id.searchEveryWhereFragment) }
         binding.autopayments.setOnClickListener { goto(R.id.autoPaymentFragment) }
         binding.paymentByQr.setOnClickListener { handleCameraPermission() }
@@ -304,10 +306,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
 
     private fun handleCameraPermission() {
         when {
-            ContextCompat.checkSelfPermission(
-                requireContext(),
-                Manifest.permission.CAMERA
-            ) == PackageManager.PERMISSION_GRANTED -> {
+            ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
                 goto(R.id.qrPaymentFragment)
             }
 
@@ -321,11 +320,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         if (isGranted) {
             goto(R.id.qrPaymentFragment)
         } else {
-            Toast.makeText(
-                requireContext(),
-                "Go to settings and enable camera permission to use this feature",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(requireContext(), "Go to settings and enable camera permission to use this feature", Toast.LENGTH_SHORT).show()
         }
     }
 

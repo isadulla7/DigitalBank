@@ -18,7 +18,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.databinding.FragmentConversionBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
-import uz.fido.universaldigital.ui.main_dialogs.ChooseCardDialog
+import uz.fido.universaldigital.ui.dialogs.ChooseCardDialog
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getCommand
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isNotActive
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardBalance

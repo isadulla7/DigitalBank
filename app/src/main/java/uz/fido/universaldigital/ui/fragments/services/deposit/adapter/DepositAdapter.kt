@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
 import uz.fido.network.domain.model.deposits.Deposit
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.ItemDepositProductBinding
@@ -14,23 +15,19 @@ class DepositAdapter(
     private val onClickDeposit: (Deposit) -> Unit
 ) : ListAdapter<Deposit, DepositAdapter.DepositVh>(CallBackDeposit()) {
 
-    inner class DepositVh(private val binding: ItemDepositProductBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class DepositVh(private val binding: ItemDepositProductBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: Deposit) {
             binding.apply {
                 depositName.text = item.dep_name
                 depositPercent.text = item.percent + "%"
-                depositTerm.text =
-                    Format().formattedDepositExpire(itemView.context, item.keeping_time)
-                depositAmount.text =
-                    Format().formattedDepositAmount(itemView.context, item.min_sum.toString())
+                depositTerm.text = Format().formattedDepositExpire(itemView.context, item.keeping_time)
+                depositAmount.text = Format().formattedDepositAmount(itemView.context, item.min_sum.toString())
                 depositDescription.text = item.description
+                depositImage.load(loadDepositImage(item.dep_id))
                 itemView.setOnClickListener {
                     onClickDeposit.invoke(item)
                 }
-                depositImage.setImageResource(loadDepositImage(item.dep_id))
             }
-
         }
     }
 
@@ -63,7 +60,5 @@ private fun loadDepositImage(depId: Int): Int {
 
 class CallBackDeposit : DiffUtil.ItemCallback<Deposit>() {
     override fun areItemsTheSame(oldItem: Deposit, newItem: Deposit) = oldItem == newItem
-
-    override fun areContentsTheSame(oldItem: Deposit, newItem: Deposit) =
-        oldItem.dep_id == newItem.dep_id
+    override fun areContentsTheSame(oldItem: Deposit, newItem: Deposit) = oldItem.dep_id == newItem.dep_id
 }

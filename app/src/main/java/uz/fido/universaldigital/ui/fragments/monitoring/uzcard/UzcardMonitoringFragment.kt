@@ -21,9 +21,8 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentUzcardMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringViewModel
-import uz.fido.universaldigital.ui.fragments.monitoring.dialog.UzCardMonitoringDetailsDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.utils.format.Format
 import uz.fido.utils.libs.skeleton.SkeletonScreen
@@ -125,7 +124,7 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
                 dateEnd = dateFormat.format(format.parse(it.endDate)?.time ?: "")
                 dateBegin = dateFormat.format(format.parse(it.startDate)?.time ?: "")
             } else initMonitoringDate()
-            val type = when (it.plusMinus) {
+            val type = when (it.operationType) {
                 getString(R.string.enrollments) -> 0
                 getString(R.string.write_offs) -> 1
                 else -> 2

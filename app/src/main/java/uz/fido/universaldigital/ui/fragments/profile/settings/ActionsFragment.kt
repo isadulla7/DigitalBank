@@ -4,7 +4,7 @@ import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import uz.fido.universaldigital.base.BaseSimpleFragment
-import uz.fido.universaldigital.base.ShakeActions
+import uz.fido.universaldigital.ui.fragments.profile.settings.ShakeActions
 import uz.fido.universaldigital.databinding.FragmentAppActionsBinding
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper

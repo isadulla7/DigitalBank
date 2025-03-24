@@ -9,21 +9,17 @@ import kotlinx.coroutines.launch
 import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
 import uz.fido.universaldigital.ui.utils.lang.LocaleHelper.getLanguage
 import uz.fido.utils.utility.activity.adjustFontScale
-import uz.fido.utils.utility.theme.PreferencesImpl
-import uz.fido.utils.utility.theme.ThemeDarkEnum
 import uz.fido.utils.view.progress_bar.ProgressBarDialog
 
 abstract class BaseActivity : AppCompatActivity() {
 
     private val job = Job()
     private val coroutineScope = CoroutineScope(job + Dispatchers.Main)
-    private val preference by lazy { PreferencesImpl.instance(this) }
     private var progressBarDialog: ProgressBarDialog? = null
 
     override fun attachBaseContext(newBase: Context?) {
         super.attachBaseContext(LocaleHelper.setLocale(newBase!!, getLanguage(newBase)))
     }
-
 
     override fun onStart() {
         super.onStart()
@@ -35,11 +31,11 @@ abstract class BaseActivity : AppCompatActivity() {
             if (progressBarDialog != null) {
                 if (!progressBarDialog!!.isShowing) {
                     progressBarDialog = ProgressBarDialog(this@BaseActivity, progressText)
-                    progressBarDialog!!.show()
+                    progressBarDialog?.show()
                 }
             } else {
                 progressBarDialog = ProgressBarDialog(this@BaseActivity, progressText)
-                progressBarDialog!!.show()
+                progressBarDialog?.show()
             }
         }
     }
@@ -47,13 +43,9 @@ abstract class BaseActivity : AppCompatActivity() {
     fun hideProgress() {
         coroutineScope.launch {
             if (progressBarDialog != null) {
-                progressBarDialog!!.dismiss()
+                progressBarDialog?.dismiss()
             }
         }
-    }
-
-    fun isCurrentThemeDark(): Boolean {
-        return preference.isThemeDark == ThemeDarkEnum.THEME_NIGHT.name
     }
 
     override fun onDestroy() {

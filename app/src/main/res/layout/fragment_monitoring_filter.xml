@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:clipChildren="false">
 
-
     <uz.fido.utils.view.custom_app_bar.MainAppBar
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -15,14 +14,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:s_title="@string/filter" />
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingBottom="16dp"
         app:layout_constraintBottom_toTopOf="@+id/lin_btn"
         app:layout_constraintTop_toBottomOf="@+id/app_bar">
-
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -44,7 +41,7 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="16dp"
                     android:gravity="center"
-                    android:text="@string/saved_receivers"
+                    android:text="@string/selected_filters"
                     android:textColor="@color/mainTextColor"
                     android:textSize="20dp"
                     android:visibility="gone" />
@@ -58,7 +55,6 @@
                     android:orientation="horizontal"
                     android:visibility="gone"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
 
                 <uz.fido.utils.view.custom_text_view.TextViewSemiBold
                     android:id="@+id/operation_tip"
@@ -77,38 +73,24 @@
                     android:id="@+id/rec_service"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clipToPadding="false"
                     android:orientation="vertical"
+                    android:paddingHorizontal="4dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-                <androidx.appcompat.widget.LinearLayoutCompat
+                <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+                    android:id="@+id/card"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <uz.fido.utils.view.custom_text_view.TextViewSemiBold
-                        android:id="@+id/card"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
-                        android:layout_marginTop="16dp"
-                        android:layout_weight="1"
-                        android:drawablePadding="2dp"
-                        android:gravity="center_vertical"
-                        android:paddingEnd="16dp"
-                        android:text="@string/card"
-                        android:textColor="@color/mainTextColor"
-                        android:textSize="20dp" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/card_animation"
-                        android:layout_width="64dp"
-                        android:layout_height="48dp"
-                        android:layout_marginTop="6dp"
-                        android:layout_marginEnd="16dp"
-                        android:layout_weight="1"
-                        android:src="@drawable/ic_monitoring_filter_icon"
-                        android:visibility="gone" />
-                </androidx.appcompat.widget.LinearLayoutCompat>
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_weight="1"
+                    android:drawablePadding="2dp"
+                    android:gravity="center_vertical"
+                    android:paddingEnd="16dp"
+                    android:text="@string/card"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="20dp" />
 
                 <net.cachapa.expandablelayout.ExpandableLayout
                     android:id="@+id/expandable_cards"
@@ -137,7 +119,6 @@
 
                 </net.cachapa.expandablelayout.ExpandableLayout>
 
-
                 <uz.fido.utils.view.custom_text_view.TextViewSemiBold
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -156,26 +137,11 @@
                     android:scrollbars="none"
                     android:visibility="visible">
 
-                    <LinearLayout
+                    <androidx.appcompat.widget.LinearLayoutCompat
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:visibility="visible">
-
-
-                        <uz.fido.utils.view.custom_text_view.TextViewMedium
-                            android:id="@+id/new_card"
-                            android:layout_width="wrap_content"
-                            android:layout_height="match_parent"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginStart="16dp"
-                            android:background="@drawable/monitoring_filter_item_color"
-                            android:gravity="center"
-                            android:paddingHorizontal="12dp"
-                            android:text="@string/card"
-                            android:textColor="@color/mainTextColor"
-                            android:textSize="14dp"
-                            android:visibility="gone" />
 
                         <uz.fido.utils.view.custom_text_view.TextViewMedium
                             android:id="@+id/time"
@@ -216,93 +182,15 @@
                             android:text="@string/funds_flow"
                             android:textColor="@color/mainTextColor"
                             android:textSize="14dp" />
-                    </LinearLayout>
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
 
                 </HorizontalScrollView>
 
-
-                <uz.fido.utils.view.custom_text_view.TextViewSemiBold
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:gravity="center"
-                    android:text="@string/title_card"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="20dp"
-                    android:visibility="gone" />
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:visibility="gone">
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/card_number_layout"
-                        style="@style/EditTextInputLayoutStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="68dp"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginVertical="20dp"
-                        android:hint="@string/card_number"
-                        app:layout_constraintTop_toTopOf="parent">
-
-                        <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
-                            android:id="@+id/et_card_number"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:digits="+0123456789 "
-                            android:imeOptions="actionNext"
-                            android:inputType="numberDecimal|numberSigned|phone"
-                            android:maxLength="19"
-                            android:maxLines="1"
-                            android:theme="@style/DefaultEditTextTheme" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <uz.fido.utils.view.custom_text_view.TextViewRegular
-                        android:id="@+id/owner_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="8dp"
-                        android:drawablePadding="6dp"
-                        android:gravity="center|start"
-                        android:includeFontPadding="false"
-                        android:paddingStart="16dp"
-                        android:textColor="@color/mainTextColor"
-                        android:textSize="12dp"
-                        android:visibility="gone"
-                        app:layout_constraintTop_toBottomOf="@+id/card_number_layout" />
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/scanner"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="16dp"
-                        android:src="@drawable/ic_transfer_scanner"
-                        app:layout_constraintBottom_toBottomOf="@id/card_number_layout"
-                        app:layout_constraintEnd_toEndOf="@+id/card_number_layout"
-                        app:layout_constraintTop_toTopOf="@id/card_number_layout" />
-
-                    <ProgressBar
-                        android:id="@+id/progress"
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="16dp"
-                        android:src="@drawable/ic_transfer_scanner"
-                        android:visibility="gone"
-                        app:layout_constraintBottom_toBottomOf="@id/card_number_layout"
-                        app:layout_constraintEnd_toEndOf="@+id/card_number_layout"
-                        app:layout_constraintTop_toTopOf="@id/card_number_layout" />
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
             </androidx.appcompat.widget.LinearLayoutCompat>
+
         </androidx.core.widget.NestedScrollView>
+
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView

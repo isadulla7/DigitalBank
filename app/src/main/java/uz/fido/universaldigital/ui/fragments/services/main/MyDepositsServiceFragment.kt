@@ -17,13 +17,13 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.Cli
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class MyDepositsServiceFragment :
-    BaseFragment<FragmentMyDepositsServiceBinding, MenuProductsViewModel>(
-        FragmentMyDepositsServiceBinding::inflate, MenuProductsViewModel::class.java
-    ) {
+class MyDepositsServiceFragment : BaseFragment<FragmentMyDepositsServiceBinding, MenuProductsViewModel>(
+    FragmentMyDepositsServiceBinding::inflate, MenuProductsViewModel::class.java
+) {
 
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
     private lateinit var homeDepositsAdapter: HomeDepositsAdapter
@@ -32,9 +32,11 @@ class MyDepositsServiceFragment :
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         initClientDepositsRv()
+
     }
 
     private fun initClientDepositsRv() {
+        binding.appBar.setOnBackButtonClickListener { pop() }
         binding.rvClientDeposits.apply {
             layoutManager = LinearLayoutManager(requireContext())
             homeDepositsAdapter =

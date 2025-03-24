@@ -22,7 +22,7 @@ import uz.fido.network.domain.model.payment.location.PaymentByLocationResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentPaymentBranchBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringViewPagerAdapter
+import uz.fido.universaldigital.ui.utils.base.ViewPagerAdapter
 import uz.fido.universaldigital.ui.fragments.services.map_payment.dialog.LocalPaymentSearchDialog
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
@@ -121,7 +121,7 @@ class PaymentBranchFragment : BaseFragment<FragmentPaymentBranchBinding, Payment
 
     private fun initViewPager(newList: ArrayList<LocalPaymentType>) {
         viewModels.setLocalPaymentType(newList[0])
-        val viewPagerAdapter = MonitoringViewPagerAdapter(requireActivity(), listFragment(newList))
+        val viewPagerAdapter = ViewPagerAdapter(requireActivity(), listFragment(newList))
         binding.viewPager.adapter = viewPagerAdapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = newList[position].name

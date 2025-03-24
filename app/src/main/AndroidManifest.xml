@@ -57,7 +57,8 @@
             android:exported="true"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.App.SplashScreen"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity">
 
             <intent-filter
                 android:autoVerify="true"
@@ -79,9 +80,10 @@
         </activity>
 
         <activity
-            android:name=".ui.activities.LockSetActivity"
+            android:name=".ui.activities.security.LockSetActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
 
         <activity
             android:name=".ui.activities.MainActivity"
@@ -89,32 +91,37 @@
             android:screenOrientation="portrait"
             android:theme="@style/Base.Theme.UniversalMobileDigital"
             android:windowSoftInputMode="adjustResize"
-            tools:ignore="DiscouragedApi" />
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.activities.VpnErrorActivity"
+            android:name=".ui.activities.security.VpnErrorActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.activities.CallSafeActivity"
+            android:name=".ui.activities.security.CallSafeActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.activities.FaceIdActivity"
+            android:name=".ui.activities.security.FaceIdActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
 
         <activity
             android:name=".ui.fragments.profile.edit_photo.EditPhotoActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
 
         <activity
-            android:name=".ui.activities.RootedDeviceActivity"
+            android:name=".ui.activities.security.RootedDeviceActivity"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            tools:ignore="DiscouragedApi,LockedOrientationActivity" />
 
         <uses-library
             android:name="com.google.android.maps"
@@ -142,7 +149,7 @@
         </receiver>
 
         <provider
-            android:name=".ui.utils.GenericFileProvider"
+            android:name=".ui.utils.file.GenericFileProvider"
             android:authorities="${applicationId}.my.package.name.provider"
             android:exported="false"
             android:grantUriPermissions="true">

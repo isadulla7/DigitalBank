@@ -8,7 +8,7 @@ import uz.fido.network.domain.model.monitoring.categories.SetCategoryRequest
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringRequest
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringResponse
 import uz.fido.network.domain.model.monitoring.filter.MonitoringFilterCardResponse
-import uz.fido.network.domain.model.monitoring.filter.NewFilterMonitoringFilterRequest
+import uz.fido.network.domain.model.monitoring.filter.LocalMonitoringFilterRequest
 import uz.fido.network.domain.model.monitoring.filter.PaymentServiceResponse
 import uz.fido.network.domain.model.monitoring.home.HomeHistoryRequest
 import uz.fido.network.domain.model.monitoring.home.HomeHistoryResponse
@@ -71,6 +71,6 @@ interface IMonitoringRepository {
 
     suspend fun newFilterLocalMonitoring(
         token: String,
-        filterMonitoringModel: NewFilterMonitoringFilterRequest
+        filterMonitoringModel: LocalMonitoringFilterRequest
     ): Resource<LocalMonitoringResponse>
 }

@@ -1,6 +1,5 @@
 package uz.fido.universaldigital.ui.fragments.login.pin
 
-import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -16,6 +15,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentPinCodeBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.activities.MainActivity
+import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
 import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAndOutAnim
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
@@ -273,8 +273,8 @@ class PinCodeFragment : BaseFragment<FragmentPinCodeBinding, PinCodeViewModel>(
         PinDotsAnimation.errorAnimation(binding.dotView, requireActivity())
         secondPin = ""
         binding.errorText.text = getString(R.string.wrong_pin)
-        Handler(Looper.myLooper()!!).postDelayed({
-            if (context != null) {
+        Handler(Looper.getMainLooper()).postDelayed({
+            if (context != null && binding != null) {
                 clearDots()
                 binding.errorText.text = ""
             }
@@ -283,7 +283,7 @@ class PinCodeFragment : BaseFragment<FragmentPinCodeBinding, PinCodeViewModel>(
     }
 
     private fun setWrongPinCounter() {
-       incorrectPinCount++
+        incorrectPinCount++
         if (incorrectPinCount == 2) {
             showWrongPinWarning()
         }

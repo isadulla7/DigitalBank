@@ -1,0 +1,101 @@
+package uz.fido.universaldigital.ui.fragments.monitoring.local
+
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
+import uz.fido.network.domain.model.monitoring.DateItem
+import uz.fido.network.domain.model.monitoring.GeneralItem
+import uz.fido.network.domain.model.monitoring.ListItem
+import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
+import uz.fido.universaldigital.R
+import uz.fido.universaldigital.databinding.ItemHistoriesHeaderBinding
+import uz.fido.universaldigital.databinding.ItemMonitoringBinding
+import uz.fido.utils.format.Format
+import uz.fido.utils.sticky.StickyHeaderInterface
+
+class LocalMonitoringAdapter(
+    private var consolidatedList: ArrayList<ListItem>,
+    private val itemClickListener: (LocalMonitoring) -> Unit
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyHeaderInterface {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == ListItem.TYPE_DATE) {
+            DateViewHolder(ItemHistoriesHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        } else {
+            GeneralItemViewHolder(ItemMonitoringBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        }
+    }
+
+    override fun getItemCount(): Int = consolidatedList.size
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val item = consolidatedList[position]
+        if (holder is DateViewHolder) {
+            holder.bind(item)
+        } else {
+            (holder as GeneralItemViewHolder).bind(item)
+        }
+    }
+
+    inner class GeneralItemViewHolder(private val binding: ItemMonitoringBinding) : RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(item: ListItem) {
+            val monitoringData: GeneralItem = item as GeneralItem
+            val monitoringItem = monitoringData.localMonitoringItem
+            monitoringItem?.let { localMonitoring ->
+                binding.tvName.setTransactionName(localMonitoring)
+                binding.tvTime.setTransactionTime(localMonitoring)
+                binding.icon.setTransactionImage(localMonitoring)
+                binding.tvAmount.setTransactionAmountColor(localMonitoring)
+                binding.tvAmount.setTransactionAmount(localMonitoring)
+                binding.tvType.setAdditionalInfo(localMonitoring)
+                binding.father.setOnClickListener {
+                    itemClickListener.invoke(localMonitoring)
+                }
+            }
+        }
+    }
+
+    inner class DateViewHolder(private val binding: ItemHistoriesHeaderBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: ListItem) {
+            val dateItem: DateItem = item as DateItem
+            val date = dateItem.date
+            binding.dateView.text = date?.let { Format.monitoringDate(it) }
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int = consolidatedList[position].type
+
+    override fun headerPositionForItem(itemPosition: Int): Int {
+        for (i in itemPosition downTo 1) {
+            if (isHeader(i)) {
+                return i
+            }
+        }
+        return 0
+    }
+
+    override fun headerLayout(headerPosition: Int): Int = R.layout.item_histories_header
+
+    override fun bindHeaderData(header: View, headerPosition: Int) {
+        val dateItem: DateItem = consolidatedList[headerPosition] as DateItem
+        val date: TextView = header.findViewById(R.id.date_view)
+        date.text = Format.monitoringDate(dateItem.date.toString())
+    }
+
+    override fun isHeader(itemPosition: Int): Boolean = getItemViewType(itemPosition) == ListItem.TYPE_DATE
+
+    fun setListAdapter(totalList: ArrayList<ListItem>) {
+        consolidatedList = totalList
+        notifyDataSetChanged()
+    }
+
+    fun removeList() {
+        consolidatedList.clear()
+        notifyDataSetChanged()
+    }
+
+
+}

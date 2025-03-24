@@ -10,9 +10,9 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMenuMonitoringBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringPagerAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.all_card.LocalMonitoringFragment
-import uz.fido.universaldigital.ui.fragments.monitoring.chart.MonitoringChartFragment
+import uz.fido.universaldigital.ui.fragments.monitoring.local.chart.MonitoringChartFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringFragment
+import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
@@ -23,7 +23,7 @@ import uz.fido.utils.const.CardConst.HUMO_CARD
 import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
-import uz.fido.utils.utility.fragment.gotoWithSlide
+import uz.fido.utils.utility.fragment.goto
 
 @AndroidEntryPoint
 class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuMonitoringViewModel>(FragmentMenuMonitoringBinding::inflate, MenuMonitoringViewModel::class.java) {
@@ -62,21 +62,21 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
         binding.filter.setOnClickListener {
             when (position) {
                 1 -> if (cardUzCardList.isNotEmpty()) {
-                    gotoWithSlide(R.id.monitoringUzCardFilterFragment)
+                    goto(R.id.monitoringUzCardFilterFragment)
                     menuMonitoringViewModel.isFilterWindows = true
                 }
 
                 2 -> if (cardHumoList.isNotEmpty()) {
-                    gotoWithSlide(R.id.monitoringHumoFilterFragment)
+                    goto(R.id.monitoringHumoFilterFragment)
                     menuMonitoringViewModel.isFilterWindows = true
                 }
 
                 3 -> if (cardWalledList.isNotEmpty()) {
-                    gotoWithSlide(R.id.monitoringWalletFilterFragment)
+                    goto(R.id.monitoringWalletFilterFragment)
                     menuMonitoringViewModel.isFilterWindows = true
                 }
 
-                else -> if (isFilter) gotoWithSlide(R.id.monitoringFilterFragment)
+                else -> if (isFilter) goto(R.id.monitoringFilterFragment)
             }
         }
         binding.chart.setOnClickListener {
@@ -107,7 +107,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
                     }
                 }
             }
-            menuMonitoringViewModel.allCardList.value = isFilter
+            menuMonitoringViewModel.userHasCard(isFilter)
             menuMonitoringViewModel.uzcardList.value = cardUzCardList
             menuMonitoringViewModel.humoList.value = cardHumoList
             menuMonitoringViewModel.currencyList.value = cardCurrencyList

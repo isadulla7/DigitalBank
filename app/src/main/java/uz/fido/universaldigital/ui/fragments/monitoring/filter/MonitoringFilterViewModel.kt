@@ -26,8 +26,7 @@ class MonitoringFilterViewModel @Inject constructor(
         emit(monitoringRepository.getLocalMonitoringServiceList(token))
     }
 
-    fun getCardInfo(token: String, checkCardRequestP2p: CheckCardRequestP2p) =
-        liveData(Dispatchers.IO) {
-            emit(cardRepository.checkCardInfo(token, checkCardRequestP2p))
-        }
+    fun getCardInfo(token: String, checkCardRequestP2p: CheckCardRequestP2p) = liveData(Dispatchers.IO) {
+        emit(cardRepository.checkCardInfo(token, checkCardRequestP2p))
+    }
 }

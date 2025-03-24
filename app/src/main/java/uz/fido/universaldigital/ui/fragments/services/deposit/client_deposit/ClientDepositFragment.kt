@@ -216,7 +216,6 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
                     "",
                     "",
                     "",
-                    "",
                     1
                 )
                 dateSortList.add(accountHistory)
@@ -232,7 +231,6 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
                     "",
                     "",
                     it.dateExecute,
-                    "",
                     "",
                     "",
                     "",

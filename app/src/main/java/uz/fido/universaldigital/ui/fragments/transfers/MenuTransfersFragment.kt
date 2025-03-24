@@ -12,11 +12,10 @@ import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 
 @AndroidEntryPoint
-class MenuTransfersFragment :
-    BaseSimpleFragment<FragmentMenuTransfersBinding>(FragmentMenuTransfersBinding::inflate) {
+class MenuTransfersFragment : BaseSimpleFragment<FragmentMenuTransfersBinding>(FragmentMenuTransfersBinding::inflate) {
 
     private val transferTypesAdapter by lazy {
-        MenuTransfersAdapter(requireContext(), getTransferTypes()) { transferType ->
+        MenuTransfersAdapter(getTransferTypes()) { transferType ->
             initSetOnClickListeners(transferType)
         }
     }

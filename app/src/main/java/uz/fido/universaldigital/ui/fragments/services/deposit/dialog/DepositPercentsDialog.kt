@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.services.deposit.dialog
 
 import android.os.Bundle
 import android.view.View
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
@@ -47,7 +48,6 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
     private val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
     private val newDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.appBar.setOnBackButtonClickListener { pop() }
@@ -58,9 +58,8 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
     }
 
     private fun setDate() {
-        val dicimal = BigDecimal("100")
-
-        binding.etAmount.setText(Format.formatAmount((((clientDeposit.sumDep ?: "0").toBigDecimal() - (clientDeposit.amount ?: "0").toBigDecimal()) / dicimal).toString()))
+        binding.btnEnter.isVisible = clientDeposit.withdrawInterest == "Y"
+        binding.etAmount.setText(Format.formatAmount((((clientDeposit.persSum ?: "0").toBigDecimal()) / BigDecimal("100")).toString()))
         binding.btnEnter.setOnClickListener {
             if (clientDeposit.withdrawInterest == "Y") {
                 val bundle = Bundle()
@@ -68,9 +67,10 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
                 bundle.putSerializable("deposit", clientDeposit)
                 bundle.putString("card_type", clientDeposit.currencyCode)
                 goto(R.id.depositFillingFragment, bundle)
+            } else {
+                showSnackbar(getString(R.string.cannot_withdraw_percents))
             }
         }
-
     }
 
     private fun recyclerView() {
@@ -134,11 +134,10 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
         }
     }
 
-
     private fun addDateView(list: ArrayList<AccountHistory>) {
         list.forEach {
             if (dateSortList.isEmpty()) {
-                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", "", 1)
+                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", 1)
                 dateSortList.add(accountHistory)
             }
 
@@ -146,7 +145,7 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
             val listDate = newDateFormat.format(simpleDateFormat.parse(it.dateExecute).time)
 
             if (newlistDate != listDate) {
-                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", "", 1)
+                val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", 1)
                 dateSortList.add(accountHistory)
             }
             dateSortList.add(it)
@@ -155,7 +154,6 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
 
         accountHistoryAdapter!!.setNewList(dateSortList)
     }
-
 
     private fun emptyView() {
         if (list.isEmpty()) {

@@ -24,20 +24,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.viewbinding.ViewBinding
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
-import uz.fido.network.domain.model.client_info.ClientDetailedInfo
-import uz.fido.network.domain.model.loans.loan_groups.CreditGroup
-import uz.fido.network.domain.model.my_id.Profile
 import uz.fido.network.domain.model.sms.CheckSmsForPayment
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.ui.activities.VpnErrorActivity
+import uz.fido.universaldigital.ui.activities.security.VpnErrorActivity
 import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
 import uz.fido.universaldigital.ui.dialogs.OpenSettingsDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsViewModel
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
-import uz.fido.universaldigital.ui.fragments.services.loan.loan_info.LoanUserInfo1Fragment
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.ServerMessages.ERROR_CODE_VPN
@@ -59,8 +54,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
     private var permissionInterface: PermissionInterface? = null
     private var alertDialog: AlertDialog? = null
 
-    val currentActivity get() = activity as BaseActivity
-
     fun functionInProgress() {
         showSnackbar(
             getString(R.string.service_under_development), title = getString(R.string.info)
@@ -70,10 +63,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
     fun showProgress(progressText: String? = null) = (activity as BaseActivity).showProgress(progressText)
 
     fun hideProgress() = (activity as BaseActivity).hideProgress()
-
-    fun isCurrentThemeDark(): Boolean {
-        return (activity as BaseActivity).isCurrentThemeDark()
-    }
 
     fun isInternetConnected(context: Context): Boolean {
         var result: Boolean
@@ -356,21 +345,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
                 BackgroundColorSpan(ContextCompat.getColor(context, uz.fido.utils.R.color.white)), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0
             )
             setSpan(UnderlineSpan(), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0)
-        }
-    }
-
-    fun saveCreditProgress(
-        creditGroup: CreditGroup, clientDetailedInfo: ClientDetailedInfo, profile: Profile? = null, step: Int, finalHashMap: HashMap<String, String>? = null
-    ) {
-        Paper.book().write(LoanUserInfo1Fragment.CREDIT_ITEM, creditGroup)
-        Paper.book().write(LoanUserInfo1Fragment.CLIENT_INFO, clientDetailedInfo)
-        Paper.book().write(LoanUserInfo1Fragment.CREDIT_PROGRESS_STEP, step)
-
-        if (step > 1) {
-            profile?.let { Paper.book().write(LoanUserInfo1Fragment.CLIENT_MY_ID_INFO, it) }
-        }
-        if (finalHashMap != null) {
-            Paper.book().write(LoanUserInfo1Fragment.RESULT_USER_INFO, finalHashMap)
         }
     }
 

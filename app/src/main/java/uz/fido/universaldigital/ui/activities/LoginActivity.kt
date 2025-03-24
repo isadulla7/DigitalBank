@@ -2,27 +2,25 @@ package uz.fido.universaldigital.ui.activities
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.Navigation.findNavController
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.universaldigital.R
-import uz.fido.universaldigital.base.AppIcons
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityLoginBinding
+import uz.fido.universaldigital.ui.activities.app_icon_changer.AppIcons
+import uz.fido.universaldigital.ui.activities.app_icon_changer.AppIconsViewModel
 import uz.fido.universaldigital.ui.activities.app_icon_changer.changeAppIcon
+import uz.fido.universaldigital.ui.activities.security.LockSetActivity
+import uz.fido.universaldigital.ui.activities.security.RootedDeviceActivity
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
+import uz.fido.universaldigital.ui.utils.extensions.getLoginStartDestination
 import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
-import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.security.SecurityCheck
 import uz.fido.utils.security.SecurityCheck.isPhoneRooted
 import uz.fido.utils.security.SecurityCheck.isRunningOnEmulator
@@ -31,32 +29,25 @@ import uz.fido.utils.security.SecurityCheck.isRunningOnEmulator
 class LoginActivity : BaseActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var database: DatabaseReference
+    private val viewModel: AppIconsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        database = FirebaseDatabase.getInstance().getReference(Const.FIREBASE_APP_ICON_NAME)
         setContentView(binding.root)
         checkForDeviceLock()
         listenAppIconChanges()
     }
 
     private fun listenAppIconChanges() {
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val currentIcon = getFromPaper(Const.CURRENT_APP_ICON, AppIcons.APP_ICON_DEFAULT)
-                if (currentIcon != snapshot.value.toString()) {
-                    saveToPaper(Const.CURRENT_APP_ICON, snapshot.value.toString())
-                    changeAppIcon()
-                }
+        viewModel.appIconLiveData.observe(this) {
+            val currentIcon = getFromPaper(Const.CURRENT_APP_ICON, AppIcons.APP_ICON_DEFAULT)
+            if (currentIcon != it) {
+                saveToPaper(Const.CURRENT_APP_ICON, it)
+                changeAppIcon()
             }
-
-            override fun onCancelled(error: DatabaseError) {
-                saveToPaper(Const.CURRENT_APP_ICON, AppIcons.APP_ICON_DEFAULT)
-            }
-        })
+        }
     }
 
     private fun checkForDeviceLock() {
@@ -99,25 +90,15 @@ class LoginActivity : BaseActivity() {
 
     private fun checkNotification() {
         val notification = intent.getStringExtra(PassCodeFragment.NOTIFICATION_OPERATION)
-        if (notification != null) {
-            val bundle = bundleOf(PassCodeFragment.NOTIFICATION_OPERATION to notification)
-            setStartDestination(bundle)
-        } else {
-            setStartDestination()
-        }
+        val bundle = bundleOf(PassCodeFragment.NOTIFICATION_OPERATION to notification)
+        setStartDestination(bundle)
     }
 
     private fun setStartDestination(bundle: Bundle? = null) {
         val navController = findNavController(this, R.id.nav_host_login)
         val navGraph = navController.navInflater.inflate(R.navigation.navigation_login)
-        navGraph.setStartDestination(getStartDestination())
+        navGraph.setStartDestination(getLoginStartDestination())
         navController.setGraph(navGraph, bundle)
-    }
-
-    private fun isUserLogged() = Paper.book().read(USER_LOGGED, false) == false
-
-    private fun getStartDestination(): Int {
-        return if (isUserLogged()) R.id.chooseLanguageFragment else R.id.passCodeFragment
     }
 
     private fun openLockActivity() {
