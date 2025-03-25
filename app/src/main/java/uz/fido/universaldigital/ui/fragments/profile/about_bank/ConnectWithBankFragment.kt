@@ -1,8 +1,8 @@
 package uz.fido.universaldigital.ui.fragments.profile.about_bank
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import androidx.core.net.toUri
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
@@ -32,7 +32,7 @@ class ConnectWithBankFragment : BaseFragment<FragmentConnectWithBankBinding, Men
     private fun openTelegram() {
         startActivity(
             Intent(
-                Intent.ACTION_VIEW, Uri.parse("https://t.me/myuniversalbank")
+                Intent.ACTION_VIEW, "https://t.me/myuniversalbank".toUri()
             )
         )
     }
@@ -40,7 +40,7 @@ class ConnectWithBankFragment : BaseFragment<FragmentConnectWithBankBinding, Men
     private fun callToBank() {
         val phone = "tel: +998712001110"
         val intent = Intent(Intent.ACTION_DIAL)
-        intent.data = Uri.parse(phone)
+        intent.data = phone.toUri()
         startActivity(intent)
     }
 
@@ -49,7 +49,7 @@ class ConnectWithBankFragment : BaseFragment<FragmentConnectWithBankBinding, Men
         val emailIntent = Intent(Intent.ACTION_SENDTO)
         emailIntent.type = "message/rfc822"
         emailIntent.putExtra(Intent.EXTRA_EMAIL, email)
-        emailIntent.data = Uri.parse("mailto:$email")
+        emailIntent.data = "mailto:$email".toUri()
         emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         emailIntent.addFlags(Intent.FLAG_FROM_BACKGROUND)
         startActivity(emailIntent)

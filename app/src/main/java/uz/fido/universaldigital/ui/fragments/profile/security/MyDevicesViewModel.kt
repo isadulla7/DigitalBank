@@ -16,14 +16,12 @@ class MyDevicesViewModel @Inject constructor(
     private val utilsRepository: IUtilsRepository
 ) : AbstractViewModel(application) {
 
-    fun getActiveSessions(token: String, getUserDevicesRequest: GetUserDevicesRequest) =
-        liveData(Dispatchers.IO) {
-            emit(utilsRepository.getActiveSessions(token, getUserDevicesRequest))
-        }
+    fun getActiveSessions(token: String, getUserDevicesRequest: GetUserDevicesRequest) = liveData(Dispatchers.IO) {
+        emit(utilsRepository.getActiveSessions(token, getUserDevicesRequest))
+    }
 
-    fun checkDevice(token: String, checkDeviceRequest: CheckDeviceRequest) =
-        liveData(Dispatchers.IO) {
-            emit(utilsRepository.checkDevice(token, checkDeviceRequest))
-        }
+    fun checkDevice(token: String, checkDeviceRequest: CheckDeviceRequest) = liveData(Dispatchers.IO) {
+        emit(utilsRepository.checkDevice(token, checkDeviceRequest))
+    }
 
 }

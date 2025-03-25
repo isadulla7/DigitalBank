@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.profile.security
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -14,23 +13,21 @@ import uz.fido.universaldigital.databinding.ItemMyDevicesBinding
 @SuppressLint("SetTextI18n")
 class DevicesAdapter(
     private val list: ArrayList<UserDevices>,
-    private val baseInterface: BaseInterface,
-    private val context: Context,
+    private val baseInterface: BaseInterface
 ) : RecyclerView.Adapter<DevicesAdapter.ViewHolder>() {
 
-    inner class ViewHolder(private val binding: ItemMyDevicesBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    inner class ViewHolder(private val binding: ItemMyDevicesBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: UserDevices) {
             binding.apply {
-                deviceName.text = if (item.device_name == "") context.getString(R.string.unknown) else item.device_name
+                deviceName.text = if (item.device_name == "") itemView.context.getString(R.string.unknown) else item.device_name
                 lastSeen.text = item.last_seen_date
-                lastState.text = if (item.status == "A") context.getString(R.string.activ) else context.getString(R.string.ne_active)
+                lastState.text = if (item.status == "A") itemView.context.getString(R.string.activ) else itemView.context.getString(R.string.ne_active)
                 if (item.online == "true") {
-                    imageView.setBackgroundColor(ContextCompat.getColor(context, R.color.monitoring_amount))
-                    lastState.setTextColor(ContextCompat.getColor(context, R.color.monitoring_amount))
+                    imageView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.monitoring_amount))
+                    lastState.setTextColor(ContextCompat.getColor(itemView.context, R.color.monitoring_amount))
                 } else {
-                    imageView.setBackgroundColor(ContextCompat.getColor(context, R.color.hintColor))
-                    lastState.setTextColor(ContextCompat.getColor(context, R.color.hintColor))
+                    imageView.setBackgroundColor(ContextCompat.getColor(itemView.context, R.color.hintColor))
+                    lastState.setTextColor(ContextCompat.getColor(itemView.context, R.color.hintColor))
                 }
                 deleteDevice.setOnClickListener {
                     baseInterface.terminateSession(item)

@@ -21,15 +21,13 @@ class IdentificationViewModel @Inject constructor(
     private val swapKeyRepository: ISwapKeyRepository
 ) : AbstractViewModel(application) {
 
-    fun identification(token: String, checkIdentification: CheckIdentification) =
-        liveData(Dispatchers.IO) {
-            emit(userRepository.checkIdentification(token, checkIdentification))
-        }
+    fun identification(token: String, checkIdentification: CheckIdentification) = liveData(Dispatchers.IO) {
+        emit(userRepository.checkIdentification(token, checkIdentification))
+    }
 
-    fun checkPassport(myIdGetAccessTokenRequest: MyIdGetAccessTokenRequest) =
-        liveData(Dispatchers.IO) {
-            emit(userRepository.getAccessToken(context.getClientToken(), myIdGetAccessTokenRequest))
-        }
+    fun checkPassport(myIdGetAccessTokenRequest: MyIdGetAccessTokenRequest) = liveData(Dispatchers.IO) {
+        emit(userRepository.getAccessToken(context.getClientToken(), myIdGetAccessTokenRequest))
+    }
 
     fun signIn(signInRequest: SignInRequestNew) = liveData(Dispatchers.IO) {
         emit(userRepository.signInPin(context.getClientToken(), signInRequest))

@@ -7,10 +7,10 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.graphics.drawable.toDrawable
 import androidx.core.net.toUri
 import androidx.exifinterface.media.ExifInterface
 import com.google.android.gms.common.util.IOUtils
@@ -19,9 +19,15 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityEditPhotoBinding
 import uz.fido.universaldigital.ui.utils.file.FileUtils
-import java.io.*
+import java.io.File
+import java.io.FileNotFoundException
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
+import java.io.OutputStream
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Locale
 import kotlin.math.ln
 import kotlin.math.pow
 import kotlin.math.roundToInt
@@ -74,7 +80,7 @@ class EditPhotoActivity : BaseActivity() {
         copy(this, storagePhotoUri, newImageFile)
         val mSaveUri = Uri.fromFile(newImageFile)
         val bitmap = getBitmap(mSaveUri)
-        val drawable = BitmapDrawable(resources, bitmap)
+        val drawable = bitmap?.toDrawable(resources)
         val minScale = binding.imageView.setMinimumScaleToFit(drawable)
         binding.imageView.maximumScale = minScale * 3
         binding.imageView.mediumScale = minScale * 2

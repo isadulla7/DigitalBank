@@ -16,7 +16,6 @@ import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.FragmentMyDevicesBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment.Companion.SMS_OPERATION_TERMINATE_SESSION
-import uz.fido.universaldigital.ui.fragments.profile.dialog.DeviceDialog
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.context.AppSignatureHelper
@@ -37,7 +36,7 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
 ), BaseInterface {
 
     private lateinit var devicesAdapter: DevicesAdapter
-    private lateinit var deviceDialog: DeviceDialog
+    private lateinit var terminateDeviceDialog: TerminateDeviceDialog
 
     private var list = ArrayList<UserDevices>()
     private var userDevice: UserDevices? = null
@@ -63,7 +62,7 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
     private fun initRecyclerView() {
         binding.trustedDevices.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            devicesAdapter = DevicesAdapter(list, this@MyDevicesFragment, requireContext())
+            devicesAdapter = DevicesAdapter(list, this@MyDevicesFragment)
             adapter = devicesAdapter
         }
         binding.deviceName.text = android.os.Build.MODEL
@@ -146,29 +145,28 @@ class MyDevicesFragment : BaseFragment<FragmentMyDevicesBinding, MyDevicesViewMo
         userDevice = item
         userDevice?.my_device_code = requireActivity().getDeviceIds()
         super<BaseFragment>.terminateSession(item)
-        deviceDialog = DeviceDialog(item, object : BaseInterface {
+        terminateDeviceDialog = TerminateDeviceDialog(item, object : BaseInterface {
             override fun deviceDelete() {
                 super.deviceDelete()
-                deviceDialog.dismiss()
+                terminateDeviceDialog.dismiss()
                 terminateSessionRequest(userDevice!!, OPERATION_DELETE)
             }
 
             override fun deviceState() {
                 super.deviceState()
-                deviceDialog.dismiss()
+                terminateDeviceDialog.dismiss()
                 val state = if (item.status == "A") OPERATION_DEACTIVATE else OPERATION_ACTIVATE
                 terminateSessionRequest(userDevice!!, state)
             }
 
             override fun deviceDeleteAll() {
                 super.deviceDeleteAll()
-                deviceDialog.dismiss()
+                terminateDeviceDialog.dismiss()
                 terminateSessionRequest(userDevice!!, OPERATION_DELETE_ALL)
             }
         })
-        deviceDialog.show(childFragmentManager, "")
+        terminateDeviceDialog.show(childFragmentManager, "")
     }
-
 
     companion object {
         const val OPERATION_DELETE = "delete"

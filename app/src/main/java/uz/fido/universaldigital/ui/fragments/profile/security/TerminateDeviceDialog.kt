@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.profile.dialog
+package uz.fido.universaldigital.ui.fragments.profile.security
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.databinding.DialogDiveceBinding
 
-class DeviceDialog(
-    val item: UserDevices,
+class TerminateDeviceDialog(
+    private val item: UserDevices,
     private var baseInterface: BaseInterface,
 ) : BottomSheetDialogFragment() {
 
@@ -28,16 +28,12 @@ class DeviceDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.tvState.text = if (item.status != "A") getString(R.string.active) else getString(R.string.ne_active)
         binding.tvDelete.setOnClickListener {
             baseInterface.deviceDelete()
         }
         binding.tvState.setOnClickListener {
             baseInterface.deviceState()
-        }
-        binding.tvDeleteAll.setOnClickListener {
-            baseInterface.deviceDeleteAll()
         }
     }
 }

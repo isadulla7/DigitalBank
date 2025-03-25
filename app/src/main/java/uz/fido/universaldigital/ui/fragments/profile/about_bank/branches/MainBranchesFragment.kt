@@ -19,8 +19,6 @@ import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior.BottomSheetCallback
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.Tab
 import com.google.maps.android.SphericalUtil
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
@@ -49,21 +47,12 @@ class MainBranchesFragment : BaseFragment<FragmentBranchesBinding, MenuProfileVi
     private lateinit var lastLocation: Location
 
     private var branches = ArrayList<Branches>()
-    private var miniBanks = ArrayList<Branches>()
-    private var atms = ArrayList<Branches>()
-    private var adms = ArrayList<Branches>()
-
     private var map: GoogleMap? = null
-    private var tabPosition = 0
 
     companion object {
         var currentLatLng: LatLng? = null
         var allBranches = ArrayList<Branches>()
-
-        const val FILIAL_TYPE_MINI_BANK = "M"
-        const val FILIAL_TYPE_BRANCH = "F"
         const val FILIAL_TYPE_ATM = "B"
-        const val FILIAL_TYPE_ADM = "A"
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -80,8 +69,6 @@ class MainBranchesFragment : BaseFragment<FragmentBranchesBinding, MenuProfileVi
         initSetOnClickListeners()
         handleBackPressed()
         bottomSheetStateChangeListener()
-        initTabLayout()
-        initTabSelectedListener()
     }
 
     private fun getBranchesFromViewModel() {
@@ -117,24 +104,11 @@ class MainBranchesFragment : BaseFragment<FragmentBranchesBinding, MenuProfileVi
     }
 
     private fun buildListWithOperation(list: ArrayList<Branches>) {
-        clearAllBranchTypes()
+        branches.clear()
         list.forEach {
-            when (it.filial_type) {
-                FILIAL_TYPE_ATM -> atms.add(it)
-                FILIAL_TYPE_MINI_BANK -> miniBanks.add(it)
-                FILIAL_TYPE_ADM -> adms.add(it)
-                else -> branches.add(it)
-            }
+            branches.add(it)
         }
         buildBranchList()
-    }
-
-    private fun clearAllBranchTypes() {
-        atms.clear()
-        miniBanks.clear()
-        branches.clear()
-        branches.clear()
-        adms.clear()
     }
 
     override fun openBranchDetails(branch: Branches, viewHolder: BranchesAdapter.ViewHolder) {
@@ -151,7 +125,7 @@ class MainBranchesFragment : BaseFragment<FragmentBranchesBinding, MenuProfileVi
             it.uiSettings.isZoomControlsEnabled = false
             it.uiSettings.isCompassEnabled = false
             it.uiSettings.isMyLocationButtonEnabled = false
-            branchesMarker(FILIAL_TYPE_BRANCH)
+            branchesMarker()
             it.setOnMarkerClickListener(this)
         }
     }
@@ -339,69 +313,16 @@ class MainBranchesFragment : BaseFragment<FragmentBranchesBinding, MenuProfileVi
         })
     }
 
-    private fun initTabLayout() {
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.branches))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.atms))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.mini_bank))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText(R.string.adm))
-    }
-
-    private fun initTabSelectedListener() {
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: Tab?) {
-                tab?.let {
-                    when (it.position) {
-                        0 -> {
-                            buildBranchList()
-                        }
-
-                        1 -> {
-                            builtAtmList()
-                        }
-
-                        2 -> {
-                            buildMiniBankList()
-                        }
-
-                        3 -> {
-                            builtAdmList()
-                        }
-                    }
-                    tabPosition = it.position
-                }
-            }
-
-            override fun onTabUnselected(tab: Tab?) {}
-            override fun onTabReselected(tab: Tab?) {}
-
-        })
-    }
-
     private fun buildBranchList() {
         buildList(branches)
-        branchesMarker(FILIAL_TYPE_BRANCH)
+        branchesMarker()
     }
 
-    private fun buildMiniBankList() {
-        buildList(miniBanks)
-        branchesMarker(FILIAL_TYPE_MINI_BANK)
-    }
-
-    private fun builtAtmList() {
-        buildList(atms)
-        branchesMarker(FILIAL_TYPE_ATM)
-    }
-
-    private fun builtAdmList() {
-        buildList(adms)
-        branchesMarker(FILIAL_TYPE_ADM)
-    }
-
-    private fun branchesMarker(filialType: String) {
+    private fun branchesMarker() {
         map?.let {
             it.clear()
             currLocationMarker(zoom = 13f, isMove = false, addMarker = true)
-            val selectedFilialBranches = getSelectFilialBranches(filialType)
+            val selectedFilialBranches = branches
             selectedFilialBranches.forEach { selectedBranch ->
                 if (isBranchLocationCorrect(selectedBranch)) {
                     addMarkerToSelectedBranch(it, selectedBranch)
@@ -430,17 +351,6 @@ class MainBranchesFragment : BaseFragment<FragmentBranchesBinding, MenuProfileVi
                 )
             )
         )
-    }
-
-    private fun getSelectFilialBranches(filialType: String): ArrayList<Branches> {
-        val list: ArrayList<Branches> = ArrayList()
-        when (filialType) {
-            FILIAL_TYPE_BRANCH -> list.addAll(branches)
-            FILIAL_TYPE_ATM -> list.addAll(atms)
-            FILIAL_TYPE_MINI_BANK -> list.addAll(miniBanks)
-            FILIAL_TYPE_ADM -> list.addAll(adms)
-        }
-        return list
     }
 
     override fun onStart() {

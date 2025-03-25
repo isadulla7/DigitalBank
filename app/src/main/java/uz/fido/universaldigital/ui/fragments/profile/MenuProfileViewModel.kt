@@ -32,15 +32,13 @@ class MenuProfileViewModel @Inject constructor(
         emit(userRepository.logOut(token, logOutRequest))
     }
 
-    fun changeNotificationState(token: String, request: ChangeNotifStateRequest) =
-        liveData(Dispatchers.IO) {
-            emit(userRepository.changeNotificationState(token, request))
-        }
+    fun changeNotificationState(token: String, request: ChangeNotifStateRequest) = liveData(Dispatchers.IO) {
+        emit(userRepository.changeNotificationState(token, request))
+    }
 
-    fun getBranches(token: String, getBranchListRequest: GetBranchListRequest) =
-        liveData(Dispatchers.IO) {
-            emit(utilsRepository.getBranchList(token, getBranchListRequest))
-        }
+    fun getBranches(token: String, getBranchListRequest: GetBranchListRequest) = liveData(Dispatchers.IO) {
+        emit(utilsRepository.getBranchList(token, getBranchListRequest))
+    }
 
     fun editUserInfo(token: String, editUserInfo: EditUserInfo) = liveData(Dispatchers.IO) {
         emit(userRepository.editUserInfo(token, editUserInfo))

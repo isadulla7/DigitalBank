@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.View
+import androidx.core.content.edit
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.ChangeNotifStateRequest
@@ -71,11 +72,10 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, MenuProfileViewMo
     }
 
     private fun saveNotificationState(state: String) {
-        val sharedPref: SharedPreferences =
-            requireContext().getSharedPreferences(NOTIFICATION_STATE, Context.MODE_PRIVATE)
-        val editor: SharedPreferences.Editor = sharedPref.edit()
-        editor.putBoolean(STATE, state == STATE_ACTIVE)
-        editor.apply()
+        val sharedPref: SharedPreferences = requireContext().getSharedPreferences(NOTIFICATION_STATE, Context.MODE_PRIVATE)
+        sharedPref.edit {
+            putBoolean(STATE, state == STATE_ACTIVE)
+        }
     }
 
     private fun showNotificationStateProgress() {
