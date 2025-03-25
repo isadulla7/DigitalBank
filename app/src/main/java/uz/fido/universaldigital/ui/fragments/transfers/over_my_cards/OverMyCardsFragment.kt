@@ -287,8 +287,12 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
 
     private fun initAmountTextWatcher() {
         binding.etAmount.doAfterTextChanged {
-            setCommission(percent)
-            binding.btnContinue.isEnabled(continueButtonState())
+            try {
+                setCommission(percent)
+                binding.btnContinue.isEnabled(continueButtonState())
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
         }
     }
 
