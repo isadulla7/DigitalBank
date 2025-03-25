@@ -636,7 +636,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
 
             18 -> goto(R.id.clientDepositListFragment)
             19 -> goto(R.id.clientCreditListFragment)
-            20 -> openPaymentByServiceId("788")
+            20 -> openIshonchLoanPayment()
         }
     }
 
@@ -785,8 +785,8 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
         }
     }
 
-    private fun openPaymentByServiceId(serviceId: String) {
-        val service = DatabaseHelper(requireContext()).getServiceByContractId(serviceId)
+    private fun openIshonchLoanPayment() {
+        val service = DatabaseHelper(requireContext()).getServiceByContractId("788")
         val bundle = Bundle()
         bundle.putSerializable(PaymentFragment.PAYMENT_SERVICE, service)
         bundle.putInt(PaymentFragment.PAYMENT_OPERATION, PaymentFragment.PAYMENT_OPERATION_PAYMENT)

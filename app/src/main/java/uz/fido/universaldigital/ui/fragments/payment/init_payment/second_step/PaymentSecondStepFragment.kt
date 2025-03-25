@@ -682,7 +682,7 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
                 } else {
                     java.lang.Double.parseDouble(Format.noSpace(transferAmount))
                 }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             paymentAmount = 0.0
             binding.btnContinue.isEnabled(false)
         }
@@ -776,7 +776,7 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
         var loanId = ""
         for (param in paymentParamsArrayList) {
             if (param.code == "ABONENT_ID" || param.code == "PAYER" || param.code == "ABONENTLIC"
-                || param.code == "CUSTOMER" || param.code == "ABONENTID" || param.code == "CUSTOMER"
+                || param.code == "CUSTOMER" || param.code == "ABONENTID"
                 || param.code == "PROVIDER_ACC"
             ) {
                 if (accountId.isEmpty()) {
@@ -802,7 +802,7 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
             if (!param.is_required.equals("N") && param.code.isNotEmpty()) {
                 try {
                     keyValueList[param.code] = paymentHashMap[param.code]!!
-                } catch (e: Exception) {
+                } catch (_: Exception) {
                     keyValueList[param.code] = ""
                     templateKeyValues!![param.code] = ""
                 }
