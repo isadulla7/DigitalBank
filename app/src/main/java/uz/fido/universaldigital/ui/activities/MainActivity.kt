@@ -123,7 +123,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
                 destination.id == R.id.menuNewHomeFragment
             ) {
                 binding.bottomNavigation.showAnimWithSlideUp()
-                binding.divider.showAnimWithSlideUp()
+//                binding.divider.showAnimWithSlideUp()
                 when (destination.id) {
                     R.id.productsFragment -> {
                         tintSystemBars(R.color.brandRedColor, R.color.backgroundColor)
@@ -140,7 +140,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
             } else {
                 tintSystemBars(R.color.whiteColor)
                 binding.bottomNavigation.hideAnimWithSlideDown()
-                binding.divider.hideAnimWithSlideDown()
+//                binding.divider.hideAnimWithSlideDown()
             }
         }
     }

@@ -13,7 +13,8 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.os.bundleOf
-import androidx.fragment.app.activityViewModels
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
@@ -65,12 +66,10 @@ import java.math.RoundingMode
 import java.sql.SQLException
 import java.util.Locale
 
-class PaymentSecondStepFragment :
-    BaseSimpleFragment<FragmentPaymentSecondStepBinding>(FragmentPaymentSecondStepBinding::inflate),
-    BaseInterface {
+class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBinding>(FragmentPaymentSecondStepBinding::inflate), BaseInterface {
 
     private lateinit var paymentHashMap: HashMap<String, String>
-    private val menuPaymentViewModel: MenuPaymentViewModel by activityViewModels()
+    private val menuPaymentViewModel: MenuPaymentViewModel by viewModels()
 
     private var paymentParamsArrayList = ArrayList<PaymentParams>()
     private var paymentService: PaymentService? = null
@@ -107,6 +106,9 @@ class PaymentSecondStepFragment :
     private var paymentParamsForIndicatorTo: PaymentParams? = null
     private var range = 0L
 
+    private var calculatorTariffAmount = BigDecimal(0)
+    private var calculatorView: ViewElectricityCalculator? = null
+
     companion object {
         const val PAYMENT_PARAMS_LIST = "params_list"
         const val PAYMENT_TEMPLATE_NAME = "template_name"
@@ -120,8 +122,7 @@ class PaymentSecondStepFragment :
         super.onCreate(savedInstanceState)
         mobileDBHelper = DatabaseHelper(requireContext())
         arguments?.let {
-            paymentParamsArrayList =
-                it.serializable<ArrayList<PaymentParams>>(PAYMENT_PARAMS_LIST) as ArrayList<PaymentParams>
+            paymentParamsArrayList = it.serializable<ArrayList<PaymentParams>>(PAYMENT_PARAMS_LIST) as ArrayList<PaymentParams>
             paymentService = it.serializable(PaymentFragment.PAYMENT_SERVICE) as PaymentService?
             operation = it.getInt(PaymentFragment.PAYMENT_OPERATION)
             templateName = it.getString(PAYMENT_TEMPLATE_NAME).toString()
@@ -134,12 +135,24 @@ class PaymentSecondStepFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initPaymentName()
+        initSetOnClickListeners()
+        drawViews()
+        checkForHomeId()
+    }
+
+    private fun initPaymentName() {
         binding.appBar.setTitle(paymentService?.nameIndex.toString())
+    }
+
+    private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
             gotoNext()
         }
-        drawViews()
+    }
+
+    private fun checkForHomeId() {
         if (homeId != null) {
             binding.btnContinue.isEnabled(checkForButton())
         }
@@ -170,22 +183,12 @@ class PaymentSecondStepFragment :
                     if (binding.balance.text.toString().isEmpty() &&
                         paymentParamsArrayList[i].def_value != "null"
                     ) {
-                        accountBalance =
-                            paymentParamsArrayList[i].def_value.replace(",", " ") + " UZS"
-                        paymentHashMap[paymentParamsArrayList[i].code] =
-                            paymentParamsArrayList[i].def_value
-//                        if (paymentParamsArrayList[i].def_value.startsWith("-")) {
-//                            binding.balance.setTextColor(
-//                                ContextCompat.getColor(
-//                                    requireContext(),
-//                                    R.color.brandRedColor
-//                                )
-//                            )
-//                        }
+                        accountBalance = paymentParamsArrayList[i].def_value.replace(",", " ") + " UZS"
+                        paymentHashMap[paymentParamsArrayList[i].code] = paymentParamsArrayList[i].def_value
                     }
                     binding.balance.text = accountBalance.toString()
                 } else {
-                    drawMainBlockViews(paymentParamsArrayList[i], i)
+                    drawMainBlockViews(paymentParamsArrayList[i])
                 }
             }
         }
@@ -193,9 +196,6 @@ class PaymentSecondStepFragment :
         drawCalculatorView()
         binding.btnContinue.isEnabled(checkForButton())
     }
-
-    private var calculatorTariffAmount = BigDecimal(0)
-    private var calculatorView: ViewElectricityCalculator? = null
 
     private fun drawCalculatorView() {
         if (operation != null && operation == PaymentFragment.PAYMENT_OPERATION_PAYMENT) {
@@ -242,9 +242,7 @@ class PaymentSecondStepFragment :
 
     private fun calculateRange() {
         if (calculatorTariffAmount != BigDecimal(0)) {
-            amountEditText?.setText(
-                range.toBigDecimal().multiply(calculatorTariffAmount).toString()
-            )
+            amountEditText?.setText(range.toBigDecimal().multiply(calculatorTariffAmount).toString())
             val transferAmount = amountEditText?.text.toString()
             paymentHashMap["AMOUNT"] = transferAmount
         }
@@ -379,7 +377,6 @@ class PaymentSecondStepFragment :
         binding.mainLayout.addView(mainBlockBinding.root)
     }
 
-    /*NAVIGATION VIEW*/
     private fun drawViewsForNavigation(paymentParams: PaymentParams) {
         val viewPaymentNavigationBinding =
             ViewPaymentNavigationBinding.inflate(
@@ -603,15 +600,13 @@ class PaymentSecondStepFragment :
     }
 
     @SuppressLint("SetTextI18n")
-    private fun drawMainBlockViews(paymentParams: PaymentParams, position: Int) {
-        val mainBlockBinding =
-            ViewPaymentSecondStepDetailsBinding.inflate(
-                LayoutInflater.from(requireContext()),
-                requireView().parent as ViewGroup,
-                false
-            )
-        mainBlockBinding.textViewName.text =
-            if (paymentParams.hint.isNullOrEmpty()) paymentParams.name else paymentParams.hint
+    private fun drawMainBlockViews(paymentParams: PaymentParams) {
+        val mainBlockBinding = ViewPaymentSecondStepDetailsBinding.inflate(
+            LayoutInflater.from(requireContext()),
+            requireView().parent as ViewGroup,
+            false
+        )
+        mainBlockBinding.textViewName.text = if (paymentParams.hint.isNullOrEmpty()) paymentParams.name else paymentParams.hint
         mainBlockBinding.textViewValue.text = paymentParams.def_value
         mainBlockBinding.textViewValue.tag = paymentParams.code
         if (paymentParams.is_visible != "Y") {
@@ -636,9 +631,6 @@ class PaymentSecondStepFragment :
         if (paymentParams.is_required.equals("N") && paymentParams.def_value.trim().isEmpty()) {
             mainBlockBinding.root.visibility = View.GONE
         }
-//        if (position == paymentParamsArrayList.size - 1) {
-//            mainBlockBinding.viewLine.visibility = View.INVISIBLE
-//        }
         paymentHashMap[paymentParams.code] = paymentParams.def_value
         if (paymentParams.code != "TARIF_PRICE" && paymentParams.def_value.isEmpty()) {
             return
@@ -654,12 +646,8 @@ class PaymentSecondStepFragment :
                 false
             )
 
-        val textViewName =
-            binding.infoLayout.findViewWithTag<TextViewRegular>(paymentParamsForSelect?.code + "_SELECT_name${name}")
-                ?: null
-        val textViewValue =
-            binding.infoLayout.findViewWithTag<TextViewMedium>(paymentParamsForSelect?.code + "_SELECT_value${name}")
-                ?: null
+        val textViewName = binding.infoLayout.findViewWithTag<TextViewRegular>(paymentParamsForSelect?.code + "_SELECT_name${name}")
+        val textViewValue = binding.infoLayout.findViewWithTag<TextViewMedium>(paymentParamsForSelect?.code + "_SELECT_value${name}")
         if (textViewName != null) {
             textViewName.text = name
             textViewValue?.text = value
@@ -704,13 +692,13 @@ class PaymentSecondStepFragment :
         if (minAmount > amount || amount > maxAmount) {
             binding.btnContinue.isEnabled(false)
         } else {
-          binding.btnContinue.isEnabled(checkForButton())
+            binding.btnContinue.isEnabled(checkForButton())
         }
     }
 
     private fun checkForButton(): Boolean {
         for (maskEditText in editTextList) {
-            if (maskEditText.visibility == View.VISIBLE) {
+            if (maskEditText.isVisible) {
                 if (maskEditText.rawText.isEmpty()) {
                     return false
                 }
@@ -723,11 +711,11 @@ class PaymentSecondStepFragment :
             if (amountEditText?.text.toString().isEmpty()) {
                 return false
             }
-            if (!amountEditText?.text.isNullOrEmpty()){
+            if (!amountEditText?.text.isNullOrEmpty()) {
                 if (amountEditText?.text.toString() == "0") {
                     return false
                 }
-                if (amountEditText?.text.toString()=="0."){
+                if (amountEditText?.text.toString() == "0.") {
                     return false
                 }
             }
@@ -739,49 +727,46 @@ class PaymentSecondStepFragment :
     }
 
     private fun preparePayment(
-        service_id: String,
-        curr_level_pos: String,
-        payment_detail_code: String,
+        serviceId: String,
+        paymentDetailCode: String,
         params: HashMap<String, String>,
-        payment_type: String
+        paymentType: String
     ) {
         val model = PreparePaymentRequest(
-            service_id = service_id,
-            curr_level_position = curr_level_pos,
-            payment_detail_code = payment_detail_code,
+            service_id = serviceId,
+            curr_level_position = "2",
+            payment_detail_code = paymentDetailCode,
             params = params,
-            command = payment_type.lowercase(Locale.getDefault()).trim()
+            command = paymentType.lowercase(Locale.getDefault()).trim()
         )
         binding.btnContinue.setProgress(true)
-        menuPaymentViewModel.preparePaymentRequest(getClientToken(), model)
-            .observe(viewLifecycleOwner) {
-                it?.let {
-                    binding.btnContinue.setProgress(false)
-                    when (it.status) {
-                        Status.SUCCESS -> {
-                            paymentParamsArrayList.forEach { paymentParams ->
-                                if (paymentParams.code == "AMOUNT") {
-                                    if (amountEditText != null) {
-                                        paymentParams.def_value = amountEditText!!.text.toString()
-                                    }
-                                } else {
-                                    if (paymentParams.code != "SELECT") {
-                                        paymentParams.def_value =
-                                            paymentHashMap[paymentParams.code].toString()
-                                    }
+        menuPaymentViewModel.preparePaymentRequest(getClientToken(), model).observe(viewLifecycleOwner) {
+            it?.let {
+                binding.btnContinue.setProgress(false)
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        paymentParamsArrayList.forEach { paymentParams ->
+                            if (paymentParams.code == "AMOUNT") {
+                                if (amountEditText != null) {
+                                    paymentParams.def_value = amountEditText!!.text.toString()
+                                }
+                            } else {
+                                if (paymentParams.code != "SELECT") {
+                                    paymentParams.def_value = paymentHashMap[paymentParams.code].toString()
                                 }
                             }
-                            val response = it.data as PreparePaymentResponse
-                            Const.request_id = response.request_id.toString()
-                            openConfirmPayment(response.service_details)
                         }
+                        val response = it.data as PreparePaymentResponse
+                        Const.request_id = response.request_id.toString()
+                        openConfirmPayment(response.service_details)
+                    }
 
-                        Status.ERROR -> {
-                            showSnackbar(it.message.toString())
-                        }
+                    Status.ERROR -> {
+                        showSnackbar(it.message.toString())
                     }
                 }
             }
+        }
     }
 
     private fun gotoNext() {
@@ -828,12 +813,10 @@ class PaymentSecondStepFragment :
                 }
             }
         }
-        val levelPosition1 = "2"
-        if (paymentService!!.service_id == -2 && loanId.isNotEmpty() && levelPosition1 == "2") {
+        if (paymentService!!.service_id == -2 && loanId.isNotEmpty()) {
             keyValueList["LOANS_ID"] = loanId
         }
-        val imm =
-            requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         var vi = requireActivity().currentFocus
         if (vi == null) {
             vi = View(activity)
@@ -841,7 +824,6 @@ class PaymentSecondStepFragment :
         imm.hideSoftInputFromWindow(vi.windowToken, 0)
         preparePayment(
             paymentService!!.service_id.toString(),
-            levelPosition1,
             paymentService!!.payment_detail_code.toString(),
             keyValueList,
             paymentService!!.payment_type.toString()
@@ -887,7 +869,6 @@ class PaymentSecondStepFragment :
 
     private fun saveTemplate() {
         binding.btnContinue.setProgress(true)
-        // templateKeyValues!!["AMOUNT"]="0.0"
         val model = CreateTemplateRequest(
             name = templateName,
             template_type = if (homeId != null) "H" else "D",
