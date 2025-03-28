@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputEditText
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.apache.commons.lang3.math.NumberUtils
@@ -66,6 +67,7 @@ import java.math.RoundingMode
 import java.sql.SQLException
 import java.util.Locale
 
+@AndroidEntryPoint
 class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBinding>(FragmentPaymentSecondStepBinding::inflate), BaseInterface {
 
     private lateinit var paymentHashMap: HashMap<String, String>
