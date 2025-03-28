@@ -241,14 +241,7 @@ object BaseCardUtils {
         return state != "0" && state != "A"
     }
 
-    fun CardResponse.isUniversalCard(): Boolean =
-        object_value.startsWith("860048") ||
-                object_value.startsWith("626283") ||
-                object_value.startsWith("986023") ||
-                object_value.startsWith("561468") ||
-                object_value.startsWith("840048") ||
-                object_value.startsWith("978048") ||
-                object_type == "KL"
+    fun CardResponse.isUniversalCard(): Boolean = is_our_bank == "Y" && object_type != "KL"
 
     fun CardResponse.isValidSumCard(): Boolean =
         currency_code == "000" && balance_visibility && object_type != CURRENCY_CARD && state == "0" && processing_server_status != "-100"

@@ -26,6 +26,7 @@ import uz.fido.universaldigital.databinding.ViewDepositCreateBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.MainDepositViewModel
+import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isUniversalCard
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
@@ -190,7 +191,7 @@ class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBindin
 
     private fun initCards() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) { cardResponseList ->
-            val filteredCards = cardResponseList.filter { it.object_type != "KL" }
+            val filteredCards = cardResponseList.filter { it.isUniversalCard() }
             binding.chooseCardLayout.initCards(
                 filteredCards as ArrayList<CardResponse>, amount, type
             ) { cardResponse ->
