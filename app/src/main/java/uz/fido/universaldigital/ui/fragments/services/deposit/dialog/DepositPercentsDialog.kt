@@ -37,7 +37,6 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
 
     private lateinit var clientDeposit: ClientDeposit
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
-    private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
     private var accountHistoryAdapter: AccountHistoriesAdapter? = null
     private var list = ArrayList<AccountHistory>()
     private var currentDate: String? = null
@@ -45,8 +44,6 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
     private var dateEnd: String? = null
     private var dateSortList = ArrayList<AccountHistory>()
     private var skeletonScreen: SkeletonScreen? = null
-    private val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
-    private val newDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -95,6 +92,7 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
     }
 
     private fun initDate() {
+        val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
         val calendarStart = Calendar.getInstance()
         val calendarEnd = Calendar.getInstance()
         currentDate = df.format(calendarEnd.time)
@@ -121,7 +119,7 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
                 skeletonScreen!!.hide()
             when (it.status) {
                 Status.SUCCESS -> {
-                    list.addAll(it.data!!.response)
+                    list.addAll(it.data?.response ?: emptyList())
                     emptyView()
                     if (it.data!!.response.isNotEmpty())
                         addDateView(it.data!!.response)
@@ -135,6 +133,8 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
     }
 
     private fun addDateView(list: ArrayList<AccountHistory>) {
+        val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
+        val newDateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
         list.forEach {
             if (dateSortList.isEmpty()) {
                 val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", 1)
@@ -149,17 +149,15 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
                 dateSortList.add(accountHistory)
             }
             dateSortList.add(it)
-
         }
-
         accountHistoryAdapter!!.setNewList(dateSortList)
     }
 
     private fun emptyView() {
-        if (list.isEmpty()) {
-            binding.empty.visibility = View.VISIBLE
-            binding.amountLin.visibility = View.GONE
-        }
+//        if (accountHistoryAdapter?.itemCount == 0) {
+//            binding.empty.visibility = View.VISIBLE
+//            binding.amountLin.visibility = View.GONE
+//        }
     }
 
 }

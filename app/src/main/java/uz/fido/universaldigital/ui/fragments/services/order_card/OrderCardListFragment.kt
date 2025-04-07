@@ -7,7 +7,6 @@ import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.OrderCardTypeRequest
 import uz.fido.network.domain.model.cards.OrderCardTypeResponse
@@ -21,6 +20,7 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
+import uz.fido.utils.utility.user.getFromPaper
 
 @AndroidEntryPoint
 class OrderCardListFragment : BaseFragment<FragmentOrderCardListBinding, OrderCardViewModel>(
@@ -172,7 +172,7 @@ class OrderCardListFragment : BaseFragment<FragmentOrderCardListBinding, OrderCa
 
     override fun selectedCardWithOperation(priceItem: ProductType, operation: String) {
         super.selectedCardWithOperation(priceItem, operation)
-        val userTypeId = Paper.book().read<Int>(Const.PAPER_CLIENT_USER_TYPE_ID)
+        val userTypeId = getFromPaper(Const.PAPER_CLIENT_USER_TYPE_ID).toInt()
         if (priceItem.is_allowed_user_types.contains(userTypeId)) {
             val bundle = bundleOf(
                 Constants.PRICE_ITEM.text to Gson().toJson(priceItem),

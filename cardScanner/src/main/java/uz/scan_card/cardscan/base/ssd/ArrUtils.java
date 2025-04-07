@@ -1,20 +1,6 @@
 package uz.scan_card.cardscan.base.ssd;
 
-import android.util.Log;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class ArrUtils {
-
-    public static void printArrayList(ArrayList<float[]> alist) {
-        Log.d("ArrUtils for ArrayList", Arrays.deepToString(alist.toArray()));
-    }
-
-    public static void print(float[] arr) {
-
-        Log.d("ArrUtils for float[]", Arrays.toString(arr));
-    }
 
     public static float clamp(float val, float min, float max) {
         /** Clamp the value between min and max
@@ -148,10 +134,6 @@ public class ArrUtils {
             }
         }
         return boxes;
-    }
-
-    public void print(float[][] arr) {
-        Log.d("ArrUtils for float[][]", Arrays.toString(arr));
     }
 
     public float[][] softmax2D(float[][] scores) {

@@ -40,7 +40,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
         if (uri != null) {
             openEditPhotoActivity(uri.toString())
         } else {
-            Log.d("TAG", "PickMedia:error ")
+            //error
         }
     }
 
@@ -148,7 +148,6 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
 
     private val editPhotoIntent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK && it.data != null) {
-            Log.d("TAG", "Tag:${it.data} ")
             val path = it.data?.getStringExtra(EditPhotoActivity.RESULT_IMAGE)
             saveToPaper(Const.PAPER_USER_PHOTO_PATH, path)
             Picasso.get().load(path).into(binding.profileImage)

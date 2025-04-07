@@ -329,7 +329,6 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             senderCard == null || receiverCard == null -> {
                 binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
-                Log.d("TAG", "continueButtonState: ${senderCard == null}")
                 hideCommissionBlock()
                 return false
             }
@@ -386,7 +385,6 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 binding.tvMinAmount.text =
                     getString(R.string.min_amount) + " ${Format.formatAmount((minAmount).toString())} ${getString(R.string.sum_text)}"
-                Log.d("TAG", "continueButtonState:1 ")
                 return true
             }
 

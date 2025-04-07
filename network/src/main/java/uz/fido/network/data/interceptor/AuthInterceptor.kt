@@ -184,12 +184,7 @@ fun saveSignInPinResponse(context: Context, signInResponse: SignInResponse) {
         saveToPaper(Const.PAPER_CLIENT_ID, signInResponse.user_id)
         saveToPaper(Const.LAST_NAME, signInResponse.surname)
         saveToPaper(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number)
-        saveToPaper(Const.PAPER_CLIENT_POINTS, signInResponse.points ?: "0")
         saveToPaper(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
-        saveToPaper(Const.PAPER_CLIENT_STATUS_ID, signInResponse.user_status_id)
-        saveToPaper(Const.PAPER_CLIENT_STATUS_NAME, signInResponse.user_status_name)
-        saveToPaper(Const.PAPER_CLIENT_APPLICATION_COUNT, signInResponse.phone_number)
-        saveToPaper(Const.APPLICATION_COUNT, signInResponse.application_count.toString())
         saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
         saveToPaper(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
     }

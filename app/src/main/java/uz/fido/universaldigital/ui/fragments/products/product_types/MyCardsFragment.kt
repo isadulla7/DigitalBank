@@ -174,13 +174,10 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
 
             R.id.monitoring -> {
                 cardOperationsDialog.dismiss()
-                Log.d("TAG", "onClick:${selectedCard.object_id} ")
                 when (selectedCard.object_type) {
                     CardConst.UZCARD -> goto(R.id.uzCardMonitoringFragment, bundleOf(Const.CARD to selectedCard))
                     CardConst.HUMO_CARD -> goto(R.id.humoMonitoringFragment, bundleOf(Const.CARD to selectedCard))
                     CardConst.WALLET -> goto(R.id.walletMonitoringFragment, bundleOf(Const.CARD to selectedCard))
-                    //else->goto(R.id.visaMonitoringFragment, bundleOf(Const.CARD to selectedCard))
-
                 }
             }
 
@@ -254,7 +251,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     }
 
     private fun checkWalletBalance(balance: String): Boolean {
-        Log.d("TAG", "checkWalletBalance:${balance} ")
         val doubleBalance = balance.toDouble()
         return doubleBalance > 0
     }

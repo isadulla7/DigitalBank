@@ -14,7 +14,6 @@ import uz.fido.network.domain.model.payment.PaymentReference
 import uz.fido.network.domain.model.payment.PaymentService
 import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
 import uz.fido.utils.const.Const
-import uz.fido.utils.log.Logger
 import java.sql.SQLException
 
 class DatabaseHelper(
@@ -209,7 +208,7 @@ class DatabaseHelper(
 
             db.setTransactionSuccessful()
         } catch (ex: Exception) {
-            Logger.writeErrorLog("Error inserting service groups: ${ex.localizedMessage}")
+            ex.printStackTrace()
         } finally {
             db.endTransaction()
             db.close()
@@ -243,7 +242,7 @@ class DatabaseHelper(
             }
             db.setTransactionSuccessful()
         } catch (ex: Exception) {
-            Logger.writeErrorLog("Error inserting cashback list: ${ex.localizedMessage}")
+            ex.printStackTrace()
         } finally {
             db.endTransaction()
             db.close()
@@ -295,7 +294,7 @@ class DatabaseHelper(
             }
             db.setTransactionSuccessful()
         } catch (ex: Exception) {
-            Logger.writeErrorLog("Error inserting service list: ${ex.localizedMessage}")
+            ex.printStackTrace()
         } finally {
             db.endTransaction()
             db.close()
@@ -367,7 +366,7 @@ class DatabaseHelper(
             }
             db.setTransactionSuccessful()
         } catch (ex: Exception) {
-            Logger.writeErrorLog(ex.localizedMessage.orEmpty())
+            ex.printStackTrace()
         } finally {
             db.endTransaction()
             db.close()
@@ -404,7 +403,7 @@ class DatabaseHelper(
             }
             db.setTransactionSuccessful()
         } catch (ex: Exception) {
-            Logger.writeErrorLog("Error inserting reference list: ${ex.localizedMessage}")
+            ex.printStackTrace()
         } finally {
             db.endTransaction()
             db.close()
@@ -460,7 +459,7 @@ class DatabaseHelper(
             }
             cursor?.close()
         } catch (e: Exception) {
-            Logger.writeErrorLog(e.localizedMessage.orEmpty())
+            e.printStackTrace()
         }
         return categoriesResult
     }
@@ -500,7 +499,7 @@ class DatabaseHelper(
                         )
                         services.add(service)
                     } catch (e: java.lang.Exception) {
-                        Logger.writeErrorLog(e.localizedMessage.orEmpty())
+                        e.printStackTrace()
                     }
                 } while (cursor.moveToNext())
             }

@@ -8,7 +8,6 @@ import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.net.Uri
-import android.os.Bundle
 import android.provider.Settings
 import android.text.Annotation
 import android.text.SpannableString
@@ -18,7 +17,6 @@ import android.text.style.BackgroundColorSpan
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.text.style.UnderlineSpan
-import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -39,7 +37,6 @@ import uz.fido.utils.const.ServerMessages.ERROR_CODE_VPN
 import uz.fido.utils.const.ServerMessages.LOG_OUT
 import uz.fido.utils.const.ServerMessages.NEED_IDENTIFIED
 import uz.fido.utils.const.ServerMessages.getMeaningFulMessage
-import uz.fido.utils.log.Log.d
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -154,26 +151,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
 
     private fun openVpnErrorActivity() {
         startActivity(Intent(requireActivity(), VpnErrorActivity::class.java))
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        context?.d("onViewCreated")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        context?.d("onStart")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        context?.d("onPause")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        context?.d("onDestroyView")
     }
 
     private fun openSettingsPage(description: String) {

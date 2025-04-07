@@ -642,7 +642,7 @@ public abstract class ScanBaseActivity extends Activity implements Camera.Previe
 
     @Override
     public void onObjectFatalError() {
-        Log.d("ScanBaseActivity", "onObjectFatalError for object detection");
+
     }
 
     @Override
@@ -722,7 +722,7 @@ public abstract class ScanBaseActivity extends Activity implements Camera.Previe
                 mCamera.setPreviewDisplay(holder);
                 mCamera.startPreview();
             } catch (IOException e) {
-                Log.d("CameraCaptureActivity", "Error setting camera preview: " + e.getMessage());
+                e.printStackTrace();
             }
         }
 
@@ -759,7 +759,7 @@ public abstract class ScanBaseActivity extends Activity implements Camera.Previe
                 mCamera.setPreviewCallbackWithBuffer(mPreviewCallback);
                 mCamera.startPreview();
             } catch (Exception e) {
-                Log.d("CameraCaptureActivity", "Error starting camera preview: " + e.getMessage());
+                e.printStackTrace();
             }
         }
     }

@@ -43,17 +43,14 @@ class CheckInfoPaymentFragment :
     private lateinit var chequeAdapter: ChequeAdapter
     private lateinit var currentDate: String
     private lateinit var operation: String
-    private lateinit var icon: String
 
     private val filteredList = ArrayList<Cheque>()
     private var transactId: String = ""
     private var qr_code: String = ""
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (arguments != null) {
-            icon = requireArguments().getString("icon").toString()
             transactId = requireArguments().getString("transactId", "0")
             operation = requireArguments().getString("operation").toString()
         }
@@ -137,6 +134,7 @@ class CheckInfoPaymentFragment :
         init()
     }
 
+    @SuppressLint("SetTextI18n")
     private fun init() {
         currentDate = getCurrentDateNumber() + " " + getCurrentTime2()
         binding.dateTime.text = currentDate

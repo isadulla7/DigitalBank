@@ -11,13 +11,13 @@
 -dontwarn kotlin.time.**
 
 # Retain cryptography-related classes
--keep class javax.crypto.** { *; }
--keep class sun.security.** { *; }
--keep class org.bouncycastle.** { *; }
+#-keep class javax.crypto.** { *; }
+#-keep class sun.security.** { *; }
+#-keep class org.bouncycastle.** { *; }
 
 # Keep keystore-related methods
--keep public class * extends java.security.KeyStoreSpi
--keep public class * extends javax.crypto.SecretKeyFactorySpi
+#-keep public class * extends java.security.KeyStoreSpi
+#-keep public class * extends javax.crypto.SecretKeyFactorySpi
 
 -keepnames class kotlinx.** { *; }
 -keep class kotlinx.coroutines.** { *; }

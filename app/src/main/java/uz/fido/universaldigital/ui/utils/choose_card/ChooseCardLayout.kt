@@ -78,6 +78,54 @@ class ChooseCardLayout(context: Context, attr: AttributeSet) : ConstraintLayout(
         }
     }
 
+    fun initCardsOnly(
+        cards: ArrayList<CardResponse>,
+        minAmount: String? = null,
+        currencyChar: String? = null,
+        addCard: () -> Unit = {},
+        scrollListener: (CardResponse?) -> Unit
+    ) {
+        val onlyCards = getRealCardsOnly(cards)
+        val sortedCardList = filterCardsByCurrency(currencyChar, onlyCards)
+        if (sortedCardList.isNotEmpty()) {
+            binding.noCards.visibility = View.GONE
+            val snapHelper: SnapHelper = PagerSnapHelper()
+            val linearLayoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            binding.cards.apply {
+                adapter = ChooseCardAdapter(sortedCardList, minAmount)
+                layoutManager = linearLayoutManager
+                onFlingListener = null
+                snapHelper.attachToRecyclerView(this)
+                scrollListener.invoke(sortedCardList[0])
+
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                        super.onScrollStateChanged(recyclerView, newState)
+                        if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                            try {
+                                snapHelper.findSnapView(linearLayoutManager)?.let { view ->
+                                    linearLayoutManager.getPosition(view).let { position ->
+                                        vibrateTick(context)
+                                        scrollListener.invoke(sortedCardList[position])
+                                    }
+                                }
+                            } catch (e: Exception) {
+                                e.printStackTrace()
+                            }
+                        }
+                    }
+                })
+            }
+        } else {
+            binding.noCards.visibility = View.VISIBLE
+            scrollListener.invoke(null)
+        }
+        binding.noCards.setOnClickListener {
+            addCard()
+        }
+    }
+
     fun getUniversalCards(
         cards: ArrayList<CardResponse>,
         minAmount: String? = null,
@@ -190,6 +238,10 @@ class ChooseCardLayout(context: Context, attr: AttributeSet) : ConstraintLayout(
 
     private fun getDvCards(cardList: ArrayList<CardResponse>): ArrayList<CardResponse> {
         return cardList.filter { it.is_Dv == "Y" } as ArrayList<CardResponse>
+    }
+
+    private fun getRealCardsOnly(cardList: ArrayList<CardResponse>): ArrayList<CardResponse> {
+        return cardList.filter { it.object_type != "KL" } as ArrayList<CardResponse>
     }
 
 }

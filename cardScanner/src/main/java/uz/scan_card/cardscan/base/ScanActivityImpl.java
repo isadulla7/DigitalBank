@@ -98,11 +98,7 @@ public class ScanActivityImpl extends ScanBaseActivity {
         if (mInDebugMode) {
             mDebugImageView.setImageBitmap(ImageUtils.drawBoxesOnImage(bitmap, digitBoxes,
                     expiryBox));
-            Log.d(TAG, "Prediction (ms): " +
-                    (SystemClock.uptimeMillis() - mPredictionStartMs));
             if (startTimeMs != 0) {
-                Log.d(TAG, "time to first prediction: " +
-                        (SystemClock.uptimeMillis() - startTimeMs));
                 startTimeMs = 0;
             }
         }

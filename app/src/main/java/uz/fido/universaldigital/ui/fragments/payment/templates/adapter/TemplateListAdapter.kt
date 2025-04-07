@@ -61,7 +61,6 @@ class TemplateListAdapter(
         }
         if (item.service_group_code == "SWIFT") {
             holder.description.text = item.service_group_code
-//            holder.imageView.setPadding(4, 4, 4, 4)
             holder.imageView.setImageResource(R.drawable.ic_transfer_swift)
         }
         if (item.balance.isNullOrEmpty() || item.balance.toString().startsWith("0")) {

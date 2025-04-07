@@ -33,13 +33,11 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.coroutineScope
 import androidx.lifecycle.findViewTreeLifecycleOwner
 import coil.load
-import coil.transform.RoundedCornersTransformation
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.crashlytics.FirebaseCrashlytics
-import io.paperdb.Paper
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -58,6 +56,7 @@ import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.const.ServerMessages.getMeaningFulMessage
 import uz.fido.utils.device.vibrateTick
 import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.user.getFromPaper
 import java.io.Serializable
 import java.util.Calendar
 import java.util.GregorianCalendar
@@ -126,7 +125,7 @@ fun ImageView.loadTemplateImage(iconName: String) {
     val url = "${Keys.paynetPhotoUrl()}$iconName"
     this.load(url) {
         crossfade(true)
-        transformations(RoundedCornersTransformation(convertDpToPixel(12f, context)))
+//        transformations(RoundedCornersTransformation(convertDpToPixel(12f, context)))
         error(R.drawable.ic_payments_placeholder)
     }
 }
@@ -323,8 +322,8 @@ fun limitRange(): CalendarConstraints.Builder {
     return constraintsBuilderRange
 }
 
-fun isUserIdentified(): Boolean {
-    val userTypeId = Paper.book().read<Int>(Const.PAPER_CLIENT_USER_TYPE_ID)
+fun Fragment.isUserIdentified(): Boolean {
+    val userTypeId = getFromPaper(Const.PAPER_CLIENT_USER_TYPE_ID).toInt()
     return if (userTypeId != null) {
         userTypeId == 1 || userTypeId == 2
     } else false

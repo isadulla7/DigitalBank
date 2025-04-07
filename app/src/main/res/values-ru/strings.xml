@@ -1050,7 +1050,7 @@
     <string name="enable_shaking_action">Enable shaking action</string>
     <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
     <string name="rooted_device_not_allowed">Во избежание мошенничества и обеспечения безопасности ваших данных использование приложения на этом устройстве запрещено! Устройство может быть рутировано</string>
-    <string name="card_for_credit">"Карта для зачесления "</string>
+    <string name="card_for_credit">Карта списания</string>
     <string name="password_success">Успех</string>
     <string name="transfer_t0_wallet">Перевод на кашелек</string>
     <string name="select_phone_from_contact">Выберите номер телефона из контактов</string>

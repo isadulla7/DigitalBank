@@ -1,14 +1,12 @@
 package uz.fido.utils.app
 
-import uz.fido.utils.log.Log
-
 object Keys {
 
     init {
         try {
             System.loadLibrary("utils-lib")
         } catch (e: UnsatisfiedLinkError) {
-            Log.e("NativeLibrary", "Failed to load library: ${e.message}")
+            //Failed to load library
         }
     }
 

@@ -22,7 +22,7 @@ import java.io.File
 import java.nio.charset.StandardCharsets
 
 fun Context.saveSignInResponse(signInResponse: SignInResponse) {
-    Paper.book().write<Int>(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id)
+    saveToPaper(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id.toString())
     saveToPaper(Const.PAPER_CLIENT_FILIAL_CODE, signInResponse.filial_code.orEmpty())
     saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
     saveToPaper(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
@@ -37,7 +37,7 @@ fun Context.saveSignInResponse(signInResponse: SignInResponse) {
 }
 
 fun Fragment.saveSignInPinResponse(signInResponse: SignInResponse) {
-    Paper.book().write<Int>(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id)
+    saveToPaper(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id.toString())
     saveToPaper(Const.PAPER_CLIENT_FILIAL_CODE, signInResponse.filial_code.orEmpty())
     saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
     saveToPaper(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
@@ -47,13 +47,7 @@ fun Fragment.saveSignInPinResponse(signInResponse: SignInResponse) {
     saveToPaper(Const.LAST_NAME, signInResponse.surname)
     saveToPaper(Const.PATRONYMIC, signInResponse.patronymic)
     saveToPaper(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
-    saveToPaper(Const.PAPER_CLIENT_POINTS, signInResponse.points ?: "0")
-    saveToPaper(Const.PAPER_CLIENT_STATUS_NAME, signInResponse.user_status_name)
-    saveToPaper(Const.PAPER_CLIENT_STATUS_ID, signInResponse.user_status_id)
     saveToPaper(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
-    saveToPaper(Const.PAPER_CLIENT_APPLICATION_COUNT, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
-    saveToPaper(Const.APPLICATION_COUNT, signInResponse.application_count.toString())
-    saveToPaper(Const.USER_FULL_NAME, signInResponse.surname + " " + signInResponse.name + " " + signInResponse.patronymic)
     saveToPaper(Const.USER_BIRTHDAY, signInResponse.date_of_birth)
     saveToPaper(Const.USER_PASSWORD_DATA, signInResponse.passport_serial + " " + signInResponse.passport_number)
     saveToPaper(Const.USER_PASS_GIVEN_DATE, signInResponse.passport_registration_date)

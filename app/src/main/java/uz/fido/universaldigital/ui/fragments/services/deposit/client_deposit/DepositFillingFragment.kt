@@ -213,7 +213,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
             string_line = stringLine
         )
         viewModel.investMoney(getClientToken(), model).observe(viewLifecycleOwner) {
-            binding.btnContinue.isEnabled(false)
+            binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
                     getClientDeposits(amount)

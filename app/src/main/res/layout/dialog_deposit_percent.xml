@@ -48,8 +48,9 @@
 
     <uz.fido.utils.view.custom_empty_view.EmptyView
         android:id="@+id/empty"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/backgroundColor"
         android:visibility="gone"
         app:ev_desc="@string/interest_is_not_available"
         app:ev_title="@string/calculated_percents"

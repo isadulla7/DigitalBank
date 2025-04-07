@@ -166,5 +166,3 @@ firebase-database-ktx = { group = "com.google.firebase", name = "firebase-databa
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlyticsVersion" }
 
 [plugins]
-android-application = { id = "com.android.application" }
-

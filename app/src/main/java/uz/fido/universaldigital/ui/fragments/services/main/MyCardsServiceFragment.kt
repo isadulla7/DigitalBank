@@ -179,13 +179,10 @@ class MyCardsServiceFragment : BaseSimpleFragment<FragmentMyCardsServiceBinding>
 
             R.id.monitoring -> {
                 cardOperationsDialog.dismiss()
-                Log.d("TAG", "onClick:${selectedCard.object_id} ")
                 when (selectedCard.object_type) {
                     CardConst.UZCARD -> goto(R.id.uzCardMonitoringFragment, bundleOf(Const.CARD to selectedCard))
                     CardConst.HUMO_CARD -> goto(R.id.humoMonitoringFragment, bundleOf(Const.CARD to selectedCard))
                     CardConst.WALLET -> goto(R.id.walletMonitoringFragment, bundleOf(Const.CARD to selectedCard))
-                    //else->goto(R.id.visaMonitoringFragment, bundleOf(Const.CARD to selectedCard))
-
                 }
             }
 
@@ -195,9 +192,9 @@ class MyCardsServiceFragment : BaseSimpleFragment<FragmentMyCardsServiceBinding>
             }
 
             R.id.delete_wallet -> {
-                if (checkWalletBalance(selectedCard.balance)){
-                    showSnackbar(title = getString(R.string.wallet), snackbarText = getString(R.string.wallet_be_closed)  )
-                }else{
+                if (checkWalletBalance(selectedCard.balance)) {
+                    showSnackbar(title = getString(R.string.wallet), snackbarText = getString(R.string.wallet_be_closed))
+                } else {
                     walletOperationsDialog.dismiss()
                     CloseWalletDialog {
                         closeWallet()
@@ -235,7 +232,6 @@ class MyCardsServiceFragment : BaseSimpleFragment<FragmentMyCardsServiceBinding>
     }
 
     private fun checkWalletBalance(balance: String): Boolean {
-        Log.d("TAG", "checkWalletBalance:${balance} ")
         val doubleBalance = balance.toDouble()
         return doubleBalance > 0
     }

@@ -74,8 +74,6 @@ class AppSignatureHelper(context: Context) : ContextWrapper(context) {
                 // encode into Base64
                 var base64Hash = encodeToString(hashSignature, NO_PADDING or NO_WRAP)
                 base64Hash = base64Hash.substring(0, NUM_BASE64_CHAR)
-
-                Log.d(TAG, String.format("pkg: %s -- hash: %s", packageName, base64Hash))
                 return base64Hash
             } catch (e: NoSuchAlgorithmException) {
                 Log.e(TAG, "hash:NoSuchAlgorithm", e)

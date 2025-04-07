@@ -46,8 +46,6 @@ public class LocaleHelper {
     }
 
     private static void persist(String language, Context context) {
-
-        Log.d("TAG", "persist: "+language);
         PaperExtensionKt.saveToPaper(context, "lang", language);
     }
 

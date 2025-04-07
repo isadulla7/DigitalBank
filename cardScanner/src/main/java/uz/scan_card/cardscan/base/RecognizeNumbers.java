@@ -49,11 +49,8 @@ class RecognizeNumbers {
 
     private String recognizeAmexDigits(RecognizedDigitsModel model, ArrayList<DetectedBox> line) {
         ArrayList<RecognizedDigits> recognizedDigits = new ArrayList<>();
-        //Log.d("asdf", "staring amex");
         for (DetectedBox box : line) {
             recognizedDigits.add(cachedDigits(model, box));
-            String debugString = recognizedDigits.get(recognizedDigits.size() - 1).debugString();
-            //Log.d("asdf", debugString);
         }
 
         int startCol = line.get(0).col;

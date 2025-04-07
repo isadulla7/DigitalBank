@@ -144,17 +144,34 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
     }
 
     private fun initCards() {
-        menuProductsViewModel.cards.observe(viewLifecycleOwner) {
-            binding.chooseCardLayout.initCards(
-                it as ArrayList<CardResponse>, (totalAmount).toString(), if (currency == "000") CurrencyConst.CURRENCY_CHAR_UZS else CurrencyConst.CURRENCY_CHAR_USD
-            ) { cardResponse ->
-                cardResponse?.let { card ->
-                    senderCard = card
-                    binding.continueButton.isEnabled(
-                        !BaseCardUtils.compareWithBalance(
-                            totalAmount.toString(), card
+        if (paymentService?.service_id == 788) {
+            menuProductsViewModel.cards.observe(viewLifecycleOwner) {
+                binding.chooseCardLayout.initCardsOnly(
+                    it as ArrayList<CardResponse>, (totalAmount).toString(), if (currency == "000") CurrencyConst.CURRENCY_CHAR_UZS else CurrencyConst.CURRENCY_CHAR_USD
+                ) { cardResponse ->
+                    cardResponse?.let { card ->
+                        senderCard = card
+                        binding.continueButton.isEnabled(
+                            !BaseCardUtils.compareWithBalance(
+                                totalAmount.toString(), card
+                            )
                         )
-                    )
+                    }
+                }
+            }
+        } else {
+            menuProductsViewModel.cards.observe(viewLifecycleOwner) {
+                binding.chooseCardLayout.initCards(
+                    it as ArrayList<CardResponse>, (totalAmount).toString(), if (currency == "000") CurrencyConst.CURRENCY_CHAR_UZS else CurrencyConst.CURRENCY_CHAR_USD
+                ) { cardResponse ->
+                    cardResponse?.let { card ->
+                        senderCard = card
+                        binding.continueButton.isEnabled(
+                            !BaseCardUtils.compareWithBalance(
+                                totalAmount.toString(), card
+                            )
+                        )
+                    }
                 }
             }
         }
@@ -201,7 +218,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
 
                 else -> {
                     valueView.text = if (paymentParams.def_value.trim().isNotEmpty()) {
-                        paymentParams.def_value.replace(" ","")
+                        paymentParams.def_value.replace(" ", "")
                     } else ""
                 }
             }

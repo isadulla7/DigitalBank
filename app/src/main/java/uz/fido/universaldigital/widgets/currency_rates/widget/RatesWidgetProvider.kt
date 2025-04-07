@@ -4,7 +4,6 @@ import android.appwidget.AppWidgetManager
 import android.appwidget.AppWidgetProvider
 import android.content.Context
 import androidx.work.ListenableWorker
-import uz.fido.nfccardreaderlib.Logger
 import uz.fido.universaldigital.widgets.currency_rates.retrofit.Failure
 import uz.fido.universaldigital.widgets.currency_rates.retrofit.RatesRepository
 import uz.fido.universaldigital.widgets.currency_rates.retrofit.Repository
@@ -31,8 +30,8 @@ class RatesWidgetProvider : AppWidgetProvider() {
                     view.update(context, it.data)
                     false
                 }
+
                 is Failure -> {
-                    Logger.writeLog("fail "+it.error)
                     true
                 }
             }

@@ -1,7 +1,6 @@
 package uz.fido.utils.utility.user
 
 import android.content.Context
-import android.util.Log
 import androidx.fragment.app.Fragment
 import io.paperdb.Paper
 import io.paperdb.PaperDbException
@@ -42,12 +41,8 @@ fun Context.getFromPaper(key: String, defaultValue: String? = ""): String {
     var decryptedValue = ""
     try {
         decryptedValue = CryptoUtil.decrypt(encryptedValue, getDeviceIds())
-        Log.d("TAG", "getFromPaper:$decryptedValue")
-
     } catch (e: Exception) {
-        Log.d("TAG", "getFromPaper:----$decryptedValue")
         return encryptedValue.orEmpty()
-
     }
     return decryptedValue
 }

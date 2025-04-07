@@ -97,15 +97,8 @@ public class MachineLearningThread implements Runnable {
 
     private BitmapPair getBitmap(byte[] bytes, int width, int height, int format,
                                  int sensorOrientation, float roiCenterYRatio, boolean isOcr) {
-        long startTime = SystemClock.uptimeMillis();
 
         final Bitmap bitmap = YUVtoRGB(bytes, width, height);
-        long decode = SystemClock.uptimeMillis();
-
-        if (GlobalConfig.PRINT_TIMING) {
-            Log.d("MLThread", "decode -> " + ((decode - startTime) / 1000.0));
-        }
-
         sensorOrientation = sensorOrientation % 360;
 
         double h;
@@ -151,11 +144,6 @@ public class MachineLearningThread implements Runnable {
 
         Bitmap croppedBitmap = Bitmap.createBitmap(bitmap, x, y, (int) w, (int) h);
 
-        long crop = SystemClock.uptimeMillis();
-        if (GlobalConfig.PRINT_TIMING) {
-            Log.d("MLThread", "crop -> " + ((crop - decode) / 1000.0));
-        }
-
         Matrix matrix = new Matrix();
         matrix.postRotate(sensorOrientation);
         Bitmap bm = Bitmap.createBitmap(croppedBitmap, 0, 0, croppedBitmap.getWidth(),
@@ -164,11 +152,6 @@ public class MachineLearningThread implements Runnable {
 
         Bitmap fullScreen = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
                 bitmap.getHeight(), matrix, true);
-
-        long rotate = SystemClock.uptimeMillis();
-        if (GlobalConfig.PRINT_TIMING) {
-            Log.d("MLThread", "rotate -> " + ((rotate - crop) / 1000.0));
-        }
 
         croppedBitmap.recycle();
         bitmap.recycle();

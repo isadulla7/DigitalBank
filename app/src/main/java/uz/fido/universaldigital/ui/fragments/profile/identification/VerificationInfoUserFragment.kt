@@ -7,7 +7,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
-import io.paperdb.Paper
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.my_id.CheckIdentification
 import uz.fido.network.domain.model.my_id.MyIdGetAccessTokenRequest
@@ -21,6 +20,7 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
+import uz.fido.utils.utility.user.saveToPaper
 
 @AndroidEntryPoint
 class VerificationInfoUserFragment : BaseFragment<FragmentVerificationInfoUserBinding, IdentificationViewModel>(
@@ -140,22 +140,15 @@ class VerificationInfoUserFragment : BaseFragment<FragmentVerificationInfoUserBi
         myIdResponse?.let { response ->
             val commonData = response.profile.common_data
             val docData = response.profile.doc_data
-            val userName = "${commonData.first_name} ${commonData.last_name}"
             val fullName = "${commonData.first_name} ${commonData.last_name} ${commonData.middle_name}"
-
-            Paper.book().apply {
-                write(Const.FIRST_NAME, commonData.first_name)
-                write(Const.LAST_NAME, commonData.last_name)
-                write(Const.PATRONYMIC, commonData.middle_name)
-                write(Const.USER_NAME, userName)
-                write(Const.USER_FULL_NAME, fullName)
-                write(Const.USER_BIRTHDAY, commonData.birth_date)
-                write(Const.USER_CITIZENSHIP, commonData.citizenship)
-                write(Const.USER_PASSWORD_DATA, docData.pass_data)
-                write(Const.USER_PASS_GIVEN_DATE, docData.issued_date)
-                write(Const.USER_PASS_EXPIRE_DATE, docData.expiry_date ?: "")
-                write(Const.USER_PINFL, commonData.pinfl)
-            }
+            saveToPaper(Const.FIRST_NAME, commonData.first_name)
+            saveToPaper(Const.LAST_NAME, commonData.last_name)
+            saveToPaper(Const.PATRONYMIC, commonData.middle_name)
+            saveToPaper(Const.USER_BIRTHDAY, commonData.birth_date)
+            saveToPaper(Const.USER_CITIZENSHIP, commonData.citizenship)
+            saveToPaper(Const.USER_PASSWORD_DATA, docData.pass_data)
+            saveToPaper(Const.USER_PASS_GIVEN_DATE, docData.issued_date)
+            saveToPaper(Const.USER_PASS_EXPIRE_DATE, docData.expiry_date ?: "")
         }
     }
 
