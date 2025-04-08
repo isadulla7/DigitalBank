@@ -24,4 +24,11 @@ object Keys {
 
     external fun getCertFilePassword(): String
 
+    external fun getCertPin1(): String
+
+    external fun getCertPin2(): String
+
+    external fun getCertPin3(): String
+
+    external fun getDomainName(): String
 }

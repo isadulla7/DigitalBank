@@ -1,7 +1,6 @@
 package uz.fido.network.di
 
 import android.content.Context
-import android.os.Build
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -26,7 +25,6 @@ import uz.fido.network.domain.datasource.services.SwapKeyApiInterface
 import uz.fido.network.domain.datasource.services.UserApiInterface
 import uz.fido.utils.const.MyIdServiceConst
 import java.io.InputStream
-import java.security.GeneralSecurityException
 import java.security.KeyStore
 import java.security.SecureRandom
 import java.util.concurrent.TimeUnit
@@ -59,13 +57,11 @@ object NetworkModule {
     @Singleton
     fun provideKeyStore(caFileInputStream: InputStream): KeyStore = kotlin.run {
         val keyStore = KeyStore.getInstance("PKCS12")
-        try {
-            val password = Keys.getCertFilePassword().toCharArray()
-            keyStore.load(caFileInputStream, password)
-        } catch (e: Exception) {
-            e.printStackTrace()
+        val password = Keys.getCertFilePassword().toCharArray()
+        caFileInputStream.use {
+            keyStore.load(it, password)
         }
-        return@run keyStore
+        return keyStore
     }
 
     @Provides
@@ -78,17 +74,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideSslContext(keyStore: KeyStore, keyManagerFactory: KeyManagerFactory): SSLContext =
+    fun provideSslContext(keyManagerFactory: KeyManagerFactory): SSLContext =
         kotlin.run {
-            val sslContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                SSLContext.getInstance("TLSv1.3")
-            } else {
-                SSLContext.getInstance("TLSv1.2")
-            }
-            val tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm()
-            val tmf = TrustManagerFactory.getInstance(tmfAlgorithm)
-            tmf.init(keyStore)
-            sslContext.init(keyManagerFactory.keyManagers, null, SecureRandom())
+            val sslContext = SSLContext.getInstance("TLSv1.2")
+            val tmf = systemDefaultTrustManager()
+            sslContext.init(keyManagerFactory.keyManagers, arrayOf(tmf), SecureRandom())
             return@run sslContext
         }
 
@@ -96,18 +86,14 @@ object NetworkModule {
     @Singleton
     fun provideSslSocketFactory(sslContext: SSLContext): SSLSocketFactory = sslContext.socketFactory
 
-    private fun systemDefaultTrustManager(keyStore: KeyStore): X509TrustManager? {
-        return try {
-            val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
-            trustManagerFactory.init(keyStore as KeyStore?)
-            val trustManagers = trustManagerFactory.trustManagers
-            check(!(trustManagers.size != 1 || trustManagers.first() !is X509TrustManager)) {
-                "Unexpected default trust managers:" + trustManagers.contentToString()
-            }
-            trustManagers.first() as X509TrustManager
-        } catch (e: GeneralSecurityException) {
-            throw AssertionError()
+    private fun systemDefaultTrustManager(): X509TrustManager {
+        val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+        trustManagerFactory.init(null as KeyStore?)
+        val trustManagers = trustManagerFactory.trustManagers
+        require(trustManagers.size == 1 && trustManagers[0] is X509TrustManager) {
+            "Unexpected TrustManager configuration"
         }
+        return trustManagers[0] as X509TrustManager
     }
 
     @Provides
@@ -119,9 +105,9 @@ object NetworkModule {
     }
 
     private val certificatePinner = CertificatePinner.Builder()
-        .add("ra.ubank.uz", "sha256/P8Meknq+VzYp+Y/EiOHnGk5usNgeRR1LTPUZwtTspv4=")
-        .add("ra.ubank.uz", "sha256/4a6cPehI7OG6cuDZka5NDZ7FR8a60d3auda+sKfg4Ng=")
-        .add("ra.ubank.uz", "sha256/x4QzPSC810K5/cMjb05Qm4k3Bw5zBn4lTdO/nEW/Td4=")
+        .add(Keys.getDomainName(), Keys.getCertPin1())
+        .add(Keys.getDomainName(), Keys.getCertPin2())
+        .add(Keys.getDomainName(), Keys.getCertPin3())
         .build()
 
     @BaseOkhttpClient
@@ -129,11 +115,11 @@ object NetworkModule {
     fun provideOkhttpClient(
         @ApplicationContext appContext: Context,
         sslSocketFactory: SSLSocketFactory,
-        keyStore: KeyStore,
         loggingInterceptor: HttpLoggingInterceptor,
         swapKeyService: SwapKeyApiInterface,
         apiInterface: dagger.Lazy<UserApiInterface>,
-    ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager(keyStore) as X509TrustManager)
+    ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager())
+        .certificatePinner(certificatePinner)
         .addInterceptor(HeaderInterceptor(context = appContext))
         .addInterceptor(loggingInterceptor)
         .addInterceptor(
@@ -142,7 +128,6 @@ object NetworkModule {
         .addInterceptor(DecryptionInterceptor(appContext))
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS)
-//        .certificatePinner(certificatePinner)
         .build()
 
     @SimpleClientRetrofit
@@ -192,11 +177,13 @@ object NetworkModule {
 
     @SwapKeyRetrofit
     @Provides
-    fun swapKeyRetrofitClient(sslSocketFactory: SSLSocketFactory, keyStore: KeyStore, loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
-        OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager(keyStore) as X509TrustManager).addInterceptor(Interceptor {
-            val request: Request = it.request().newBuilder().build()
-            return@Interceptor it.proceed(request)
-        }).addInterceptor(loggingInterceptor).readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS).writeTimeout(180, TimeUnit.SECONDS).build()
+    fun swapKeyRetrofitClient(sslSocketFactory: SSLSocketFactory, loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+        OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager())
+            .certificatePinner(certificatePinner)
+            .addInterceptor(Interceptor {
+                val request: Request = it.request().newBuilder().build()
+                return@Interceptor it.proceed(request)
+            }).addInterceptor(loggingInterceptor).readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS).writeTimeout(180, TimeUnit.SECONDS).build()
 
     @SwapKeyRetrofit
     @Provides
