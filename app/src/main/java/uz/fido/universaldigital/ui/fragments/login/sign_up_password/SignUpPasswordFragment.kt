@@ -24,6 +24,7 @@ import uz.fido.universaldigital.ui.utils.extensions.removeSpace
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.encryptPassword
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.context.GetDeviceInfo
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
@@ -106,7 +107,7 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
             device_name = getDeviceName(),
             device_type = "A",
             email = "",
-            fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
+            fcm_token = requireContext().getFromSecureStore(Const.PAPER_FCM_TOKEN),
             flag = SignUpFlagsEnum.Continue.flag,
             imei_data = device.imei_data.toString(),
             invited_user_id = "",

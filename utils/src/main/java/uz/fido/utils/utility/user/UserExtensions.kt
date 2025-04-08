@@ -4,18 +4,19 @@ import android.content.Context
 import android.util.Base64
 import androidx.fragment.app.Fragment
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 import java.nio.charset.StandardCharsets
 
 fun Fragment.getClientToken(): String {
-    val token = getFromPaper(Const.PAPER_CLIENT_TOKEN)
+    val token = getFromSecureStore(Const.PAPER_CLIENT_TOKEN)
     if (token.isEmpty()) {
         return token
     }
     return String(Base64.decode(token, Base64.DEFAULT), StandardCharsets.UTF_8)
 }
 
-fun Context.getClientToken(): String {
-    val token = getFromPaper(Const.PAPER_CLIENT_TOKEN)
+fun getClientToken(): String {
+    val token = getFromSecureStore(Const.PAPER_CLIENT_TOKEN)
     if (token.isEmpty()) {
         return token
     }
@@ -23,11 +24,11 @@ fun Context.getClientToken(): String {
 }
 
 fun Fragment.getClientPhoneNumber(): String {
-    return getFromPaper(Const.PAPER_CLIENT_PHONE)
+    return getFromSecureStore(Const.PAPER_CLIENT_PHONE)
 }
 
 fun Fragment.getFormattedClientPhone(): String {
-    val currentPhone = getFromPaper(Const.PAPER_CLIENT_PHONE)
+    val currentPhone = getFromSecureStore(Const.PAPER_CLIENT_PHONE)
     return when {
         currentPhone.isEmpty() -> ""
         currentPhone.startsWith("+") && currentPhone.length == 13 -> {
@@ -50,10 +51,10 @@ fun Fragment.getFormattedClientPhone(): String {
 }
 
 fun Fragment.getClientId(): String {
-    return getFromPaper(Const.PAPER_CLIENT_ID)
+    return getFromSecureStore(Const.PAPER_CLIENT_ID)
 }
 
 fun Context.getClientId(): String {
-    return getFromPaper(Const.PAPER_CLIENT_ID)
+    return getFromSecureStore(Const.PAPER_CLIENT_ID)
 }
 

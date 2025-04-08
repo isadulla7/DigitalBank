@@ -6,9 +6,10 @@ import android.content.pm.PackageManager
 import uz.fido.universaldigital.ui.activities.app_icon_changer.AppIcons
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 
 fun Activity.changeAppIcon() {
-    val iconAliasName = getFromPaper(Const.CURRENT_APP_ICON, AppIcons.APP_ICON_DEFAULT)
+    val iconAliasName = this.getFromSecureStore(Const.CURRENT_APP_ICON, AppIcons.APP_ICON_DEFAULT)
     // Disable other aliases
     val aliases = listOf(
         AppIcons.APP_ICON_SPRING,

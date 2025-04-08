@@ -13,44 +13,44 @@ import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.universaldigital.ui.activities.LoginActivity
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.APIServiceConst.profileImageUrl
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.DiffieHellman
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.context.startActivityWithClearTask
 import java.io.File
 import java.nio.charset.StandardCharsets
 
 fun Context.saveSignInResponse(signInResponse: SignInResponse) {
-    saveToPaper(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id.toString())
-    saveToPaper(Const.PAPER_CLIENT_FILIAL_CODE, signInResponse.filial_code.orEmpty())
-    saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
-    saveToPaper(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
-    saveToPaper(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
-    saveToPaper(Const.PAPER_CLIENT_ID, signInResponse.user_id)
-    saveToPaper(Const.FIRST_NAME, signInResponse.name)
-    saveToPaper(Const.LAST_NAME, signInResponse.surname)
-    saveToPaper(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
+    saveToSecureStore(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id.toString())
+    saveToSecureStore(Const.PAPER_CLIENT_FILIAL_CODE, signInResponse.filial_code.orEmpty())
+    saveToSecureStore(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
+    saveToSecureStore(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
+    saveToSecureStore(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
+    saveToSecureStore(Const.PAPER_CLIENT_ID, signInResponse.user_id)
+    saveToSecureStore(Const.FIRST_NAME, signInResponse.name)
+    saveToSecureStore(Const.LAST_NAME, signInResponse.surname)
+    saveToSecureStore(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
     signInResponse.password?.let {
         saveUserQwerty(it)
     }
 }
 
 fun Fragment.saveSignInPinResponse(signInResponse: SignInResponse) {
-    saveToPaper(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id.toString())
-    saveToPaper(Const.PAPER_CLIENT_FILIAL_CODE, signInResponse.filial_code.orEmpty())
-    saveToPaper(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
-    saveToPaper(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
-    saveToPaper(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
-    saveToPaper(Const.PAPER_CLIENT_ID, signInResponse.user_id)
-    saveToPaper(Const.FIRST_NAME, signInResponse.name)
-    saveToPaper(Const.LAST_NAME, signInResponse.surname)
-    saveToPaper(Const.PATRONYMIC, signInResponse.patronymic)
-    saveToPaper(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
-    saveToPaper(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
-    saveToPaper(Const.USER_BIRTHDAY, signInResponse.date_of_birth)
-    saveToPaper(Const.USER_PASSWORD_DATA, signInResponse.passport_serial + " " + signInResponse.passport_number)
-    saveToPaper(Const.USER_PASS_GIVEN_DATE, signInResponse.passport_registration_date)
+    saveToSecureStore(Const.PAPER_CLIENT_USER_TYPE_ID, signInResponse.user_type_id.toString())
+    saveToSecureStore(Const.PAPER_CLIENT_FILIAL_CODE, signInResponse.filial_code.orEmpty())
+    saveToSecureStore(Const.PAPER_CLIENT_TOKEN, getClientEncodedToken(signInResponse.token))
+    saveToSecureStore(Const.PAPER_PAYMENT_VERSION, signInResponse.version ?: "0")
+    saveToSecureStore(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
+    saveToSecureStore(Const.PAPER_CLIENT_ID, signInResponse.user_id)
+    saveToSecureStore(Const.FIRST_NAME, signInResponse.name)
+    saveToSecureStore(Const.LAST_NAME, signInResponse.surname)
+    saveToSecureStore(Const.PATRONYMIC, signInResponse.patronymic)
+    saveToSecureStore(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
+    saveToSecureStore(Const.PAPER_CLIENT_PHONE, signInResponse.phone_number?.replace("+", "")?.replace(" ", ""))
+    saveToSecureStore(Const.USER_BIRTHDAY, signInResponse.date_of_birth)
+    saveToSecureStore(Const.USER_PASSWORD_DATA, signInResponse.passport_serial + " " + signInResponse.passport_number)
+    saveToSecureStore(Const.USER_PASS_GIVEN_DATE, signInResponse.passport_registration_date)
 }
 
 fun Context.saveUserQwerty(qwerty: String) {

@@ -11,9 +11,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.FragmentNewDesignOnboardBinding
 import uz.fido.universaldigital.ui.activities.MainActivity
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 
 @AndroidEntryPoint
 class NewDesignOnboardingPage : DialogFragment() {
@@ -33,7 +33,7 @@ class NewDesignOnboardingPage : DialogFragment() {
     }
 
     private fun loadImage() {
-        if (getFromPaper(Const.NEW_DESIGN, "N") == "Y") {
+        if (requireContext().getFromSecureStore(Const.NEW_DESIGN, "N") == "Y") {
             binding.title.setText(R.string.old_design_title)
             binding.description.setText(R.string.old_design_description)
             binding.switchNewDesign.setText(R.string.switch_old_design)
@@ -48,14 +48,14 @@ class NewDesignOnboardingPage : DialogFragment() {
 
     private fun initOnClickListeners() {
         binding.switchNewDesign.setOnClickListener {
-            if (getFromPaper(Const.NEW_DESIGN, "N") == "Y") {
-                saveToPaper(Const.NEW_DESIGN, "N")
+            if (requireContext().getFromSecureStore(Const.NEW_DESIGN, "N") == "Y") {
+                saveToSecureStore(Const.NEW_DESIGN, "N")
                 val intent = Intent(requireContext(), MainActivity::class.java)
                 intent.putExtra(Const.NEW_DESIGN, false)
                 requireActivity().finishAffinity()
                 startActivity(intent)
             } else {
-                saveToPaper(Const.NEW_DESIGN, "Y")
+                saveToSecureStore(Const.NEW_DESIGN, "Y")
                 val intent = Intent(requireContext(), MainActivity::class.java)
                 intent.putExtra(Const.NEW_DESIGN, true)
                 requireActivity().finishAffinity()

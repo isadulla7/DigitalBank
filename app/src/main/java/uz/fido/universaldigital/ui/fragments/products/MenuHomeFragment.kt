@@ -38,14 +38,13 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardNameAn
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardTypeImage
 import uz.fido.universaldigital.ui.utils.extensions.doTransferOperationByType
 import uz.fido.universaldigital.ui.utils.extensions.getDrawableFromRes
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.extensions.setCardState
 import uz.fido.universaldigital.ui.utils.home_utils.getCardsWithBalanceVisibility
-import uz.fido.universaldigital.ui.utils.home_utils.initBalanceWidget
+import uz.fido.universaldigital.ui.utils.home_utils.getUserCardsFromSecureStore
 import uz.fido.universaldigital.ui.utils.home_utils.initRefreshLayout
-import uz.fido.universaldigital.ui.utils.home_utils.loadCardsFromPaper
 import uz.fido.universaldigital.ui.utils.home_utils.loadProfileImage
+import uz.fido.universaldigital.ui.utils.home_utils.saveUserCardsSecure
 import uz.fido.universaldigital.ui.utils.home_utils.setUpTickerView
 import uz.fido.universaldigital.ui.utils.home_utils.setUserDetails
 import uz.fido.universaldigital.ui.utils.stack_notification.CardStackLayoutManager
@@ -53,6 +52,7 @@ import uz.fido.universaldigital.ui.utils.stack_notification.Direction
 import uz.fido.universaldigital.ui.utils.stack_notification.StackFrom
 import uz.fido.universaldigital.ui.utils.stack_notification.SwipeableMethod
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
@@ -108,7 +108,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     }
 
     private fun setSeasonAnimation() {
-        val currentSeason = getFromPaper(Const.CURRENT_SEASON, Season.DEFAULT)
+        val currentSeason = requireContext().getFromSecureStore(Const.CURRENT_SEASON, Season.DEFAULT)
         when (currentSeason) {
             Season.WINTER -> {
                 binding.homeAnimView.apply {
@@ -265,7 +265,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
     }
 
     private fun initTotalBalance() {
-        userCards = loadCardsFromPaper()
+        userCards = getUserCardsFromSecureStore()
         menuProductsViewModel.updateCards(userCards)
         menuProductsViewModel.cards.observe(viewLifecycleOwner) { currentCards ->
             userCards = currentCards as ArrayList<CardResponse>
@@ -288,7 +288,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
                 (currentCards.size == savedCardsWithBalanceVisibility.size)
             ) savedCardsWithBalanceVisibility else currentCards
             checkForBalanceOfCards()
-            Paper.book().write(Const.PAPER_CLIENT_CARDS, currentCards)
+            saveUserCardsSecure(currentCards)
             setTotalBalance()
             initBalanceVisibility()
             initUserCards()
@@ -473,7 +473,6 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         val totalBalanceLast =
             Format.formatAmount(Format.convertFromTiynDivide(totalBalance.toString()))
         binding.balance.text = "$totalBalanceLast $currency"
-        initBalanceWidget(totalBalanceLast)
     }
 
     private fun initUserCards() {

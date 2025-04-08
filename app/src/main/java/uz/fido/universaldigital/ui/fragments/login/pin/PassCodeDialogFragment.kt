@@ -15,12 +15,12 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogPassCodeBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAndOutAnim
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.device.vibrateTick
 import uz.fido.utils.security.getDecodedString
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.context.startActivityWithClearTask
 import uz.fido.utils.view.custom_text_view.TextViewMedium
 import java.util.concurrent.Executors
@@ -66,7 +66,7 @@ class PassCodeDialogFragment(var onSuccessBack: () -> Unit) : BottomSheetDialogF
     }
 
     private fun initPinCodeOperation() {
-        if (pin == getDecodedString(getFromPaper(Const.PAPER_CLIENT_PIN))) {
+        if (pin == getDecodedString(requireContext().getFromSecureStore(Const.PAPER_CLIENT_PIN))) {
             dismiss()
             onSuccessBack.invoke()
         } else {

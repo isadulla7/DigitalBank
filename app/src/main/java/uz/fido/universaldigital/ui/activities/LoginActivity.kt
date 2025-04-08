@@ -17,13 +17,14 @@ import uz.fido.universaldigital.ui.activities.app_icon_changer.changeAppIcon
 import uz.fido.universaldigital.ui.activities.security.LockSetActivity
 import uz.fido.universaldigital.ui.activities.security.RootedDeviceActivity
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.getLoginStartDestination
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.SecurityCheck
 import uz.fido.utils.security.SecurityCheck.isPhoneRooted
 import uz.fido.utils.security.SecurityCheck.isRunningOnEmulator
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
+
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity() {
@@ -41,10 +42,22 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun listenAppIconChanges() {
+//        GlobalScope.launch(Dispatchers.IO) {
+//            val hostname = "ra.ubank.uz"
+//            val certificatePinner = CertificatePinner.Builder()
+//                .add(hostname, "sha1/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
+//                .build()
+//            val client = OkHttpClient.Builder().certificatePinner(certificatePinner).build()
+//
+//            val request: Request = Request.Builder()
+//                .url("https://$hostname")
+//                .build()
+//            client.newCall(request).execute()
+//        }
         viewModel.appIconLiveData.observe(this) {
-            val currentIcon = getFromPaper(Const.CURRENT_APP_ICON, AppIcons.APP_ICON_DEFAULT)
+            val currentIcon = this.getFromSecureStore(Const.CURRENT_APP_ICON, AppIcons.APP_ICON_DEFAULT)
             if (currentIcon != it) {
-                saveToPaper(Const.CURRENT_APP_ICON, it)
+                saveToSecureStore(Const.CURRENT_APP_ICON, it)
                 changeAppIcon()
             }
         }

@@ -17,11 +17,11 @@ import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveUs
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.encryptPassword
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.context.startActivityWithClearTask
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.language.Utility.isValidPasswordFormat
 import uz.fido.utils.utility.user.getClientToken
-import uz.fido.utils.utility.user.getFromPaper
 
 @AndroidEntryPoint
 class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, RestoreProfileViewModel>(FragmentChangePasswordBinding::inflate, RestoreProfileViewModel::class.java) {
@@ -81,7 +81,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
     private fun changePasswordOperation() {
         when (operation) {
             CHANGE_PASSWORD -> {
-                if (encryptPassword(binding.etOldPassword.text.toString().trim()) == getFromPaper(Const.PASSWORD_ENC)) {
+                if (encryptPassword(binding.etOldPassword.text.toString().trim()) == getFromSecureStore(Const.PASSWORD_ENC)) {
                     changePassword()
                 } else {
                     showSnackbar(getString(R.string.old_password_is_wrong))
@@ -100,7 +100,7 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
 
     private fun changePassword() {
         binding.btnContinue.setProgress(true)
-        val model = ChangePasswordRequest(new_password = encryptPassword(binding.etPassword.text.toString().trim()), current_password = getFromPaper(Const.PASSWORD_ENC))
+        val model = ChangePasswordRequest(new_password = encryptPassword(binding.etPassword.text.toString().trim()), current_password = getFromSecureStore(Const.PASSWORD_ENC))
         viewModel.changePassword(getClientToken(), model).observe(viewLifecycleOwner) {
             binding.btnContinue.setProgress(false)
             when (it.status) {

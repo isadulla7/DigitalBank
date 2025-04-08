@@ -18,6 +18,7 @@ import uz.fido.universaldigital.ui.fragments.payment.auto_payment.dialog.AutoPay
 import uz.fido.universaldigital.ui.utils.calendar_view.EventObjects
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
@@ -121,7 +122,7 @@ class AutoPaymentFragment : BaseFragment<FragmentApWithCalendarBinding, AutoPaym
 
     private fun getListItem() {
         val skeletonScreen = showSkeleton(binding.recyclerView, autoPaymentAdapter, R.layout.shimmer_item_history)
-        viewModel.getAutoPaymentList(getClientToken(), AutoPaymentRequest(getFromPaper(Const.PAPER_CLIENT_PHONE, ""))).observe(viewLifecycleOwner) {
+        viewModel.getAutoPaymentList(getClientToken(), AutoPaymentRequest(getFromSecureStore(Const.PAPER_CLIENT_PHONE, ""))).observe(viewLifecycleOwner) {
             skeletonScreen.hide()
             when (it.status) {
                 Status.SUCCESS -> {

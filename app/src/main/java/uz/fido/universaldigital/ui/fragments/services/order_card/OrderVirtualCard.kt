@@ -28,6 +28,7 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.Basic
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
@@ -149,9 +150,9 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
             getClientToken(), OrderVirtualCardRequest(
                 orderType = productCode,
                 cardType = cardType.toString().replace("4", "3"),
-                contact = getFromPaper(Const.PAPER_CLIENT_PHONE),
+                contact = getFromSecureStore(Const.PAPER_CLIENT_PHONE),
                 service_id = "-11",
-                smsMobilePhone = getFromPaper(Const.PAPER_CLIENT_PHONE),
+                smsMobilePhone = getFromSecureStore(Const.PAPER_CLIENT_PHONE),
                 virtual = "Y",
                 secretWord = secretWord
             )

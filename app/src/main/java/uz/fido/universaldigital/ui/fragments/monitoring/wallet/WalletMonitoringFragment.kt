@@ -26,6 +26,7 @@ import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format.newDateFormat
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.sticky.StickyHeaderDecoration
 import uz.fido.utils.utility.adapter.showSkeleton
@@ -115,7 +116,7 @@ class WalletMonitoringFragment :
                     else -> 0
                 }
 
-                val filialCode = getFromPaper(Const.PAPER_CLIENT_FILIAL_CODE)
+                val filialCode = getFromSecureStore(Const.PAPER_CLIENT_FILIAL_CODE)
                 val model = AccountHistoriesRequest(
                     pageNumber = "1",
                     pageSize = "20",
@@ -269,7 +270,7 @@ class WalletMonitoringFragment :
     }
 
     private fun createModel(page: Int): AccountHistoriesRequest {
-        val filialCode = getFromPaper(Const.PAPER_CLIENT_FILIAL_CODE)
+        val filialCode = getFromSecureStore(Const.PAPER_CLIENT_FILIAL_CODE)
         val model = AccountHistoriesRequest(
             pageNumber = page.toString(),
             pageSize = "20",

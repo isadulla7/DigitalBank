@@ -23,6 +23,7 @@ import uz.fido.utils.const.CardConst.CURRENCY_CARD
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.CryptoUtil
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
@@ -110,7 +111,7 @@ class AboutCardFragment : BaseFragment<FragmentAboutCardBinding, MenuProductsVie
                     Status.SUCCESS -> {
                         val result = it.data as GetObjValueResponse
                         try {
-                            copyObjValue(CryptoUtil.decryptWithoutSalt(result.object_value, getFromPaper(Const.PASSWORD_ENC)))
+                            copyObjValue(CryptoUtil.decryptWithoutSalt(result.object_value, getFromSecureStore(Const.PASSWORD_ENC)))
                         } catch (e: Exception) {
                             toast(e.localizedMessage)
                         }

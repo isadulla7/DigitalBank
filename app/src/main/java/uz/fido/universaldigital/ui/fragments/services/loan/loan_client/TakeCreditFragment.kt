@@ -21,6 +21,7 @@ import uz.fido.utils.const.CardConst.HUMO_CARD
 import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
@@ -158,6 +159,6 @@ class TakeCreditFragment : BaseFragment<FragmentTakeCreditBinding, ClientLoanVie
     }
 
     fun getClientPhoneNumber(): String {
-        return getFromPaper(Const.PAPER_CLIENT_PHONE)
+        return getFromSecureStore(Const.PAPER_CLIENT_PHONE)
     }
 }

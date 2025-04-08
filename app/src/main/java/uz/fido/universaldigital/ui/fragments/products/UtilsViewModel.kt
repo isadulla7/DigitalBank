@@ -50,7 +50,7 @@ class UtilsViewModel @Inject constructor(
 
     fun updateRates() {
         vmScope.launch {
-            val rates = cardsUseCase.getRates(context.getClientToken())
+            val rates = cardsUseCase.getRates(getClientToken())
             currencyRates.postValue(rates)
         }
     }

@@ -8,7 +8,7 @@ import okhttp3.Response
 import okhttp3.ResponseBody.Companion.toResponseBody
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.CryptoUtil
-import uz.fido.utils.utility.user.getFromPaper
+import uz.fido.utils.security.getFromSecureStore
 import java.io.IOException
 
 /**
@@ -36,7 +36,7 @@ class DecryptionInterceptor(val context: Context) : Interceptor {
             val responseString = response.peekBody(Long.MAX_VALUE).string()
             var decryptedString: String? = null
             try {
-                decryptedString = CryptoUtil.decrypt(responseString, context.getFromPaper(Const.KEY_K))
+                decryptedString = CryptoUtil.decrypt(responseString, context.getFromSecureStore(Const.KEY_K))
             } catch (e: Exception) {
                 e.printStackTrace()
             }

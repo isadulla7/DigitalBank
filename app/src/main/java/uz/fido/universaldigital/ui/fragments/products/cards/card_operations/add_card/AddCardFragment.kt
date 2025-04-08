@@ -23,6 +23,7 @@ import uz.fido.universaldigital.ui.utils.extensions.getCardBackgroundList
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.context.AppSignatureHelper
 import uz.fido.utils.utility.context.checkForExpireDate
 import uz.fido.utils.utility.context.getDeviceIds
@@ -139,7 +140,7 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
             getClientToken(), CheckCardRequest(
                 expireDate,
                 cardNumber,
-                getFromPaper(Const.PAPER_CLIENT_PHONE),
+                getFromSecureStore(Const.PAPER_CLIENT_PHONE),
                 AppSignatureHelper(requireContext()).appKeyHash,
                 requireContext().getDeviceIds()
             )
@@ -151,7 +152,7 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
                         val addCardRequest = AddCardRequest(
                             object_value = cardNumber,
                             object_expiry = expireDate,
-                            phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE),
+                            phone_number = getFromSecureStore(Const.PAPER_CLIENT_PHONE),
                             object_name = cardName,
                             sms_code = "",
                             is_main = isMain,

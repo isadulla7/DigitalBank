@@ -60,7 +60,7 @@ public class DiffieHellman {
         biK = biB.modPow(a, p);
         biKString = biK.toString();
         biKString += additionalText;
-        PaperExtKt.saveToPaper(context, "KEY_K", biKString);
+        SecurePrefsManagerKt.saveToSecureStore("KEY_K", biKString);
     }
 
     public String getKeyK() {

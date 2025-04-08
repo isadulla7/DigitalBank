@@ -20,14 +20,14 @@ import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.activities.MainActivity
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInPinResponse
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.Const
 import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.activity.insertStringBetween
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
@@ -66,16 +66,16 @@ class SuccessVerificationFragment : BaseFragment<FragmentSuccessVerificationBind
     }
 
     private fun swapKeys() {
-        saveToPaper(Const.DEVICE_CODE, requireContext().getDeviceIds())
-        saveToPaper("VERSION_CODE", BuildConfig.VERSION_CODE.toString())
-        saveToPaper("VERSION_NAME", BuildConfig.VERSION_NAME)
+        saveToSecureStore(Const.DEVICE_CODE, requireContext().getDeviceIds())
+        saveToSecureStore(Const.VERSION_CODE, BuildConfig.VERSION_CODE.toString())
+        saveToSecureStore(Const.VERSION_NAME, BuildConfig.VERSION_NAME)
         viewModel.swapKeysPin(
             SwapKeysRequest(
                 device_code = requireContext().getDeviceIds(),
                 public_key1 = DiffieHellman.getDiffieHellman()._g.toBigInteger(),
                 public_key2 = DiffieHellman.getDiffieHellman()._p.toBigInteger(),
                 encryptData = DiffieHellman.getDiffieHellman().keyA,
-                phoneNumber = getFromPaper(Const.PAPER_CLIENT_PHONE).replace("", ""),
+                phoneNumber = getFromSecureStore(Const.PAPER_CLIENT_PHONE).replace("", ""),
             )
         ).observe(viewLifecycleOwner) {
             when (it.status) {
@@ -111,15 +111,15 @@ class SuccessVerificationFragment : BaseFragment<FragmentSuccessVerificationBind
     private fun signInRequest(userInfo: UserInfo) {
         val device = GetDeviceInfo(requireContext()).deviceInfo
         val signInRequest = SignInRequestNew(
-            phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE).replace("", ""),
+            phone_number = getFromSecureStore(Const.PAPER_CLIENT_PHONE).replace("", ""),
             device_type = "A",
             device_code = requireContext().getDeviceIds(),
             device_name = Utility.getDeviceName(),
             version = "1",
             ip = requireContext().getIpAddress(),
             client_id = Keys.getClientId(),
-            fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
-            password = getFromPaper(Const.PASSWORD_ENC),
+            fcm_token = requireContext().getFromSecureStore(Const.PAPER_FCM_TOKEN),
+            password = getFromSecureStore(Const.PASSWORD_ENC),
             is_pin = 1,
             sim_iccd = device.simCcd.toString(),
             network_state = device.networkState.toString(),
@@ -158,17 +158,17 @@ class SuccessVerificationFragment : BaseFragment<FragmentSuccessVerificationBind
 
     private fun changeKey(keyK: String) {
         try {
-            val key1 = getFromPaper(Const.PAPER_CLIENT_PHONE).insertStringBetween("@$#", 3)
-            val key2 = getFromPaper(Const.PAPER_CLIENT_PHONE).insertStringBetween("&^%", 6)
-            if (getFromPaper(Const.PASSWORD_ENC).isEmpty() || getFromPaper(Const.STRING_LINE).isEmpty()) {
+            val key1 = getFromSecureStore(Const.PAPER_CLIENT_PHONE).insertStringBetween("@$#", 3)
+            val key2 = getFromSecureStore(Const.PAPER_CLIENT_PHONE).insertStringBetween("&^%", 6)
+            if (getFromSecureStore(Const.PASSWORD_ENC).isEmpty() || getFromSecureStore(Const.STRING_LINE).isEmpty()) {
                 requireActivity().logOut()
             } else {
                 val newKey = CryptoUtil.encrypt(
-                    getFromPaper(Const.PASSWORD_ENC), key1
+                    getFromSecureStore(Const.PASSWORD_ENC), key1
                 ) + keyK + CryptoUtil.encrypt(
-                    getFromPaper(Const.STRING_LINE), key2
+                    getFromSecureStore(Const.STRING_LINE), key2
                 )
-                saveToPaper(Const.KEY_K, newKey)
+                saveToSecureStore(Const.KEY_K, newKey)
             }
         } catch (e: Exception) {
             e.printStackTrace()

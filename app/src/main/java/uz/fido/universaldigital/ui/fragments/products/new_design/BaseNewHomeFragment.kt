@@ -41,14 +41,14 @@ import uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFastAccessOperationList
 import uz.fido.universaldigital.ui.utils.extensions.getFormattedContact
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.universaldigital.ui.utils.home_utils.DoAfterTextWatcher
 import uz.fido.universaldigital.ui.utils.home_utils.applyMask
 import uz.fido.universaldigital.ui.utils.home_utils.mobileServiceId
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
@@ -231,7 +231,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         var fastAccessOperations = ArrayList<FastAccessOperation>()
         if (Paper.book().read<ArrayList<FastAccessOperation>>(Const.FAST_ACCESS) == null ||
             Paper.book().read(Const.UPDATE_FAST_ACCESS, true) == true ||
-            Paper.book().read(Const.UPDATE_MAIN_WIDGETS, false) == true||
+            Paper.book().read(Const.UPDATE_MAIN_WIDGETS, false) == true ||
             Const.MAIN_FAST_ACCESS_VERSION > (Paper.book().read(Const.MAIN_FAST_ACCESS_VERSION_SAVED, 0) ?: 0)
         ) {
             fastAccessOperations = getFastAccessOperationList(requireContext())
@@ -266,7 +266,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
 
     private fun initHomeTemplates() {
         val paymentTemplatesAdapter = NewHomeTemplatesAdapter(this@BaseNewHomeFragment, ArrayList())
-        if (getFromPaper(Const.HOME_TEMPLATES_EXPANDED, "N") == "Y") {
+        if (requireContext().getFromSecureStore(Const.HOME_TEMPLATES_EXPANDED, "N") == "Y") {
             binding.templateExpandable.isExpanded = true
             binding.templatesExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
         } else {
@@ -288,11 +288,11 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             if (binding.templateExpandable.isExpanded) {
                 binding.templatesExpandableHandle.setImageResource(R.drawable.ic_arrow_down)
                 binding.templateExpandable.collapse()
-                saveToPaper(Const.HOME_TEMPLATES_EXPANDED, "N")
+                saveToSecureStore(Const.HOME_TEMPLATES_EXPANDED, "N")
             } else {
                 binding.templatesExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
                 binding.templateExpandable.expand()
-                saveToPaper(Const.HOME_TEMPLATES_EXPANDED, "Y")
+                saveToSecureStore(Const.HOME_TEMPLATES_EXPANDED, "Y")
             }
         }
     }
@@ -309,7 +309,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         utilsViewModel.myHouse.observe(viewLifecycleOwner) {
             myHomeAdapter.setList(it)
         }
-        if (getFromPaper(Const.HOME_MY_HOUSE_EXPANDED, "N") == "Y") {
+        if (requireContext().getFromSecureStore(Const.HOME_MY_HOUSE_EXPANDED, "N") == "Y") {
             binding.myHouseExpandable.isExpanded = true
             binding.myHouseExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
         } else {
@@ -321,11 +321,11 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             if (binding.myHouseExpandable.isExpanded) {
                 binding.myHouseExpandableHandle.setImageResource(R.drawable.ic_arrow_down)
                 binding.myHouseExpandable.collapse()
-                saveToPaper(Const.HOME_MY_HOUSE_EXPANDED, "N")
+                saveToSecureStore(Const.HOME_MY_HOUSE_EXPANDED, "N")
             } else {
                 binding.myHouseExpandableHandle.setImageResource(R.drawable.arrow_up_24dp)
                 binding.myHouseExpandable.expand()
-                saveToPaper(Const.HOME_MY_HOUSE_EXPANDED, "Y")
+                saveToSecureStore(Const.HOME_MY_HOUSE_EXPANDED, "Y")
             }
         }
         binding.rvMyHouse.apply {

@@ -9,8 +9,8 @@ import androidx.fragment.app.DialogFragment
 import uz.fido.network.domain.model.loans.loan_products.CreditProduct
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.FragmentCreditRequisitesBinding
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 
 class CreditRequisitesFragment(private val clientProduct: CreditProduct) : DialogFragment() {
 
@@ -38,7 +38,7 @@ class CreditRequisitesFragment(private val clientProduct: CreditProduct) : Dialo
 
     @SuppressLint("SetTextI18n")
     private fun initView() {
-        binding.value.text = getFromPaper(Const.LAST_NAME) + " " + getFromPaper(Const.FIRST_NAME)
+        binding.value.text = getFromSecureStore(Const.LAST_NAME) + " " + getFromSecureStore(Const.FIRST_NAME)
         binding.valueNumber.text = clientProduct.codeFilial
         binding.address.text = clientProduct.filialName
     }

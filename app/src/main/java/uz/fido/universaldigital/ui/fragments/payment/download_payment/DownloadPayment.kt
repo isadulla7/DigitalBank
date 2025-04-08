@@ -13,10 +13,10 @@ import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.payment.Payment
 import uz.fido.network.domain.model.payment.PaymentGroup
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.recordException
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 
 @AndroidEntryPoint
 abstract class DownloadPayment : Fragment() {
@@ -51,8 +51,8 @@ abstract class DownloadPayment : Fragment() {
     }
 
     fun checkForPaymentDownload() {
-        val currentDatabaseVersion = getFromPaper(Const.PAPER_PAYMENT_VERSION, "0")
-        val savedDatabaseVersion = getFromPaper(Const.PAPER_PAYMENT_VERSION_DB, "0")
+        val currentDatabaseVersion = getFromSecureStore(Const.PAPER_PAYMENT_VERSION, "0")
+        val savedDatabaseVersion = getFromSecureStore(Const.PAPER_PAYMENT_VERSION_DB, "0")
         if (downloadPaymentViewModel.paymentGroupMutableList.value != null && downloadPaymentViewModel.paymentGroupMutableList.value!!.size != 0 && !updateLang
         ) {
             downloadPaymentInterface.getMutablePaymentList()
@@ -109,7 +109,7 @@ abstract class DownloadPayment : Fragment() {
                     withContext(Dispatchers.Main) {
                         downloadPaymentInterface.downloadPaymentSuccess()
                     }
-                    saveToPaper(Const.PAPER_PAYMENT_VERSION_DB, payment.curr_version ?: "0")
+                    saveToSecureStore(Const.PAPER_PAYMENT_VERSION_DB, payment.curr_version ?: "0")
                 }
             } catch (e: Exception) {
                 recordException(e, ::setToStorage.name)

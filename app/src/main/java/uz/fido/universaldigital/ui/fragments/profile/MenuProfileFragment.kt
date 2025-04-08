@@ -22,6 +22,7 @@ import uz.fido.universaldigital.ui.utils.extensions.isUserIdentified
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.Const
 import uz.fido.utils.device.GetDeviceInfo
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -55,16 +56,16 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
 
     private fun initDetails() {
         loadProfileImage()
-        if (getFromPaper(Const.PAPER_CLIENT_FULL_NAME).isNotEmpty() && getFromPaper(Const.PAPER_CLIENT_FULL_NAME).isNotBlank()) {
-            binding.userName.text = getFromPaper(Const.PAPER_CLIENT_FULL_NAME, getString(R.string.your_phone_number))
+        if (getFromSecureStore(Const.PAPER_CLIENT_FULL_NAME).isNotEmpty() && getFromSecureStore(Const.PAPER_CLIENT_FULL_NAME).isNotBlank()) {
+            binding.userName.text = getFromSecureStore(Const.PAPER_CLIENT_FULL_NAME, getString(R.string.your_phone_number))
         } else {
             binding.userName.text = getString(R.string.your_phone_number)
         }
-        binding.userPhone.text = Format.phoneFormat(getFromPaper(Const.PAPER_CLIENT_PHONE))
+        binding.userPhone.text = Format.phoneFormat(getFromSecureStore(Const.PAPER_CLIENT_PHONE))
         binding.version.text = getString(R.string.version, BuildConfig.VERSION_NAME) + "(${BuildConfig.VERSION_CODE})" + if (BuildConfig.DEBUG) "-DEBUG" else ""
         storage = FirebaseStorage.getInstance()
         storageReference = storage!!.reference
-        binding.appMode.text = if (getFromPaper(Const.NEW_DESIGN, "N") == "Y") "Pro" else "Lite"
+        binding.appMode.text = if (requireContext().getFromSecureStore(Const.NEW_DESIGN, "N") == "Y") "Pro" else "Lite"
     }
 
     private fun initUserIdentifyStatus() {
@@ -104,9 +105,9 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
     }
 
     private fun loadProfileImage() {
-        if (getFromPaper(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
+        if (getFromSecureStore(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
             Picasso.get()
-                .load(getFromPaper(Const.PAPER_USER_PHOTO_PATH))
+                .load(getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
                 .placeholder(R.drawable.ic_profile_image_empty)
                 .error(R.drawable.ic_profile_image_empty)
                 .into(binding.profileImage)
@@ -123,8 +124,8 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
             logOutRequest = LogOutRequest(
                 device_code = requireContext().getDeviceIds(),
                 device_type = "A",
-                fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
-                phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE),
+                fcm_token = requireContext().getFromSecureStore(Const.PAPER_FCM_TOKEN),
+                phone_number = getFromSecureStore(Const.PAPER_CLIENT_PHONE),
                 sim_iccd = device.simCcd,
                 network_state = device.networkState,
                 imei_data = device.imeiData,

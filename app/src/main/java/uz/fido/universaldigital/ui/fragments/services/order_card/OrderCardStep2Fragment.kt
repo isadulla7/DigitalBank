@@ -28,6 +28,7 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getCardByType
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.yearText
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientId
@@ -94,8 +95,8 @@ class OrderCardStep2Fragment : BaseFragment<FragmentOrderCardStep2Binding, Order
     private fun init() {
         initCards(cardType)
         binding.appBar.setTitle(priceItem.name)
-        binding.phoneNumber.setText(getFromPaper(Const.PAPER_CLIENT_PHONE))
-        binding.smsPhone.setText(getFromPaper(Const.PAPER_CLIENT_PHONE))
+        binding.phoneNumber.setText(getFromSecureStore(Const.PAPER_CLIENT_PHONE))
+        binding.smsPhone.setText(getFromSecureStore(Const.PAPER_CLIENT_PHONE))
         cardPrice = priceItem.price
         binding.dotsIndicator.isVisible = productTypes.size > 1
 

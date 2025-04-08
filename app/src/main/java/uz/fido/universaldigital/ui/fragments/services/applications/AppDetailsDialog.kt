@@ -24,6 +24,7 @@ import uz.fido.universaldigital.ui.fragments.services.applications.adapter.AppDe
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.context.AppSignatureHelper
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.format.Format
@@ -225,7 +226,7 @@ class AppDetailsDialog(
         if (cardName.isEmpty()) return
         utilsViewModel.checkCardRequest(
             getClientToken(), CheckCardRequest(
-                expireDate, cardNumber, getFromPaper(Const.PAPER_CLIENT_PHONE), AppSignatureHelper(requireContext()).appKeyHash, requireContext().getDeviceIds()
+                expireDate, cardNumber, getFromSecureStore(Const.PAPER_CLIENT_PHONE), AppSignatureHelper(requireContext()).appKeyHash, requireContext().getDeviceIds()
             )
         ).observe(viewLifecycleOwner) {
             it?.let {
@@ -234,7 +235,7 @@ class AppDetailsDialog(
                         val addCardRequest = AddCardRequest(
                             object_value = cardNumber,
                             object_expiry = expireDate,
-                            phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE),
+                            phone_number = getFromSecureStore(Const.PAPER_CLIENT_PHONE),
                             object_name = cardName,
                             sms_code = "",
                             is_main = "N",

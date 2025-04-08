@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -22,10 +21,10 @@ import uz.fido.universaldigital.databinding.FragmentEditProfileBinding
 import uz.fido.universaldigital.ui.fragments.profile.MenuProfileViewModel
 import uz.fido.universaldigital.ui.fragments.profile.edit_photo.EditPhotoActivity
 import uz.fido.universaldigital.ui.utils.extensions.fixQuestionMarks
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.recordException
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientToken
@@ -55,9 +54,9 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
         storageReference = storage.reference
         loadProfileImage()
         binding.apply {
-            userName.setText(getFromPaper(Const.FIRST_NAME, getString(R.string.unknown)).fixQuestionMarks())
-            surname.setText(getFromPaper(Const.LAST_NAME, getString(R.string.unknown)).fixQuestionMarks())
-            mail.setText(getFromPaper(Const.EMAIL, getString(R.string.unknown)))
+            userName.setText(getFromSecureStore(Const.FIRST_NAME, getString(R.string.unknown)).fixQuestionMarks())
+            surname.setText(getFromSecureStore(Const.LAST_NAME, getString(R.string.unknown)).fixQuestionMarks())
+            mail.setText(getFromSecureStore(Const.EMAIL, getString(R.string.unknown)))
         }
     }
 
@@ -86,19 +85,19 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
             if (it.status == Status.ERROR) {
                 showSnackbar(it.message.toString())
             } else {
-                saveToPaper(Const.FIRST_NAME, binding.userName.text.toString().uppercase())
-                saveToPaper(Const.LAST_NAME, binding.surname.text.toString().uppercase())
-                saveToPaper(Const.PAPER_CLIENT_FULL_NAME, binding.userName.text.toString().uppercase() + " " + binding.surname.text.toString().uppercase())
-                saveToPaper(Const.EMAIL, binding.mail.text.toString().lowercase())
+                saveToSecureStore(Const.FIRST_NAME, binding.userName.text.toString().uppercase())
+                saveToSecureStore(Const.LAST_NAME, binding.surname.text.toString().uppercase())
+                saveToSecureStore(Const.PAPER_CLIENT_FULL_NAME, binding.userName.text.toString().uppercase() + " " + binding.surname.text.toString().uppercase())
+                saveToSecureStore(Const.EMAIL, binding.mail.text.toString().lowercase())
                 pop()
             }
         }
     }
 
     private fun loadProfileImage() {
-        if (getFromPaper(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
+        if (getFromSecureStore(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
             Picasso.get()
-                .load(getFromPaper(Const.PAPER_USER_PHOTO_PATH))
+                .load(getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
                 .placeholder(R.drawable.ic_profile_image_empty)
                 .error(R.drawable.ic_profile_image_empty)
                 .into(binding.profileImage)
@@ -149,7 +148,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
     private val editPhotoIntent = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         if (it.resultCode == Activity.RESULT_OK && it.data != null) {
             val path = it.data?.getStringExtra(EditPhotoActivity.RESULT_IMAGE)
-            saveToPaper(Const.PAPER_USER_PHOTO_PATH, path)
+            saveToSecureStore(Const.PAPER_USER_PHOTO_PATH, path)
             Picasso.get().load(path).into(binding.profileImage)
             uploadImageToFirebase(path!!.toUri())
         }

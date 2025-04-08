@@ -22,11 +22,13 @@ import uz.fido.universaldigital.ui.fragments.products.adapter.NewHomeCardsAdapte
 import uz.fido.universaldigital.ui.fragments.profile.settings.NewDesignOnboardingPage
 import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
+import uz.fido.universaldigital.ui.utils.home_utils.getUserCardsFromSecureStore
 import uz.fido.universaldigital.ui.utils.home_utils.initRefreshLayout
-import uz.fido.universaldigital.ui.utils.home_utils.loadCardsFromPaper
 import uz.fido.universaldigital.ui.utils.home_utils.loadProfileImage
+import uz.fido.universaldigital.ui.utils.home_utils.saveUserCardsSecure
 import uz.fido.universaldigital.ui.utils.home_utils.setUserDetails
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
 
@@ -71,7 +73,7 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
     }
 
     private fun setSeasonAnimation() {
-        val currentSeason = getFromPaper(Const.CURRENT_SEASON, Season.DEFAULT)
+        val currentSeason = requireContext().getFromSecureStore(Const.CURRENT_SEASON, Season.DEFAULT)
         when (currentSeason) {
             Season.WINTER -> {
                 binding.homeAnimView.apply {
@@ -115,13 +117,13 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
     }
 
     private fun initTotalBalance() {
-        userCards = loadCardsFromPaper()
+        userCards = getUserCardsFromSecureStore()
         menuProductsViewModel.updateCards(userCards)
         menuProductsViewModel.cards.observe(viewLifecycleOwner) { currentCards ->
             userCards = currentCards as ArrayList<CardResponse>
             binding.addCardLayout.isVisible = currentCards.isEmpty()
             binding.userCardsLayout.isVisible = currentCards.isNotEmpty()
-            Paper.book().write(Const.PAPER_CLIENT_CARDS, currentCards)
+            saveUserCardsSecure(currentCards)
             initUserCards()
             initBalanceVisibility()
         }

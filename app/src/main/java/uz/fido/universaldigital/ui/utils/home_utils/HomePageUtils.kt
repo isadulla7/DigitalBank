@@ -4,6 +4,8 @@ import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import androidx.core.content.res.ResourcesCompat
 import coil.load
+import com.google.common.reflect.TypeToken
+import com.google.gson.Gson
 import com.robinhood.ticker.TickerUtils
 import com.squareup.picasso.Picasso
 import io.paperdb.Paper
@@ -11,20 +13,21 @@ import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.ui.fragments.products.MenuHomeFragment
 import uz.fido.universaldigital.ui.fragments.products.new_design.MenuNewHomeFragment
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.widgets.total_balance.TotalBalanceWidget
 import uz.fido.utils.const.Const
 import uz.fido.utils.libs.smart_refresh.smart.BezierCircleHeader
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.format.Format
+import uz.fido.utils.utility.user.deleteFromPaper
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
 fun MenuHomeFragment.loadProfileImage() {
-    if (getFromPaper(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
+    if (getFromSecureStore(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
         Picasso.get()
-            .load(getFromPaper(Const.PAPER_USER_PHOTO_PATH))
+            .load(getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
             .placeholder(R.drawable.ic_profile_image_empty)
             .error(R.drawable.ic_profile_image_empty)
             .into(binding.userAvatar)
@@ -35,9 +38,9 @@ fun MenuHomeFragment.loadProfileImage() {
 
 
 fun MenuNewHomeFragment.loadProfileImage() {
-    if (getFromPaper(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
+    if (getFromSecureStore(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
         Picasso.get()
-            .load(getFromPaper(Const.PAPER_USER_PHOTO_PATH))
+            .load(getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
             .placeholder(R.drawable.ic_profile_image_empty)
             .error(R.drawable.ic_profile_image_empty)
             .into(binding.userAvatar)
@@ -47,14 +50,14 @@ fun MenuNewHomeFragment.loadProfileImage() {
 }
 
 fun MenuHomeFragment.setUserDetails() {
-    val fullName = getFromPaper(Const.PAPER_CLIENT_FULL_NAME)
-    val clientPhone = Format.phoneFormat(getFromPaper(Const.PAPER_CLIENT_PHONE))
+    val fullName = getFromSecureStore(Const.PAPER_CLIENT_FULL_NAME)
+    val clientPhone = Format.phoneFormat(getFromSecureStore(Const.PAPER_CLIENT_PHONE))
     binding.userName.text = fullName.trim().ifEmpty { clientPhone }
 }
 
 fun MenuNewHomeFragment.setUserDetails() {
-    val fullName = getFromPaper(Const.PAPER_CLIENT_FULL_NAME)
-    val clientPhone = Format.phoneFormat(getFromPaper(Const.PAPER_CLIENT_PHONE))
+    val fullName = getFromSecureStore(Const.PAPER_CLIENT_FULL_NAME)
+    val clientPhone = Format.phoneFormat(getFromSecureStore(Const.PAPER_CLIENT_PHONE))
     binding.userName.text = fullName.trim().ifEmpty { clientPhone }
 }
 
@@ -72,6 +75,25 @@ fun loadCardsFromPaper(): ArrayList<CardResponse> {
     } catch (e: Exception) {
         Paper.book().write(Const.PAPER_CLIENT_CARDS, ArrayList<CardResponse>())
         ArrayList()
+    }
+}
+
+fun saveUserCardsSecure(cards: List<CardResponse>) {
+    try {
+        val json = Gson().toJson(cards)
+        saveToSecureStore(Const.PAPER_CLIENT_CARDS, json)
+        deleteFromPaper(Const.PAPER_CLIENT_CARDS)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+fun getUserCardsFromSecureStore(): ArrayList<CardResponse> {
+    try {
+        val type = object : TypeToken<ArrayList<CardResponse>>() {}.type
+        return Gson().fromJson(getFromSecureStore(Const.PAPER_CLIENT_CARDS), type) ?: loadCardsFromPaper()
+    } catch (e: Exception) {
+        return loadCardsFromPaper()
     }
 }
 
@@ -123,7 +145,7 @@ fun MenuHomeFragment.initBalanceWidget(userBalance: String) {
     val dateFormat = SimpleDateFormat("HH:mm", Locale.ENGLISH)
     val updatedText =
         requireContext().getString(R.string.updated_at) + " " + dateFormat.format(Date())
-    saveToPaper(Const.TOTAL_BALANCE_UPDATED_AT, updatedText)
-    saveToPaper(Const.TOTAL_BALANCE, userBalance)
+    saveToSecureStore(Const.TOTAL_BALANCE_UPDATED_AT, updatedText)
+    saveToSecureStore(Const.TOTAL_BALANCE, userBalance)
 }
 

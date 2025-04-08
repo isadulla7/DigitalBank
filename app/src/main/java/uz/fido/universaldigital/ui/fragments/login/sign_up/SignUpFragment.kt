@@ -21,12 +21,12 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -105,7 +105,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             if (isValidPhoneNumber()) {
                 if (isInternetConnected(requireContext())) {
                     binding.btnContinue.setProgress(true)
-                    saveToPaper(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
+                    saveToSecureStore(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
                     swapKeysRequest()
                 }
             }
@@ -132,9 +132,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun swapKeysRequest() {
-        saveToPaper("VERSION_CODE", BuildConfig.VERSION_CODE.toString())
-        saveToPaper("VERSION_NAME", BuildConfig.VERSION_NAME)
-        saveToPaper(Const.DEVICE_CODE, requireContext().getDeviceIds())
+        saveToSecureStore(Const.VERSION_CODE, BuildConfig.VERSION_CODE.toString())
+        saveToSecureStore(Const.VERSION_NAME, BuildConfig.VERSION_NAME)
+        saveToSecureStore(Const.DEVICE_CODE, requireContext().getDeviceIds())
         viewModel.swapKeys(
             SwapKeysRequest(
                 device_code = requireContext().getDeviceIds(),

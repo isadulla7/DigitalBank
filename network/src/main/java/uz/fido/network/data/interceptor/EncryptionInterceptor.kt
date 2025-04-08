@@ -11,7 +11,7 @@ import okhttp3.Response
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.LanguageConst
 import uz.fido.utils.security.CryptoUtil
-import uz.fido.utils.utility.user.getFromPaper
+import uz.fido.utils.security.getFromSecureStore
 import java.util.Locale
 
 class EncryptionInterceptor(val context: Context) : Interceptor {
@@ -25,7 +25,7 @@ class EncryptionInterceptor(val context: Context) : Interceptor {
         if (rawBody != null) {
             try {
                 val rawBodyString = CryptoUtil.requestBodyToString(rawBody)
-                encryptedBody = CryptoUtil.encrypt(rawBodyString, context.getFromPaper(Const.KEY_K))
+                encryptedBody = CryptoUtil.encrypt(rawBodyString, context.getFromSecureStore(Const.KEY_K))
             } catch (e: Exception) {
                 e.printStackTrace()
             }
@@ -37,7 +37,7 @@ class EncryptionInterceptor(val context: Context) : Interceptor {
         return chain.proceed(request)
     }
 
-    private var language = context.getFromPaper(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN).uppercase(Locale.ROOT)
+    private var language = context.getFromSecureStore(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN).uppercase(Locale.ROOT)
 
     private fun getRequest(request: Request, requestBody: RequestBody? = null): Request {
         return if (request.method == "GET") {

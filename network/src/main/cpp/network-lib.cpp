@@ -17,6 +17,12 @@ Java_uz_fido_network_di_Keys_getClientId(JNIEnv *env, jobject thiz) {
 }
 
 JNIEXPORT jstring
+Java_uz_fido_network_di_Keys_getCertificatePin(JNIEnv *env, jobject thiz) {
+    char const *pinner = "sha256/P8Meknq+VzYp+Y/EiOHnGk5usNgeRR1LTPUZwtTspv4=";
+    return env->NewStringUTF(pinner);
+}
+
+JNIEXPORT jstring
 Java_uz_fido_network_di_Keys_getBaseUrl(JNIEnv *env, jobject thiz) {
     char const *baseUrl = "https://ra.ubank.uz/api/";
     return env->NewStringUTF(baseUrl);

@@ -40,11 +40,9 @@ import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isNotIdenti
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isUserIdentifiedButDeviceNot
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.isUserNotIdentifiedButDeviceIdentified
 import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAndOutAnim
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.extensions.pendingTransition
 import uz.fido.universaldigital.ui.utils.extensions.recordException
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.Const
@@ -54,6 +52,8 @@ import uz.fido.utils.device.vibrateTick
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.security.getDecodedString
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.activity.insertStringBetween
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
@@ -135,7 +135,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun initPinCodeOperation() {
-        if (pin == getDecodedString(getFromPaper(Const.PAPER_CLIENT_PIN))) {
+        if (pin == getDecodedString(requireContext().getFromSecureStore(Const.PAPER_CLIENT_PIN))) {
             if (isInternetConnected(requireContext())) {
                 if (operation == PASS_OPERATION_POP) {
                     pop()
@@ -154,7 +154,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun operationSignIn() {
-        if (pin == getDecodedString(getFromPaper(Const.PAPER_CLIENT_PIN))) {
+        if (pin == getDecodedString(requireContext().getFromSecureStore(Const.PAPER_CLIENT_PIN))) {
             fillDots()
             swapKeys()
         } else {
@@ -218,7 +218,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 super.onAuthenticationSucceeded(result)
                 requireActivity().runOnUiThread {
                     fillDots()
-                    pin = getDecodedString(getFromPaper(Const.PAPER_CLIENT_PIN))
+                    pin = getDecodedString(requireContext().getFromSecureStore(Const.PAPER_CLIENT_PIN))
                     swapKeys()
                 }
             }
@@ -294,16 +294,16 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun swapKeys() {
-        saveToPaper(Const.DEVICE_CODE, requireContext().getDeviceIds())
-        saveToPaper("VERSION_CODE", BuildConfig.VERSION_CODE.toString())
-        saveToPaper("VERSION_NAME", BuildConfig.VERSION_NAME)
+        saveToSecureStore(Const.DEVICE_CODE, requireContext().getDeviceIds())
+        saveToSecureStore(Const.VERSION_CODE, BuildConfig.VERSION_CODE.toString())
+        saveToSecureStore(Const.VERSION_NAME, BuildConfig.VERSION_NAME)
         viewModel.swapKeysPin(
             SwapKeysRequest(
                 device_code = requireContext().getDeviceIds(),
                 public_key1 = DiffieHellman.getDiffieHellman()._g.toBigInteger(),
                 public_key2 = DiffieHellman.getDiffieHellman()._p.toBigInteger(),
                 encryptData = DiffieHellman.getDiffieHellman().keyA,
-                phoneNumber = getFromPaper(Const.PAPER_CLIENT_PHONE).replace("", ""),
+                phoneNumber = requireContext().getFromSecureStore(Const.PAPER_CLIENT_PHONE).replace("", ""),
             )
         ).observe(viewLifecycleOwner) {
             when (it.status) {
@@ -346,15 +346,15 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     private fun signInRequest(userInfo: UserInfo) {
         val device = GetDeviceInfo(requireContext()).deviceInfo
         val signInRequest = SignInRequestNew(
-            phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE).replace("", ""),
+            phone_number = requireContext().getFromSecureStore(Const.PAPER_CLIENT_PHONE).replace("", ""),
             device_type = "A",
             device_code = requireContext().getDeviceIds(),
             device_name = getDeviceName(),
             version = "1",
             ip = requireContext().getIpAddress(),
             client_id = Keys.getClientId(),
-            fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
-            password = getFromPaper(Const.PASSWORD_ENC),
+            fcm_token = requireContext().getFromSecureStore(Const.PAPER_FCM_TOKEN),
+            password = requireContext().getFromSecureStore(Const.PASSWORD_ENC),
             is_pin = 1,
             sim_iccd = device.simCcd.toString(),
             network_state = device.networkState.toString(),
@@ -405,19 +405,19 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     private fun changeKey(keyK: String) {
         try {
-            val key1 = getFromPaper(Const.PAPER_CLIENT_PHONE).insertStringBetween("@$#", 3)
-            val key2 = getFromPaper(Const.PAPER_CLIENT_PHONE).insertStringBetween("&^%", 6)
-            if (getFromPaper(Const.PASSWORD_ENC).isEmpty() || getFromPaper(Const.STRING_LINE).isEmpty()) {
+            val key1 = requireContext().getFromSecureStore(Const.PAPER_CLIENT_PHONE).insertStringBetween("@$#", 3)
+            val key2 = requireContext().getFromSecureStore(Const.PAPER_CLIENT_PHONE).insertStringBetween("&^%", 6)
+            if (requireContext().getFromSecureStore(Const.PASSWORD_ENC).isEmpty() || requireContext().getFromSecureStore(Const.STRING_LINE).isEmpty()) {
                 requireActivity().logOut()
             } else {
                 val newKey = CryptoUtil.encrypt(
-                    getFromPaper(Const.PASSWORD_ENC),
+                    requireContext().getFromSecureStore(Const.PASSWORD_ENC),
                     key1
                 ) + keyK + CryptoUtil.encrypt(
-                    getFromPaper(Const.STRING_LINE),
+                    requireContext().getFromSecureStore(Const.STRING_LINE),
                     key2
                 )
-                saveToPaper(Const.KEY_K, newKey)
+                saveToSecureStore(Const.KEY_K, newKey)
             }
         } catch (e: Exception) {
             e.printStackTrace()
@@ -552,7 +552,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             in 12..16 -> getString(R.string.good_afternoon)
             else -> getString(R.string.good_evening)
         }
-        val name = getFromPaper(Const.FIRST_NAME)
+        val name = requireContext().getFromSecureStore(Const.FIRST_NAME)
         if (name.isNotEmpty()) {
             binding.welcomeText.text = "$partOfDay, $name"
         } else {
@@ -574,9 +574,9 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
     }
 
     private fun loadProfileImage() {
-        if (getFromPaper(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
+        if (requireContext().getFromSecureStore(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
             Picasso.get()
-                .load(getFromPaper(Const.PAPER_USER_PHOTO_PATH))
+                .load(requireContext().getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
                 .placeholder(R.drawable.ic_profile_image_empty)
                 .error(R.drawable.ic_profile_image_empty)
                 .into(binding.userAvatar)

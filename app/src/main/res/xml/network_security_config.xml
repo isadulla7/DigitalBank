@@ -6,7 +6,9 @@
     <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">https://ra.ubank.uz</domain>
         <pin-set>
-            <pin digest="SHA-256">nhwFdtQQBT48b3nlYu8XKRq2RIp6Vuo89WSnbHAEZo0=</pin>
+            <pin digest="SHA-256">P8Meknq+VzYp+Y/EiOHnGk5usNgeRR1LTPUZwtTspv4=</pin>
+            <pin digest="SHA-256">4a6cPehI7OG6cuDZka5NDZ7FR8a60d3auda+sKfg4Ng=</pin>
+            <pin digest="SHA-256">x4QzPSC810K5/cMjb05Qm4k3Bw5zBn4lTdO/nEW/Td4=</pin>
         </pin-set>
     </domain-config>
 
@@ -30,7 +32,6 @@
         <domain includeSubdomains="true">universaldigitalbank.page</domain>
         <domain includeSubdomains="true">universaldigitalbank.page.link</domain>
         <domain includeSubdomains="true">universaldigitalbank.page.link/qrcard</domain>
-        <domain includeSubdomains="true">ra.ubank.uz</domain>
     </domain-config>
 
 </network-security-config>

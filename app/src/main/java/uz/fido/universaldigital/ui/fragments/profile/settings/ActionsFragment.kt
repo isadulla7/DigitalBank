@@ -4,12 +4,11 @@ import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import uz.fido.universaldigital.base.BaseSimpleFragment
-import uz.fido.universaldigital.ui.fragments.profile.settings.ShakeActions
 import uz.fido.universaldigital.databinding.FragmentAppActionsBinding
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.extensions.setChildrenEnable
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.fragment.pop
 
 @AndroidEntryPoint
@@ -20,8 +19,8 @@ class ActionsFragment : BaseSimpleFragment<FragmentAppActionsBinding>(
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         initSetOnClickListeners()
-        binding.radioGroup.setChildrenEnable(getFromPaper(Const.SHAKING_ACTION_STATE, "N") == "Y")
-        binding.switchAction.isChecked = getFromPaper(Const.SHAKING_ACTION_STATE, "N") == "Y"
+        binding.radioGroup.setChildrenEnable(requireContext().getFromSecureStore(Const.SHAKING_ACTION_STATE, "N") == "Y")
+        binding.switchAction.isChecked = requireContext().getFromSecureStore(Const.SHAKING_ACTION_STATE, "N") == "Y"
         binding.radioGroup.check(Paper.book().read<Int>(Const.SELECTED_OPTION, -1) ?: -1)
     }
 
@@ -29,12 +28,12 @@ class ActionsFragment : BaseSimpleFragment<FragmentAppActionsBinding>(
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.switchAction.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                saveToPaper(Const.SHAKING_ACTION_STATE, "Y")
+                saveToSecureStore(Const.SHAKING_ACTION_STATE, "Y")
                 binding.radioGroup.setChildrenEnable(true)
             } else {
                 binding.radioGroup.clearCheck()
                 binding.radioGroup.setChildrenEnable(false)
-                saveToPaper(Const.SHAKING_ACTION_STATE, "N")
+                saveToSecureStore(Const.SHAKING_ACTION_STATE, "N")
             }
         }
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->

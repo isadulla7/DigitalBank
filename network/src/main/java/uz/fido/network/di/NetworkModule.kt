@@ -9,6 +9,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -117,6 +118,12 @@ object NetworkModule {
         return httpLoggingInterceptor
     }
 
+    private val certificatePinner = CertificatePinner.Builder()
+        .add("ra.ubank.uz", "sha256/P8Meknq+VzYp+Y/EiOHnGk5usNgeRR1LTPUZwtTspv4=")
+        .add("ra.ubank.uz", "sha256/4a6cPehI7OG6cuDZka5NDZ7FR8a60d3auda+sKfg4Ng=")
+        .add("ra.ubank.uz", "sha256/x4QzPSC810K5/cMjb05Qm4k3Bw5zBn4lTdO/nEW/Td4=")
+        .build()
+
     @BaseOkhttpClient
     @Provides
     fun provideOkhttpClient(
@@ -129,11 +136,14 @@ object NetworkModule {
     ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager(keyStore) as X509TrustManager)
         .addInterceptor(HeaderInterceptor(context = appContext))
         .addInterceptor(loggingInterceptor)
-        .addInterceptor(AuthInterceptor(swapKeyService = swapKeyService, context = appContext, apiInterface)
+        .addInterceptor(
+            AuthInterceptor(swapKeyService = swapKeyService, context = appContext, apiInterface)
         ).addInterceptor(EncryptionInterceptor(appContext))
         .addInterceptor(DecryptionInterceptor(appContext))
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
-        .writeTimeout(180, TimeUnit.SECONDS).build()
+        .writeTimeout(180, TimeUnit.SECONDS)
+//        .certificatePinner(certificatePinner)
+        .build()
 
     @SimpleClientRetrofit
     @Provides

@@ -3,27 +3,8 @@ package uz.fido.utils.utility.user
 import android.content.Context
 import androidx.fragment.app.Fragment
 import io.paperdb.Paper
-import io.paperdb.PaperDbException
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.utility.context.getDeviceIds
-
-fun Fragment.saveToPaper(key: String, value: String?) {
-    if (value == null) {
-        throw PaperDbException("Paper doesn't support writing null root values")
-    } else {
-        val encryptedValue = CryptoUtil.encrypt(value, requireContext().getDeviceIds())
-        Paper.book().write(key, encryptedValue)
-    }
-}
-
-fun Context.saveToPaper(key: String, value: String?) {
-    if (value == null) {
-        throw PaperDbException("Paper doesn't support writing null root values")
-    } else {
-        val encryptedValue = CryptoUtil.encrypt(value, getDeviceIds())
-        Paper.book().write(key, encryptedValue)
-    }
-}
 
 fun Fragment.getFromPaper(key: String, defaultValue: String? = ""): String {
     val encryptedValue = Paper.book().read<String>(key, defaultValue)
@@ -45,4 +26,12 @@ fun Context.getFromPaper(key: String, defaultValue: String? = ""): String {
         return encryptedValue.orEmpty()
     }
     return decryptedValue
+}
+
+fun deleteFromPaper(key: String) {
+    try {
+        Paper.book().delete(key)
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
 }

@@ -26,6 +26,7 @@ import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
 import uz.fido.utils.sticky.StickyHeaderDecoration
 import uz.fido.utils.utility.adapter.showSkeleton
@@ -91,7 +92,7 @@ class OneFirstMonitoringFragment : BaseFragment<FragmentWalletFirstMonitoringBin
         val formatEndDate = inputFormat.parse(dateEnd)
         dateBegin = format.format(formatStartDate)
         dateEnd = format.format(formatEndDate)
-        val filialCode = getFromPaper(Const.PAPER_CLIENT_FILIAL_CODE)
+        val filialCode = getFromSecureStore(Const.PAPER_CLIENT_FILIAL_CODE)
         val model = AccountHistoriesRequest(
             pageNumber = "1",
             pageSize = "20",
@@ -252,7 +253,7 @@ class OneFirstMonitoringFragment : BaseFragment<FragmentWalletFirstMonitoringBin
     }
 
     private fun createModel(page: Int): AccountHistoriesRequest {
-        val filialCode = getFromPaper(Const.PAPER_CLIENT_FILIAL_CODE)
+        val filialCode = getFromSecureStore(Const.PAPER_CLIENT_FILIAL_CODE)
         val model = AccountHistoriesRequest(
             pageNumber = page.toString(),
             pageSize = "20",

@@ -56,7 +56,7 @@ class TransferToCardUseCaseImpl @Inject constructor(
 
     override suspend fun getTransferHistories(context: Context): ArrayList<CardByPhone> {
         val response = p2PRepository.getP2pHistory(
-            context.getClientToken(), P2PHistoryRequest(
+            getClientToken(), P2PHistoryRequest(
                 context.getClientId(), Keys.getClientId(), Command.INFO, "A"
             )
         )

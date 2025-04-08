@@ -23,9 +23,7 @@ import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragmen
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.DeviceIdentifyState
 import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.Const
@@ -33,6 +31,8 @@ import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.DiffieHellman
 import uz.fido.utils.security.encryptPassword
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
 import uz.fido.utils.utility.fragment.goto
@@ -126,7 +126,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun swapKeysRequest() {
-        saveToPaper(Const.DEVICE_CODE, requireContext().getDeviceIds())
+        saveToSecureStore(Const.DEVICE_CODE, requireContext().getDeviceIds())
         viewModel.swapKeys(
             SwapKeysRequest(
                 device_code = requireContext().getDeviceIds(),
@@ -175,8 +175,8 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun checkUserSignInRequest(data: UserInfo) {
-        saveToPaper("VERSION_CODE", BuildConfig.VERSION_CODE.toString())
-        saveToPaper("VERSION_NAME", BuildConfig.VERSION_NAME)
+        saveToSecureStore(Const.VERSION_CODE, BuildConfig.VERSION_CODE.toString())
+        saveToSecureStore(Const.VERSION_NAME, BuildConfig.VERSION_NAME)
         val device = GetDeviceInfo(requireContext()).deviceInfo
         val model = SignInRequestNew(
             phone_number = phoneNumberFormatted(),
@@ -190,7 +190,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
             device_code = requireContext().getDeviceIds(),
             device_name = getDeviceName(),
             userInfo = data,
-            fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
+            fcm_token = requireContext().getFromSecureStore(Const.PAPER_FCM_TOKEN),
             version = "0",
             sim_iccd = device.simCcd.toString(),
             os_system_version_api = "A",
@@ -225,14 +225,14 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun gotoConfirmSmsFragment(model: SignInRequestNew, deviceMyIdState: String) {
-        saveToPaper(Const.PAPER_PAYMENT_VERSION, model.version)
+        saveToSecureStore(Const.PAPER_PAYMENT_VERSION, model.version)
         val bundle = Bundle().apply {
             putString(Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString())
             putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_IN)
             putString(Const.DEVICE_MY_ID_STATE, deviceMyIdState)
             putSerializable(ConfirmSmsFragment.SIGN_IN_REQUEST, model)
         }
-        saveToPaper(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
+        saveToSecureStore(Const.PAPER_CLIENT_PHONE, phoneNumberFormatted())
         gotoWithSlide(R.id.confirmSmsFragmentLogin, bundle)
     }
 

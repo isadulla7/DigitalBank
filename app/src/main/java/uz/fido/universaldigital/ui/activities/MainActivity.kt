@@ -47,10 +47,11 @@ import uz.fido.universaldigital.ui.utils.extensions.getStartDestination
 import uz.fido.universaldigital.ui.utils.extensions.isActive
 import uz.fido.universaldigital.ui.utils.extensions.isNewDesign
 import uz.fido.universaldigital.ui.utils.extensions.recordException
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.internet_checker.InternetConnectionChecker
 import uz.fido.utils.internet_checker.NoConnectionDialog
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.update_checker.UpdateChecker
 import uz.fido.utils.utility.activity.tintSystemBars
 import uz.fido.utils.utility.context.startActivityWithClearTask
@@ -147,7 +148,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
 
     private fun listenForSeasonChanges() {
         viewModel.seasonLiveData.observe(this) {
-            saveToPaper(Const.CURRENT_SEASON, it)
+            saveToSecureStore(Const.CURRENT_SEASON, it)
         }
     }
 
@@ -309,7 +310,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
     }
 
     override fun onShakeDetected() {
-        if (getFromPaper(Const.SHAKING_ACTION_STATE, "N") == "Y") {
+        if (this.getFromSecureStore(Const.SHAKING_ACTION_STATE, "N") == "Y") {
             when (Paper.book().read<String>(Const.SELECTED_FRAGMENT)) {
                 ShakeActions.ACTION_MY_CARDS -> {
                     openPage(R.id.myCardsServiceFragment)

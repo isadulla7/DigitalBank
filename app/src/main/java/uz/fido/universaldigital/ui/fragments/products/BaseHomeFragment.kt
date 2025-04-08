@@ -69,6 +69,7 @@ import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Command
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
@@ -462,7 +463,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
         val layoutBinding = HomeNewDesignWidgetBinding.inflate(
             LayoutInflater.from(requireContext()), container, false
         )
-        layoutBinding.appMode.text = if (getFromPaper(Const.NEW_DESIGN, "N") == "Y") "Pro" else "Lite"
+        layoutBinding.appMode.text = if (requireContext().getFromSecureStore(Const.NEW_DESIGN, "N") == "Y") "Pro" else "Lite"
         layoutBinding.backToLite.setOnClickListener {
             NewDesignOnboardingPage().show(childFragmentManager, "")
         }

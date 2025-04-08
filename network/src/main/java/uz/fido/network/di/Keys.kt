@@ -16,6 +16,8 @@ object Keys {
 
     external fun getBaseUrl(): String
 
+    external fun getCertificatePin(): String
+
     external fun getSocketUrl(): String
 
     external fun paynetPhotoUrl(): String

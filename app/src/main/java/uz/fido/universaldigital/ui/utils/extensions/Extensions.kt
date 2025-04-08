@@ -55,8 +55,8 @@ import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.const.ServerMessages.getMeaningFulMessage
 import uz.fido.utils.device.vibrateTick
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.fragment.goto
-import uz.fido.utils.utility.user.getFromPaper
 import java.io.Serializable
 import java.util.Calendar
 import java.util.GregorianCalendar
@@ -323,7 +323,7 @@ fun limitRange(): CalendarConstraints.Builder {
 }
 
 fun Fragment.isUserIdentified(): Boolean {
-    val userTypeId = getFromPaper(Const.PAPER_CLIENT_USER_TYPE_ID).toInt()
+    val userTypeId = getFromSecureStore(Const.PAPER_CLIENT_USER_TYPE_ID).toInt()
     return if (userTypeId != null) {
         userTypeId == 1 || userTypeId == 2
     } else false

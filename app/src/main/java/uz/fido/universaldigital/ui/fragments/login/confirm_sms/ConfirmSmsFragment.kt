@@ -59,8 +59,6 @@ import uz.fido.universaldigital.ui.fragments.login.sign_up_password.SignUpPasswo
 import uz.fido.universaldigital.ui.fragments.profile.security.MyDevicesFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.APIServiceConst.profileImageUrl
@@ -69,6 +67,8 @@ import uz.fido.utils.const.Const.PHONE_NUMBER
 import uz.fido.utils.device.GetDeviceInfo
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.encryptPassword
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.activity.insertStringBetween
 import uz.fido.utils.utility.bundle.serializable
 import uz.fido.utils.utility.context.getDeviceIds
@@ -220,7 +220,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         viewModel.resetPinCount(getClientToken(), item).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    saveToPaper(Const.STRING_LINE, stringLineEnc)
+                    saveToSecureStore(Const.STRING_LINE, stringLineEnc)
                     binding.btnContinue.setProgress(false)
                     val bundle = Bundle().apply {
                         this.putString(Const.OPERATION, BasicSuccessFragment.HUMO_ACTIVATION)
@@ -253,7 +253,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         ).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> {
-                    saveToPaper(Const.STRING_LINE, stringLineEnc)
+                    saveToSecureStore(Const.STRING_LINE, stringLineEnc)
                     hideProgress()
                     pop()
                 }
@@ -318,7 +318,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             val signInRequest = CheckUserSms(
                 phone_number = data.phone_number.replace("+", ""),
                 string_line = stringLineEnc,
-                fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
+                fcm_token = requireContext().getFromSecureStore(Const.PAPER_FCM_TOKEN),
                 device_code = requireContext().getDeviceIds(),
                 device_name = getDeviceName(),
                 device_type = "A",
@@ -357,10 +357,10 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     }
 
     private fun changeKey() {
-        val key1 = getFromPaper(Const.PAPER_CLIENT_PHONE).insertStringBetween("@$#", 3)
-        val key2 = getFromPaper(Const.PAPER_CLIENT_PHONE).insertStringBetween("&^%", 6)
-        val newKey = CryptoUtil.encrypt(getFromPaper(Const.PASSWORD_ENC), key1) + getFromPaper(Const.KEY_K) + CryptoUtil.encrypt(getFromPaper(Const.STRING_LINE), key2)
-        saveToPaper(Const.KEY_K, newKey)
+        val key1 = getFromSecureStore(Const.PAPER_CLIENT_PHONE).insertStringBetween("@$#", 3)
+        val key2 = getFromSecureStore(Const.PAPER_CLIENT_PHONE).insertStringBetween("&^%", 6)
+        val newKey = CryptoUtil.encrypt(getFromSecureStore(Const.PASSWORD_ENC), key1) + getFromSecureStore(Const.KEY_K) + CryptoUtil.encrypt(getFromSecureStore(Const.STRING_LINE), key2)
+        saveToSecureStore(Const.KEY_K, newKey)
     }
 
     private fun checkRegUser() {
@@ -382,7 +382,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                     binding.btnContinue.setProgress(false)
                     when (it.status) {
                         Status.SUCCESS -> {
-                            saveToPaper(Const.STRING_LINE, stringLineEnc)
+                            saveToSecureStore(Const.STRING_LINE, stringLineEnc)
                             if (it.data != null) {
                                 if (operation == SMS_OPERATION_SIGN_UP) {
                                     requireContext().saveUserSms(smsCode)
@@ -422,7 +422,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {
-                    saveToPaper(Const.STRING_LINE, stringLineEnc)
+                    saveToSecureStore(Const.STRING_LINE, stringLineEnc)
                     binding.btnContinue.setProgress(false)
                     val bundle = Bundle().apply {
                         this.putString(Const.OPERATION, BasicSuccessFragment.HUMO_ACTIVATION)
@@ -451,7 +451,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                 getClientToken(), AddCardRequest(
                     object_value = data.object_value,
                     object_expiry = data.object_expiry,
-                    phone_number = getFromPaper(Const.PAPER_CLIENT_PHONE),
+                    phone_number = getFromSecureStore(Const.PAPER_CLIENT_PHONE),
                     object_name = data.object_name,
                     sms_code = binding.etSms.editableText.toString(),
                     string_line = stringLineEnc,
@@ -525,7 +525,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             device_name = getDeviceName(),
             version = "0",
             ip = requireContext().getIpAddress(),
-            fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
+            fcm_token = requireContext().getFromSecureStore(Const.PAPER_FCM_TOKEN),
             sim_iccd = device.simCcd,
             network_state = device.networkState,
             imei_data = device.imeiData,
@@ -541,7 +541,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                     Status.SUCCESS -> {
                         val signInResponse = it.data!!
                         requireContext().saveSignInResponse(signInResponse)
-                        saveToPaper(Const.PASSWORD_ENC, signInResponse.password)
+                        saveToSecureStore(Const.PASSWORD_ENC, signInResponse.password)
                         gotoWithSlide(
                             R.id.changePasswordFragment2, bundleOf(ChangePasswordFragment.CHANGE_PASSWORD_OPERATION to ChangePasswordFragment.CHANGE_PASSWORD_SIGNUP)
                         )
@@ -703,9 +703,9 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         val stringLineEnc = CryptoUtil.encryptWithoutSalt(data.string_line.toString().replace(" ", ""), smsCode)
         val signInResponse = checkSmsCodeResponse.data
         if (signInResponse?.token != null) {
-            saveToPaper(Const.STRING_LINE, stringLineEnc)
-            saveToPaper(Const.PASSWORD_ENC, data.password)
-            saveToPaper(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
+            saveToSecureStore(Const.STRING_LINE, stringLineEnc)
+            saveToSecureStore(Const.PASSWORD_ENC, data.password)
+            saveToSecureStore(Const.PAPER_USER_PHOTO_PATH, profileImageUrl(signInResponse.user_avatar))
             signInResponse.password = encryptPassword(data.password)
             requireContext().saveSignInResponse(signInResponse)
             requireContext().saveUserSms(smsCode)

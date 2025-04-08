@@ -15,6 +15,7 @@ import io.paperdb.Paper
 import uz.fido.universaldigital.R
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
+import uz.fido.utils.security.getFromSecureStore
 
 fun Activity.pendingTransition(enterAnim: Int, exitAnim: Int) {
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
@@ -42,9 +43,9 @@ fun adjustBottomNavForKeyboard(bottomNavigationView: BottomNavigationView) {
     }
 }
 
-fun Activity.getStartDestination(): Int = if (getFromPaper(Const.NEW_DESIGN, "N") == "Y") R.id.menuNewHomeFragment else R.id.productsFragment
+fun Activity.getStartDestination(): Int = if (this.getFromSecureStore(Const.NEW_DESIGN, "N") == "Y") R.id.menuNewHomeFragment else R.id.productsFragment
 
-fun Activity.isNewDesign() = getFromPaper(Const.NEW_DESIGN, "N") == "Y"
+fun Activity.isNewDesign() = this.getFromSecureStore(Const.NEW_DESIGN, "N") == "Y"
 
 fun isUserLogged() = Paper.book().read(USER_LOGGED, false) == false
 

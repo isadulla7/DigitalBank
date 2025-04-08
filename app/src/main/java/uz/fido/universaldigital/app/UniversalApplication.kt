@@ -5,12 +5,13 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.HiltAndroidApp
 import io.paperdb.Paper
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
 import uz.fido.universaldigital.ui.utils.lang.LocaleHelper.getLanguage
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.DEVICE_CODE
 import uz.fido.utils.security.DiffieHellman
+import uz.fido.utils.security.SecurePrefsManager
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.context.getDeviceIds
 
 @HiltAndroidApp
@@ -24,10 +25,11 @@ class UniversalApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
-        Paper.init(this)
+        Paper.init(applicationContext)
         initTheme()
         DiffieHellman.getDiffieHellman()
-        saveToPaper(DEVICE_CODE, this.getDeviceIds())
+        SecurePrefsManager.init(applicationContext)
+        saveToSecureStore(DEVICE_CODE, this.getDeviceIds())
         initLocale()
     }
 

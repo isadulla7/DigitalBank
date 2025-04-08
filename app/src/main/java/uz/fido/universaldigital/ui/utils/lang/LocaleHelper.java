@@ -3,11 +3,10 @@ package uz.fido.universaldigital.ui.utils.lang;
 import android.content.Context;
 import android.content.res.Configuration;
 import android.content.res.Resources;
-import android.util.Log;
 
 import java.util.Locale;
 
-import uz.fido.universaldigital.ui.utils.extensions.PaperExtensionKt;
+import uz.fido.utils.security.SecurePrefsManagerKt;
 
 public class LocaleHelper {
 
@@ -42,11 +41,11 @@ public class LocaleHelper {
     }
 
     private static String getPersistedData(String defaultLanguage, Context context) {
-        return PaperExtensionKt.getFromPaper(context, "lang", defaultLanguage);
+        return SecurePrefsManagerKt.getFromSecureStore(context,"lang", defaultLanguage);
     }
 
     private static void persist(String language, Context context) {
-        PaperExtensionKt.saveToPaper(context, "lang", language);
+        SecurePrefsManagerKt.saveToSecureStore("lang", language);
     }
 
     private static Context updateResources(Context context, String language) {

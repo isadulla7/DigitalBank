@@ -14,6 +14,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMoneyTransfersListBinding
 import uz.fido.universaldigital.ui.fragments.services.money_transfers.adapters.MoneyTransferListAdapter
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.hasUserCard
+import uz.fido.universaldigital.ui.utils.home_utils.getUserCardsFromSecureStore
 import uz.fido.utils.const.Const
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -55,7 +56,7 @@ class MoneyTransfersListFragment :
 
 
     private fun openMoneyTransfer(item: RemittanceType) {
-        val cards = Paper.book().read(Const.PAPER_CLIENT_CARDS, ArrayList<CardResponse>())
+        val cards = getUserCardsFromSecureStore()
         if (hasUserCard()) {
             moneyTransferParamsResponse?.remittance_type = item
             when (item.foreignCode) {

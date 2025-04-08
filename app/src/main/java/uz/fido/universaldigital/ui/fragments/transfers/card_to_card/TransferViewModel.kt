@@ -39,7 +39,7 @@ class TransferViewModel @Inject constructor(
     fun getPopularTransfers() {
         vmScope.launch {
             popularTransfersLoader.postValue(true)
-            val result = useCase.getPopularTransferList(context.getClientToken())
+            val result = useCase.getPopularTransferList(getClientToken())
             popularTransfers.postValue(result)
             popularTransfersLoader.postValue(false)
         }
@@ -48,7 +48,7 @@ class TransferViewModel @Inject constructor(
     fun getFavoriteTransfers() {
         vmScope.launch {
             popularTransfersLoader.postValue(true)
-            val result = useCase.getPopularTransferList(context.getClientToken())
+            val result = useCase.getPopularTransferList(getClientToken())
             val sortedList = result.filter { it.is_favourite == "Y" && it.card_number?.length == 16 }
             popularTransfers.postValue(sortedList as ArrayList<PopularTransfers>?)
             popularTransfersLoader.postValue(false)
@@ -59,21 +59,21 @@ class TransferViewModel @Inject constructor(
     fun getCardInfo(cardNumber: String, objectId: String? = null) {
         vmScope.launch {
             val result =
-                useCase.getCardInfo(context.getClientToken(), CheckCardRequestP2p(Command.CARD, cardNumber, objectId))
+                useCase.getCardInfo(getClientToken(), CheckCardRequestP2p(Command.CARD, cardNumber, objectId))
             cardInfo.postValue(result)
         }
     }
 
     fun getWalletInfo(cardNumber: String) {
         vmScope.launch {
-            val result = useCase.getCardInfo(context.getClientToken(), CheckCardRequestP2p(Command.PURSE, cardNumber))
+            val result = useCase.getCardInfo(getClientToken(), CheckCardRequestP2p(Command.PURSE, cardNumber))
             cardInfo.postValue(result)
         }
     }
 
     fun getCardInfoByPhone(phoneNumber: String) {
         vmScope.launch {
-            val result = useCase.getCardInfo(context.getClientToken(), CheckCardRequestP2p(Command.INFO, phoneNumber))
+            val result = useCase.getCardInfo(getClientToken(), CheckCardRequestP2p(Command.INFO, phoneNumber))
             cardInfo.postValue(result)
         }
     }
@@ -83,7 +83,7 @@ class TransferViewModel @Inject constructor(
             if (senderCard.object_value != receiverCardDto.card_number) {
                 vmScope.launch {
                     val result = useCase.getTransferInfo(
-                        clientToken = context.getClientToken(),
+                        clientToken = getClientToken(),
                         P2PInfoRequest(
                             service_id = getServiceIdInfo(
                                 receiverCardDto.card_number ?: "",
@@ -132,7 +132,7 @@ class TransferViewModel @Inject constructor(
     }
 
     fun getHomePopularTransfers() = liveData(Dispatchers.IO) {
-        emit(useCaseP2P.getPopularTransferList(context.getClientToken()))
+        emit(useCaseP2P.getPopularTransferList(getClientToken()))
     }
 
 }

@@ -13,12 +13,12 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentRestoreWithEmailBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveSignInResponse
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
-import uz.fido.universaldigital.ui.utils.extensions.saveToPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.EMAIL
 import uz.fido.utils.const.Const.PHONE_NUMBER
 import uz.fido.utils.security.CryptoUtil
+import uz.fido.utils.security.getFromSecureStore
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.context.GetDeviceInfo
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
@@ -96,7 +96,7 @@ class RestoreWithEmailFragment : BaseFragment<FragmentRestoreWithEmailBinding, R
                 device_name = getDeviceName(),
                 version = "0",
                 ip = requireContext().getIpAddress(),
-                fcm_token = getFromPaper(Const.PAPER_FCM_TOKEN),
+                fcm_token = requireContext().getFromSecureStore(Const.PAPER_FCM_TOKEN),
                 sim_iccd = device.sim_iccd.toString(),
                 network_state = device.network_state.toString(),
                 imei_data = device.imei_data.toString(),
@@ -115,7 +115,7 @@ class RestoreWithEmailFragment : BaseFragment<FragmentRestoreWithEmailBinding, R
                             if (signInResponse!!.msg.isNullOrEmpty()) {
                                 signInResponse.phone_number = phoneNumber!!
                                 requireContext().saveSignInResponse(signInResponse)
-                                saveToPaper(Const.PASSWORD_ENC, signInResponse.password)
+                                saveToSecureStore(Const.PASSWORD_ENC, signInResponse.password)
                                 val bundle = Bundle()
                                 bundle.putString(
                                     ChangePasswordFragment.CHANGE_PASSWORD_OPERATION,

@@ -17,10 +17,10 @@ import uz.fido.universaldigital.databinding.FragmentOrderCardListBinding
 import uz.fido.universaldigital.ui.fragments.services.order_card.adapters.ChooseOperationAdapter
 import uz.fido.universaldigital.ui.fragments.services.order_card.dialogs.IdentifyDialog
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
-import uz.fido.utils.utility.user.getFromPaper
 
 @AndroidEntryPoint
 class OrderCardListFragment : BaseFragment<FragmentOrderCardListBinding, OrderCardViewModel>(
@@ -172,7 +172,7 @@ class OrderCardListFragment : BaseFragment<FragmentOrderCardListBinding, OrderCa
 
     override fun selectedCardWithOperation(priceItem: ProductType, operation: String) {
         super.selectedCardWithOperation(priceItem, operation)
-        val userTypeId = getFromPaper(Const.PAPER_CLIENT_USER_TYPE_ID).toInt()
+        val userTypeId = getFromSecureStore(Const.PAPER_CLIENT_USER_TYPE_ID).toInt()
         if (priceItem.is_allowed_user_types.contains(userTypeId)) {
             val bundle = bundleOf(
                 Constants.PRICE_ITEM.text to Gson().toJson(priceItem),

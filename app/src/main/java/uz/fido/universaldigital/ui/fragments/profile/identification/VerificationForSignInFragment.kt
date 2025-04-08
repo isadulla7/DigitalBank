@@ -23,10 +23,10 @@ import uz.fido.universaldigital.ui.fragments.login.pin.PinCodeFragment
 import uz.fido.universaldigital.ui.fragments.profile.identification.adapters.CodeAndNameAdapter
 import uz.fido.universaldigital.ui.utils.extensions.pendingTransition
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
-import uz.fido.utils.utility.user.saveToPaper
 
 @AndroidEntryPoint
 class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserBinding, IdentificationViewModel>(
@@ -153,15 +153,12 @@ class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserB
         myIdResponse?.let { response ->
             val commonData = response.profile.common_data
             val docData = response.profile.doc_data
-            val fullName = "${commonData.first_name} ${commonData.last_name} ${commonData.middle_name}"
-            saveToPaper(Const.FIRST_NAME, commonData.first_name)
-            saveToPaper(Const.LAST_NAME, commonData.last_name)
-            saveToPaper(Const.PATRONYMIC, commonData.middle_name)
-            saveToPaper(Const.USER_BIRTHDAY, commonData.birth_date)
-            saveToPaper(Const.USER_CITIZENSHIP, commonData.citizenship)
-            saveToPaper(Const.USER_PASSWORD_DATA, docData.pass_data)
-            saveToPaper(Const.USER_PASS_GIVEN_DATE, docData.issued_date)
-            saveToPaper(Const.USER_PASS_EXPIRE_DATE, docData.expiry_date ?: "")
+            saveToSecureStore(Const.FIRST_NAME, commonData.first_name)
+            saveToSecureStore(Const.LAST_NAME, commonData.last_name)
+            saveToSecureStore(Const.PATRONYMIC, commonData.middle_name)
+            saveToSecureStore(Const.USER_BIRTHDAY, commonData.birth_date)
+            saveToSecureStore(Const.USER_PASSWORD_DATA, docData.pass_data)
+            saveToSecureStore(Const.USER_PASS_GIVEN_DATE, docData.issued_date)
         }
     }
 
