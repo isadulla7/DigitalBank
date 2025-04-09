@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.transfers.over_my_cards
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -53,6 +52,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
     private var userSumCards = ArrayList<CardResponse>()
     private var receiverCard: CardResponse? = null
+    private var isP2pInfoSuccess: Boolean? = null
     private var senderCard: CardResponse? = null
     private var p2PInfoDto: P2PInfoDto? = null
     private var maxAmount = BigDecimal(50000000.0)
@@ -222,6 +222,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 when (it.status) {
                     Status.SUCCESS -> {
                         val p2pInfoResponse = it.data as P2PInfoResponse
+                        isP2pInfoSuccess = true
                         p2PInfoDto = p2pInfoResponse.mapToDto()
                         minAmount = p2pInfoResponse.min_amount.toBigDecimal().divide(100.toBigDecimal())
                         maxAmount = p2pInfoResponse.max_amount.toBigDecimal().divide(100.toBigDecimal()) ?: 15000000.0.toBigDecimal()
@@ -232,8 +233,9 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                     }
 
                     Status.ERROR -> {
+                        isP2pInfoSuccess = false
                         setErrorText(it?.message)
-                        binding.btnContinue.isEnabled(false)
+                        binding.btnContinue.isEnabled(continueButtonState(it?.message))
                     }
                 }
             }
@@ -288,7 +290,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
     private fun initAmountTextWatcher() {
         binding.etAmount.doAfterTextChanged {
             try {
-                setCommission(percent)
+                if (isP2pInfoSuccess == true) setCommission(percent)
                 binding.btnContinue.isEnabled(continueButtonState())
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -321,22 +323,28 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
         }
     }
 
-    private fun continueButtonState(): Boolean {
+    private fun continueButtonState(message: String? = null): Boolean {
         val etAmount = binding.etAmount.editableText.toString().replace(" ", "").ifEmpty { "0" }
         val formattedAmount = etAmount.toBigDecimal()
         val totalAmount = formattedAmount + (formattedAmount.divide(100.toBigDecimal())) * percent
         when {
-            senderCard == null || receiverCard == null -> {
-                binding.tvMinAmount.visibility = View.VISIBLE
-                binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
-                hideCommissionBlock()
-                return false
-            }
-
             senderCard == receiverCard -> {
                 binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text = requireContext().getString(R.string.sender_and_receiver_the_same)
+                hideCommissionBlock()
+                return false
+            }
+
+            isP2pInfoSuccess == false -> {
+                binding.tvMinAmount.visibility = View.GONE
+                binding.tvMinAmount.text = message ?: getString(R.string.unknown)
+                return false
+            }
+
+            senderCard == null || receiverCard == null -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
+                binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 hideCommissionBlock()
                 return false
             }
@@ -380,7 +388,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 return false
             }
 
-            totalAmount > minAmount && totalAmount <= senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) -> {
+            totalAmount > minAmount && totalAmount <= senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) && isP2pInfoSuccess == true -> {
                 binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 binding.tvMinAmount.text =
@@ -388,7 +396,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 return true
             }
 
-            else -> return true
+            else -> return false
         }
     }
 

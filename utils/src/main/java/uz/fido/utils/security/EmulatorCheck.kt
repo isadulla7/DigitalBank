@@ -135,7 +135,7 @@ open class EmulatorCheck(private val context: Context) {
 
     private fun tryToLogCrashlytics(message: String? = null) {
         try {
-            logToCrashlytics("Emulator Check", Utility.getDeviceName() + "failed function: " + message.orEmpty())
+            logToCrashlytics("Emulator Check", Utility.getDeviceName() + "failed function: " + message.orEmpty(), context)
         } catch (e: Exception) {
             e.printStackTrace()
         }

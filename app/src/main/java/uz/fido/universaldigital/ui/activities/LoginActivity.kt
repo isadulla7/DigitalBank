@@ -42,18 +42,6 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun listenAppIconChanges() {
-//        GlobalScope.launch(Dispatchers.IO) {
-//            val hostname = "ra.ubank.uz"
-//            val certificatePinner = CertificatePinner.Builder()
-//                .add(hostname, "sha1/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=")
-//                .build()
-//            val client = OkHttpClient.Builder().certificatePinner(certificatePinner).build()
-//
-//            val request: Request = Request.Builder()
-//                .url("https://$hostname")
-//                .build()
-//            client.newCall(request).execute()
-//        }
         viewModel.appIconLiveData.observe(this) {
             val currentIcon = this.getFromSecureStore(Const.CURRENT_APP_ICON, AppIcons.APP_ICON_DEFAULT)
             if (currentIcon != it) {

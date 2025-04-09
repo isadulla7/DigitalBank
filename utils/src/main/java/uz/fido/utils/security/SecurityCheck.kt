@@ -2,8 +2,10 @@ package uz.fido.utils.security
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.os.Build
 import com.scottyab.rootbeer.RootBeer
+import uz.fido.utils.device.logRootToCrashlytics
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
@@ -50,10 +52,26 @@ object SecurityCheck {
     fun Activity.isRunningOnEmulator(): Boolean = EmulatorCheck(this).isProbablyAnEmulator()
 
     fun Activity.isPhoneRooted(): Boolean {
-        return RootBeer(this).isRooted
+        return RootBeer(this).isRooted || checkRootedFiles(this) || checkSuExists(this) || checkBuildTags(this)
     }
 
-    private fun checkRootedFiles(): Boolean {
+    private fun checkSuExists(context: Context): Boolean {
+        try {
+            val process = Runtime.getRuntime().exec(arrayOf("/system/xbin/which", "su"))
+            val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+            val result = bufferedReader.readLine() != null
+            if (result) {
+                logRootToCrashlytics("checkSuExists", bufferedReader.readLine().toString(), context)
+                return true
+            } else {
+                return false
+            }
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
+    private fun checkRootedFiles(context: Context): Boolean {
         val paths = arrayOf(
             "/system/app/Superuser.apk",
             "/sbin/su",
@@ -66,57 +84,22 @@ object SecurityCheck {
             "/data/local/su"
         )
         for (path in paths) {
-            if (File(path).exists()) return true
+            if (File(path).exists()) {
+                logRootToCrashlytics("checkRootedFiles", path, context)
+                return true
+            }
         }
         return false
     }
 
-    private fun canExecuteSu(): Boolean {
-        return try {
-            val process = Runtime.getRuntime().exec(arrayOf("su", "-c", "whoami"))
-            val output = process.inputStream.bufferedReader().readLine()
-            output != null && output.contains("root")
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    private fun isMagiskPresent(): Boolean {
-        try {
-            val paths = listOf(
-                "/sbin/.magisk",
-                "/cache/.disable_magisk",
-                "/system/etc/init/magisk.rc"
-            )
-            for (path in paths) {
-                if (File(path).exists()) {
-                    return true
-                }
-            }
+    private fun checkBuildTags(context: Context): Boolean {
+        val buildTags = Build.TAGS
+        val result = buildTags != null && buildTags.contains("test-keys")
+        if (result) {
+            logRootToCrashlytics("checkBuildTags", buildTags, context)
+            return true
+        } else {
             return false
-        } catch (e: Exception) {
-            return false
-        }
-    }
-
-    private fun canWriteToSystem(): Boolean {
-        return try {
-            val file = File("/system/test_root_check")
-            val success = file.createNewFile()
-            if (success) file.delete()
-            success
-        } catch (e: Exception) {
-            false
-        }
-    }
-
-    private fun checkRootProps(): Boolean {
-        return try {
-            val process = Runtime.getRuntime().exec("getprop ro.build.tags")
-            val output = process.inputStream.bufferedReader().readLine()
-            output != null && output.contains("test-keys")
-        } catch (e: Exception) {
-            false
         }
     }
 
