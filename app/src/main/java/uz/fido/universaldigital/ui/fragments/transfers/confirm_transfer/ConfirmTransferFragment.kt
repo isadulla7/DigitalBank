@@ -95,7 +95,7 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
         binding.btnContinue.setOnClickListener {
             transferDto.senderCard?.let { senderCard ->
                 p2pRequest = P2PRequest(
-                    command = setCommand(senderCard.object_type, transferDto.receiverCard?.card_number.orEmpty()),
+                    command = setCommand(senderCard.object_type, transferDto.receiverCard?.card_type.orEmpty()),
                     amount = transferDto.transferAmount.toString(),
                     from_object_id = senderCard.object_id,
                     from_object_expire = senderCard.object_expiry,

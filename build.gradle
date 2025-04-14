@@ -1,6 +1,5 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-
     repositories {
         google()
         mavenCentral()
@@ -24,10 +23,7 @@ allprojects {
         mavenCentral()
         jcenter()
         maven { url PluginDependencies.jitPackIo }
-        flatDir { dirs 'aars' }
-        maven {
-            url PluginDependencies.flutterIo
-        }
+        maven { url PluginDependencies.flutterIo}
         maven { url "https://artifactory.aigroup.uz:443/artifactory/myid" }
     }
 }
