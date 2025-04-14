@@ -42,6 +42,7 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
     FragmentUzcardMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
 ), (UzcardMonitoringItem) -> Unit {
 
+    private lateinit var layoutManager: LinearLayoutManager
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private var operationType = 2
     private var dateBegin: String = ""
@@ -79,7 +80,8 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
     }
 
     private fun initScrollListener() {
-        scrollListener = object : EndlessRecyclerViewScrollListener(LinearLayoutManager(requireContext())) {
+        layoutManager = LinearLayoutManager(requireContext())
+        scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
                 if (menuMonitoringViewModel.uzCardFilter)
                     getFilteredMonitoringList(page)
@@ -92,7 +94,7 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
         binding.monitoringList.apply {
             adapter = uzcardMonitoringAdapter
             setHasFixedSize(true)
-            layoutManager = LinearLayoutManager(requireContext())
+            layoutManager = this@UzcardMonitoringFragment.layoutManager
             addOnScrollListener(scrollListener)
             addItemDecoration(StickyHeaderDecoration(uzcardMonitoringAdapter))
         }
@@ -100,7 +102,7 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
 
     private fun checkForFilter() {
         if (menuMonitoringViewModel.uzCardFilter)
-            getFilteredMonitoringList(1)
+            getFilteredMonitoringList(0)
         else {
             getUzCardMonitoringList(operationType)
         }
@@ -184,7 +186,7 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
                 UzcardMonitoringRequest(
                     startDate = dateBegin,
                     endDate = dateEnd,
-                    pageNumber = "1",
+                    pageNumber = "0",
                     pageItemSize = "20",
                     selectedCards = cardList
                 )
