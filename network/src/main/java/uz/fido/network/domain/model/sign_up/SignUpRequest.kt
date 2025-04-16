@@ -1,7 +1,7 @@
 package uz.fido.network.domain.model.sign_up
 
+import uz.fido.network.di.Keys
 import uz.fido.network.domain.model.abc_base.UserInfo
-import uz.fido.utils.const.Const.USER_CLIENT_ID
 import java.io.Serializable
 
 data class SignUpRequest(
@@ -14,7 +14,7 @@ data class SignUpRequest(
     val device_name: String,
     val version: String,
     val ip: String,
-    val client_id: String = USER_CLIENT_ID,
+    val client_id: String = Keys.getClientId(),
     val email: String,
     var password: String? = null,
     val fcm_token: String? = null,

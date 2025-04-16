@@ -1,11 +1,12 @@
 package uz.fido.network.domain.model.sign_up
 
+import uz.fido.network.di.Keys
 import uz.fido.network.domain.model.abc_base.UserInfo
 
 data class FinishRegRequest(
     val app_version: String? = null,
     val app_version_code: String? = null,
-    var client_id: String? = null,
+    var client_id: String = Keys.getClientId(),
     val device_code: String? = null,
     val device_name: String? = null,
     val device_type: String? = null,
@@ -30,5 +31,6 @@ data class FinishRegRequest(
     var userInfo: UserInfo? = null,
     val card_number: String? = null,
     var expire_date: String? = null,
-    val version: String? = null
+    val version: String? = null,
+    val emp_ref_code: String? = null
 ) : java.io.Serializable

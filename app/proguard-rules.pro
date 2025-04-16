@@ -19,3 +19,18 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keep class kotlin.Metadata { *; }
+-keep class uz.fido.universaldigital.ui.fragments.products.model.FastAccessOperation { *; }
+-dontwarn kotlin.time.**
+-dontwarn org.slf4j.impl.StaticLoggerBinder
+-keepnames class kotlinx.** { *; }
+-keep class kotlinx.coroutines.** { *; }
+-dontwarn kotlinx.coroutines.**
+-keep class uz.fido.universaldigital.ui.dialogs.BaseInfoDialog { *; }
+-keep public class * extends androidx.fragment.app.Fragment {
+    public <init>();
+}
+
+
+

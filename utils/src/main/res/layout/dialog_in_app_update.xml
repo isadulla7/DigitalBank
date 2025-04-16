@@ -10,7 +10,7 @@
     <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/tv_title"
         style="@style/dialog_header_style"
-        android:textSize="20sp"
+        android:textSize="20dp"
         android:text="@string/update_downloaded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -30,7 +30,7 @@
         android:id="@+id/cancel"
         style="@style/dialog_button_style"
         android:text="@string/cancel"
-        android:textColor="@color/black"
+        android:textColor="@color/blackColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/reopen"
         app:layout_constraintTop_toBottomOf="@+id/animation_view" />

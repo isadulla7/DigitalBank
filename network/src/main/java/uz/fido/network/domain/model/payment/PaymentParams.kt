@@ -1,5 +1,6 @@
 package uz.fido.network.domain.model.payment
 
+import android.annotation.SuppressLint
 import java.io.Serializable
 
 class PaymentParams : Serializable {
@@ -65,6 +66,7 @@ class PaymentParams : Serializable {
         const val COLUMN_MASK = "field_mask"
     }
 
+    @SuppressLint("NotConstructor")
     fun PaymentParams(
         payment_detail_code: String,
         is_visible: String,

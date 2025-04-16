@@ -6,5 +6,5 @@ data class CheckSmsForPayment(
     val amount: String,
     val service_id: String,
     val sms_confirm_counter: String? = "Y",
-    val device_code:String
+    val device_code: String
 )

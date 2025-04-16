@@ -5,5 +5,6 @@ import java.io.Serializable
 data class Mib(
     var client_type: String? = null,
     var doc_value: String? = null,
-    var created_on: String? = null
+    var created_on: String? = null,
+    var isCurrent: Boolean = false
 ) : Serializable

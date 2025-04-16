@@ -1,24 +1,38 @@
 plugins {
     id 'com.android.library'
     id 'kotlin-android'
-    id 'kotlin-kapt'
+    id 'com.google.devtools.ksp' 
     id 'dagger.hilt.android.plugin'
 }
 
 android {
+
     namespace 'uz.fido.network'
-    compileSdkVersion 33
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 33
+        minSdkVersion ConfigData.MIN_SDK_VERSION
+        compileSdk ConfigData.COMPILE_SDK_VERSION
+        targetSdkVersion ConfigData.TARGET_SDK_VERSION
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+        externalNativeBuild {
+            cmake {
+                cppFlags("")
+            }
+        }
     }
-
+    buildFeatures {
+        buildConfig true
+    }
+    externalNativeBuild {
+        cmake {
+            path = "src/main/cpp/CMakeLists.txt"
+            version = "3.22.1"
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -29,35 +43,30 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    packagingOptions {
+        exclude "lib/x86/liblog.so"
+        exclude "lib/x86_64/liblog.so"
+        exclude "lib/arm64-v8a/liblog.so"
+        exclude "lib/armeabi-v7a/liblog.so"
+    }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'com.google.android.material:material:1.6.1'
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    implementation(libs.com.google.dagger.hilt.android)
+    ksp libs.com.google.dagger.hilt.android.compiler
 
-    //hilt
-    implementation "com.google.dagger:hilt-android:2.42"
-    kapt "com.google.dagger:hilt-android-compiler:2.42"
+    implementation(libs.com.squareup.retrofit2.retrofit)
+    implementation(libs.com.squareup.retrofit2.converter.gson)
+    implementation(libs.com.google.code.gson)
+    implementation(libs.androidx.room.room.runtime)
+    ksp(libs.androidx.room.room.compiler)
 
-    //retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation(libs.androidx.room.room.ktx)
+    implementation(libs.io.github.pilgr.paperdb)
+    implementation(libs.com.squareup.okhttp3)
+    implementation(libs.com.squareup.okhttp3.logging.interceptor)
 
-    //okhttp3
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    implementation(project(ModuleList.UTILS))
 
-    //gson
-    implementation 'com.google.code.gson:gson:2.9.0'
-
-    //paper book
-    implementation 'io.paperdb:paperdb:2.7.1'
-
-    //utils module
-    implementation project(path: ':utils')
 }

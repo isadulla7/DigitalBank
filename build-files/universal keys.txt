@@ -1,0 +1,3 @@
+key:universaldigital2023
+alias:digital23
+alias password:universaldigital2023

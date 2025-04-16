@@ -1,25 +1,35 @@
 plugins {
     id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
-    id 'kotlin-kapt'
 }
 
 android {
     namespace 'uz.fido.utils'
-    compileSdkVersion 33
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 33
+        minSdkVersion ConfigData.MIN_SDK_VERSION
+        compileSdk ConfigData.COMPILE_SDK_VERSION
+        targetSdkVersion ConfigData.TARGET_SDK_VERSION
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles "consumer-rules.pro"
+        externalNativeBuild {
+            cmake {
+                cppFlags("")
+            }
+        }
     }
     buildFeatures {
         viewBinding true
     }
+    externalNativeBuild {
+        cmake {
+            path = "src/main/cpp/CMakeLists.txt"
+            version = "3.22.1"
+        }
+    }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -30,36 +40,32 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
+    ndkVersion '25.0.8775105'
 }
 
 dependencies {
+    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.com.google.android.material)
+    implementation(libs.androidx.databinding.databinding.runtime)
+    implementation(libs.androidx.preference)
+    implementation(libs.com.google.firebase.firebase.messaging.ktx)
+    implementation(libs.com.google.firebase.firebase.analytics.ktx)
+    implementation(libs.com.squareup.okhttp3)
+    implementation(libs.com.squareup.okhttp3.logging.interceptor)
+    implementation(libs.com.airbnb.android.lottie)
+    implementation(libs.com.google.android.app.update)
+    implementation(libs.io.github.pilgr.paperdb)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.fragment.ktx)
+    implementation(libs.androidx.security.crypto)
+    implementation(libs.androidx.biometric)
+    implementation(libs.io.supercharge.shimmerlayout)
+    implementation libs.firebase.crashlytics
+    implementation libs.rootbeer.lib
 
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.5.1'
-    implementation 'com.google.android.material:material:1.6.1'
-    implementation 'androidx.databinding:databinding-runtime:8.0.1'
-    implementation 'androidx.preference:preference-ktx:1.2.0'
-
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-
-    //okhttp3
-    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.0'
-
-    //lottie animation
-    implementation "com.airbnb.android:lottie:5.2.0"
-
-    //in app update
-    //in-app update
-    implementation 'com.google.android.play:core-ktx:1.8.1'
-
-    //paper book
-    implementation 'io.paperdb:paperdb:2.7.1'
-
-    //navigation jetpack
-    implementation "androidx.navigation:navigation-fragment-ktx:2.5.3"
-    implementation "androidx.navigation:navigation-ui-ktx:2.5.3"
-    implementation "androidx.fragment:fragment-ktx:1.5.7"
+    testImplementation(libs.junit.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
+    androidTestImplementation(libs.androidx.test.espresso.espresso.core)
 }

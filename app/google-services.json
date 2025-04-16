@@ -1,66 +1,26 @@
 {
   "project_info": {
-    "project_number": "640041761428",
-    "firebase_url": "https://universalmobile-448ae.firebaseio.com",
-    "project_id": "universalmobile-448ae",
-    "storage_bucket": "universalmobile-448ae.appspot.com"
+    "project_number": "221468593329",
+    "project_id": "universal-mobile-digital",
+    "storage_bucket": "universal-mobile-digital.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:640041761428:android:89af458f656cd268821281",
+        "mobilesdk_app_id": "1:221468593329:android:acb0c632a9dc91db8fa690",
         "android_client_info": {
           "package_name": "uz.fido.universaldigital"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "640041761428-tpkttmdi4pk8lq2tof27a70mu2ckjqrp.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyAlTBBrB7l3zLWGQ0Uw0drTn_-HLiwvTSM"
+          "current_key": "AIzaSyC8KkCiy1RfkZ4Key8xNT16phN-iXL8BIQ"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "640041761428-tpkttmdi4pk8lq2tof27a70mu2ckjqrp.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:640041761428:android:734d76e50a6d38e5821281",
-        "android_client_info": {
-          "package_name": "uz.universalbank.universalmobileuz"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "640041761428-tpkttmdi4pk8lq2tof27a70mu2ckjqrp.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyAlTBBrB7l3zLWGQ0Uw0drTn_-HLiwvTSM"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "640041761428-tpkttmdi4pk8lq2tof27a70mu2ckjqrp.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }

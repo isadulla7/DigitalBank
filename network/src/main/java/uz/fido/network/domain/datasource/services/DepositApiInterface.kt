@@ -1,17 +1,28 @@
 package uz.fido.network.domain.datasource.services
 
-import uz.fido.network.domain.model.deposits.*
-import uz.fido.network.domain.model.deposits.constructor.DepositConstParamsResponse
-import uz.fido.network.domain.model.deposits.constructor.DepositConstPercent
-import uz.fido.network.domain.model.deposits.constructor.DepositConstPercentRequest
-import uz.fido.network.domain.model.deposits.constructor.DepositConstRequest
-import uz.fido.network.domain.model.deposits.my_deposit.ClientDepositListResponse
-import uz.fido.network.domain.model.deposits.operations.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import uz.fido.network.domain.model.abc_base.BaseResponse
+import uz.fido.network.domain.model.deposits.CalculateDepositAuto
+import uz.fido.network.domain.model.deposits.CreateCreditRequest
+import uz.fido.network.domain.model.deposits.DepositCalculatorResponse
+import uz.fido.network.domain.model.deposits.DepositListResponse
+import uz.fido.network.domain.model.deposits.GetDepositListRequest
+import uz.fido.network.domain.model.deposits.RenameDepositRequest
+import uz.fido.network.domain.model.deposits.constructor.BxmListResponse
+import uz.fido.network.domain.model.deposits.constructor.DepositConstParamsResponse
+import uz.fido.network.domain.model.deposits.constructor.DepositConstPercent
+import uz.fido.network.domain.model.deposits.constructor.DepositConstPercentRequest
+import uz.fido.network.domain.model.deposits.constructor.DepositConstRequest
+import uz.fido.network.domain.model.deposits.my_deposit.ClientDepositListResponse
+import uz.fido.network.domain.model.deposits.operations.EarlyClosureRequest
+import uz.fido.network.domain.model.deposits.operations.EarlyClosureResponse
+import uz.fido.network.domain.model.deposits.operations.InvestMoneyToDepositRequest
+import uz.fido.network.domain.model.deposits.operations.InvestMoneyToDepositResponse
+import uz.fido.network.domain.model.deposits.operations.PartialWithdrawMoneyDepositRequest
+import uz.fido.network.domain.model.deposits.operations.PartialWithdrawMoneyDepositResponse
 
 interface DepositApiInterface {
 
@@ -74,4 +85,13 @@ interface DepositApiInterface {
         @Body request: RenameDepositRequest
     ): BaseResponse
 
+    @POST("CLOSURE_DEPOSIT")
+    suspend fun closeDeposit(
+        @Header("Authorization") token: String, @Body earlyClosureRequest: EarlyClosureRequest
+    ): EarlyClosureResponse
+
+    @GET("BXM_LIST")
+    suspend fun getBxmList(
+        @Header("Authorization") token: String
+    ): BxmListResponse
 }

@@ -2,7 +2,7 @@ package uz.fido.network.data.repository
 
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.IChatRepository
+import uz.fido.network.domain.datasource.interfaces.IChatRepository
 import uz.fido.network.domain.datasource.services.ChatApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.chat.AddNewRoomResponse

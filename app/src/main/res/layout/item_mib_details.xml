@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/father"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp"
+    android:background="@drawable/cornered_bg_12dp_stroke"
+    android:orientation="vertical">
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/fio"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="14dp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_fio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/mainTextColor"
+        android:textSize="14dp"
+        tools:text="МАМАТОВ САДРИДДИН ИСМОИЛОВИЧ" />
+
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/purpose_type"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="14dp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="4dp"
+        android:textColor="@color/mainTextColor"
+        android:textSize="14dp"
+        tools:text="Mamuriy Jarima" />
+
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/mib_debts"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="14dp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"
+        android:textColor="@color/brandRedColor_80"
+        android:textSize="14dp"
+        tools:text="1000000000 UZS" />
+</androidx.appcompat.widget.LinearLayoutCompat>

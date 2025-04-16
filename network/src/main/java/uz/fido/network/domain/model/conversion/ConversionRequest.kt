@@ -4,7 +4,7 @@ import java.io.Serializable
 
 data class ConversionRequest(
     val command: String,
-    val from_object_value: String,
+    val from_object_value: String? = null,
     val from_object_id: String,
     val to_object_value: String,
     val to_object_expire: String,

@@ -4,22 +4,25 @@ apply plugin: 'maven-publish'
 
 
 android {
-    compileSdkVersion 33
 
     defaultConfig {
-        minSdkVersion 23
-        targetSdkVersion 33
+        minSdkVersion ConfigData.MIN_SDK_VERSION
+        compileSdk ConfigData.COMPILE_SDK_VERSION
+        targetSdkVersion ConfigData.TARGET_SDK_VERSION
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'proguard-rules-keep-lib.pro'
     }
 
     externalNativeBuild {
-        cmake { path "src/main/cpp/CMakeLists.txt" }
+        cmake {
+            path = "src/main/cpp/CMakeLists.txt"
+            version = "3.22.1"
+        }
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             consumerProguardFiles 'proguard-rules-keep-lib.pro'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules-keep-lib.pro'
         }
@@ -28,17 +31,16 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    ndkVersion '25.0.8775105'
 }
 
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.core:core-ktx:1.8.0'
-    implementation 'androidx.appcompat:appcompat:1.5.0'
-    implementation 'androidx.test.espresso:espresso-idling-resource:3.4.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    implementation 'org.tensorflow:tensorflow-lite:2.9.0'
+    implementation(libs.androidx.ktx)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.test.espresso.espresso.idling.resource)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.org.tensorflow.tensorflow.lite)
 }
 
 afterEvaluate {

@@ -3,7 +3,7 @@ package uz.fido.network.data.repository
 import retrofit2.Call
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.ISwapKeyRepository
+import uz.fido.network.domain.datasource.interfaces.ISwapKeyRepository
 import uz.fido.network.domain.datasource.services.SwapKeyApiInterface
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
 import uz.fido.network.domain.model.abc_base.SwapKeysResponse
@@ -16,6 +16,11 @@ class SwapKeyRepositoryImpl @Inject constructor(private val swapKeyService: Swap
     override suspend fun swapKeys(request: SwapKeysRequest): Resource<SwapKeysResponse> =
         getResult {
             swapKeyService.swapKeys(request)
+        }
+
+    override suspend fun swapKeysPin(request: SwapKeysRequest): Resource<SwapKeysResponse> =
+        getResult {
+            swapKeyService.swapKeysPin(request)
         }
 
     override fun swapKey(request: SwapKeysRequest): Call<SwapKeysResponse> =

@@ -6,9 +6,9 @@
         de carte soit visible
     </string>
     <!--Translation type: Machine-->
-    <string name="card_scan_deny_permission_title">Besoin d\'un accès à la caméra</string>
+    <string name="card_scan_deny_permission_title">Besoin d’un accès à la caméra</string>
     <!--Translation type: Machine-->
-    <string name="card_scan_deny_permission_message">Veuillez autoriser l\'accès à l\'appareil photo
+    <string name="card_scan_deny_permission_message">Veuillez autoriser l’accès à l\'appareil photo
         pour scanner votre carte
     </string>
     <!--Translation type: Machine-->

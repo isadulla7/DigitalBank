@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:background="@color/whiteColor">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteColor"
+        android:outlineSpotShadowColor="@color/appBarShadowColor"
+        android:translationZ="@dimen/elevation_8dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:s_additionalIcon="@drawable/ic_history"
+        app:s_title="@string/by_wallet_number" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/nested_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_cards"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/sender_cards"
+                    android:layout_width="match_parent"
+                    android:layout_height="72dp"
+                    android:layout_marginTop="16dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/from_card" />
+
+                <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+                    android:id="@+id/sender_indicator"
+                    android:layout_width="wrap_content"
+                    android:layout_height="10dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:paddingHorizontal="16dp"
+                    app:dotsColor="@color/brandBlueColor_10"
+                    app:dotsCornerRadius="8dp"
+                    app:dotsSize="8dp"
+                    app:dotsSpacing="4dp"
+                    app:dotsWidthFactor="1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sender_cards"
+                    app:progressMode="false"
+                    app:selectedDotColor="@color/brandBlueColor_90" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/empty_cards"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/ll_cards"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:id="@+id/title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginHorizontal="16dp"
+                    android:gravity="center"
+                    android:text="@string/you_dont_have_card"
+                    android:textColor="@color/brandBlueColor_50"
+                    android:textSize="16dp" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewRegular
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="56dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/no_cards_desc_p2p"
+                    android:textColor="@color/brandRedColor"
+                    android:textSize="14dp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/wallet_number_layout"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="68dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="20dp"
+                android:hint="@string/wallet_number"
+                app:layout_constraintTop_toBottomOf="@id/ll_cards">
+
+                <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                    android:id="@+id/et_wallet_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:imeOptions="actionNext"
+                    android:inputType="textCapCharacters"
+                    android:maxLength="12"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:id="@+id/owner_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:gravity="center|start"
+                android:includeFontPadding="false"
+                android:paddingStart="16dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="12dp"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/wallet_number_layout" />
+
+            <ProgressBar
+                android:id="@+id/progress_view"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="16dp"
+                android:indeterminateTint="@color/brandRedColor"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/wallet_number_layout"
+                app:layout_constraintEnd_toEndOf="@id/wallet_number_layout"
+                app:layout_constraintTop_toTopOf="@id/wallet_number_layout" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/amount_layout"
+                style="@style/EditTextInputLayoutStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp"
+                android:hint="@string/input_amount"
+                app:layout_constraintTop_toBottomOf="@id/owner_name">
+
+                <uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountEditText
+                    android:id="@+id/et_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:digits="1234567890. "
+                    android:imeOptions="actionDone"
+                    android:inputType="numberDecimal"
+                    android:tag="AMOUNT"
+                    android:theme="@style/DefaultEditTextTheme" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <uz.fido.utils.view.amount.AmountSuggestionView
+                android:id="@+id/amount_suggestions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/amount_layout" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:id="@+id/tv_min_amount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:text="@string/min_amount_1000"
+                android:textColor="@color/brandBlueColor_50"
+                android:textSize="14dp"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/amount_suggestions" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+                android:id="@+id/tv_saved_receivers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="28dp"
+                android:text="@string/saved_receivers"
+                android:textColor="@color/mainTextColor"
+                android:textSize="20dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_min_amount" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/saved_receivers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:nestedScrollingEnabled="false"
+                android:overScrollMode="never"
+                app:layout_constraintTop_toBottomOf="@id/tv_saved_receivers" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="24dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_saved_receivers">
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/empty_list"
+                    android:textColor="@color/brandBlueColor_50"
+                    android:textSize="16dp" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewRegular
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center"
+                    android:text="@string/empty_transfers"
+                    android:textColor="@color/brandBlueColor_50"
+                    android:textSize="14dp" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <uz.fido.utils.view.custom_circle_button.CustomFAButton
+        android:id="@+id/btn_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

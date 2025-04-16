@@ -3,18 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/father"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="56dp"
+    android:background="@color/whiteColor"
+    android:elevation="@dimen/elevation_8dp"
     android:gravity="center_vertical"
-    android:paddingVertical="4dp">
+    android:orientation="horizontal"
+    android:outlineSpotShadowColor="@color/appBarShadowColor"
+    android:translationZ="@dimen/elevation_8dp">
 
     <ImageView
         android:id="@+id/back"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="4dp"
-        android:clickable="true"
-        android:focusable="true"
         android:padding="12dp"
+        android:src="@drawable/ic_back_button"
         tools:ignore="ContentDescription" />
 
     <uz.fido.utils.view.custom_text_view.TextViewMedium
@@ -22,13 +25,15 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginHorizontal="8dp"
+        android:layout_marginHorizontal="12dp"
         android:layout_weight="1"
         android:ellipsize="end"
-        android:gravity="start"
+        android:gravity="center|start"
+        android:includeFontPadding="false"
         android:maxLines="2"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:textColor="@color/brandBlueColor"
+        android:textSize="16dp"
+        tools:text="@string/common_signin_button_text_long" />
 
     <ImageView
         android:id="@+id/additional"
@@ -36,7 +41,7 @@
         android:layout_height="48dp"
         android:layout_marginEnd="4dp"
         android:padding="12sp"
-        android:visibility="invisible"
+        android:visibility="visible"
         tools:ignore="ContentDescription" />
 
 </androidx.appcompat.widget.LinearLayoutCompat>

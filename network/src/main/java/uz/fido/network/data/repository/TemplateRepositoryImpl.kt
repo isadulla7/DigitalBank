@@ -2,7 +2,7 @@ package uz.fido.network.data.repository
 
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.ITemplateRepository
+import uz.fido.network.domain.datasource.interfaces.ITemplateRepository
 import uz.fido.network.domain.datasource.services.TemplateApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.template.CreateTemplateGroupRequest
@@ -18,8 +18,8 @@ import uz.fido.network.domain.model.template.SetTemplateOrderRequest
 import uz.fido.network.domain.model.template.TemplateGroupResponse
 import javax.inject.Inject
 
-class TemplateRepositoryImpl @Inject constructor(private val templateService: TemplateApiInterface) :
-    ITemplateRepository {
+class TemplateRepositoryImpl @Inject constructor(private val templateService: TemplateApiInterface) : ITemplateRepository {
+
     override suspend fun createTemplate(
         token: String,
         createTemplateRequest: CreateTemplateRequest
@@ -34,52 +34,36 @@ class TemplateRepositoryImpl @Inject constructor(private val templateService: Te
         templateService.createTemplateGroup(token, createTemplateGroupRequest)
     }
 
-
-    override suspend fun editTemplateGroup(
-        token: String,
-        editTemplateGroupRequest: EditTemplateGroupRequest
-    ): Resource<BaseResponse> = getResult {
+    override suspend fun editTemplateGroup(token: String, editTemplateGroupRequest: EditTemplateGroupRequest): Resource<BaseResponse> = getResult {
         templateService.editTemplateGroup(token, editTemplateGroupRequest)
     }
 
-    override suspend fun getTemplateGroup(token: String): Resource<TemplateGroupResponse> =
-        getResult {
-            templateService.getTemplateGroup(token)
-        }
+    override suspend fun getTemplateGroup(token: String): Resource<TemplateGroupResponse> = getResult {
+        templateService.getTemplateGroup(token)
+    }
 
 
-    override suspend fun getTemplateList(
-        token: String,
-        getTemplateListRequest: GetTemplateListRequest
-    ): Resource<GetTemplateListResponse> = getResult {
+    override suspend fun getTemplateList(token: String, getTemplateListRequest: GetTemplateListRequest): Resource<GetTemplateListResponse> = getResult {
         templateService.getTemplateList(token, getTemplateListRequest)
     }
 
-    override suspend fun getTemplate(
-        token: String,
-        getTemplateRequest: GetTemplateRequest
-    ): Resource<GetTemplateResponse> = getResult {
+    override suspend fun getUpdatedTemplateList(token: String): Resource<GetTemplateListResponse> = getResult {
+        templateService.getUpdatedTemplateList(token, GetTemplateListRequest(template_group_id = "1"))
+    }
+
+    override suspend fun getTemplate(token: String, getTemplateRequest: GetTemplateRequest): Resource<GetTemplateResponse> = getResult {
         templateService.getTemplate(token, getTemplateRequest)
     }
 
-    override suspend fun setTemplateOrder(
-        token: String,
-        setTemplateOrderRequest: SetTemplateOrderRequest
-    ): Resource<BaseResponse> = getResult {
+    override suspend fun setTemplateOrder(token: String, setTemplateOrderRequest: SetTemplateOrderRequest): Resource<BaseResponse> = getResult {
         templateService.setTemplateOrder(token, setTemplateOrderRequest)
     }
 
-    override suspend fun deleteTemplate(
-        token: String,
-        deleteTemplateRequest: DeleteTemplateRequest
-    ): Resource<BaseResponse> = getResult {
+    override suspend fun deleteTemplate(token: String, deleteTemplateRequest: DeleteTemplateRequest): Resource<BaseResponse> = getResult {
         templateService.deleteTemplate(token, deleteTemplateRequest)
     }
 
-    override suspend fun deleteTemplateGroup(
-        token: String,
-        getTemplateListRequest: GetTemplateListRequest
-    ): Resource<BaseResponse> = getResult {
+    override suspend fun deleteTemplateGroup(token: String, getTemplateListRequest: GetTemplateListRequest): Resource<BaseResponse> = getResult {
         templateService.deleteTemplateGroup(token, getTemplateListRequest)
     }
 }

@@ -2,7 +2,7 @@ package uz.fido.network.data.repository
 
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.IWalletRepository
+import uz.fido.network.domain.datasource.interfaces.IWalletRepository
 import uz.fido.network.domain.datasource.services.WalletApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.wallet.CreateWalletRequest

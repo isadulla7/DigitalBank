@@ -4,10 +4,68 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <uz.fido.utils.view.custom_app_bar.MainAppBar
+    <uz.fido.utils.view.custom_app_bar.AppBarWithSubtitle
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:title="App Bar Test" />
+        app:title="@string/input_sms_code" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/sms_layout"
+        style="@style/EditTextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:hint="@string/input_code"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_sms"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:digits="1234567890"
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:maxLength="8"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:theme="@style/DefaultEditTextTheme" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/tv_resend_after"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="16dp"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/sms_layout" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/resend_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:padding="16dp"
+        android:text="@string/resend_code"
+        android:textColor="@color/brandRedColor"
+        android:textSize="16dp"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sms_layout" />
+
+    <uz.fido.utils.view.custom_circle_button.CustomFAButton
+        android:id="@+id/btn_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

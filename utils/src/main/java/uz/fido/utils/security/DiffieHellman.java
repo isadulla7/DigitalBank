@@ -1,9 +1,11 @@
 package uz.fido.utils.security;
 
-import java.math.BigInteger;
-import java.util.Random;
+import android.content.Context;
 
-import uz.fido.utils.log.Logger;
+import java.math.BigInteger;
+import java.security.SecureRandom;
+
+import uz.fido.utils.utility.user.PaperExtKt;
 
 public class DiffieHellman {
 
@@ -12,6 +14,7 @@ public class DiffieHellman {
 
     BigInteger biA, biB;
     BigInteger biK;
+    String biKString;
 
     private static DiffieHellman diffieHellman = null;
 
@@ -22,8 +25,12 @@ public class DiffieHellman {
         return diffieHellman;
     }
 
+    public static void clearDiffieHellman() {
+        diffieHellman = null;
+    }
+
     private DiffieHellman() {
-        Random randomGenerator = new Random();
+        SecureRandom randomGenerator = new SecureRandom();
         a = new BigInteger(bitLength, randomGenerator);
         g = new BigInteger(bitLength, randomGenerator);
         p = new BigInteger(bitLength, randomGenerator);
@@ -45,11 +52,18 @@ public class DiffieHellman {
     public void SetKeyB(String B) {
         biB = new BigInteger(B);
         biK = biB.modPow(a, p);
-        Logger.writeLog("bik________________________" + biK);
+        biKString = biK.toString();
+    }
+
+    public void setKeyBSwapKey(String B, String additionalText, Context context) {
+        biB = new BigInteger(B);
+        biK = biB.modPow(a, p);
+        biKString = biK.toString();
+        biKString += additionalText;
+        SecurePrefsManagerKt.saveToSecureStore("KEY_K", biKString);
     }
 
     public String getKeyK() {
-        Logger.writeLog("get_bik________________________" + biK);
-        return biK.toString();
+        return biKString;
     }
 }

@@ -2,17 +2,20 @@
 <resources>
     <!-- RED -->
     <color name="brandRedColor">#BF272B</color>
-    <color name="brandRedColor_90">#BF272B</color>
-    <color name="brandRedColor_80">#BF272B</color>
-    <color name="brandRedColor_70">#BF272B</color>
-    <color name="brandRedColor_60">#BF272B</color>
-    <color name="brandRedColor_50">#BF272B</color>
-    <color name="brandRedColor_40">#BF272B</color>
-    <color name="brandRedColor_30">#BF272B</color>
-    <color name="brandRedColor_20">#BF272B</color>
-    <color name="brandRedColor_10">#BF272B</color>
+    <color name="brandRedColor_90">#E6BF272B</color>
+    <color name="brandRedColor_80">#CCBF272B</color>
+    <color name="brandRedColor_70">#B3BF272B</color>
+    <color name="brandRedColor_60">#99BF272B</color>
+    <color name="brandRedColor_50">#80BF272B</color>
+    <color name="brandRedColor_40">#66BF272B</color>
+    <color name="brandRedColor_30">#4DBF272B</color>
+    <color name="brandRedColor_20">#33BF272B</color>
+    <color name="brandRedColor_10">#1ABF272B</color>
+    <color name="secondary_red">#FF4646</color>
+    <color name="bank_red_color">#BD282B</color>
 
     <color name="brandRedActiveColor">#A31D21</color>
+    <color name="lightRedColor">#F4DBDB</color>
 
     <!-- BLUE -->
     <color name="brandBlueColor">#091C3A</color>
@@ -25,7 +28,52 @@
     <color name="brandBlueColor_30">#B6BBC4</color>
     <color name="brandBlueColor_20">#CED2D8</color>
     <color name="brandBlueColor_10">#E7E9EC</color>
+    <color name="view_pager_mib_color">#F0F0F0</color>
 
     <color name="blackColor">#000000</color>
     <color name="whiteColor">#FFFFFF</color>
+    <color name="frozenWhite">#FFFFFF</color>
+    <color name="frozenBlue">#091C3A</color>
+    <color name="cardBgColor">#FFFFFF</color>
+    <color name="newCardBgColor">#F8F8F8</color>
+    <color name="cardBorderColor">#F6F6F6</color>
+
+    <color name="etBackgroundColor">#F6F6F6</color>
+    <color name="viewPagerTextColor">#091C3A</color>
+
+    <color name="hintColor">@color/brandBlueColor_60</color>
+    <color name="mainTextColor">@color/brandBlueColor</color>
+    <color name="shimmer_color">#f4f4f4</color>
+    <color name="shimmer_color_2">#f4f4f4</color>
+    <color name="stroke_color">#212121</color>
+    <color name="monitoring_filter">#F6F6F6</color>
+
+    <color name="dialogButtonColor">#007AFF</color>
+    <color name="monitoring_amount">#3BBC7E</color>
+
+    <color name="buttonEnabled">#DB8688</color>
+
+    <color name="seek_bar_background">#E7E9EC</color>
+    <color name="seek_bar_progress">#BF272B</color>
+    <color name="seek_bar_secondary_progress">#3399CC</color>
+
+    <color name="searchBackgroundColor">#F0F0F0</color>
+    <color name="backgroundColor">#F8F8F8</color>
+    <color name="newBackgroundColor">#FFFFFF</color>
+    <color name="status_waiting">#FCB924</color>
+    <color name="status_done">#3BBC7E</color>
+    <color name="goal_out">#1E000000</color>
+    <color name="color_auto_activ">#3BBC7E</color>
+    <color name="color_auto_no_activ">#FCB924</color>
+
+    <color name="color_for_disable_card">#C5C5C5</color>
+    <color name="alert_dialog_background">#F2FFFFFF</color>
+    <color name="view_pager_tab_color">#ffffff</color>
+    <color name="view_pager_stroke_color">#E7E9EC</color>
+    <color name="link_color">#0000EE</color>
+    <color name="home_card_description_color">#848E9D</color>
+    <color name="home_gradient_color_1">#FFEBE7</color>
+    //my id colors
+    <color name="myidColorPrimary">@color/brandRedColor</color>
+    <color name="myidPrimaryButtonColor">@color/brandRedColor</color>
 </resources>

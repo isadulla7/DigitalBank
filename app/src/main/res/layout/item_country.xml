@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uz.fido.utils.view.custom_text_view.TextViewRegular xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/country_name"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:background="?selectableItemBackground"
+    android:gravity="center|start"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    tools:text="Uzbekistan"
+    android:textColor="@color/mainTextColor"
+    android:textSize="15dp">
+
+</uz.fido.utils.view.custom_text_view.TextViewRegular>

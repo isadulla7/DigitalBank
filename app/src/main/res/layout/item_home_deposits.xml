@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="12dp"
+    android:background="@drawable/cornered_bg_12dp"
+    android:orientation="vertical"
+    android:outlineSpotShadowColor="@color/appBarShadowColor"
+    android:padding="12dp"
+    android:translationZ="@dimen/elevation_8dp">
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tv_deposit_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="16dp"
+        tools:text="My Deposit" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+        android:id="@+id/tv_deposit_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="20dp"
+        tools:text="215 000 000 UZS" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp">
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/tv_deposit_percentage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="14dp" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/tv_deposit_duration"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="14dp" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/progress_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:indeterminateTint="@color/brandRedColor"
+        android:progress="0"
+        app:trackColor="@color/brandBlueColor_10"
+        app:trackCornerRadius="4dp"
+        app:trackThickness="6dp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

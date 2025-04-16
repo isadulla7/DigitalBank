@@ -18,8 +18,13 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import uz.fido.network.domain.model.abc_base.BaseResponse
+import uz.fido.network.domain.model.sessions.CheckDeviceRequest
+import uz.fido.network.domain.model.sessions.DeleteUserDeviceRequest
+import uz.fido.network.domain.model.sessions.GetUserDevicesRequest
+import uz.fido.network.domain.model.sessions.GetUserDevicesResponse
 
 interface UtilsApiInterface {
+
     @POST("SEARCH")
     suspend fun searchRequest(
         @Header("Authorization") token: String,
@@ -102,4 +107,26 @@ interface UtilsApiInterface {
         @Header("Authorization") token: String,
         @Body checkContactsRequest: CheckContactsRequest
     ): CheckContactsResponse
+
+    @POST("GET_DEVICES_LIST")
+    suspend fun getActiveSessions(
+        @Header("Authorization") token: String, @Body getUserDevicesRequest: GetUserDevicesRequest
+    ): GetUserDevicesResponse
+
+    @POST("SEND_SMS_FOR_REMOVE_DEVICE")
+    suspend fun checkDeviceRequest(
+        @Header("Authorization") token: String, @Body checkDeviceRequest: CheckDeviceRequest
+    ): BaseResponse
+
+    @POST("REMOVE_USER_DEVICE")
+    suspend fun deleteSession(
+        @Header("Authorization") token: String, @Body deleteUserDeviceRequest: DeleteUserDeviceRequest
+    ): BaseResponse
+
+    @POST("NOTIFICATION_IS_READ")
+    suspend fun updateNotificationStatus(
+        @Header("Authorization") token: String,
+        @Body updateNewsStatusRequest: UpdateNotificationState
+    ): BaseResponse
+
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/father"
+    android:layout_width="84dp"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/shimmer_circle"
+        android:gravity="center"
+        android:textColor="@color/brandRedColor"
+        android:textSize="20dp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:layout_width="56dp"
+        android:layout_height="16sp"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginTop="8sp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/shimmer_bg"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:lineSpacingExtra="1.8dp"
+        android:maxLines="2"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="12dp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:layout_width="40dp"
+        android:layout_height="12sp"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/shimmer_bg"
+        android:gravity="center"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="12dp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

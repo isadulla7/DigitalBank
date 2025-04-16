@@ -1,21 +1,24 @@
-# Add project specific ProGuard rules here.
-# You can control the set of applied configuration files using the
-# proguardFiles setting in build.gradle.
-#
-# For more details, see
-#   http://developer.android.com/guide/developing/tools/proguard.html
+-keepattributes *Annotation*
+-keep class kotlin.Metadata { *; }
+-keepclassmembers class kotlin.Metadata { *; }
+-keep class com.google.gson.** { *; }
+-keep class uz.fido.network.domain.model.** { *; }
+-keep class uz.fido.network.di.**{*;}
+-keep class uz.myid.android.sdk.**{*;}
+-keep class org.bouncycastle.** {*;}
+-dontwarn kotlin.time.**
+-keep class com.android.org.bouncycastle.jcajce.**{*;}
 
-# If your project uses WebView with JS, uncomment the following
-# and specify the fully qualified class name to the JavaScript interface
-# class:
-#-keepclassmembers class fqcn.of.javascript.interface.for.webview {
-#   public *;
-#}
+# Retain cryptography-related classes
+#-keep class java.security.**{ *; }
+#-keep class javax.crypto.** { *; }
+#-keep class sun.security.** { *; }
+#-keep class org.bouncycastle.** { *; }
 
-# Uncomment this to preserve the line number information for
-# debugging stack traces.
-#-keepattributes SourceFile,LineNumberTable
+# Keep keystore-related methods
+#-keep public class * extends java.security.KeyStoreSpi
+#-keep public class * extends javax.crypto.SecretKeyFactorySpi
 
-# If you keep the line number information, uncomment this to
-# hide the original source file name.
-#-renamesourcefileattribute SourceFile
+-keepnames class kotlinx.** { *; }
+-keep class kotlinx.coroutines.** { *; }
+-dontwarn kotlinx.coroutines.**

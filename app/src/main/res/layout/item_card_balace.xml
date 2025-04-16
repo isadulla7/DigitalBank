@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/father"
+    android:layout_width="match_parent"
+    android:layout_height="64dp"
+    android:animateLayoutChanges="true"
+    android:paddingHorizontal="16dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/card_bg"
+        android:layout_width="40dp"
+        android:layout_height="28dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/bg_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedImageView"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/card_type"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@drawable/ic_uzcard_white_24"
+        app:layout_constraintBottom_toBottomOf="@id/card_bg"
+        app:layout_constraintEnd_toEndOf="@id/card_bg"
+        app:layout_constraintStart_toStartOf="@id/card_bg"
+        app:layout_constraintTop_toTopOf="@id/card_bg"
+        tools:ignore="ContentDescription" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/card_balance"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
+        android:gravity="bottom"
+        android:maxLines="1"
+        android:textColor="@color/brandBlueColor"
+        android:textSize="17dp"
+        app:layout_constraintBottom_toTopOf="@id/card_name"
+        app:layout_constraintEnd_toStartOf="@id/switchView"
+        app:layout_constraintStart_toEndOf="@id/card_bg"
+        app:layout_constraintTop_toTopOf="@id/card_bg"
+        tools:text="256 496.00 UZS" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/card_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textColor="#9DA4B0"
+        android:textSize="14dp"
+        app:layout_constraintBottom_toBottomOf="@id/card_bg"
+        app:layout_constraintEnd_toStartOf="@id/switchView"
+        app:layout_constraintStart_toEndOf="@id/card_bg"
+        app:layout_constraintTop_toBottomOf="@id/card_balance"
+        tools:text="Зарплатная карта ** 9018" />
+
+    <ImageView
+        android:id="@+id/main_card_sign"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginEnd="16dp"
+        android:src="@drawable/ic_star"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/switchView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/brandRedColor"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/switchView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/btn_radio_on"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="ContentDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

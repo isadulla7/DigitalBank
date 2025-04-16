@@ -1,8 +1,5 @@
 package uz.fido.network.domain.model.loans.my_loans
 
-import uz.fido.network.domain.model.loans.my_loans.Application
-import uz.fido.network.domain.model.loans.my_loans.Credit
-
 data class CreditListResponse(
     val application_list: ArrayList<Application>,
     val code: Int,

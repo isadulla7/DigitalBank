@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<appwidget-provider xmlns:android="http://schemas.android.com/apk/res/android"
+    android:initialKeyguardLayout="@layout/total_balance_widget_layout"
+    android:initialLayout="@layout/total_balance_widget_layout"
+    android:previewImage="@drawable/total_balance_review"
+    android:resizeMode="horizontal"
+    android:targetCellWidth="1"
+    android:targetCellHeight="1"
+    android:updatePeriodMillis="86400000"
+    android:widgetCategory="home_screen">
+
+</appwidget-provider>

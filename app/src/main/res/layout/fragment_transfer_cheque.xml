@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false"
+    android:orientation="vertical">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteColor"
+        android:outlineSpotShadowColor="@color/appBarShadowColor"
+        android:translationZ="@dimen/elevation_8dp"
+        app:s_title="@string/check" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/info_block"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="20dp">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:text="@string/service"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/operation_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="14dp"
+                android:text="@string/sender"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/sender_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14dp"
+                tools:text="9860 **** **** 1711" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/sender_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="11dp"
+                tools:text="(HUSNIDDIN MADAMINOV)" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="14dp"
+                android:text="@string/receiver"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/receiver_card"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14dp"
+                tools:text="9860 0901 0112 1711" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/receiver_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="2dp"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="11dp"
+                tools:text="(HUSNIDDIN MADAMINOV)" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="14dp"
+                android:text="@string/date_time"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/operation_time"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="14dp"
+                android:text="@string/commission"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/commission"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="14sp"
+                android:text="@string/amount"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/total_amount"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/btn_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:drawableTop="@drawable/ic_btn_share"
+        android:gravity="center"
+        android:text="@string/share"
+        android:textColor="@color/mainTextColor"
+        android:textSize="16dp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

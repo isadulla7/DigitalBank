@@ -2,7 +2,7 @@ package uz.fido.network.data.repository
 
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
-import uz.fido.network.domain.datasource.repositories.IDepositRepository
+import uz.fido.network.domain.datasource.interfaces.IDepositRepository
 import uz.fido.network.domain.datasource.services.DepositApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.deposits.CalculateDepositAuto
@@ -11,6 +11,7 @@ import uz.fido.network.domain.model.deposits.DepositCalculatorResponse
 import uz.fido.network.domain.model.deposits.DepositListResponse
 import uz.fido.network.domain.model.deposits.GetDepositListRequest
 import uz.fido.network.domain.model.deposits.RenameDepositRequest
+import uz.fido.network.domain.model.deposits.constructor.BxmListResponse
 import uz.fido.network.domain.model.deposits.constructor.DepositConstParamsResponse
 import uz.fido.network.domain.model.deposits.constructor.DepositConstPercent
 import uz.fido.network.domain.model.deposits.constructor.DepositConstPercentRequest
@@ -34,7 +35,6 @@ class DepositRepositoryImpl @Inject constructor(private val depositService: Depo
         depositService.getDeposits(token, getDepositListRequest)
     }
 
-
     override suspend fun depositCalculator(
         token: String,
         calculateDepositAuto: CalculateDepositAuto
@@ -49,10 +49,9 @@ class DepositRepositoryImpl @Inject constructor(private val depositService: Depo
         depositService.createDeposit(token, createCreditRequest)
     }
 
-    override suspend fun getClientDepositList(token: String): Resource<ClientDepositListResponse> =
-        getResult {
-            depositService.getClientDepositList(token)
-        }
+    override suspend fun getClientDepositList(token: String): Resource<ClientDepositListResponse> = getResult {
+        depositService.getClientDepositList(token)
+    }
 
 
     override suspend fun partialWithdrawMoney(
@@ -95,9 +94,22 @@ class DepositRepositoryImpl @Inject constructor(private val depositService: Depo
     override suspend fun renameDeposit(
         token: String,
         request: RenameDepositRequest
-    ): Resource<BaseResponse> =
-        getResult {
-            depositService.renameDeposit(token, request)
-        }
+    ): Resource<BaseResponse> = getResult {
+        depositService.renameDeposit(token, request)
+    }
 
+    override suspend fun calculateDepositAuto(
+        token: String,
+        calculateDepositAuto: CalculateDepositAuto
+    ): Resource<DepositCalculatorResponse> {
+        return getResult { depositService.depositCalculator(token, calculateDepositAuto) }
+    }
+
+    override suspend fun closeDeposit(
+        token: String,
+        earlyClosureRequest: EarlyClosureRequest
+    ): Resource<EarlyClosureResponse> =
+        getResult { depositService.closeDeposit(token, earlyClosureRequest) }
+
+    override suspend fun getBxmList(token: String): Resource<BxmListResponse> = getResult { depositService.getBxmList(token) }
 }

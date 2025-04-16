@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingHorizontal="16dp"
+    android:paddingTop="16dp">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout"
+        style="@style/EditTextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/payment_amount">
+
+        <uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountEditText
+            android:id="@+id/edit_text_amount"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:digits="1234567890. "
+            android:imeOptions="actionDone"
+            android:inputType="numberDecimal"
+            android:tag="AMOUNT"
+            android:theme="@style/DefaultEditTextTheme" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/text_view_min_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/mainTextColor"
+        android:textSize="14dp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -11,6 +11,7 @@ data class CourseItem(
     val beginDate: String,
     val sellingRate: Double,
     val quoteCurrency: String,
+    val quote_currency: String,
     var order: Int,
     var buyingRateDiff: Double? = 0.0,
     var sellingRateDiff: Double? = 0.0,

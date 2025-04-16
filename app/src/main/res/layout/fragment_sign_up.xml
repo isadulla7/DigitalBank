@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <uz.fido.utils.view.custom_app_bar.AppBarWithSubtitle
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:subtitle="@string/sign_up_description"
+        app:title="@string/sign_up" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/phone_number_layout"
+        style="@style/EditTextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:hint="@string/phone_number"
+        app:layout_constraintTop_toBottomOf="@id/app_bar">
+
+        <EditText
+            android:id="@+id/et_phone_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:digits="1234567890 "
+            android:imeOptions="actionDone"
+            android:inputType="phone"
+            android:maxLength="17"
+            android:maxLines="1"
+            android:theme="@style/DefaultEditTextTheme"
+            app:met_mask="+998 ## ### ## ##" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/tv_employee_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:drawableEnd="@drawable/ic_arrow_down_ios"
+        android:drawableTint="@color/brandBlueColor_30"
+        android:gravity="center_vertical"
+        android:includeFontPadding="false"
+        android:paddingVertical="8dp"
+        android:text="@string/input_ref_code"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="16dp"
+        app:layout_constraintTop_toBottomOf="@id/phone_number_layout" />
+
+    <net.cachapa.expandablelayout.ExpandableLayout
+        android:id="@+id/expandable_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:el_duration="300"
+        app:el_expanded="false"
+        app:layout_constraintTop_toBottomOf="@id/tv_employee_code">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emp_ref_code_layout"
+            style="@style/EditTextInputLayoutStyle"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/input_ref_code">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_ref_code"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="number"
+                android:maxLength="25"
+                android:theme="@style/DefaultEditTextTheme" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </net.cachapa.expandablelayout.ExpandableLayout>
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/text_sing_up_terms"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16sp"
+        android:gravity="center|start"
+        android:text="@string/sign_up_privacy"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="12dp"
+        app:layout_constraintBottom_toBottomOf="@id/btn_continue"
+        app:layout_constraintEnd_toStartOf="@id/btn_continue"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/btn_continue" />
+
+    <uz.fido.utils.view.custom_circle_button.CustomFAButton
+        android:id="@+id/btn_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:importantForAccessibility="no"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="FloatingButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_margin">20dp</item>
+        <item name="srcCompat">@drawable/ic_arrow_right</item>
+        <item name="elevation">4dp</item>
+        <item name="android:outlineSpotShadowColor" tools:targetApi="p">@color/brandRedColor</item>
+        <item name="android:outlineAmbientShadowColor" tools:targetApi="p">@color/brandRedColor
+        </item>
+        <item name="cornerRadius">16sp</item>
+        <item name="android:shadowColor">@color/brandRedColor_10</item>
+        <item name="backgroundTint">@color/fab_button_background</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.Material3.Corner.Full</item>
+        <item name="android:windowActivityTransitions">true</item>
+        <item name="tint">@color/white</item>
+    </style>
+
+    <style name="pin_number_style">
+        <item name="android:layout_width">72dp</item>
+        <item name="android:layout_height">72dp</item>
+        <item name="android:background">@drawable/pin_number_bg</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/pin_number_text_color</item>
+        <item name="android:textSize">30dp</item>
+    </style>
+
+    <style name="pin_number_style_mini">
+        <item name="android:layout_width">64dp</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:background">@drawable/pin_number_bg_mini</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/pin_number_text_color</item>
+        <item name="android:textSize">24dp</item>
+    </style>
+
+    <style name="MyAlertDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="cornerRadius">16dp</item>
+        <item name="colorAccent">@color/brandRedColor</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:windowBackground">@color/white</item>
+    </style>
+
+    <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">@color/white</item>
+        <item name="colorAccent">@color/mainTextColor</item>
+        <item name="dialogCornerRadius">12dp</item>
+        <item name="android:textColor">@color/mainTextColor</item>
+        <item name="android:textColorPrimary">@color/brandBlueColor_60</item>
+    </style>
+
+    <style name="CustomSwitch" parent="Theme.AppCompat.Light">
+        <!-- active thumb & track color (30% transparency) -->
+        <item name="colorControlActivated">@color/brandRedColor</item>
+
+        <!-- inactive thumb color -->
+        <item name="colorSwitchThumbNormal">@color/white</item>
+
+        <!-- inactive track color (30% transparency) -->
+        <item name="android:colorForeground">@color/brandBlueColor_40
+        </item>
+    </style>
+
+    <style name="roundedImageView" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">4dp</item>
+    </style>
+
+    <style name="homeRefreshButton" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">24dp</item>
+    </style>
+
+
+    <style name="cardBackground" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="Widget.MKBank.AppWidget.Container" parent="android:Widget">
+        <item name="android:id">@android:id/background</item>
+        <item name="android:background">@drawable/widget_backgroud</item>
+    </style>
+
+</resources>

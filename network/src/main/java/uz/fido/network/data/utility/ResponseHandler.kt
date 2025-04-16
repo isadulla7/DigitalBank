@@ -2,11 +2,11 @@ package uz.fido.network.data.utility
 
 import retrofit2.HttpException
 import uz.fido.network.domain.model.abc_base.CustomException
-import uz.fido.utils.security.SecurityCheck.isFromVpn
+import uz.fido.utils.security.SecurityCheck.isVpnActive
 import java.net.SocketTimeoutException
 
 suspend fun <T : Any> getResult(data: suspend () -> T): Resource<T> {
-    return if (!isFromVpn()) {
+    return if (!isVpnActive()) {
         try {
             handleSuccess(data())
         } catch (e: Exception) {
@@ -31,9 +31,25 @@ fun <T : Any> handleException(e: Exception): Resource<T> {
     when (e) {
         is HttpException -> {
             val error = ErrorUtils.parseError(e.response()!!)
-            errorResource = Resource.error(
-                message = error.message, data = null, errorBody = error
-            )
+            errorResource = when (error.code) {
+                700 -> {
+                    Resource.error(
+                        message = "NEED_IDENTIFIED", data = null, errorBody = error
+                    )
+                }
+
+                1525, -777 -> {
+                    Resource.error(
+                        message = "LOG_OUT", data = null, errorBody = error
+                    )
+                }
+
+                else -> {
+                    Resource.error(
+                        message = error.message, data = null, errorBody = error
+                    )
+                }
+            }
         }
 
         is SocketTimeoutException -> {
@@ -45,8 +61,7 @@ fun <T : Any> handleException(e: Exception): Resource<T> {
         }
 
         else -> {
-            errorResource =
-                Resource.error(message = getErrorMessage(Int.MAX_VALUE, e.message), data = null)
+            errorResource = Resource.error(message = getErrorMessage(Int.MAX_VALUE, e.message), data = null)
         }
     }
     return errorResource
@@ -67,6 +82,7 @@ private fun getErrorMessage(code: Int, message: String?): String {
         ServerCode.TOKEN_EXPIRED.code -> "Срок действия токена истек"
         ServerCode.SERVER_ERROR.code -> "Ошибка в сервере"
         ServerCode.TECHNICAL_WORKS.code -> "Технические неполадки"
+        ServerCode.SERVICE_UNAVAILABLE.code -> "Технические неполадки"
         else -> "Code: $code;\nMessage: $message"
     }
 }

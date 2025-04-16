@@ -13,7 +13,7 @@ class Branches : Serializable {
     var filial_code: String? = null
     var filial_type: String? = null
     var full_address: String? = null
-    var help_line: String? = null
+    var helpline: String? = null
     var icon_name: String? = null
     var id: String? = null
     var name: String? = null

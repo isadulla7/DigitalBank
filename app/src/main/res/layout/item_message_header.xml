@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center">
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/text_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="24dp"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="13dp"
+        tools:text="29.05" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>

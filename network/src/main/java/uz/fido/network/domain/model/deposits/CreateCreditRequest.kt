@@ -22,5 +22,7 @@ data class CreateCreditRequest(
     val dcParam204: String? = null,
     val dcParam205: String? = null,
     val dep_name: String? = null,
-    val sms_code: String? = null
+    val sms_code: String? = null,
+    val string_line: String? = null,
+    val bxm_code: String? = null
 )

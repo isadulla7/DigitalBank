@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<uz.fido.utils.view.custom_text_view.TextViewRegular xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/textView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground"
+    android:background="@color/whiteColor"
+    android:padding="16dp"
+    android:gravity="center"
+    android:textColor="@color/blackColor"
+    android:textSize="16dp" />

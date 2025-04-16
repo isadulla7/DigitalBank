@@ -1,9 +1,8 @@
 package uz.fido.network.domain.model.monitoring
 
-import fido.mkbank.ui.ib.fragments.menu.menu_monitoring.model.ListItem
-import uz.fido.network.domain.model.monitoring.uzcard.SVMonitoringItem
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringItem
 
 class UzcardItem : ListItem() {
-    var svMonitoringItem: SVMonitoringItem? = null
+    var uzcardMonitoringItem: UzcardMonitoringItem? = null
     override val type = TYPE_GENERAL
 }

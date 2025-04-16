@@ -1,13 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="please_try_again_later">Noma\'lum xatolik, birozdan so\'ng harakat qilib ko\'ring</string>
+    <string name="please_try_again_later">Неизвестная ошибка, повторите попытку позже.</string>
     <string name="error_security_connection">Не удалось установить безопасное соединение с сервером</string>
     <string name="slow_internet_connection">Пожалуйста, проверьте интернет соединение</string>
-    <string name="tech_works">Ведутся технические работы\\nПожалуйста, попробуйте позже</string>
+    <string name="tech_works">Ведутся технические работы\nПожалуйста, попробуйте позже</string>
     <string name="update">Обновить</string>
     <string name="error_no_internet_connection">Проблема с подключением к интернету, проверьте соединение</string>
     <string name="update_downloaded">Обновление скачано</string>
     <string name="cancel">Отменить</string>
     <string name="reopen">Перезагрузить</string>
+    <string name="today">Сегодня</string>
+    <string name="yesterday">Вчера</string>
+    <string name="day">день</string>
+    <string name="days">дней</string>
+    <string name="month">месяц</string>
+    <string name="months">месяцев</string>
+    <string name="year">год</string>
+    <string name="years">годы</string>
+    <string name="indefinite">Бессрочный</string>
+    <string name="wrong_format">Неправильный формат</string>
+    <string name="wrong_card_expire_date">Введите правильный срок действия карты</string>
+    <string name="main_card">Основная карта</string>
+    <string name="sum">сум</string>
+    <string name="no_card">На карту</string>
+    <string name="unkknown_error">Unknown error</string>
+    <string name="empty_list">Ничего не нашлось</string>
+    <string name="accured_interest">Текущие проценты</string>
+    <string name="accured_interest_deposit">Начисленный проценты</string>
+    <string name="re_registration_deposit">Переоформления вклада</string>
+    <string name="correctional_operations">Исправительная операция</string>
+    <string name="bank_service">Услуга банка</string>
+    <string name="transferrred_to_inactivity">Спящие</string>
+    <string name="excees_interests_returned">Возвращено превышение проценты</string>
+    <string name="deposit_withdrawal">Снятие с вклада</string>
+    <string name="accural_of_interest">Начисление процентов</string>
+    <string name="deposit_replenishment">Пополнение вклада</string>
+    <string name="capitalization_of_interest">Зачисление процентов</string>
+    <string name="interest_withdrawal">Снятие процентов</string>
+    <string name="re_calculate_percents">Пересчет процентов</string>
+    <string name="you_have_no_internet">У вас нет интернета</string>
+    <string name="you_have_no_internet_desc">Нет подключения к интернета повторите попытку или попробуйте позже</string>
+    <string name="from_card">С карты</string>
+    <string name="card">Карта</string>
+    <string name="deposit_min_amount">от %s</string>
+    <string name="please_log_out">Из-за изменений в безопасности приложения просим вас войти в приложение заново для безопасности ваших данных. Просим прощение за неудобство</string>
+    <string name="srl_content_empty" translatable="false">The content view in SmartRefreshLayout is empty. Do you forget to add it in xml layout file?</string>
+    <string name="srl_component_falsify" formatted="false" translatable="false">%s falsify area,\n Represents the height[%.1fdp] of drag at run time,\n It does not show anything.</string>
+    <string name="sat">Сб</string>
+    <string name="fri">Пт</string>
+    <string name="thu">Чт</string>
+    <string name="wed">Ср</string>
+    <string name="tue">Вт</string>
+    <string name="mon">Пн</string>
+    <string name="sun">Вс</string>
+    <string name="one_year">год</string>
+    <string name="two_three_four_year">года</string>
+    <string name="five_year">лет</string>
+    <string name="two_three_four_day">дня</string>
+    <string name="two_three_four_month">месяца</string>
+
 </resources>

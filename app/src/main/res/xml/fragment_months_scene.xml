@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<MotionScene xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ConstraintSet android:id="@+id/start">
+        <Constraint
+            android:id="@+id/pieChart"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:background="@color/transparent"
+            android:scaleX="1"
+            android:scaleY="1"
+            app:animateCircleAngleTo="clockwise"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor"
+            android:clickable="true"
+            android:focusable="true"
+            app:visibilityMode="ignore" />
+
+        <Constraint
+            android:id="@+id/progress_view"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
+            android:elevation="5dp"
+            android:indeterminateDrawable="@drawable/anim_custom_loader"
+            android:indeterminateTint="@color/brandRedColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityMode="ignore" />
+
+        <Constraint
+            android:id="@+id/chartDetails"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pieChart" />
+
+    </ConstraintSet>
+
+    <ConstraintSet android:id="@+id/end">
+        <Constraint
+            android:id="@id/pieChart"
+            android:layout_width="match_parent"
+            android:layout_height="240dp"
+            android:background="@color/transparent"
+            android:scaleX="0.4"
+            android:scaleY="0.4"
+            app:animateCircleAngleTo="clockwise"
+            app:layout_constraintBottom_toTopOf="parent" />
+
+        <Constraint
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor"
+            android:clickable="true"
+            android:focusable="true"
+            app:visibilityMode="ignore" />
+
+        <Constraint
+            android:id="@+id/progress_view"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="16dp"
+            android:elevation="5dp"
+            android:indeterminateDrawable="@drawable/anim_custom_loader"
+            android:indeterminateTint="@color/brandRedColor"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:visibilityMode="ignore" />
+
+        <Constraint
+            android:id="@+id/chartDetails"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pieChart" />
+    </ConstraintSet>
+
+    <Transition
+        app:constraintSetEnd="@id/end"
+        app:constraintSetStart="@+id/start"
+        app:duration="500">
+        <OnSwipe
+            app:autoCompleteMode="continuousVelocity"
+            app:dragDirection="dragUp"
+            app:touchAnchorId="@id/chartDetails" />
+    </Transition>
+
+</MotionScene>

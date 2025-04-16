@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/father"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="12dp"
+    android:layout_marginTop="12dp"
+    android:background="@drawable/monitoring_filter_item_color"
+    android:orientation="horizontal"
+    app:layout_constraintTop_toTopOf="parent">
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/tip_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="@string/type_of_transaction_text"
+        android:textColor="@color/mainTextColor"
+        android:textSize="14dp" />
+
+</androidx.appcompat.widget.LinearLayoutCompat>
+

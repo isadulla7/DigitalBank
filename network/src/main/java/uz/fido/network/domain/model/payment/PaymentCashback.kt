@@ -21,20 +21,4 @@ class PaymentCashback : Serializable {
         const val COLUMN_KL_PERCENT = "kl_percent"
     }
 
-    fun PaymentCashback(
-        gl_percent: String,
-        service_id: String,
-        state: String,
-        sv_percent: String,
-        tet_percent: String,
-        kl_percent: String
-    ): PaymentCashback {
-        this.gl_percent = gl_percent
-        this.service_id = service_id
-        this.state = state
-        this.sv_percent = sv_percent
-        this.tet_percent = tet_percent
-        this.kl_percent = kl_percent
-        return this
-    }
 }

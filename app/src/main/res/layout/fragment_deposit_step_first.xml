@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/whiteColor"
+        app:layout_constraintTop_toTopOf="parent"
+        app:s_additionalIcon="@drawable/ic_calculator_deposit"
+        app:s_title="@string/open_deposit" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/lin_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/cornered_bg_12dp_stroke"
+        android:elevation="28dp"
+        android:orientation="vertical"
+        android:outlineSpotShadowColor="#0AFFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar">
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/percent_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_percent_deposit_icon"
+            android:drawablePadding="16dp"
+            android:gravity="center|start"
+            android:text="@string/deposit_percent"
+            android:textColor="@color/mainTextColor"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/min_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_min_amount_icon"
+            android:drawablePadding="16dp"
+            android:gravity="center|start"
+            android:textColor="@color/mainTextColor"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Минимальная сумма 1 000 000.00 UZS" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="16dp"
+            android:layout_weight="1"
+            android:drawableStart="@drawable/ic_timer_deposit"
+            android:drawablePadding="16dp"
+            android:gravity="center|start"
+            android:textColor="@color/mainTextColor"
+            android:textSize="14dp"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Срок вклад 25 месяцев" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/select_branch_layout"
+        style="@style/EditTextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:longClickable="false"
+        app:layout_constraintTop_toBottomOf="@id/amount_lin">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_branch"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_gravity="center_vertical"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:focusedByDefault="false"
+            android:gravity="center_vertical"
+            android:hint="@string/choose_near_branch"
+            android:inputType="number"
+            android:theme="@style/DefaultEditTextTheme" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_text_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="12dp"
+        android:src="@drawable/ic_arrow_down"
+        app:layout_constraintBottom_toBottomOf="@id/select_branch_layout"
+        app:layout_constraintEnd_toEndOf="@id/select_branch_layout"
+        app:layout_constraintTop_toTopOf="@id/select_branch_layout" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/amount_lin"
+        style="@style/EditTextInputLayoutStyle"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="24dp"
+        android:hint="@string/amount"
+        app:layout_constraintTop_toBottomOf="@id/lin_info">
+
+        <uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountEditText
+            android:id="@+id/et_amount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:digits=" 0123456789"
+            android:imeOptions="actionDone"
+            android:inputType="number"
+            android:maxLength="10"
+            android:maxLines="1"
+            android:theme="@style/DefaultEditTextTheme" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/max_amount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/max_summ_deposit"
+        android:textColor="@color/hintColor"
+        android:textSize="12dp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/amount_lin" />
+
+    <uz.fido.utils.view.custom_circle_button.CustomFAButton
+        android:id="@+id/btn_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

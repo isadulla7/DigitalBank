@@ -8,6 +8,8 @@ import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.client_info.ClientDetailedInfoResponse
 import uz.fido.network.domain.model.loans.CheckHasLoanRequest
 import uz.fido.network.domain.model.loans.CreateCreditAppRequest
+import uz.fido.network.domain.model.loans.CreateCreditRequestNew
+import uz.fido.network.domain.model.loans.GetLoanRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualResponse
 import uz.fido.network.domain.model.loans.create.CreateCreditClaimByCrm
@@ -39,7 +41,7 @@ interface CreditApiInterface {
         @Body createCreditQuestionRequest: CreateCreditQuestionRequest
     ): BaseResponse
 
-    @GET("LN_GET_PRODUCTS_FROM_IABS")
+    @GET("GET_LOAN_PRODUCTS")
     suspend fun getCreditGroups(@Header("Authorization") token: String): CreditGroupsResponse
 
     @POST("IBS_CALC_CREDIT_MANUAL")
@@ -92,6 +94,17 @@ interface CreditApiInterface {
     suspend fun checkLoanByCrm(
         @Header("Authorization") token: String,
         @Body request: CheckHasLoanRequest
+    ): BaseResponse
+
+    @POST("LN_GETTING_LOAN")
+    suspend fun createCreditRequest(
+        @Header("Authorization") token: String,
+        @Body createCreditApplication: CreateCreditRequestNew
+    ): BaseResponse
+
+    @POST("LN_LOAN_ISSUANCE")
+    suspend fun confirmGetLoan(
+        @Header("Authorization") token: String, @Body request: GetLoanRequest
     ): BaseResponse
 
 }

@@ -1,6 +1,5 @@
 package uz.fido.utils.update_checker
 
-import android.app.Activity
 import android.content.IntentSender
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.play.core.appupdate.AppUpdateManager
@@ -56,9 +55,13 @@ open class UpdateChecker(private var activity: AppCompatActivity) {
     }
 
     private fun popupSnackbarForCompleteUpdate() {
-        UpdateDownloadedDialog {
-            appUpdateManager.completeUpdate()
-        }.show(activity.supportFragmentManager, "")
+        try {
+            UpdateDownloadedDialog {
+                appUpdateManager.completeUpdate()
+            }.show(activity.supportFragmentManager, "")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

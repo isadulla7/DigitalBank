@@ -1,8 +1,9 @@
 package uz.fido.utils.const
 
 object APIServiceConst {
-    const val UNIVERSAL_URL = "https://mobile.mkb.uz/REST/api/"
-    const val UNIVERSAL_SOCKET_URL = "https://mobile.mkb.uz/SOCKET/api/"
-    const val PAYMENT_IMAGE_URL = "http://87.237.237.230:8181/tel/mobile/PaymentPhoto/"
-    const val USER_INFO_URL = "http://ip-api.com/json/"
+
+    //PROFILE IMAGE URL
+    fun profileImageUrl(imageName: String) =
+        "https://firebasestorage.googleapis.com/v0/b/universal-mobile-digital.appspot.com/o/images%2F$imageName?alt=media&token=e78b872b-fd3c-4dc1-aa12-f59efd22013f&_gl=1*14i0gum*_ga*MTIyNjczNzcxOC4xNjk2MzM2MjI2*_ga_CW55HF8NVT*MTY5NjQwMjk0MC4zLjEuMTY5NjQwMzUwNi4zMS4wLjA."
+
 }

@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp">
+
+        <uz.fido.utils.view.custom_text_view.TextViewBold
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginHorizontal="16dp"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="@string/payments"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="24dp" />
+
+        <ImageView
+            android:id="@+id/search"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginEnd="4dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_search_button"
+            tools:ignore="ContentDescription" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="12dp"
+                    android:paddingTop="8dp"
+                    android:paddingBottom="16dp">
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/loan_repayment"
+                        android:layout_width="120dp"
+                        android:layout_height="104dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/transfer_type_ripple_bg"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/ic_bank_universal"
+                            app:tint="@color/brandRedColor"
+                            tools:ignore="ContentDescription" />
+
+                        <uz.fido.utils.view.custom_text_view.TextViewRegular
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="8dp"
+                            android:layout_marginTop="6dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:text="@string/loan_repayment"
+                            android:textColor="@color/brandBlueColor"
+                            android:textSize="14dp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/loan_ishonch"
+                        android:layout_width="120dp"
+                        android:layout_height="104dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/transfer_type_ripple_bg"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+                        <ImageView
+                            android:id="@+id/ishonch_logo"
+                            android:layout_width="56dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
+                            app:tint="@color/status_done"
+                            tools:ignore="ContentDescription" />
+
+                        <uz.fido.utils.view.custom_text_view.TextViewRegular
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="8dp"
+                            android:layout_marginTop="6dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:text="@string/loan_repayment"
+                            android:textColor="@color/brandBlueColor"
+                            android:textSize="14dp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/autopayments"
+                        android:layout_width="120dp"
+                        android:layout_height="104dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/transfer_type_ripple_bg"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/ic_auto_payments"
+                            tools:ignore="ContentDescription" />
+
+                        <uz.fido.utils.view.custom_text_view.TextViewRegular
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="8dp"
+                            android:layout_marginTop="6dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:text="@string/auto_payments"
+                            android:textColor="@color/brandBlueColor"
+                            android:textSize="14dp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/my_home"
+                        android:layout_width="120dp"
+                        android:layout_height="104dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/transfer_type_ripple_bg"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/ic_my_home_40"
+                            tools:ignore="ContentDescription" />
+
+                        <uz.fido.utils.view.custom_text_view.TextViewRegular
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="8dp"
+                            android:layout_marginTop="6dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:text="@string/my_home"
+                            android:textColor="@color/brandBlueColor"
+                            android:textSize="14dp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                    <androidx.appcompat.widget.LinearLayoutCompat
+                        android:id="@+id/payment_by_qr"
+                        android:layout_width="120dp"
+                        android:layout_height="104dp"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/transfer_type_ripple_bg"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/icon"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="12dp"
+                            android:src="@drawable/ic_payment_by_qr"
+                            tools:ignore="ContentDescription" />
+
+                        <uz.fido.utils.view.custom_text_view.TextViewRegular
+                            android:id="@+id/item_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="8dp"
+                            android:layout_marginTop="6dp"
+                            android:ellipsize="end"
+                            android:gravity="center"
+                            android:maxLines="2"
+                            android:text="@string/qr_payment"
+                            android:textColor="@color/brandBlueColor"
+                            android:textSize="14dp" />
+
+                    </androidx.appcompat.widget.LinearLayoutCompat>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </HorizontalScrollView>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/ll_templates"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="4dp">
+
+                <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center|start"
+                    android:includeFontPadding="false"
+                    android:text="@string/saved_payments"
+                    android:textColor="@color/brandBlueColor"
+                    android:textSize="20dp" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/all"
+                    android:textColor="@color/brandBlueColor"
+                    android:textSize="14dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/saved_payments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="8dp"
+                tools:listitem="@layout/item_payment_group" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center|start"
+                android:includeFontPadding="false"
+                android:text="@string/service_category"
+                android:textColor="@color/brandBlueColor"
+                android:textSize="20dp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/payments"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:nestedScrollingEnabled="false"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="12dp"
+                tools:listitem="@layout/item_payment_group" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

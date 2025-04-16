@@ -10,6 +10,7 @@ import retrofit2.http.POST
 import uz.fido.network.domain.model.abc_base.BaseResponse
 
 interface ChatApiInterface {
+
     @GET("CHAT_GET_COUNT_UNREAD_MESSAGES")
     suspend fun fetchCountUnreadMessages(
         @Header("Authorization") token: String
@@ -84,4 +85,5 @@ interface ChatApiInterface {
         @Header("Authorization") token: String,
         @Body messageOperationRequest: MessageOperationRequest
     ): BaseResponse
+
 }

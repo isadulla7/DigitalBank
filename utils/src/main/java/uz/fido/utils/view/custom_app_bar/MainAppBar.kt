@@ -4,10 +4,9 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.fragment.app.Fragment
+import androidx.core.content.ContextCompat
 import uz.fido.utils.R
 import uz.fido.utils.databinding.AppBarBinding
-import uz.fido.utils.utility.fragment.pop
 
 /**
  * Created by Husniddin Muhammad Amin on 19.01.2023
@@ -22,10 +21,26 @@ class MainAppBar(context: Context, attr: AttributeSet) : LinearLayoutCompat(cont
         binding = AppBarBinding.bind(this)
         val attributes = context.obtainStyledAttributes(attr, R.styleable.MainAppBar)
         binding.apply {
-            title.text = attributes.getString(R.styleable.MainAppBar_title)
-            additional.setImageDrawable(attributes.getDrawable(R.styleable.MainAppBar_additionalIcon))
+            title.text = attributes.getString(R.styleable.MainAppBar_s_title)
+            additional.setImageDrawable(attributes.getDrawable(R.styleable.MainAppBar_s_additionalIcon))
+            title.setTextColor(
+                attributes.getColor(
+                    R.styleable.MainAppBar_s_tint,
+                    ContextCompat.getColor(context, R.color.brandBlueColor)
+                )
+            )
+            back.setColorFilter(
+                attributes.getColor(
+                    R.styleable.MainAppBar_s_tint,
+                    ContextCompat.getColor(context, R.color.brandBlueColor)
+                )
+            )
         }
         attributes.recycle()
+    }
+
+    fun setAdditionalIcon(icon: Int) {
+        binding.additional.setImageResource(icon)
     }
 
     fun setTitle(title: String) {
@@ -57,6 +72,13 @@ class MainAppBar(context: Context, attr: AttributeSet) : LinearLayoutCompat(cont
     fun setOnAdditionalBtnClickListener(function: () -> Unit) {
         binding.additional.setOnClickListener {
             function.invoke()
+        }
+    }
+
+    fun setOnAdditionalLongClickListener(function: () -> Unit) {
+        binding.additional.setOnLongClickListener {
+            function.invoke()
+            true
         }
     }
 

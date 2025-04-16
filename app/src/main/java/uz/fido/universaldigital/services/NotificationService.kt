@@ -1,0 +1,81 @@
+package uz.fido.universaldigital.services
+
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.media.RingtoneManager
+import android.os.Build
+import androidx.core.app.NotificationCompat
+import com.google.firebase.messaging.FirebaseMessagingService
+import com.google.firebase.messaging.RemoteMessage
+import uz.fido.universaldigital.R
+import uz.fido.universaldigital.ui.activities.LoginActivity
+import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
+import uz.fido.utils.const.Const
+import uz.fido.utils.security.saveToSecureStore
+
+class NotificationService : FirebaseMessagingService() {
+
+    companion object {
+        const val NOTIFICATION_TYPE_P2P = "P2P"
+        const val NOTIFICATION_TYPE_NEWS = "NEWS"
+        const val NOTIFICATION_HANDLE_KEY = "type"
+    }
+
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        remoteMessage.notification.let { notification ->
+            if (remoteMessage.data.isNotEmpty()) {
+                initNotificationOperations(remoteMessage.data)
+            }
+            notification?.let {
+                sendNotification(notification.title, notification.body)
+            }
+        }
+    }
+
+    private fun initNotificationOperations(data: Map<String, String>) {
+        when (data[NOTIFICATION_HANDLE_KEY]) {
+            NOTIFICATION_TYPE_P2P -> {}
+            NOTIFICATION_TYPE_NEWS -> {}
+            else -> {}
+        }
+    }
+
+    private fun sendNotification(messageTitle: String?, messageBody: String?) {
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.putExtra(PassCodeFragment.NOTIFICATION_OPERATION, "notification")
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+
+        val pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT)
+        val channelId = getString(R.string.push_channel_id)
+
+        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        val notificationBuilder = NotificationCompat.Builder(applicationContext, channelId)
+            .setWhen(System.currentTimeMillis())
+            .setSmallIcon(R.drawable.ic_universal_logo_white)
+            .setContentTitle(messageTitle ?: getString(R.string.app_name))
+            .setContentText(messageBody ?: getString(R.string.new_message))
+            .setAutoCancel(false)
+            .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setSound(defaultSoundUri)
+            .setContentIntent(pendingIntent)
+
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val channel = NotificationChannel(channelId, getString(R.string.push_channel_name), NotificationManager.IMPORTANCE_HIGH)
+            notificationManager.createNotificationChannel(channel)
+        }
+
+        notificationManager.notify(System.currentTimeMillis().hashCode(), notificationBuilder.build())
+    }
+
+    override fun onNewToken(p0: String) {
+        super.onNewToken(p0)
+        saveToSecureStore(Const.PAPER_FCM_TOKEN, p0)
+    }
+
+}

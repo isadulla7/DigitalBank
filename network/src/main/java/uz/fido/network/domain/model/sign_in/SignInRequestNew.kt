@@ -15,7 +15,7 @@ data class SignInRequestNew(
     val ip: String,
     val is_pin: Int,
     val network_state: String,
-    val os_system_version_api: String,
+    val os_system_version_api: String = "A",
     val os_version: String,
     val password: String,
     val phone_number: String,

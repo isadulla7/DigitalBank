@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/father_item_quick_action"
+    android:layout_width="wrap_content"
+    android:layout_height="60dp"
+    android:clipToPadding="false"
+    android:gravity="center"
+    android:paddingEnd="4dp">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/item"
+        android:layout_width="wrap_content"
+        android:layout_height="42dp"
+        android:layout_marginHorizontal="6dp"
+        android:background="@drawable/cornered_bg_white_10dp"
+        android:gravity="center"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            tools:ignore="ContentDescription" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewRegular
+            android:id="@+id/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="4dp"
+            android:gravity="center"
+            android:maxLines="1"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="14dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <ImageView
+        android:id="@+id/ic_add_button"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="-4dp"
+        android:src="@drawable/ic_clear_red_20dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="@id/item"
+        app:layout_constraintStart_toEndOf="@id/item"
+        app:layout_constraintTop_toTopOf="@id/item"
+        tools:ignore="ContentDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -4,5 +4,6 @@ import java.io.Serializable
 
 data class CheckCardRequestP2p(
     val command: String,
-    val to_object_value: String
+    val to_object_value: String,
+    val to_object_id: String? = null
 ) : Serializable

@@ -1,5 +1,0 @@
-package uz.fido.network.domain.model.abc_base
-
-data class BaseRequest(
-    val token: String
-)

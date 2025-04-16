@@ -1,0 +1,126 @@
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:clipChildren="false"
+    android:orientation="vertical">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:s_title="@string/transfer_to_account" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/uzsAccount"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/cornered_bg_12dp_stroke"
+        android:gravity="center"
+        android:paddingStart="12sp"
+        android:paddingEnd="16sp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_sum_account"
+            tools:ignore="ContentDescription" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16sp"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="@string/uzs_account"
+            android:textColor="@color/mainTextColor"
+            android:textSize="16dp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_arrow_left_ios"
+            app:tint="@color/brandBlueColor_30"
+            tools:ignore="ContentDescription" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/usdAccount"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/cornered_bg_12dp_stroke"
+        android:gravity="center"
+        android:visibility="gone"
+        android:paddingStart="12dp"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_usd_account"
+            tools:ignore="ContentDescription" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16sp"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="@string/currency_account"
+            android:textColor="@color/mainTextColor"
+            android:textSize="16dp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_arrow_left_ios"
+            app:tint="@color/brandBlueColor_30"
+            tools:ignore="ContentDescription" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/budget"
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/cornered_bg_12dp_stroke"
+        android:gravity="center"
+        android:paddingStart="12dp"
+        android:paddingEnd="16dp">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_budget_payment"
+            tools:ignore="ContentDescription" />
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="16sp"
+            android:layout_weight="1"
+            android:gravity="center|start"
+            android:text="@string/budget_payment"
+            android:textColor="@color/mainTextColor"
+            android:textSize="16dp" />
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_arrow_left_ios"
+            app:tint="@color/brandBlueColor_30"
+            tools:ignore="ContentDescription" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

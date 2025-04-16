@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/textView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:foreground="?selectableItemBackground"
+    android:background="@color/whiteColor"
+    android:gravity="center"
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginTop="16dp"
+    android:orientation="vertical"
+    android:textColor="@color/blackColor"
+    android:textSize="16dp">
+    
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="5 Года"
+        android:id="@+id/month"
+        android:layout_marginTop="4dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/brandBlueColor_50"
+        android:textSize="14dp"/>
+
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="До 2027 года"
+        android:id="@+id/time"
+         android:layout_marginVertical="4dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textColor="@color/brandBlueColor_30"
+        android:textSize="14dp"/>
+    
+</androidx.appcompat.widget.LinearLayoutCompat>

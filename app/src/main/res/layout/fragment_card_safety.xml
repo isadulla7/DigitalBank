@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:clipChildren="false">
+
+    <uz.fido.utils.view.custom_app_bar.MainAppBar
+        android:id="@+id/appBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:s_title="@string/safety" />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBar">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/limit_layout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/cornered_bg_12dp_stroke"
+            android:gravity="center|start"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/appBar">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/ic_card_limits"
+                tools:ignore="ContentDescription" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="@string/set_limit"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14dp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="12dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_arrow_left_ios"
+                tools:ignore="ContentDescription" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/change_pin_layout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/cornered_bg_12dp_stroke"
+            android:gravity="center|start"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/appBar">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/pin_card"
+                tools:ignore="ContentDescription" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="@string/change_pin_card"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14dp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="12dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_arrow_left_ios"
+                tools:ignore="ContentDescription" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/safe_mode_layout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/cornered_bg_12dp_stroke"
+            android:gravity="center|start"
+            app:layout_constraintTop_toBottomOf="@id/appBar">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/card_safe_mode"
+                tools:ignore="ContentDescription" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="@string/safe_mode"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14dp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="12dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_arrow_left_ios"
+                tools:ignore="ContentDescription" />
+
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/visa_secure_layout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/cornered_bg_12dp_stroke"
+            android:gravity="center|start"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/appBar">
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="16dp"
+                android:src="@drawable/visa_secure"
+                tools:ignore="ContentDescription" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:text="@string/secure_3d"
+                android:textColor="@color/mainTextColor"
+                android:textSize="14dp" />
+
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginHorizontal="12dp"
+                android:padding="2dp"
+                android:src="@drawable/ic_arrow_left_ios"
+                tools:ignore="ContentDescription" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</androidx.constraintlayout.widget.ConstraintLayout>

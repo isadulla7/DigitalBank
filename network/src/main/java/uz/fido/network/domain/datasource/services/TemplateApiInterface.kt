@@ -18,6 +18,7 @@ import uz.fido.network.domain.model.template.SetTemplateOrderRequest
 import uz.fido.network.domain.model.template.TemplateGroupResponse
 
 interface TemplateApiInterface {
+
     @POST("CREATE_TEMPLATE")
     suspend fun createTemplate(
         @Header("Authorization") token: String,
@@ -47,6 +48,12 @@ interface TemplateApiInterface {
         @Body getTemplateListRequest: GetTemplateListRequest
     ): GetTemplateListResponse
 
+    @POST("GET_PAYMENT_BALANCE")
+    suspend fun getUpdatedTemplateList(
+        @Header("Authorization") token: String,
+        @Body getTemplateListRequest: GetTemplateListRequest
+    ): GetTemplateListResponse
+
     @POST("GET_TEMPLATE")
     suspend fun getTemplate(
         @Header("Authorization") token: String,
@@ -70,4 +77,5 @@ interface TemplateApiInterface {
         @Header("Authorization") token: String,
         @Body getTemplateListRequest: GetTemplateListRequest
     ): BaseResponse
+
 }

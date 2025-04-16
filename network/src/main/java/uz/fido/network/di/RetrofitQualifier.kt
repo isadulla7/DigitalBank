@@ -30,3 +30,15 @@ annotation class MyIdOkhttpClient
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
 annotation class BaseOkhttpClient
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class SimpleClientRetrofit
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class SslContextForSwapKeys
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class SslFactoryForSwapKeys

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/brandBlueColor_70">
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/stories_wheel"
+        android:layout_width="match_parent"
+        android:layout_height="6dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:progressBackgroundTint="@color/brandRedColor"
+        android:progressTint="@color/brandRedColor"
+        app:indicatorColor="@color/brandRedColor"
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackColor="@color/frozenWhite"
+        app:trackCornerRadius="6dp"
+        app:trackThickness="6dp" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+        android:id="@+id/tv_product_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="32dp"
+        android:textColor="@color/frozenWhite"
+        android:textSize="32dp"
+        app:layout_constraintEnd_toStartOf="@id/close"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/stories_wheel"
+        tools:text="Yubiley 22%" />
+
+    <ImageView
+        android:id="@+id/close"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="4dp"
+        android:padding="12sp"
+        android:src="@drawable/close"
+        app:layout_constraintBottom_toBottomOf="@id/tv_product_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tv_product_name"
+        app:tint="@color/frozenWhite"
+        tools:ignore="ContentDescription" />
+
+    <uz.fido.utils.view.custom_text_view.TextViewRegular
+        android:id="@+id/tv_product_desc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Выплата процентов: В случае досрочного изъятия вклада: от 1 до 6 месяцев — 10%, от 6 до 12 месяцев — 20%, на более, чем 12 месяцев — 22%."
+        android:textColor="@color/frozenWhite"
+        android:textSize="16dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_product_name" />
+
+    <ImageView
+        android:id="@+id/ic_illustration"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginBottom="40dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/illustration_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_product_desc"
+        tools:ignore="ContentDescription" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
