@@ -52,10 +52,9 @@ class P2PRepositoryImpl @Inject constructor(private val p2pService: P2PApiInterf
         }
 
 
-    override suspend fun p2p(token: String, p2PRequest: P2PRequest): Resource<P2PResponse> =
-        getResult {
-            p2pService.p2p(token, p2PRequest)
-        }
+    override suspend fun p2p(token: String, p2PRequest: P2PRequest): Resource<P2PResponse> = getResult {
+        p2pService.p2p(token, p2PRequest)
+    }
 
 
     override suspend fun closeTarget(token: String, p2PRequest: P2PRequest): Resource<P2PResponse> =

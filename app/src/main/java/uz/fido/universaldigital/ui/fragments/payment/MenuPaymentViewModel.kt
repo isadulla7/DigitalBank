@@ -23,12 +23,9 @@ class MenuPaymentViewModel @Inject constructor(
 
     var templates: MutableLiveData<List<Template>> = MutableLiveData()
 
-    fun getOperationParams(token: String, getOperationParamRequest: GetOperationInfoRequest) =
-        liveData(
-            Dispatchers.IO
-        ) {
-            emit(paymentRepository.getOperationParams(token, getOperationParamRequest))
-        }
+    fun getOperationParams(token: String, getOperationParamRequest: GetOperationInfoRequest) = liveData(Dispatchers.IO) {
+        emit(paymentRepository.getOperationParams(token, getOperationParamRequest))
+    }
 
     fun preparePaymentRequest(token: String, preparePaymentRequest: PreparePaymentRequest) =
         liveData(

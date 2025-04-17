@@ -6,13 +6,14 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath libs.build.gradle
-        classpath libs.kotlin.gradle.plugin
-        classpath libs.google.services
-        classpath libs.hild.android.gradle.plugin
-        classpath libs.firebase.crashlytics.gradle
+        classpath PluginDependencies.buildGradle
+        classpath PluginDependencies.kotlinGradle
+        classpath PluginDependencies.googleServices
+        classpath PluginDependencies.hilt
+        classpath PluginDependencies.firebaseCrashlytics
+        classpath PluginDependencies.androidToolsR8
         classpath libs.com.google.devtools.ksp.gradle.plugin
-        classpath libs.firebase.perf.plugin
+        classpath PluginDependencies.firebasePerf
     }
 }
 
