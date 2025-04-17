@@ -48,8 +48,6 @@ import uz.fido.network.domain.model.limits.gl.GlLimitListRequest
 import uz.fido.network.domain.model.limits.gl.GlLimitParamsResponse
 import uz.fido.network.domain.model.limits.gl.GlLimitResponse
 import uz.fido.network.domain.model.limits.gl.GlSetCardLimitRequest
-import uz.fido.network.domain.model.p2p.P2PHistoryRequest
-import uz.fido.network.domain.model.p2p.P2PHistoryResponse
 import javax.inject.Inject
 
 class CardRepositoryImpl @Inject constructor(private val cardApiService: CardApiInterface) : ICardRepository {

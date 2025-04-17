@@ -17,8 +17,6 @@ import uz.fido.network.domain.model.mib.DeleteMibAccount
 import uz.fido.network.domain.model.mib.MibDetailsResponse
 import uz.fido.network.domain.model.mib.MibInfoRequest
 import uz.fido.network.domain.model.mib.MibPassportListResponse
-import uz.fido.network.domain.model.subscriptions.AutoPaymentHistoryRequest
-import uz.fido.network.domain.model.subscriptions.AutoPaymentHistoryResponse
 import uz.fido.network.domain.model.target.ChangeTargetStateRequest
 import uz.fido.network.domain.model.target.EditGoalRequest
 import uz.fido.network.domain.model.target.GoalHistoriesResponse

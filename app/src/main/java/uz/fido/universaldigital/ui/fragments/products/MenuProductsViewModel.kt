@@ -11,7 +11,6 @@ import kotlinx.coroutines.flow.StateFlow
 import uz.fido.network.data.repository.CardRepositoryImpl
 import uz.fido.network.domain.datasource.interfaces.ICreditRepository
 import uz.fido.network.domain.datasource.interfaces.IDepositRepository
-import uz.fido.network.domain.datasource.interfaces.IP2PRepository
 import uz.fido.network.domain.datasource.interfaces.IUtilsRepository
 import uz.fido.network.domain.datasource.interfaces.IWalletRepository
 import uz.fido.network.domain.model.cards.BlockCardRequest
@@ -44,7 +43,6 @@ import javax.inject.Inject
 class MenuProductsViewModel @Inject constructor(
     application: Application,
     private val cardRepository: CardRepositoryImpl,
-    private val p2PRepository: IP2PRepository,
     private val walletRepository: IWalletRepository,
     private val depositRepository: IDepositRepository,
     private val creditRepository: ICreditRepository,
