@@ -1,15 +1,8 @@
 package uz.fido.universaldigital.ui.fragments.products.widgets.search
 
-import android.app.Activity
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.ui.fragments.products.widgets.search.model.SearchItem
-import uz.fido.utils.const.Const
-import java.lang.reflect.Type
 
 object SearchList {
 
@@ -102,26 +95,10 @@ object SearchList {
         )
         searchList.add(
             SearchItem(
-                name = context.getString(R.string.currency_exchange),
-                groupName = GROUP_NAME_APP_FUNCTIONALITY,
-                imageName = "ic_conversion_24dp",
-                id = "011"
-            )
-        )
-        searchList.add(
-            SearchItem(
                 name = context.getString(R.string.by_requisites),
                 groupName = GROUP_NAME_APP_FUNCTIONALITY,
                 imageName = "ic_transfer_by_requisites",
                 id = "012"
-            )
-        )
-        searchList.add(
-            SearchItem(
-                name = context.getString(R.string.swift_transfer),
-                groupName = GROUP_NAME_APP_FUNCTIONALITY,
-                imageName = "ic_transfer_swift",
-                id = "013"
             )
         )
         searchList.add(
@@ -138,14 +115,6 @@ object SearchList {
                 groupName = GROUP_NAME_APP_FUNCTIONALITY,
                 imageName = "ic_transfer_by_phone",
                 id = "015"
-            )
-        )
-        searchList.add(
-            SearchItem(
-                name = context.getString(R.string.by_wallet_number),
-                groupName = GROUP_NAME_APP_FUNCTIONALITY,
-                imageName = "ic_transfer_by_wallet",
-                id = "016"
             )
         )
         searchList.add(
@@ -246,14 +215,6 @@ object SearchList {
         )
         searchList.add(
             SearchItem(
-                name = context.getString(R.string.currency_account),
-                groupName = GROUP_NAME_APP_FUNCTIONALITY,
-                imageName = "ic_usd_account",
-                id = "031"
-            )
-        )
-        searchList.add(
-            SearchItem(
                 name = context.getString(R.string.budget_payment),
                 groupName = GROUP_NAME_APP_FUNCTIONALITY,
                 imageName = "ic_budget_payment",
@@ -262,32 +223,9 @@ object SearchList {
         )
         searchList.add(
             SearchItem(
-                name = context.getString(R.string.swift_usd_transfer),
-                groupName = GROUP_NAME_APP_FUNCTIONALITY,
-                imageName = "ic_usd_account",
-                id = "033"
-            )
-        )
-        searchList.add(
-            SearchItem(
-                name = context.getString(R.string.swift_eur_transfer),
-                groupName = GROUP_NAME_APP_FUNCTIONALITY,
-                imageName = "ic_eur_account",
-                id = "034"
-            )
-        )
-        searchList.add(
-            SearchItem(
                 name = context.getString(R.string.order_card),
                 groupName = GROUP_NAME_APP_FUNCTIONALITY,
                 id = "035"
-            )
-        )
-        searchList.add(
-            SearchItem(
-                name = context.getString(R.string.apply_loan),
-                groupName = GROUP_NAME_APP_FUNCTIONALITY,
-                id = "036"
             )
         )
         searchList.add(
@@ -306,14 +244,6 @@ object SearchList {
         )
         searchList.add(
             SearchItem(
-                name = context.getString(R.string.payment_in_places),
-                groupName = GROUP_NAME_APP_FUNCTIONALITY,
-                imageName = "ic_service_payment_in_places",
-                id = "039"
-            )
-        )
-        searchList.add(
-            SearchItem(
                 name = context.getString(R.string.my_applications),
                 groupName = GROUP_NAME_APP_FUNCTIONALITY,
                 imageName = "application_icon",
@@ -326,22 +256,6 @@ object SearchList {
                 groupName = GROUP_NAME_APP_FUNCTIONALITY,
                 imageName = "ic_service_connect_sms_info",
                 id = "041"
-            )
-        )
-        searchList.add(
-            SearchItem(
-                name = context.getString(R.string.check_debts),
-                groupName = GROUP_NAME_APP_FUNCTIONALITY,
-                imageName = "ic_service_debts",
-                id = "042"
-            )
-        )
-        searchList.add(
-            SearchItem(
-                name = context.getString(R.string.money_transfers),
-                groupName = GROUP_NAME_APP_FUNCTIONALITY,
-                imageName = "ic_service_money_transfers",
-                id = "043"
             )
         )
         searchList.add(
@@ -390,28 +304,4 @@ object SearchList {
     // templates
     // qr payment
     // history
-
-    fun addList(list: ArrayList<SearchItem>) {
-        searchList.addAll(list)
-    }
-
-    fun getSearchList(activity: Activity): ArrayList<SearchItem> {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        val gson = Gson()
-        val json: String? = prefs.getString(Const.SEARCH_LIST, null)
-        val type: Type? = object : TypeToken<java.util.ArrayList<SearchItem>>() {}.type
-        return if (json != null && type != null) {
-            gson.fromJson(json, type)
-        } else ArrayList()
-    }
-
-    fun saveSearchList(activity: Activity) {
-        val prefs: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
-        val editor: SharedPreferences.Editor = prefs.edit()
-        val gson = Gson()
-        val json: String = gson.toJson(searchList)
-        editor.putString(Const.SEARCH_LIST, json)
-        editor.apply()
-    }
-
 }
