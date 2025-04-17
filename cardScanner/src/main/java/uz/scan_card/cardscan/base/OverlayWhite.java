@@ -3,7 +3,7 @@ package uz.scan_card.cardscan.base;
 import android.content.Context;
 import android.util.AttributeSet;
 
-import uz.scan_card.base.R;
+import uz.fido.cardScanner.R;
 
 
 public class OverlayWhite extends Overlay {

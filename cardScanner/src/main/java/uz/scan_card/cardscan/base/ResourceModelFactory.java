@@ -2,11 +2,10 @@ package uz.scan_card.cardscan.base;
 
 import android.content.Context;
 
-import uz.scan_card.base.R;
-
-
 import java.io.IOException;
 import java.nio.MappedByteBuffer;
+
+import uz.fido.cardScanner.R;
 
 class ResourceModelFactory extends ModelFactory {
     @Override

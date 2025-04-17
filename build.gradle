@@ -6,14 +6,13 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath PluginDependencies.buildGradle
-        classpath PluginDependencies.kotlinGradle
-        classpath PluginDependencies.googleServices
-        classpath PluginDependencies.hilt
-        classpath PluginDependencies.firebaseCrashlytics
-        classpath PluginDependencies.androidToolsR8
+        classpath libs.build.gradle
+        classpath libs.kotlin.gradle.plugin
+        classpath libs.google.services
+        classpath libs.hild.android.gradle.plugin
+        classpath libs.firebase.crashlytics.gradle
         classpath libs.com.google.devtools.ksp.gradle.plugin
-        classpath PluginDependencies.firebasePerf
+        classpath libs.firebase.perf.plugin
     }
 }
 
@@ -23,7 +22,6 @@ allprojects {
         mavenCentral()
         jcenter()
         maven { url PluginDependencies.jitPackIo }
-        maven { url PluginDependencies.flutterIo}
-        maven { url "https://artifactory.aigroup.uz:443/artifactory/myid" }
+        maven { url PluginDependencies.artifactory }
     }
 }

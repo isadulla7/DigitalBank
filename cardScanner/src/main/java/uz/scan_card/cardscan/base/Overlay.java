@@ -14,7 +14,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 
-import uz.scan_card.base.R;
+import uz.fido.cardScanner.R;
 
 // adapted from this: https://medium.com/@rgomez/android-how-to-draw-an-overlay-with-a-transparent-hole-471af6cf3953
 

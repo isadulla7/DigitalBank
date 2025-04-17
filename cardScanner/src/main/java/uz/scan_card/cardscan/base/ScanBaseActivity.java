@@ -47,7 +47,7 @@ import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.content.res.AppCompatResources;
 import androidx.test.espresso.idling.CountingIdlingResource;
 
-import uz.scan_card.base.R;
+import uz.fido.cardScanner.R;
 
 
 import uz.scan_card.cardscan.base.ssd.DetectedSSDBox;

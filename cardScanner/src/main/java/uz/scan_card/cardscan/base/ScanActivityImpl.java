@@ -16,7 +16,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 
 import java.util.List;
 
-import uz.scan_card.base.R;
+import uz.fido.cardScanner.R;
 import uz.scan_card.cardscan.base.image.BitmapHelper;
 
 public class ScanActivityImpl extends ScanBaseActivity {
