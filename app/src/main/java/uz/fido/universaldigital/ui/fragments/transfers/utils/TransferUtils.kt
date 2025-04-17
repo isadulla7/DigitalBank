@@ -16,6 +16,7 @@ import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.format.Format
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.adapter.showSkeleton
+import java.math.BigDecimal
 import java.util.Locale
 
 fun getInfoCommand(receiverCard: CardResponse): String {
@@ -149,6 +150,12 @@ fun TextView.setMinMaxAmount(
         val totalAmount = formattedAmount + (formattedAmount.divide(100.toBigDecimal())) * percent
 
         when {
+            !p2PInfoDto.isSuccess -> {
+                setTextColor(ContextCompat.getColor(context, R.color.brandRedColor))
+                text = p2PInfoDto.errorMessage
+                return false
+            }
+
             formattedAmount < minAmount -> {
                 setTextColor(ContextCompat.getColor(context, R.color.brandBlueColor_50))
                 text = context.getString(R.string.min_amount) + " " +
@@ -182,14 +189,17 @@ fun TextView.setMinMaxAmount(
                 return false
             }
 
+            formattedAmount == BigDecimal(0) -> {
+                setTextColor(ContextCompat.getColor(context, R.color.brandRedColor))
+                return false
+            }
+
             else -> {
                 setTextColor(ContextCompat.getColor(context, R.color.brandBlueColor_50))
-                text = context.getString(R.string.commission) + " " +
-                        percent.toString() + "% (" + Format.formatAmount(
-                    Format.convertFromTiynDivide(
-                        (formattedAmount * percent).toString()
-                    )
-                ) + " " + context.getString(R.string.sum_text) + ") "
+                text =
+                    context.getString(R.string.commission) + " " + percent.toString() + "% (" + Format.formatAmount(Format.convertFromTiynDivide((formattedAmount * percent).toString())) + " " + context.getString(
+                        R.string.sum_text
+                    ) + ") "
                 return true
             }
         }

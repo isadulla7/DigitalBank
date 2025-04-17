@@ -12,9 +12,6 @@ import uz.fido.network.domain.model.loans.CreateCreditRequestNew
 import uz.fido.network.domain.model.loans.GetLoanRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualResponse
-import uz.fido.network.domain.model.loans.create.CreateCreditClaimByCrm
-import uz.fido.network.domain.model.loans.create.CreateCreditClaimByCrmResponse
-import uz.fido.network.domain.model.loans.create.CreateCreditQuestionRequest
 import uz.fido.network.domain.model.loans.loan_available_amount.AvailableAmountResponse
 import uz.fido.network.domain.model.loans.loan_available_amount.GetAmountRequest
 import uz.fido.network.domain.model.loans.loan_graph.CreditActualGraphResponse
@@ -28,18 +25,6 @@ import uz.fido.network.domain.model.loans.my_loans.CreditListResponse
 import uz.fido.network.domain.model.loans.overdraft.OverdraftGraphResponse
 
 interface CreditApiInterface {
-
-    @POST("LN_CREATE_CLAIM_BY_CRM")
-    suspend fun createCreditClaimByCrm(
-        @Header("Authorization") token: String,
-        @Body createCreditClaimByCrm: CreateCreditClaimByCrm
-    ): CreateCreditClaimByCrmResponse
-
-    @POST("LN_CREATE_QUESTION_NAIRE_BY_CRM")
-    suspend fun createCreditQuestion(
-        @Header("Authorization") token: String,
-        @Body createCreditQuestionRequest: CreateCreditQuestionRequest
-    ): BaseResponse
 
     @GET("GET_LOAN_PRODUCTS")
     suspend fun getCreditGroups(@Header("Authorization") token: String): CreditGroupsResponse

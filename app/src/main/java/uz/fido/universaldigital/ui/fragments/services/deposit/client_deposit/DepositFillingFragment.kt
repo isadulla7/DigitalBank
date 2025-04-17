@@ -138,7 +138,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                     }
                 }
             } catch (e: Exception) {
-                recordException(e, ::initCards.name)
+                recordException(e, ::earlyCloseDeposit.name)
             }
         }
     }
@@ -175,7 +175,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                     }
                 }
             } catch (e: Exception) {
-                recordException(e, ::initCards.name)
+                recordException(e, ::closeDeposit.name)
             }
         }
     }
@@ -192,9 +192,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                 "-6"
             ) { sms_yes, string_line ->
                 if (sms_yes == "Y") {
-                    goto(
-                        R.id.confirmSmsFragment, bundleOf(Const.OPERATION to ConfirmSmsFragment.SMS_OPERATION_PAYMENT_KEY)
-                    )
+                    goto(R.id.confirmSmsFragment, bundleOf(Const.OPERATION to ConfirmSmsFragment.SMS_OPERATION_PAYMENT_KEY))
                 } else {
                     investMoney()
                 }

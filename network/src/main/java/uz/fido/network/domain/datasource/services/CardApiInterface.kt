@@ -95,12 +95,6 @@ interface CardApiInterface {
         @Body checkCardRequestP2p: CheckCardRequestP2p
     ): CheckWalletResponse
 
-    @POST("GET_USER_OBJ_P2P_HIS")
-    suspend fun getP2pHistory(
-        @Header("Authorization") token: String,
-        @Body p2PHistoryRequest: P2PHistoryRequest
-    ): P2PHistoryResponse
-
     @POST("GET_HUMO_CARD_INFO")
     suspend fun getHumoCardInfo(
         @Header("Authorization") token: String,

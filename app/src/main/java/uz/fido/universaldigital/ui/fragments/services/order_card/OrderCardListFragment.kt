@@ -203,7 +203,6 @@ class OrderCardListFragment : BaseFragment<FragmentOrderCardListBinding, OrderCa
                     layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     adapter = ChooseOperationAdapter(
-                        requireContext(),
                         this@OrderCardListFragment,
                         uzCardList,
                         cardType.toString()
@@ -220,7 +219,6 @@ class OrderCardListFragment : BaseFragment<FragmentOrderCardListBinding, OrderCa
                     layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     adapter = ChooseOperationAdapter(
-                        requireContext(),
                         this@OrderCardListFragment,
                         humoCardList,
                         cardType.toString()
@@ -237,7 +235,6 @@ class OrderCardListFragment : BaseFragment<FragmentOrderCardListBinding, OrderCa
                     layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     adapter = ChooseOperationAdapter(
-                        requireContext(),
                         this@OrderCardListFragment,
                         masterCardList,
                         cardType.toString()
@@ -254,7 +251,6 @@ class OrderCardListFragment : BaseFragment<FragmentOrderCardListBinding, OrderCa
                     layoutManager =
                         LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     adapter = ChooseOperationAdapter(
-                        requireContext(),
                         this@OrderCardListFragment,
                         visaCardList,
                         cardType.toString()

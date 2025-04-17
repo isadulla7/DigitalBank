@@ -40,7 +40,6 @@ class ConfirmSmsViewModel @Inject constructor(
         emit(userRepository.finishReg(finishRegRequest))
     }
 
-
     fun checkUserSms(checkUserSms: CheckUserSms) = liveData(Dispatchers.IO) {
         emit(userRepository.checkUserSms(checkUserSms))
     }

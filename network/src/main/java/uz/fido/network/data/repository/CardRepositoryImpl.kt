@@ -128,12 +128,6 @@ class CardRepositoryImpl @Inject constructor(private val cardApiService: CardApi
         cardApiService.checkWalletInfo(token, checkCardRequestP2p)
     }
 
-    override suspend fun getP2pHistory(
-        token: String, p2PHistoryRequest: P2PHistoryRequest
-    ): Resource<P2PHistoryResponse> = getResult {
-        cardApiService.getP2pHistory(token, p2PHistoryRequest)
-    }
-
     override suspend fun getHumoCardInfo(
         token: String, humoCardInfoRequest: HumoCardInfoRequest
     ): Resource<NfcHUMOInfoResponse> = getResult {

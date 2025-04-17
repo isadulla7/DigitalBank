@@ -21,42 +21,31 @@ class ClientDepositViewModel @Inject constructor(
     private val depositRepository: IDepositRepository
 ) : AbstractViewModel(application) {
 
+    fun getAccountHistories(token: String, accountHistoriesRequest: AccountHistoriesRequest) = liveData(Dispatchers.IO) {
+        emit(monitoringRepository.getAccountHistories(token, accountHistoriesRequest))
+    }
 
-    fun getAccountHistories(token: String, accountHistoriesRequest: AccountHistoriesRequest) =
-        liveData(
-            Dispatchers.IO
-        ) {
-            emit(monitoringRepository.getAccountHistories(token, accountHistoriesRequest))
-        }
-
-    fun renameDeposit(token: String, renameDepositRequest: RenameDepositRequest) =
-        liveData(Dispatchers.IO) {
-            emit(depositRepository.renameDeposit(token, renameDepositRequest))
-        }
+    fun renameDeposit(token: String, renameDepositRequest: RenameDepositRequest) = liveData(Dispatchers.IO) {
+        emit(depositRepository.renameDeposit(token, renameDepositRequest))
+    }
 
     fun getClientDepositList(token: String) = liveData(Dispatchers.IO) {
         emit(depositRepository.getClientDepositList(token))
     }
 
-    fun investMoney(token: String, investMoneyToDepositRequest: InvestMoneyToDepositRequest) =
-        liveData(Dispatchers.IO) {
-            emit(depositRepository.investMoneyToDeposit(token, investMoneyToDepositRequest))
-        }
+    fun investMoney(token: String, investMoneyToDepositRequest: InvestMoneyToDepositRequest) = liveData(Dispatchers.IO) {
+        emit(depositRepository.investMoneyToDeposit(token, investMoneyToDepositRequest))
+    }
 
-    fun earlyCloseDeposit(token: String, earlyClosureRequest: EarlyClosureRequest) =
-        liveData(Dispatchers.IO) {
-            emit(depositRepository.earlyClosure(token, earlyClosureRequest))
-        }
+    fun earlyCloseDeposit(token: String, earlyClosureRequest: EarlyClosureRequest) = liveData(Dispatchers.IO) {
+        emit(depositRepository.earlyClosure(token, earlyClosureRequest))
+    }
 
-    fun closeDeposit(token: String, earlyClosureRequest: EarlyClosureRequest) =
-        liveData(Dispatchers.IO) {
-            emit(depositRepository.closeDeposit(token, earlyClosureRequest))
-        }
+    fun closeDeposit(token: String, earlyClosureRequest: EarlyClosureRequest) = liveData(Dispatchers.IO) {
+        emit(depositRepository.closeDeposit(token, earlyClosureRequest))
+    }
 
-    fun partialWithDraw(
-        token: String,
-        partialWithdrawMoneyDepositRequest: PartialWithdrawMoneyDepositRequest
-    ) = liveData(Dispatchers.IO) {
+    fun partialWithDraw(token: String, partialWithdrawMoneyDepositRequest: PartialWithdrawMoneyDepositRequest) = liveData(Dispatchers.IO) {
         emit(depositRepository.partialWithdrawMoney(token, partialWithdrawMoneyDepositRequest))
     }
 }

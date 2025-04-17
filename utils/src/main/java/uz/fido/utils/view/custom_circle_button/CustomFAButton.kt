@@ -27,7 +27,7 @@ class CustomFAButton @JvmOverloads constructor(
         }
     }
 
-    fun isEnabled(isEnabled: Boolean) {
+    fun     isEnabled(isEnabled: Boolean) {
         faButton.isEnabled = isEnabled
     }
 

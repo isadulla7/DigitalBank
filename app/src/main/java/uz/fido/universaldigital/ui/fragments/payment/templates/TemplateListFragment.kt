@@ -17,13 +17,13 @@ import uz.fido.network.domain.model.template.Template
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
-import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.databinding.FragmentTemplateListBinding
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.payment.templates.adapter.TemplateListAdapter
 import uz.fido.universaldigital.ui.fragments.payment.templates.dialog.AddTemplateDialog
 import uz.fido.universaldigital.ui.fragments.payment.templates.dialog.TemplateOperationDialog
+import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.utils.const.Const
 import uz.fido.utils.libs.skeleton.SkeletonScreen
@@ -38,10 +38,10 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
     FragmentTemplateListBinding::inflate, UtilsViewModel::class.java
 ) {
 
+    private lateinit var dialog: TemplateOperationDialog
     private var templateList = ArrayList<Template>()
     private var templatesAdapter: TemplateListAdapter? = null
-
-    private lateinit var dialog: TemplateOperationDialog
+    private var addTemplateDialog: AddTemplateDialog? = null
     private var skeletonScreen: SkeletonScreen? = null
     private var downloadPaymentStart = false
     private var type = ""
@@ -128,21 +128,6 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
         }
     }
 
-//    override fun selectTemplateType(templateType: String) {
-//        if (type.isNotEmpty() && type == "S") {
-//            setFragmentResult(
-//                InitTransferDetailsFragment.BANK_TRANSFER_OPERATION,
-//                bundleOf(InitTransferDetailsFragment.BANK_TRANSFER_OPERATION to 2)
-//            )
-//            findNavController().navigateUp()
-//        } else {
-//            val bundle = Bundle()
-//            bundle.putString("type", templateType)
-//            gotoWithSlide(R.id.newPaymentGroupListFragment, bundle)
-//        }
-//    }
-
-    private var addTemplateDialog: AddTemplateDialog? = null
     private fun renameTemplateNameDialog(item: Template) {
         addTemplateDialog = AddTemplateDialog(item.name.toString(), object : BaseInterface {
             override fun addTemplateName(name: String) {
@@ -153,7 +138,6 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
         }, getString(R.string.edit_house))
         addTemplateDialog?.show(childFragmentManager, "TAG")
     }
-
 
     private fun deleteTemplate(position: Int, templateId: String, addTemplate: Boolean? = false) {
         showProgress()
@@ -188,7 +172,6 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
             }
         }
     }
-
 
     private fun saveTemplate(position: Int) {
         val item = templateList[position]
@@ -231,7 +214,6 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
             }
         }
     }
-
 
     internal fun getTemplate(item: Template, operation: String) {
         showProgress()
@@ -369,7 +351,6 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
         }
     }
 
-
     private fun getTemplateList() {
         viewModel.getTemplateList(
             getClientToken(), GetTemplateListRequest(
@@ -412,6 +393,5 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
             }
         }
     }
-
 
 }

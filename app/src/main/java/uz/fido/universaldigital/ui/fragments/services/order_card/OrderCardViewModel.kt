@@ -32,23 +32,20 @@ class OrderCardViewModel @Inject constructor(
         this.branches.postValue(branches)
     }
 
-    fun getProductTypes(token: String, orderCardTypeRequest: OrderCardTypeRequest) =
-        liveData(Dispatchers.IO) {
-            emit(serviceRepository.getCardOrderTypes(token, orderCardTypeRequest))
-        }
+    fun getProductTypes(token: String, orderCardTypeRequest: OrderCardTypeRequest) = liveData(Dispatchers.IO) {
+        emit(serviceRepository.getCardOrderTypes(token, orderCardTypeRequest))
+    }
 
-    fun getBranches(token: String, getBranchListRequest: GetBranchListRequest) =
-        liveData(Dispatchers.IO) {
-            emit(utilsRepository.getBranchList(token, getBranchListRequest))
-        }
+    fun getBranches(token: String, getBranchListRequest: GetBranchListRequest) = liveData(Dispatchers.IO) {
+        emit(utilsRepository.getBranchList(token, getBranchListRequest))
+    }
 
     fun orderCard(token: String, orderCardRequest: OrderCardRequest) = liveData(Dispatchers.IO) {
         emit(serviceRepository.orderCardRequest(token, orderCardRequest))
     }
 
-    fun orderVirtualCard(token: String, orderVirtualCard: OrderVirtualCardRequest) =
-        liveData(Dispatchers.IO) {
-            emit(serviceRepository.orderVirtualCard(token, orderVirtualCard))
-        }
+    fun orderVirtualCard(token: String, orderVirtualCard: OrderVirtualCardRequest) = liveData(Dispatchers.IO) {
+        emit(serviceRepository.orderVirtualCard(token, orderVirtualCard))
+    }
 
 }

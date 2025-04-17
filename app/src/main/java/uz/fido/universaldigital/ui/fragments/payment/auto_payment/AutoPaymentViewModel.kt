@@ -42,8 +42,7 @@ class AutoPaymentViewModel @Inject constructor(
         emit(paymentRepository.changeAutoPaymentState(token, changeAutoPaymentStateRequest))
     }
 
-    fun deleteAutoPayment(token: String, deleteAutoPaymentRequest: DeleteAutoPaymentRequest) =
-        liveData(Dispatchers.IO) {
-            emit(paymentRepository.deleteAutoPayment(token, deleteAutoPaymentRequest))
-        }
+    fun deleteAutoPayment(token: String, deleteAutoPaymentRequest: DeleteAutoPaymentRequest) = liveData(Dispatchers.IO) {
+        emit(paymentRepository.deleteAutoPayment(token, deleteAutoPaymentRequest))
+    }
 }

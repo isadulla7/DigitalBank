@@ -14,7 +14,6 @@ import uz.fido.network.domain.datasource.interfaces.IDepositRepository
 import uz.fido.network.domain.datasource.interfaces.IP2PRepository
 import uz.fido.network.domain.datasource.interfaces.IUtilsRepository
 import uz.fido.network.domain.datasource.interfaces.IWalletRepository
-import uz.fido.network.domain.model.amount_requests.RmSetStateRequest
 import uz.fido.network.domain.model.cards.BlockCardRequest
 import uz.fido.network.domain.model.cards.CardInfoRequest
 import uz.fido.network.domain.model.cards.CardResponse
@@ -30,7 +29,6 @@ import uz.fido.network.domain.model.deposits.my_deposit.ClientDeposit
 import uz.fido.network.domain.model.limits.CardLimitRequest
 import uz.fido.network.domain.model.limits.LimitDeleteRequest
 import uz.fido.network.domain.model.limits.SvSetCardLimitRequest
-import uz.fido.network.domain.model.limits.SvSetMainCardRequest
 import uz.fido.network.domain.model.limits.gl.GlLimitDeleteRequest
 import uz.fido.network.domain.model.limits.gl.GlLimitListRequest
 import uz.fido.network.domain.model.limits.gl.GlSetCardLimitRequest
@@ -113,16 +111,8 @@ class MenuProductsViewModel @Inject constructor(
         emit(cardRepository.secure3DAction(token, secure3DRequest))
     }
 
-    fun setState(token: String, rmSetStateRequest: RmSetStateRequest) = liveData(Dispatchers.IO) {
-        emit(p2PRepository.setState(token, rmSetStateRequest))
-    }
-
     fun getCVV(token: String, request: GetCVVRequest) = liveData(Dispatchers.IO) {
         emit(cardRepository.getCVV(token, request))
-    }
-
-    fun svSetMainCard(token: String, request: SvSetMainCardRequest) = liveData(Dispatchers.IO) {
-        emit(cardRepository.svSetMainCard(token, request))
     }
 
     fun getSvCardLimitList(token: String, request: CardLimitRequest) = liveData(Dispatchers.IO) {

@@ -12,9 +12,6 @@ import uz.fido.network.domain.model.loans.CreateCreditRequestNew
 import uz.fido.network.domain.model.loans.GetLoanRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualResponse
-import uz.fido.network.domain.model.loans.create.CreateCreditClaimByCrm
-import uz.fido.network.domain.model.loans.create.CreateCreditClaimByCrmResponse
-import uz.fido.network.domain.model.loans.create.CreateCreditQuestionRequest
 import uz.fido.network.domain.model.loans.loan_available_amount.AvailableAmountResponse
 import uz.fido.network.domain.model.loans.loan_available_amount.GetAmountRequest
 import uz.fido.network.domain.model.loans.loan_graph.CreditActualGraphResponse
@@ -30,21 +27,6 @@ import javax.inject.Inject
 
 class CreditRepositoryImpl @Inject constructor(private val creditService: CreditApiInterface) :
     ICreditRepository {
-
-    override suspend fun createCreditClaimByCrm(
-        token: String,
-        createCreditClaimByCrm: CreateCreditClaimByCrm
-    ): Resource<CreateCreditClaimByCrmResponse> = getResult {
-        creditService.createCreditClaimByCrm(token, createCreditClaimByCrm)
-    }
-
-    override suspend fun createCreditQuestion(
-        token: String,
-        createCreditQuestionRequest: CreateCreditQuestionRequest
-    ): Resource<BaseResponse> = getResult {
-        creditService.createCreditQuestion(token, createCreditQuestionRequest)
-    }
-
 
     override suspend fun getCreditGroups(token: String): Resource<CreditGroupsResponse> =
         getResult {

@@ -9,9 +9,6 @@ import uz.fido.network.domain.model.loans.CreateCreditRequestNew
 import uz.fido.network.domain.model.loans.GetLoanRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualResponse
-import uz.fido.network.domain.model.loans.create.CreateCreditClaimByCrm
-import uz.fido.network.domain.model.loans.create.CreateCreditClaimByCrmResponse
-import uz.fido.network.domain.model.loans.create.CreateCreditQuestionRequest
 import uz.fido.network.domain.model.loans.loan_available_amount.AvailableAmountResponse
 import uz.fido.network.domain.model.loans.loan_available_amount.GetAmountRequest
 import uz.fido.network.domain.model.loans.loan_graph.CreditActualGraphResponse
@@ -25,17 +22,6 @@ import uz.fido.network.domain.model.loans.my_loans.CreditListResponse
 import uz.fido.network.domain.model.loans.overdraft.OverdraftGraphResponse
 
 interface ICreditRepository {
-
-    suspend fun createCreditClaimByCrm(
-        token: String,
-        createCreditClaimByCrm: CreateCreditClaimByCrm
-    ): Resource<CreateCreditClaimByCrmResponse>
-
-    suspend fun createCreditQuestion(
-        token: String,
-        createCreditQuestionRequest: CreateCreditQuestionRequest
-    ): Resource<BaseResponse>
-
 
     suspend fun getCreditGroups(token: String): Resource<CreditGroupsResponse>
 

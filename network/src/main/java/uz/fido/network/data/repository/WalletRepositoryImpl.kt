@@ -7,12 +7,11 @@ import uz.fido.network.domain.datasource.services.WalletApiInterface
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.wallet.CreateWalletRequest
 import uz.fido.network.domain.model.wallet.DeleteWalletRequest
-import uz.fido.network.domain.model.wallet.RenameWalletRequest
-import uz.fido.network.domain.model.wallet.WalletDataRequest
 import javax.inject.Inject
 
 class WalletRepositoryImpl @Inject constructor(private val walletService: WalletApiInterface) :
     IWalletRepository {
+
     override suspend fun createWallet(
         token: String,
         createWalletRequest: CreateWalletRequest
@@ -27,24 +26,4 @@ class WalletRepositoryImpl @Inject constructor(private val walletService: Wallet
         walletService.deleteWallet(token, deleteWalletRequest)
     }
 
-    override suspend fun getPurseData(
-        token: String,
-        getWalletData: WalletDataRequest
-    ): Resource<BaseResponse> = getResult {
-        walletService.getPurseData(token, getWalletData)
-    }
-
-    override suspend fun renameWallet(
-        token: String,
-        renameWalletRequest: RenameWalletRequest
-    ): Resource<BaseResponse> = getResult {
-        walletService.renameWallet(token, renameWalletRequest)
-    }
-
-    override suspend fun setWalletState(
-        token: String,
-        renameWalletRequest: RenameWalletRequest
-    ): Resource<BaseResponse> = getResult {
-        walletService.setWalletState(token, renameWalletRequest)
-    }
 }

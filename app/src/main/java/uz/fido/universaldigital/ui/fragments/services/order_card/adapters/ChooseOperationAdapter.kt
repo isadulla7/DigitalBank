@@ -3,7 +3,6 @@ package uz.fido.universaldigital.ui.fragments.services.order_card.adapters
 import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +16,6 @@ import uz.fido.utils.utility.format.Format
 
 
 class ChooseOperationAdapter(
-    private val context: Context,
     private val baseInterface: BaseInterface,
     private val list: ArrayList<ProductType>,
     private val operation: String
@@ -47,14 +45,6 @@ class ChooseOperationAdapter(
                     Format.formatAmount((priceItem.price.toDouble() / 100).toString()) + " UZS"
                 allServiceLists.add(infoItems)
             }
-
-            if (priceItem.delivery_amount != 0 && priceItem.is_virtual == "N") {
-                infoItems = AllServiceLists()
-                infoItems.name = context.getString(R.string.delivery_cost)
-                infoItems.code =
-                    Format.formatAmount((priceItem.delivery_amount.toDouble() / 100).toString()) + " UZS"
-                allServiceLists.add(infoItems)
-            }
             if (priceItem.card_validity_period.isNotEmpty()) {
                 infoItems = AllServiceLists()
                 infoItems.name = context.getString(R.string.card_expire)
@@ -71,21 +61,9 @@ class ChooseOperationAdapter(
                 infoItems.name = context.getString(R.string.issue_cost)
                 infoItems.code = context.getString(R.string.free)
                 allServiceLists.add(infoItems)
-//                    issueCost.text = context.getString(R.string.free)
             }
-            if (priceItem.delivery_amount == 0) {
-                infoItems = AllServiceLists()
-                infoItems.name = context.getString(R.string.delivery_cost)
-                infoItems.code = context.getString(R.string.free)
-                allServiceLists.add(infoItems)
-//                    deliveryCost.text = context.getString(R.string.free)
-            }
-
             binding.continueButton.setOnClickListener {
                 baseInterface.selectedCardWithOperation(priceItem, operation)
-            }
-            if (operation == "1" || operation == "2") {
-                binding.layoutInsuranceDeposit.visibility = View.GONE
             }
             binding.recyclerView.apply {
                 layoutManager = GridLayoutManager(context, 2)
@@ -99,7 +77,7 @@ class ChooseOperationAdapter(
         val binding = ItemOrderCardOperationBinding.inflate(
             LayoutInflater.from(parent.context), parent, false
         )
-        return ViewHolder(binding, context)
+        return ViewHolder(binding, parent.context)
     }
 
     override fun getItemCount(): Int {

@@ -178,14 +178,14 @@ fun Fragment.getTransferTypes(): ArrayList<MenuServiceItem> {
             getString(R.string.by_phone_number_desc)
         )
     )
-    transferTypes.add(
-        MenuServiceItem(
-            R.drawable.ic_transfer_by_wallet,
-            getString(R.string.by_wallet_number),
-            400,
-            getString(R.string.by_wallet_number_desc)
-        )
-    )
+//    transferTypes.add(
+//        MenuServiceItem(
+//            R.drawable.ic_transfer_by_wallet,
+//            getString(R.string.by_wallet_number),
+//            400,
+//            getString(R.string.by_wallet_number_desc)
+//        )
+//    )
     transferTypes.add(
         MenuServiceItem(
             R.drawable.ic_service_transfer_to_account,

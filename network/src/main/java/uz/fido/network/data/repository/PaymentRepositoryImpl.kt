@@ -15,8 +15,6 @@ import uz.fido.network.domain.model.humo_pay.HumoPayRequest
 import uz.fido.network.domain.model.humo_pay.NfcResponse
 import uz.fido.network.domain.model.payment.CreatePaymentRequest
 import uz.fido.network.domain.model.payment.CreatePaymentResponse
-import uz.fido.network.domain.model.payment.GetPaymentVersionRequest
-import uz.fido.network.domain.model.payment.GetPaymentVersionResponse
 import uz.fido.network.domain.model.payment.Payment
 import uz.fido.network.domain.model.payment.PreparePaymentRequest
 import uz.fido.network.domain.model.payment.PreparePaymentResponse
@@ -90,19 +88,9 @@ class PaymentRepositoryImpl @Inject constructor(private val paymentService: Paym
     }
 
 
-    override suspend fun fetchLocalPaymentTypes(token: String): Resource<LocalPaymentTypesResponse> =
-        getResult {
-            paymentService.fetchLocalPaymentTypes(token)
-        }
-
-
-    override suspend fun getPaymentVersion(
-        token: String,
-        getPaymentVersionRequest: GetPaymentVersionRequest
-    ): Resource<GetPaymentVersionResponse> = getResult {
-        paymentService.getPaymentVersion(token, getPaymentVersionRequest)
+    override suspend fun fetchLocalPaymentTypes(token: String): Resource<LocalPaymentTypesResponse> = getResult {
+        paymentService.fetchLocalPaymentTypes(token)
     }
-
 
     override suspend fun loadRepayment(
         token: String,

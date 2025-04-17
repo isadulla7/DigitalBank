@@ -7,7 +7,6 @@ import kotlinx.coroutines.Dispatchers
 import uz.fido.network.domain.datasource.interfaces.ISwapKeyRepository
 import uz.fido.network.domain.datasource.interfaces.IUserRepository
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
-import uz.fido.network.domain.model.profile.LogOutRequest
 import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.universaldigital.base.AbstractViewModel
 import uz.fido.utils.utility.user.getClientToken
@@ -30,10 +29,6 @@ class PinCodeViewModel @Inject constructor(
 
     fun getUserDetailedInfo(fileUrl: String) = liveData(Dispatchers.IO) {
         emit(swapKeyRepository.getUserDetailedInfoAsync(fileUrl))
-    }
-
-    fun logOutRequest(token: String, logOutRequest: LogOutRequest) = liveData(Dispatchers.IO) {
-        emit(userRepository.logOut(token, logOutRequest))
     }
 
 }

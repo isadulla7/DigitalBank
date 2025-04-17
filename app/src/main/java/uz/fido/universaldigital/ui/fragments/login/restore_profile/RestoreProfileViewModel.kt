@@ -25,15 +25,13 @@ class RestoreProfileViewModel @Inject constructor(
         emit(userRepository.sendEmailCode(sendEmailCode))
     }
 
-    fun changePassword(token: String, changePasswordRequest: ChangePasswordRequest) =
-        liveData(Dispatchers.IO) {
-            emit(userRepository.changePasswordWithoutSMS(token, changePasswordRequest))
-        }
+    fun changePassword(token: String, changePasswordRequest: ChangePasswordRequest) = liveData(Dispatchers.IO) {
+        emit(userRepository.changePasswordWithoutSMS(token, changePasswordRequest))
+    }
 
-    fun changePasswordWithSMS(changePasswordRequest: ChangePasswordRequest) =
-        liveData(Dispatchers.IO) {
-            emit(userRepository.changePassword(changePasswordRequest))
-        }
+    fun changePasswordWithSMS(changePasswordRequest: ChangePasswordRequest) = liveData(Dispatchers.IO) {
+        emit(userRepository.changePassword(changePasswordRequest))
+    }
 
 
 }

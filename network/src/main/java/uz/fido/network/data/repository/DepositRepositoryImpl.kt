@@ -61,14 +61,12 @@ class DepositRepositoryImpl @Inject constructor(private val depositService: Depo
         depositService.partialWithdrawMoney(token, partialWithdrawMoneyDepositRequest)
     }
 
-
     override suspend fun investMoneyToDeposit(
         token: String,
         investMoneyToDepositRequest: InvestMoneyToDepositRequest
     ): Resource<InvestMoneyToDepositResponse> = getResult {
         depositService.investMoneyToDeposit(token, investMoneyToDepositRequest)
     }
-
 
     override suspend fun earlyClosure(
         token: String,

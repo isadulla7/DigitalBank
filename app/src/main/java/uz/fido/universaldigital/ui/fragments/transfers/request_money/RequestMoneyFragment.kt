@@ -1,7 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.transfers.request_money
 
-import android.net.Uri
 import android.os.Bundle
+import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
@@ -21,7 +21,6 @@ import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.view.amount.AmountSuggestionView
-
 
 @AndroidEntryPoint
 class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, RequestMoneyViewModel>(
@@ -82,20 +81,18 @@ class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, Req
     }
 
     private fun initSetOnClickListeners() {
-
         binding.btnContinue.setOnClickListener {
             binding.btnContinue.setProgress(true)
             val url = "https://universaldigitalbank.page.link/qrcard?cardNumber=${receiverCard?.object_value}&amount=${
                 Format.sendFormat(binding.etAmount.text.toString())
             }&objectId=${receiverCard?.object_id}&comment=${binding.etComment.text.toString()}"
             Firebase.dynamicLinks.shortLinkAsync {
-                link = Uri.parse(url)
+                link = url.toUri()
                 domainUriPrefix = "https://universaldigitalbank.page.link"
                 androidParameters {
                     minimumVersion = 24
                 }
-                val uri =
-                    Uri.parse("https://firebasestorage.googleapis.com/v0/b/universal-mobile-digital.appspot.com/o/Uploads%2Fsocial_media.png?alt=media&token=0bb1942b-946a-4712-aff7-a77318b17fb6")
+                val uri = "https://firebasestorage.googleapis.com/v0/b/universal-mobile-digital.appspot.com/o/Uploads%2Fsocial_media.png?alt=media&token=0bb1942b-946a-4712-aff7-a77318b17fb6".toUri()
                 socialMetaTagParameters {
                     title = requireContext().getString(R.string.request_money)
                     description = requireContext().getString(R.string.request_money_desc)

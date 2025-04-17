@@ -1,6 +1,5 @@
 package uz.fido.network.data.repository
 
-import uz.fido.network.domain.model.monitoring.filter.PaymentServiceResponse
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.getResult
 import uz.fido.network.domain.datasource.interfaces.IMonitoringRepository
@@ -11,8 +10,9 @@ import uz.fido.network.domain.model.monitoring.AccountHistoriesResponse
 import uz.fido.network.domain.model.monitoring.categories.SetCategoryRequest
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringRequest
 import uz.fido.network.domain.model.monitoring.currency_card.CurrencyCardMonitoringResponse
-import uz.fido.network.domain.model.monitoring.filter.MonitoringFilterCardResponse
 import uz.fido.network.domain.model.monitoring.filter.LocalMonitoringFilterRequest
+import uz.fido.network.domain.model.monitoring.filter.MonitoringFilterCardResponse
+import uz.fido.network.domain.model.monitoring.filter.PaymentServiceResponse
 import uz.fido.network.domain.model.monitoring.home.HomeHistoryRequest
 import uz.fido.network.domain.model.monitoring.home.HomeHistoryResponse
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringRequest
@@ -111,9 +111,8 @@ class MonitoringRepositoryImpl @Inject constructor(private val monitoringApiServ
     override suspend fun newFilterLocalMonitoring(
         token: String,
         filterMonitoringModel: LocalMonitoringFilterRequest
-    ): Resource<LocalMonitoringResponse> =
-        getResult {
-            monitoringApiService.newFilterMonitoringFilter(token, filterMonitoringModel)
-        }
+    ): Resource<LocalMonitoringResponse> = getResult {
+        monitoringApiService.newFilterMonitoringFilter(token, filterMonitoringModel)
+    }
 
 }

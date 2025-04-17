@@ -25,7 +25,6 @@ import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.order_card.adapters.OrderCardBgAdapter
 import uz.fido.universaldigital.ui.fragments.services.order_card.dialogs.ChooseBranchDialog
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getCardByType
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.yearText
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.getFromSecureStore
@@ -219,12 +218,8 @@ class OrderCardStep2Fragment : BaseFragment<FragmentOrderCardStep2Binding, Order
             binding.dotsIndicator.visibility = View.GONE
 //            binding.designPriceLayout.visibility = View.GONE
         }
-
-        design =
-            if (designPriceList.size > 0) designPriceList[0].image_name else "ic_card_visa_classic"
+        design = if (designPriceList.size > 0) designPriceList[0].image_name else "ic_card_visa_classic"
         designPrice = designPriceList[0].design_price
-//        binding.designPrice.text = Format.formatAmount((designPriceList[0].design_price / 100).toString(), 0) + " UZS"
-
         cardBgAdapter = OrderCardBgAdapter(requireContext(), designPriceList, this)
         binding.viewPager.adapter = cardBgAdapter
         binding.dotsIndicator.setViewPager(binding.viewPager)
@@ -238,17 +233,9 @@ class OrderCardStep2Fragment : BaseFragment<FragmentOrderCardStep2Binding, Order
             @SuppressLint("SetTextI18n")
             override fun onPageSelected(position: Int) {
                 designPrice = if (designPriceList[position].design_price == 0) {
-                    //                    binding.designPrice.text = Format.formatAmount(
-                    //                        (designPriceList[position].design_price / 100).toString(),
-                    //                        0
-                    //                    ) + " UZS"
                     designPriceList[position].design_price
                 } else {
                     designPriceList[position].design_price
-                    //                    binding.designPrice.text = Format.formatAmount(
-                    //                        (designPriceList[position].design_price / 100).toString(),
-                    //                        0
-                    //                    ) + " UZS"
                 }
                 design = designPriceList[position].image_name
             }

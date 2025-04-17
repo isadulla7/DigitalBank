@@ -14,7 +14,13 @@ import uz.fido.network.domain.model.branches.OneTimeInfoRequest
 import uz.fido.network.domain.model.branches.OneTimeInfoResponse
 import uz.fido.network.domain.model.humo_pay.HumoPayRequest
 import uz.fido.network.domain.model.humo_pay.NfcResponse
-import uz.fido.network.domain.model.payment.*
+import uz.fido.network.domain.model.payment.CreatePaymentRequest
+import uz.fido.network.domain.model.payment.CreatePaymentResponse
+import uz.fido.network.domain.model.payment.Payment
+import uz.fido.network.domain.model.payment.PreparePaymentRequest
+import uz.fido.network.domain.model.payment.PreparePaymentResponse
+import uz.fido.network.domain.model.payment.PrintChequeRequest
+import uz.fido.network.domain.model.payment.PrintChequeResponse
 import uz.fido.network.domain.model.payment.location.LocalPaymentRequest
 import uz.fido.network.domain.model.payment.location.LocalPaymentTypesResponse
 import uz.fido.network.domain.model.payment.location.PaymentByLocationRequest
@@ -22,7 +28,11 @@ import uz.fido.network.domain.model.payment.location.PaymentByLocationResponse
 import uz.fido.network.domain.model.search.GetOperationInfoRequest
 import uz.fido.network.domain.model.sms.CheckSmsForPayment
 import uz.fido.network.domain.model.sms.CheckSmsForPaymentResponse
-import uz.fido.network.domain.model.subscriptions.*
+import uz.fido.network.domain.model.subscriptions.AutoPaymentRequest
+import uz.fido.network.domain.model.subscriptions.AutoPaymentResponse
+import uz.fido.network.domain.model.subscriptions.ChangeAutoPaymentStateRequest
+import uz.fido.network.domain.model.subscriptions.DeleteAutoPaymentRequest
+import uz.fido.network.domain.model.subscriptions.SaveAutoPaymentModel
 import uz.fido.network.domain.model.swift.CreateSwiftAppRequest
 import uz.fido.network.domain.model.swift.GetSwiftCommissionRequest
 import uz.fido.network.domain.model.swift.SwiftCommissionResponse
@@ -73,12 +83,6 @@ interface PaymentApiInterface {
     suspend fun fetchLocalPaymentTypes(
         @Header("Authorization") token: String
     ): LocalPaymentTypesResponse
-
-    @POST("GET_PAYMENTS_VERSION")
-    suspend fun getPaymentVersion(
-        @Header("Authorization") token: String,
-        @Body getPaymentVersionRequest: GetPaymentVersionRequest
-    ): GetPaymentVersionResponse
 
     @POST("LOAN_REPAYMENT")
     suspend fun loadRepayment(

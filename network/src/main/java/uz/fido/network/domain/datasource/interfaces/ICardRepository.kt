@@ -43,8 +43,6 @@ import uz.fido.network.domain.model.limits.gl.GlLimitListRequest
 import uz.fido.network.domain.model.limits.gl.GlLimitParamsResponse
 import uz.fido.network.domain.model.limits.gl.GlLimitResponse
 import uz.fido.network.domain.model.limits.gl.GlSetCardLimitRequest
-import uz.fido.network.domain.model.p2p.P2PHistoryRequest
-import uz.fido.network.domain.model.p2p.P2PHistoryResponse
 
 interface ICardRepository {
 
@@ -88,10 +86,6 @@ interface ICardRepository {
     suspend fun checkWalletInfo(
         token: String, checkCardRequestP2p: CheckCardRequestP2p
     ): Resource<CheckWalletResponse>
-
-    suspend fun getP2pHistory(
-        token: String, p2PHistoryRequest: P2PHistoryRequest
-    ): Resource<P2PHistoryResponse>
 
     suspend fun getHumoCardInfo(
         token: String, humoCardInfoRequest: HumoCardInfoRequest
