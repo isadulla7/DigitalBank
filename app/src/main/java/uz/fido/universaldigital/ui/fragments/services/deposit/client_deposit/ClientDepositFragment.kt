@@ -81,28 +81,40 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
                 dialog.dismiss()
                 when (it) {
                     RENAME_DEPOSIT -> {
-                        goto(
-                            R.id.depositEditNameFragment,
-                            bundleOf(DepositEditNameFragment.EDIT_NAME to clientDeposit)
-                        )
+                        if (clientDeposit.isOfflineDeposit()) {
+                            showSnackbar(getString(R.string.this_function_only_working_with_online_deposit))
+                        } else {
+                            goto(
+                                R.id.depositEditNameFragment,
+                                bundleOf(DepositEditNameFragment.EDIT_NAME to clientDeposit)
+                            )
+                        }
                     }
 
                     EARLY_CLOSE_DEPOSIT -> {
-                        goto(
-                            R.id.depositFillingFragment, bundleOf(
-                                "deposit" to clientDeposit,
-                                Const.OPERATION to EARLY_CLOSE_DEPOSIT
+                        if (clientDeposit.isOfflineDeposit()) {
+                            showSnackbar(getString(R.string.this_function_only_working_with_online_deposit))
+                        } else {
+                            goto(
+                                R.id.depositFillingFragment, bundleOf(
+                                    "deposit" to clientDeposit,
+                                    Const.OPERATION to EARLY_CLOSE_DEPOSIT
+                                )
                             )
-                        )
+                        }
                     }
 
                     CLOSE_DEPOSIT -> {
-                        goto(
-                            R.id.depositFillingFragment, bundleOf(
-                                "deposit" to clientDeposit,
-                                Const.OPERATION to CLOSE_DEPOSIT
+                        if (clientDeposit.isOfflineDeposit()) {
+                            showSnackbar(getString(R.string.this_function_only_working_with_online_deposit))
+                        } else {
+                            goto(
+                                R.id.depositFillingFragment, bundleOf(
+                                    "deposit" to clientDeposit,
+                                    Const.OPERATION to CLOSE_DEPOSIT
+                                )
                             )
-                        )
+                        }
                     }
 
                     DEPOSIT_INFO -> {
@@ -114,10 +126,14 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
                     }
 
                     WITH_DRAW_PERCENT -> {
-                        goto(
-                            R.id.depositPercentsDialog,
-                            bundleOf("client_deposit" to clientDeposit)
-                        )
+                        if (clientDeposit.isOfflineDeposit()) {
+                            showSnackbar(getString(R.string.this_function_only_working_with_online_deposit))
+                        } else {
+                            goto(
+                                R.id.depositPercentsDialog,
+                                bundleOf("client_deposit" to clientDeposit)
+                            )
+                        }
                     }
                 }
             }
@@ -313,20 +329,28 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
     override fun onClick(p0: View?) {
         when (p0!!.id) {
             R.id.linear_income -> {
-                goto(
-                    R.id.depositFillingFragment, bundleOf(
-                        "deposit" to clientDeposit,
-                        Const.OPERATION to TOP_UP_DEPOSIT
+                if (clientDeposit.isOfflineDeposit()) {
+                    showSnackbar(getString(R.string.this_function_only_working_with_online_deposit))
+                } else {
+                    goto(
+                        R.id.depositFillingFragment, bundleOf(
+                            "deposit" to clientDeposit,
+                            Const.OPERATION to TOP_UP_DEPOSIT
+                        )
                     )
-                )
+                }
             }
 
             R.id.linear_out -> {
-                if (clientDeposit.partialWrite == "Y") {
-                    val bundle = Bundle()
-                    bundle.putString(Const.OPERATION, WITH_DRAW_PERCENT)
-                    bundle.putSerializable("deposit", clientDeposit)
-                    goto(R.id.depositFillingFragment, bundle)
+                if (clientDeposit.isOfflineDeposit()) {
+                    showSnackbar(getString(R.string.this_function_only_working_with_online_deposit))
+                } else {
+                    if (clientDeposit.partialWrite == "Y") {
+                        val bundle = Bundle()
+                        bundle.putString(Const.OPERATION, WITH_DRAW_PERCENT)
+                        bundle.putSerializable("deposit", clientDeposit)
+                        goto(R.id.depositFillingFragment, bundle)
+                    }
                 }
             }
         }

@@ -33,7 +33,7 @@ class CallSafeActivity : BaseActivity() {
     private val broadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
             when (intent?.action) {
-                AudioModeService.Companion.ACTION_CLOSE_ACTIVITY -> finishIfOpen()
+                AudioModeService.ACTION_CLOSE_ACTIVITY -> finishIfOpen()
             }
         }
     }
@@ -42,7 +42,7 @@ class CallSafeActivity : BaseActivity() {
     override fun onResume() {
         super.onResume()
         try {
-            val intentFilter = IntentFilter(AudioModeService.Companion.ACTION_CLOSE_ACTIVITY)
+            val intentFilter = IntentFilter(AudioModeService.ACTION_CLOSE_ACTIVITY)
             startService(Intent(this, AudioModeService::class.java))
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 registerReceiver(

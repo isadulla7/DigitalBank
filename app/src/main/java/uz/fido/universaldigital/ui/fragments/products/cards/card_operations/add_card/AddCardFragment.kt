@@ -20,7 +20,6 @@ import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.adapter.CardBackgroundAdapter
 import uz.fido.universaldigital.ui.fragments.transfers.utils.checkCardNumber
 import uz.fido.universaldigital.ui.utils.extensions.getCardBackgroundList
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.getFromSecureStore
@@ -188,32 +187,31 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
         getActivityResult.launch(intent)
     }
 
-    private val getActivityResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK && it.data != null) {
-                val scanResult = ScanActivity.creditCardFromResult(it.data)
-                val result = scanResult?.number
-                val expireDate = scanResult?.expiryForDisplay()
-                if (result != null) {
-                    binding.cardNumber.setText(result)
-                    if (!checkCardNumber(result)) {
-                        binding.cardNumberLayout.error = getString(R.string.invalid_card_number)
-                    }
-                    if (expireDate != null) {
-                        if (expireDate.length != 5 && !expireDate.toString().contains("/")) {
-                            binding.cardExpire.setText(expireDate)
-                            binding.cardExpireLayout.error =
-                                getString(R.string.wrong_format)
-                        } else if (!expireDate.toString()
-                                .contains("//") && expireDate.length == 5
-                        ) {
-                            binding.cardExpireLayout.error = null
-                            binding.cardExpire.setText(expireDate)
-                        }
+    private val getActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK && it.data != null) {
+            val scanResult = ScanActivity.creditCardFromResult(it.data)
+            val result = scanResult?.number
+            val expireDate = scanResult?.expiryForDisplay()
+            if (result != null) {
+                binding.cardNumber.setText(result)
+                if (!checkCardNumber(result)) {
+                    binding.cardNumberLayout.error = getString(R.string.invalid_card_number)
+                }
+                if (expireDate != null) {
+                    if (expireDate.length != 5 && !expireDate.toString().contains("/")) {
+                        binding.cardExpire.setText(expireDate)
+                        binding.cardExpireLayout.error =
+                            getString(R.string.wrong_format)
+                    } else if (!expireDate.toString()
+                            .contains("//") && expireDate.length == 5
+                    ) {
+                        binding.cardExpireLayout.error = null
+                        binding.cardExpire.setText(expireDate)
                     }
                 }
             }
         }
+    }
 
     override fun cameraPermissionGranted() {
         openCameraForCardRead()

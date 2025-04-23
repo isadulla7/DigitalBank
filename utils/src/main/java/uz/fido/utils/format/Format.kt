@@ -28,13 +28,6 @@ object Format {
         return date.substring(6, 10) + "-" + date.substring(3, 5) + "-" + date.substring(0, 2)
     }
 
-    fun firstLetterUpperCase(text: String): String {
-        return if (text.isNotEmpty()) text[0].uppercaseChar().toString() + text.substring(
-            0,
-            text.length
-        ) else ""
-    }
-
     fun formatCardNumber(cardNumber: String): String {
         return if (cardNumber.length == 16) {
             cardNumber.substring(0, 4) + " " + cardNumber.substring(

@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="cannot_withdraw_percents">Ushbu turdagi deposit uchun hisoblangan foizlarni yechib olish mumkin emas!</string>
+    <string name="this_function_only_working_with_online_deposit">Bu funksionallik faqatgina onlayn omonatda mavjud.</string>
 </resources>

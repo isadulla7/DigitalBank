@@ -5,18 +5,12 @@ import android.graphics.Bitmap;
 import java.util.ArrayList;
 
 class RecognizeNumbers {
-    private final int numRows;
-    private final int numCols;
     private final RecognizedDigits[][] recognizedDigits;
     private final Bitmap image;
-    private String number = null;
     private ArrayList<CGRect> numberBoxes;
 
     RecognizeNumbers(Bitmap image, int numRows, int numCols) {
         this.image = image;
-        this.numRows = numRows;
-        this.numCols = numCols;
-
         this.recognizedDigits = new RecognizedDigits[numRows][numCols];
     }
 
@@ -34,7 +28,6 @@ class RecognizeNumbers {
             }
 
             if (candidateNumber.length() == 16 && CreditCardUtils.luhnCheck(candidateNumber.toString())) {
-                this.number = candidateNumber.toString();
                 this.numberBoxes = new ArrayList<>();
                 for (DetectedBox box : line) {
                     this.numberBoxes.add(box.rect);

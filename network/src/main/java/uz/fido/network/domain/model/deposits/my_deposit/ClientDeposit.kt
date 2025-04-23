@@ -35,4 +35,8 @@ data class ClientDeposit(
     val sumDep: String? = null,
     val withdrawInterest: String? = null,
     val interestPayable: String? = null
-) : Serializable
+) : Serializable {
+    fun isOfflineDeposit(): Boolean {
+        return isMobile == "0"
+    }
+}

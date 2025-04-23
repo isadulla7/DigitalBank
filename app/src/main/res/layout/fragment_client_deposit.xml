@@ -7,7 +7,6 @@
     android:background="@color/backgroundColor"
     app:layoutDescription="@xml/fragment_client_deposit_scene">
 
-
     <uz.fido.utils.view.custom_app_bar.MainAppBar
         android:id="@+id/app_bar"
         android:layout_width="match_parent"

@@ -35,9 +35,7 @@ class AppDetailsAdapter(
             }
             if (item.state_id == -100) {
                 binding.cardView.setCardBackgroundColor(itemView.context.getColor(R.color.brandRedColor))
-//                binding.errorText.visibility = View.VISIBLE
                 binding.status.visibility = View.VISIBLE
-//                binding.errorText.text = item.err_msg
                 binding.status.text = item.status
                 binding.applicationName.setTextColor(
                     ContextCompat.getColor(

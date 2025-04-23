@@ -1067,4 +1067,5 @@
     <string name="unable_to_get_passport_data">Не удалось получить ваши паспортные данные. Попробуйте войти еще раз, используя свои паспортные данные.</string>
     <string name="selected_filters">Tanlangan filtrlar</string>
     <string name="cannot_withdraw_percents">Ushbu turdagi deposit uchun hisoblangan foizlarni yechib olish mumkin emas!</string>
+    <string name="this_function_only_working_with_online_deposit">Bu funksionallik faqatgina onlayn omonatda mavjud.</string>
 </resources>

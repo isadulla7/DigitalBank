@@ -21,7 +21,6 @@ import uz.fido.universaldigital.databinding.DialogAppDetailsBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.services.applications.adapter.AppDetailsAdapter
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.getFromSecureStore
@@ -225,9 +224,8 @@ class AppDetailsDialog(
         val cardName = application.module_product
         if (cardName.isEmpty()) return
         utilsViewModel.checkCardRequest(
-            getClientToken(), CheckCardRequest(
-                expireDate, cardNumber, getFromSecureStore(Const.PAPER_CLIENT_PHONE), AppSignatureHelper(requireContext()).appKeyHash, requireContext().getDeviceIds()
-            )
+            getClientToken(),
+            CheckCardRequest(expireDate, cardNumber, getFromSecureStore(Const.PAPER_CLIENT_PHONE), AppSignatureHelper(requireContext()).appKeyHash, requireContext().getDeviceIds())
         ).observe(viewLifecycleOwner) {
             it?.let {
                 when (it.status) {
@@ -261,6 +259,5 @@ class AppDetailsDialog(
             }
         }
     }
-
 
 }

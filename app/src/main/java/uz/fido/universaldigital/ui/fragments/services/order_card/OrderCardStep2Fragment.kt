@@ -98,13 +98,11 @@ class OrderCardStep2Fragment : BaseFragment<FragmentOrderCardStep2Binding, Order
         binding.smsPhone.setText(getFromSecureStore(Const.PAPER_CLIENT_PHONE))
         cardPrice = priceItem.price
         binding.dotsIndicator.isVisible = productTypes.size > 1
-
         if (cardType == CardType.VISA.id || cardType == CardType.MASTERCARD.id) {
             binding.secretWordLayout.visibility = View.VISIBLE
             binding.secretWordDesc.visibility = View.VISIBLE
             binding.etSecretWord.addTextChangedListener { binding.btnContinue.isEnabled(checkFields()) }
         }
-
         if (priceItem.code == Constants.HUMO_NEW_CARD.text) {
             binding.pinCodeLayoutMain.visibility = View.VISIBLE
             pinCode = binding.pinCode.editableText.toString().trim()
@@ -132,7 +130,6 @@ class OrderCardStep2Fragment : BaseFragment<FragmentOrderCardStep2Binding, Order
             pinCode = binding.pinCode.editableText.toString().trim()
             if (pinCode.length != 4 && binding.pinCodeLayoutMain.isVisible) {
                 binding.pinCodeLayout.isErrorEnabled = true
-//                    binding.pinCodeLayout.error = getString(R.string.pin_for_card)
             } else {
                 val request = OrderCardRequest(
                     command = "card",

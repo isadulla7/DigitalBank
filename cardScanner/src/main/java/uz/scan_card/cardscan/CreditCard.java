@@ -71,11 +71,6 @@ public class CreditCard implements Parcelable {
         }
     }
 
-    @NonNull
-    public String last4() {
-        return this.number.substring(this.number.length() - 4);
-    }
-
     @Nullable
     public String expiryForDisplay() {
         if (this.expiryMonth == null || this.expiryYear == null) {

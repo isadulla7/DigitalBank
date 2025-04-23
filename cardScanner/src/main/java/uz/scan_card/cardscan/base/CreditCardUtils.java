@@ -1,7 +1,6 @@
 package uz.scan_card.cardscan.base;
 
 public class CreditCardUtils {
-    // https://en.wikipedia.org/wiki/Luhn_algorithm#Java
     static boolean luhnCheck(String ccNumber) {
         if (ccNumber == null || ccNumber.isEmpty()) {
             return false;
@@ -60,8 +59,7 @@ public class CreditCardUtils {
     }
 
     private static boolean isValidBin(String number) {
-        return isAmex(number) || isDiscover(number) || isVisa(number) || isMastercard(number)
-                || isUnionPay(number);
+        return isAmex(number) || isDiscover(number) || isVisa(number) || isMastercard(number) || isUnionPay(number) || isUzCard(number) || isHumo(number);
     }
 
     private static String prefix(String s, int n) {
@@ -109,6 +107,14 @@ public class CreditCardUtils {
         }
 
         return prefix2 >= 86 || prefix2 >= 51 && prefix2 <= 55 || prefix4 >= 2221 && prefix4 <= 2720;
+    }
+
+    public static boolean isHumo(String number) {
+        return (number.length() == 16) && number.startsWith("9860");
+    }
+
+    public static boolean isUzCard(String number) {
+        return (number.length() == 16) && (number.startsWith("56") || number.startsWith("86"));
     }
 
     public static boolean isVisa(String number) {

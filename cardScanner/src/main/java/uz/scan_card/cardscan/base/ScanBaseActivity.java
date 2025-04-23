@@ -31,7 +31,6 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.OrientationEventListener;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -240,8 +239,6 @@ public abstract class ScanBaseActivity extends Activity implements Camera.Previe
             preview.addView(cameraPreview);
         }
     }
-
-    // https://stackoverflow.com/a/17804792
     private @Nullable
     Camera.Size getOptimalPreviewSize(List<Camera.Size> sizes, int w, int h) {
         final double ASPECT_TOLERANCE = 0.1;

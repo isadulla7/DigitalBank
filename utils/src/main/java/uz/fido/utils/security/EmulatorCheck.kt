@@ -10,7 +10,14 @@ import java.io.File
 open class EmulatorCheck(private val context: Context) {
 
     fun isProbablyAnEmulator(): Boolean {
-        return isEmulator() || checkForEmulatorFiles() || checkEmulatorSoftware() || checkForMEmu() || checkForLDPlayer() || checkForNoxPlayer() || checkForGenymotion() || checkForKoPlayer()
+        return isEmulator() ||
+                checkForEmulatorFiles() ||
+                checkEmulatorSoftware() ||
+                checkForMEmu() ||
+                checkForLDPlayer() ||
+                checkForNoxPlayer() ||
+                checkForGenymotion() ||
+                checkForKoPlayer()
     }
 
     private fun checkForEmulatorFiles(): Boolean {
