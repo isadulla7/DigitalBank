@@ -16,10 +16,7 @@ import uz.fido.universaldigital.ui.fragments.products.widgets.search.model.Searc
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
-    application: Application,
-
-    ) : AbstractViewModel(application) {
+class SearchViewModel @Inject constructor(application: Application) : AbstractViewModel(application) {
 
     private val _uiState = MutableStateFlow<ArrayList<SearchItem>>(arrayListOf())
     val uiState: StateFlow<ArrayList<SearchItem>> = _uiState

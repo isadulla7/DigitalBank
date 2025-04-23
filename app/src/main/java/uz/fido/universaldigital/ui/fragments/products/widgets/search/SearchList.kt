@@ -68,14 +68,6 @@ object SearchList {
                 id = "007"
             )
         )
-//        searchList.add(
-//            SearchItem(
-//                name = context.getString(R.string.humo_pay),
-//                groupName = GROUP_NAME_APP_FUNCTIONALITY,
-//                imageName = "ic_services_humo_pay",
-//                id = "008"
-//            )
-//        )
         searchList.add(
             SearchItem(
                 name = context.getString(R.string.my_home),
