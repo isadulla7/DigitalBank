@@ -221,7 +221,8 @@ class HumoMonitoringFragment :
                     groupDataIntoHashMap(response!!)
                 }
             }
-        val sortedMap = groupedHashMap.toSortedMap(compareByDescending { it })
+        val filteredHashMap = groupedHashMap.mapValues { it.value.sortedByDescending { it.transactionDate }.toMutableList() }
+        val sortedMap = filteredHashMap.toSortedMap(compareByDescending { it })
         addDateMonitoringList(sortedMap)
     }
 

@@ -21,7 +21,6 @@ import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
@@ -223,7 +222,8 @@ class WalletMonitoringFragment :
 
             else -> groupDataIntoHashMap(response)
         }
-        val sortedMap = groupedHashMap.toSortedMap(compareByDescending { it })
+        val filteredHashMap = groupedHashMap.mapValues { it.value.sortedByDescending { it.dateExecute }.toMutableList() }
+        val sortedMap = filteredHashMap.toSortedMap(compareByDescending { it })
         for (date in sortedMap.keys) {
             val dateItem = DateItem()
             dateItem.date = date
