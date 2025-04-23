@@ -36,8 +36,7 @@ import java.util.Calendar
 import java.util.Locale
 
 @AndroidEntryPoint
-class WalletMonitoringFragment :
-    BaseFragment<FragmentWalletMonitoringBinding, LocalMonitoringViewModel>(
+class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, LocalMonitoringViewModel>(
         FragmentWalletMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
     ), (AccountHistory) -> Unit {
 
