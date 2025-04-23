@@ -27,6 +27,8 @@ import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 @AndroidEntryPoint
 @SuppressLint("SetTextI18n")
@@ -83,7 +85,10 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
     }
 
     private fun setCommission(commission: String, amount: Double) {
-        val calculatedCommission = amount * commission.toDouble() / 100
+        val calculatedCommission = amount.toBigDecimal()
+            .multiply(commission.toBigDecimal())
+            .divide(BigDecimal(100))
+            .setScale(2, RoundingMode.DOWN)
         binding.tvCommission.text = commission + " % ($calculatedCommission ${getString(uz.fido.utils.R.string.sum)})"
     }
 

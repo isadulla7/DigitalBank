@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.transfers.over_my_cards
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -404,7 +405,10 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
         try {
             if (senderCard != null) {
                 val balance = senderCard?.balance.toString().toBigDecimal().divide(BigDecimal(100))
-                val calculatedAmount = balance.divide(BigDecimal(1) + percent.divide(BigDecimal(100)), 3, RoundingMode.DOWN)
+                val calculatedAmount = balance
+                    .divide(BigDecimal(1) + percent.divide(BigDecimal(100)), 10, RoundingMode.DOWN)
+                    .setScale(2, RoundingMode.DOWN)
+
                 return calculatedAmount.toString()
             } else return ""
         } catch (e: Exception) {

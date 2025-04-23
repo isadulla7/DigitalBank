@@ -320,7 +320,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     }
 
     private fun groupDataIntoHashMap(monitoringList: List<LocalMonitoring>): HashMap<String, MutableList<LocalMonitoring>> {
-        return monitoringList.sortedBy { it.createdDate }
+        return monitoringList.sortedByDescending { it.createdDate }
             .groupByTo(HashMap()) { Format.newDateFormat(it.createdDate.substring(0, 10)) }
             .mapValues { it.value.toMutableList() } as HashMap<String, MutableList<LocalMonitoring>>
     }
