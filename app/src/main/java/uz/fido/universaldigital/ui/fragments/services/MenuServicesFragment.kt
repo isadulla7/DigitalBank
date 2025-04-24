@@ -60,7 +60,7 @@ class MenuServicesFragment :
         when (serviceId) {
             2 -> goto(R.id.orderCardListFragment)
             3 -> goto(R.id.loanGroupListFragment) /*functionInProgress()*/
-            4 -> checkIdentificationAndGoto(R.id.uzsDepositFragment)
+            4 -> checkIdentificationAndGoto(R.id.mainDepositFragment)
             5 -> goto(R.id.openWalletFragment)
             100 -> goto(R.id.myCardsServiceFragment)
             101 -> goto(R.id.myDepositsServiceFragment)

@@ -147,9 +147,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
                 clearDots()
             }
         } else {
-            Handler(Looper.getMainLooper()).postDelayed({
-                errorPin()
-            }, 50)
+            errorPin()
         }
     }
 
@@ -158,9 +156,7 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
             fillDots()
             swapKeys()
         } else {
-            Handler(Looper.getMainLooper()).postDelayed({
-                errorPin()
-            }, 50)
+            errorPin()
         }
     }
 

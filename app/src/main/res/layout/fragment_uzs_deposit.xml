@@ -9,16 +9,6 @@
     android:orientation="vertical"
     android:translationZ="@dimen/elevation_8dp">
 
-    <uz.fido.utils.view.custom_app_bar.MainAppBar
-        android:id="@+id/app_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/whiteColor"
-        android:outlineSpotShadowColor="@color/appBarShadowColor"
-        android:translationZ="@dimen/elevation_8dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:s_title="@string/open_deposit" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/deposits"
         android:layout_width="match_parent"
@@ -35,7 +25,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/app_bar"
+        app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_deposit_product" />
 
     <uz.fido.utils.view.custom_empty_view.EmptyView

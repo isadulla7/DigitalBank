@@ -7,9 +7,9 @@ import com.google.android.material.tabs.TabLayoutMediator
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMainDepositBinding
-import uz.fido.universaldigital.ui.utils.base.ViewPagerAdapter
 import uz.fido.universaldigital.ui.fragments.services.deposit.usd_deposit.UsdDepositFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.uzs_deposit.UzsDepositFragment
+import uz.fido.universaldigital.ui.utils.base.ViewPagerAdapter
 import uz.fido.utils.utility.fragment.pop
 
 class MainDepositFragment : BaseFragment<FragmentMainDepositBinding, MainDepositViewModel>
@@ -18,7 +18,6 @@ class MainDepositFragment : BaseFragment<FragmentMainDepositBinding, MainDeposit
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         createViewPager()
         onClickView()
 

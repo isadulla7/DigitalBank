@@ -32,7 +32,6 @@ class UzsDepositFragment : BaseFragment<FragmentUzsDepositBinding, MainDepositVi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         recyclerView()
-        binding.appBar.setOnBackButtonClickListener { pop() }
     }
 
     private fun recyclerView() {
