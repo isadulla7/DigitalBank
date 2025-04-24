@@ -58,7 +58,7 @@ class AccountHistoriesAdapter(
             } else {
                 binding.icon.setImageResource(R.drawable.icon_monitoring)
                 binding.amount.setTextColor(ContextCompat.getColor(itemView.context, R.color.mainTextColor))
-                binding.amount.text = "- ${Format.formatAmount((item.debitAmount.toDouble() / 100).toString())} $currencyChar"
+                binding.amount.text = "- ${Format.formatAmount((item.debitAmount.toDouble()).toString())} $currencyChar"
                 binding.type.text = itemView.context.getText(R.string.write_offs)
 
             }
