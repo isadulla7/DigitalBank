@@ -1063,7 +1063,10 @@
     <string name="attention">Attention</string>
     <string name="unable_to_get_profile_data">We were unable to retrieve your account information. Please contact your bank \n+998712001110</string>
     <string name="unable_to_get_passport_data">We were unable to retrieve your passport information. Please try again by entering your passport information.</string>
-    <string name="selected_filters">Tanlangan filtrlar</string>
-    <string name="cannot_withdraw_percents">Ushbu turdagi deposit uchun hisoblangan foizlarni yechib olish mumkin emas!</string>
-    <string name="this_function_only_working_with_online_deposit">Bu funksionallik faqatgina onlayn omonatda mavjud.</string>
+    <string name="selected_filters">Selected filters</string>
+    <string name="cannot_withdraw_percents">It is not possible to withdraw the interest accrued on this type of deposit!</string>
+    <string name="this_function_only_working_with_online_deposit">This functionality is available only for online deposits.</string>
+    <string name="goto_settings_and_allow_permission">Go to settings and enable camera permission to use this feature</string>
+    <string name="empty_deposit_description">This is an easy way to preserve your savings or save up for a large purchase.</string>
+    <string name="empty_credit_message">Apply for a loan without leaving home.</string>
 </resources>

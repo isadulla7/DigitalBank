@@ -17,6 +17,7 @@ import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCre
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
@@ -36,15 +37,16 @@ class MyCreditsFragment :
     }
 
     private fun initClientCreditsRv() {
+        binding.getLoan.setOnClickListener { gotoWithSlide(R.id.loanGroupListFragment) }
         binding.rvClientCredits.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            homeCreditsAdapter =
-                HomeCreditsAdapter(this@MyCreditsFragment, ArrayList(), false)
+            homeCreditsAdapter = HomeCreditsAdapter(this@MyCreditsFragment, ArrayList(), false)
             adapter = homeCreditsAdapter
         }
         menuProductsViewModel.creditProduct.observe(viewLifecycleOwner) {
             homeCreditsAdapter.setList(it as ArrayList<CreditProduct>)
             binding.emptyView.isVisible = it.isEmpty()
+            binding.getLoan.isVisible = it.isEmpty()
         }
         if (menuProductsViewModel.creditProduct.value == null || menuProductsViewModel.creditProduct.value!!.isEmpty()) {
             creditShimmer = showSkeleton(

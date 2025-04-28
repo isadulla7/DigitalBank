@@ -20,6 +20,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment.Companion.SMS_OPERATION_FORGOT_PASSWORD
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
@@ -39,7 +40,6 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
     companion object {
         const val OPERATION = "operation"
-        const val OPERATION_RECOVER_PASSWORD = "recover_password"
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -208,10 +208,9 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
         response: Resource<BaseResponse>, model: SignUpCheckRequest
     ) {
         val bundle = Bundle()
-        bundle.putString(Const.OPERATION, ConfirmSmsFragment.SMS_OPERATION_SIGN_UP)
-        bundle.putString(
-            Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString()
-        )
+        val operation = arguments?.getString(OPERATION) ?: ConfirmSmsFragment.SMS_OPERATION_SIGN_UP
+        bundle.putString(Const.OPERATION, operation)
+        bundle.putString(Const.PHONE_NUMBER, binding.etPhoneNumber.editableText.toString())
         bundle.putSerializable("data", model)
         bundle.putString(Const.RANDOM_TEXT, response.data?.string_line.toString())
         bundle.putString(Const.REF_CODE, binding.etRefCode.editableText.toString())
@@ -247,7 +246,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
     private fun initRecoverPasswordDescription() {
         arguments?.let {
-            if (it.getString(OPERATION) == OPERATION_RECOVER_PASSWORD) {
+            if (it.getString(OPERATION) == SMS_OPERATION_FORGOT_PASSWORD) {
                 binding.appBar.apply {
                     setTitle(getString(R.string.reset_password))
                     setSubtitle(getString(R.string.reset_password_description))

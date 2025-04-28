@@ -17,6 +17,7 @@ import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.activities.MainActivity
 import uz.fido.universaldigital.ui.dialogs.BaseInfoDialog
 import uz.fido.universaldigital.ui.fragments.login.pin.PinDotsAnimation.zoomInAndOutAnim
+import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.USER_LOGGED
 import uz.fido.utils.device.isFingerEnable
@@ -273,12 +274,16 @@ class PinCodeFragment : BaseFragment<FragmentPinCodeBinding, PinCodeViewModel>(
         PinDotsAnimation.errorAnimation(binding.dotView, requireActivity())
         secondPin = ""
         binding.errorText.text = getString(R.string.wrong_pin)
-        Handler(Looper.getMainLooper()).postDelayed({
-            if (context != null && binding != null) {
-                clearDots()
-                binding.errorText.text = ""
-            }
-        }, 2000)
+        try {
+            Handler(Looper.getMainLooper()).postDelayed({
+                if (isAdded && binding != null) {
+                    clearDots()
+                    binding.errorText.text = ""
+                }
+            }, 1000)
+        } catch (e: Exception) {
+            recordException(e, ::errorPin.name)
+        }
         setWrongPinCounter()
     }
 

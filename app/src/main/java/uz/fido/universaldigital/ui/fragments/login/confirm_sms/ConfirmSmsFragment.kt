@@ -167,7 +167,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private fun continueButtonClickEvent() {
         when (operation) {
 
-            SMS_OPERATION_SIGN_UP -> {
+            SMS_OPERATION_SIGN_UP , SMS_OPERATION_FORGOT_PASSWORD-> {
                 checkRegUser()
             }
 

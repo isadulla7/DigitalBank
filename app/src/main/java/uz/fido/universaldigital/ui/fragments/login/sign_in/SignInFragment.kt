@@ -20,6 +20,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignInBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment.Companion.SMS_OPERATION_FORGOT_PASSWORD
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.DeviceIdentifyState
 import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpFragment
 import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
@@ -105,7 +106,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.tvGotoSignUp.setOnClickListener { goto(R.id.signUpFragment) }
-        binding.tvResetPassword.setOnClickListener { goto(R.id.signUpFragment, bundleOf(SignUpFragment.OPERATION to SignUpFragment.OPERATION_RECOVER_PASSWORD)) }
+        binding.tvResetPassword.setOnClickListener { goto(R.id.signUpFragment, bundleOf(SignUpFragment.OPERATION to SMS_OPERATION_FORGOT_PASSWORD)) }
         binding.btnContinue.setOnClickListener {
             binding.btnContinue.setProgress(true)
             swapKeysRequest()

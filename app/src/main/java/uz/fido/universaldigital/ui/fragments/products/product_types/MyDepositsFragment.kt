@@ -17,6 +17,7 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.Cli
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
@@ -35,15 +36,16 @@ class MyDepositsFragment :
     }
 
     private fun initClientDepositsRv() {
+        binding.openDeposit.setOnClickListener { gotoWithSlide(R.id.mainDepositFragment) }
         binding.rvClientDeposits.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            homeDepositsAdapter =
-                HomeDepositsAdapter(this@MyDepositsFragment, ArrayList(), false)
+            homeDepositsAdapter = HomeDepositsAdapter(this@MyDepositsFragment, ArrayList(), false)
             adapter = homeDepositsAdapter
         }
         menuProductsViewModel.clientDeposit.observe(viewLifecycleOwner) {
             homeDepositsAdapter.setList(it as ArrayList<ClientDeposit>)
             binding.emptyView.isVisible = it.isEmpty()
+            binding.openDeposit.isVisible = it.isEmpty()
         }
         if (menuProductsViewModel.clientDeposit.value == null || menuProductsViewModel.clientDeposit.value!!.isEmpty()) {
             depositShimmer = showSkeleton(

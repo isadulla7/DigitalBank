@@ -120,12 +120,16 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
             binding.profileImage.alpha = 0.8f
             val ref = storageReference.child("images/$photoId")
             ref.putFile(filePath).addOnSuccessListener {
-                setProfilePhotoId(photoId)
-                binding.progressBar.visibility = View.GONE
-                binding.profileImage.alpha = 1f
+                if (binding != null) {
+                    setProfilePhotoId(photoId)
+                    binding.progressBar.visibility = View.GONE
+                    binding.profileImage.alpha = 1f
+                }
             }.addOnFailureListener { e ->
-                binding.progressBar.visibility = View.GONE
-                binding.profileImage.alpha = 1f
+                if (binding != null) {
+                    binding.progressBar.visibility = View.GONE
+                    binding.profileImage.alpha = 1f
+                }
                 showSnackbar(e.localizedMessage?.toString() ?: "")
             }
         } catch (e: Exception) {

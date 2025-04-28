@@ -1048,7 +1048,7 @@
     <string name="enable_shaking_action">Enable shaking action</string>
     <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
     <string name="rooted_device_not_allowed">Har qanday firibgarlikning oldini olish va ma\'lumotlaringizni xavfsiz saqlash uchun ilovadan ushbu qurilmada foydalanishga ruxsat berilmagan! Qurilma root qilingan bo‘lishi mumkin</string>
-    <string name="card_for_credit">"Card for acceptance "</string>
+    <string name="card_for_credit">Card for acceptance</string>
     <string name="password_success">Muvaffaqiyatli</string>
     <string name="transfer_t0_wallet">Hamyonga o‘tkazma</string>
     <string name="select_phone_from_contact">Kontaktdan telefon raqam tanlang</string>
@@ -1066,4 +1066,7 @@
     <string name="selected_filters">Tanlangan filtrlar</string>
     <string name="cannot_withdraw_percents">Ushbu turdagi deposit uchun hisoblangan foizlarni yechib olish mumkin emas!</string>
     <string name="this_function_only_working_with_online_deposit">Bu funksionallik faqatgina onlayn omonatda mavjud.</string>
+    <string name="goto_settings_and_allow_permission">Bu funksionallikni ishlatish uchun "Sozlamalar" bo‘limidan kameraga ruxsat berishingiz kerak</string>
+    <string name="empty_deposit_description">Bu jamg‘armalaringizni tejash yoki katta xarid uchun tejashning oson yo‘li.</string>
+    <string name="empty_credit_message">Uydan chiqmasdan kredit olish uchun murojaat qiling</string>
 </resources>

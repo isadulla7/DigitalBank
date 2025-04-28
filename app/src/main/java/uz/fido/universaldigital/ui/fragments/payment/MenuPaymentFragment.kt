@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -320,7 +319,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
         if (isGranted) {
             goto(R.id.qrPaymentFragment)
         } else {
-            Toast.makeText(requireContext(), "Go to settings and enable camera permission to use this feature", Toast.LENGTH_SHORT).show()
+            showSnackbar(getString(R.string.goto_settings_and_allow_permission))
         }
     }
 

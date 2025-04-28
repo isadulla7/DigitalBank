@@ -17,6 +17,7 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit.Cli
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
@@ -32,20 +33,19 @@ class MyDepositsServiceFragment : BaseFragment<FragmentMyDepositsServiceBinding,
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         initClientDepositsRv()
-
+        getSetOnClickListeners()
     }
 
     private fun initClientDepositsRv() {
-        binding.appBar.setOnBackButtonClickListener { pop() }
         binding.rvClientDeposits.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            homeDepositsAdapter =
-                HomeDepositsAdapter(this@MyDepositsServiceFragment, ArrayList(), false)
+            homeDepositsAdapter = HomeDepositsAdapter(this@MyDepositsServiceFragment, ArrayList(), false)
             adapter = homeDepositsAdapter
         }
         menuProductsViewModel.clientDeposit.observe(viewLifecycleOwner) {
             homeDepositsAdapter.setList(it as ArrayList<ClientDeposit>)
             binding.emptyView.isVisible = it.isEmpty()
+            binding.openDeposit.isVisible = it.isEmpty()
         }
         if (menuProductsViewModel.clientDeposit.value == null || menuProductsViewModel.clientDeposit.value!!.isEmpty()) {
             depositShimmer = showSkeleton(
@@ -56,6 +56,11 @@ class MyDepositsServiceFragment : BaseFragment<FragmentMyDepositsServiceBinding,
             )
             getDeposits()
         }
+    }
+
+    private fun getSetOnClickListeners() {
+        binding.openDeposit.setOnClickListener { gotoWithSlide(R.id.mainDepositFragment) }
+        binding.appBar.setOnBackButtonClickListener { pop() }
     }
 
     private fun getDeposits() {
@@ -69,7 +74,7 @@ class MyDepositsServiceFragment : BaseFragment<FragmentMyDepositsServiceBinding,
                 }
 
                 Status.ERROR -> {
-
+                    showSnackbar(it.message.toString())
                 }
             }
         }
