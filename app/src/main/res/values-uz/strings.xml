@@ -820,9 +820,9 @@
     <string name="eur_text">EUR</string>
     <string name="no_currency_cards">Valyuta kartalari mavjud emas</string>
     <string name="no_deposits">Sizda omonatlar mavjud emas</string>
-    <string name="you_can_open_deposit_by_clicking">Quyidagi tugmani bosish orqali siz omonat ochishingiz mumkin</string>
+    <string name="you_can_open_deposit_by_clicking">Bu jamg\'armalaringizni saqlab qolish yoki katta xarid uchun tejashning oson yo\'li.</string>
     <string name="no_credits">Sizda kreditlar mavjud emas</string>
-    <string name="you_can_get_credit_by_clicking">Quyidagi tugmani bosish orqali siz kredit olishingiz mumkin</string>
+    <string name="you_can_get_credit_by_clicking">Uydan chiqmasdan kredit olish uchun murojaat qilingn</string>
     <string name="home_page_widgets">Asosiy oynadagi vidjetlar</string>
     <string name="hidden">Yopiq</string>
     <string name="min_widget_size">Ko‘rsatiladigan vidjetlarning minimal soni 2</string>
@@ -1066,4 +1066,5 @@
     <string name="selected_filters">Tanlangan filtrlar</string>
     <string name="cannot_withdraw_percents">Ushbu turdagi deposit uchun hisoblangan foizlarni yechib olish mumkin emas!</string>
     <string name="this_function_only_working_with_online_deposit">Bu funksionallik faqatgina onlayn omonatda mavjud.</string>
+    <string name="camera_permission">Sozlamalarga o‘ting va ushbu funksiyadan foydalanish uchun kamera ruxsatini yoqing</string>
 </resources>

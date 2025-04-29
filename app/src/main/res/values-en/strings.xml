@@ -824,9 +824,9 @@
     <string name="eur_text">EUR</string>
     <string name="no_currency_cards">No currency cards available</string>
     <string name="no_deposits">You have no deposits</string>
-    <string name="you_can_open_deposit_by_clicking">You can open a deposit by clicking the button below</string>
+    <string name="you_can_open_deposit_by_clicking">This is an easy way to preserve your savings or save up for a large purchase.</string>
     <string name="no_credits">You have no credits</string>
-    <string name="you_can_get_credit_by_clicking">You can get credit by clicking the button below</string>
+    <string name="you_can_get_credit_by_clicking">Apply for a loan without leaving home.</string>
     <string name="home_page_widgets">Widgets on the home screen</string>
     <string name="hidden">Hidden</string>
     <string name="min_widget_size">The minimum number of displayed widgets is 2</string>
@@ -1063,7 +1063,8 @@
     <string name="attention">Attention</string>
     <string name="unable_to_get_profile_data">We were unable to retrieve your account information. Please contact your bank \n+998712001110</string>
     <string name="unable_to_get_passport_data">We were unable to retrieve your passport information. Please try again by entering your passport information.</string>
-    <string name="selected_filters">Tanlangan filtrlar</string>
-    <string name="cannot_withdraw_percents">Ushbu turdagi deposit uchun hisoblangan foizlarni yechib olish mumkin emas!</string>
-    <string name="this_function_only_working_with_online_deposit">Bu funksionallik faqatgina onlayn omonatda mavjud.</string>
+    <string name="selected_filters">Selected filters</string>
+    <string name="cannot_withdraw_percents">It is not possible to withdraw the accrued interest for this type of deposit!</string>
+    <string name="this_function_only_working_with_online_deposit">This functionality is only available for online deposits.</string>
+    <string name="camera_permission">Go to settings and enable camera permission to use this feature</string>
 </resources>
