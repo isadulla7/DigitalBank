@@ -35,28 +35,33 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
     DialogDepositPercentBinding::inflate, ClientDepositViewModel::class.java
 ) {
 
-    private lateinit var clientDeposit: ClientDeposit
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
+    private lateinit var clientDeposit: ClientDeposit
+
     private var accountHistoryAdapter: AccountHistoriesAdapter? = null
-    private var list = ArrayList<AccountHistory>()
+    private var skeletonScreen: SkeletonScreen? = null
     private var currentDate: String? = null
     private var dateBegin: String? = null
     private var dateEnd: String? = null
+
     private var dateSortList = ArrayList<AccountHistory>()
-    private var skeletonScreen: SkeletonScreen? = null
+    private var list = ArrayList<AccountHistory>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        clientDeposit = requireArguments().serializable<ClientDeposit>("client_deposit") as ClientDeposit
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.appBar.setOnBackButtonClickListener { pop() }
-        clientDeposit = arguments?.serializable<ClientDeposit>("client_deposit") as ClientDeposit
-        setDate()
+        initSetOnClickListeners()
+        initDefaultState()
         initDate()
-        recyclerView()
+        initHistoriesRecyclerView()
     }
 
-    private fun setDate() {
-        binding.btnEnter.isVisible = clientDeposit.withdrawInterest == "Y"
-        binding.etAmount.setText(Format.formatAmount((((clientDeposit.persSum ?: "0").toBigDecimal()) / BigDecimal("100")).toString()))
+    private fun initSetOnClickListeners() {
+        binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnEnter.setOnClickListener {
             if (clientDeposit.withdrawInterest == "Y") {
                 val bundle = Bundle()
@@ -70,7 +75,12 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
         }
     }
 
-    private fun recyclerView() {
+    private fun initDefaultState() {
+        binding.btnEnter.isVisible = clientDeposit.withdrawInterest == "Y"
+        binding.etAmount.setText(Format.formatAmount((((clientDeposit.persSum ?: "0").toBigDecimal()) / BigDecimal("100")).toString()))
+    }
+
+    private fun initHistoriesRecyclerView() {
         binding.list.apply {
             setHasFixedSize(true)
             val linerLayoutManager = LinearLayoutManager(context)
@@ -81,7 +91,8 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
                 }
             }
             accountHistoryAdapter = AccountHistoriesAdapter(Const.TYPE_DEPOSIT, list, clientDeposit) { accountHistory, s ->
-
+                val loanDetailsDialog = DialogInfoMonitoring(accountHistory, clientDeposit, s)
+                loanDetailsDialog.show(childFragmentManager, "")
             }
             adapter = accountHistoryAdapter
             addOnScrollListener(scrollListener)
@@ -115,14 +126,13 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
             skeletonScreen = showSkeleton(binding.list, accountHistoryAdapter!!, R.layout.shimmer_item_account_history)
         }
         viewModel.getAccountHistories(getClientToken(), model).observe(viewLifecycleOwner) {
-            if (page == 1)
-                skeletonScreen!!.hide()
+            if (page == 1) skeletonScreen?.hide()
             when (it.status) {
                 Status.SUCCESS -> {
                     list.addAll(it.data?.response ?: emptyList())
-                    emptyView()
-                    if (it.data!!.response.isNotEmpty())
+                    if (it.data!!.response.isNotEmpty()) {
                         addDateView(it.data!!.response)
+                    }
                 }
 
                 Status.ERROR -> {
@@ -140,24 +150,15 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
                 val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", 1)
                 dateSortList.add(accountHistory)
             }
-
-            val newlistDate = newDateFormat.format(simpleDateFormat.parse(dateSortList[dateSortList.size - 1].dateExecute).time)
-            val listDate = newDateFormat.format(simpleDateFormat.parse(it.dateExecute).time)
-
-            if (newlistDate != listDate) {
+            val newListDate = newDateFormat.format(simpleDateFormat.parse(dateSortList[dateSortList.size - 1].dateExecute.toString())?.time ?: "")
+            val listDate = newDateFormat.format(simpleDateFormat.parse(it.dateExecute.toString())?.time ?: "")
+            if (newListDate != listDate) {
                 val accountHistory = AccountHistory("", "", "", "", "", "", it.dateExecute, "", "", "", "", "", "", "", "", "", 1)
                 dateSortList.add(accountHistory)
             }
             dateSortList.add(it)
         }
         accountHistoryAdapter!!.setNewList(dateSortList)
-    }
-
-    private fun emptyView() {
-//        if (accountHistoryAdapter?.itemCount == 0) {
-//            binding.empty.visibility = View.VISIBLE
-//            binding.amountLin.visibility = View.GONE
-//        }
     }
 
 }

@@ -846,7 +846,7 @@
     <string name="you_dont_have_templates">Hali shablon yo‘q</string>
     <string name="template_operation">Shablon bilan ishlash</string>
     <string name="take_off">Yechib olish</string>
-    <string name="profit_per_year">Yillik rentabellik</string>
+    <string name="profit_per_year">Yillik foiz</string>
     <string name="deposit_edit">Omonat nomini o‘zgartirish</string>
     <string name="early_closing_of_the_deposit">Depozitni erta yopish</string>
     <string name="close_deposit">Omonatni yopish</string>

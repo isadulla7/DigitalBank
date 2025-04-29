@@ -110,25 +110,6 @@ object NetworkModule {
         .add(Keys.getDomainName(), Keys.getCertPin3())
         .build()
 
-    @BaseOkhttpClient
-    @Provides
-    fun provideOkhttpClient(
-        @ApplicationContext appContext: Context,
-        sslSocketFactory: SSLSocketFactory,
-        loggingInterceptor: HttpLoggingInterceptor,
-        swapKeyService: SwapKeyApiInterface,
-        apiInterface: dagger.Lazy<UserApiInterface>,
-    ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager())
-        .certificatePinner(certificatePinner)
-        .addInterceptor(HeaderInterceptor(context = appContext))
-        .addInterceptor(loggingInterceptor)
-        .addInterceptor(
-            AuthInterceptor(swapKeyService = swapKeyService, context = appContext, apiInterface)
-        ).addInterceptor(EncryptionInterceptor(appContext))
-        .addInterceptor(DecryptionInterceptor(appContext))
-        .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
-        .writeTimeout(180, TimeUnit.SECONDS)
-        .build()
 
     @SimpleClientRetrofit
     @Provides
@@ -141,6 +122,25 @@ object NetworkModule {
         baseUrl: String, @BaseOkhttpClient okHttpClient: OkHttpClient, gsonBuilder: Gson
     ): Retrofit = Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create(gsonBuilder)).baseUrl(baseUrl).build()
 
+    @BaseOkhttpClient
+    @Provides
+    fun provideOkhttpClient(
+        @ApplicationContext appContext: Context,
+        sslSocketFactory: SSLSocketFactory,
+        loggingInterceptor: HttpLoggingInterceptor,
+        swapKeyService: SwapKeyApiInterface,
+        apiInterface: dagger.Lazy<UserApiInterface>,
+    ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager())
+        .certificatePinner(certificatePinner)
+        .addInterceptor(HeaderInterceptor(context = appContext))
+        .addInterceptor(
+            AuthInterceptor(swapKeyService = swapKeyService, context = appContext, apiInterface)
+        ).addInterceptor(EncryptionInterceptor(appContext))
+        .addInterceptor(DecryptionInterceptor(appContext))
+        .addInterceptor(loggingInterceptor)
+        .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
+        .writeTimeout(180, TimeUnit.SECONDS)
+        .build()
     /*
     *   MY ID RETROFIT CLIENT
     */

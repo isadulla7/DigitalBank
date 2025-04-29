@@ -851,7 +851,7 @@
     <string name="you_dont_have_templates">Шаблонов пока нет</string>
     <string name="template_operation">Операция с шаблоном</string>
     <string name="take_off">Снять</string>
-    <string name="profit_per_year">\"Доходность в год</string>
+    <string name="profit_per_year">Доходность в год</string>
     <string name="deposit_edit">Переименовать депозит</string>
     <string name="early_closing_of_the_deposit">Досрочное закрытие вклад</string>
     <string name="close_deposit">Закрыть вклад</string>
