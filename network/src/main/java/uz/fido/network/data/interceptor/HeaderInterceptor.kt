@@ -1,6 +1,7 @@
 package uz.fido.network.data.interceptor
 
 import android.content.Context
+import okhttp3.HttpUrl.Companion.toHttpUrl
 import okhttp3.Interceptor
 import okhttp3.Request
 import okhttp3.Response
@@ -17,13 +18,21 @@ import java.util.Locale
 class HeaderInterceptor(private val context: Context) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
-        val request: Request =
+        val request: Request = if (chain.request().url == "https://ra.ubank.uz/api/USER_OBJ_LIST".toHttpUrl()) {
+            chain.request().newBuilder()
+                .header(HEADER_APP_VERSION, context.getFromSecureStore(Const.VERSION_CODE))
+                .header(HEADER_APP_LANGUAGE, language)
+                .header(HEADER_DEVICE_TYPE, DEVICE)
+//                .header(HEADER_DEVICE_CODE, getFromSecureStore(Const.DEVICE_CODE))
+                .build()
+        } else {
             chain.request().newBuilder()
                 .header(HEADER_APP_VERSION, context.getFromSecureStore(Const.VERSION_CODE))
                 .header(HEADER_APP_LANGUAGE, language)
                 .header(HEADER_DEVICE_TYPE, DEVICE)
                 .header(HEADER_DEVICE_CODE, getFromSecureStore(Const.DEVICE_CODE))
                 .build()
+        }
         return chain.proceed(request)
     }
 

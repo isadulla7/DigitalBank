@@ -32,6 +32,8 @@ object SecurityCheck {
         return false
     }
 
+    fun Activity.isRunningOnEmulator(): Boolean = EmulatorCheck(this).isProbablyAnEmulator()
+
     fun isFromEmulator(): Boolean {
         return (Build.FINGERPRINT.startsWith("google/sdk_gphone_")
                 && Build.FINGERPRINT.endsWith(":user/release-keys")
@@ -47,60 +49,6 @@ object SecurityCheck {
                 || Build.BRAND.startsWith("generic") && Build.DEVICE.startsWith("generic")
                 || Build.PRODUCT == "google_sdk"
                 || SystemProperties.getProp("ro.kernel.qemu") == "1"
-    }
-
-    fun Activity.isRunningOnEmulator(): Boolean = EmulatorCheck(this).isProbablyAnEmulator()
-
-    fun Activity.isPhoneRooted(): Boolean {
-        return RootBeer(this).isRooted || checkRootedFiles(this) || checkSuExists(this) || checkBuildTags(this)
-    }
-
-    private fun checkSuExists(context: Context): Boolean {
-        try {
-            val process = Runtime.getRuntime().exec(arrayOf("/system/xbin/which", "su"))
-            val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
-            val result = bufferedReader.readLine() != null
-            if (result) {
-                logRootToCrashlytics("checkSuExists", bufferedReader.readLine().toString(), context)
-                return true
-            } else {
-                return false
-            }
-        } catch (e: Exception) {
-            return false
-        }
-    }
-
-    private fun checkRootedFiles(context: Context): Boolean {
-        val paths = arrayOf(
-            "/system/app/Superuser.apk",
-            "/sbin/su",
-            "/system/bin/su",
-            "/system/xbin/su",
-            "/data/local/xbin/su",
-            "/data/local/bin/su",
-            "/system/sd/xbin/su",
-            "/system/bin/failsafe/su",
-            "/data/local/su"
-        )
-        for (path in paths) {
-            if (File(path).exists()) {
-                logRootToCrashlytics("checkRootedFiles", path, context)
-                return true
-            }
-        }
-        return false
-    }
-
-    private fun checkBuildTags(context: Context): Boolean {
-        val buildTags = Build.TAGS
-        val result = buildTags != null && buildTags.contains("test-keys")
-        if (result) {
-            logRootToCrashlytics("checkBuildTags", buildTags, context)
-            return true
-        } else {
-            return false
-        }
     }
 
     object SystemProperties {
@@ -130,6 +78,58 @@ object SecurityCheck {
                 process?.destroy()
             }
             return defaultResult
+        }
+    }
+
+    fun Activity.isPhoneRooted(): Boolean {
+        return RootBeer(this).isRooted || checkRootedFiles(this) || checkSuExists(this) || checkBuildTags(this)
+    }
+
+    private fun checkRootedFiles(context: Context): Boolean {
+        val paths = arrayOf(
+            "/system/app/Superuser.apk",
+            "/sbin/su",
+            "/system/bin/su",
+            "/system/xbin/su",
+            "/data/local/xbin/su",
+            "/data/local/bin/su",
+            "/system/sd/xbin/su",
+            "/system/bin/failsafe/su",
+            "/data/local/su"
+        )
+        for (path in paths) {
+            if (File(path).exists()) {
+                logRootToCrashlytics("checkRootedFiles", path, context)
+                return true
+            }
+        }
+        return false
+    }
+
+    private fun checkSuExists(context: Context): Boolean {
+        try {
+            val process = Runtime.getRuntime().exec(arrayOf("/system/xbin/which", "su"))
+            val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+            val result = bufferedReader.readLine() != null
+            if (result) {
+                logRootToCrashlytics("checkSuExists", bufferedReader.readLine().toString(), context)
+                return true
+            } else {
+                return false
+            }
+        } catch (e: Exception) {
+            return false
+        }
+    }
+
+    private fun checkBuildTags(context: Context): Boolean {
+        val buildTags = Build.TAGS
+        val result = buildTags != null && buildTags.contains("test-keys")
+        if (result) {
+            logRootToCrashlytics("checkBuildTags", buildTags, context)
+            return true
+        } else {
+            return false
         }
     }
 

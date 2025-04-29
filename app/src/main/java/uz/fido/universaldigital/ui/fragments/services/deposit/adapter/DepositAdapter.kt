@@ -1,5 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.deposit.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -16,12 +17,13 @@ class DepositAdapter(
 ) : ListAdapter<Deposit, DepositAdapter.DepositVh>(CallBackDeposit()) {
 
     inner class DepositVh(private val binding: ItemDepositProductBinding) : RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun onBind(item: Deposit) {
             binding.apply {
                 depositName.text = item.dep_name
                 depositPercent.text = item.percent + "%"
                 depositTerm.text = Format().formattedDepositExpire(itemView.context, item.keeping_time)
-                depositAmount.text = Format().formattedDepositAmount(itemView.context, item.min_sum.toString())
+                depositAmount.text = Format().formattedDepositAmount(itemView.context, item.min_sum.toString(), item.currency_code)
                 depositDescription.text = item.description
                 depositImage.load(loadDepositImage(item.dep_id))
                 itemView.setOnClickListener {

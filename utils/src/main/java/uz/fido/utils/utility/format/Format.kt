@@ -563,17 +563,27 @@ class Format {
         } else return context.getString(R.string.indefinite)
     }
 
-    fun formattedDepositAmount(context: Context, amount: String): String {
+    fun formattedDepositAmount(context: Context, amount: String, currencyCode: String): String {
         if (amount == "0") return context.getString(
             R.string.deposit_min_amount,
             "0"
-        ) + " " + context.getString(R.string.sum)
+        ) + " " + getCurrencyCharNew(currencyCode)
         if (amount.length > 2) return context.getString(
             R.string.deposit_min_amount, formatAmount(
                 amount.toBigDecimal().divide(100.toBigDecimal()).toString()
             )
-        ) + " " + context.getString(R.string.sum)
+        ) + " " + getCurrencyCharNew(currencyCode)
         return ""
+    }
+
+    private fun getCurrencyCharNew(currencyCode: String): String {
+        return when (currencyCode) {
+            CURRENCY_CODE_UZS -> CURRENCY_CHAR_UZS
+            CURRENCY_CODE_USD -> CURRENCY_CODE_USD
+            CURRENCY_CODE_RUB -> CURRENCY_CHAR_RUB
+            CURRENCY_CODE_EUR -> CURRENCY_CHAR_EUR
+            else -> currencyCode
+        }
     }
 
     fun percentAmount(amount: String, percent: String?): String {

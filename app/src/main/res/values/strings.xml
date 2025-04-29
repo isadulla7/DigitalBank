@@ -828,9 +828,9 @@
     <string name="eur_text">EUR</string>
     <string name="no_currency_cards">Валютные карты недоступны</string>
     <string name="no_deposits">У вас нет вкладов</string>
-    <string name="you_can_open_deposit_by_clicking">Это простой способ сохранить свои сбережения или накопить на крупную покупку.</string>
+    <string name="you_can_open_deposit_by_clicking">Вы можете открыть вклад, нажав кнопку ниже</string>
     <string name="no_credits">У вас нет кредитов</string>
-    <string name="you_can_get_credit_by_clicking">Оформите кредит не выходя из дома.</string>
+    <string name="you_can_get_credit_by_clicking">Вы можете получить кредит, нажав кнопку ниже</string>
     <string name="home_page_widgets">Виджеты на главном экране</string>
     <string name="hidden">Скрытые</string>
     <string name="min_widget_size">Минимальное количество отображаемых виджетов — 2</string>
@@ -1066,7 +1066,9 @@
     <string name="unable_to_get_profile_data">Не удалось получить ваши учетные данные. Пожалуйста, свяжитесь с банком \n+998712001110.</string>
     <string name="unable_to_get_passport_data">Не удалось получить ваши паспортные данные. Попробуйте войти еще раз, используя свои паспортные данные.</string>
     <string name="selected_filters">Выбранные фильтры</string>
-    <string name="cannot_withdraw_percents">Вы не можете снять проценты, накопленные по этому типу депозита!</string>
-    <string name="this_function_only_working_with_online_deposit">Эта функция доступна только при онлайн-депозите.</string>
-    <string name="camera_permission">Перейдите в настройки и включите разрешение камеры, чтобы использовать эту функцию</string>
+    <string name="cannot_withdraw_percents">Этот вид депозита не позволяет снимать начисленные проценты!</string>
+    <string name="this_function_only_working_with_online_deposit">Эта функция доступна только в онлайн-вкладе.</string>
+    <string name="goto_settings_and_allow_permission">Перейдите в настройки и включите разрешение на камеру, чтобы использовать эту функцию.</string>
+    <string name="empty_deposit_description">Это простой способ сохранить свои сбережения или накопить на крупную покупку.</string>
+    <string name="empty_credit_message">Оформите кредит не выходя из дома.</string>
 </resources>

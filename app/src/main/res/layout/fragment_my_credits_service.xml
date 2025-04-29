@@ -33,9 +33,22 @@
         android:layout_height="0dp"
         android:background="@color/backgroundColor"
         android:visibility="gone"
-        app:ev_desc="@string/you_can_get_credit_by_clicking"
+        app:ev_desc="@string/empty_credit_message"
         app:ev_title="@string/no_credits"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/app_bar" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/get_loan"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_margin="16dp"
+        android:text="@string/get_credit"
+        android:textColor="@color/frozenWhite"
+        android:textSize="16dp"
+        android:visibility="gone"
+        app:cornerRadius="12dp"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

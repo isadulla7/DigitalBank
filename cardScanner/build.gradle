@@ -42,16 +42,3 @@ dependencies {
     implementation(libs.androidx.constraintlayout)
     implementation(libs.org.tensorflow.tensorflow.lite)
 }
-
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-                groupId = "com.github.yusufbekibragimov"
-                artifactId = "cardscan-base"
-                version = "1.2"
-            }
-        }
-    }
-}

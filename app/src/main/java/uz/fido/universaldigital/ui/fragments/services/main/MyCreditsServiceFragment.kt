@@ -17,36 +17,35 @@ import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCre
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class MyCreditsServiceFragment :
-    BaseFragment<FragmentMyCreditsServiceBinding, MenuProductsViewModel>(
-        FragmentMyCreditsServiceBinding::inflate, MenuProductsViewModel::class.java
-    ) {
+class MyCreditsServiceFragment : BaseFragment<FragmentMyCreditsServiceBinding, MenuProductsViewModel>(
+    FragmentMyCreditsServiceBinding::inflate, MenuProductsViewModel::class.java
+) {
 
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
-
-    private lateinit var homeCreditsAdapter: HomeCreditsAdapter
     private var creditShimmer: SkeletonScreen? = null
+    private lateinit var homeCreditsAdapter: HomeCreditsAdapter
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         initClientCreditsRv()
+        getSetOnClickListeners()
     }
 
     private fun initClientCreditsRv() {
-        binding.appBar.setOnBackButtonClickListener { pop() }
         binding.rvClientCredits.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            homeCreditsAdapter =
-                HomeCreditsAdapter(this@MyCreditsServiceFragment, ArrayList(), false)
+            homeCreditsAdapter = HomeCreditsAdapter(this@MyCreditsServiceFragment, ArrayList(), false)
             adapter = homeCreditsAdapter
         }
         menuProductsViewModel.creditProduct.observe(viewLifecycleOwner) {
             homeCreditsAdapter.setList(it as ArrayList<CreditProduct>)
             binding.emptyView.isVisible = it.isEmpty()
+            binding.getLoan.isVisible = it.isEmpty()
         }
         if (menuProductsViewModel.creditProduct.value == null || menuProductsViewModel.creditProduct.value!!.isEmpty()) {
             creditShimmer = showSkeleton(
@@ -57,6 +56,11 @@ class MyCreditsServiceFragment :
             )
             getCreditProducts()
         }
+    }
+
+    private fun getSetOnClickListeners() {
+        binding.getLoan.setOnClickListener { gotoWithSlide(R.id.loanGroupListFragment) }
+        binding.appBar.setOnBackButtonClickListener { pop() }
     }
 
     private fun getCreditProducts() {
