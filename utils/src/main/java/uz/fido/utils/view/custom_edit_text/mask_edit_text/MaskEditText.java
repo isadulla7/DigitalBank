@@ -354,8 +354,5 @@ public class MaskEditText extends TextInputEditText {
         super.finalize();
     }
 
-    public void setDrawableClickListener(DrawableClickListener listener) {
-        this.clickListener = listener;
-    }
 }
 

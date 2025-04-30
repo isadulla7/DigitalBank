@@ -116,7 +116,7 @@
                     android:digits="1234567890/"
                     android:drawablePadding="12sp"
                     android:imeOptions="actionNext"
-                    android:inputType="numberDecimal"
+                    android:inputType="text"
                     android:maxLength="5"
                     android:maxLines="1"
                     android:singleLine="true"

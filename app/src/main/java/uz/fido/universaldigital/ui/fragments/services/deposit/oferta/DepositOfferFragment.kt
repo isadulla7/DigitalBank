@@ -37,6 +37,7 @@ class DepositOfferFragment : BaseSimpleFragment<FragmentDepositOfertaBinding>
                     "isSum" to arguments?.getBoolean("isSum")
                 )
             )
+            binding.offerCheckbox.isChecked = false
         }
         binding.offerCheckbox.setOnCheckedChangeListener { _, isChecked ->
             binding.btnContinue.isEnabled(isChecked)
@@ -56,6 +57,7 @@ class DepositOfferFragment : BaseSimpleFragment<FragmentDepositOfertaBinding>
         }
         binding.webView.loadUrl(website)
     }
+
 }
 
 

@@ -50,6 +50,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
 
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
     private lateinit var dialogInfo: UzCardMonitoringDetailsDialog
+
     private var operationType = 2
     private var dateBegin: String = ""
     private var dateEnd: String = ""
@@ -57,7 +58,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
     private var timeType = ""
     private var filter: Boolean = false
     private var totalList: ArrayList<ListItem> = ArrayList()
-    private val uzcardMonitoringAdapter by lazy {
+    private val uzCardMonitoringAdapter by lazy {
         UzcardMonitoringAdapter(
             totalList,
             this
@@ -78,9 +79,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
         initScrollListener()
         createMonitoringAdapter()
         checkSaveItem()
-        //checkFilter()
         onClickView()
-
     }
 
     private fun setImageFirst() {
@@ -88,7 +87,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
     }
 
     private fun checkSaveItem() {
-        getUzCardMonitoringList(1, operationType)
+        getUzCardMonitoringList(operationType)
     }
 
     private fun getFilterUzCardMonitoringList(page: Int) {
@@ -131,7 +130,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
                 }
 
                 Status.ERROR -> {
-                    uzcardMonitoringAdapter.removeList()
+                    uzCardMonitoringAdapter.removeList()
                     binding.consError.visibility = View.VISIBLE
                 }
             }
@@ -172,8 +171,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
             totalList = ArrayList()
             binding.consError.visibility = View.GONE
             binding.shimmerView.visibility = View.VISIBLE
-            getUzCardMonitoringList(page = 1, operationType)
-
+            getUzCardMonitoringList(operationType)
         }
     }
 
@@ -199,15 +197,15 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
 
     private fun createMonitoringAdapter() {
         binding.rec.apply {
-            adapter = uzcardMonitoringAdapter
+            adapter = uzCardMonitoringAdapter
             setHasFixedSize(true)
             layoutManager = linearLayoutManager
             addOnScrollListener(scrollListener)
-            addItemDecoration(StickyHeaderDecoration(uzcardMonitoringAdapter))
+            addItemDecoration(StickyHeaderDecoration(uzCardMonitoringAdapter))
         }
     }
 
-    private fun getUzCardMonitoringList(page: Int, operationType: Int) {
+    private fun getUzCardMonitoringList(operationType: Int) {
         if (cardList.isNotEmpty()) {
             val skeletonScreen = showSkeleton(
                 binding.shimmerView,
@@ -221,8 +219,8 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
                 UzcardMonitoringRequest(
                     startDate = dateBegin,
                     endDate = dateEnd,
-                    pageNumber = page.toString(),
-                    pageItemSize = "2",
+                    pageNumber = "0",
+                    pageItemSize = "20",
                     selectedCards = cardList
                 )
             ).observe(viewLifecycleOwner) { resources ->
@@ -236,7 +234,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
                     }
 
                     Status.ERROR -> {
-                        uzcardMonitoringAdapter.removeList()
+                        uzCardMonitoringAdapter.removeList()
                         binding.consError.visibility = View.VISIBLE
                     }
                 }
@@ -273,7 +271,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
                 }
 
                 Status.ERROR -> {
-                    uzcardMonitoringAdapter.removeList()
+                    uzCardMonitoringAdapter.removeList()
                     binding.consError.visibility = View.VISIBLE
                 }
             }
@@ -333,7 +331,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
     }
 
     private fun setAdapter(totalList: ArrayList<ListItem>) {
-        uzcardMonitoringAdapter.setListAdapter(totalList)
+        uzCardMonitoringAdapter.setListAdapter(totalList)
         binding.rec.scheduleLayoutAnimation()
         emptyView()
 

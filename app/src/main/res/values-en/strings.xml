@@ -494,7 +494,7 @@
     <string name="rm_from">from</string>
     <string name="collected">Collected</string>
     <string name="collecting">Collecting</string>
-    <string name="history_is_empty">Translation history is empty</string>
+    <string name="history_is_empty">Transaction history is empty</string>
     <string name="latest_translations">Your \nlatest translations will be displayed here</string>
     <string name="uzs">UZS</string>
     <string name="canselled">Refused</string>

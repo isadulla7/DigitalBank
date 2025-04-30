@@ -138,7 +138,10 @@ class LocalMonitoringDetailsDialog(
                 )
             )
         }
-        addView(getString(uz.fido.universaldigital.R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(localMonitoring.amount)) + " ${Format.currencyCode(localMonitoring.currencyCode)}")
+        addView(
+            getString(uz.fido.universaldigital.R.string.amount),
+            Format.formatAmount(Format.convertFromTiynDivide(localMonitoring.amount)) + " ${Format.currencyCode(localMonitoring.currencyCode)}"
+        )
         val state = if (localMonitoring.stateId == "1") {
             getString(uz.fido.universaldigital.R.string.successfully)
         } else {

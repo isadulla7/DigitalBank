@@ -85,7 +85,7 @@ class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, Req
             binding.btnContinue.setProgress(true)
             val url = "https://universaldigitalbank.page.link/qrcard?cardNumber=${receiverCard?.object_value}&amount=${
                 Format.sendFormat(binding.etAmount.text.toString())
-            }&objectId=${receiverCard?.object_id}&comment=${binding.etComment.text.toString()}"
+            }&objectId=${receiverCard?.object_id}"
             Firebase.dynamicLinks.shortLinkAsync {
                 link = url.toUri()
                 domainUriPrefix = "https://universaldigitalbank.page.link"

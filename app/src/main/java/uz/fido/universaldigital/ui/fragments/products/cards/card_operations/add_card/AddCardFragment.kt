@@ -100,9 +100,9 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
             editText.doAfterTextChanged {
                 var isTrueCard = true
                 val et1 = binding.cardNumber.text.toString().trim().replace(" ", "")
-                val et2 = binding.cardExpire.text.toString().trim().replace("/", "")
+                val et2 = binding.cardExpire.text.toString().trim()
                 val et3 = binding.cardName.text.toString()
-                if (et2.length > 1) {
+                if (et2.isNotEmpty()) {
                     requireContext().checkForExpireDate(
                         binding.cardExpire.text.toString(),
                         binding.cardExpire,
@@ -217,13 +217,12 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
         openCameraForCardRead()
     }
 
-    private val activityNfcLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                binding.cardNumber.setText(result.data?.extras?.getString("card_number"))
-                binding.cardExpire.setText(result.data?.extras?.getString("card_expire"))
-            }
+    private val activityNfcLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            binding.cardNumber.setText(result.data?.extras?.getString("card_number"))
+            binding.cardExpire.setText(result.data?.extras?.getString("card_expire"))
         }
+    }
 
     private fun initCardBgViewPager() {
         val cardBgAdapter = CardBackgroundAdapter(requireContext(), getCardBackgroundList(), this)
