@@ -191,7 +191,7 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
             binding.shimmerView.visibility = View.GONE
             binding.rec.visibility = View.GONE
             binding.layoutEmpty.visibility = View.VISIBLE
-            binding.layoutEmpty.findViewById<TextViewMedium>(R.id.title).text = getString(R.string.card_list_no)
+            binding.layoutEmpty.findViewById<TextViewMedium>(R.id.title).text = getString(R.string.you_have_no_wallets)
         }
     }
 

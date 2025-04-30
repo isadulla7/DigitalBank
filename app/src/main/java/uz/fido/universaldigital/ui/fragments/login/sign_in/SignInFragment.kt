@@ -23,7 +23,6 @@ import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragmen
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment.Companion.SMS_OPERATION_FORGOT_PASSWORD
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.state.DeviceIdentifyState
 import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpFragment
-import uz.fido.universaldigital.ui.utils.extensions.CustomPasswordTransformation
 import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.keys.Keys
@@ -115,7 +114,6 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     }
 
     private fun initTextChangeListeners() {
-        binding.etPassword.transformationMethod = CustomPasswordTransformation()
         binding.etPassword.addTextChangedListener { password ->
             binding.btnContinue.isEnabled(password.toString().length > 7 && phoneNumberFormatted().length == 12)
         }

@@ -17,7 +17,7 @@
         android:id="@+id/phone_number_layout"
         style="@style/EditTextInputLayoutStyle"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="56dp"
         android:layout_marginHorizontal="16dp"
         android:layout_marginTop="24dp"
         android:hint="@string/phone_number"

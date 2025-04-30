@@ -1071,4 +1071,5 @@
     <string name="goto_settings_and_allow_permission">Перейдите в настройки и включите разрешение на камеру, чтобы использовать эту функцию.</string>
     <string name="empty_deposit_description">Это простой способ сохранить свои сбережения или накопить на крупную покупку.</string>
     <string name="empty_credit_message">Оформите кредит не выходя из дома.</string>
+    <string name="you_have_no_wallets">У вас нет кошельков</string>
 </resources>

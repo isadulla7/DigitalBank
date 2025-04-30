@@ -900,7 +900,7 @@
     <string name="bank_product_1">Yuksalish 23%</string>
     <string name="bank_product_2">Turizm 32%</string>
     <string name="bank_product_3">Yubiley 22%</string>
-    <string name="empty_goal_title">Your latest translations\nwill be displayed here</string>
+    <string name="empty_goal_title">Your latest transactions\nwill be displayed here</string>
     <string name="insufficient">Insufficient funds</string>
     <string name="min_amount_500">Minimum amount 500 sum</string>
     <string name="write_of_from_the_target">Write off from the target</string>
@@ -1069,4 +1069,5 @@
     <string name="goto_settings_and_allow_permission">Go to settings and enable camera permission to use this feature</string>
     <string name="empty_deposit_description">This is an easy way to preserve your savings or save up for a large purchase.</string>
     <string name="empty_credit_message">Apply for a loan without leaving home.</string>
+    <string name="you_have_no_wallets">You have no wallets</string>
 </resources>
