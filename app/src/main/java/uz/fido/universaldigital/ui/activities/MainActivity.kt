@@ -14,10 +14,13 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
+import kotlinx.coroutines.launch
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivityMainBinding
@@ -49,6 +52,7 @@ import uz.fido.universaldigital.ui.utils.extensions.isNewDesign
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.const.Const
 import uz.fido.utils.internet_checker.InternetConnectionChecker
+import uz.fido.utils.internet_checker.InternetConnectionObserver
 import uz.fido.utils.internet_checker.NoConnectionDialog
 import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.security.saveToSecureStore
@@ -66,7 +70,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
     private lateinit var updateChecker: UpdateChecker
     private lateinit var shakeDetectionService: ShakeDetectionService
     private val viewModel: SeasonViewModel by viewModels()
-
+    private lateinit var internetObserver: InternetConnectionObserver
     private var noConnectionDialog: NoConnectionDialog? = null
     private var isStop = false
 
@@ -84,9 +88,11 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        internetObserver = InternetConnectionObserver(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
         shakeDetectionService = ShakeDetectionService(this, this)
         shakeDetectionService.start()
+        internetListener()
 
         setContentView(binding.root)
         initBottomNavigationMenuItems()
@@ -166,7 +172,6 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
     @SuppressLint("UnspecifiedRegisterReceiverFlag")
     override fun onResume() {
         super.onResume()
-        internetListener()
         try {
             startService(Intent(this, AudioModeService::class.java))
             shakeDetectionService.start()
@@ -231,6 +236,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
 
     override fun onStop() {
         super.onStop()
+        internetObserver.unregister()
         pausedMillis = Calendar.getInstance().timeInMillis
         isStop = true
     }
@@ -264,25 +270,31 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
 
     private fun internetListener() {
         try {
-            InternetConnectionChecker(this).observe(this) { isConnected ->
-                if (isConnected) {
-                    if (isActive()) {
-                        if (noConnectionDialog != null) {
+            lifecycleScope.launch {
+                repeatOnLifecycle(Lifecycle.State.STARTED) {
+                    internetObserver.connectionFlow.collect { isConnected ->
+                        if (isConnected) {
                             noConnectionDialog?.dismissAllowingStateLoss()
                             noConnectionDialog = null
+                        } else if (!this@MainActivity.isStop && isActive()) {
+                            if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
+                                noConnectionDialog = NoConnectionDialog()
+                                noConnectionDialog?.show(supportFragmentManager, "")
+                            }
                         }
-                    }
-                } else if (!this@MainActivity.isStop && isActive()) {
-                    if (lifecycle.currentState.isAtLeast(Lifecycle.State.RESUMED)) {
-                        noConnectionDialog = NoConnectionDialog()
-                        noConnectionDialog?.show(supportFragmentManager, "")
                     }
                 }
             }
-        } catch (e: Exception) {
+        }catch (e:Exception){
             recordException(e, ::internetListener.name)
         }
     }
+
+    override fun onStart() {
+        super.onStart()
+        internetObserver.register()
+    }
+
 
     private val requestPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
