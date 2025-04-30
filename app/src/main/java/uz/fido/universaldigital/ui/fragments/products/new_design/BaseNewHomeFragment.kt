@@ -23,6 +23,8 @@ import io.paperdb.Paper
 import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.my_house.MyHouseGroup
+import uz.fido.network.domain.model.news.GetNotificationsRequest
+import uz.fido.network.domain.model.news.Notification
 import uz.fido.network.domain.model.template.GetTemplateListRequest
 import uz.fido.network.domain.model.template.GetTemplateRequest
 import uz.fido.network.domain.model.template.Template
@@ -63,6 +65,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     lateinit var binding: FragmentMenuNewHomeBinding
     private val utilsViewModel: UtilsViewModel by activityViewModels()
     val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
+    private var notificationList = arrayListOf<Notification>()
     var mask = "#### #### #### ####"
     var typeCurrent = true
     var container: ViewGroup? = null
@@ -77,10 +80,12 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     }
 
     fun initWidgets() {
+        setNotification()
         cardAndPhoneLayout()
         initFastAccessLayout()
         initHomeTemplates()
         initMyHome()
+
     }
 
     private fun cardAndPhoneLayout() {
@@ -615,5 +620,54 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         bundle.putInt(PaymentFragment.PAYMENT_OPERATION, PaymentFragment.PAYMENT_OPERATION_PAYMENT)
         goto(R.id.paymentFragment, bundle)
     }
+
+    private fun getNotification() {
+        menuProductsViewModel.getNotifications(
+            getClientToken(), GetNotificationsRequest(
+                page_number = "0",
+                page_item_size = "10"
+            )
+        ).observe(viewLifecycleOwner) { resource ->
+            when (resource.status) {
+                Status.SUCCESS -> {
+                    val list = resource.data?.notifications?.filter { it.is_read == "N" } ?: emptyList()
+                    val arraylist = arrayListOf<Notification>()
+                    arraylist.addAll(list)
+                    notificationList.addAll(arraylist)
+                    menuProductsViewModel.setNotificationList(arraylist)
+                    checkNotification()
+                }
+
+                Status.ERROR -> {}
+            }
+        }
+
+    }
+    private fun checkNotification() {
+        if (notificationList.isNotEmpty()) {
+            binding.notificationItem.text = notificationList.size.toString()
+            binding.notificationItem.visibility = View.VISIBLE
+        } else {
+            binding.notificationItem.visibility = View.GONE
+        }
+    }
+
+    private fun setNotification() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            menuProductsViewModel.notification.collect { item ->
+                if (item.isEmpty()) {
+                    try {
+                        getNotification()
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+                } else {
+                    notificationList = item
+                    checkNotification()
+                }
+            }
+        }
+    }
+
 
 }
