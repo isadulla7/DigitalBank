@@ -14,6 +14,7 @@ import uz.fido.universaldigital.databinding.FragmentChangePasswordBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.saveUserQwerty
+import uz.fido.universaldigital.ui.utils.extensions.CustomPasswordTransformation
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.encryptPassword
@@ -66,6 +67,9 @@ class ChangePasswordFragment : BaseFragment<FragmentChangePasswordBinding, Resto
     }
 
     private fun initDefaults() {
+        binding.etPassword.transformationMethod = CustomPasswordTransformation()
+        binding.etOldPassword.transformationMethod = CustomPasswordTransformation()
+        binding.etRepeatPassword.transformationMethod = CustomPasswordTransformation()
         when (operation) {
             CHANGE_PASSWORD -> {
                 binding.oldPasswordLayout.visibility = View.VISIBLE
