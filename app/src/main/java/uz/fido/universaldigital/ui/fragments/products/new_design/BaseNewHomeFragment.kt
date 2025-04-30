@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -137,7 +138,6 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             }
         }
         val maskTextWatcher = object : DoAfterTextWatcher() {
-
             private var isUpdating = false
             override fun afterTextChanged(s: Editable?) {
                 if (isUpdating) return
@@ -576,13 +576,14 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
 
     private fun pickPhoneNumberFromContact(contactQuery: Cursor?) {
         try {
-            val phoneNumber: String
+            var phoneNumber: String
             if (contactQuery != null && contactQuery.moveToFirst()) {
                 val numberIndex: Int =
                     contactQuery.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
                 phoneNumber = contactQuery.getString(numberIndex)
                 if (getFormattedContact(phoneNumber).isNotEmpty()) {
                     if (typeCurrent) {
+                        phoneNumber=getFormattedContact(phoneNumber)
                         goto(R.id.transferByPhoneFragment, bundleOf(Const.CARD_NUMBER to phoneNumber))
                     } else {
                         mobilePayment(phoneNumber)

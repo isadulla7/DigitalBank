@@ -74,6 +74,7 @@ fun getFormattedContact(phoneNumber: String): String {
     return when {
         formatted.startsWith("+998") && formatted.length == 13 -> formatted
         formatted.startsWith("998") && formatted.length == 12 -> "+$formatted"
+       // !(formatted.startsWith("+998") || !formatted.startsWith("998")) && formatted.length == 9 -> "+998$formatted"
         formatted.length == 9 -> "+998$formatted"
         else -> ""
     }
