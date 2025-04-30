@@ -1,13 +1,16 @@
 package uz.fido.universaldigital.ui.fragments.login.sign_up
 
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
+import uz.fido.network.data.interceptor.tryMakeToast
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.BaseResponse
@@ -53,6 +56,7 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
 
     private fun setMask() {
         binding.etPhoneNumber.setText("+998")
+        pasteText()
         binding.etPhoneNumber.addTextChangedListener(object : TextWatcher {
             private var isEditing = false
             private var lastText = ""
@@ -79,6 +83,32 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
             override fun afterTextChanged(s: Editable?) {
             }
         })
+    }
+
+    private fun pasteText() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            binding.etPhoneNumber.setOnReceiveContentListener(arrayOf("text/plain")){ _, payload ->
+                try {
+                    val pastedText = payload.clip.getItemAt(0).text
+                    var digitsOnly = pastedText.filter { it.isDigit() }
+                    if (digitsOnly.startsWith("998")) {
+                        digitsOnly = digitsOnly.removePrefix("998")
+                    }
+                    val formattedNumber = if (digitsOnly.length >= 9) {
+                        "+998 ${digitsOnly.substring(0,2)} ${digitsOnly.substring(2,5)} ${digitsOnly.substring(5,7)} ${digitsOnly.substring(7,9)}"
+                    } else {
+                        "+998 $digitsOnly"
+                    }
+
+                    binding.etPhoneNumber.setText(formattedNumber)
+                    binding.etPhoneNumber.setSelection(formattedNumber.length)
+                }catch (e:Exception){
+
+                }
+
+                null
+            }
+        }
     }
 
     private fun formatPhoneNumber(text: String): String {
