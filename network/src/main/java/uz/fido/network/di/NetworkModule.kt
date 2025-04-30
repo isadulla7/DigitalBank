@@ -135,9 +135,10 @@ object NetworkModule {
         .addInterceptor(HeaderInterceptor(context = appContext))
         .addInterceptor(
             AuthInterceptor(swapKeyService = swapKeyService, context = appContext, apiInterface)
-        ).addInterceptor(EncryptionInterceptor(appContext))
-        .addInterceptor(DecryptionInterceptor(appContext))
+        )
         .addInterceptor(loggingInterceptor)
+        .addInterceptor(EncryptionInterceptor(appContext))
+        .addInterceptor(DecryptionInterceptor(appContext))
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS)
         .build()
