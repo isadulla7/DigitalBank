@@ -16,8 +16,8 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpPasswordBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
+import uz.fido.universaldigital.ui.utils.extensions.CustomPasswordTransformation
 import uz.fido.universaldigital.ui.utils.extensions.containsNumber
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.hasLetter
 import uz.fido.universaldigital.ui.utils.extensions.hasSpecialSymbol
 import uz.fido.universaldigital.ui.utils.extensions.removeSpace
@@ -52,6 +52,8 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
     }
 
     private fun initFieldsListener() {
+        binding.etPassword.transformationMethod = CustomPasswordTransformation()
+        binding.etRepeatPassword.transformationMethod = CustomPasswordTransformation()
         val removeFilter = InputFilter { s, _, _, _, _, _ -> s.toString().removeSpace() }
         binding.etPassword.apply { filters = filters.plus(removeFilter) }
         binding.etPassword.doAfterTextChanged {

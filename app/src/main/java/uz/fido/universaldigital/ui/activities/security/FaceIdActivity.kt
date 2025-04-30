@@ -13,13 +13,13 @@ import uz.myid.android.sdk.capture.MyIdConfig
 import uz.myid.android.sdk.capture.MyIdException
 import uz.myid.android.sdk.capture.MyIdResult
 import uz.myid.android.sdk.capture.MyIdResultListener
-import uz.myid.android.sdk.capture.model.MyIdBuildMode
+import uz.myid.android.sdk.capture.model.MyIdCameraResolution
 import uz.myid.android.sdk.capture.model.MyIdCameraShape
 import uz.myid.android.sdk.capture.model.MyIdEntryType
+import uz.myid.android.sdk.capture.model.MyIdEnvironment
 import uz.myid.android.sdk.capture.model.MyIdImageFormat
-import uz.myid.android.sdk.capture.model.MyIdResidentType
-import uz.myid.android.sdk.capture.model.MyIdResolution
-import uz.myid.android.sdk.capture.takeUserResult
+import uz.myid.android.sdk.capture.model.MyIdResidency
+import uz.myid.android.sdk.capture.takeMyIdResult
 import java.util.Locale
 
 /**
@@ -48,19 +48,23 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
      */
 
     private fun startMyId() {
-        val myIdConfig = MyIdConfig.Companion.builder(clientId = Keys.getMyIdClientId())
+        val myIdConfig = MyIdConfig.Builder(clientId = Keys.getMyIdClientId())
             .withClientHash(Keys.getMyIdClientHash(), Keys.getMyIdClientHashId())
-            .withPassportData(clientPassport).withBirthDate(clientBirthday)
-            .withBuildMode(MyIdBuildMode.PRODUCTION).withEntryType(MyIdEntryType.AUTH)
-            .withResidency(MyIdResidentType.USER_DEFINED).withLocale(Locale(initLanguage()))
-            .withCameraShape(MyIdCameraShape.CIRCLE)
-            .withResolution(MyIdResolution.RESOLUTION_720).withImageFormat(MyIdImageFormat.PNG)
+            .withPassportData(clientPassport)
+            .withBirthDate(clientBirthday)
+            .withEnvironment(MyIdEnvironment.Production)
+            .withEntryType(MyIdEntryType.Identification)
+            .withResidency(MyIdResidency.UserDefined)
+            .withLocale(Locale(initLanguage()))
+            .withCameraShape(MyIdCameraShape.Circle)
+            .withCameraResolution(MyIdCameraResolution.High)
+            .withImageFormat(MyIdImageFormat.PNG)
             .build()
         val intent = client.createIntent(this, myIdConfig)
         result.launch(intent)
     }
 
-    private val result = takeUserResult(this)
+    private val result = takeMyIdResult(this)
 
     /**
      * MY ID result is successful

@@ -5,7 +5,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -45,6 +44,7 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
     private var clientAllCardList = ArrayList<CardResponse>()
     private var cardsAdapter: CardsListAdapter? = null
+
     private lateinit var walletOperationsDialog: WalletOperationsDialog
     private lateinit var cardOperationsDialog: CardOperationsDialog
     private lateinit var selectedCard: CardResponse
@@ -68,7 +68,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
         }
     }
 
-
     private fun initCards() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) { list ->
             clientAllCardList = list as ArrayList<CardResponse>
@@ -76,7 +75,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
             showEmptyView(clientAllCardList)
         }
     }
-
 
     private fun initCardsRv(cardLayoutManager: GridLayoutManager) {
         cardsAdapter = CardsListAdapter(this@MyCardsFragment, cardLayoutManager)
@@ -90,7 +88,6 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     override fun switchList() {
         refreshCards()
     }
-
 
     private fun refreshCards() {
         try {

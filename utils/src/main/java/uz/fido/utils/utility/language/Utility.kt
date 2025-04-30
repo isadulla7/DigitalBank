@@ -32,7 +32,7 @@ object Utility {
     }
 
     fun isValidPasswordFormat(password: String): Boolean {
-        val passwordREGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+*/!()_=-])(?=\\S+\$).{4,}\$")
+        val passwordREGEX = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#\$%^&+*/!()_=-?])(?=\\S+\$).{4,}\$")
         return passwordREGEX.matcher(password).matches()
     }
 

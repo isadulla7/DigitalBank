@@ -142,6 +142,7 @@ object NetworkModule {
         .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
         .writeTimeout(180, TimeUnit.SECONDS)
         .build()
+
     /*
     *   MY ID RETROFIT CLIENT
     */

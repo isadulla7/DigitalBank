@@ -103,10 +103,18 @@ fun Context.checkForExpireDate(
         val sdf = SimpleDateFormat(myFormat)
         var currentYear = sdf.format(calendar.time)
         currentYear = currentYear.substring(2, currentYear.length)
-        val year = currentYear.toInt() + 5
-        val yearOld = currentYear.toInt() - 5
+        val year = currentYear.toInt() + 10
+        val yearOld = currentYear.toInt() - 1
+        if (expireDate.count { it == '/' } > 1) {
+            textInputLayout.isErrorEnabled = true
+            textInputLayout.error = getString(R.string.wrong_card_expire_date)
+            editText.setText("")
+            return
+        }
         if (expireDate.length == 2) {
             if (expireDate.contains("/")) {
+                textInputLayout.isErrorEnabled = true
+                textInputLayout.error = getString(R.string.wrong_card_expire_date)
                 editText.setText("")
                 return
             }

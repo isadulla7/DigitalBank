@@ -321,7 +321,7 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
         val calendarStart = Calendar.getInstance()
         val calendarEnd = Calendar.getInstance()
         currentDate = df.format(calendarEnd.time)
-        calendarStart.add(Calendar.DAY_OF_MONTH, -360)
+        calendarStart.add(Calendar.YEAR, -365)
         dateBegin = df.format(calendarStart.time)
         dateEnd = df.format(calendarEnd.time)
     }
