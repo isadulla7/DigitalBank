@@ -84,6 +84,7 @@
         android:layout_margin="16dp"
         android:background="@drawable/notification_backgroud_lite"
         android:gravity="center"
+        android:visibility="gone"
         android:includeFontPadding="false"
         android:textColor="@color/white"
         android:textSize="10dp"

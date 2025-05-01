@@ -80,7 +80,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     }
 
     fun initWidgets() {
-        setNotification()
+
         cardAndPhoneLayout()
         initFastAccessLayout()
         initHomeTemplates()
@@ -631,10 +631,9 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             when (resource.status) {
                 Status.SUCCESS -> {
                     val list = resource.data?.notifications?.filter { it.is_read == "N" } ?: emptyList()
-                    val arraylist = arrayListOf<Notification>()
-                    arraylist.addAll(list)
-                    notificationList.addAll(arraylist)
-                    menuProductsViewModel.setNotificationList(arraylist)
+                    notificationList= arrayListOf()
+                    notificationList.addAll(list)
+                    menuProductsViewModel.setNotificationList(notificationList)
                     checkNotification()
                 }
 
@@ -652,7 +651,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         }
     }
 
-    private fun setNotification() {
+     fun setNotification() {
         viewLifecycleOwner.lifecycleScope.launch {
             menuProductsViewModel.notification.collect { item ->
                 if (item.isEmpty()) {
