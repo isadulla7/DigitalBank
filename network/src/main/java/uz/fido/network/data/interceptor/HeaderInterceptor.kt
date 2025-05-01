@@ -17,6 +17,7 @@ import java.util.Locale
 class HeaderInterceptor(private val context: Context) : Interceptor {
 
     override fun intercept(chain: Interceptor.Chain): Response {
+        val language = getLanguage()
         val request: Request = chain.request().newBuilder()
             .header(HEADER_APP_VERSION, context.getFromSecureStore(Const.VERSION_CODE))
             .header(HEADER_APP_LANGUAGE, language)
@@ -26,7 +27,7 @@ class HeaderInterceptor(private val context: Context) : Interceptor {
         return chain.proceed(request)
     }
 
-    private val language = context.getFromSecureStore(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN)
+    private fun getLanguage(): String = context.getFromSecureStore(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN)
         .uppercase(Locale.ROOT)
         .replace("RUS", "RU")
         .replace("UZ", "UZL")

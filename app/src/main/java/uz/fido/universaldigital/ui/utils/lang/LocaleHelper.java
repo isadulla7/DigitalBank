@@ -15,7 +15,7 @@ public class LocaleHelper {
         if (!getPersistedData(Locale.getDefault().getLanguage(), context).isEmpty()) {
             return getPersistedData(Locale.getDefault().getLanguage(), context);
         } else {
-            return "uz";
+            return "uzl";
         }
     }
 
