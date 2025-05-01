@@ -58,6 +58,7 @@ class MenuNewHomeFragment : BaseNewHomeFragment(), BaseInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setNotification()
         initDefaultStates()
         initWidgets()
         initSetOnClickListeners()

@@ -7,6 +7,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
@@ -93,6 +94,7 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
 
 
         setFragmentResultListener(TransferHistoriesFragment.REQUEST_KEY) { _, bundle ->
+            Log.d("TAG", "onViewCreated:run_---- ")
             val phoneNumber = bundle.getString(TransferHistoriesFragment.REQUEST_KEY)
             binding.etPhoneNumber.setText(phoneNumber)
         }
