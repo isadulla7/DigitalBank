@@ -9,6 +9,7 @@ import android.net.Network
 import android.net.NetworkCapabilities
 import android.provider.Settings
 import android.util.Log
+import android.widget.EditText
 import com.google.android.material.textfield.TextInputLayout
 import uz.fido.utils.R
 import uz.fido.utils.utility.language.Utility.getLocalIpAddress
@@ -96,6 +97,58 @@ fun <T> Context.startActivityWithClearTask(activity: Class<T>) {
 @SuppressLint("SimpleDateFormat")
 fun Context.checkForExpireDate(
     expireDate: String, editText: MaskEditText, textInputLayout: TextInputLayout
+) {
+    try {
+        val calendar = Calendar.getInstance()
+        val myFormat = "yyyy"
+        val sdf = SimpleDateFormat(myFormat)
+        var currentYear = sdf.format(calendar.time)
+        currentYear = currentYear.substring(2, currentYear.length)
+        val year = currentYear.toInt() + 10
+        val yearOld = currentYear.toInt() - 1
+        if (expireDate.count { it == '/' } > 1) {
+            textInputLayout.isErrorEnabled = true
+            textInputLayout.error = getString(R.string.wrong_card_expire_date)
+            editText.setText("")
+            return
+        }
+        if (expireDate.length == 2) {
+            if (expireDate.contains("/")) {
+                textInputLayout.isErrorEnabled = true
+                textInputLayout.error = getString(R.string.wrong_card_expire_date)
+                editText.setText("")
+                return
+            }
+            if (expireDate.toInt() > 12 || expireDate.isEmpty()) {
+                textInputLayout.isErrorEnabled = true
+                textInputLayout.error = getString(R.string.wrong_card_expire_date)
+                return
+            } else {
+                textInputLayout.error = null
+                textInputLayout.isErrorEnabled = false
+            }
+        }
+        if (expireDate.length == 5) {
+            val inputYear = expireDate.substring(3, expireDate.length)
+            if (inputYear.toInt() > year || inputYear.toInt() < yearOld) {
+                textInputLayout.isErrorEnabled = true
+                textInputLayout.error = getString(R.string.wrong_card_expire_date)
+                return
+            } else {
+                textInputLayout.error = null
+                textInputLayout.isErrorEnabled = false
+            }
+        }
+    } catch (e: NumberFormatException) {
+        Log.e("Log", e.toString())
+    }
+
+
+}
+
+@SuppressLint("SimpleDateFormat")
+fun Context.checkForExpireDate(
+    expireDate: String, editText: EditText, textInputLayout: TextInputLayout
 ) {
     try {
         val calendar = Calendar.getInstance()
