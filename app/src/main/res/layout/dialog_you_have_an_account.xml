@@ -16,6 +16,7 @@
         tools:ignore="ContentDescription" />
 
     <uz.fido.utils.view.custom_text_view.TextViewSemiBold
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp"

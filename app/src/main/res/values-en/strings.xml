@@ -84,7 +84,7 @@
     <string name="you_already_have_account">You already have an account, would you like to restore it?</string>
     <string name="bank_products">Bank products</string>
     <string name="order_card">Order card</string>
-    <string name="apply_loan">Apply for a loan</string>
+    <string name="apply_loan">Apply for loan</string>
     <string name="open_deposit">Open deposit</string>
     <string name="open_wallet">Open wallet</string>
     <string name="order_card_description">Order plastic cards without queuing</string>
@@ -333,7 +333,7 @@
     <string name="loan_time">Loan term</string>
     <string name="loan_percent">Rate</string>
     <string name="summa">sum</string>
-    <string name="text_empty_loan">Credit not yet available</string>
+    <string name="text_empty_loan">Loan not yet available</string>
     <string name="by_phone_number">By phone number</string>
     <string name="saved_receivers">Selected recipients</string>
     <string name="card_not_found">Card not found</string>
@@ -495,7 +495,7 @@
     <string name="collected">Collected</string>
     <string name="collecting">Collecting</string>
     <string name="history_is_empty">Transaction history is empty</string>
-    <string name="latest_translations">Your \nlatest translations will be displayed here</string>
+    <string name="latest_translations">Your latest transactions will be displayed here</string>
     <string name="uzs">UZS</string>
     <string name="canselled">Refused</string>
     <string name="humo_operation">Humo operation</string>
@@ -825,7 +825,7 @@
     <string name="no_currency_cards">No currency cards available</string>
     <string name="no_deposits">You have no deposits</string>
     <string name="you_can_open_deposit_by_clicking">You can open a deposit by clicking the button below</string>
-    <string name="no_credits">You have no credits</string>
+    <string name="no_credits">You have no loans</string>
     <string name="you_can_get_credit_by_clicking">You can get credit by clicking the button below</string>
     <string name="home_page_widgets">Widgets on the home screen</string>
     <string name="hidden">Hidden</string>
@@ -928,7 +928,7 @@
     <string name="no_cards_desc_p2p">Add a card to perform this operation</string>
     <string name="sender_and_receiver_the_same">The sender and the recipient are the same</string>
     <string name="transfer_successfully">Transfer transferred successfully</string>
-    <string name="card_list_no">You do not have a card</string>
+    <string name="card_list_no">You have no cards</string>
     <string name="humo_pay_not_supported">HumoPay is not available on rooted devices</string>
     <string name="nfc_not_supported">Your phone does not support NFC</string>
     <string name="no_connected_cards">No connected cards</string>
@@ -993,7 +993,7 @@
     <string name="delete_account_q">Delete account?</string>
     <string name="delete_account_description">Are you sure you want to delete your account? This operation cannot be undone</string>
     <string name="successfully_deleted">Your account has been successfully deleted</string>
-    <string name="pass_check">The password must be entered with one uppercase letter, a proper letter, a special symbol, a number, and a name. 8.</string>
+    <string name="pass_check">The password must contain at least one lowercase letter, one uppercase letter, one special character, and one number, and it must be at least 8 characters long</string>
     <string name="delete_all">Delete all</string>
     <string name="nameless">No name</string>
     <string name="error_password">Please clear your memory and try logging in again</string>
@@ -1027,8 +1027,8 @@
     <string name="open">Open</string>
     <string name="in_call_you_cant_use_app">For security reasons, you cannot use the application during a call</string>
     <string name="input_pin_code">Input PIN</string>
-    <string name="wallet_be_closed">The wallet cannot be closed, please withdraw the funds first.</string>
-    <string name="error_card_number">The card number may be incorrect.</string>
+    <string name="wallet_be_closed">The wallet cannot be closed, please withdraw the funds first</string>
+    <string name="error_card_number">The card number may be incorrect</string>
     <string name="new_design">New design</string>
     <string name="switch_new_design">Switch to Lite version</string>
     <string name="stay_old_design">Switch to Pro version</string>
@@ -1048,26 +1048,27 @@
     <string name="enable_shaking_action">Enable shaking action</string>
     <string name="shaking_action_description">For quick access to the selection option when shaking the phone</string>
     <string name="rooted_device_not_allowed">To prevent any fraud and keep your data safe, the app is not allowed to be used on this device! The device may be rooted</string>
-    <string name="card_for_credit">Карта списания</string>
+    <string name="card_for_credit">Write-off card</string>
     <string name="password_success">Successful</string>
     <string name="transfer_t0_wallet">Transfer to wallet</string>
     <string name="select_phone_from_contact">Choose phone number from contacts</string>
     <string name="scan_card_number">Scan card number</string>
     <string name="end_session">End Session</string>
     <string name="google_api_key_for_map">AIzaSyAz12HO8DlLFz34dNvuNwQ9Rzhw3hpUZGQ</string>
-    <string name="you_can_close_deposit_only_dv_cards">You can only close a deposit to a "Mobile DV" account. It can be opened for free in the "Open a Deposit" section.</string>
-    <string name="create_mobile_dv">Create a Mobile DV</string>
+    <string name="you_can_close_deposit_only_dv_cards">You can only close a deposit to a "Mobile DV" account. It can be opened for free in the "Open a Deposit" section</string>
+    <string name="create_mobile_dv">Create Mobile DV</string>
     <string name="ishonch">Ishonch</string>
-    <string name="you_dont_have_an_account">Your account information could not be retrieved, you can continue registration or go back.</string>
-    <string name="identification_login_desc">For increased security, you will need to verify your face to access the app.</string>
+    <string name="you_dont_have_an_account">Your account information could not be retrieved, you can continue registration or go back</string>
+    <string name="identification_login_desc">For increased security, you will need to verify your face to access the app</string>
     <string name="attention">Attention</string>
     <string name="unable_to_get_profile_data">We were unable to retrieve your account information. Please contact your bank \n+998712001110</string>
-    <string name="unable_to_get_passport_data">We were unable to retrieve your passport information. Please try again by entering your passport information.</string>
+    <string name="unable_to_get_passport_data">We were unable to retrieve your passport information. Please try again by entering your passport information</string>
     <string name="selected_filters">Selected filters</string>
     <string name="cannot_withdraw_percents">It is not possible to withdraw the interest accrued on this type of deposit!</string>
-    <string name="this_function_only_working_with_online_deposit">This functionality is available only for online deposits.</string>
+    <string name="this_function_only_working_with_online_deposit">This functionality is available only for online deposits</string>
     <string name="goto_settings_and_allow_permission">Go to settings and enable camera permission to use this feature</string>
-    <string name="empty_deposit_description">This is an easy way to preserve your savings or save up for a large purchase.</string>
-    <string name="empty_credit_message">Apply for a loan without leaving home.</string>
+    <string name="empty_deposit_description">This is an easy way to preserve your savings or save up for a large purchase</string>
+    <string name="empty_credit_message">Apply for a loan without leaving home</string>
     <string name="you_have_no_wallets">You have no wallets</string>
+
 </resources>

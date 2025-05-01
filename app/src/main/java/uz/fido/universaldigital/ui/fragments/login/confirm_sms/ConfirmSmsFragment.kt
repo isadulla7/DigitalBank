@@ -167,7 +167,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private fun continueButtonClickEvent() {
         when (operation) {
 
-            SMS_OPERATION_SIGN_UP , SMS_OPERATION_FORGOT_PASSWORD-> {
+            SMS_OPERATION_SIGN_UP, SMS_OPERATION_FORGOT_PASSWORD -> {
                 checkRegUser()
             }
 
@@ -494,7 +494,11 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             }
         } else if (operation == SMS_OPERATION_FORGOT_PASSWORD) {
             if (checkSmsResponse.is_authenticate == "Y") {
-                openMyIdActivity()
+                YouHaveAccountDialog(openMyId = {
+                    openMyIdActivity()
+                }, continueSignUp = {
+                    continueSignUpOperation()
+                }, false).show(childFragmentManager, "")
             } else {
                 YouDontHaveAccountDialog(cancelOperation = {
                     pop()

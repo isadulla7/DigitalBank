@@ -5,11 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogYouHaveAnAccountBinding
 
 class YouHaveAccountDialog(
     private val openMyId: () -> Unit,
     private val continueSignUp: () -> Unit,
+    private val isRequireContinueSignUp: Boolean? = true
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: DialogYouHaveAnAccountBinding
@@ -18,6 +20,10 @@ class YouHaveAccountDialog(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = DialogYouHaveAnAccountBinding.inflate(inflater, container, false)
+        if (isRequireContinueSignUp == false) {
+            binding.title.text = getString(R.string.reset_password)
+            binding.continueSignUp.visibility = View.GONE
+        }
         binding.openMyid.setOnClickListener {
             dismiss()
             openMyId.invoke()
