@@ -40,8 +40,7 @@ import kotlin.math.roundToInt
 @AndroidEntryPoint
 class MainBranchesFragment : BaseFragment<FragmentBranchesBinding, MenuProfileViewModel>(
     FragmentBranchesBinding::inflate, MenuProfileViewModel::class.java
-), BaseInterface, OnMapReadyCallback, LocationListener,
-    GoogleMap.OnMarkerClickListener, PermissionInterface {
+), BaseInterface, OnMapReadyCallback, LocationListener, GoogleMap.OnMarkerClickListener, PermissionInterface {
 
     private lateinit var branchesAdapter: BranchesAdapter
     private lateinit var lastLocation: Location
@@ -176,7 +175,7 @@ class MainBranchesFragment : BaseFragment<FragmentBranchesBinding, MenuProfileVi
                     }
                 } else {
                     currentLatLng = LatLng(41.3775, 64.5853)
-                    it.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng!!, 4f))
+                    it.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng!!, 5f))
                 }
                 fetchBranches()
             }

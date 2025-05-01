@@ -120,7 +120,7 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
                     var text = it.toString()
                     text = text.replace(Regex("[^0-9/]"), "")
 
-                    if (text.length >= 1 && text[0] == '/') {
+                    if (text.isNotEmpty() && text[0] == '/') {
                         text = text.substring(1)
                     }
                     if (text.length in 2..3 && text[2 - 1] == '/' && text.length < 3) {
@@ -140,10 +140,10 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
                         binding.cardExpire.setSelection(text.length)
                     }
                 }
-                if (binding.cardExpireLayout.error == null && binding.cardExpire.text.length == 5) {
-                    cardDate = true
+                cardDate = if (binding.cardExpireLayout.error == null && binding.cardExpire.text.length == 5) {
+                    true
                 } else {
-                    cardDate = false
+                    false
                 }
                 binding.addCardBtn.isEnabled(
                     cardDate && cardNumberAndName
@@ -175,7 +175,6 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
                 if (et1.isEmpty()) {
                     binding.cardNumberLayout.error = null
                 }
-
                 cardNumberAndName = binding.cardNumber.text.toString().replace(" ", "").length == 16
                         && binding.cardName.text.toString().isNotEmpty()
                 binding.addCardBtn.isEnabled(

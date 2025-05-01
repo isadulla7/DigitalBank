@@ -510,7 +510,7 @@
     <string name="period">Filter parameters</string>
     <string name="funds_flow">Vehicle movement</string>
     <string name="card">Cards</string>
-    <string name="status">State of affairs</string>
+    <string name="status">State</string>
     <string name="activ">Active</string>
     <string name="no_activ">Not active</string>
     <string name="type_of_transaction">Transaction type</string>
