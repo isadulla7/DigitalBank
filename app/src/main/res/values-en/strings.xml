@@ -70,7 +70,7 @@
     <string name="functions">Functions</string>
     <string name="min_password_length">Password must be at least 8 characters</string>
     <string name="resend_code">Resend code</string>
-    <string name="left_time">Resend code via %1$s</string>
+    <string name="left_time">Resend code after %1$s</string>
     <string name="you_input_wrong_sms_code">You entered the wrong code</string>
     <string name="wrong_sms_code_description">Try again if the wrong code is entered. Remaining number of attempts is 2</string>
     <string name="enter_pin_code">Enter PIN</string>

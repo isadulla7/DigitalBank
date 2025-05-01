@@ -28,9 +28,10 @@
             android:layout_height="match_parent"
             android:imeOptions="actionNext"
             android:inputType="phone"
+            android:letterSpacing="0.01"
             android:maxLength="17"
             android:maxLines="1"
-            android:theme="@style/DefaultEditTextTheme" />
+            android:theme="@style/DefaultEditTextThemeWithNoFont" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -50,8 +51,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textPassword"
+            android:letterSpacing="0.01"
             android:maxLength="25"
-            android:theme="@style/DefaultEditTextTheme" />
+            android:theme="@style/DefaultEditTextThemeWithNoFont" />
 
     </com.google.android.material.textfield.TextInputLayout>
 

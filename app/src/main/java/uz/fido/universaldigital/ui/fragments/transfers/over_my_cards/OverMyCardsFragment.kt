@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.transfers.over_my_cards
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -389,7 +388,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 return false
             }
 
-            totalAmount > minAmount && totalAmount <= senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) && isP2pInfoSuccess == true -> {
+            totalAmount >= minAmount && totalAmount <= senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) && isP2pInfoSuccess == true -> {
                 binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
                 binding.tvMinAmount.text =

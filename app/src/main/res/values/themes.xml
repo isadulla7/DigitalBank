@@ -47,6 +47,21 @@
         <item name="android:colorAccent">@color/brandRedColor</item>
     </style>
 
+    <style name="DefaultEditTextThemeWithNoFont" parent="Widget.AppCompat.EditText">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">56dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:textColor">@color/brandBlueColor</item>
+        <item name="hintTextColor">@color/brandBlueColor_60</item>
+        <item name="android:maxLines">1</item>
+        <item name="colorAccent">@color/brandRedColor</item>
+        <item name="android:colorAccent">@color/brandRedColor</item>
+    </style>
+
     <style name="EditTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
         <item name="errorTextColor">@color/brandRedColor</item>
         <item name="colorAccent">@color/white</item>
