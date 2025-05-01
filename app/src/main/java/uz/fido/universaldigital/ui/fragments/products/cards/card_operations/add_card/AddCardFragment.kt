@@ -3,6 +3,8 @@ package uz.fido.universaldigital.ui.fragments.products.cards.card_operations.add
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.addTextChangedListener
 import androidx.core.widget.doAfterTextChanged
@@ -46,6 +48,8 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
 
     private var isMain = "N"
     private lateinit var addCardOperation: String
+    private var cardDate: Boolean = false
+    private var cardNumberAndName: Boolean = false
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
@@ -83,46 +87,99 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
     }
 
     private fun init() {
+        cardDateMask()
         binding.cardNumber.addTextChangedListener { checkEditTexts() }
-        binding.cardExpire.addTextChangedListener { checkEditTexts() }
         binding.makeMain.setOnCheckedChangeListener { _, isChecked ->
             isMain = if (isChecked) "Y" else "N"
         }
+
+    }
+
+    private fun cardDateMask() {
+        binding.cardExpire.addTextChangedListener(object : TextWatcher {
+            var isEditing = false
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (isEditing) return
+                isEditing = true
+                s?.let {
+                    if (it.isNotEmpty()) {
+                        requireContext().checkForExpireDate(
+                            binding.cardExpire.text.toString(),
+                            binding.cardExpire,
+                            binding.cardExpireLayout
+                        )
+                    }
+                    var text = it.toString()
+                    text = text.replace(Regex("[^0-9/]"), "")
+
+                    if (text.length >= 1 && text[0] == '/') {
+                        text = text.substring(1)
+                    }
+                    if (text.length in 2..3 && text[2 - 1] == '/' && text.length < 3) {
+                        text = text.replace("/", "")
+                    }
+
+                    if (text.length > 2 && text[2] != '/') {
+                        text = text.substring(0, 2) + "/" + text.substring(2)
+                    }
+
+                    if (text.length > 5) {
+                        text = text.substring(0, 5)
+                    }
+
+                    if (text != it.toString()) {
+                        binding.cardExpire.setText(text)
+                        binding.cardExpire.setSelection(text.length)
+                    }
+                }
+                if (binding.cardExpireLayout.error == null && binding.cardExpire.text.length == 5) {
+                    cardDate = true
+                } else {
+                    cardDate = false
+                }
+                binding.addCardBtn.isEnabled(
+                    cardDate && cardNumberAndName
+                )
+
+                isEditing = false
+            }
+        })
+
     }
 
     private fun checkEditTexts() {
         val editTexts = listOf(
             binding.cardNumber,
-            binding.cardExpire,
             binding.cardName,
         )
         for (editText in editTexts) {
             editText.doAfterTextChanged {
                 var isTrueCard = true
                 val et1 = binding.cardNumber.text.toString().trim().replace(" ", "")
-                val et2 = binding.cardExpire.text.toString().trim()
                 val et3 = binding.cardName.text.toString()
-                if (et2.isNotEmpty()) {
-                    requireContext().checkForExpireDate(
-                        binding.cardExpire.text.toString(),
-                        binding.cardExpire,
-                        binding.cardExpireLayout
-                    )
-                }
+
                 if (binding.cardExpire.text.toString().isEmpty()) {
                     isTrueCard = false
                 }
                 if (binding.cardNumberLayout.error != null) {
                     isTrueCard = false
                 }
-                if (binding.cardExpireLayout.error != null) {
-                    isTrueCard = false
-                }
                 if (et1.isEmpty()) {
                     binding.cardNumberLayout.error = null
                 }
+
+                cardNumberAndName = binding.cardNumber.text.toString().replace(" ", "").length == 16
+                        && binding.cardName.text.toString().isNotEmpty()
                 binding.addCardBtn.isEnabled(
-                    et1.length == 16 && et2.length == 4 && et3.isNotEmpty() && isTrueCard
+                    et1.length == 16 && et3.isNotEmpty() && isTrueCard && cardDate
                 )
             }
         }

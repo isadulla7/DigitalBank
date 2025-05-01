@@ -108,12 +108,11 @@
                 android:layout_marginEnd="16sp"
                 android:hint="@string/card_expire">
 
-                <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+                <EditText
                     android:id="@+id/card_expire"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:autofillHints="phone"
-                    android:digits="1234567890/"
                     android:drawablePadding="12sp"
                     android:imeOptions="actionNext"
                     android:inputType="text"
@@ -122,7 +121,7 @@
                     android:singleLine="true"
                     android:textColor="@color/mainTextColor"
                     android:textSize="16dp"
-                    app:met_mask="##/##" />
+                   />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
