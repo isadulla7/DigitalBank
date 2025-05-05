@@ -45,13 +45,11 @@ import uz.fido.universaldigital.ui.fragments.transfers.by_phone.TransferByPhoneF
 import uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferFragment
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
 import uz.fido.universaldigital.ui.utils.extensions.adjustBottomNavForKeyboard
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.getStartDestination
 import uz.fido.universaldigital.ui.utils.extensions.isActive
 import uz.fido.universaldigital.ui.utils.extensions.isNewDesign
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.const.Const
-import uz.fido.utils.internet_checker.InternetConnectionChecker
 import uz.fido.utils.internet_checker.InternetConnectionObserver
 import uz.fido.utils.internet_checker.NoConnectionDialog
 import uz.fido.utils.security.getFromSecureStore

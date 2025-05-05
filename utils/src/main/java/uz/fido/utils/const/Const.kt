@@ -39,7 +39,7 @@ object Const {
     const val DEVICE_CODE = "device_code"
     const val VERSION_CODE = "VERSION_CODE"
     const val VERSION_NAME = "VERSION_NAME"
-    const val APP_LANGUAGE = "language"
+    const val APP_LANGUAGE = "lang"
     const val PHONE_NUMBER = "phone_number"
     const val CARD_NUMBER = "card_number"
     const val EMAIL = "email"

@@ -31,7 +31,7 @@ import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.activity.insertStringBetween
 import uz.fido.utils.utility.context.getDeviceIds
 import uz.fido.utils.utility.context.getIpAddress
-import uz.fido.utils.utility.fragment.goto
+import uz.fido.utils.utility.fragment.gotoWithPopupSlide
 import uz.fido.utils.utility.language.Utility
 
 @AndroidEntryPoint
@@ -52,8 +52,8 @@ class SuccessVerificationFragment : BaseFragment<FragmentSuccessVerificationBind
     private fun gotoWriteWay() {
         binding.btnContinue.setProgress(false)
         if (activity is MainActivity) {
-            goto(
-                R.id.action_successVerificationFragment2_to_productsFragment, bundleOf(Const.USER_IDENTIFIED to true)
+            gotoWithPopupSlide(
+                R.id.action_successVerificationFragment2_to_productsFragment,R.id.menuProfileFragment, bundleOf(Const.USER_IDENTIFIED to true)
             )
         } else {
             startActivity(Intent(requireContext(), LoginActivity::class.java))

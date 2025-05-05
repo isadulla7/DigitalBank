@@ -18,7 +18,6 @@ import uz.fido.network.domain.model.swift.SwiftRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentInitTransferDetailsBinding
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.getFromSecureStore

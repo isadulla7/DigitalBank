@@ -17,7 +17,6 @@ import uz.fido.universaldigital.databinding.FragmentPaymentListBinding
 import uz.fido.universaldigital.ui.fragments.payment.abc_adapter.PaymentListAdapter
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.getFromSecureStore

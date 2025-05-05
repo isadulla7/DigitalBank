@@ -10,7 +10,6 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentOpenWalletBinding
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.fragment.gotoWithSlide

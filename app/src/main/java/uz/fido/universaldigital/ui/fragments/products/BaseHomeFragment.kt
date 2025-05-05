@@ -60,7 +60,6 @@ import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCre
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.universaldigital.ui.utils.extensions.getBankProducts
 import uz.fido.universaldigital.ui.utils.extensions.getFastAccessOperationList
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.universaldigital.ui.utils.home_utils.DoAfterTextWatcher
 import uz.fido.universaldigital.ui.utils.home_utils.applyMask

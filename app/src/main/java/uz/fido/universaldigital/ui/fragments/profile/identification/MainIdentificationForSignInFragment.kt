@@ -58,7 +58,6 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
 
     private fun openFaceIdActivity(passportData: String? = null, dateOfBirth: String? = null, pinfl: String? = null) {
         val intent = Intent(requireActivity(), FaceIdActivity::class.java)
-        intent.putExtra(FaceIdActivity.MODE, FaceIdActivity.STRONG)
         intent.putExtra(FaceIdActivity.CLIENT_PASSPORT, if (passportData.isNullOrEmpty()) pinfl.orEmpty() else passportData)
         intent.putExtra(FaceIdActivity.CLIENT_DATE_OF_BIRTH, dateOfBirth.orEmpty())
         faceIdActivityResult.launch(intent)

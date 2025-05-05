@@ -20,7 +20,6 @@ import uz.fido.universaldigital.databinding.FragmentMenuNewHomeBinding
 import uz.fido.universaldigital.ui.activities.seasons.Season
 import uz.fido.universaldigital.ui.fragments.products.adapter.NewHomeCardsAdapter
 import uz.fido.universaldigital.ui.fragments.profile.settings.NewDesignOnboardingPage
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.home_utils.getUserCardsFromSecureStore
 import uz.fido.universaldigital.ui.utils.home_utils.initRefreshLayout

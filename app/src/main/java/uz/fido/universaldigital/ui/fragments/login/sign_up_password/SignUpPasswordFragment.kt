@@ -17,7 +17,6 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentSignUpPasswordBinding
 import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.universaldigital.ui.utils.extensions.containsNumber
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.hasLetter
 import uz.fido.universaldigital.ui.utils.extensions.hasSpecialSymbol
 import uz.fido.universaldigital.ui.utils.extensions.removeSpace

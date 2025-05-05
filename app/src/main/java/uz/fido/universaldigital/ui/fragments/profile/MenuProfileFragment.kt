@@ -17,7 +17,6 @@ import uz.fido.universaldigital.ui.dialogs.LogOutDialog
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.extensions.logOut
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeDialogFragment
 import uz.fido.universaldigital.ui.fragments.profile.settings.NewDesignOnboardingPage
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.universaldigital.ui.utils.extensions.isUserIdentified
 import uz.fido.utils.app.PermissionInterface
 import uz.fido.utils.const.Const

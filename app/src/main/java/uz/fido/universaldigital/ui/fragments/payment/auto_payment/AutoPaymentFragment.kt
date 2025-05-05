@@ -16,7 +16,6 @@ import uz.fido.universaldigital.databinding.FragmentApWithCalendarBinding
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.adapter.AutoPaymentsAdapter
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.dialog.AutoPaymentOperationDialog
 import uz.fido.universaldigital.ui.utils.calendar_view.EventObjects
-import uz.fido.universaldigital.ui.utils.extensions.getFromPaper
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.adapter.showSkeleton
