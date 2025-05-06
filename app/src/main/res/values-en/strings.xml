@@ -1069,4 +1069,6 @@
     <string name="goto_settings_and_allow_permission">Go to settings and enable camera permission to use this feature</string>
     <string name="empty_deposit_description">This is an easy way to preserve your savings or save up for a large purchase.</string>
     <string name="empty_credit_message">Apply for a loan without leaving home.</string>
+    <string name="template">Шаблон</string>
+    <string name="min_summ">Minimum amount 500</string>
 </resources>

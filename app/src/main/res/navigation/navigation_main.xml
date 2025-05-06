@@ -467,9 +467,14 @@
         android:id="@+id/autoPaymentFragment"
         android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.AutoPaymentFragment"
         android:label="AutoPaymentFragment" />
+<!--    <fragment-->
+<!--        android:id="@+id/createAutoPaymentFragment"-->
+<!--        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment.CreateAutoPaymentFragment"-->
+<!--        android:label="CreateAutoPaymentFragment" />-->
+
     <fragment
-        android:id="@+id/createAutoPaymentFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment.CreateAutoPaymentFragment"
+        android:id="@+id/createNewAutoPaymentFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment.CreateNewAutoPaymentFragment"
         android:label="CreateAutoPaymentFragment" />
     <fragment
         android:id="@+id/saveAutoPaymentFinalFragment"

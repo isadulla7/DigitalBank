@@ -94,8 +94,7 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
 
 
         setFragmentResultListener(TransferHistoriesFragment.REQUEST_KEY) { _, bundle ->
-            Log.d("TAG", "onViewCreated:run_---- ")
-            val phoneNumber = bundle.getString(TransferHistoriesFragment.REQUEST_KEY)
+            val phoneNumber = bundle.getString(TransferHistoriesFragment.DATA)
             binding.etPhoneNumber.setText(phoneNumber)
         }
     }
@@ -348,9 +347,9 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
                             commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
                             operation = SuccessTransferFragment.TRANSFER_BY_PHONE,
                             phoneNumber = phoneNumber
-                        )
+                        ),
+                        SuccessTransferFragment.TRANSFER_OPERATION to SuccessTransferFragment.TRANSFER_CARD_BY_PHONE)
                     )
-                )
             }
         } else showSnackbar(p2PInfoDto?.errorMessage ?: "")
     }

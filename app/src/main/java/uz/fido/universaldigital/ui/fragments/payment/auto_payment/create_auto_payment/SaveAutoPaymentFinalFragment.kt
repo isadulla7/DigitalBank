@@ -1,10 +1,12 @@
 package uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
@@ -56,6 +58,7 @@ class SaveAutoPaymentFinalFragment :
         onClickView()
         addViewItem()
         initCards()
+
     }
 
     private fun addViewItem() {

@@ -1069,4 +1069,6 @@
     <string name="goto_settings_and_allow_permission">Bu funksionallikni ishlatish uchun "Sozlamalar" bo‘limidan kameraga ruxsat berishingiz kerak</string>
     <string name="empty_deposit_description">Bu jamg‘armalaringizni tejash yoki katta xarid uchun tejashning oson yo‘li.</string>
     <string name="empty_credit_message">Uydan chiqmasdan kredit olish uchun murojaat qiling</string>
+    <string name="template">Шаблон</string>
+    <string name="min_summ">Minimal summa 500 so‘m.</string>
 </resources>

@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.transfers.confirm_transfer
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
@@ -73,7 +74,7 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
             binding.cardBalance.setCardBalance(it)
             binding.cardType.setCardTypeImage(it)
             binding.bankLogo.setBankLogo(it)
-            binding.tvMainCard.text = if (it.is_main=="Y") getString(R.string.main_card) else ""
+            binding.tvMainCard.text = if (it.is_main == "Y") getString(R.string.main_card) else ""
             binding.cardBackground.load(requireContext().getDrawableFromRes(it.bg_icon_name))
         }
     }
@@ -139,7 +140,9 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
                             R.id.confirmSmsForTransfer, bundleOf(
                                 ConfirmSmsForTransfer.STRING_LINE to stringLine,
                                 ConfirmSmsForTransfer.TRANSFER_REQUEST to p2pRequest,
-                                SuccessTransferFragment.TRANSFER_DTO to transferDto
+                                SuccessTransferFragment.TRANSFER_DTO to transferDto,
+                                SuccessTransferFragment.TRANSFER_OPERATION to transferDto,
+                                SuccessTransferFragment.TRANSFER_OPERATION to requireArguments().getString(SuccessTransferFragment.TRANSFER_OPERATION,"")
                             )
                         )
                     } else {
@@ -160,7 +163,11 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
-                    gotoWithSlide(R.id.successTransferFragment, bundleOf(SuccessTransferFragment.TRANSFER_DTO to transferDto))
+                    gotoWithSlide(R.id.successTransferFragment,
+                        bundleOf(
+                            SuccessTransferFragment.TRANSFER_OPERATION to requireArguments().getString(SuccessTransferFragment.TRANSFER_OPERATION,""),
+                            SuccessTransferFragment.TRANSFER_DTO to transferDto
+                            ))
                 }
 
                 Status.ERROR -> {

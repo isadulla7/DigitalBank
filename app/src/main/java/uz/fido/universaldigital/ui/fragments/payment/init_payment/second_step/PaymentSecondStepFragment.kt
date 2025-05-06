@@ -849,7 +849,7 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
                     name = paymentService?.nameIndex
                 )
                 gotoWithSlide(
-                    R.id.createAutoPaymentFragment,
+                    R.id.createNewAutoPaymentFragment,
                     bundleOf(CreateAutoPaymentFragment.SAVE_AUTO_PAYMENT_MODEL to model)
                 )
             }
