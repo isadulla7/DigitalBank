@@ -131,7 +131,7 @@
     <string name="this_is_last_attempt">PIN-kod uchun oxirgi marta urinish qoldi</string>
     <string name="too_many_attempts">Juda ko‘p muvaffaqiyatsiz urinishlar</string>
     <string name="wrong_pin">Noto‘g‘ri PIN-kod</string>
-    <string name="connect_sms_notification">SMS xabarnomani yoqish \n(HUMO)</string>
+    <string name="connect_sms_notification">SMS xabarnomani yoqish \n(Humo)</string>
     <string name="input_card_number">Karta raqamini kiriting</string>
     <string name="bank_not_found">Bank topilmadi</string>
     <string name="commission_with_dots">Kommissiya:</string>
@@ -1070,4 +1070,6 @@
     <string name="empty_deposit_description">Bu jamg‘armalaringizni tejash yoki katta xarid uchun tejashning oson yo‘li.</string>
     <string name="empty_credit_message">Uydan chiqmasdan kredit olish uchun murojaat qiling</string>
     <string name="you_have_no_wallets">Sizda hamyonlar yo‘q</string>
+    <string name="sms_notification_for_only_universalbank_humo_cards">• SMS xabarnomani yoqish faqatgina Universalbankning Humo kartalari uchun mavjud</string>
+    <string name="sms_notification_turned_on_current_phone">• SMS xabarnoma joriy telefon raqamiga yoqiladi %1$s</string>
 </resources>

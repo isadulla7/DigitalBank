@@ -132,7 +132,7 @@
     <string name="this_is_last_attempt">Last PIN attempt left</string>
     <string name="too_many_attempts">Too many failed attempts</string>
     <string name="wrong_pin">Wrong PIN</string>
-    <string name="connect_sms_notification">Enable SMS notification \n(HUMO)</string>
+    <string name="connect_sms_notification">Enable SMS notification \n(Humo)</string>
     <string name="input_card_number">Enter card number</string>
     <string name="bank_not_found">Bank not found</string>
     <string name="commission_with_dots">Commission:</string>
@@ -1070,5 +1070,7 @@
     <string name="empty_deposit_description">This is an easy way to preserve your savings or save up for a large purchase</string>
     <string name="empty_credit_message">Apply for a loan without leaving home</string>
     <string name="you_have_no_wallets">You have no wallets</string>
+    <string name="sms_notification_for_only_universalbank_humo_cards">• SMS notification is only available for Universalbank\'s Humo cards</string>
+    <string name="sms_notification_turned_on_current_phone">• SMS notification is activated for the current phone number %1$s</string>
 
 </resources>

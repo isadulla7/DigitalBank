@@ -19,7 +19,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shimmer_view"
         android:layout_width="match_parent"
@@ -54,7 +53,7 @@
             android:layout_marginTop="8dp"
             android:gravity="center"
             android:text="@string/history_is_empty"
-            android:textColor="@color/brandBlueColor_50"
+            android:textColor="@color/brandBlueColor_60"
             android:textSize="16dp" />
 
         <uz.fido.utils.view.custom_text_view.TextViewRegular
@@ -80,8 +79,8 @@
         android:visibility="gone">
 
         <ImageView
-            android:layout_width="240dp"
-            android:layout_height="240dp"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
             android:layout_marginBottom="32dp"
             android:src="@drawable/ic_illustration_icon"
             app:layout_constraintBottom_toTopOf="@id/empty_center"
@@ -98,7 +97,7 @@
             android:gravity="center"
             android:paddingTop="4dp"
             android:text="@string/history_error"
-            android:textColor="@color/brandBlueColor_50"
+            android:textColor="@color/brandBlueColor_60"
             android:textSize="18dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

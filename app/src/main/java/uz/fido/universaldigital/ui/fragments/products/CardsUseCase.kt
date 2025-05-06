@@ -16,10 +16,7 @@ class CardsUseCaseImpl @Inject constructor(
 ) : CardsUseCase {
 
     override suspend fun getRates(clientToken: String): ArrayList<CourseItem> {
-        val response = utilsRepository.getCurrencyRates(
-            clientToken,
-            GetCurrencyRatesRequest(Command.INFO, "all")
-        )
+        val response = utilsRepository.getCurrencyRates(clientToken, GetCurrencyRatesRequest(Command.INFO, "all"))
         return if (response.status == Status.SUCCESS) {
             response.data?.currency_rates ?: ArrayList()
         } else ArrayList()

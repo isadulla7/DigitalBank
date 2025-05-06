@@ -102,7 +102,7 @@
     <string name="money_transfers">Денежные переводы</string>
     <string name="qr_payment">Оплата по QR</string>
     <string name="connect_sms_info">Подключить HUMO SMS</string>
-    <string name="humo_pay">HUMO PAY</string>
+    <string name="humo_pay">Humo Pay</string>
     <string name="enter_sms_code_from_mail">Введите код, полученный по</string>
     <string name="card_number">Номер карты</string>
     <string name="card_expire">Срок действия карты</string>
@@ -134,7 +134,7 @@
     <string name="this_is_last_attempt">Осталось последняя попытка ввода PIN-кода</string>
     <string name="too_many_attempts">Слишком много неудачных попыток</string>
     <string name="wrong_pin">Неверный PIN-код</string>
-    <string name="connect_sms_notification">Включить SMS-оповещение \n(HUMO)</string>
+    <string name="connect_sms_notification">Включить SMS-уведомление \n(Humo)</string>
     <string name="input_card_number">Введите номер карты</string>
     <string name="bank_not_found">Банк не найден</string>
     <string name="commission_with_dots">Комиссия:</string>
@@ -936,8 +936,8 @@
     <string name="no_connected_cards">Нет подключённых карт</string>
     <string name="humo_pay_description">Подключите HumoPay, чтобы оплачивать покупки смартфоном</string>
     <string name="humo_pay_timer">Статус ожидания закончится через %1$s секунд</string>
-    <string name="set_pin_humo_pay">Установите PIN-код для HUMO Pay</string>
-    <string name="repeat_pin_humo_pay">Повторите PIN-код HUMO Pay</string>
+    <string name="set_pin_humo_pay">Установите PIN-код для Humo Pay</string>
+    <string name="repeat_pin_humo_pay">Повторите PIN-код Humo Pay</string>
     <string name="your_phone_number">Ваш номер телефона</string>
     <string name="been_processed">Ваш запрос принят в обработку</string>
     <string name="application_approved">Заявка одобрена</string>
@@ -1072,4 +1072,6 @@
     <string name="empty_deposit_description">Это простой способ сохранить свои сбережения или накопить на крупную покупку.</string>
     <string name="empty_credit_message">Оформите кредит не выходя из дома.</string>
     <string name="you_have_no_wallets">У вас нет кошельков</string>
+    <string name="sms_notification_for_only_universalbank_humo_cards">• Включение SMS-уведомлений доступно только для карт Humo от Universalbank</string>
+    <string name="sms_notification_turned_on_current_phone">• SMS-уведомление подключается на текущий номер телефона%1$s</string>
 </resources>

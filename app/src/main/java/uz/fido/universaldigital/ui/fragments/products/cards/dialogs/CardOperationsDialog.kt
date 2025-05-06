@@ -10,7 +10,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogCardOperationBinding
-import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isBankCard
 import uz.fido.utils.const.CardConst.CURRENCY_CARD
 
 class CardOperationsDialog(
@@ -36,7 +35,7 @@ class CardOperationsDialog(
 
     private fun init() {
         binding.transferToCard.isVisible = card.object_type != CURRENCY_CARD
-        binding.blockCard.isVisible = isBankCard(card)
+        binding.blockCard.isVisible = card.is_our_bank == "Y"
         if (card.state == "P") {
             binding.transferToCard.visibility = View.GONE
             binding.setLimits.visibility = View.GONE

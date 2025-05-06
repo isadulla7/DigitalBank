@@ -41,6 +41,7 @@ import uz.fido.universaldigital.ui.fragments.profile.identification.Verification
 import uz.fido.universaldigital.ui.fragments.profile.settings.ShakeActions
 import uz.fido.universaldigital.ui.fragments.profile.user_details.EditProfileFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
+import uz.fido.universaldigital.ui.fragments.services.sms_notification.ConnectSmsNotificationFragment
 import uz.fido.universaldigital.ui.fragments.transfers.by_phone.TransferByPhoneFragment
 import uz.fido.universaldigital.ui.fragments.transfers.card_to_card.TransferFragment
 import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFragment
@@ -128,7 +129,6 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
                 destination.id == R.id.menuNewHomeFragment
             ) {
                 binding.bottomNavigation.showAnimWithSlideUp()
-//                binding.divider.showAnimWithSlideUp()
                 when (destination.id) {
                     R.id.productsFragment -> {
                         tintSystemBars(R.color.brandRedColor, R.color.backgroundColor)
@@ -145,7 +145,6 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
             } else {
                 tintSystemBars(R.color.whiteColor)
                 binding.bottomNavigation.hideAnimWithSlideDown()
-//                binding.divider.hideAnimWithSlideDown()
             }
         }
     }
@@ -206,7 +205,8 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
             currentFragment is BasicSuccessFragment ||
             currentFragment is PaymentFragment ||
             currentFragment is VerificationInfoUserFragment ||
-            currentFragment is EditProfileFragment
+            currentFragment is EditProfileFragment ||
+            currentFragment is ConnectSmsNotificationFragment
         ) {
             pausedMillis = 0L
         } else {
@@ -283,7 +283,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
                     }
                 }
             }
-        }catch (e:Exception){
+        } catch (e: Exception) {
             recordException(e, ::internetListener.name)
         }
     }
