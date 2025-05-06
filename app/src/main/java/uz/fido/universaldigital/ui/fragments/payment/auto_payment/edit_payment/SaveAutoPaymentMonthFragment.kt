@@ -6,10 +6,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.domain.model.payment.AllServiceLists
@@ -27,7 +25,9 @@ import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientPhoneNumber
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 @AndroidEntryPoint
 class SaveAutoPaymentMonthFragment : SimpleAbstractFragment<FragmentSavePaymentMonthBinding>(
@@ -323,8 +323,13 @@ class SaveAutoPaymentMonthFragment : SimpleAbstractFragment<FragmentSavePaymentM
                 val timePicker = TimePickerDialog(
                     activity, R.style.my_dialog_theme,
                     { _, selectedHour, selectedMinute ->
+                        val calendar = Calendar.getInstance()
+                        calendar.set(Calendar.HOUR_OF_DAY, selectedHour)
+                        calendar.set(Calendar.MINUTE, selectedMinute)
+                        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                        val formattedTime = sdf.format(calendar.time)
                         selectedTime = selectedHour.toString()
-                        binding.editTextTime.setText("$selectedHour:$selectedMinute")
+                        binding.editTextTime.setText(formattedTime)
                         binding.btnContinue.isEnabled(checkForButton())
                     },
                     cal.get(Calendar.HOUR_OF_DAY),

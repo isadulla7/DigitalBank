@@ -92,10 +92,14 @@ class SaveAutoPaymentSpecialFragment : SimpleAbstractFragment<FragmentSavePaymen
                 val timePicker = TimePickerDialog(
                     activity, R.style.my_dialog_theme,
                     { _, selectedHour, selectedMinute ->
-
+                        val calendar = Calendar.getInstance()
+                        calendar.set(Calendar.HOUR_OF_DAY, selectedHour)
+                        calendar.set(Calendar.MINUTE, selectedMinute)
+                        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                        val formattedTime = sdf.format(calendar.time)
                         selectedTime = selectedHour.toString()
                         if (selectedHour.toString() != "0") {
-                            binding.editTextTime.setText("$selectedHour:$selectedMinute")
+                            binding.editTextTime.setText(formattedTime)
                         } else binding.btnContinue.isEnabled(false)
                         if (binding.editTextDayOfPayment.text.toString().isNotEmpty() &&
                             binding.editTextAmount.text.toString().isNotEmpty() &&

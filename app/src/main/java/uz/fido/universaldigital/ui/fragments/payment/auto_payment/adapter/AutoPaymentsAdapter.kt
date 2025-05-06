@@ -30,7 +30,7 @@ class AutoPaymentsAdapter(
                         itemView.context.getString(uz.fido.utils.R.string.sum)
             binding.textDate.text =
                 if (item.state == STATE_ACTIVE) itemView.context.getString(R.string.active) else itemView.context.getString(
-                    R.string.ne_active
+                    R.string.inactive
                 )
 
             if (item.state == STATE_ACTIVE) {

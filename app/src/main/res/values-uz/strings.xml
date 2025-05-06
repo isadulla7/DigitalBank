@@ -1072,6 +1072,7 @@
     <string name="you_have_no_wallets">Sizda hamyonlar yo‘q</string>
     <string name="sms_notification_for_only_universalbank_humo_cards">• SMS xabarnomani yoqish faqatgina Universalbankning Humo kartalari uchun mavjud</string>
     <string name="sms_notification_turned_on_current_phone">• SMS xabarnoma joriy telefon raqamiga yoqiladi %1$s</string>
-    <string name="template">Шаблон</string>
+    <string name="template">Saqlangan to‘lov</string>
     <string name="min_summ">Minimal summa 500 so‘m</string>
+    <string name="inactive">Faol emas</string>
 </resources>

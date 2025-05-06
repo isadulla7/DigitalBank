@@ -7,7 +7,7 @@ import uz.fido.utils.utility.context.getDeviceIds
 
 fun Context.getFromPaper(key: String, defaultValue: String? = ""): String {
     val encryptedValue = Paper.book().read<String>(key, defaultValue)
-    var decryptedValue = ""
+    var decryptedValue: String
     try {
         decryptedValue = CryptoUtil.decrypt(encryptedValue, getDeviceIds())
     } catch (e: Exception) {

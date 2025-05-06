@@ -1,4 +1,4 @@
-package uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment
+package uz.fido.universaldigital.ui.fragments.payment.auto_payment
 
 import android.os.Bundle
 import android.text.TextUtils
@@ -12,7 +12,6 @@ import uz.fido.network.domain.model.subscriptions.ChangeAutoPaymentStateRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentAutoPaymentDetailBinding
-import uz.fido.universaldigital.ui.fragments.payment.auto_payment.AutoPaymentViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.CardConst.STATE_ACTIVE
 import uz.fido.utils.const.CardConst.STATE_PASSIVE
@@ -53,7 +52,7 @@ class AutoPaymentDetailsFragment : BaseFragment<FragmentAutoPaymentDetailBinding
             binding.statusValue.isChecked = true
         } else {
             binding.statusValue.isChecked = false
-            binding.statusValue.text = getString(R.string.ne_active)
+            binding.statusValue.text = getString(R.string.inactive)
             binding.statusValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_auto_no_activ))
         }
 

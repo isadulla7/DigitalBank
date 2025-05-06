@@ -23,16 +23,18 @@ import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientPhoneNumber
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 @AndroidEntryPoint
-class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,EditAutoPaymentViewModel>
-    (FragmentSaveAutoPaymentDayBinding::inflate,EditAutoPaymentViewModel::class.java),
+class SaveAutoPaymentDayFragment : BaseFragment<FragmentSaveAutoPaymentDayBinding, EditAutoPaymentViewModel>
+    (FragmentSaveAutoPaymentDayBinding::inflate, EditAutoPaymentViewModel::class.java),
     View.OnClickListener {
 
     private var saveAutoPaymentModel: SaveAutoPaymentModel? = null
     private var autoPayment: AutoPayment? = null
-    private val days= arrayListOf<String>()
+    private val days = arrayListOf<String>()
 
     private var daysList = ArrayList<AllServiceLists>()
 
@@ -94,13 +96,13 @@ class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,
                 listOfDays.add(autoPaymentDates)
             }
             daysList = ArrayList()
-            listOfDays.forEach { it.isSelected=false }
-            daysList=listOfDays
+            listOfDays.forEach { it.isSelected = false }
+            daysList = listOfDays
             listOfDays.forEach { dayWithName ->
                 currentDays!!.forEach {
                     if (it == dayWithName.code!!.toInt()) {
-                        daysList[it-1].isSelected=true
-                    //daysList.add(dayWithName)
+                        daysList[it - 1].isSelected = true
+                        //daysList.add(dayWithName)
                     }
                 }
             }
@@ -225,10 +227,11 @@ class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,
                 daysArrayList.add(it.code!!.toInt())
                 dayNameBuilder.append(" ").append(it.name?.replace("'", " ")).append(" ,")
                 dayNameBuilder.deleteCharAt(dayNameBuilder.length - 1)
-            } }
+            }
+        }
         saveAutoPaymentModel?.months = ArrayList()
         saveAutoPaymentModel?.days = daysArrayList
-        saveAutoPaymentModel?.selected_days= arrayListOf()
+        saveAutoPaymentModel?.selected_days = arrayListOf()
         saveAutoPaymentModel?.hours = selectedTime
         saveAutoPaymentModel?.amount = Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", ""))
         saveAutoPaymentModel?.daysName = dayNameBuilder.toString()
@@ -252,10 +255,11 @@ class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,
         }
 
         override fun afterTextChanged(s: Editable?) {
-           binding.btnContinue.isEnabled(checkForButton())
+            binding.btnContinue.isEnabled(checkForButton())
         }
     }
-    private fun checkForButton():Boolean {
+
+    private fun checkForButton(): Boolean {
         if (binding.editTextName.text.toString().isEmpty()) {
             return false
         }
@@ -263,10 +267,11 @@ class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,
             return false
         }
         if (binding.editTextAmount.text.toString().isEmpty()
-            || binding.editTextAmount.text.toString().replace(" ", "").toDouble() < 500) {
+            || binding.editTextAmount.text.toString().replace(" ", "").toDouble() < 500
+        ) {
             return false
         }
-        val newLists= daysList.filter { it.isSelected }
+        val newLists = daysList.filter { it.isSelected }
         if (newLists.isEmpty()) {
             return false
         }
@@ -274,13 +279,19 @@ class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,
     }
 
     override fun onClick(p0: View?) {
-        when(p0?.id){
-            R.id.edit_text_time_day,R.id.icon_text_time_day->{
+        when (p0?.id) {
+            R.id.edit_text_time_day, R.id.icon_text_time_day -> {
                 val cal = Calendar.getInstance()
-                val timePicker = TimePickerDialog(activity,R.style.my_dialog_theme,
+                val timePicker = TimePickerDialog(
+                    activity, R.style.my_dialog_theme,
                     { _, selectedHour, selectedMinute ->
+                        val calendar = Calendar.getInstance()
+                        calendar.set(Calendar.HOUR_OF_DAY, selectedHour)
+                        calendar.set(Calendar.MINUTE, selectedMinute)
+                        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+                        val formattedTime = sdf.format(calendar.time)
                         selectedTime = selectedHour.toString()
-                        binding.editTextTimeDay.setText("$selectedHour:$selectedMinute")
+                        binding.editTextTimeDay.setText(formattedTime)
                         binding.btnContinue.isEnabled(checkForButton())
 
                     },

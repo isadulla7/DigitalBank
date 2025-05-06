@@ -482,7 +482,7 @@
         android:label="SaveAutoPaymentFinalFragment" />
     <fragment
         android:id="@+id/autoPaymentDetailsFragment"
-        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment.AutoPaymentDetailsFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.payment.auto_payment.AutoPaymentDetailsFragment"
         android:label="AutoPaymentDetailsFragment" />
     <fragment
         android:id="@+id/confirmSWIFTTransfer"

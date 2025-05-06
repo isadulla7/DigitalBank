@@ -172,23 +172,23 @@ class AutoPaymentFragment : BaseFragment<FragmentApWithCalendarBinding, AutoPaym
                         if (autoPayment.months.isNotEmpty()) {
                             autoPayment.months.forEach { month ->
                                 if (month != 0 && autoPayment.days.isNotEmpty()) {
-                                    val calendar = Calendar.getInstance()
-                                    calendar.set(Calendar.MONTH, month - 1)
-                                    calendar.set(Calendar.DAY_OF_MONTH, autoPayment.days.first())
-                                    if (calendar.time >= today) {
-                                        events.add(EventObjects(autoPayment.name, calendar.time))
+                                    val calendar1 = Calendar.getInstance()
+                                    calendar1.set(Calendar.MONTH, month - 1)
+                                    calendar1.set(Calendar.DAY_OF_MONTH, autoPayment.days.first())
+                                    if (calendar1.time >= today) {
+                                        events.add(EventObjects(autoPayment.name, calendar1.time))
                                         binding.calendar.addEvents(events)
                                     }
                                 }
                             }
                             autoPayment.months.forEach { month ->
                                 if (month != 0 && autoPayment.days.isNotEmpty()) {
-                                    val calendar = Calendar.getInstance()
-                                    calendar.add(Calendar.YEAR, 1)
-                                    calendar.set(Calendar.MONTH, month - 1)
-                                    calendar.set(Calendar.DAY_OF_MONTH, autoPayment.days.first())
-                                    if (calendar.time >= today) {
-                                        events.add(EventObjects(autoPayment.name, calendar.time))
+                                    val calendar1 = Calendar.getInstance()
+                                    calendar1.add(Calendar.YEAR, 1)
+                                    calendar1.set(Calendar.MONTH, month - 1)
+                                    calendar1.set(Calendar.DAY_OF_MONTH, autoPayment.days.first())
+                                    if (calendar1.time >= today) {
+                                        events.add(EventObjects(autoPayment.name, calendar1.time))
                                         binding.calendar.addEvents(events)
                                     }
                                 }

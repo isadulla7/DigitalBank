@@ -171,12 +171,4 @@ androidx-room-room-ktx = { group = "androidx.room", name = "room-ktx", version.r
 org-tensorflow-tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tenserFlow" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlyticsVersion" }
-build-gradle = { group = "com.android.tools.build", name = "gradle", version.ref = "buildGradle" }
-kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
-google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
-hild-android-gradle-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin", version.ref = "hilt" }
-firebase-crashlytics-gradle = { group = "com.google.firebase", name = "firebase-crashlytics-gradle", version.ref = "firebaseCrashlyticsGradle" }
-firebase-perf-plugin = { group = "com.google.firebase", name = "perf-plugin", version.ref = "perfPlugin" }
-com-android-tools-r8 = { group = "com.android.tools", name = "r8", version.ref = "r8" }
-
 [plugins]

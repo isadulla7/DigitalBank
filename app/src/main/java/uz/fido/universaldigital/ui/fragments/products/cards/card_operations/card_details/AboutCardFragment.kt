@@ -112,7 +112,7 @@ class AboutCardFragment : BaseFragment<FragmentAboutCardBinding, MenuProductsVie
                         try {
                             copyObjValue(CryptoUtil.decryptWithoutSalt(result.object_value, getFromSecureStore(Const.PASSWORD_ENC)))
                         } catch (e: Exception) {
-                            toast(e.localizedMessage)
+                            toast(e.message.toString())
                         }
                     }
 

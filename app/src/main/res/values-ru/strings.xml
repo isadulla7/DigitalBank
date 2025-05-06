@@ -1076,4 +1076,5 @@
     <string name="sms_notification_turned_on_current_phone">• SMS-уведомление подключается на текущий номер телефона%1$s</string>
     <string name="template">Шаблон</string>
     <string name="min_summ">Минимальная сумма 500 сум</string>
+    <string name="inactive">Неактивный</string>
 </resources>

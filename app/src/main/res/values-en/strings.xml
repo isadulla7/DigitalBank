@@ -1074,4 +1074,5 @@
     <string name="sms_notification_turned_on_current_phone">• SMS notification is activated for the current phone number %1$s</string>
     <string name="template">Template</string>
     <string name="min_summ">Minimum amount 500</string>
+    <string name="inactive">Inactive</string>
 </resources>
