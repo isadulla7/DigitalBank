@@ -105,7 +105,7 @@ class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,
                 }
             }
             daysAdapter?.setList(daysList)
-            checkForButton()
+
         } else {
             val amount = saveAutoPaymentModel?.payment_details?.get("AMOUNT")
             if (amount != null) {
@@ -138,7 +138,40 @@ class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,
 
     private fun onClickView() {
         binding.editTextName.addTextChangedListener(textWatcher)
-        binding.editTextAmount.addTextChangedListener(textWatcher)
+        binding.editTextAmount.addTextChangedListener(object : TextWatcher {
+            private var isEditing = false
+
+            override fun afterTextChanged(s: Editable?) {
+                if (isEditing) return
+
+                isEditing = true
+
+                val digits = s.toString().replace(Regex("[^0-9]"), "")
+
+                if (digits.isNotEmpty()) {
+                    val formatted = digits.reversed().chunked(3).joinToString(" ").reversed()
+                    binding.editTextAmount.setText(formatted)
+                    binding.editTextAmount.setSelection(formatted.length)
+
+                    val amount = digits.toLongOrNull() ?: 0L
+                    if (amount < 500) {
+                        binding.editTextAmount.error = getString(R.string.min_summ)
+                    } else {
+                        binding.editTextAmount.error = null
+                    }
+
+                } else {
+                    binding.editTextAmount.setText("")
+                    binding.editTextAmount.error = getString(R.string.min_summ)
+                }
+
+                isEditing = false
+                binding.btnContinue.isEnabled(checkForButton())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
         binding.editTextTimeDay.addTextChangedListener(textWatcher)
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.editTextTimeDay.setOnClickListener(this)
@@ -229,10 +262,12 @@ class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,
         if (binding.editTextTimeDay.text.toString().isEmpty()) {
             return false
         }
-        if (binding.editTextAmount.text.toString().isEmpty()) {
+        if (binding.editTextAmount.text.toString().isEmpty()
+            || binding.editTextAmount.text.toString().replace(" ", "").toDouble() < 500) {
             return false
         }
-        if (daysList.size == 0) {
+        val newLists= daysList.filter { it.isSelected }
+        if (newLists.isEmpty()) {
             return false
         }
         return true
@@ -246,8 +281,7 @@ class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,
                     { _, selectedHour, selectedMinute ->
                         selectedTime = selectedHour.toString()
                         binding.editTextTimeDay.setText("$selectedHour:$selectedMinute")
-                        checkForButton()
-                        binding.btnContinue.isEnabled(true)
+                        binding.btnContinue.isEnabled(checkForButton())
 
                     },
                     cal.get(Calendar.HOUR_OF_DAY),
@@ -271,6 +305,7 @@ class SaveAutoPaymentDayFragment:BaseFragment<FragmentSaveAutoPaymentDayBinding,
                 ++selectedDays
             }
         }
+        binding.btnContinue.isEnabled(checkForButton())
         binding.switchDaily.isChecked = selectedDays == 7
     }
 

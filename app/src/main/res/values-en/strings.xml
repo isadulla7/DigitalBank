@@ -1072,5 +1072,6 @@
     <string name="you_have_no_wallets">You have no wallets</string>
     <string name="sms_notification_for_only_universalbank_humo_cards">• SMS notification is only available for Universalbank\'s Humo cards</string>
     <string name="sms_notification_turned_on_current_phone">• SMS notification is activated for the current phone number %1$s</string>
-
+    <string name="template">Template</string>
+    <string name="min_summ">Minimum amount 500</string>
 </resources>

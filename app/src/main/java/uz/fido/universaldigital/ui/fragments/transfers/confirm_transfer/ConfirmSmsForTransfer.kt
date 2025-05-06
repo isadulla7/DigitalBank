@@ -139,7 +139,9 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
                     }
                     gotoWithSlide(
                         R.id.action_confirmSmsForTransfer_to_successTransferFragment,
-                        bundleOf(SuccessTransferFragment.TRANSFER_DTO to transferDto)
+                        bundleOf(
+                            SuccessTransferFragment.TRANSFER_OPERATION to requireArguments().getString(SuccessTransferFragment.TRANSFER_OPERATION,""),
+                            SuccessTransferFragment.TRANSFER_DTO to transferDto)
                     )
                 }
 

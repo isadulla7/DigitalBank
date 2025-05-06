@@ -6,8 +6,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
+import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.domain.model.payment.AllServiceLists
@@ -104,13 +106,11 @@ class SaveAutoPaymentMonthFragment : SimpleAbstractFragment<FragmentSavePaymentM
                 currentMonths!!.forEach {
                     if (it == dayWithName.code!!.toInt()) {
                         monthsList[it - 1].isSelected = true
-                        //monthsList.add(dayWithName)
                     }
                 }
             }
             monthsAdapter?.setList(monthsList)
-            //  binding.btnContinue.isEnabled(true)
-            checkForButton()
+          //  checkForButton()
         } else {
             val amount = saveAutoPaymentModel?.payment_details?.get("AMOUNT")
             if (amount != null) {
@@ -137,7 +137,42 @@ class SaveAutoPaymentMonthFragment : SimpleAbstractFragment<FragmentSavePaymentM
         binding.editTextName.addTextChangedListener(textWatcher)
         binding.editTextTime.addTextChangedListener(textWatcher)
         binding.editTextDayOfPayment.addTextChangedListener(textWatcher)
-        binding.editTextAmount.addTextChangedListener(textWatcher)
+        binding.editTextAmount.addTextChangedListener(object : TextWatcher {
+            private var isEditing = false
+
+            override fun afterTextChanged(s: Editable?) {
+                if (isEditing) return
+
+                isEditing = true
+
+                val digits = s.toString().replace(Regex("[^0-9]"), "")
+
+                if (digits.isNotEmpty()) {
+                    // Formatlash
+                    val formatted = digits.reversed().chunked(3).joinToString(" ").reversed()
+                    binding.editTextAmount.setText(formatted)
+                    binding.editTextAmount.setSelection(formatted.length)
+
+                    // Min 500 tekshirish
+                    val amount = digits.toLongOrNull() ?: 0L
+                    if (amount < 500) {
+                        binding.editTextAmount.error = getString(R.string.min_summ)
+                    } else {
+                        binding.editTextAmount.error = null // Error yo‘qoladi
+                    }
+
+                } else {
+                    binding.editTextAmount.setText("")
+                    binding.editTextAmount.error = getString(R.string.min_summ)
+                }
+
+                isEditing = false
+                binding.btnContinue.isEnabled(checkForButton())
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
         binding.editTextDayOfPayment.setOnClickListener(this)
         binding.iconTextDayOfPayment.setOnClickListener(this)
         binding.editTextTime.setOnClickListener(this)
@@ -248,13 +283,16 @@ class SaveAutoPaymentMonthFragment : SimpleAbstractFragment<FragmentSavePaymentM
         if (binding.editTextTime.text.toString().isEmpty()) {
             return false
         }
-        if (binding.editTextAmount.text.toString().isEmpty()) {
+        if (binding.editTextAmount.text.toString().isEmpty()
+            || binding.editTextAmount.text.toString().replace(" ", "").toDouble() < 500
+        ) {
             return false
         }
         if (binding.editTextDayOfPayment.text.toString().isEmpty()) {
             return false
         }
-        if (monthsList.size == 0) {
+        val newList= monthsList.filter { it.isSelected }
+        if (newList.isEmpty()) {
             return false
         }
 
@@ -269,6 +307,7 @@ class SaveAutoPaymentMonthFragment : SimpleAbstractFragment<FragmentSavePaymentM
                 ++selectedDays
             }
         }
+        binding.btnContinue.isEnabled(checkForButton())
     }
 
     override fun onClick(p0: View?) {
@@ -286,6 +325,7 @@ class SaveAutoPaymentMonthFragment : SimpleAbstractFragment<FragmentSavePaymentM
                     { _, selectedHour, selectedMinute ->
                         selectedTime = selectedHour.toString()
                         binding.editTextTime.setText("$selectedHour:$selectedMinute")
+                        binding.btnContinue.isEnabled(checkForButton())
                     },
                     cal.get(Calendar.HOUR_OF_DAY),
                     cal.get(Calendar.HOUR_OF_DAY),

@@ -1074,4 +1074,6 @@
     <string name="you_have_no_wallets">У вас нет кошельков</string>
     <string name="sms_notification_for_only_universalbank_humo_cards">• Включение SMS-уведомлений доступно только для карт Humo от Universalbank</string>
     <string name="sms_notification_turned_on_current_phone">• SMS-уведомление подключается на текущий номер телефона%1$s</string>
+    <string name="template">Шаблон</string>
+    <string name="min_summ">Минимальная сумма 500 сум</string>
 </resources>

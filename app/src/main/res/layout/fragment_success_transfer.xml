@@ -11,7 +11,9 @@
         android:gravity="center"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/goto_main_page"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429"
+        tools:layout_editor_absoluteX="40dp">
 
         <com.airbnb.lottie.LottieAnimationView
             android:layout_width="120dp"
@@ -55,31 +57,95 @@
             android:textSize="24dp"
             tools:text="68 600 сум" />
 
+
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/cheque"
-            android:layout_width="80dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
             android:layout_marginTop="40dp"
-            android:gravity="center"
-            android:orientation="vertical">
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-            <ImageView
-                android:layout_width="56dp"
-                android:layout_height="56dp"
-                android:src="@drawable/ic_cheque"
-                tools:ignore="ContentDescription" />
-
-            <uz.fido.utils.view.custom_text_view.TextViewMedium
-                android:layout_width="match_parent"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/repeat"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
                 android:gravity="center"
-                android:text="@string/cheque"
-                android:textColor="@color/mainTextColor"
-                android:textSize="12dp" />
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_repeat"
+                    tools:ignore="ContentDescription" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/repeat"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="12dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/cheque"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_cheque"
+                    tools:ignore="ContentDescription" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/cheque"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="12sp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/tempate"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:src="@drawable/ic_add_template"
+                    tools:ignore="ContentDescription" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:gravity="center"
+                    android:text="@string/template"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="12dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

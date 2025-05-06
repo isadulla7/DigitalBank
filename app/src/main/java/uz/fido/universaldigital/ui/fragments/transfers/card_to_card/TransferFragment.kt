@@ -338,7 +338,8 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
                         operation = SuccessTransferFragment.TRANSFER_BY_CARD,
                         requestId = p2PInfoDto?.requestId,
                         cardId = p2PInfoDto?.cardId
-                    )
+                    ),
+                    SuccessTransferFragment.TRANSFER_OPERATION to SuccessTransferFragment.TRANSFER_BY_CARD
                 )
             )
         } else showSnackbar(p2PInfoDto?.errorMessage ?: "")

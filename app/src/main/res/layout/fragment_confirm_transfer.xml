@@ -207,7 +207,7 @@
 
     </androidx.core.widget.NestedScrollView>
 
-    <uz.fido.utils.view.custom_circle_button.CustomFAButton
+        <uz.fido.utils.view.custom_circle_button.CustomFAButton
         android:id="@+id/btn_continue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -317,7 +317,8 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                         operation = SuccessTransferFragment.TRANSFER_OVER_MY_CARDS,
                         requestId = p2PInfoDto?.requestId,
                         cardId = p2PInfoDto?.cardId
-                    )
+                    ),
+                    SuccessTransferFragment.TRANSFER_OPERATION to SuccessTransferFragment.TRANSFER_OVER_MY_CARDS_BY
                 )
             )
         }
