@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -114,6 +115,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                 val count = daysList.filter { it.isSelected }
                 binding.btnContinue.isEnabled(
                     binding.editTextAmount.text.toString().isNotEmpty() &&
+                            binding.editTextAmount.text.toString().replace(" ", "").toDouble() >= 500 &&
                             binding.editTextName.toString().isNotEmpty() &&
                             count.isNotEmpty()
                             && !binding.editTextTimeDay.text.isNullOrEmpty()
@@ -123,13 +125,16 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
             2 -> {
                 val count = monthsList.filter { it.isSelected }
                 binding.btnContinue.isEnabled(
-                    !binding.editTextDayOfPayment.text.isNullOrEmpty()
-                            && count.isNotEmpty() && !binding.editTextTime.text.isNullOrEmpty()
+                    !binding.editTextDayOfPayment.text.isNullOrEmpty() &&
+                     binding.editTextAmount.text.toString().replace(" ", "").toDouble() >= 500
+                     && count.isNotEmpty() && !binding.editTextTime.text.isNullOrEmpty()
                 )
             }
 
             3 -> {
-                binding.btnContinue.isEnabled(customDates.isNotEmpty() && !selectedTime.isNullOrEmpty())
+                binding.btnContinue.isEnabled(customDates.isNotEmpty()
+                        && binding.editTextAmount.text.toString().replace(" ", "").toDouble() >= 500
+                        && !selectedTime.isNullOrEmpty())
             }
         }
     }
@@ -229,6 +234,34 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
         binding.btnContinue.setOnClickListener {
             nextWindow()
         }
+        binding.editTextAmount.addTextChangedListener(object : TextWatcher {
+            private var isEditing = false
+
+            override fun afterTextChanged(s: Editable?) {
+                if (isEditing) return
+                isEditing = true
+                val digits = s.toString().replace(Regex("[^0-9]"), "")
+                if (digits.isNotEmpty()) {
+                    val formatted = digits.reversed().chunked(3).joinToString(" ").reversed()
+                    binding.editTextAmount.setText(formatted)
+                    binding.editTextAmount.setSelection(formatted.length)
+                    val amount = digits.toLongOrNull() ?: 0L
+                    if (amount < 500) {
+                        binding.editTextAmount.error = getString(R.string.min_summ)
+                    } else {
+                        binding.editTextAmount.error = null
+                    }
+                } else {
+                    binding.editTextAmount.setText("")
+                    binding.editTextAmount.error = getString(R.string.min_summ)
+                }
+                buttonCheck()
+                isEditing = false
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
 
     }
 
@@ -243,7 +276,9 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                 binding.btnContinue.isEnabled(customDates.isNotEmpty())
 
             }
+
             adapter = customDatesAdapterAdapter
+            customDatesAdapterAdapter.setList(customDates)
         }
     }
 
@@ -251,90 +286,6 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
         if (autoPayment != null) {
             binding.editTextAmount.setText(Format.convertFromTiynDivide(autoPayment?.amount.toString()))
             binding.editTextName.setText(autoPayment?.name.toString())
-            /*   val time = autoPayment?.hour
-               val timeList = ArrayList<AllServiceLists>()
-               for (i in 1..24) {
-                   val allServiceLists = AllServiceLists()
-                   allServiceLists.name = ("$i:00")
-                   allServiceLists.code = i.toString()
-                   timeList.add(allServiceLists)
-               }
-               var timeName: String? = ""
-               timeList.forEach {
-                   if (it.code!!.toInt() == time) {
-                       timeName = it.name.toString()
-                       selectedTime = it.code.toString()
-                   }
-               }
-
-               binding.editTextTime.setText(timeName)
-               binding.editTextTimeDay.setText(timeName)
-               autoPaymentType = if (autoPayment!!.type == "M") 2 else 1
-
-               when (autoPaymentType) {
-                   1 -> {
-                       binding.editTextType.setText(getString(R.string.by_day))
-                       binding.daily.visibility = View.VISIBLE
-                       binding.monthly.visibility = View.GONE
-                       binding.customDateLayout.visibility = View.GONE
-                   }
-
-                   2 -> {
-                       binding.editTextType.setText(getString(R.string.by_month))
-                       binding.daily.visibility = View.GONE
-                       binding.monthly.visibility = View.VISIBLE
-                       binding.customDateLayout.visibility = View.GONE
-                   }
-
-                   else -> {
-                       binding.customDateLayout.visibility = View.VISIBLE
-                       binding.daily.visibility = View.GONE
-                       binding.monthly.visibility = View.GONE
-                       binding.editTextType.setText(getString(R.string.custom))
-                   }
-               }
-
-               if (autoPayment!!.type == "M") {
-                   binding.editTextDayOfPayment.setText(autoPayment!!.days[0].toString())
-                   val currentMonths = autoPayment?.months
-                   val listOfMonths = ArrayList<AllServiceLists>()
-                   for (i in months.indices) {
-                       val autoPaymentDates = AllServiceLists()
-                       autoPaymentDates.name = months[i]
-                       autoPaymentDates.code = (i + 1).toString()
-                       autoPaymentDates.isSelected = currentMonths!!.contains(i + 1)
-                       listOfMonths.add(autoPaymentDates)
-                   }
-                   if (currentMonths != null) {
-                       binding.sswitchMonthly.isChecked = currentMonths.size == 12
-                   }
-                   monthsList = ArrayList()
-                   listOfMonths.forEach { dayWithName ->
-                       monthsList.add(dayWithName)
-                   }
-                   monthsAdapter?.setList(monthsList)
-
-               } else {
-                   val currentDays = autoPayment?.days
-                   val listOfDays = ArrayList<AllServiceLists>()
-                   for (i in days.indices) {
-                       val autoPaymentDates = AllServiceLists()
-                       autoPaymentDates.name = days[i]
-                       autoPaymentDates.code = (i + 1).toString()
-                       autoPaymentDates.isSelected = currentDays!!.contains(i + 1)
-                       listOfDays.add(autoPaymentDates)
-                   }
-                   if (currentDays != null) {
-                       binding.switchDaily.isChecked = currentDays.size == 7
-                   }
-                   daysList = ArrayList()
-                   listOfDays.forEach { dayWithName ->
-                       daysList.add(dayWithName)
-                   }
-                   daysAdapter?.setList(daysList)
-               }
-               buttonCheck()
-   */
         } else {
             val amount = saveAutoPaymentModel?.payment_details?.get("AMOUNT")
             if (amount != null) {
