@@ -115,6 +115,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                 val count = daysList.filter { it.isSelected }
                 val amount = binding.editTextAmount.text.toString().replace(" ", "").toDoubleOrNull() ?: 0.0
                 binding.btnContinue.isEnabled(
+                    !binding.editTextName.text.isNullOrEmpty() &&
                     binding.editTextAmount.text.toString().isNotEmpty() &&
                             amount >= 500 &&
                             binding.editTextName.toString().isNotEmpty() &&
@@ -127,6 +128,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                 val amount = binding.editTextAmount.text.toString().replace(" ", "").toDoubleOrNull() ?: 0.0
                 val count = monthsList.filter { it.isSelected }
                 binding.btnContinue.isEnabled(
+                    !binding.editTextName.text.isNullOrEmpty() &&
                     !binding.editTextDayOfPayment.text.isNullOrEmpty() &&
                      amount >= 500
                      && count.isNotEmpty() && !binding.editTextTime.text.isNullOrEmpty()
@@ -136,6 +138,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
             3 -> {
                 val amount = binding.editTextAmount.text.toString().replace(" ", "").toDoubleOrNull() ?: 0.0
                 binding.btnContinue.isEnabled(customDates.isNotEmpty()
+                        && !binding.editTextName.text.isNullOrEmpty()
                         && amount >= 500
                         && !selectedTime.isNullOrEmpty())
             }
@@ -233,6 +236,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
         binding.editTextTimeDay.addTextChangedListener(textWatcher)
         binding.editTextDayOfPayment.addTextChangedListener(textWatcher)
         binding.editTextTime.addTextChangedListener(textWatcher)
+        binding.editTextName.addTextChangedListener(textWatcher)
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
             nextWindow()
