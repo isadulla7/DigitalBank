@@ -22,8 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20sp"
-        android:layout_marginEnd="16dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="16dp"
         android:gravity="center"
         android:text="@string/operation_with_card"
         android:textColor="@color/mainTextColor"
@@ -42,6 +42,7 @@
             android:layout_marginStart="21.5dp"
             android:layout_marginTop="28.5dp"
             android:background="@color/brandBlueColor_20"
+            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,6 +56,19 @@
             tools:itemCount="4"
             tools:layout_editor_absoluteX="-16dp"
             tools:listitem="@layout/item_application_status" />
+
+        <ProgressBar
+            android:id="@+id/progress"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="16dp"
+            android:indeterminateTint="@color/brandRedColor"
+            android:progressTint="@color/brandRedColor"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

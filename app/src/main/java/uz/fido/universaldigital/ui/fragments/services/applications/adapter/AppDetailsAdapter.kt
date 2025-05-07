@@ -12,7 +12,8 @@ import uz.fido.universaldigital.databinding.ItemApplicationStatusBinding
 import uz.fido.utils.utility.format.Format
 
 class AppDetailsAdapter(
-    private val list: ArrayList<ApplicationStatus>, private val addButton: () -> Unit
+    private val list: ArrayList<ApplicationStatus>,
+    private val addButton: () -> Unit
 ) : RecyclerView.Adapter<AppDetailsAdapter.ViewHolder>() {
 
     inner class ViewHolder(private val binding: ItemApplicationStatusBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -20,14 +21,14 @@ class AppDetailsAdapter(
             binding.applicationName.text = item.state_name
             binding.date.text = item.create_date
             if (item.isEnable) {
-                binding.applicationName.setTextColor(itemView.context.getColor(R.color.brandRedColor))
+                binding.applicationName.setTextColor(itemView.context.getColor(R.color.monitoring_amount))
                 binding.cardView.setCardBackgroundColor(
                     ContextCompat.getColor(
-                        itemView.context, R.color.brandRedColor
+                        itemView.context, R.color.monitoring_amount
                     )
                 )
                 binding.cardView.strokeColor = ContextCompat.getColor(
-                    itemView.context, R.color.brandRedColor
+                    itemView.context, R.color.monitoring_amount
                 )
             } else {
                 binding.applicationName.setTextColor(itemView.context.getColor(R.color.mainTextColor))

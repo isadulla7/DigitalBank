@@ -21,10 +21,9 @@ class AppListAdapter(
     inner class ViewHolder(private val binding: ItemApplicationBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: OrderCardApp) {
-            binding.applicationName.text =
-                item.module_product.ifEmpty { itemView.context.getString(R.string.application) }
-            binding.appId.text = "ID: " +
-                    if (item.product == "CREDIT") item.loan_cc_id.toString() else item.application_id.toString()
+            binding.applicationName.text = item.module_product.ifEmpty { itemView.context.getString(R.string.application) }
+            binding.appId.text = "ID: " + if (item.product == "CREDIT") item.loan_cc_id.toString() else item.application_id.toString()
+            binding.createdDate.text = item.create_date
             when (item.state_id) {
                 1 -> {
                     binding.status.text = context.getString(R.string.application_received)

@@ -65,13 +65,12 @@ class AppDetailsDialog(
     }
 
     private fun initStatuses() {
-        utilsViewModel.getProductDetails(
-            getClientToken(), GetProductDetailsRequest(application.application_id.toString())
-        ).observe(viewLifecycleOwner) {
+        binding.progress.visibility = View.VISIBLE
+        utilsViewModel.getProductDetails(getClientToken(), GetProductDetailsRequest(application.application_id.toString())).observe(viewLifecycleOwner) {
+            binding.progress.visibility = View.GONE
             when (it.status) {
                 Status.SUCCESS -> {
-                    val response = it.data
-                    details = response!!
+                    details = it.data!!
                     initList()
                 }
 
@@ -84,6 +83,7 @@ class AppDetailsDialog(
 
     private fun initList() {
         statusList.clear()
+        binding.progressBg.visibility = View.VISIBLE
         when (application.state_id) {
             1 -> {
                 statusList.add(
@@ -208,7 +208,6 @@ class AppDetailsDialog(
                 )
             }
         }
-
         applicationStatusAdapter = AppDetailsAdapter(statusList) {
             checkCardRequest()
         }

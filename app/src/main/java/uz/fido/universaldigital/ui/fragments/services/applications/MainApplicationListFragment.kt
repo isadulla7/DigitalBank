@@ -17,15 +17,16 @@ class MainApplicationListFragment : BaseFragment<FragmentMainApplicationListBind
     FragmentMainApplicationListBinding::inflate, UtilsViewModel::class.java
 ) {
 
+    private lateinit var adapter: AppTypesViewPagerAdapter
+
     companion object {
         var OPERATION = ""
     }
 
-    private lateinit var adapter: AppTypesViewPagerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            OPERATION = it.getString(Const.OPERATION, "")!!
+            OPERATION = it.getString(Const.OPERATION, "")
         }
     }
 
@@ -33,7 +34,6 @@ class MainApplicationListFragment : BaseFragment<FragmentMainApplicationListBind
         super.onInit(savedInstanceState)
         initAppTypes()
     }
-
 
     private fun initAppTypes() {
         binding.appBar.setOnBackButtonClickListener { pop() }
