@@ -17,11 +17,11 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMonitoringUzcardFilterBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.FilterCardMonitoringAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringFilterAdapter
+import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringFilteredAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringAmountDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringDateDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.filter.TransactionTypeDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringFilterViewModel
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.TransactionTypeDialog
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.pop
@@ -33,7 +33,7 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     View.OnClickListener, (MonitoringFilter) -> Unit {
 
     private val cardAdapter by lazy { FilterCardMonitoringAdapter(this) }
-    private val monitoringFilterAdapter by lazy { MonitoringFilterAdapter(arrayListOf(), this) }
+    private val monitoringFilterAdapter by lazy { MonitoringFilteredAdapter(arrayListOf(), this) }
     private var filterSaveVh: FilterSaveVh? = null
 
     private lateinit var monitoringDateDialog: MonitoringDateDialog

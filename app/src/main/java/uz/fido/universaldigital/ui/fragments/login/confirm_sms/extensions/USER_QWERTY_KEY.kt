@@ -51,6 +51,7 @@ fun Fragment.saveSignInPinResponse(signInResponse: SignInResponse) {
     saveToSecureStore(Const.USER_BIRTHDAY, signInResponse.date_of_birth)
     saveToSecureStore(Const.USER_PASSWORD_DATA, signInResponse.passport_serial + " " + signInResponse.passport_number)
     saveToSecureStore(Const.USER_PASS_GIVEN_DATE, signInResponse.passport_registration_date)
+    saveToSecureStore(Const.PINFL, signInResponse.pnfl)
 }
 
 fun Context.saveUserQwerty(qwerty: String) {

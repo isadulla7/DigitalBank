@@ -21,13 +21,13 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMonitoringFilterBinding
 import uz.fido.universaldigital.ui.fragments.monitoring.MenuMonitoringViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.FilterLocalCardMonitoringAdapter
-import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringFilterAdapter
+import uz.fido.universaldigital.ui.fragments.monitoring.adapter.MonitoringFilteredAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.adapter.ServiceAllMonitoringAdapter
 import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringAmountDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringDateDialog
+import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringFilterViewModel
 import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringServiceFilterDialog
 import uz.fido.universaldigital.ui.fragments.monitoring.filter.TransactionTypeDialog
-import uz.fido.universaldigital.ui.fragments.monitoring.filter.MonitoringFilterViewModel
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
@@ -50,7 +50,7 @@ class LocalMonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBindi
         )
     }
     private val monitoringFilterAdapter by lazy {
-        MonitoringFilterAdapter(
+        MonitoringFilteredAdapter(
             arrayListOf(),
             this
         )
@@ -324,14 +324,6 @@ class LocalMonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBindi
                 showStartEndDate()
             }
 
-            R.id.card -> {
-                if (binding.expandableCards.isExpanded) {
-                    binding.expandableCards.collapse()
-                } else {
-                    binding.expandableCards.expand()
-                }
-            }
-
             R.id.amount -> {
                 showAmountFilter()
             }
@@ -572,8 +564,6 @@ class LocalMonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBindi
                     layoutManager = layoutFlexBox
                     adapter = serviceAdapter
                 }
-
-
                 allOperationFilter.remove(monitoringFilter)
                 monitoringFilterAdapter.setList(allOperationFilter)
                 setFilterAdapter(allOperationFilter)
@@ -626,12 +616,10 @@ class LocalMonitoringFilterFragment : BaseFragment<FragmentMonitoringFilterBindi
         val isService = serviceList.filter { it.service_current }
         if ((amountCurrent || chooseCurrent || dateCurrent || isCard.isNotEmpty() || isService.isNotEmpty()) && cardResponseError) {
             binding.btnEnter.isEnabled = true
-            binding.btnEnter.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.brandRedColor)
+            binding.btnEnter.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.brandRedColor)
         } else {
             binding.btnEnter.isEnabled = false
-            binding.btnEnter.backgroundTintList =
-                ContextCompat.getColorStateList(requireContext(), R.color.buttonEnabled)
+            binding.btnEnter.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.buttonEnabled)
         }
     }
 

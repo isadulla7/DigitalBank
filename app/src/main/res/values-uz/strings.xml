@@ -1075,4 +1075,5 @@
     <string name="template">Saqlangan to‘lov</string>
     <string name="min_summ">Minimal summa 500 so‘m</string>
     <string name="inactive">Faol emas</string>
+    <string name="pnfl">PINFL</string>
 </resources>

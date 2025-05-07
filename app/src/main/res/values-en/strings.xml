@@ -1075,4 +1075,5 @@
     <string name="template">Template</string>
     <string name="min_summ">Minimum amount 500</string>
     <string name="inactive">Inactive</string>
+    <string name="pnfl">PINFL</string>
 </resources>

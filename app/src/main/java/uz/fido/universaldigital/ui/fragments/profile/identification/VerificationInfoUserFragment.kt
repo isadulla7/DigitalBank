@@ -146,6 +146,7 @@ class VerificationInfoUserFragment : BaseFragment<FragmentVerificationInfoUserBi
             saveToSecureStore(Const.USER_BIRTHDAY, commonData.birth_date)
             saveToSecureStore(Const.USER_PASSWORD_DATA, docData.pass_data)
             saveToSecureStore(Const.USER_PASS_GIVEN_DATE, docData.issued_date)
+            saveToSecureStore(Const.PINFL, commonData.pinfl)
         }
     }
 

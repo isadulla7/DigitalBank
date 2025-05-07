@@ -30,6 +30,7 @@ class MyDetailsFragment : BaseSimpleFragment<FragmentMyDetailsBinding>(FragmentM
             getString(R.string.birth_date) to getFromSecureStore(Const.USER_BIRTHDAY, getString(R.string.unknown)),
             getString(R.string.passport_no) to getFromSecureStore(Const.USER_PASSWORD_DATA, getString(R.string.unknown)),
             getString(R.string.given_date) to getFromSecureStore(Const.USER_PASS_GIVEN_DATE, getString(R.string.unknown)),
+            getString(R.string.pnfl) to getFromSecureStore(Const.PINFL, getString(R.string.unknown) ),
             getString(R.string.address_mail) to getFromSecureStore(Const.EMAIL, getString(R.string.unknown))
         )
         binding.recyclerView.apply {
