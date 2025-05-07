@@ -54,7 +54,7 @@
                 android:hint="@string/amount"
                 app:layout_constraintTop_toBottomOf="@id/card_view">
 
-                <androidx.appcompat.widget.AppCompatEditText
+                <uz.fido.utils.view.custom_edit_text.amount_edit_text.AmountEditText
                     android:id="@+id/edit_text_amount"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

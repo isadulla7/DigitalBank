@@ -266,8 +266,9 @@ class SaveAutoPaymentDayFragment : BaseFragment<FragmentSaveAutoPaymentDayBindin
         if (binding.editTextTimeDay.text.toString().isEmpty()) {
             return false
         }
+
         if (binding.editTextAmount.text.toString().isEmpty()
-            || binding.editTextAmount.text.toString().replace(" ", "").toDouble() < 500
+            || (binding.editTextAmount.text.toString().replace(" ", "").toDoubleOrNull()?:0.0) < 500
         ) {
             return false
         }

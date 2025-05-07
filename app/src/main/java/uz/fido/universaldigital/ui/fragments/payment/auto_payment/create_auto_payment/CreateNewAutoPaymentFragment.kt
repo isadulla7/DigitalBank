@@ -113,9 +113,10 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
         when (autoPaymentType) {
             1 -> {
                 val count = daysList.filter { it.isSelected }
+                val amount = binding.editTextAmount.text.toString().replace(" ", "").toDoubleOrNull() ?: 0.0
                 binding.btnContinue.isEnabled(
                     binding.editTextAmount.text.toString().isNotEmpty() &&
-                            binding.editTextAmount.text.toString().replace(" ", "").toDouble() >= 500 &&
+                            amount >= 500 &&
                             binding.editTextName.toString().isNotEmpty() &&
                             count.isNotEmpty()
                             && !binding.editTextTimeDay.text.isNullOrEmpty()
@@ -123,17 +124,19 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
             }
 
             2 -> {
+                val amount = binding.editTextAmount.text.toString().replace(" ", "").toDoubleOrNull() ?: 0.0
                 val count = monthsList.filter { it.isSelected }
                 binding.btnContinue.isEnabled(
                     !binding.editTextDayOfPayment.text.isNullOrEmpty() &&
-                     binding.editTextAmount.text.toString().replace(" ", "").toDouble() >= 500
+                     amount >= 500
                      && count.isNotEmpty() && !binding.editTextTime.text.isNullOrEmpty()
                 )
             }
 
             3 -> {
+                val amount = binding.editTextAmount.text.toString().replace(" ", "").toDoubleOrNull() ?: 0.0
                 binding.btnContinue.isEnabled(customDates.isNotEmpty()
-                        && binding.editTextAmount.text.toString().replace(" ", "").toDouble() >= 500
+                        && amount >= 500
                         && !selectedTime.isNullOrEmpty())
             }
         }

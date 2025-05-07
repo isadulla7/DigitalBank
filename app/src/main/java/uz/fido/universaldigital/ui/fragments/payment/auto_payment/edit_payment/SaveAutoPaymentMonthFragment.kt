@@ -284,7 +284,7 @@ class SaveAutoPaymentMonthFragment : SimpleAbstractFragment<FragmentSavePaymentM
             return false
         }
         if (binding.editTextAmount.text.toString().isEmpty()
-            || binding.editTextAmount.text.toString().replace(" ", "").toDouble() < 500
+            || (binding.editTextAmount.text.toString().replace(" ", "").toDoubleOrNull()?:0.0) < 500
         ) {
             return false
         }
