@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.transfers.transfer_history
 
 import android.os.Bundle
-import android.util.Log
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
@@ -48,7 +47,6 @@ class TransferHistoriesFragment :
         super.onCreate(savedInstanceState)
         operation = requireArguments().serializable<TransferOperation>(Const.OPERATION) as TransferOperation
         p2PHistoryAdapter = P2PHistoryAdapter(true, operation == TransferOperation.BY_PHONE) { cardByPhone ->
-            Log.d("TAG", "onCreate:${cardByPhone.phone_number} ")
             val bundle = Bundle()
             if (operation == TransferOperation.BY_PHONE) {
                 bundle.putString(DATA, cardByPhone.phone_number)

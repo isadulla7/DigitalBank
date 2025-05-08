@@ -7,7 +7,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
-import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
@@ -71,8 +70,7 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.getHistoriesByPhone()
-        popularTransfersAdapter =
-            P2PHistoryAdapter(isByPhone = true, onItemClickListener = ::popularTransferClickEvent)
+        popularTransfersAdapter = P2PHistoryAdapter(isByPhone = true, onItemClickListener = ::popularTransferClickEvent)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -348,8 +346,9 @@ class TransferByPhoneFragment : BaseFragment<FragmentTransferByPhoneBinding, Tra
                             operation = SuccessTransferFragment.TRANSFER_BY_PHONE,
                             phoneNumber = phoneNumber
                         ),
-                        SuccessTransferFragment.TRANSFER_OPERATION to SuccessTransferFragment.TRANSFER_CARD_BY_PHONE)
+                        SuccessTransferFragment.TRANSFER_OPERATION to SuccessTransferFragment.TRANSFER_CARD_BY_PHONE
                     )
+                )
             }
         } else showSnackbar(p2PInfoDto?.errorMessage ?: "")
     }
