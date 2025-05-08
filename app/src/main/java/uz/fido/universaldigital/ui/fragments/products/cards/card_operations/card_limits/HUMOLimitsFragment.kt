@@ -76,7 +76,7 @@ class HUMOLimitsFragment : BaseFragment<FragmentHumoLimitsBinding, MenuProductsV
         binding.limitAmount.text = Format.formatAmount(Format.formatAmountFromTiynToInteger(response.limit_value)) + " UZS"
         binding.limitStartDate.text = response.limit_date_from
         binding.limitEndDate.text = response.limit_date_to
-        binding.limitType.text = response.limit_type
+        binding.limitType.text = response.limit_name
         limitType = response.limit_type
     }
 
