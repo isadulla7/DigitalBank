@@ -3,11 +3,14 @@ package uz.fido.universaldigital.ui.fragments.monitoring.wallet
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.monitoring.filter.FilterCard
 import uz.fido.network.domain.model.monitoring.filter.FilterSaveVh
@@ -39,6 +42,8 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     private lateinit var monitoringDateDialog: MonitoringDateDialog
     private lateinit var monitoringAmountDialog: MonitoringAmountDialog
     private lateinit var transactionTypeDialog: TransactionTypeDialog
+    private var oldWallet:String=""
+    private var buttonClick:Boolean=false
 
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var allOperationFilter = arrayListOf<MonitoringFilter>()
@@ -118,6 +123,12 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     }
 
     private fun getCardList() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            saveViewModel.filterWalletCard.collect{it->
+                oldWallet=it
+            }
+
+        }
         val skeletonScreen = showSkeleton(binding.shimmerView, cardAdapter, R.layout.shimmer_item_card, 3)
         viewModel.getLocalMonitoringCardList(getClientToken()).observe(viewLifecycleOwner) { resource ->
             Handler(Looper.getMainLooper()).postDelayed({
@@ -136,7 +147,7 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
                         }
                     }
                     if (newList.isNotEmpty()) newList.forEachIndexed { index, card ->
-                        if (index != 0) card.is_selected_monitoring = true
+                        if (card.object_id.toString() != oldWallet) card.is_selected_monitoring = true
                     }
                     cardList = newList
                     successCardList(cardList)
@@ -213,7 +224,11 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     private fun filterChooseSave() {
         var isCurrent = false
         cardList.forEach { if (!it.is_selected_monitoring) isCurrent = true }
-        if (isCurrent) {
+        if (cardList.firstOrNull { !it.is_selected_monitoring }?.object_id.toString()==oldWallet && allOperationFilter.isEmpty()){
+            saveViewModel.walletFilter = false
+            pop()
+        } else if (isCurrent) {
+            buttonClick=true
             val filter = FilterSaveVh(startDate, endDate, maxAmount, minAmount, choose, "", cardList, arrayListOf())
             saveViewModel.setWalletMonitoringFilter(filter)
             saveViewModel.walletFilter = true
@@ -246,9 +261,12 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     }
 
     private fun addFilterList(type: String, name: String, current: Boolean) {
-        val monitoringFilter = MonitoringFilter(name, type, current)
-        allOperationFilter.add(0, monitoringFilter)
-        setFilterAdapter(allOperationFilter)
+       if (!buttonClick){
+           val monitoringFilter = MonitoringFilter(name, type, current)
+           allOperationFilter.add(0, monitoringFilter)
+           setFilterAdapter(allOperationFilter)
+       }
+
     }
 
     private fun setFilterAdapter(allOperationFilter: ArrayList<MonitoringFilter>) {
@@ -314,18 +332,23 @@ class MonitoringWalletFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     private fun operationFilter(type: String) {
         when (type) {
             "amount" -> {
+                minAmount=""
+                maxAmount=""
                 amountCurrent = false
                 binding.amount.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.amount.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
             }
 
             "date" -> {
+                endDate=""
+                startDate=""
                 dateCurrent = false
                 binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
             }
 
             "choose" -> {
+                choose=""
                 chooseCurrent = false
                 binding.minPlus.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.minPlus.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))

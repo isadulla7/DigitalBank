@@ -45,7 +45,6 @@ class HumoMonitoringFragment :
     private var dateBegin: String = ""
     private var dateEnd: String = ""
     private var operationType = 2
-
     private val menuMonitoringViewModel by activityViewModels<MenuMonitoringViewModel>()
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
@@ -144,6 +143,9 @@ class HumoMonitoringFragment :
                 R.layout.shimmer_item_monitoring,
                 1
             )
+            if (cardList.isNotEmpty()) {
+                saveViewModel.filterHumoCard(cardList[0])
+            }
             viewModel.getHumoMonitoring(
                 getClientToken(),
                 HumoMonitoringRequest(
@@ -152,6 +154,7 @@ class HumoMonitoringFragment :
                     end_date = dateEnd
                 )
             ).observe(viewLifecycleOwner) { resource ->
+
                 skeletonScreen.hide()
                 binding.shimmerView.visibility = View.GONE
                 when (resource.status) {

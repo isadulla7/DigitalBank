@@ -18,6 +18,12 @@ class MenuMonitoringViewModel @Inject constructor(
     private var _userHasCard = MutableStateFlow(false)
     val userHasCard: StateFlow<Boolean> = _userHasCard
 
+    private var _filterHumoCard = MutableStateFlow("")
+    val filterHumoCard: StateFlow<String> = _filterHumoCard
+
+    private var _filterWalletCard = MutableStateFlow("")
+    val filterWalletCard: StateFlow<String> = _filterWalletCard
+
     private var _saveLocalMonitoring = MutableStateFlow<ArrayList<LocalMonitoring>>(arrayListOf())
     val saveLocalMonitoring: StateFlow<ArrayList<LocalMonitoring>> = _saveLocalMonitoring
 
@@ -44,6 +50,14 @@ class MenuMonitoringViewModel @Inject constructor(
 
     fun userHasCard(value: Boolean) {
         _userHasCard.value = value
+    }
+
+    fun filterWalletCard(value: String) {
+        _filterWalletCard.value = value
+    }
+
+    fun filterHumoCard(value: String) {
+        _filterHumoCard.value = value
     }
 
     fun saveLocalMonitoring(list: ArrayList<LocalMonitoring>) {

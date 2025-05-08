@@ -68,7 +68,6 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
         setTime()
         createMonitoringAdapter()
         checkFilterWallet()
-
         onClickView()
     }
 
@@ -81,6 +80,7 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
     private fun getFilterWalletList() {
         try {
             menuMonitoringViewModel.walletMonitoringFilter.observe(viewLifecycleOwner) { filterSaveVh ->
+
                 val skeletonScreen = showSkeleton(
                     binding.shimmerView,
                     MibDetailsAdapter(requireContext(), this),
@@ -118,7 +118,7 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
                 val model = AccountHistoriesRequest(
                     pageNumber = "1",
                     pageSize = "20",
-                    type = operationType.toString(),
+                    type = type.toString(),
                     account = walletList[0],
                     codeFilial = filialCode,
                     dateClose = dateEnd,
@@ -283,7 +283,19 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
     }
 
     private fun getCardList() {
-        walletList = menuMonitoringViewModel.walledList.value ?: arrayListOf()
+        val newList= arrayListOf<CardResponse>()
+        menuProductsViewModel.cards.observe(viewLifecycleOwner) { card ->
+            card.forEach {
+                if (it.object_type == CardConst.WALLET) {
+                    newList.add(it)
+                    walletList.add(it.account_code)
+                }
+            }
+            if (newList.isNotEmpty()){
+                menuMonitoringViewModel.filterWalletCard(newList[0].object_id)
+            }
+        }
+
     }
 
     private fun emptyView() {
