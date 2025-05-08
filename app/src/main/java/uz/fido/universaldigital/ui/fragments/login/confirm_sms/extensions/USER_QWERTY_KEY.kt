@@ -31,6 +31,8 @@ fun Context.saveSignInResponse(signInResponse: SignInResponse) {
     saveToSecureStore(Const.FIRST_NAME, signInResponse.name)
     saveToSecureStore(Const.LAST_NAME, signInResponse.surname)
     saveToSecureStore(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
+    saveToSecureStore(Const.EMAIL, signInResponse.email.toString().lowercase())
+    saveToSecureStore(Const.ADDRESS, signInResponse.address.toString().lowercase())
     signInResponse.password?.let {
         saveUserQwerty(it)
     }
@@ -52,6 +54,8 @@ fun Fragment.saveSignInPinResponse(signInResponse: SignInResponse) {
     saveToSecureStore(Const.USER_PASSWORD_DATA, signInResponse.passport_serial + " " + signInResponse.passport_number)
     saveToSecureStore(Const.USER_PASS_GIVEN_DATE, signInResponse.passport_registration_date)
     saveToSecureStore(Const.PINFL, signInResponse.pnfl)
+    saveToSecureStore(Const.EMAIL, signInResponse.email.toString().lowercase())
+    saveToSecureStore(Const.ADDRESS, signInResponse.address.toString().lowercase())
 }
 
 fun Context.saveUserQwerty(qwerty: String) {

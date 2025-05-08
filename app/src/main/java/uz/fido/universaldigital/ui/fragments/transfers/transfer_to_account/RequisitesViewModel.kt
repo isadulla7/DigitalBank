@@ -21,20 +21,17 @@ class RequisitesViewModel @Inject constructor(
     private val utilsRepository: IUtilsRepository
 ) : AbstractViewModel(application) {
 
-    fun getBankName(token: String, getBankNameRequest: GetBankNameRequest) =
-        liveData(Dispatchers.IO) {
-            emit(paymentRepository.getBankNameRequest(token, getBankNameRequest))
-        }
+    fun getBankName(token: String, getBankNameRequest: GetBankNameRequest) = liveData(Dispatchers.IO) {
+        emit(paymentRepository.getBankNameRequest(token, getBankNameRequest))
+    }
 
-    fun oneTimeInfo(token: String, oneTimeInfoRequest: OneTimeInfoRequest) =
-        liveData(Dispatchers.IO) {
-            emit(paymentRepository.oneTimeInfoRequest(token, oneTimeInfoRequest))
-        }
+    fun oneTimeInfo(token: String, oneTimeInfoRequest: OneTimeInfoRequest) = liveData(Dispatchers.IO) {
+        emit(paymentRepository.oneTimeInfoRequest(token, oneTimeInfoRequest))
+    }
 
-    fun preparePaymentRequest(token: String, preparePaymentRequest: PreparePaymentRequest) =
-        liveData(Dispatchers.IO) {
-            emit(paymentRepository.preparePayment(token, preparePaymentRequest))
-        }
+    fun preparePaymentRequest(token: String, preparePaymentRequest: PreparePaymentRequest) = liveData(Dispatchers.IO) {
+        emit(paymentRepository.preparePayment(token, preparePaymentRequest))
+    }
 
     fun createPaymentRequest(
         token: String,
@@ -44,8 +41,7 @@ class RequisitesViewModel @Inject constructor(
         emit(paymentRepository.createPayment(token, createPaymentRequest, path))
     }
 
-    fun getBranches(token: String, getBranchListRequest: GetBranchListRequest) =
-        liveData(Dispatchers.IO) {
-            emit(utilsRepository.getBranchList(token, getBranchListRequest))
-        }
+    fun getBranches(token: String, getBranchListRequest: GetBranchListRequest) = liveData(Dispatchers.IO) {
+        emit(utilsRepository.getBranchList(token, getBranchListRequest))
+    }
 }
