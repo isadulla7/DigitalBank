@@ -48,6 +48,8 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
     private var daysList = ArrayList<AllServiceLists>()
     private var daysAdapter: AutoPaymentDaysAdapter? = null
     private var selectedTime: String? = null
+    private var selectedCustom: String? = null
+    private var selectedMonth: String? = null
 
     //month
     private var months = ArrayList<String>()
@@ -116,7 +118,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                 val amount = binding.editTextAmount.text.toString().replace(" ", "").toDoubleOrNull() ?: 0.0
                 binding.btnContinue.isEnabled(
                     !binding.editTextName.text.isNullOrEmpty() &&
-                    binding.editTextAmount.text.toString().isNotEmpty() &&
+                            binding.editTextAmount.text.toString().isNotEmpty() &&
                             amount >= 500 &&
                             binding.editTextName.toString().isNotEmpty() &&
                             count.isNotEmpty()
@@ -129,18 +131,20 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                 val count = monthsList.filter { it.isSelected }
                 binding.btnContinue.isEnabled(
                     !binding.editTextName.text.isNullOrEmpty() &&
-                    !binding.editTextDayOfPayment.text.isNullOrEmpty() &&
-                     amount >= 500
-                     && count.isNotEmpty() && !binding.editTextTime.text.isNullOrEmpty()
+                            !binding.editTextDayOfPayment.text.isNullOrEmpty() &&
+                            amount >= 500
+                            && count.isNotEmpty() && !binding.editTextTime.text.isNullOrEmpty()
                 )
             }
 
             3 -> {
                 val amount = binding.editTextAmount.text.toString().replace(" ", "").toDoubleOrNull() ?: 0.0
-                binding.btnContinue.isEnabled(customDates.isNotEmpty()
-                        && !binding.editTextName.text.isNullOrEmpty()
-                        && amount >= 500
-                        && !selectedTime.isNullOrEmpty())
+                binding.btnContinue.isEnabled(
+                    customDates.isNotEmpty()
+                            && !binding.editTextName.text.isNullOrEmpty()
+                            && amount >= 500
+                            && !binding.editTextCustom.text.isNullOrEmpty()
+                )
             }
         }
     }
@@ -149,9 +153,23 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
         if (autoPayment != null) {
             //  editAutoPayment()
         } else {
+            var hour =""
+            when (autoPaymentType) {
+                1 -> {
+                    hour = selectedTime.toString()
+                }
+
+                2 -> {
+                    hour = selectedMonth.toString()
+                }
+
+                3 -> {
+                    hour = selectedCustom.toString()
+                }
+            }
             saveAutoPaymentModel?.phone_number = getClientPhoneNumber()
             saveAutoPaymentModel?.name = binding.editTextName.text.toString()
-            saveAutoPaymentModel?.hours = selectedTime
+            saveAutoPaymentModel?.hours = hour
             saveAutoPaymentModel?.amount = Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", ""))
             saveAutoPaymentModel?.payment_details?.set("AMOUNT", Format.formatAmountToTiyn(binding.editTextAmount.text.toString().replace(" ", "")))
             when (autoPaymentType) {
@@ -482,6 +500,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                         val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
                         val formattedTime = sdf.format(calendar.time)
                         selectedTime = selectedHour.toString()
+                        selectedMonth = selectedHour.toString()
                         if (selectedHour.toString() != "0") {
                             binding.editTextTime.setText(formattedTime)
                         } else binding.btnContinue.isEnabled(false)
@@ -508,6 +527,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                         val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
                         val formattedTime = sdf.format(calendar.time)
                         selectedTime = selectedHour.toString()
+                        selectedCustom = selectedHour.toString()
                         if (selectedHour.toString() != "0") {
                             binding.editTextCustom.setText(formattedTime)
                         }

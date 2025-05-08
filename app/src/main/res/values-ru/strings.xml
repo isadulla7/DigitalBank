@@ -376,7 +376,7 @@
     <string name="name_57a_bic">57A - SWIFT/BIC код банка получателя</string>
     <string name="details_of_charges">Детали расходов</string>
     <string name="monthly_payment">Ежемесячный платеж</string>
-    <string name="payment_time">Дата платежа</string>
+    <string name="payment_time">Время оплаты</string>
     <string name="loan_type">Тип графика погашения</string>
     <string name="order_card2">Заказать карту</string>
 
