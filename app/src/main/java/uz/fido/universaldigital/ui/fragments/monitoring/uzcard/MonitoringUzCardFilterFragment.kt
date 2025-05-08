@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.monitoring.uzcard
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -26,6 +27,7 @@ import uz.fido.utils.const.CardConst
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
+import kotlin.math.log
 
 @AndroidEntryPoint
 class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilterBinding, MonitoringFilterViewModel>
@@ -38,6 +40,8 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     private lateinit var monitoringDateDialog: MonitoringDateDialog
     private lateinit var monitoringAmountDialog: MonitoringAmountDialog
     private lateinit var transactionTypeDialog: TransactionTypeDialog
+    private var oldList:Int=0
+    private var buttonClick:Boolean=false
 
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var allOperationFilter = arrayListOf<MonitoringFilter>()
@@ -126,11 +130,13 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
             }, 500)
             when (resource.status) {
                 Status.SUCCESS -> {
+                    oldList=0
                     val response = resource.data?.user_objects ?: ArrayList()
                     val newList = arrayListOf<FilterCard>()
                     response.forEach { filterCard ->
                         if (filterCard.object_type == CardConst.UZCARD) {
                             if (!newList.map { it.object_value }.contains(filterCard.object_value)) {
+                                oldList++
                                 newList.add(filterCard)
                             }
                         }
@@ -195,7 +201,10 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
             }
 
             R.id.btn_enter -> {
-                filterChooseSave()
+                if (oldList==cardList.filter { it.is_selected_monitoring }.size && allOperationFilter.isEmpty()) {
+                    saveViewModel.uzCardFilter = false
+                    pop()
+                } else filterChooseSave()
             }
 
             R.id.btn_cansel -> {
@@ -214,6 +223,7 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
         cardList.forEach { if (!it.is_selected_monitoring) isCurrent = true }
         if (isCurrent) {
             val filter = FilterSaveVh(startDate, endDate, maxAmount, minAmount, choose, "", cardList, arrayListOf())
+            buttonClick=true
             saveViewModel.setUzCardMonitoringFilter(filter)
             saveViewModel.uzCardFilter = true
             pop()
@@ -245,9 +255,11 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     }
 
     private fun addFilterList(type: String, name: String, current: Boolean) {
+        if (!buttonClick){
         val monitoringFilter = MonitoringFilter(name, type, current)
         allOperationFilter.add(0, monitoringFilter)
         setFilterAdapter(allOperationFilter)
+        }
     }
 
     private fun setFilterAdapter(allOperationFilter: ArrayList<MonitoringFilter>) {
@@ -256,6 +268,7 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     }
 
     private fun removeList(type: String) {
+        Log.d("TAG", "removeList: $type")
         val filter = allOperationFilter.find { it.type == type }
         allOperationFilter.remove(filter)
         setFilterAdapter(allOperationFilter)
@@ -311,20 +324,27 @@ class MonitoringUzCardFilterFragment : BaseFragment<FragmentMonitoringUzcardFilt
     }
 
     private fun operationFilter(type: String) {
+
         when (type) {
             "amount" -> {
+                maxAmount=""
+                minAmount=""
                 amountCurrent = false
                 binding.amount.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.amount.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
             }
 
             "date" -> {
+                startDate = ""
+                endDate = ""
                 dateCurrent = false
                 binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
             }
 
             "choose" -> {
+              choose = ""
+                chooseCurrent = false
                 chooseCurrent = false
                 binding.minPlus.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.minPlus.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))

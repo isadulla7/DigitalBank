@@ -3,11 +3,15 @@ package uz.fido.universaldigital.ui.fragments.monitoring.humo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.monitoring.filter.FilterCard
 import uz.fido.network.domain.model.monitoring.filter.FilterSaveVh
@@ -38,12 +42,13 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
     private lateinit var monitoringDateDialog: MonitoringDateDialog
     private lateinit var monitoringAmountDialog: MonitoringAmountDialog
     private lateinit var transactionTypeDialog: TransactionTypeDialog
+    private var buttonClick:Boolean=false
 
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var allOperationFilter = arrayListOf<MonitoringFilter>()
     private var cardList = arrayListOf<FilterCard>()
 
-
+    private var oldCard:Int=0
     private var startDate = ""
     private var endDate = ""
     private var minAmount = ""
@@ -118,6 +123,12 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
     }
 
     private fun getCardList() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            saveViewModel.filterHumoCard.collect{it->
+                oldCard=it.toInt()
+            }
+
+        }
         val skeletonScreen = showSkeleton(binding.shimmerView, cardAdapter, R.layout.shimmer_item_card, 3)
         viewModel.getLocalMonitoringCardList(getClientToken()).observe(viewLifecycleOwner) { resource ->
             Handler(Looper.getMainLooper()).postDelayed({
@@ -136,7 +147,7 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
                         }
                     }
                     if (newList.isNotEmpty()) newList.forEachIndexed { index, card ->
-                        if (index != 0) card.is_selected_monitoring = true
+                        if (card.object_id != oldCard) card.is_selected_monitoring = true
                     }
                     cardList = newList
                     successCardList(cardList)
@@ -198,7 +209,10 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
             }
 
             R.id.btn_enter -> {
-                filterChooseSave()
+                if (oldCard== (cardList.firstOrNull { !it.is_selected_monitoring }?.object_id?:1) && allOperationFilter.isEmpty()){
+                    saveViewModel.humoFilter=false
+                    pop()
+                }else filterChooseSave()
             }
 
             R.id.btn_cansel -> {
@@ -216,6 +230,7 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
         var isCurrent = false
         cardList.forEach { if (!it.is_selected_monitoring) isCurrent = true }
         if (isCurrent) {
+            buttonClick=true
             val filter = FilterSaveVh(startDate, endDate, maxAmount, minAmount, choose, "", cardList, arrayListOf())
             saveViewModel.setHumoMonitoringFilter(filter)
             saveViewModel.humoFilter = true
@@ -248,9 +263,11 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
     }
 
     private fun addFilterList(type: String, name: String, current: Boolean) {
+        if (!buttonClick){
         val monitoringFilter = MonitoringFilter(name, type, current)
         allOperationFilter.add(0, monitoringFilter)
         setFilterAdapter(allOperationFilter)
+        }
     }
 
     private fun setFilterAdapter(allOperationFilter: ArrayList<MonitoringFilter>) {
@@ -316,18 +333,23 @@ class MonitoringHumoFilterFragment : BaseFragment<FragmentMonitoringUzcardFilter
     private fun operationFilter(type: String) {
         when (type) {
             "amount" -> {
+                maxAmount=""
+                minAmount=""
                 amountCurrent = false
                 binding.amount.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.amount.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
             }
 
             "date" -> {
+                startDate = ""
+                endDate = ""
                 dateCurrent = false
                 binding.time.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.time.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
             }
 
             "choose" -> {
+                choose = ""
                 chooseCurrent = false
                 binding.minPlus.background = ContextCompat.getDrawable(requireContext(), R.drawable.monitoring_filter_item_color)
                 binding.minPlus.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
