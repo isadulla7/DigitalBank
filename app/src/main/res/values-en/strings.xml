@@ -374,7 +374,7 @@
     <string name="name_57a_bic">57A - SWIFT/BIC code of the recipient\'s bank</string>
     <string name="details_of_charges">Cost details</string>
     <string name="monthly_payment">Monthly payment</string>
-    <string name="payment_time">Payment date</string>
+    <string name="payment_time">Payment time</string>
     <string name="loan_type">Repayment schedule type</string>
     <string name="order_card2">Order card</string>
     <string name="issue_cost">Issue cost</string>
