@@ -225,8 +225,8 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                 3 -> {
                     saveAutoPaymentModel?.monthsName = ""
                     saveAutoPaymentModel?.daysName = ""
-                    saveAutoPaymentModel?.months = java.util.ArrayList()
-                    saveAutoPaymentModel?.days = java.util.ArrayList()
+                    saveAutoPaymentModel?.months = ArrayList()
+                    saveAutoPaymentModel?.days = ArrayList()
                     saveAutoPaymentModel?.type = "S"
                     saveAutoPaymentModel?.selected_days = customDates
                     gotoWithSlide(
