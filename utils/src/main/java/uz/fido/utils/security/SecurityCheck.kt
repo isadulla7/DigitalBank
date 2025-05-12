@@ -4,8 +4,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.os.Build
-import com.scottyab.rootbeer.RootBeer
 import uz.fido.utils.device.logRootToCrashlytics
+import uz.fido.utils.libs.rootbeer.RootBeer
 import java.io.BufferedReader
 import java.io.File
 import java.io.IOException
