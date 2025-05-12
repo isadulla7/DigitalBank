@@ -6,7 +6,6 @@ constraintLayout = "2.1.4"
 kotlin = "2.0.21"
 kotlinxMetadataJvm = "0.6.1"
 legacySupport = "1.0.0"
-rootbeerLib = "0.1.1"
 work = "2.8.1"
 material = "1.12.0"
 playServicesVision = "20.1.3"
@@ -156,7 +155,6 @@ com-jakewharton-rxrelay2-rxrelay = { group = "com.jakewharton.rxrelay2", name = 
 io-github-pilgr-paperdb = { group = "io.github.pilgr", name = "paperdb", version.ref = "paperdb" }
 io-supercharge-shimmerlayout = { group = "io.supercharge", name = "shimmerlayout", version.ref = "shimmerLayout" }
 com-airbnb-android-lottie = { group = "com.airbnb.android", name = "lottie", version.ref = "lottie" }
-rootbeer-lib = { module = "com.scottyab:rootbeer-lib", version.ref = "rootbeerLib" }
 uz-myid-sdk-capture = { group = "uz.myid.sdk.capture", name = "myid-capture-sdk", version.ref = "myId" }
 com-github-philjay-mpadroidChart = { group = "com.github.PhilJay", name = "MPAndroidChart", version.ref = "mPAndroidChart" }
 androidx-room-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomRuntime" }
@@ -165,4 +163,5 @@ androidx-room-room-ktx = { group = "androidx.room", name = "room-ktx", version.r
 org-tensorflow-tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tenserFlow" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlyticsVersion" }
+
 [plugins]
