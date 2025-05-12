@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.monitoring.uzcard
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -245,8 +246,10 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
         val sortedResponse = ArrayList<UzcardMonitoringItem>()
         val groupedHashMap: HashMap<String, MutableList<UzcardMonitoringItem>> = when (operationType) {
             0 -> {
+
                 response?.forEach {
                     if (it.transactionType == LocalMonitoringFragment.MONITORING_CREDIT) {
+                        Log.d("TAG", "successMonitoringList:${it.transactionAmount} ")
                         sortedResponse.add(it)
                     }
                 }
@@ -256,6 +259,7 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
             1 -> {
                 response?.forEach {
                     if (it.transactionType == LocalMonitoringFragment.MONITORING_DEBIT) {
+                        Log.d("TAG", "successMonitoringList:${it.transactionAmount} ")
                         sortedResponse.add(it)
                     }
                 }
