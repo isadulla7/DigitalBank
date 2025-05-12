@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -553,16 +554,32 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
         val startYear = currentDateTime.get(Calendar.YEAR)
         val startMonth = currentDateTime.get(Calendar.MONTH)
         val startDay = currentDateTime.get(Calendar.DAY_OF_MONTH)
+        val currentDateInMillis = currentDateTime.timeInMillis
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            R.style.my_dialog_theme,
+            { _, year, month, day ->
+                val pickedDateTime = Calendar.getInstance()
+                pickedDateTime.set(year, month, day)
+                if (pickedDateTime.timeInMillis < currentDateInMillis) {
+                    Toast.makeText(requireContext(), "Faqat bugungi sanadan keyingi sanani tanlash mumkin", Toast.LENGTH_SHORT).show()
+                    return@DatePickerDialog
+                }
 
-        DatePickerDialog(requireContext(), R.style.my_dialog_theme, { _, year, month, day ->
-            val pickedDateTime = Calendar.getInstance()
-            pickedDateTime.set(year, month, day)
-            if (!customDates.contains(df.format(pickedDateTime.time))) {
-                customDates.add(df.format(pickedDateTime.time))
-                customDatesAdapterAdapter.setList(customDates)
-            }
-            buttonCheck()
-        }, startYear, startMonth, startDay).show()
+                if (!customDates.contains(df.format(pickedDateTime.time))) {
+                    customDates.add(df.format(pickedDateTime.time))
+                    customDatesAdapterAdapter.setList(customDates)
+                }
+
+                buttonCheck()
+            },
+            startYear,
+            startMonth,
+            startDay)
+        datePickerDialog.datePicker.minDate = currentDateInMillis
+
+        // DatePickerDialog ni ko'rsatish
+        datePickerDialog.show()
     }
 
     override fun invoke(count: Int, name: String) {
