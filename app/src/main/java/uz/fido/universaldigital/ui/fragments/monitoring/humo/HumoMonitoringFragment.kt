@@ -14,6 +14,7 @@ import uz.fido.network.domain.model.monitoring.HumoItem
 import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
 import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringRequest
+import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringItem
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
@@ -45,6 +46,8 @@ class HumoMonitoringFragment :
     private var dateBegin: String = ""
     private var dateEnd: String = ""
     private var operationType = 2
+    private var maxAmount:String=""
+    private var minAmount:String=""
     private val menuMonitoringViewModel by activityViewModels<MenuMonitoringViewModel>()
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
     private val dateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
@@ -87,6 +90,10 @@ class HumoMonitoringFragment :
                 R.layout.shimmer_item_monitoring,
                 1
             )
+            if (filterSaveVh.maxAmount.isNotEmpty()){
+                maxAmount=filterSaveVh.maxAmount.replace(" ","")+"00"
+                minAmount=filterSaveVh.minAmount.replace(" ","")+"00"
+            }
             val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             if (filterSaveVh.startDate != "") {
                 dateEnd = dateFormat.format(format.parse(filterSaveVh.endDate).time)
@@ -109,7 +116,18 @@ class HumoMonitoringFragment :
                 when (it.status) {
                     Status.SUCCESS -> {
                         val response = it.data?.transactions ?: arrayListOf()
-                        successMonitoringList(response, type)
+                        val item = arrayListOf<HumoMonitoringItem>()
+                        try {
+                            response.forEach {
+                                if ((it.transactionAmount.toDoubleOrNull() ?: 0.0) < maxAmount.toDouble()
+                                    && (it.transactionAmount.toDoubleOrNull() ?: 0.0)>minAmount.toDouble()) {
+                                    item.add(it)
+                                }
+                            }
+                            successMonitoringList(item, type)
+                        }catch (e:Exception){
+                            successMonitoringList(response,type)
+                        }
                     }
 
                     Status.ERROR -> {

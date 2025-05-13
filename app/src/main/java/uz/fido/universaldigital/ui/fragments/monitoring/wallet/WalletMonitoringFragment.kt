@@ -13,6 +13,7 @@ import uz.fido.network.domain.model.monitoring.AccountHistory
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.ListItem
 import uz.fido.network.domain.model.monitoring.WalletHistoryItem
+import uz.fido.network.domain.model.monitoring.humo.HumoMonitoringItem
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.base.BaseInterface
@@ -47,6 +48,8 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
 
     private var dateBegin: String = ""
     private var dateEnd: String = ""
+    private var maxAmount:String=""
+    private var minAmount:String=""
     private var walletList = arrayListOf<String>()
     private var linearLayoutManager: LinearLayoutManager? = null
     private lateinit var walletMonitoringDetailsDialog: WalletMonitoringDetailsDialog
@@ -103,6 +106,10 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
                     walletList.add(it.account_code)
                 }
                 totalList = arrayListOf()
+                if (filterSaveVh.maxAmount.isNotEmpty()){
+                    maxAmount=filterSaveVh.maxAmount.replace(" ","")
+                    minAmount=filterSaveVh.minAmount.replace(" ","")
+                }
                 val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
                 if (filterSaveVh.startDate != "") {
                     dateEnd = df.format(format.parse(filterSaveVh.endDate)?.time ?: "")
@@ -130,7 +137,18 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
                     when (it.status) {
                         Status.SUCCESS -> {
                             val response = it.data!!.response
-                            successMonitoringList(response, type)
+                            val item = arrayListOf<AccountHistory>()
+                            try {
+                                response.forEach {
+                                    if ((it.creditAmount?.toDoubleOrNull() ?: 0.0) < maxAmount.toDouble()
+                                        && (it.creditAmount?.toDoubleOrNull() ?: 0.0)>minAmount.toDouble()) {
+                                        item.add(it)
+                                    }
+                                }
+                                successMonitoringList(item, type)
+                            }catch (e:Exception){
+                                successMonitoringList(response,type)
+                            }
                             if (response.size < 1) {
                                 binding.layoutEmpty.visibility = View.VISIBLE
                             }
