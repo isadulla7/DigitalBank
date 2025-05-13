@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    android:clipChildren="false">
 
     <uz.fido.utils.view.custom_app_bar.MainAppBar
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:outlineSpotShadowColor="@color/appBarShadowColor"
+        android:translationZ="@dimen/elevation_8dp"
         app:layout_constraintTop_toTopOf="parent"
         app:s_title="@string/check" />
 
@@ -23,6 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:paddingVertical="4dp"
             app:layout_constraintTop_toBottomOf="@+id/app_bar">
 
         </androidx.appcompat.widget.LinearLayoutCompat>
@@ -32,8 +37,6 @@
         android:id="@+id/operation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
-
         android:orientation="horizontal"
         android:paddingBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
