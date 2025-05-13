@@ -24,10 +24,9 @@ import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientToken
 
 @AndroidEntryPoint
-class TransferHistoriesFragment :
-    BaseFragment<FragmentTransferHistoryBinding, TransferToCardViewModel>(
-        FragmentTransferHistoryBinding::inflate, TransferToCardViewModel::class.java
-    ) {
+class TransferHistoriesFragment : BaseFragment<FragmentTransferHistoryBinding, TransferToCardViewModel>(
+    FragmentTransferHistoryBinding::inflate, TransferToCardViewModel::class.java
+) {
 
     enum class TransferOperation {
         BY_PHONE,
