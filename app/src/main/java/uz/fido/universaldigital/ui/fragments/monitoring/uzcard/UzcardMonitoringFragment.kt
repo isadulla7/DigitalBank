@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.monitoring.uzcard
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -47,6 +48,8 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
     private var operationType = 2
     private var dateBegin: String = ""
     private var dateEnd: String = ""
+    private var maxAmount:String=""
+    private var minAmount:String=""
     private var totalList: ArrayList<ListItem> = ArrayList()
     private val menuMonitoringViewModel by activityViewModels<MenuMonitoringViewModel>()
     private var cardList = arrayListOf<String>()
@@ -122,6 +125,10 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
         menuMonitoringViewModel.uzCardMonitoringFilter.observe(viewLifecycleOwner) { it ->
             val card = it.cardList.filter { !it.is_selected_monitoring }.map { it.object_id.toString() }
             val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            if (it.maxAmount.isNotEmpty()){
+                maxAmount=it.maxAmount.replace(" ","")+"00"
+                minAmount=it.minAmount.replace(" ","")+"00"
+            }
             if (it.startDate != "") {
                 dateEnd = dateFormat.format(format.parse(it.endDate)?.time ?: "")
                 dateBegin = dateFormat.format(format.parse(it.startDate)?.time ?: "")
@@ -160,9 +167,19 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
                 when (it.status) {
                     Status.SUCCESS -> {
                         val response = it.data?.transactions ?: arrayListOf()
-                        successMonitoringList(response, type)
+                        val item = arrayListOf<UzcardMonitoringItem>()
+                        try {
+                            response.forEach {
+                                if ((it.transactionAmount.toDoubleOrNull() ?: 0.0) < maxAmount.toDouble()
+                                    && (it.transactionAmount.toDoubleOrNull() ?: 0.0)>minAmount.toDouble()) {
+                                    item.add(it)
+                                }
+                            }
+                            successMonitoringList(item, type)
+                        }catch (e:Exception){
+                           successMonitoringList(response,type)
+                        }
                     }
-
                     Status.ERROR -> {
                         uzcardMonitoringAdapter.removeList()
                         binding.consError.visibility = View.VISIBLE
@@ -245,8 +262,10 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
         val sortedResponse = ArrayList<UzcardMonitoringItem>()
         val groupedHashMap: HashMap<String, MutableList<UzcardMonitoringItem>> = when (operationType) {
             0 -> {
+
                 response?.forEach {
                     if (it.transactionType == LocalMonitoringFragment.MONITORING_CREDIT) {
+                        Log.d("TAG", "successMonitoringList:${it.transactionAmount} ")
                         sortedResponse.add(it)
                     }
                 }
@@ -256,6 +275,7 @@ class UzcardMonitoringFragment : BaseFragment<FragmentUzcardMonitoringBinding, L
             1 -> {
                 response?.forEach {
                     if (it.transactionType == LocalMonitoringFragment.MONITORING_DEBIT) {
+                        Log.d("TAG", "successMonitoringList:${it.transactionAmount} ")
                         sortedResponse.add(it)
                     }
                 }

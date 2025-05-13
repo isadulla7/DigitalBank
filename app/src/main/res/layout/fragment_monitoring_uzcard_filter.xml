@@ -105,8 +105,9 @@
                             android:paddingHorizontal="12dp"
                             android:text="@string/amount"
                             android:textColor="@color/mainTextColor"
-                            android:textSize="14dp"
-                            android:visibility="gone" />
+                            android:textSize="14dp" />
+
+
 
                         <uz.fido.utils.view.custom_text_view.TextViewMedium
                             android:id="@+id/min_plus"
