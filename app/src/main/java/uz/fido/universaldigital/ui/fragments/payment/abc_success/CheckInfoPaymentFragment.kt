@@ -3,7 +3,9 @@ package uz.fido.universaldigital.ui.fragments.payment.abc_success
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +42,7 @@ class CheckInfoPaymentFragment :
     private lateinit var printChequeResponse: PrintChequeResponse
     private lateinit var dialogReceipt: BottomReceiptsDialog
     private lateinit var dialogQrcode: BottomQRcodeDialog
-    private lateinit var chequeAdapter: ChequeAdapter
+    private  val chequeAdapter by lazy { ChequeAdapter() }
     private lateinit var currentDate: String
     private lateinit var operation: String
 
@@ -48,16 +50,24 @@ class CheckInfoPaymentFragment :
     private var transactId: String = ""
     private var qr_code: String = ""
 
+
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.list.adapter=chequeAdapter
         if (arguments != null) {
             transactId = requireArguments().getString("transactId", "0")
             operation = requireArguments().getString("operation").toString()
         }
-        chequeAdapter = ChequeAdapter()
         setonClick()
-        getCheque()
+        if (filteredList.isEmpty()){
+            getCheque()
+        }else initList(filteredList)
+
     }
+
+
 
     private fun setonClick() {
         binding.appBar.setOnBackButtonClickListener { pop() }
@@ -115,6 +125,7 @@ class CheckInfoPaymentFragment :
                             binding.buttonReceipt.visibility = View.VISIBLE
                         }
                         initList(filteredList)
+
                     }
 
                     Status.ERROR -> {
@@ -125,17 +136,12 @@ class CheckInfoPaymentFragment :
     }
 
     private fun initList(list: ArrayList<Cheque>) {
-        binding.list.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            chequeAdapter.submitList(list)
-            adapter = chequeAdapter
-
-        }
-        init()
+        chequeAdapter.submitList(list)
+        initItem()
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun init() {
+
+    private fun initItem() {
         currentDate = getCurrentDateNumber() + " " + getCurrentTime2()
         binding.dateTime.text = currentDate
         binding.amount.text = requireArguments().getString("amount")
