@@ -83,9 +83,9 @@
     <string name="continue_registration">Continue registration</string>
     <string name="you_already_have_account">You already have an account, would you like to restore it?</string>
     <string name="bank_products">Bank products</string>
-    <string name="order_card">Order card</string>
+    <string name="order_card">Order a card</string>
     <string name="apply_loan">Apply for loan</string>
-    <string name="open_deposit">Open deposit</string>
+    <string name="open_deposit">Open a deposit</string>
     <string name="open_wallet">Open wallet</string>
     <string name="order_card_description">Order plastic cards without queuing</string>
     <string name="apply_loan_description">Get a quick loan without leaving home</string>
@@ -376,7 +376,7 @@
     <string name="monthly_payment">Monthly payment</string>
     <string name="payment_time">Payment time</string>
     <string name="loan_type">Repayment schedule type</string>
-    <string name="order_card2">Order card</string>
+    <string name="order_card2">Order a card</string>
     <string name="issue_cost">Issue cost</string>
     <string name="delivery_cost">Delivery cost</string>
     <string name="insurance_deposit">Insurance deposit</string>
@@ -508,7 +508,7 @@
     <string name="filter">Filter</string>
     <string name="select_period">Select period</string>
     <string name="period">Filter parameters</string>
-    <string name="funds_flow">Vehicle movement</string>
+    <string name="funds_flow">Transaction flow</string>
     <string name="card">Cards</string>
     <string name="status">State</string>
     <string name="activ">Active</string>
@@ -927,7 +927,7 @@
     <string name="service_not_available">Service is temporarily unavailable</string>
     <string name="no_cards_desc_p2p">Add a card to perform this operation</string>
     <string name="sender_and_receiver_the_same">The sender and the recipient are the same</string>
-    <string name="transfer_successfully">Transfer transferred successfully</string>
+    <string name="transfer_successfully">Transfer completed successfully</string>
     <string name="card_list_no">You have no cards</string>
     <string name="humo_pay_not_supported">HumoPay is not available on rooted devices</string>
     <string name="nfc_not_supported">Your phone does not support NFC</string>
@@ -1076,4 +1076,5 @@
     <string name="min_summ">Minimum amount 500</string>
     <string name="inactive">Inactive</string>
     <string name="pnfl">PINFL</string>
+    <string name="register">Зарегистрироваться</string>
 </resources>

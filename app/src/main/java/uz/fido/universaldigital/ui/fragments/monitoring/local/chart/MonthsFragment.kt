@@ -182,6 +182,9 @@ class MonthsFragment : BaseSimpleFragment<FragmentMonthsBinding>(FragmentMonthsB
         val calendar = Calendar.getInstance()
         val lastDay = dateFormat.format(calendar.time)
         calendar.set(Calendar.DAY_OF_MONTH, 1)
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
         val firstDay = dateFormat.format(calendar.time)
         return Pair(firstDay, lastDay)
     }

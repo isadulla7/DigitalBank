@@ -268,7 +268,7 @@
     <string name="with_drawal">Yechish</string>
     <string name="maybe_dep">Mumkin</string>
     <string name="possible">Mumkin emas</string>
-    <string name="accept_deposit_privacy">Men Universal Bank <annotation type="help_link">foydalanuvchi shartnomasi</annotation> ga roziman</string>
+    <string name="accept_deposit_privacy">Men Universal Bank <annotation type="help_link">Foydalanuvchi shartnomasi</annotation> shartlariga roziman</string>
     <string name="please_accept_privacy">Iltimos, shartnomaning barcha shartlarini qabul qiling</string>
     <string name="open_deposit_success">Deposit muvaffaqiyatli ochildi</string>
     <string name="text_empty_deposit">Deposit vaqtinda mavjud emas</string>
@@ -1076,4 +1076,5 @@
     <string name="min_summ">Minimal summa 500 so‘m</string>
     <string name="inactive">Faol emas</string>
     <string name="pnfl">PINFL</string>
+    <string name="register">Зарегистрироваться</string>
 </resources>
