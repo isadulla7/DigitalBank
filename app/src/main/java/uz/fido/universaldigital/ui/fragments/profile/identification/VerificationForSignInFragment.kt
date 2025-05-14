@@ -61,6 +61,7 @@ class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserB
             if (binding.checkBox.isChecked) {
                 if (myIdMe != null) {
                     checkForIdentification()
+                    saveUserDetails(myIdMe)
                 } else {
                     getAccessToken()
                 }
@@ -141,7 +142,6 @@ class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserB
                 getString(R.string.passport_no) to docData.pass_data,
                 getString(R.string.date_of_expire) to (docData.expiry_date ?: "")
             )
-            saveUserDetails(it)
             binding.recyclerView.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = CodeAndNameAdapter(details)

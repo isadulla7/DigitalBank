@@ -789,7 +789,6 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
                 param.def_value = when (param.payment_detail_code) {
                     "PAYNET_8016" -> paymentHashMap[param.code]!!
                     else -> Format.formatAmountToTiyn(paymentHashMap[param.code])
-
                 }
                 paymentHashMap[param.code] = param.def_value
             }
@@ -824,12 +823,17 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
             vi = View(activity)
         }
         imm.hideSoftInputFromWindow(vi.windowToken, 0)
-        preparePayment(
-            paymentService!!.service_id.toString(),
-            paymentService!!.payment_detail_code.toString(),
-            keyValueList,
-            paymentService!!.payment_type.toString()
-        )
+        println("=====${paymentHashMap["AMOUNT"]}")
+        if (paymentHashMap["AMOUNT"] == "0.0" || paymentHashMap["AMOUNT"] == "0.00" || paymentHashMap["AMOUNT"] == "0") {
+            showSnackbar(getString(R.string.amount_must_not_be_zero))
+        } else {
+            preparePayment(
+                paymentService!!.service_id.toString(),
+                paymentService!!.payment_detail_code.toString(),
+                keyValueList,
+                paymentService!!.payment_type.toString()
+            )
+        }
     }
 
     private fun openConfirmPayment(serviceDetails: ArrayList<PaymentParams>) {

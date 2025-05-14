@@ -118,12 +118,24 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
                 return false
             }
             val amount = binding.etBankAmount.text.toString().replace(" ", "").toBigDecimal()
-            if (amount < minAmount || amount > maxAmount) {
+            if (amount < minAmount) {
+                binding.layoutBankAmount.isErrorEnabled = true
+                binding.layoutBankAmount.error = getString(R.string.min_amount_500)
                 return false
             }
-            return (binding.etReceiverAccount.editableText.toString().length == 27 || binding.etReceiverAccount.editableText.toString().length == 25) &&
-                    binding.etPurpose.editableText.toString().isNotEmpty() &&
-                    binding.etBankAmount.editableText.toString().isNotEmpty()
+            if (amount > maxAmount) {
+                binding.layoutBankAmount.isErrorEnabled = true
+                binding.layoutBankAmount.error = getString(R.string.max_amount_50_000_000)
+                return false
+            }
+            if ((binding.etReceiverAccount.editableText.toString().length == 27 || binding.etReceiverAccount.editableText.toString().length == 25) &&
+                binding.etPurpose.editableText.toString().isNotEmpty() &&
+                binding.etBankAmount.editableText.toString().isNotEmpty()
+            ) {
+                binding.layoutBankAmount.isErrorEnabled = false
+                return true
+            }
+            return false
         } catch (e: Exception) {
             return false
         }

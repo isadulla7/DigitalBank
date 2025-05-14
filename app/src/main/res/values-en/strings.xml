@@ -592,7 +592,7 @@
     <string name="night_mode">Dark</string>
     <string name="automatic">System</string>
     <string name="call">Call</string>
-    <string name="mail">Mail</string>
+    <string name="mail">Email</string>
     <string name="show_more">Show more</string>
     <string name="all_cards">All cards</string>
     <string name="show_less">Show less</string>
@@ -993,7 +993,7 @@
     <string name="delete_account_q">Delete account?</string>
     <string name="delete_account_description">Are you sure you want to delete your account? This operation cannot be undone</string>
     <string name="successfully_deleted">Your account has been successfully deleted</string>
-    <string name="pass_check">The password must contain at least one lowercase letter, one uppercase letter, one special character, and one number, and it must be at least 8 characters long</string>
+    <string name="pass_check">The password must be entered with one uppercase letter, a proper letter, a special symbol, a number and minimum length of 8 characters</string>
     <string name="delete_all">Delete all</string>
     <string name="nameless">No name</string>
     <string name="error_password">Please clear your memory and try logging in again</string>
@@ -1077,4 +1077,5 @@
     <string name="inactive">Inactive</string>
     <string name="pnfl">PINFL</string>
     <string name="register">Зарегистрироваться</string>
+    <string name="amount_must_not_be_zero">The entered amount must be greater than zero</string>
 </resources>

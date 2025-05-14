@@ -1013,7 +1013,7 @@
     <string name="password_letter_requirement">Kamida bitta kichik va katta harf</string>
     <string name="password_number_requirement">Kamida bitta raqam</string>
     <string name="password_symbol_requirement">Kamida bitta maxsus simvol</string>
-    <string name="no_transaction_or_payment_selected_period">Вы не делали никаких платежей или переводов через приложение в выбранном месяце</string>
+    <string name="no_transaction_or_payment_selected_period">Tanlangan oyda ilova orqali hech qanday to‘lov yoki o‘tkazmalarni amalga oshirmagansiz</string>
     <string name="secret_word_instruction">Maxfiy so‘z uzunligi 5 tadan ko‘p va 10 dan kam bo‘lishi kerak.</string>
     <string name="card_or_phone_number">Karta yoki telefon raqami</string>
     <string name="today">Bugun</string>
@@ -1077,4 +1077,5 @@
     <string name="inactive">Faol emas</string>
     <string name="pnfl">PINFL</string>
     <string name="register">Зарегистрироваться</string>
+    <string name="amount_must_not_be_zero">Kiritilga miqdor 0 dan katta bo‘lishi shart</string>
 </resources>

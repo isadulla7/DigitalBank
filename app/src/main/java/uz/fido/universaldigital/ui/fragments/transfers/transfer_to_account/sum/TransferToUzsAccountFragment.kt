@@ -45,6 +45,7 @@ class TransferToUzsAccountFragment : BaseFragment<FragmentTransferToUzsAccountBi
     private var editTextForBank = ArrayList<TextInputEditText>()
     private var percent = -1.0
     private var templateDetails: ArrayList<TemplateKeyValue>? = null
+    private var isCorrectAccountNumber = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,6 +125,7 @@ class TransferToUzsAccountFragment : BaseFragment<FragmentTransferToUzsAccountBi
                 if (binding.etReceiverAccount.editableText.toString()
                         .substring(5, 8) != CURRENCY_CODE_UZS
                 ) {
+                    isCorrectAccountNumber = false
                     binding.layoutReceiverAccount.error = getString(R.string.wrong_account_code)
                     binding.btnContinue.isEnabled(false)
                 } else {
@@ -182,7 +184,7 @@ class TransferToUzsAccountFragment : BaseFragment<FragmentTransferToUzsAccountBi
             return false
         }
         val amount = binding.etBankAmount.text.toString().replace(" ", "").toBigDecimal()
-        return !(amount < minAmount || amount > maxAmount)
+        return !(amount < minAmount || amount > maxAmount) && isCorrectAccountNumber && binding.etReceiverAccount.editableText.toString().length == 20
     }
 
     private fun getBankName(filialCode: String) {
@@ -223,10 +225,17 @@ class TransferToUzsAccountFragment : BaseFragment<FragmentTransferToUzsAccountBi
                             )
                             binding.textPercent.text = getString(R.string.commission_with_dots) + " " + oneTimeInfoResponse.fee_percent + "%"
                         }
+                        isCorrectAccountNumber = true
+                        binding.layoutReceiverAccount.isErrorEnabled = false
+                        binding.btnContinue.isEnabled(checkForError())
                     }
                 }
 
                 Status.ERROR -> {
+                    binding.layoutReceiverAccount.isErrorEnabled = true
+                    binding.layoutReceiverAccount.error = getString(R.string.wrong_account_code)
+                    isCorrectAccountNumber = false
+                    binding.btnContinue.isEnabled(checkForError())
                     showSnackbar(it.message.toString())
                 }
             }
