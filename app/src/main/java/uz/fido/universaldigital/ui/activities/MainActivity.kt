@@ -67,9 +67,8 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var updateChecker: UpdateChecker
-    private lateinit var shakeDetectionService: ShakeDetectionService
-    private val viewModel: SeasonViewModel by viewModels()
     private lateinit var internetObserver: InternetConnectionObserver
+    private val viewModel: SeasonViewModel by viewModels()
     private var noConnectionDialog: NoConnectionDialog? = null
     private var isStop = false
 
@@ -89,10 +88,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         super.onCreate(savedInstanceState)
         internetObserver = InternetConnectionObserver(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        shakeDetectionService = ShakeDetectionService(this, this)
-        shakeDetectionService.start()
         internetListener()
-
         setContentView(binding.root)
         initBottomNavigationMenuItems()
         initBottomNavigationMenu()
@@ -109,13 +105,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         navGraph.setStartDestination(getStartDestination())
         navHostFragment.navController.setGraph(navGraph, null)
         binding.bottomNavigation.setupWithNavController(navHostFragment.navController)
-        binding.bottomNavigation.apply {
-            menu.add(0, if (isNewDesign()) R.id.menuNewHomeFragment else R.id.productsFragment, 0, getString(R.string.home)).setIcon(R.drawable.ic_menu_home)
-            menu.add(0, R.id.menuTransfersFragment, 1, getString(R.string.transfer)).setIcon(R.drawable.ic_men_transfer)
-            menu.add(0, R.id.menuServicesFragment, 2, getString(R.string.services)).setIcon(R.drawable.ic_menu_products)
-            menu.add(0, R.id.basePaymentFragment, 3, getString(R.string.payments)).setIcon(R.drawable.ic_menu_payment)
-            menu.add(0, R.id.menuMonitoringFragment, 4, getString(R.string.monitoring)).setIcon(R.drawable.ic_menu_monitoring)
-        }
+        binding.bottomNavigation.inflateMenu(if (isNewDesign()) R.menu.bottom_navigation_menu_new else R.menu.bottom_navigation_menu)
     }
 
     private fun initBottomNavigationMenu() {
@@ -160,7 +150,6 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         try {
             unregisterReceiver(broadcastReceiver)
             stopService(Intent(this, AudioModeService::class.java))
-            shakeDetectionService.stop()
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -171,7 +160,6 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         super.onResume()
         try {
             startService(Intent(this, AudioModeService::class.java))
-            shakeDetectionService.start()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 registerReceiver(
                     broadcastReceiver, IntentFilter(AudioModeService.ACTION_OPEN_ACTIVITY), RECEIVER_EXPORTED

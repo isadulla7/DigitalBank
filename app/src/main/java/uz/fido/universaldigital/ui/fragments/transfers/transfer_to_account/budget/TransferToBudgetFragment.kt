@@ -77,7 +77,6 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
         binding.btnContinue.isEnabled = checkForError()
     }
 
-
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.appBar.setOnAdditionalBtnClickListener {
@@ -128,14 +127,12 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
                 binding.layoutBankAmount.error = getString(R.string.max_amount_50_000_000)
                 return false
             }
-            if ((binding.etReceiverAccount.editableText.toString().length == 27 || binding.etReceiverAccount.editableText.toString().length == 25) &&
-                binding.etPurpose.editableText.toString().isNotEmpty() &&
-                binding.etBankAmount.editableText.toString().isNotEmpty()
-            ) {
+            if (amount > minAmount || amount == minAmount || amount < maxAmount || amount == maxAmount) {
                 binding.layoutBankAmount.isErrorEnabled = false
-                return true
             }
-            return false
+            return (binding.etReceiverAccount.editableText.toString().length == 27 || binding.etReceiverAccount.editableText.toString().length == 25) &&
+                    binding.etPurpose.editableText.toString().isNotEmpty() &&
+                    binding.etBankAmount.editableText.toString().isNotEmpty()
         } catch (e: Exception) {
             return false
         }
@@ -143,23 +140,23 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
 
     private fun oneTimeInfo(accountCode: String) {
         binding.commissionProgressBar.visibility = View.VISIBLE
-        viewModel.oneTimeInfo(getClientToken(), OneTimeInfoRequest(accountCode, ""))
-            .observe(viewLifecycleOwner) {
-                binding.commissionProgressBar.visibility = View.GONE
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        val response = it.data
-                        percent = response!!.fee_percent.toDouble()
+        viewModel.oneTimeInfo(getClientToken(), OneTimeInfoRequest(accountCode, "")).observe(viewLifecycleOwner) {
+            binding.commissionProgressBar.visibility = View.GONE
+            when (it.status) {
+                Status.SUCCESS -> {
+                    val response = it.data
+                    percent = response!!.fee_percent.toDouble()
+                    if (response.payment_purpose.isNotEmpty()) {
                         binding.etPurpose.setText(response.payment_purpose)
-                        binding.textPercent.text =
-                            getString(R.string.commission_with_dots) + " " + response.fee_percent + "%"
                     }
+                    binding.textPercent.text = getString(R.string.commission_with_dots) + " " + response.fee_percent + "%"
+                }
 
-                    Status.ERROR -> {
-                        showSnackbar(it.message.toString())
-                    }
+                Status.ERROR -> {
+                    showSnackbar(it.message.toString())
                 }
             }
+        }
     }
 
     private fun preparePaymentBank() {

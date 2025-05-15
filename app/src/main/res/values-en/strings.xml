@@ -403,7 +403,7 @@
     <string name="wallets">Wallets</string>
     <string name="cards">Cards</string>
     <string name="choose_service">Choose service</string>
-    <string name="add_card">Add card</string>
+    <string name="add_card">Add a card</string>
     <string name="account_permanently_closed">Account is completely closed</string>
     <string name="account_closed_temporarily">Account is temporarily closed</string>
     <string name="special_bank_restrictions">Your account has been blocked as inactive for more than 6 months. Contact the Bank</string>
@@ -644,7 +644,7 @@
     <string name="confirm_payment">Confirm payment</string>
     <string name="for_confirm_payment_touch_sensor">Touch the sensor to confirm the payment</string>
     <string name="improved_security">Improved security</string>
-    <string name="finger_print_description">Enable app login with fingerprint for better data</string>
+    <string name="finger_print_description">Enable app login with fingerprint for enhanced security</string>
     <string name="currency_rate_date">Current exchange rates for</string>
     <string name="balance">Balance</string>
     <string name="please_wait">Please wait…</string>

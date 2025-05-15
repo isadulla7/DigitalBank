@@ -53,21 +53,21 @@ class AppThemeFragment : BaseSimpleFragment<FragmentAppThemeBinding>(
 
     private fun setFollowSystem() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-        recreateActivity()
+//        recreateActivity()
         Paper.book().write(Const.APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         selectDefault()
     }
 
     private fun setThemeDarkMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-        recreateActivity()
+//        recreateActivity()
         Paper.book().write(Const.APP_THEME, AppCompatDelegate.MODE_NIGHT_YES)
         selectDark()
     }
 
     private fun setThemeLightMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        recreateActivity()
+//        recreateActivity()
         Paper.book().write(Const.APP_THEME, AppCompatDelegate.MODE_NIGHT_NO)
         selectLight()
     }
