@@ -104,8 +104,8 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         val navGraph = navHostFragment.navController.navInflater.inflate(R.navigation.navigation_main)
         navGraph.setStartDestination(getStartDestination())
         navHostFragment.navController.setGraph(navGraph, null)
-        binding.bottomNavigation.setupWithNavController(navHostFragment.navController)
         binding.bottomNavigation.inflateMenu(if (isNewDesign()) R.menu.bottom_navigation_menu_new else R.menu.bottom_navigation_menu)
+        binding.bottomNavigation.setupWithNavController(navHostFragment.navController)
     }
 
     private fun initBottomNavigationMenu() {
@@ -149,7 +149,8 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         super.onPause()
         try {
             unregisterReceiver(broadcastReceiver)
-            stopService(Intent(this, AudioModeService::class.java))
+            val intent = Intent(this, AudioModeService::class.java)
+            stopService(intent)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -281,10 +282,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         internetObserver.register()
     }
 
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) {}
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
 
     private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -298,6 +296,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == UpdateChecker.UPDATE_CODE) {
