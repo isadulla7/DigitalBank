@@ -187,11 +187,11 @@
                     android:id="@+id/et_secret_word"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:digits="qwertyuiopasdfghjklzxcvbnm1234567890"
                     android:hint="@string/input_secret_word"
                     android:imeOptions="actionDone"
                     android:inputType="text"
                     android:maxLength="100"
-                    android:digits="qwertyuiopasdfghjklzxcvbnm1234567890"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColor="@color/mainTextColor"
@@ -254,4 +254,5 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

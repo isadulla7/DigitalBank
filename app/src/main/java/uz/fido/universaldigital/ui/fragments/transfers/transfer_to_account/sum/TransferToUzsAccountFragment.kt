@@ -147,7 +147,7 @@ class TransferToUzsAccountFragment : BaseFragment<FragmentTransferToUzsAccountBi
             }
         }
         binding.etBankAmount.doAfterTextChanged {
-            if (it.isNullOrEmpty()) {
+            if (it.isNullOrEmpty() && percent != -1.0) {
                 binding.textPercent.text = getString(R.string.commission_with_dots) + " " + percent + "%"
                 return@doAfterTextChanged
             }

@@ -271,7 +271,7 @@
     <string name="with_drawal">Снятие</string>
     <string name="maybe_dep">Возможно</string>
     <string name="possible">Невозможно</string>
-    <string name="accept_deposit_privacy">Я согласен на с <annotation type="help_link">Пользовательским соглашением</annotation> Universal Bank</string>
+    <string name="accept_deposit_privacy">Я согласен с <annotation type="help_link">Пользовательским соглашением</annotation> Universal Bank</string>
     <string name="open_deposit_success">Депозит успешно открыт</string>
     <string name="text_empty_deposit">Депозит пока недоступен</string>
     <string name="insufficient_amount">Недостаточно средств на счёте</string>
