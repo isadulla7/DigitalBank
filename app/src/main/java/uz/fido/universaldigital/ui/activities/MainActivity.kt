@@ -16,6 +16,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -90,7 +91,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         binding = ActivityMainBinding.inflate(layoutInflater)
         internetListener()
         setContentView(binding.root)
-        initBottomNavigationMenuItems()
+        initBottomNavigationMenuItems(savedInstanceState)
         initBottomNavigationMenu()
         checkForDeepLink()
         adjustBottomNavForKeyboard(binding.bottomNavigation)
@@ -99,13 +100,15 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         askNotificationPermission()
     }
 
-    private fun initBottomNavigationMenuItems() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navGraph = navHostFragment.navController.navInflater.inflate(R.navigation.navigation_main)
-        navGraph.setStartDestination(getStartDestination())
-        navHostFragment.navController.setGraph(navGraph, null)
+    private fun initBottomNavigationMenuItems(savedInstanceState: Bundle?) {
+        val navController = findNavController(this, R.id.nav_host_fragment)
+        val navGraph = navController.navInflater.inflate(R.navigation.navigation_main)
+        if (savedInstanceState == null) {
+            navGraph.setStartDestination(getStartDestination())
+        }
+        navController.setGraph(navGraph, null)
         binding.bottomNavigation.inflateMenu(if (isNewDesign()) R.menu.bottom_navigation_menu_new else R.menu.bottom_navigation_menu)
-        binding.bottomNavigation.setupWithNavController(navHostFragment.navController)
+        binding.bottomNavigation.setupWithNavController(navController)
     }
 
     private fun initBottomNavigationMenu() {
