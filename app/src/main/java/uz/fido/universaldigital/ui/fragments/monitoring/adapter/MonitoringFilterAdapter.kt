@@ -14,7 +14,7 @@ class MonitoringFilterAdapter(
 
     inner class VhFilter(val binding: ItemMonitoringFilterBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(monitoringFilter: MonitoringFilter) {
-            binding.textName.text = if (monitoringFilter.name.length == 16) Format.formatCardNumber(monitoringFilter.name) else monitoringFilter.name
+            binding.textName.text = if (checkCard(monitoringFilter.name, monitoringFilter.type)) Format.formatCardNumber(monitoringFilter.name) else monitoringFilter.name
             binding.father.setOnClickListener {
                 filterOnClick.invoke(monitoringFilter)
             }
@@ -35,6 +35,10 @@ class MonitoringFilterAdapter(
     fun setList(allOperationFilter: ArrayList<MonitoringFilter>) {
         list = allOperationFilter
         notifyDataSetChanged()
+    }
+
+    fun checkCard(text: String, type: String): Boolean {
+        return text.length == 16 && type != "amount" && type != "choose" && type != "date"
     }
 
 }

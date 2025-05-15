@@ -1,5 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.login.sign_up
 
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -54,6 +56,8 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
         initRecoverPasswordDescription()
     }
 
+
+
     private fun setMask() {
         binding.etPhoneNumber.setText("+998")
         pasteText()
@@ -86,27 +90,20 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun pasteText() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            binding.etPhoneNumber.setOnReceiveContentListener(arrayOf("text/plain")){ _, payload ->
-                try {
-                    val pastedText = payload.clip.getItemAt(0).text
-                    var digitsOnly = pastedText.filter { it.isDigit() }
-                    if (digitsOnly.startsWith("998")) {
-                        digitsOnly = digitsOnly.removePrefix("998")
-                    }
-                    val formattedNumber = if (digitsOnly.length >= 9) {
-                        "+998 ${digitsOnly.substring(0,2)} ${digitsOnly.substring(2,5)} ${digitsOnly.substring(5,7)} ${digitsOnly.substring(7,9)}"
-                    } else {
-                        "+998 $digitsOnly"
-                    }
-
-                    binding.etPhoneNumber.setText(formattedNumber)
-                    binding.etPhoneNumber.setSelection(formattedNumber.length)
-                }catch (e:Exception){
-
+        binding.etPhoneNumber.setOnCreateContextMenuListener { _, _, _ ->
+            val clipboard = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            if (clipboard.hasPrimaryClip()) {
+                val clipText = clipboard.primaryClip?.getItemAt(0)?.text.toString()
+                if (clipText.startsWith("+998")) {
+                    val cleaned = clipText
+                        .removePrefix("+998")
+                        .replace("998", "")
+                        .replace(Regex("[^0-9]"), "").replace(" ","")
+                    val result = "+998$cleaned"
+                    binding.etPhoneNumber.setText(result)
+                    binding.etPhoneNumber.setSelection(result.length)
+                    binding.btnContinue.isEnabled(clipText.length == 17)
                 }
-
-                null
             }
         }
     }

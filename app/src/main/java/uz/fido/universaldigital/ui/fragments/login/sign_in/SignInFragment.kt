@@ -1,12 +1,16 @@
 package uz.fido.universaldigital.ui.fragments.login.sign_in
 
 import android.annotation.SuppressLint
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.text.method.LinkMovementMethod
+import android.util.Log
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import dagger.hilt.android.AndroidEntryPoint
@@ -48,9 +52,29 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
         setMask()
+        pasteText()
         initSetOnClickListeners()
         setTermsOfUseColor()
         initTextChangeListeners()
+    }
+
+    private fun pasteText() {
+        binding.etPhoneNumber.setOnCreateContextMenuListener { _, _, _ ->
+            val clipboard = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            if (clipboard.hasPrimaryClip()) {
+                val clipText = clipboard.primaryClip?.getItemAt(0)?.text.toString()
+                if (clipText.startsWith("+998")) {
+                    val cleaned = clipText
+                        .removePrefix("+998")
+                        .replace("998", "")
+                        .replace(Regex("[^0-9]"), "")
+                    val result = "+998$cleaned"
+                    binding.etPhoneNumber.setText(result)
+                    binding.etPhoneNumber.setSelection(result.length)
+                    binding.btnContinue.isEnabled(clipText.length == 17 && passwordFormatted().length > 7)
+                }
+            }
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -70,6 +94,7 @@ class SignInFragment : BaseFragment<FragmentSignInBinding, SignInViewModel>(
                 if (!currentText.startsWith("+998")) {
                     currentText = "+998"
                 }
+                Log.d("TAG", "onTextChanged: $currentText")
                 val formattedText = formatPhoneNumber(currentText)
                 binding.etPhoneNumber.removeTextChangedListener(this)
                 binding.etPhoneNumber.setText(formattedText)

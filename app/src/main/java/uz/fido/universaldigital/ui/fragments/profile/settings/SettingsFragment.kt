@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.view.View
 import androidx.core.content.edit
+import androidx.navigation.fragment.findNavController
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.ChangeNotifStateRequest
@@ -39,7 +40,12 @@ class SettingsFragment : BaseFragment<FragmentSettingsBinding, MenuProfileViewMo
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.changeLanguage.setOnClickListener { gotoWithSlide(R.id.changeLanguageFragmentSettings) }
-        binding.appTheme.setOnClickListener { gotoWithSlide(R.id.appThemeFragment) }
+        binding.appTheme.setOnClickListener {
+            val navController=  requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.findNavController()
+            navController?.navigate(R.id.appThemeFragment)
+          //  gotoWithSlide(R.id.appThemeFragment)
+
+        }
         binding.actions.setOnClickListener { gotoWithSlide(R.id.actionsFragment) }
         binding.switchNotification.setOnCheckedChangeListener { _, isChecked ->
             if (!isChecked) changeNotificationState(STATE_PASSIVE) else changeNotificationState(

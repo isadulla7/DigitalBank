@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
@@ -43,11 +46,14 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     private lateinit var myCalendar: Calendar
     private lateinit var card: CardResponse
 
+
     private var limitTypes = ArrayList<AllServiceLists>()
     private var svLimit: SvLimit? = null
     private var limitId: String? = null
     private var referenceDialog: ReferenceDialog? = null
     private var buttonOperation = "save"
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +70,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     }
 
     private fun init() {
+        binding.etAmount.filters = arrayOf(InputFilter.LengthFilter(10))
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.appBar.setOnAdditionalBtnClickListener {
             deleteSvCardLimit()
@@ -159,7 +166,9 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
             date_from = binding.startDate.text.toString().replace(" ", "").replace("-", "").replace(":", ""),
             limit_name = binding.limitType.text.toString()
         )
+        showProgress()
         viewModel.setGlCardLimit(getClientToken(), request).observe(viewLifecycleOwner) {
+            hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {
                     val bundle = Bundle()
@@ -247,14 +256,43 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         }
     }
 
-    private fun datePicker(isStart: Boolean) {
-        DatePickerDialog(
+
+    private fun startDatePicker() {
+        binding.endDate.setText("")
+       val startDate= DatePickerDialog(
             requireContext(),
-            if (isStart) startDatePicker else datePick,
+            startDatePicker,
             myCalendar.get(Calendar.YEAR),
             myCalendar.get(Calendar.MONTH),
             myCalendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        )
+           startDate.datePicker.minDate=Calendar.getInstance().timeInMillis
+            startDate.show()
+    }
+
+    private fun endDatePicker() {
+        val myFormat = "yyyy-MM-dd HH:mm:ss"
+        val dateStr = binding.startDate.text.toString()
+        val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
+        val calendar = Calendar.getInstance()
+        if (dateStr.isNotEmpty()){
+            val date = sdf.parse(dateStr)
+            calendar.time = date
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+
+      val dateEnd = DatePickerDialog(
+            requireContext(),
+           datePick,
+            myCalendar.get(Calendar.YEAR),
+            myCalendar.get(Calendar.MONTH),
+            myCalendar.get(Calendar.DAY_OF_MONTH)
+        )
+          dateEnd.datePicker.minDate=calendar.timeInMillis
+          dateEnd.show()
+
+        }else{
+            toast("oldin boshlang'ich sanni kiriting")
+        }
     }
 
     private val datePick = DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
@@ -316,11 +354,11 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
             }
 
             R.id.end_date -> {
-                datePicker(false)
+                endDatePicker()
             }
 
             R.id.start_date -> {
-                datePicker(true)
+                startDatePicker()
             }
         }
     }

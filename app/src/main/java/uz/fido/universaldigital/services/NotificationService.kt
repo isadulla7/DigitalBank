@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
@@ -23,9 +24,11 @@ class NotificationService : FirebaseMessagingService() {
         const val NOTIFICATION_TYPE_NEWS = "NEWS"
         const val NOTIFICATION_HANDLE_KEY = "type"
     }
+    var count= 0
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         remoteMessage.notification.let { notification ->
+            Log.d("TAG", "onMessageReceived:___ ")
             if (remoteMessage.data.isNotEmpty()) {
                 initNotificationOperations(remoteMessage.data)
             }
