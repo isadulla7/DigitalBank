@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.profile
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import coil.load
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -94,7 +95,11 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
                     gotoWithSlide(R.id.securityFragment)
                 }.show(childFragmentManager, "")
             }
-            settings.setOnClickListener { gotoWithSlide(R.id.settingsFragment) }
+            settings.setOnClickListener {
+                val navController=  requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.findNavController()
+                navController?.navigate(R.id.settingsFragment)
+
+                /*gotoWithSlide(R.id.settingsFragment)*/ }
             aboutBank.setOnClickListener { gotoWithSlide(R.id.aboutBankFragment) }
             logOut.setOnClickListener { showLogOutDialog() }
             profile.setOnClickListener { gotoWithSlide(R.id.myDetailsFragment) }

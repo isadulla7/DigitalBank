@@ -144,10 +144,11 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         }
         val maskTextWatcher = object : DoAfterTextWatcher() {
             private var isUpdating = false
-            override fun afterTextChanged(s: Editable?) {
+            override fun afterTextChanged(text: Editable?) {
                 if (isUpdating) return
-                s?.let {
-                    var text = it.toString()
+                text?.let {
+                    val originalText = it.toString()
+                    var text = originalText
                     if (typeCurrent) {
                         if (text.length == 3 && text.isNotEmpty()) {
                             if (text.startsWith("998") || text.startsWith("+99")) {
@@ -167,9 +168,9 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                     val masked = applyMask(mask, cleanText)
                     isUpdating = true
                     binding.etPhoneNumber.removeTextChangedListener(this)
+                    val newCursor = calculateCursorAfterMasking(originalText, masked, binding.etPhoneNumber.selectionStart)
                     binding.etPhoneNumber.setText(masked)
-                    val selectionIndex = if (masked.length > text.length) text.length else masked.length
-                    binding.etPhoneNumber.setSelection(selectionIndex)
+                    binding.etPhoneNumber.setSelection(newCursor.coerceIn(0, masked.length))
                     binding.etPhoneNumber.addTextChangedListener(this)
                     isUpdating = false
                     if (typeCurrent) {
@@ -187,6 +188,45 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             }
         }
         binding.etPhoneNumber.addTextChangedListener(maskTextWatcher)
+    }
+
+    fun calculateCursorAfterMasking(oldText: String, newText: String, oldCursor: Int): Int {
+        var digitCount = 0
+        for (i in 0 until oldCursor.coerceAtMost(oldText.length)) {
+            if (oldText[i].isDigit() || oldText[i] == '+') digitCount++
+        }
+        var newCursor = 0
+        var counted = 0
+        for (i in newText.indices) {
+            if (newText[i].isDigit() || newText[i] == '+') counted++
+            if (counted == digitCount) {
+                newCursor = i + 1
+                break
+            }
+        }
+//        if (oldText.startsWith("+998") && newText.startsWith("+998")) {
+//            newCursor += 5
+//        }
+        // 👇 Agar "+" belgisi qo‘shilgan bo‘lsa, kursorni 1 ta oldinga suramiz
+        if (!oldText.startsWith("+") && newText.startsWith("+")) {
+            newCursor += 1
+        }
+        return newCursor.coerceAtMost(newText.length)
+//        var digitCount = 0
+//        for (i in 0 until oldCursor.coerceAtMost(oldText.length)) {
+//            if (oldText[i].isDigit() || oldText[i] == '+') digitCount++
+//        }
+//
+//        var newCursor = 0
+//        var counted = 0
+//        for (i in newText.indices) {
+//            if (newText[i].isDigit() || newText[i] == '+') counted++
+//            if (counted == digitCount) {
+//                newCursor = i + 1
+//                break
+//            }
+//        }
+//        return newCursor
     }
 
     private fun mobilePayment(text: String) {

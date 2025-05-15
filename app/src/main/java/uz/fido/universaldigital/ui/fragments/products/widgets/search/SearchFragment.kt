@@ -10,6 +10,7 @@ import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
@@ -216,7 +217,11 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
 
                     "027" -> goto(R.id.myDevicesFragment)
                     "028" -> goto(R.id.changeLanguageFragmentSettings)
-                    "029" -> goto(R.id.appThemeFragment)
+                    "029" -> {
+
+
+                     goto(R.id.appThemeFragment)
+                    }
                     "030" -> goto(R.id.transferToUzsAccountFragment)
                     "031" -> goto(R.id.transferToUsdAccountFragment)
                     "032" -> goto(R.id.transferToBudgetFragment)

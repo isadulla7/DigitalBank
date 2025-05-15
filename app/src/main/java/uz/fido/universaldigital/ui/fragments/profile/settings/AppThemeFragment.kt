@@ -53,29 +53,23 @@ class AppThemeFragment : BaseSimpleFragment<FragmentAppThemeBinding>(
 
     private fun setFollowSystem() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
-//        recreateActivity()
+        requireActivity().recreate()
         Paper.book().write(Const.APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
         selectDefault()
     }
 
     private fun setThemeDarkMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-//        recreateActivity()
+        requireActivity().recreate()
         Paper.book().write(Const.APP_THEME, AppCompatDelegate.MODE_NIGHT_YES)
         selectDark()
     }
 
     private fun setThemeLightMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-//        recreateActivity()
+        requireActivity().recreate()
         Paper.book().write(Const.APP_THEME, AppCompatDelegate.MODE_NIGHT_NO)
         selectLight()
-    }
-
-    private fun recreateActivity() {
-        binding.dayMode.delayOnLifecycle(10, Dispatchers.Main) {
-            requireActivity().recreate()
-        }
     }
 
     private fun selectDark() {
@@ -95,4 +89,5 @@ class AppThemeFragment : BaseSimpleFragment<FragmentAppThemeBinding>(
         binding.switchDaymode.isChecked = false
         binding.switchDarkmode.isChecked = false
     }
+
 }
