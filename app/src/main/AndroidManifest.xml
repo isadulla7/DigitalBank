@@ -103,7 +103,6 @@
             android:name=".ui.activities.security.CallSafeActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/CallSafe.Theme.UniversalMobileDigital"
             tools:ignore="DiscouragedApi,LockedOrientationActivity" />
 
         <activity

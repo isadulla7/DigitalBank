@@ -23,7 +23,7 @@ class CallSafeActivity : BaseActivity() {
     private lateinit var binding: ActivityCallSafeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.CallSafe_Theme_UniversalMobileDigital)
+        setTheme(R.style.Base_Theme_UniversalMobileDigital)
         super.onCreate(savedInstanceState)
         isActivityOpen = true
         binding = ActivityCallSafeBinding.inflate(layoutInflater)
