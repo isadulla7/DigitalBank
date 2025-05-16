@@ -26,6 +26,7 @@ import uz.fido.universaldigital.ui.dialogs.ReferenceDialog
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.universaldigital.ui.utils.home_utils.DoAfterTextWatcher
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const
@@ -33,6 +34,8 @@ import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
+import java.math.BigDecimal
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -45,6 +48,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     private lateinit var operationType: String
     private lateinit var myCalendar: Calendar
     private lateinit var card: CardResponse
+    private var currentAmount: Boolean = false
 
 
     private var limitTypes = ArrayList<AllServiceLists>()
@@ -52,7 +56,6 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     private var limitId: String? = null
     private var referenceDialog: ReferenceDialog? = null
     private var buttonOperation = "save"
-
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +73,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     }
 
     private fun init() {
-        binding.etAmount.filters = arrayOf(InputFilter.LengthFilter(10))
+        binding.etAmount.filters = arrayOf(InputFilter.LengthFilter(12))
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.appBar.setOnAdditionalBtnClickListener {
             deleteSvCardLimit()
@@ -100,7 +103,22 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         }
     }
 
+    fun checkAmount(text: Editable?): Boolean {
+        return if (!text.isNullOrEmpty()) BigDecimal(text.toString().replace(" ", "")) < BigDecimal(1000000000)
+                && BigDecimal(text.toString().replace(" ", "")) > BigDecimal(1000) else false
+    }
+
     private fun checkEditTexts() {
+        binding.etAmount.addTextChangedListener(object : DoAfterTextWatcher() {
+            override fun afterTextChanged(text: Editable?) {
+                if (checkAmount(text)) {
+
+                }
+                if (!text.isNullOrEmpty()) {
+                    currentAmount = BigDecimal(text.toString().replace(" ", "")) < BigDecimal(1000000000) && BigDecimal(text.toString().replace(" ", "")) > BigDecimal(1000)
+                } else currentAmount = false
+            }
+        })
         val editTexts = listOf(
             binding.limitType, binding.endDate, binding.etAmount
         )
@@ -117,7 +135,10 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                     val et2 = binding.startDate.text.toString()
                     val et4 = binding.etAmount.text.toString()
                     if (card.object_type == CardConst.HUMO_CARD) {
-                        binding.continueButton.isEnabled(et1.isNotEmpty() && et3.isNotEmpty() && et4.isNotEmpty() && et2.isNotEmpty())
+                        binding.continueButton.isEnabled(
+                            et1.isNotEmpty() && et3.isNotEmpty()
+                                    && et4.isNotEmpty() && et2.isNotEmpty()
+                        )
                     } else {
                         binding.continueButton.isEnabled(et1.isNotEmpty() && et4.isNotEmpty())
                     }
@@ -256,18 +277,17 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         }
     }
 
-
     private fun startDatePicker() {
         binding.endDate.setText("")
-       val startDate= DatePickerDialog(
+        val startDate = DatePickerDialog(
             requireContext(),
             startDatePicker,
             myCalendar.get(Calendar.YEAR),
             myCalendar.get(Calendar.MONTH),
             myCalendar.get(Calendar.DAY_OF_MONTH)
         )
-           startDate.datePicker.minDate=Calendar.getInstance().timeInMillis
-            startDate.show()
+        startDate.datePicker.minDate = Calendar.getInstance().timeInMillis
+        startDate.show()
     }
 
     private fun endDatePicker() {
@@ -275,22 +295,22 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         val dateStr = binding.startDate.text.toString()
         val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
         val calendar = Calendar.getInstance()
-        if (dateStr.isNotEmpty()){
+        if (dateStr.isNotEmpty()) {
             val date = sdf.parse(dateStr)
             calendar.time = date
             calendar.add(Calendar.DAY_OF_MONTH, 1)
 
-      val dateEnd = DatePickerDialog(
-            requireContext(),
-           datePick,
-            myCalendar.get(Calendar.YEAR),
-            myCalendar.get(Calendar.MONTH),
-            myCalendar.get(Calendar.DAY_OF_MONTH)
-        )
-          dateEnd.datePicker.minDate=calendar.timeInMillis
-          dateEnd.show()
+            val dateEnd = DatePickerDialog(
+                requireContext(),
+                datePick,
+                myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)
+            )
+            dateEnd.datePicker.minDate = calendar.timeInMillis
+            dateEnd.show()
 
-        }else{
+        } else {
             toast("oldin boshlang'ich sanni kiriting")
         }
     }
