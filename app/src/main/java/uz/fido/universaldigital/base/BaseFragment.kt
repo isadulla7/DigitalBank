@@ -319,7 +319,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
                 ), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0
             )
             setSpan(
-                BackgroundColorSpan(ContextCompat.getColor(context, uz.fido.utils.R.color.white)), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0
+                BackgroundColorSpan(ContextCompat.getColor(context, uz.fido.utils.R.color.whiteColor)), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0
             )
             setSpan(UnderlineSpan(), fullText.getSpanStart(it), fullText.getSpanEnd(it), 0)
         }

@@ -271,8 +271,8 @@
     <string name="with_drawal">Снятие</string>
     <string name="maybe_dep">Возможно</string>
     <string name="possible">Невозможно</string>
-    <string name="accept_deposit_privacy">Я согласен на с <annotation type="help_link">пользователским соглашением</annotation> Universal Bank</string>
-    <string name="open_deposit_success">Депосит  успешно открыт</string>
+    <string name="accept_deposit_privacy">Я согласен с <annotation type="help_link">Пользовательским соглашением</annotation> Universal Bank</string>
+    <string name="open_deposit_success">Депозит успешно открыт</string>
     <string name="text_empty_deposit">Депозит пока недоступен</string>
     <string name="insufficient_amount">Недостаточно средств на счёте</string>
     <string name="choose_card">Выберите карту</string>
@@ -666,7 +666,7 @@
     <string name="confirm_payment">Подтверждать оплату</string>
     <string name="for_confirm_payment_touch_sensor">Коснитесь сенсора, чтобы подтвердить платеж</string>
     <string name="improved_security">Улучшенная защита</string>
-    <string name="finger_print_description">Включите вход в приложение с отпечатком пальца для более улучшенной данных</string>
+    <string name="finger_print_description">Включите вход в приложение отпечатком пальца для лучшей защиты ваших данных</string>
     <string name="currency_rate_date">Актуальные курсы обмена валют на</string>
     <string name="balance">Баланс</string>
     <string name="please_wait">Пожалуйста, подождите…</string>
@@ -868,7 +868,7 @@
     <string name="no_bank_transfer">Здесь будет ваш список банковских переводов, который вы создаете</string>
     <string name="safety">Безопасность</string>
     <string name="change_pin_card">Изменить PIN-код карты</string>
-    <string name="you_have_not_account">У вас нету аккаунт? Регистрация</string>
+    <string name="you_have_not_account">У вас нет аккаунта? Зарегистрироваться</string>
     <string name="reset_password">Восстановить пароль</string>
     <string name="receipt">Квитанция</string>
     <string name="fiscal_check">Фискальный\nчек</string>
@@ -1077,4 +1077,7 @@
     <string name="template">Шаблон</string>
     <string name="min_summ">Минимальная сумма 500 сум</string>
     <string name="inactive">Неактивный</string>
+    <string name="pnfl">ПИНФЛ</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="amount_must_not_be_zero">Введённая сумма должна быть больше нуля</string>
 </resources>

@@ -1,7 +1,12 @@
 package uz.fido.network.domain.model.wallet
 
+import com.google.gson.annotations.SerializedName
+
 data class CreateWalletRequest(
-    val filial_code: String,
-    val code_currency: String,
-    val name: String
+    @SerializedName("filial_code")
+    val filialCode: String,
+    @SerializedName("code_currency")
+    val codeCurrency: String,
+    @SerializedName("name")
+    val walletName: String
 )

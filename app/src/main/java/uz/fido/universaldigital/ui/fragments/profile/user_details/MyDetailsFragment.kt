@@ -24,12 +24,12 @@ class MyDetailsFragment : BaseSimpleFragment<FragmentMyDetailsBinding>(FragmentM
 
     private fun initUserDetails() {
         val details = mapOf(
-            getString(R.string.name) to getFromSecureStore(Const.FIRST_NAME, getString(R.string.unknown)).fixQuestionMarks(),
-            getString(R.string.surname) to getFromSecureStore(Const.LAST_NAME, getString(R.string.unknown)).fixQuestionMarks(),
-            getString(R.string.patronymic) to getFromSecureStore(Const.PATRONYMIC, getString(R.string.unknown)).fixQuestionMarks(),
+            getString(R.string.fio) to getFullName(),
             getString(R.string.birth_date) to getFromSecureStore(Const.USER_BIRTHDAY, getString(R.string.unknown)),
             getString(R.string.passport_no) to getFromSecureStore(Const.USER_PASSWORD_DATA, getString(R.string.unknown)),
             getString(R.string.given_date) to getFromSecureStore(Const.USER_PASS_GIVEN_DATE, getString(R.string.unknown)),
+            getString(R.string.address) to getFromSecureStore(Const.ADDRESS, getString(R.string.unknown)),
+            getString(R.string.pnfl) to getFromSecureStore(Const.PINFL, getString(R.string.unknown)),
             getString(R.string.address_mail) to getFromSecureStore(Const.EMAIL, getString(R.string.unknown))
         )
         binding.recyclerView.apply {
@@ -37,6 +37,10 @@ class MyDetailsFragment : BaseSimpleFragment<FragmentMyDetailsBinding>(FragmentM
             adapter = CodeAndNameAdapter(details)
         }
     }
+
+    private fun getFullName() = getFromSecureStore(Const.FIRST_NAME, getString(R.string.unknown)).fixQuestionMarks() + " " +
+            getFromSecureStore(Const.LAST_NAME, getString(R.string.unknown)).fixQuestionMarks() + " " +
+            getFromSecureStore(Const.PATRONYMIC, getString(R.string.unknown)).fixQuestionMarks()
 
     private fun initSetOnClickListeners() {
         binding.appBar.setOnBackButtonClickListener { pop() }

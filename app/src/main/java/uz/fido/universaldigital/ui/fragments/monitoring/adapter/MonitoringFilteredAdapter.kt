@@ -4,15 +4,15 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.fido.network.domain.model.monitoring.filter.MonitoringFilter
-import uz.fido.universaldigital.databinding.ItemMonitoringFilterBinding
+import uz.fido.universaldigital.databinding.ItemMonitoringFilteredBinding
 import uz.fido.utils.utility.format.Format
 
-class MonitoringFilterAdapter(
+class MonitoringFilteredAdapter(
     private var list: ArrayList<MonitoringFilter>,
     private val filterOnClick: (MonitoringFilter) -> Unit
-) : RecyclerView.Adapter<MonitoringFilterAdapter.VhFilter>() {
+) : RecyclerView.Adapter<MonitoringFilteredAdapter.VhFilter>() {
 
-    inner class VhFilter(val binding: ItemMonitoringFilterBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class VhFilter(val binding: ItemMonitoringFilteredBinding) : RecyclerView.ViewHolder(binding.root) {
         fun onBind(monitoringFilter: MonitoringFilter) {
             binding.textName.text = if (checkCard(monitoringFilter.name, monitoringFilter.type)) Format.formatCardNumber(monitoringFilter.name) else monitoringFilter.name
             binding.father.setOnClickListener {
@@ -23,7 +23,7 @@ class MonitoringFilterAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VhFilter {
-        return VhFilter(ItemMonitoringFilterBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return VhFilter(ItemMonitoringFilteredBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun getItemCount() = list.size

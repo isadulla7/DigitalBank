@@ -23,6 +23,7 @@ import uz.fido.universaldigital.ui.fragments.payment.abc_success.SuccessPaymentF
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
 import uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.RequisitesViewModel
+import uz.fido.universaldigital.ui.fragments.transfers.utils.setTransactionPercent
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Command.ABS
@@ -37,23 +38,17 @@ import java.math.BigDecimal
 
 @AndroidEntryPoint
 @SuppressLint("SetTextI18n")
-class TransferToUzsAccountFragment :
-    BaseFragment<FragmentTransferToUzsAccountBinding, RequisitesViewModel>(
-        FragmentTransferToUzsAccountBinding::inflate, RequisitesViewModel::class.java
-    ), TextWatcher {
+class TransferToUzsAccountFragment : BaseFragment<FragmentTransferToUzsAccountBinding, RequisitesViewModel>(
+    FragmentTransferToUzsAccountBinding::inflate, RequisitesViewModel::class.java
+), TextWatcher {
 
-    private lateinit var dbHelper: DatabaseHelper
     private var editTextForBank = ArrayList<TextInputEditText>()
-    private var currency = CURRENCY_CHAR_UZS
-    private var maxAmount = BigDecimal(50000000)
-    private var minAmount = BigDecimal(500)
-    private var percent = 0.0
+    private var percent = -1.0
     private var templateDetails: ArrayList<TemplateKeyValue>? = null
-
+    private var isCorrectAccountNumber = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        dbHelper = DatabaseHelper(requireContext())
         arguments?.let {
             templateDetails =
                 it.serializable<ArrayList<TemplateKeyValue>>(PaymentFragment.PAYMENT_TEMPLATE_KEY_VALUE_LIST) as ArrayList<TemplateKeyValue>
@@ -66,27 +61,27 @@ class TransferToUzsAccountFragment :
         initSetOnClickListeners()
         initAccountCodeTextWatcher()
         initTextWatchers()
-        if (templateDetails != null) {
-            setData()
-        }
+        initTemplateDetails()
     }
 
-    private fun setData() {
-        templateDetails?.forEach {
-            when (it.code) {
-                "RECEIVER_ACCOUNT" -> binding.etReceiverAccount.setText(it.value)
-                "RECEIVER_FILLIAL_CODE" -> binding.etReceiverMfo.setText(it.value)
-                "PAYMENT_PURPOSE" -> binding.etPurpose.setText(it.value)
-                "AMOUNT" -> binding.etBankAmount.setText(Format.convertFromTiynDivide(it.value.toString()))
-                "RECEIVER_NAME" -> binding.etReceiverName.setText(it.value)
+    private fun initTemplateDetails() {
+        if (templateDetails != null) {
+            templateDetails?.forEach {
+                when (it.code) {
+                    "RECEIVER_ACCOUNT" -> binding.etReceiverAccount.setText(it.value)
+                    "RECEIVER_FILLIAL_CODE" -> binding.etReceiverMfo.setText(it.value)
+                    "PAYMENT_PURPOSE" -> binding.etPurpose.setText(it.value)
+                    "AMOUNT" -> binding.etBankAmount.setText(Format.convertFromTiynDivide(it.value.toString()))
+                    "RECEIVER_NAME" -> binding.etReceiverName.setText(it.value)
+                }
             }
+            getBankName(binding.etReceiverMfo.editableText.toString())
+            oneTimeInfo(
+                binding.etReceiverAccount.editableText.toString(),
+                binding.etReceiverMfo.editableText.toString()
+            )
+            binding.btnContinue.isEnabled = checkForError()
         }
-        getBankName(binding.etReceiverMfo.editableText.toString())
-        oneTimeInfo(
-            binding.etReceiverAccount.editableText.toString(),
-            binding.etReceiverMfo.editableText.toString()
-        )
-        binding.btnContinue.isEnabled = checkForError()
     }
 
     private fun initBankNameTextWatcher() {
@@ -130,6 +125,7 @@ class TransferToUzsAccountFragment :
                 if (binding.etReceiverAccount.editableText.toString()
                         .substring(5, 8) != CURRENCY_CODE_UZS
                 ) {
+                    isCorrectAccountNumber = false
                     binding.layoutReceiverAccount.error = getString(R.string.wrong_account_code)
                     binding.btnContinue.isEnabled(false)
                 } else {
@@ -150,6 +146,16 @@ class TransferToUzsAccountFragment :
                 binding.textPercent.text = ""
             }
         }
+        binding.etBankAmount.doAfterTextChanged {
+            if (it.isNullOrEmpty() && percent != -1.0) {
+                binding.textPercent.text = getString(R.string.commission_with_dots) + " " + percent + "%"
+                return@doAfterTextChanged
+            }
+            if (percent == -1.0) return@doAfterTextChanged
+            it.toString().trim().replace(" ", "").toBigDecimal().let { amount ->
+                binding.textPercent.setTransactionPercent(amount, percent.toBigDecimal())
+            }
+        }
     }
 
     private fun initTextWatchers() {
@@ -167,6 +173,8 @@ class TransferToUzsAccountFragment :
     }
 
     private fun checkForError(): Boolean {
+        val maxAmount = BigDecimal(50000000)
+        val minAmount = BigDecimal(500)
         editTextForBank.forEach {
             if (it.text.toString().isEmpty()) {
                 return false
@@ -176,7 +184,7 @@ class TransferToUzsAccountFragment :
             return false
         }
         val amount = binding.etBankAmount.text.toString().replace(" ", "").toBigDecimal()
-        return !(amount < minAmount || amount > maxAmount)
+        return !(amount < minAmount || amount > maxAmount) && isCorrectAccountNumber && binding.etReceiverAccount.editableText.toString().length == 20
     }
 
     private fun getBankName(filialCode: String) {
@@ -202,29 +210,36 @@ class TransferToUzsAccountFragment :
 
     private fun oneTimeInfo(accountCode: String, bankCode: String) {
         binding.commissionProgressBar.visibility = View.VISIBLE
-        viewModel.oneTimeInfo(getClientToken(), OneTimeInfoRequest(accountCode, bankCode))
-            .observe(viewLifecycleOwner) {
-                binding.commissionProgressBar.visibility = View.GONE
-                when (it.status) {
-                    Status.SUCCESS -> {
-                        val response = it.data
-                        percent = response!!.fee_percent.toDouble()
+        viewModel.oneTimeInfo(getClientToken(), OneTimeInfoRequest(accountCode, bankCode)).observe(viewLifecycleOwner) {
+            binding.commissionProgressBar.visibility = View.GONE
+            when (it.status) {
+                Status.SUCCESS -> {
+                    it.data?.let { oneTimeInfoResponse ->
+                        percent = oneTimeInfoResponse.fee_percent.toDouble()
                         if (bankCode != "") {
-                            if (response.client_name.isNotEmpty()) binding.etReceiverName.setText(
-                                response.client_name
+                            if (oneTimeInfoResponse.client_name.isNotEmpty()) binding.etReceiverName.setText(
+                                oneTimeInfoResponse.client_name
                             )
-                            if (response.payment_purpose.isNotEmpty()) binding.etPurpose.setText(
-                                response.payment_purpose
+                            if (oneTimeInfoResponse.payment_purpose.isNotEmpty()) binding.etPurpose.setText(
+                                oneTimeInfoResponse.payment_purpose
                             )
-                            binding.textPercent.text = getString(R.string.commission_with_dots) + " " + response.fee_percent + "%"
+                            binding.textPercent.text = getString(R.string.commission_with_dots) + " " + oneTimeInfoResponse.fee_percent + "%"
                         }
-                    }
-
-                    Status.ERROR -> {
-                        showSnackbar(it.message.toString())
+                        isCorrectAccountNumber = true
+                        binding.layoutReceiverAccount.isErrorEnabled = false
+                        binding.btnContinue.isEnabled(checkForError())
                     }
                 }
+
+                Status.ERROR -> {
+                    binding.layoutReceiverAccount.isErrorEnabled = true
+                    binding.layoutReceiverAccount.error = getString(R.string.wrong_account_code)
+                    isCorrectAccountNumber = false
+                    binding.btnContinue.isEnabled(checkForError())
+                    showSnackbar(it.message.toString())
+                }
             }
+        }
     }
 
     private fun preparePaymentBank() {
@@ -255,6 +270,7 @@ class TransferToUzsAccountFragment :
                 curr_level_position = "1",
                 params = params
             )
+            val dbHelper = DatabaseHelper(requireContext())
             val paymentService: PaymentService = dbHelper.getServiceByContractId(SERVICE_ID__4)!!
             val amount = binding.etBankAmount.editableText.toString().replace(" ", "").trim()
             viewModel.preparePaymentRequest(getClientToken(), request).observe(viewLifecycleOwner) {
@@ -265,7 +281,7 @@ class TransferToUzsAccountFragment :
                         bundle.putSerializable("paymentService", paymentService)
                         bundle.putSerializable("templateKeyValues", templateKeyValueList)
                         bundle.putSerializable(SuccessPaymentFragment.PAYMENT_KEY_VALUES, params)
-                        bundle.putString("currency", currency)
+                        bundle.putString("currency", CURRENCY_CHAR_UZS)
                         bundle.putDouble("percent", percent)
                         bundle.putString("amount", amount)
                         gotoWithSlide(R.id.confirmRequisitesPayment, bundle)

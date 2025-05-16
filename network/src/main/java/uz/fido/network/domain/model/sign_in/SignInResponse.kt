@@ -35,5 +35,6 @@ data class SignInResponse(
     val password_enc: String,
     val application_count: Int? = 0,
     val device_myid_state: String? = null,
+    val address: String? = null,
     val pnfl: String? = null
 ) : Serializable, BaseResponse()

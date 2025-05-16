@@ -45,7 +45,7 @@ class CardSafetyFragment : BaseFragment<FragmentCardSafetyBinding, UtilsViewMode
             binding.safeModeLayout.visibility = View.GONE
             binding.limitLayout.visibility = View.GONE
         }
-        if (card.object_type == HUMO_CARD || card.object_type == UZCARD) {
+        if (card.object_type == HUMO_CARD || (card.is_our_bank == "Y" && card.object_type == UZCARD)) {
             binding.limitLayout.visibility = View.VISIBLE
         }
         binding.visaSecureLayout.isVisible = card.object_value.startsWith("46")

@@ -6,14 +6,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.applications.OrderCardApp
-import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentAllAppBinding
 import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.services.applications.AppDetailsDialog
 import uz.fido.universaldigital.ui.fragments.services.applications.MainApplicationListFragment
 import uz.fido.universaldigital.ui.fragments.services.applications.adapter.AppListAdapter
-import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.user.getClientToken
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -23,8 +21,8 @@ class AllAppFragment : BaseFragment<FragmentAllAppBinding, UtilsViewModel>(
     FragmentAllAppBinding::inflate, UtilsViewModel::class.java
 ) {
 
-    val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
     private lateinit var applicationAdapter: AppListAdapter
+
     private var applicationList = ArrayList<OrderCardApp>()
     private var operationType = ""
 
@@ -43,55 +41,30 @@ class AllAppFragment : BaseFragment<FragmentAllAppBinding, UtilsViewModel>(
         binding.recyclerView.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
-            applicationAdapter =
-                AppListAdapter(applicationList, this@AllAppFragment, requireContext())
+            applicationAdapter = AppListAdapter(applicationList, this@AllAppFragment, requireContext())
             adapter = applicationAdapter
         }
         applicationAdapter.notifyDataSetChanged()
     }
 
     private fun getMyApplications() {
-        val skeletonScreen = showSkeleton(
-            binding.recyclerView, applicationAdapter, R.layout.shimmer_item_applications, 5
-        )
+        val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.getDefault())
+        showProgress()
         viewModel.getUserAppList(getClientToken()).observe(viewLifecycleOwner) { resource ->
+            hideProgress()
             when (resource.status) {
                 Status.SUCCESS -> {
-                    skeletonScreen.hide()
                     applicationList.clear()
                     if (resource.data?.product_list != null) {
-                        val response = resource.data!!.product_list
-                        response!!.sortByDescending { df.parse(it.create_date) }
-                        response.forEach { item ->
-                            /*if (operationType == Const.ORDER_CARD) {
-                                if (item.product == "CARD") {
-                                    applicationList.add(item)
-                                }
-                            } else*/ applicationList.add(item)
-
-                        }
-                        applicationList.forEach { application ->
-                            if (application.module_product_code != null) {
-                                val str: String = when (application.module_product_code) {
-                                    "TET_VIRTUAL_CARD" -> getString(R.string.application_for_card)
-                                    "GL_VIRTUAL_CARD" -> getString(R.string.application_for_card)
-                                    "IBS_CRM_CREDIT" -> getString(R.string.application_for_credit)
-                                    else -> {
-                                        application.module_product
-                                    }
-                                }
-                                application.module_product = str
-                            }
-                        }
+                        val response = resource.data?.product_list
+                        response?.sortByDescending { simpleDateFormat.parse(it.create_date) }
+                        response?.forEach { item -> applicationList.add(item) }
                         initList()
                     }
-
-                    binding.emptyView.visibility =
-                        if (applicationList.isEmpty()) View.VISIBLE else View.GONE
+                    binding.emptyView.visibility = if (applicationList.isEmpty()) View.VISIBLE else View.GONE
                 }
 
                 Status.ERROR -> {
-                    skeletonScreen.hide()
                     binding.emptyView.visibility = View.VISIBLE
                 }
             }

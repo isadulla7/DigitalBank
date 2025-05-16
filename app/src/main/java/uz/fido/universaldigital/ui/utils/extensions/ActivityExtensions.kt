@@ -43,7 +43,7 @@ fun adjustBottomNavForKeyboard(bottomNavigationView: BottomNavigationView) {
     }
 }
 
-fun Activity.getStartDestination(): Int = if (this.getFromSecureStore(Const.NEW_DESIGN, "N") == "Y") R.id.menuNewHomeFragment else R.id.productsFragment
+fun Activity.getStartDestination(): Int = if (isNewDesign()) R.id.menuNewHomeFragment else R.id.productsFragment
 
 fun Activity.isNewDesign() = this.getFromSecureStore(Const.NEW_DESIGN, "N") == "Y"
 

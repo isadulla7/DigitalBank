@@ -61,6 +61,7 @@ class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserB
             if (binding.checkBox.isChecked) {
                 if (myIdMe != null) {
                     checkForIdentification()
+                    saveUserDetails(myIdMe)
                 } else {
                     getAccessToken()
                 }
@@ -141,7 +142,6 @@ class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserB
                 getString(R.string.passport_no) to docData.pass_data,
                 getString(R.string.date_of_expire) to (docData.expiry_date ?: "")
             )
-            saveUserDetails(it)
             binding.recyclerView.apply {
                 layoutManager = LinearLayoutManager(requireContext())
                 adapter = CodeAndNameAdapter(details)
@@ -159,6 +159,8 @@ class VerificationForSignInFragment : BaseFragment<FragmentVerificationInfoUserB
             saveToSecureStore(Const.USER_BIRTHDAY, commonData.birth_date)
             saveToSecureStore(Const.USER_PASSWORD_DATA, docData.pass_data)
             saveToSecureStore(Const.USER_PASS_GIVEN_DATE, docData.issued_date)
+            saveToSecureStore(Const.PINFL, commonData.pinfl)
+            saveToSecureStore(Const.ADDRESS, response.profile.address.permanent_address.lowercase())
         }
     }
 

@@ -139,7 +139,7 @@ class OrderVirtualCard : BaseFragment<FragmentOrderVirtualCardBinding, OrderCard
                 }
             }
         }
-        binding.expire.text = priceItem.card_validity_period + " ${requireContext().getString(R.string.let)}"
+        binding.expire.text = priceItem.card_validity_period + " ${requireContext().getString(R.string.goda)}"
         binding.orderCardType.text = priceItem.name
     }
 

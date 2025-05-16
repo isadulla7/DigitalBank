@@ -16,6 +16,7 @@ import uz.fido.universaldigital.ui.activities.LoginActivity
 import uz.fido.utils.const.APIServiceConst.profileImageUrl
 import uz.fido.utils.const.Const
 import uz.fido.utils.security.DiffieHellman
+import uz.fido.utils.security.SecurePrefsManager
 import uz.fido.utils.security.saveToSecureStore
 import uz.fido.utils.utility.context.startActivityWithClearTask
 import java.io.File
@@ -31,6 +32,8 @@ fun Context.saveSignInResponse(signInResponse: SignInResponse) {
     saveToSecureStore(Const.FIRST_NAME, signInResponse.name)
     saveToSecureStore(Const.LAST_NAME, signInResponse.surname)
     saveToSecureStore(Const.PAPER_CLIENT_FULL_NAME, signInResponse.name + " " + signInResponse.surname)
+    saveToSecureStore(Const.EMAIL, signInResponse.email.toString().lowercase())
+    saveToSecureStore(Const.ADDRESS, signInResponse.address.toString().lowercase())
     signInResponse.password?.let {
         saveUserQwerty(it)
     }
@@ -51,6 +54,9 @@ fun Fragment.saveSignInPinResponse(signInResponse: SignInResponse) {
     saveToSecureStore(Const.USER_BIRTHDAY, signInResponse.date_of_birth)
     saveToSecureStore(Const.USER_PASSWORD_DATA, signInResponse.passport_serial + " " + signInResponse.passport_number)
     saveToSecureStore(Const.USER_PASS_GIVEN_DATE, signInResponse.passport_registration_date)
+    saveToSecureStore(Const.PINFL, signInResponse.pnfl)
+    saveToSecureStore(Const.EMAIL, signInResponse.email.toString().lowercase())
+    saveToSecureStore(Const.ADDRESS, signInResponse.address.toString().lowercase())
 }
 
 fun Context.saveUserQwerty(qwerty: String) {
@@ -118,6 +124,7 @@ fun getClientEncodedToken(token: String): String {
 fun Activity.logOut() {
     GlobalScope.launch { FirebaseMessaging.getInstance().deleteToken() }
     Paper.book().destroy()
+    SecurePrefsManager.clear()
     DiffieHellman.clearDiffieHellman()
     startActivityWithClearTask(LoginActivity::class.java)
 }

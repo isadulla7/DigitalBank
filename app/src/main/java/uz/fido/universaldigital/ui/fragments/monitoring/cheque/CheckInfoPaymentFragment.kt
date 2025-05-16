@@ -151,6 +151,8 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
         searchDataResponse?.params?.get("FIO")?.let { addView(getString(R.string.fio), it) }
         searchDataResponse?.params?.get("FIO_ABONENT")?.let { addView(getString(R.string.fio), it) }
         searchDataResponse?.params?.get("ADDRESS")?.let { addView(getString(R.string.address), it) }
+        searchDataResponse?.params?.get("clientName")?.let { addView(getString(R.string.fio), it) }
+        searchDataResponse?.params?.get("mfo")?.let { addView(getString(R.string.mfo), it) }
         addView(getString(R.string.date_time), item.createdDate)
         if (searchDataResponse?.service_id == "-4") {
             printChequeResponse.details.forEach {

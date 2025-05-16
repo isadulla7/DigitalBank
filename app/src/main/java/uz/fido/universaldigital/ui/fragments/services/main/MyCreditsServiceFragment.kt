@@ -17,7 +17,6 @@ import uz.fido.universaldigital.ui.fragments.services.loan.loan_client.ClientCre
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.adapter.showSkeleton
 import uz.fido.utils.utility.fragment.goto
-import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 
@@ -59,7 +58,7 @@ class MyCreditsServiceFragment : BaseFragment<FragmentMyCreditsServiceBinding, M
     }
 
     private fun getSetOnClickListeners() {
-        binding.getLoan.setOnClickListener { gotoWithSlide(R.id.loanGroupListFragment) }
+        binding.getLoan.setOnClickListener { /*gotoWithSlide(R.id.loanGroupListFragment)*/functionInProgress() }
         binding.appBar.setOnBackButtonClickListener { pop() }
     }
 

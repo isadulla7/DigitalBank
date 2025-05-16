@@ -13,13 +13,13 @@ import uz.myid.android.sdk.capture.MyIdConfig
 import uz.myid.android.sdk.capture.MyIdException
 import uz.myid.android.sdk.capture.MyIdResult
 import uz.myid.android.sdk.capture.MyIdResultListener
-import uz.myid.android.sdk.capture.model.MyIdCameraResolution
+import uz.myid.android.sdk.capture.model.MyIdBuildMode
 import uz.myid.android.sdk.capture.model.MyIdCameraShape
 import uz.myid.android.sdk.capture.model.MyIdEntryType
-import uz.myid.android.sdk.capture.model.MyIdEnvironment
-import uz.myid.android.sdk.capture.model.MyIdLocale
-import uz.myid.android.sdk.capture.model.MyIdResidency
-import uz.myid.android.sdk.capture.takeMyIdResult
+import uz.myid.android.sdk.capture.model.MyIdImageFormat
+import uz.myid.android.sdk.capture.model.MyIdResidentType
+import uz.myid.android.sdk.capture.model.MyIdResolution
+import uz.myid.android.sdk.capture.takeUserResult
 import java.util.Locale
 
 /**
@@ -31,7 +31,6 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
     private val client: MyIdClient = MyIdClient()
     private var clientPassport: String = ""
     private var clientBirthday: String = ""
-    private var residentType: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,33 +42,25 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
     /**
      * This is main function of this activity, this function calls MY_ID, in this function:
      * client_id is unique id of client in MY_ID
-     * there are 3 types of EntryType: Identification, VideoIdentification and FaceDetection
-     * there are 2 types of BuildMode: Production  and Debug
-     * residency types: Resident
-     * camera shapes: Circle, Ellipse
-     * camera resolutions: High, Low
-     * image formats: PNG, JPEG
+     * there are 2 types of EntryType: AUTH and FACE
+     * there are 2 types of BuildMode: PRODUCTION and DEBUG
      * organization details is optional*
      */
 
     private fun startMyId() {
-        val myIdConfig = MyIdConfig.Builder(clientId = Keys.getMyIdClientId())
+        val myIdConfig = MyIdConfig.Companion.builder(clientId = Keys.getMyIdClientId())
             .withClientHash(Keys.getMyIdClientHash(), Keys.getMyIdClientHashId())
-            .withPassportData(clientPassport)
-            .withBirthDate(clientBirthday)
-            .withEnvironment(MyIdEnvironment.Production)
-            .withEntryType(MyIdEntryType.Identification)
-            .withResidency(MyIdResidency.UserDefined)
-            .withLocale(getLanguage())
-            .withCameraShape(MyIdCameraShape.Circle)
-            .withCameraResolution(MyIdCameraResolution.Low)
+            .withPassportData(clientPassport).withBirthDate(clientBirthday)
+            .withBuildMode(MyIdBuildMode.PRODUCTION).withEntryType(MyIdEntryType.AUTH)
+            .withResidency(MyIdResidentType.USER_DEFINED).withLocale(Locale(initLanguage()))
+            .withCameraShape(MyIdCameraShape.CIRCLE)
+            .withResolution(MyIdResolution.RESOLUTION_720).withImageFormat(MyIdImageFormat.PNG)
             .build()
-
         val intent = client.createIntent(this, myIdConfig)
         result.launch(intent)
     }
 
-    private val result = takeMyIdResult(this)
+    private val result = takeUserResult(this)
 
     /**
      * MY ID result is successful
@@ -105,11 +96,11 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
         finish()
     }
 
-    private fun getLanguage(): MyIdLocale {
+    private fun initLanguage(): String {
         return when (getFromSecureStore(Const.APP_LANGUAGE, LANG_RU).lowercase(Locale.getDefault())) {
-            LANG_UZ, LANG_UZL -> MyIdLocale.Uzbek
-            LANG_RU -> MyIdLocale.Russian
-            else -> MyIdLocale.English
+            LANG_UZ, LANG_UZL -> LANG_UZ
+            LANG_RU -> LANG_RU
+            else -> LANG_EN
         }
     }
 
@@ -120,14 +111,6 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
         }
     }
 
-    private fun getResidentType(): MyIdResidency {
-        return if (clientPassport.isEmpty()) {
-            MyIdResidency.UserDefined
-        } else if (residentType == RESIDENT) {
-            MyIdResidency.Resident
-        } else MyIdResidency.NonResident
-    }
-
     companion object {
         const val ERROR_CODE_OLD_PASSPORT_DATA = 34
         const val ERROR_CODE_WRONG_PASSPORT_DATA = 2
@@ -135,12 +118,11 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
         const val CLIENT_PASSPORT = "passport"
         const val EXCEPTION_CODE = "exception_code"
         const val CODE = "code"
+        const val MODE = "mode"
+        const val STRONG = "strong"
         const val LANG_RU = "ru"
         const val LANG_UZ = "uz"
         const val LANG_UZL = "uzl"
-        const val RESIDENT_TYPE = "resident_type"
-        const val RESIDENT = "resident"
-        const val NON_RESIDENT = "non_resident"
         const val LANG_EN = "eng"
     }
 

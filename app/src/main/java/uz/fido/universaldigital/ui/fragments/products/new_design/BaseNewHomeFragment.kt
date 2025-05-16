@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.Editable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -80,7 +79,6 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
     }
 
     fun initWidgets() {
-
         cardAndPhoneLayout()
         initFastAccessLayout()
         initHomeTemplates()
@@ -204,29 +202,10 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                 break
             }
         }
-//        if (oldText.startsWith("+998") && newText.startsWith("+998")) {
-//            newCursor += 5
-//        }
-        // 👇 Agar "+" belgisi qo‘shilgan bo‘lsa, kursorni 1 ta oldinga suramiz
         if (!oldText.startsWith("+") && newText.startsWith("+")) {
             newCursor += 1
         }
         return newCursor.coerceAtMost(newText.length)
-//        var digitCount = 0
-//        for (i in 0 until oldCursor.coerceAtMost(oldText.length)) {
-//            if (oldText[i].isDigit() || oldText[i] == '+') digitCount++
-//        }
-//
-//        var newCursor = 0
-//        var counted = 0
-//        for (i in newText.indices) {
-//            if (newText[i].isDigit() || newText[i] == '+') counted++
-//            if (counted == digitCount) {
-//                newCursor = i + 1
-//                break
-//            }
-//        }
-//        return newCursor
     }
 
     private fun mobilePayment(text: String) {
@@ -628,7 +607,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                 phoneNumber = contactQuery.getString(numberIndex)
                 if (getFormattedContact(phoneNumber).isNotEmpty()) {
                     if (typeCurrent) {
-                        phoneNumber=getFormattedContact(phoneNumber)
+                        phoneNumber = getFormattedContact(phoneNumber)
                         goto(R.id.transferByPhoneFragment, bundleOf(Const.CARD_NUMBER to phoneNumber))
                     } else {
                         mobilePayment(phoneNumber)
@@ -671,7 +650,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
             when (resource.status) {
                 Status.SUCCESS -> {
                     val list = resource.data?.notifications?.filter { it.is_read == "N" } ?: emptyList()
-                    notificationList= arrayListOf()
+                    notificationList = arrayListOf()
                     notificationList.addAll(list)
                     menuProductsViewModel.setNotificationList(notificationList)
                     checkNotification()
@@ -682,6 +661,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         }
 
     }
+
     private fun checkNotification() {
         if (notificationList.isNotEmpty()) {
             binding.notificationItem.text = notificationList.size.toString()
@@ -691,7 +671,7 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
         }
     }
 
-     fun setNotification() {
+    fun setNotification() {
         viewLifecycleOwner.lifecycleScope.launch {
             menuProductsViewModel.notification.collect { item ->
                 if (item.isEmpty()) {

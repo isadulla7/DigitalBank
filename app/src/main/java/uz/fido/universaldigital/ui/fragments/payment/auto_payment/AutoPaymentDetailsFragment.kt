@@ -102,7 +102,7 @@ class AutoPaymentDetailsFragment : BaseFragment<FragmentAutoPaymentDetailBinding
                 binding.statusValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_auto_activ))
                 binding.statusValue.text = getString(R.string.active)
             } else {
-                binding.statusValue.text = getString(R.string.ne_active)
+                binding.statusValue.text = getString(R.string.inactive)
                 binding.statusValue.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_auto_no_activ))
             }
         }

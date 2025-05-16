@@ -108,6 +108,8 @@ class LocalMonitoringDetailsDialog(
     private fun initViews(isRequired: Boolean, isPayment: Boolean) {
         searchDateResponse?.params?.get("FIO")?.let { addView(getString(uz.fido.universaldigital.R.string.fio), it) }
         searchDateResponse?.params?.get("FIO_ABONENT")?.let { addView(getString(uz.fido.universaldigital.R.string.fio), it) }
+        searchDateResponse?.params?.get("clientName")?.let { addView(getString(uz.fido.universaldigital.R.string.fio), it) }
+        searchDateResponse?.params?.get("mfo")?.let { addView(getString(uz.fido.universaldigital.R.string.mfo), it) }
         searchDateResponse?.params?.get("ADDRESS")?.let { addView(getString(uz.fido.universaldigital.R.string.address), it) }
         addView(getString(uz.fido.universaldigital.R.string.date_time), localMonitoring.createdDate)
         addView(getString(uz.fido.universaldigital.R.string.transaction_number), localMonitoring.requestId)

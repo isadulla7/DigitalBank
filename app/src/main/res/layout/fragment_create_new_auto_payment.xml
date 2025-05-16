@@ -361,7 +361,7 @@
                             android:focusableInTouchMode="false"
                             android:focusedByDefault="false"
                             android:gravity="center_vertical"
-                            android:hint="@string/payment_time"
+                            android:hint="@string/day_payment"
                             android:inputType="number"
                             android:theme="@style/DefaultEditTextTheme" />
 

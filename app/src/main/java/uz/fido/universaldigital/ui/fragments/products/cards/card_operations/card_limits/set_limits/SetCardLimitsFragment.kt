@@ -253,18 +253,20 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     }
 
     private fun deleteSvCardLimit() {
+        showProgress()
         val request = LimitDeleteRequest(
             limit_id = limitId!!,
             object_id = card.object_id
         )
         viewModel.deleteSvCardLimit(getClientToken(), request).observe(viewLifecycleOwner) {
+            hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {
                     if (buttonOperation == "edit") {
                         setSvCardLimit()
                     } else {
                         showSnackbar(getString(R.string.limit_deletec), getString(R.string.successfully))
-                        Handler(Looper.myLooper()!!).postDelayed({
+                        Handler(Looper.getMainLooper()).postDelayed({
                             pop()
                         }, 500)
                     }

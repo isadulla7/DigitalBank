@@ -78,7 +78,6 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
         requireActivity().window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
     }
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
@@ -326,7 +325,6 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
                         dialog.create()
                         dialog.show()
                     }
-                    //  deviceCheck(requireActivity(),it.errorBody)
                     refreshLayout?.finishRefresh()
                 }
             }

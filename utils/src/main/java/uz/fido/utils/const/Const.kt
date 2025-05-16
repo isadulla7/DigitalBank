@@ -43,6 +43,7 @@ object Const {
     const val PHONE_NUMBER = "phone_number"
     const val CARD_NUMBER = "card_number"
     const val EMAIL = "email"
+    const val ADDRESS = "address"
     const val OPERATION = "operation_main"
     const val REF_CODE = "reference_code"
     const val ADD_CARD_OPERATION = "add_card_operation"

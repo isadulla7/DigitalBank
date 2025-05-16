@@ -268,7 +268,7 @@
     <string name="with_drawal">Yechish</string>
     <string name="maybe_dep">Mumkin</string>
     <string name="possible">Mumkin emas</string>
-    <string name="accept_deposit_privacy">Men Universal Bank <annotation type="help_link">foydalanuvchi shartnomasi</annotation> ga roziman</string>
+    <string name="accept_deposit_privacy">Men Universal Bank <annotation type="help_link">Foydalanuvchi shartnomasi</annotation> shartlariga roziman</string>
     <string name="please_accept_privacy">Iltimos, shartnomaning barcha shartlarini qabul qiling</string>
     <string name="open_deposit_success">Deposit muvaffaqiyatli ochildi</string>
     <string name="text_empty_deposit">Deposit vaqtinda mavjud emas</string>
@@ -1013,7 +1013,7 @@
     <string name="password_letter_requirement">Kamida bitta kichik va katta harf</string>
     <string name="password_number_requirement">Kamida bitta raqam</string>
     <string name="password_symbol_requirement">Kamida bitta maxsus simvol</string>
-    <string name="no_transaction_or_payment_selected_period">Вы не делали никаких платежей или переводов через приложение в выбранном месяце</string>
+    <string name="no_transaction_or_payment_selected_period">Tanlangan oyda ilova orqali hech qanday to‘lov yoki o‘tkazmalarni amalga oshirmagansiz</string>
     <string name="secret_word_instruction">Maxfiy so‘z uzunligi 5 tadan ko‘p va 10 dan kam bo‘lishi kerak.</string>
     <string name="card_or_phone_number">Karta yoki telefon raqami</string>
     <string name="today">Bugun</string>
@@ -1075,4 +1075,7 @@
     <string name="template">Saqlangan to‘lov</string>
     <string name="min_summ">Minimal summa 500 so‘m</string>
     <string name="inactive">Faol emas</string>
+    <string name="pnfl">PINFL</string>
+    <string name="register">Зарегистрироваться</string>
+    <string name="amount_must_not_be_zero">Kiritilga miqdor 0 dan katta bo‘lishi shart</string>
 </resources>

@@ -17,6 +17,7 @@ import uz.fido.utils.format.Format
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.utility.adapter.showSkeleton
 import java.math.BigDecimal
+import java.math.RoundingMode
 import java.util.Locale
 
 fun getInfoCommand(receiverCard: CardResponse): String {
@@ -209,4 +210,11 @@ fun TextView.setMinMaxAmount(
 fun Context.formatErrorMessage(message: String? = null): String {
     if (message == "CARD_EXPIRED") return getString(R.string.card_expired)
     return getString(R.string.card_not_found)
+}
+
+@SuppressLint("SetTextI18n")
+fun TextView.setTransactionPercent(amount: BigDecimal, percent: BigDecimal) {
+    val sum = BigDecimal(100)
+    val calculatedPercent = Format.formatAmount(amount.multiply(percent).divide(sum, 2, RoundingMode.HALF_UP).toString())
+    text = context.getString(R.string.commission_with_dots) + " " + percent + "% (" + calculatedPercent + " UZS )"
 }

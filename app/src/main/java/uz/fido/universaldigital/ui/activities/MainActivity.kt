@@ -16,6 +16,7 @@ import androidx.core.os.bundleOf
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
@@ -67,9 +68,8 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
 
     private lateinit var binding: ActivityMainBinding
     private lateinit var updateChecker: UpdateChecker
-    private lateinit var shakeDetectionService: ShakeDetectionService
-    private val viewModel: SeasonViewModel by viewModels()
     private lateinit var internetObserver: InternetConnectionObserver
+    private val viewModel: SeasonViewModel by viewModels()
     private var noConnectionDialog: NoConnectionDialog? = null
     private var isStop = false
 
@@ -89,12 +89,9 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         super.onCreate(savedInstanceState)
         internetObserver = InternetConnectionObserver(this)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        shakeDetectionService = ShakeDetectionService(this, this)
-        shakeDetectionService.start()
         internetListener()
-
         setContentView(binding.root)
-        initBottomNavigationMenuItems()
+        initBottomNavigationMenuItems(savedInstanceState)
         initBottomNavigationMenu()
         checkForDeepLink()
         adjustBottomNavForKeyboard(binding.bottomNavigation)
@@ -103,19 +100,15 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         askNotificationPermission()
     }
 
-    private fun initBottomNavigationMenuItems() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navGraph = navHostFragment.navController.navInflater.inflate(R.navigation.navigation_main)
-        navGraph.setStartDestination(getStartDestination())
-        navHostFragment.navController.setGraph(navGraph, null)
-        binding.bottomNavigation.setupWithNavController(navHostFragment.navController)
-        binding.bottomNavigation.apply {
-            menu.add(0, if (isNewDesign()) R.id.menuNewHomeFragment else R.id.productsFragment, 0, getString(R.string.home)).setIcon(R.drawable.ic_menu_home)
-            menu.add(0, R.id.menuTransfersFragment, 1, getString(R.string.transfer)).setIcon(R.drawable.ic_men_transfer)
-            menu.add(0, R.id.menuServicesFragment, 2, getString(R.string.services)).setIcon(R.drawable.ic_menu_products)
-            menu.add(0, R.id.basePaymentFragment, 3, getString(R.string.payments)).setIcon(R.drawable.ic_menu_payment)
-            menu.add(0, R.id.menuMonitoringFragment, 4, getString(R.string.monitoring)).setIcon(R.drawable.ic_menu_monitoring)
+    private fun initBottomNavigationMenuItems(savedInstanceState: Bundle?) {
+        val navController = findNavController(this, R.id.nav_host_fragment)
+        val navGraph = navController.navInflater.inflate(R.navigation.navigation_main)
+        if (savedInstanceState == null) {
+            navGraph.setStartDestination(getStartDestination())
         }
+        navController.setGraph(navGraph, null)
+        binding.bottomNavigation.inflateMenu(if (isNewDesign()) R.menu.bottom_navigation_menu_new else R.menu.bottom_navigation_menu)
+        binding.bottomNavigation.setupWithNavController(navController)
     }
 
     private fun initBottomNavigationMenu() {
@@ -159,8 +152,8 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         super.onPause()
         try {
             unregisterReceiver(broadcastReceiver)
-            stopService(Intent(this, AudioModeService::class.java))
-            shakeDetectionService.stop()
+            val intent = Intent(this, AudioModeService::class.java)
+            stopService(intent)
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -171,7 +164,6 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         super.onResume()
         try {
             startService(Intent(this, AudioModeService::class.java))
-            shakeDetectionService.start()
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 registerReceiver(
                     broadcastReceiver, IntentFilter(AudioModeService.ACTION_OPEN_ACTIVITY), RECEIVER_EXPORTED
@@ -293,10 +285,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         internetObserver.register()
     }
 
-
-    private val requestPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) {}
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
 
     private fun askNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
@@ -310,6 +299,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == UpdateChecker.UPDATE_CODE) {
