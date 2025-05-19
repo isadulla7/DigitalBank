@@ -1,15 +1,18 @@
 package uz.fido.universaldigital.ui.fragments.products.cards.card_operations.card_limits.set_limits
 
 import android.app.DatePickerDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
@@ -48,7 +51,6 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     private lateinit var operationType: String
     private lateinit var myCalendar: Calendar
     private lateinit var card: CardResponse
-    private var currentAmount: Boolean = false
 
 
     private var limitTypes = ArrayList<AllServiceLists>()
@@ -73,7 +75,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     }
 
     private fun init() {
-        binding.etAmount.filters = arrayOf(InputFilter.LengthFilter(12))
+        binding.etAmount.filters = arrayOf(InputFilter.LengthFilter(15))
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.appBar.setOnAdditionalBtnClickListener {
             deleteSvCardLimit()
@@ -103,24 +105,62 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         }
     }
 
-    fun checkAmount(text: Editable?): Boolean {
-        return if (!text.isNullOrEmpty()) BigDecimal(text.toString().replace(" ", "")) < BigDecimal(1000000000)
-                && BigDecimal(text.toString().replace(" ", "")) > BigDecimal(1000) else false
+    private fun checkAmount(text: String?): Boolean {
+        return if (!text.isNullOrEmpty()) BigDecimal(text.toString().replace(" ", "")) <= BigDecimal(1000000000)
+                && BigDecimal(text.toString().replace(" ", "")) >= BigDecimal(1000) else false
+    }
+
+    fun checkButton() {
+        val et1 = binding.limitType.text.toString()
+        val et3 = binding.endDate.text.toString()
+        val et2 = binding.startDate.text.toString()
+        val amount = binding.etAmount.text.toString()
+
+        if (card.object_type == CardConst.HUMO_CARD) {
+            binding.continueButton.isEnabled(
+                et1.isNotEmpty() && et3.isNotEmpty()
+                        && et2.isNotEmpty() && checkAmount(amount)
+            )
+        } else {
+            binding.continueButton.isEnabled(et1.isNotEmpty() && checkAmount(amount))
+        }
     }
 
     private fun checkEditTexts() {
         binding.etAmount.addTextChangedListener(object : DoAfterTextWatcher() {
             override fun afterTextChanged(text: Editable?) {
-                if (checkAmount(text)) {
+                val newText = text.toString().replace(" ", "")
+                 when {
+                     newText.isEmpty()->{
+                         binding.maxMinText.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainTextColor))
+                         binding.maxMinText.text=getString(R.string.min_amount_1000)
+                     }
+                    BigDecimal(newText) > BigDecimal(1000000000) -> {
+                        binding.maxMinText.text=getString(R.string.max_amount_exceed)
+                        binding.maxMinText.setTextColor(ContextCompat.getColor(requireContext(),R.color.brandRedColor))
+
+                    }
+                    BigDecimal(newText.replace(" ", "")) > BigDecimal(1000) -> {
+                        binding.maxMinText.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainTextColor))
+                        binding.maxMinText.text=getString(R.string.max_amount_1_000_000_000)
+                    }
+                    BigDecimal(newText) == BigDecimal(1000000000) -> {
+                        binding.maxMinText.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainTextColor))
+                        binding.maxMinText.text=getString(R.string.max_amount_1_000_000_000)
+                    }
+                    else -> {
+                        binding.maxMinText.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainTextColor))
+                        binding.maxMinText.text=getString(R.string.min_amount_1000)
+                    }
 
                 }
-                if (!text.isNullOrEmpty()) {
-                    currentAmount = BigDecimal(text.toString().replace(" ", "")) < BigDecimal(1000000000) && BigDecimal(text.toString().replace(" ", "")) > BigDecimal(1000)
-                } else currentAmount = false
+                checkButton()
             }
         })
+
+
         val editTexts = listOf(
-            binding.limitType, binding.endDate, binding.etAmount
+            binding.limitType, binding.endDate
         )
         for (editText in editTexts) {
             editText.addTextChangedListener(object : TextWatcher {
@@ -133,15 +173,9 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                     val et1 = binding.limitType.text.toString()
                     val et3 = binding.endDate.text.toString()
                     val et2 = binding.startDate.text.toString()
-                    val et4 = binding.etAmount.text.toString()
-                    if (card.object_type == CardConst.HUMO_CARD) {
-                        binding.continueButton.isEnabled(
-                            et1.isNotEmpty() && et3.isNotEmpty()
-                                    && et4.isNotEmpty() && et2.isNotEmpty()
-                        )
-                    } else {
-                        binding.continueButton.isEnabled(et1.isNotEmpty() && et4.isNotEmpty())
-                    }
+
+                    checkButton()
+
                 }
 
                 override fun afterTextChanged(s: Editable?) {}

@@ -199,6 +199,7 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
                         bundle.putSerializable("paymentService", paymentService)
                         bundle.putSerializable("templateKeyValues", templateKeyValueList)
                         bundle.putSerializable(SuccessPaymentFragment.PAYMENT_KEY_VALUES, params)
+                        bundle.putSerializable("operation", "budget")
                         bundle.putString("currency", currency)
                         bundle.putDouble("percent", percent)
                         bundle.putString("amount", amount)

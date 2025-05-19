@@ -67,6 +67,13 @@ interface PaymentApiInterface {
         @Path("path") path: String
     ): CreatePaymentResponse
 
+    @POST("{path}")
+    suspend fun createBudgetPayment(
+        @Header("Authorization") token: String,
+        @Body createPaymentRequest: CreatePaymentRequest,
+        @Path("path") path: String
+    ): CreatePaymentResponse
+
     @POST("LOAN_REPAYMENT")
     suspend fun loanRepayment(
         @Header("Authorization") token: String,

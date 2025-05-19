@@ -7,6 +7,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -110,18 +111,23 @@ abstract class BaseNewHomeFragment : Fragment(), BaseInterface, PermissionInterf
                 fetchPhoneNumber()
             }
         }
+        Log.d("TAG", "cardAndPhoneLayout:${binding.etPhoneNumber.text} ")
         if (typeCurrent) {
+            Log.d("TAG", "cardAndPhoneLayout:${binding.etPhoneNumber.text} ")
             binding.imageType.setImageResource(R.drawable.ic_phone_28)
             binding.btnContact.setImageResource(R.drawable.ic_star_unselected)
             binding.title.setText(R.string.transfer)
+
             binding.phoneNumberLayout.setHint(R.string.card_or_phone_number)
 
         } else {
+            Log.d("TAG", "cardAndPhoneLayout:first${binding.etPhoneNumber.text} ")
             binding.btnContact.setImageResource(R.drawable.ic_contact)
             binding.imageType.setImageResource(R.drawable.all_cards)
             binding.title.setText(R.string.mobile_network)
-
             binding.phoneNumberLayout.setHint(R.string.phone_number)
+            binding.etPhoneNumber.setText("+998")
+            Log.d("TAG", "cardAndPhoneLayout:first${binding.etPhoneNumber.text} ")
         }
         binding.phoneCard.setOnClickListener {
             if (typeCurrent) {

@@ -127,6 +127,11 @@ interface IPaymentRepository {
         token: String, createPaymentRequest: CreatePaymentRequest, path: String
     ): Resource<CreatePaymentResponse>
 
+
+    suspend fun createBudgetPayment(
+        token: String, createPaymentRequest: CreatePaymentRequest, path: String
+    ): Resource<CreatePaymentResponse>
+
     suspend fun getSwiftBic(
         token: String, swiftRequest: SwiftRequest
     ): Resource<SwiftTransferResponse>

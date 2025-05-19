@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.conf
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,6 +54,7 @@ class ConfirmRequisitesPayment :
     private var senderCard: CardResponse? = null
     private var amount: String = ""
     private var percent = 0.00
+    private var operation: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +63,7 @@ class ConfirmRequisitesPayment :
         currency = requireArguments().getString("currency").toString()
         percent = requireArguments().getDouble("percent")
         amount = requireArguments().getString("amount").toString()
+        operation = requireArguments().getString("operation") ?: ""
         paymentService =
             requireArguments().serializable<PaymentService>("paymentService") as PaymentService
     }
@@ -149,15 +152,19 @@ class ConfirmRequisitesPayment :
     private fun createPayment() {
         binding.btnContinue.setProgress(true)
         val model = CreatePaymentRequest(
-            service_id = ServiceId.SERVICE_ID__4,
+            service_id = if (operation.isNotEmpty()) ServiceId.SERVICE_ID_15 else ServiceId.SERVICE_ID__4,
             params = params,
             from_object_id = senderCard?.object_id.toString(),
             amount = params["AMOUNT"].toString(),
-            command = if (senderCard!!.object_type == WALLET) "$PURSE&$ABS" else "$CARD&$ABS",
+            command = if (operation.isNotEmpty()) {
+                if (senderCard!!.object_type == WALLET) "$PURSE&munis" else "$CARD&munis"
+            } else {
+                if (senderCard!!.object_type == WALLET) "$PURSE&$ABS" else "$CARD&$ABS"
+            },
             i_request_id = ""
         )
-
-        viewModel.createPaymentRequest(getClientToken(), model, "ONE_TIME_PAY")
+        Log.d("TAG", "createPayment:${operation} ")
+        viewModel.createPaymentRequest(getClientToken(), model, if (operation.isNotEmpty()) "CREATE_PAYMENT" else "ONE_TIME_PAY")
             .observe(viewLifecycleOwner) {
                 it?.let {
                     binding.btnContinue.setProgress(false)
