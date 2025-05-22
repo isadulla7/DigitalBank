@@ -1078,6 +1078,6 @@
     <string name="pnfl">PINFL</string>
     <string name="register">Зарегистрироваться</string>
     <string name="amount_must_not_be_zero">Kiritilga miqdor 0 dan katta bo‘lishi shart</string>
-    <string name="max_amount_1_000_000_000">Maksimal miqdori 1000 000 000</string>
+    <string name="max_amount_1_000_000_000">Maksimal miqdori 1 000 000 000</string>
     <string name="max_amount_exceed">Maksimal miqdor oshib ketdi</string>
 </resources>

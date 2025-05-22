@@ -1080,6 +1080,6 @@
     <string name="pnfl">ПИНФЛ</string>
     <string name="register">Зарегистрироваться</string>
     <string name="amount_must_not_be_zero">Введённая сумма должна быть больше нуля</string>
-    <string name="max_amount_1_000_000_000">Максимальная сумма 1000 000 000</string>
+    <string name="max_amount_1_000_000_000">Максимальная сумма 1 000 000 000</string>
     <string name="max_amount_exceed">Превышена максимальная сумма</string>
 </resources>

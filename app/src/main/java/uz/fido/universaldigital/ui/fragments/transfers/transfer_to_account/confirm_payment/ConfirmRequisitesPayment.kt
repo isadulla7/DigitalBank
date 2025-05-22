@@ -2,12 +2,12 @@ package uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.conf
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.setFragmentResultListener
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
@@ -19,6 +19,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentConfirmRequisitesPaymentBinding
 import uz.fido.universaldigital.databinding.ItemConfirmPaymentBinding
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
 import uz.fido.universaldigital.ui.fragments.payment.abc_success.SuccessPaymentFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.RequisitesViewModel
@@ -55,6 +56,7 @@ class ConfirmRequisitesPayment :
     private var amount: String = ""
     private var percent = 0.00
     private var operation: String = ""
+    private var string_line_enc: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +68,7 @@ class ConfirmRequisitesPayment :
         operation = requireArguments().getString("operation") ?: ""
         paymentService =
             requireArguments().serializable<PaymentService>("paymentService") as PaymentService
+
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -77,6 +80,10 @@ class ConfirmRequisitesPayment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         drawView()
+        setFragmentResultListener("Budget") { key, bundle ->
+            string_line_enc = bundle.getString("new_string_line") ?: ""
+            createPayment()
+        }
     }
 
     private fun initSetOnClickListeners() {
@@ -84,7 +91,8 @@ class ConfirmRequisitesPayment :
         binding.btnContinue.setOnClickListener {
             senderCard?.let {
                 getParams()
-                createPayment()
+                smsConfig()
+
             }
         }
     }
@@ -149,6 +157,7 @@ class ConfirmRequisitesPayment :
         return params
     }
 
+
     private fun createPayment() {
         binding.btnContinue.setProgress(true)
         val model = CreatePaymentRequest(
@@ -161,9 +170,9 @@ class ConfirmRequisitesPayment :
             } else {
                 if (senderCard!!.object_type == WALLET) "$PURSE&$ABS" else "$CARD&$ABS"
             },
-            i_request_id = ""
+            i_request_id = "",
+            string_line = string_line_enc
         )
-        Log.d("TAG", "createPayment:${operation} ")
         viewModel.createPaymentRequest(getClientToken(), model, if (operation.isNotEmpty()) "CREATE_PAYMENT" else "ONE_TIME_PAY")
             .observe(viewLifecycleOwner) {
                 it?.let {
@@ -191,5 +200,25 @@ class ConfirmRequisitesPayment :
                 }
             }
     }
+
+    private fun smsConfig() {
+        if (checkForPaymentSms(senderCard!!, "-1", amount = amount)) {
+            checkForSms(senderCard!!, amount, "15", { is_sms_confirm, string_line ->
+                if (is_sms_confirm == "Y") {
+                    goto(
+                        R.id.confirmSmsFragment, bundleOf(
+                            ConfirmSmsFragment.STRING_LINE to string_line,
+                            Const.OPERATION to ConfirmSmsFragment.SMS_BUDGET_OPERATION,
+                        )
+                    )
+                }else{
+                    createPayment()
+                }
+            })
+        } else {
+            createPayment()
+        }
+    }
+
 
 }
