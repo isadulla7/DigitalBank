@@ -26,7 +26,7 @@ fun mobileServiceId(text:String):String{
             "51"
         }
 
-        "93", "94" -> {
+        "93", "94","50" -> {
             "53"
         }
 

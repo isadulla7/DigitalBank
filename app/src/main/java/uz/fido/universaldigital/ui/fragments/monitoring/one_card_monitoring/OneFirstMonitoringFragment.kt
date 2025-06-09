@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.one_card_monitoring
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -140,7 +141,9 @@ class OneFirstMonitoringFragment : BaseFragment<FragmentWalletFirstMonitoringBin
             filterDialog = MonitoringSimpleFilterDialog(
                 choose, dateBegin, dateEnd, timeType,
                 onClickItem = { choose, startDate, endDate, type ->
-                    this.choose = choose
+                    this.choose=choose
+                    totalList.clear()
+                    operationType= if (choose==0) 2 else if (choose==1) 1 else 0
                     dateBegin = startDate
                     dateEnd = endDate
                     timeType = type
@@ -150,6 +153,7 @@ class OneFirstMonitoringFragment : BaseFragment<FragmentWalletFirstMonitoringBin
                     filterDialog.dismiss()
                 },
                 clear = {
+                    operationType=0
                     this.choose = 2
                     dateBegin = ""
                     dateEnd = ""

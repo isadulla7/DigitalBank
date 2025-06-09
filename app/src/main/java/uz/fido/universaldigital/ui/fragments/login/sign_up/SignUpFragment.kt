@@ -90,21 +90,10 @@ class SignUpFragment : BaseFragment<FragmentSignUpBinding, SignUpViewModel>(
     }
 
     private fun pasteText() {
-        binding.etPhoneNumber.setOnCreateContextMenuListener { _, _, _ ->
-            val clipboard = requireContext().getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-            if (clipboard.hasPrimaryClip()) {
-                val clipText = clipboard.primaryClip?.getItemAt(0)?.text.toString()
-                if (clipText.startsWith("+998")) {
-                    val cleaned = clipText
-                        .removePrefix("+998")
-                        .replace("998", "")
-                        .replace(Regex("[^0-9]"), "").replace(" ","")
-                    val result = "+998$cleaned"
-                    binding.etPhoneNumber.setText(result)
-                    binding.etPhoneNumber.setSelection(result.length)
-                    binding.btnContinue.isEnabled(clipText.length == 17)
-                }
-            }
+        binding.etPhoneNumber.onPaste={result->
+            binding.etPhoneNumber.setText(result)
+            binding.etPhoneNumber.setSelection(result.length)
+            binding.btnContinue.isEnabled(result.length == 13)
         }
     }
 

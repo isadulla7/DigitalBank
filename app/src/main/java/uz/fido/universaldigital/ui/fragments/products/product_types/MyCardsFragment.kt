@@ -109,7 +109,7 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     }
 
     override fun selectedWallet(item: CardResponse) {
-        walletOperationsDialog = WalletOperationsDialog(this)
+        walletOperationsDialog = WalletOperationsDialog(this,item)
         walletOperationsDialog.show(childFragmentManager, "TAG")
         selectedCard = item
     }

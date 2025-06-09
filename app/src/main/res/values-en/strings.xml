@@ -1080,4 +1080,10 @@
     <string name="amount_must_not_be_zero">The entered amount must be greater than zero</string>
     <string name="max_amount_1_000_000_000">Maximum amount 1 000 000 000</string>
     <string name="max_amount_exceed">Maximum amount exceeded</string>
+    <string name="max_amount_exceeded">Maximum amount exceeded.</string>
+    <string name="service_development">The service is under development</string>
+    <string name="universal_bank_dv">Mobile DV Universal Bank</string>
+    <string name="deposit_term_in_days">Срок депосита в днях</string>
+    <string name="frequency_of_interest_payment">Frequency of interest payments</string>
+    <string name="enter_starting_number_first">First enter the initial number</string>
 </resources>

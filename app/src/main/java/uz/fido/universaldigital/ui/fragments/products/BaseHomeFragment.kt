@@ -718,6 +718,8 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
                                                 )
                                             }
                                         }
+                                    }else if (it.code=="BUDGET_ACCOUNT"){
+                                        goto(R.id.transferToBudgetFragment, bundleOf(PaymentFragment.PAYMENT_TEMPLATE_KEY_VALUE_LIST to list))
                                     }
                                 }
                             }

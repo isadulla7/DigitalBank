@@ -6,10 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogWalletOperationsBinding
 
-class WalletOperationsDialog(private var listener: View.OnClickListener) :
+class WalletOperationsDialog(private var listener: View.OnClickListener, val cardResponse: CardResponse) :
     BottomSheetDialogFragment() {
 
     private lateinit var binding: DialogWalletOperationsBinding
@@ -27,6 +28,16 @@ class WalletOperationsDialog(private var listener: View.OnClickListener) :
         binding = DialogWalletOperationsBinding.inflate(inflater, container, false)
         setOnClickListeners()
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        try {
+            if (!cardResponse.is_Dv.isNullOrEmpty() && cardResponse.is_Dv=="Y"){
+                binding.takeOff.visibility=View.GONE
+                binding.topUp.visibility=View.GONE
+            }
+        }catch (e:Exception){}
     }
 
     private fun setOnClickListeners() {

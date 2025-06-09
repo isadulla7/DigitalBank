@@ -146,8 +146,9 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
     private fun initCards() {
         if (paymentService?.service_id == 788) {
             menuProductsViewModel.cards.observe(viewLifecycleOwner) {
+                val filterList= it.filter { it.is_Dv!="Y" }
                 binding.chooseCardLayout.initCardsOnly(
-                    it as ArrayList<CardResponse>, (totalAmount).toString(), if (currency == "000") CurrencyConst.CURRENCY_CHAR_UZS else CurrencyConst.CURRENCY_CHAR_USD
+                    filterList as ArrayList<CardResponse>, (totalAmount).toString(), if (currency == "000") CurrencyConst.CURRENCY_CHAR_UZS else CurrencyConst.CURRENCY_CHAR_USD
                 ) { cardResponse ->
                     cardResponse?.let { card ->
                         senderCard = card

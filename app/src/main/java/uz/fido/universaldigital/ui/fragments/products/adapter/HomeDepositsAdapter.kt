@@ -46,6 +46,16 @@ class HomeDepositsAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: ClientDeposit) {
             binding.apply {
+              depositNumber.text = try {
+                  if (item.savDepId.orEmpty().length > 5) "•• ${
+                      item.savDepId.orEmpty().substring(
+                          item.savDepId.orEmpty().length - 5,
+                          item.savDepId.orEmpty().length
+                      )
+                  }" else "  ${item.savDepId}"
+              }catch (e:Exception){
+                  ""
+              }
                 tvDepositName.text = item.depName
                 tvDepositBalance.text = Format.formatAmountWithAppend(
                     item.sumDep, item.currencyChar

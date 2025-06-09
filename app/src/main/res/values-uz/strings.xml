@@ -1080,4 +1080,10 @@
     <string name="amount_must_not_be_zero">Kiritilga miqdor 0 dan katta bo‘lishi shart</string>
     <string name="max_amount_1_000_000_000">Maksimal miqdori 1 000 000 000</string>
     <string name="max_amount_exceed">Maksimal miqdor oshib ketdi</string>
+    <string name="max_amount_exceeded">ПMaksimal miqdor oshib ketdi.</string>
+    <string name="service_development">Xizmat ishlab chiqilmoqda</string>
+    <string name="universal_bank_dv">Mobile DV Universal Bank</string>
+    <string name="deposit_term_in_days">Срок депосита в днях</string>
+    <string name="frequency_of_interest_payment">Foizlarni to\'lash chastotasi</string>
+    <string name="enter_starting_number_first">Oldin boshlang\'ich sanni kiriting</string>
 </resources>

@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.services.deposit.dialog
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,6 +27,8 @@ import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import java.math.BigDecimal
+import java.text.DecimalFormat
+import java.text.DecimalFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -77,7 +80,19 @@ class DepositPercentsDialog : BaseFragment<DialogDepositPercentBinding, ClientDe
 
     private fun initDefaultState() {
         binding.btnEnter.isVisible = clientDeposit.withdrawInterest == "Y"
-        binding.etAmount.setText(Format.formatAmount((((clientDeposit.persSum ?: "0").toBigDecimal()) / BigDecimal("100")).toString()))
+         try {
+             val summa=  clientDeposit.persSum?.toBigDecimalOrNull()?.divide(BigDecimal("100"))?:BigDecimal.ZERO
+             val symbols = DecimalFormatSymbols().apply {
+                 groupingSeparator = ' '
+                 decimalSeparator = '.'
+             }
+             val formatter = DecimalFormat("#,##0.00", symbols)
+             val formatted = formatter.format(summa)
+             binding.etAmount.setText(formatted)
+         } catch (e:Exception){
+             binding.etAmount.setText("0")
+         }
+
     }
 
     private fun initHistoriesRecyclerView() {

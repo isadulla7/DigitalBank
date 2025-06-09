@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="6dp"
                     android:layout_weight="0.9"
-                    android:gravity="start"
+                    android:gravity="end"
                     android:text="На 12 месяцев"
                     android:textColor="@color/mainTextColor"
                     android:textSize="16dp" />

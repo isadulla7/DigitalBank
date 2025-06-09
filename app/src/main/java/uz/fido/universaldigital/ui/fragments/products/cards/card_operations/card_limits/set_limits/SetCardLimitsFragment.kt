@@ -106,7 +106,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     }
 
     private fun checkAmount(text: String?): Boolean {
-        return if (!text.isNullOrEmpty()) BigDecimal(text.toString().replace(" ", "")) <= BigDecimal(1000000000)
+        return if (!text?.trim().isNullOrEmpty()) BigDecimal(text.toString().replace(" ", "")) <= BigDecimal(1000000000)
                 && BigDecimal(text.toString().replace(" ", "")) >= BigDecimal(1000) else false
     }
 
@@ -127,6 +127,16 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     }
 
     private fun checkEditTexts() {
+        val allowedCharacters = "0123456789. "
+        val filter = InputFilter { source, _, _, _, _, _ ->
+            if (source != null && source.any { it !in allowedCharacters }) {
+                ""
+            } else {
+                null
+            }
+        }
+
+        binding.etAmount.filters = arrayOf(filter)
         binding.etAmount.addTextChangedListener(object : DoAfterTextWatcher() {
             override fun afterTextChanged(text: Editable?) {
                 val newText = text.toString().replace(" ", "")
@@ -347,7 +357,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
             dateEnd.show()
 
         } else {
-            toast("oldin boshlang'ich sanni kiriting")
+            toast(getString(R.string.enter_starting_number_first))
         }
     }
 

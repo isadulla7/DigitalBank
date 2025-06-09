@@ -69,7 +69,7 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
     private fun setData() {
         templateDetails!!.forEach {
             when (it.code) {
-                "RECEIVER_ACCOUNT" -> binding.etReceiverAccount.setText(it.value)
+                "RECEIVER_ACCOUNT","BUDGET_ACCOUNT" -> binding.etReceiverAccount.setText(it.value)
                 "PAY_PURPOSE" -> binding.etPurpose.setText(it.value)
                 "AMOUNT" -> binding.etBankAmount.setText(Format.convertFromTiynDivide(it.value.toString()))
             }

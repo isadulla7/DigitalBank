@@ -25,6 +25,8 @@ data class ClientDeposit(
     val openDate: String? = null,
     val partialWrite: String? = null,
     val percent: String? = null,
+    val replenishmentMin:String?=null,
+    val replenishmentMax:String?=null,
     var persSum: String? = "0",
     val prolongation: String? = null,
     val prolongationDate: String? = null,
