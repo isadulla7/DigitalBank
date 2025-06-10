@@ -69,7 +69,7 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
     private fun setData() {
         templateDetails!!.forEach {
             when (it.code) {
-                "RECEIVER_ACCOUNT" -> binding.etReceiverAccount.setText(it.value)
+                "RECEIVER_ACCOUNT","BUDGET_ACCOUNT" -> binding.etReceiverAccount.setText(it.value)
                 "PAY_PURPOSE" -> binding.etPurpose.setText(it.value)
                 "AMOUNT" -> binding.etBankAmount.setText(Format.convertFromTiynDivide(it.value.toString()))
             }
@@ -199,6 +199,7 @@ class TransferToBudgetFragment : BaseFragment<FragmentTransferToBudgetBinding, R
                         bundle.putSerializable("paymentService", paymentService)
                         bundle.putSerializable("templateKeyValues", templateKeyValueList)
                         bundle.putSerializable(SuccessPaymentFragment.PAYMENT_KEY_VALUES, params)
+                        bundle.putSerializable("operation", "budget")
                         bundle.putString("currency", currency)
                         bundle.putDouble("percent", percent)
                         bundle.putString("amount", amount)

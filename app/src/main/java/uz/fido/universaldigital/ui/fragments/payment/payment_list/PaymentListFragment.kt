@@ -144,7 +144,7 @@ class PaymentListFragment :
                     gotoMobilePayments("51", databaseHelper)
                 }
 
-                "93", "94" -> {
+                "93", "94","50" -> {
                     gotoMobilePayments("53", databaseHelper)
                 }
 

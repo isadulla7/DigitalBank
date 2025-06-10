@@ -1080,4 +1080,14 @@
     <string name="pnfl">ПИНФЛ</string>
     <string name="register">Зарегистрироваться</string>
     <string name="amount_must_not_be_zero">Введённая сумма должна быть больше нуля</string>
+    <string name="max_amount_1_000_000_000">Максимальная сумма 1 000 000 000</string>
+    <string name="max_amount_exceed">Превышена максимальная сумма</string>
+    <string name="max_amount_exceeded">Превышена максимальная сумма.</string>
+    <string name="service_development">Сервис находится в стадии разработки</string>
+    <string name="universal_bank_dv">Мобильный ДВ Универсал Банка</string>
+    <string name="deposit_term_in_days">Осталось дней до окончания вклада</string>
+    <string name="frequency_of_interest_payment">Переодичность выплаты процентов</string>
+    <string name="enter_starting_number_first">Сначала введите начальное число</string>
+    <string name="sorry">Извините</string>
+    <string name="service_temporary_unavailable">Сервис временно недоступен</string>
 </resources>

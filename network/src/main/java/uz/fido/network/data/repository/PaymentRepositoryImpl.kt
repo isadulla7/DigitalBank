@@ -72,6 +72,11 @@ class PaymentRepositoryImpl @Inject constructor(private val paymentService: Paym
         paymentService.createPayment(token, createPaymentRequest, path)
     }
 
+    override suspend fun createBudgetPayment(token: String, createPaymentRequest: CreatePaymentRequest, path: String): Resource<CreatePaymentResponse> =
+        getResult {
+            paymentService.createBudgetPayment(token, createPaymentRequest, path)
+        }
+
 
     override suspend fun loanRepayment(
         token: String,
@@ -196,6 +201,7 @@ class PaymentRepositoryImpl @Inject constructor(private val paymentService: Paym
     ): Resource<OneTimeInfoResponse> = getResult {
         paymentService.getOneTimePayInfo(token, oneTimeInfoRequest)
     }
+
 
     override suspend fun getSwiftBic(
         token: String, swiftRequest: SwiftRequest

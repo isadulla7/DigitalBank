@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.monitoring.wallet
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import uz.fido.network.domain.model.monitoring.AccountHistory
@@ -34,7 +35,11 @@ fun AccountHistory.currencyChar() = when (debitAccount?.substring(5, 8)) {
 
 @SuppressLint("SetTextI18n")
 fun TextViewMedium.setTransactionAmount(item: AccountHistory) {
-    text = item.transactionTypeSymbol() + Format.formatAmount(item.creditAmount.toString()) + item.currencyChar()
+    try {
+        text = item.transactionTypeSymbol() + Format.formatAmount(if (item.creditAmount.isNullOrEmpty() || item.creditAmount == "0") item.debitAmount else item.creditAmount) + item.currencyChar()
+    } catch (e: Exception) {
+       text ="0"
+    }
 }
 
 fun ImageView.setMonitoringImage(item: AccountHistory) {

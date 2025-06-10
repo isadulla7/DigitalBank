@@ -261,7 +261,7 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
             when (it.status) {
                 Status.SUCCESS -> {
                     listener.invoke(
-                        it.data?.is_sms_confirm.toString(), it.data?.string_line.toString()
+                            it.data?.is_sms_confirm.toString(), it.data?.string_line.toString()
                     )
                 }
 

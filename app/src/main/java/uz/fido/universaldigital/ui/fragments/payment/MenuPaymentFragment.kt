@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.payment
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -193,6 +194,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
                             PaymentFragment.PAYMENT_OPERATION_TEMPLATE
                         )
 
+                        Log.d("TAG", "openTemplate: ${template.template_type} ")
                         when (template.template_type) {
                             TemplateTypes.DEFAULT.templateType -> {
                                 list?.forEach {
@@ -229,6 +231,8 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
                                                 )
                                             }
                                         }
+                                    }else if (it.code=="BUDGET_ACCOUNT"){
+                                        goto(R.id.transferToBudgetFragment, bundleOf(PaymentFragment.PAYMENT_TEMPLATE_KEY_VALUE_LIST to list))
                                     }
                                 }
                             }

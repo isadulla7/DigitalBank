@@ -164,7 +164,7 @@ class LocalMonitoringDetailsDialog(
 
     private fun isBadServiceIds(localMonitoring: LocalMonitoring): Boolean {
         return when (localMonitoring.serviceId) {
-            "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9", "-10", "-11", "-19" -> true
+            "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9", "-10", "-11", "-19","-12","-1" -> true
             else -> false
         }
     }

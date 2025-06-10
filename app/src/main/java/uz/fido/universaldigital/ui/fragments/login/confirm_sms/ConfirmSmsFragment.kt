@@ -15,6 +15,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.setFragmentResult
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.work.Operation.State.SUCCESS
 import com.google.android.gms.auth.api.phone.SmsRetriever
 import com.google.android.gms.tasks.Task
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,6 +25,7 @@ import uz.fido.network.domain.model.abc_base.UserInfo
 import uz.fido.network.domain.model.cards.AddCardRequest
 import uz.fido.network.domain.model.cards.ResetPinCount
 import uz.fido.network.domain.model.home.GlSMSActivateRequest
+import uz.fido.network.domain.model.payment.CreatePaymentRequest
 import uz.fido.network.domain.model.sessions.DeleteUserDeviceRequest
 import uz.fido.network.domain.model.sessions.UserDevices
 import uz.fido.network.domain.model.sign_in.SignInRequestNew
@@ -56,15 +58,19 @@ import uz.fido.universaldigital.ui.fragments.login.restore_profile.ChangePasswor
 import uz.fido.universaldigital.ui.fragments.login.sign_in.SignInViewModel
 import uz.fido.universaldigital.ui.fragments.login.sign_up.SignUpViewModel
 import uz.fido.universaldigital.ui.fragments.login.sign_up_password.SignUpPasswordFragment
+import uz.fido.universaldigital.ui.fragments.payment.abc_success.SuccessPaymentFragment
 import uz.fido.universaldigital.ui.fragments.profile.security.MyDevicesFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
+import uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.RequisitesViewModel
 import uz.fido.universaldigital.ui.utils.extensions.getFCMToken
+import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.universaldigital.ui.utils.keys.Keys
 import uz.fido.utils.app.AppSignatureHelper
 import uz.fido.utils.const.APIServiceConst.profileImageUrl
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.Const.PHONE_NUMBER
 import uz.fido.utils.device.GetDeviceInfo
+import uz.fido.utils.format.Format
 import uz.fido.utils.security.CryptoUtil
 import uz.fido.utils.security.encryptPassword
 import uz.fido.utils.security.getFromSecureStore
@@ -97,6 +103,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
     private val signInViewModel: SignInViewModel by viewModels()
     private val signUpViewModel: SignUpViewModel by viewModels()
+    private val requisiteViewModel: RequisitesViewModel by viewModels()
     private var operation: String = ""
     private var smsCode = ""
     private var stringLine = ""
@@ -117,6 +124,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         const val SMS_MAX_LENGTH = "SMS_MAX_LENGTH"
         const val SMS_RESET_PIN = "sms_reset_pin"
         const val SIGN_IN_REQUEST = "data"
+        const val SMS_BUDGET_OPERATION = "sms_budget_operation"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -202,7 +210,19 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
             SMS_RESET_PIN -> {
                 checkResetPin()
             }
+            SMS_BUDGET_OPERATION -> {
+                checkBudgetPin()
+            }
         }
+    }
+
+    private fun checkBudgetPin() {
+        binding.btnContinue.setProgress(true)
+        val smsCode = binding.etSms.editableText.toString().replace(" ", "")
+        val stringLine = requireArguments().getString(STRING_LINE).toString()
+        val stringLineEnc = CryptoUtil.encryptWithoutSalt(stringLine, smsCode)
+        setFragmentResult("Budget", bundleOf("new_string_line" to stringLineEnc))
+        findNavController().popBackStack()
     }
 
     private fun checkResetPin() {

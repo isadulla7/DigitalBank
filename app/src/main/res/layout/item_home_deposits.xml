@@ -12,7 +12,35 @@
     android:padding="12dp"
     android:translationZ="@dimen/elevation_8dp">
 
-    <uz.fido.utils.view.custom_text_view.TextViewMedium
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:orientation="horizontal">
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/tv_deposit_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:layout_weight="0.2"
+            android:textColor="@color/brandBlueColor"
+            android:textSize="16dp"
+            tools:text="My Deposit" />
+
+
+        <uz.fido.utils.view.custom_text_view.TextViewMedium
+            android:id="@+id/deposit_number"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:textColor="@color/mainTextColor"
+            android:textSize="16dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+<!--    <uz.fido.utils.view.custom_text_view.TextViewMedium
         android:id="@+id/tv_deposit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,6 +49,13 @@
         android:textColor="@color/brandBlueColor"
         android:textSize="16dp"
         tools:text="My Deposit" />
+    <uz.fido.utils.view.custom_text_view.TextViewMedium
+        android:id="@+id/deposit_number"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.7"
+        android:textColor="@color/mainTextColor"
+        android:textSize="16dp" />-->
 
     <uz.fido.utils.view.custom_text_view.TextViewSemiBold
         android:id="@+id/tv_deposit_balance"
@@ -49,6 +84,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="end"
+            tools:text="12 oy"
             android:textColor="@color/brandBlueColor"
             android:textSize="14dp" />
     </androidx.appcompat.widget.LinearLayoutCompat>

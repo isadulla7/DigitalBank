@@ -11,7 +11,9 @@ import uz.fido.network.domain.model.monitoring.AccountHistory
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogInfoDepositMonitoringBinding
 import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
+import uz.fido.universaldigital.ui.fragments.monitoring.wallet.currencyChar
 import uz.fido.utils.const.Const
+import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.format.Format
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -53,47 +55,52 @@ class DialogInfoMonitoring(
     }
 
     private fun infoDeposit() {
+        val currencyChar= clientDeposit.currencyChar?:CurrencyConst.CURRENCY_CHAR_UZS
         addView(
             getString(R.string.name),
             clientDeposit.depName.orEmpty()
         )
         addView(
             getString(R.string.initial_amount),
-            clientDeposit.amount.orEmpty()
+            clientDeposit.amount.formatTiynAmount(currencyChar)
+            //clientDeposit.amount.orEmpty()
         )
 
         addView(
+            getString(R.string.current_deposit_percents),
+            clientDeposit.persSum.formatTiynAmount(clientDeposit.currencyChar)
+        )
+        /*addView(
             getString(R.string.whole_amount),
             clientDeposit.sumDep.orEmpty()
-        )
+        )*/
 
         addView(
             getString(R.string.percents),
             "${clientDeposit.percent} %"
         )
+        addView(getString(R.string.frequency_of_interest_payment),getString(R.string.every_month))
         addView(
             getString(R.string.date_time),
             clientDeposit.openDate.orEmpty()
         )
+        addView(getString(R.string.deposit_deadline_until), clientDeposit.closingDate.orEmpty())
+       // addView(getString(R.string.frequency_of_interest_payment), clientDeposit.closingDate.orEmpty())
 
 
-
-        addView(
-            getString(R.string.deposit_balance),
-            clientDeposit.sumDep.formatTiynAmount(clientDeposit.currencyChar)
-        )
-        addView(
+//        addView(
+//            getString(R.string.deposit_balance),
+//            clientDeposit.sumDep.formatTiynAmount(clientDeposit.currencyChar)
+//        )
+      /*  addView(
             getString(R.string.interest_payable_percents),
             clientDeposit.interestPayable.formatTiynAmount(clientDeposit.currencyChar)
-        )
-        addView(
-            getString(R.string.current_deposit_percents),
-            clientDeposit.persSum.formatTiynAmount(clientDeposit.currencyChar)
-        )
+        )*/
 
-        addView(getString(R.string.deposit_deadline_until), clientDeposit.closingDate.orEmpty())
+
+
         addView(
-            getString(R.string.deposit_left_day),
+            getString(R.string.deposit_term_in_days),
             calculateDays(clientDeposit.closingDate.orEmpty()).toString() + ""
         )
 
@@ -140,6 +147,7 @@ class DialogInfoMonitoring(
     }
 
     private fun initViews() {
+        val currencyChar = clientDeposit?.currencyChar ?: CurrencyConst.CURRENCY_CHAR_UZS
         addView(
             getString(R.string.purpose),
             (if (type == Const.TYPE_LOAN) setCreditPurpose(
@@ -151,9 +159,9 @@ class DialogInfoMonitoring(
         addView(getString(R.string.date_time), item.dateExecute.toString())
         addView(
             getString(R.string.amount),
-            if (item.debitAmount == "0") Format.formatAmount((item.creditAmount!!.toDouble() / 100).toString()) + " UZS" else Format.formatAmount(
-                (item.debitAmount.toDouble() / 100).toString()
-            ) + " UZS"
+            if (item.debitAmount == "0") Format.formatAmount(item.creditAmount!!.toString()) + " $currencyChar" else Format.formatAmount(
+                item.debitAmount
+            ) + " $currencyChar"
         )
     }
 

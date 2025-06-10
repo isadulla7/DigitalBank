@@ -38,7 +38,8 @@ class ChooseCardLayout(context: Context, attr: AttributeSet) : ConstraintLayout(
         addCard: () -> Unit = {},
         scrollListener: (CardResponse?) -> Unit
     ) {
-        val sortedCardList = filterCardsByCurrency(currencyChar, cards)
+        val filterList= ArrayList(cards.filter { it.is_Dv!="Y" })
+        val sortedCardList = filterCardsByCurrency(currencyChar, filterList)
         if (sortedCardList.isNotEmpty()) {
             binding.noCards.visibility = View.GONE
             val snapHelper: SnapHelper = PagerSnapHelper()
@@ -242,6 +243,12 @@ class ChooseCardLayout(context: Context, attr: AttributeSet) : ConstraintLayout(
 
     private fun getRealCardsOnly(cardList: ArrayList<CardResponse>): ArrayList<CardResponse> {
         return cardList.filter { it.object_type != "KL" } as ArrayList<CardResponse>
+    }
+    fun setTextCard(text: String){
+        try {
+            binding.tvCards.text = text
+        }catch (e:Exception){}
+
     }
 
 }

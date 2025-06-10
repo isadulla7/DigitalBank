@@ -1,11 +1,14 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.wallet
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.monitoring.AccountHistoriesRequest
@@ -65,16 +68,32 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getCardList()
+        getFilterForWalletList()
         linearLayoutManager = LinearLayoutManager(requireContext())
         recylerViewScroll()
-        getCardList()
         setTime()
         createMonitoringAdapter()
-        checkFilterWallet()
         onClickView()
+        checkFilterWallet()
     }
 
-    private fun checkFilterWallet() {
+    private fun getFilterForWalletList() {
+        val newList= arrayListOf<CardResponse>()
+        menuProductsViewModel.cards.observe(viewLifecycleOwner) { card ->
+            card.forEach {
+                if (it.object_type == CardConst.WALLET) {
+                    newList.add(it)
+                }
+            }
+            if (newList.isNotEmpty()){
+                menuMonitoringViewModel.filterWalletCard(newList[0].object_id)
+            }
+        }
+    }
+
+
+    private  fun checkFilterWallet() {
         if (!menuMonitoringViewModel.walletFilter)
             getWalletList(1, operationType)
         else getFilterWalletList()
@@ -177,6 +196,7 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
     }
 
     private fun getWalletList(page: Int, operationType: Int) {
+        Log.d("TAG", "getCardList:${walletList.size} ")
         if (walletList.isNotEmpty()) {
             val skeletonScreen = showSkeleton(
                 binding.shimmerView,
@@ -300,20 +320,8 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
         return model
     }
 
-    private fun getCardList() {
-        val newList= arrayListOf<CardResponse>()
-        menuProductsViewModel.cards.observe(viewLifecycleOwner) { card ->
-            card.forEach {
-                if (it.object_type == CardConst.WALLET) {
-                    newList.add(it)
-                    walletList.add(it.account_code)
-                }
-            }
-            if (newList.isNotEmpty()){
-                menuMonitoringViewModel.filterWalletCard(newList[0].object_id)
-            }
-        }
-
+    private  fun getCardList() {
+        walletList = menuMonitoringViewModel.walledList.value ?: arrayListOf()
     }
 
     private fun emptyView() {

@@ -1,7 +1,9 @@
 package uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
@@ -30,6 +32,8 @@ import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientToken
+import java.math.BigDecimal
+import kotlin.math.min
 
 @AndroidEntryPoint
 class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, ClientDepositViewModel>(
@@ -40,12 +44,18 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     private lateinit var chosenCard: CardResponse
     private lateinit var deposit: ClientDeposit
     private var operation = ""
+    private var minAmount: BigDecimal = BigDecimal(0.0)
+    private var maxAmount: BigDecimal = BigDecimal(0.0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             deposit = it.serializable<ClientDeposit>("deposit") as ClientDeposit
             operation = it.serializable<String>(Const.OPERATION) as String
+            minAmount = deposit.replenishmentMin?.replace(" ", "")?.toBigDecimal() ?: BigDecimal(0.0)
+            maxAmount = deposit.replenishmentMax?.replace(" ", "")?.toBigDecimal() ?: BigDecimal(0.0)
+            if (minAmount != BigDecimal(0.0)) minAmount /= BigDecimal(100)
+            if (maxAmount != BigDecimal(0.0)) maxAmount /= BigDecimal(100)
         }
         setFragmentResultListener(ConfirmSmsFragment.SMS_OPERATION_PAYMENT_KEY) { _, bundle ->
             val stringLine = bundle.getString("string_line").orEmpty()
@@ -264,20 +274,98 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     }
 
     private fun setAmount() {
-        binding.appBar.setTitle(getString(R.string.top_up))
         checkItem(binding.etAmount.text.toString().replace(" ", ""))
         binding.etAmount.addTextChangedListener {
-            val amount = it.toString().replace(" ", "")
+            val amount = it?.toString()?.replace(" ", "") ?: "0"
+            val cardBalance = if (this::chosenCard.isInitialized)chosenCard.balance.toBigDecimal() / BigDecimal(100) else BigDecimal.ZERO
+            when {
+                !(this::chosenCard.isInitialized)->{
+                    binding.amountCheck.text = ""
+                }
+                amount.isEmpty() -> {
+                    binding.amountCheck.text = ""
+                }
+
+                minAmount == BigDecimal(0.0) && maxAmount == BigDecimal(0.0) -> {
+                    if (cardBalance > amount.toBigDecimal()) {
+                        binding.amountCheck.text = getString(R.string.min_summa) + " 1 " + deposit.currencyChar
+                        binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+                    } else {
+                        binding.amountCheck.text = getString(R.string.not_enough_money)
+                        binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+                    }
+                }
+
+                minAmount > BigDecimal(0.0) && maxAmount == BigDecimal(0.0) -> {
+                    if (cardBalance > amount.toBigDecimal()) {
+                        binding.amountCheck.text = getString(R.string.min_summa) + " ${Format.formatAmount(minAmount.toString())} " + deposit.currencyChar
+                        binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+                    } else {
+                        binding.amountCheck.text = getString(R.string.not_enough_money)
+                        binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+                    }
+                }
+
+                minAmount > BigDecimal(0.0) && maxAmount > BigDecimal(0.0) -> {
+                    if (amount.toBigDecimal() <= cardBalance) {
+                        if (amount.toBigDecimal() <= minAmount) {
+                            binding.amountCheck.text = getString(R.string.min_summa) + " ${Format.formatAmount(minAmount.toString())} " + deposit.currencyChar
+                            binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+                        } else if (amount.toBigDecimal() > minAmount && amount.toBigDecimal() <= maxAmount) {
+                            binding.amountCheck.text = getString(R.string.max_amount) + " ${Format.formatAmount(maxAmount.toString())} " + deposit.currencyChar
+                            binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+                        } else {
+                            binding.amountCheck.text = getString(R.string.max_amount_exceeded)
+                            binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+                        }
+                    } else {
+                        binding.amountCheck.text = getString(R.string.not_enough_money)
+                        binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+                    }
+                }
+
+                minAmount == BigDecimal(0.0) && maxAmount > BigDecimal(0.0) -> {
+                    if (amount.toBigDecimal() <= cardBalance) {
+                        if (BigDecimal(1) < maxAmount) {
+                            binding.amountCheck.text = getString(R.string.max_amount) + " ${Format.formatAmount(maxAmount.toString())} " + deposit.currencyChar
+                            binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+                        } else if (maxAmount < amount.toBigDecimal()) {
+                            binding.amountCheck.text = getString(R.string.max_amount_exceeded)
+                            binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+                        } else {
+                            binding.amountCheck.text = getString(R.string.min_summa) + " ${Format.formatAmount(minAmount.toString())} " + deposit.currencyChar
+                            binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
+                        }
+                    } else {
+                        binding.amountCheck.text = getString(R.string.not_enough_money)
+                        binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+                    }
+                }
+            }
             checkItem(amount)
         }
     }
 
     private fun checkItem(amount: String) {
         if (amount != "" && this::chosenCard.isInitialized) {
-            if (chosenCard.balance.toBigDecimal() > amount.toBigDecimal()) {
-                binding.btnContinue.isEnabled(true)
-            } else {
-                binding.btnContinue.isEnabled(false)
+
+            when {
+                minAmount == BigDecimal(0.0) && maxAmount == BigDecimal(0.0) -> {
+                    binding.btnContinue.isEnabled(amount.toBigDecimal() >= BigDecimal(1) && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) > amount.toBigDecimal())
+                }
+
+                minAmount > BigDecimal(0.0) && maxAmount == BigDecimal(0.0) -> {
+                    binding.btnContinue.isEnabled(amount.toBigDecimal() >= minAmount && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) > amount.toBigDecimal())
+                }
+
+                minAmount == BigDecimal(0.0) && maxAmount > BigDecimal(0.0) -> {
+                    binding.btnContinue.isEnabled(amount.toBigDecimal() >= BigDecimal(1) && amount.toBigDecimal() <= maxAmount && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) > amount.toBigDecimal())
+                }
+
+                minAmount > BigDecimal(0.0) && maxAmount > BigDecimal(0.0) -> {
+                    binding.btnContinue.isEnabled(amount.toBigDecimal() in minAmount..maxAmount && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) > amount.toBigDecimal())
+                }
+
             }
         } else binding.btnContinue.isEnabled(false)
     }
@@ -285,8 +373,14 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     private fun initCards() {
         var minAmount = ""
         when (operation) {
-            ClientDepositFragment.TOP_UP_DEPOSIT -> minAmount = "100"
-            ClientDepositFragment.EARLY_CLOSE_DEPOSIT, ClientDepositFragment.CLOSE_DEPOSIT -> minAmount = "0"
+            ClientDepositFragment.TOP_UP_DEPOSIT -> {
+                minAmount = "1"
+                binding.chooseCardLayout.setTextCard(getString(R.string.write_off_card))
+            }
+            ClientDepositFragment.EARLY_CLOSE_DEPOSIT, ClientDepositFragment.CLOSE_DEPOSIT -> {
+                minAmount = "0"
+                binding.chooseCardLayout.setTextCard(getString(R.string.universal_bank_dv))
+            }
             ClientDepositFragment.WITH_DRAW_PERCENT -> minAmount = "0"
         }
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {

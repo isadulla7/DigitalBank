@@ -401,7 +401,7 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
         canvas.drawBitmap(scaledBitmap1, 710f, 1194f, null)
 
         canvas.drawText(
-            "universaldigitalbank@gmail.com",
+            "info@universalbank.uz",
             startPositionX,
             1290f,
             tinyText

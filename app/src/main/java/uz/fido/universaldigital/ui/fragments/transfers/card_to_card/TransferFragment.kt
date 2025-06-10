@@ -106,8 +106,9 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
 
     private fun initCardList(listener: () -> Unit) {
         cardsViewModel.cards.observe(viewLifecycleOwner) { cardList ->
+            val filterList= cardList.filter { it.is_Dv!="Y" }
             userSumCards.clear()
-            cardList.forEach {
+            filterList.forEach {
                 if (it.currency_code == CurrencyConst.CURRENCY_CODE_UZS) {
                     userSumCards.add(it)
                 }

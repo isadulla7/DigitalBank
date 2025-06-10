@@ -69,6 +69,7 @@
             android:id="@+id/wallet"
             android:layout_width="match_parent"
             android:layout_height="56dp"
+            android:visibility="gone"
             android:layout_marginHorizontal="16dp"
             android:drawableStart="@drawable/ic_card_type_wallet_main"
             android:drawablePadding="12dp"

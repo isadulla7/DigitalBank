@@ -49,18 +49,18 @@
         android:hint="@string/input_card_number"
         app:layout_constraintTop_toBottomOf="@id/app_bar">
 
-        <uz.fido.utils.view.custom_edit_text.mask_edit_text.MaskEditText
+        <EditText
             android:id="@+id/card_number"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:autofillHints="phone"
             android:digits="1234567890 "
             android:imeOptions="actionDone"
-            android:inputType="numberDecimal"
+            android:inputType="number"
             android:maxLength="19"
             android:maxLines="1"
             android:singleLine="true"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:theme="@style/DefaultEditTextTheme"
             app:met_mask="#### #### #### ####" />
 

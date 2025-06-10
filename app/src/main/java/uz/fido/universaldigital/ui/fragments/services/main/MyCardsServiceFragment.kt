@@ -5,7 +5,6 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -117,7 +116,7 @@ class MyCardsServiceFragment : BaseSimpleFragment<FragmentMyCardsServiceBinding>
     }
 
     override fun selectedWallet(item: CardResponse) {
-        walletOperationsDialog = WalletOperationsDialog(this)
+        walletOperationsDialog = WalletOperationsDialog(this, item)
         walletOperationsDialog.show(childFragmentManager, "TAG")
         selectedCard = item
     }

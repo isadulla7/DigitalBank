@@ -1,6 +1,7 @@
 package uz.fido.network.di
 
 import android.content.Context
+import android.os.Build
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -8,7 +9,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.CertificatePinner
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -25,6 +25,7 @@ import uz.fido.network.domain.datasource.services.SwapKeyApiInterface
 import uz.fido.network.domain.datasource.services.UserApiInterface
 import uz.fido.utils.const.MyIdServiceConst
 import java.io.InputStream
+import java.security.GeneralSecurityException
 import java.security.KeyStore
 import java.security.SecureRandom
 import java.util.concurrent.TimeUnit
@@ -57,11 +58,13 @@ object NetworkModule {
     @Singleton
     fun provideKeyStore(caFileInputStream: InputStream): KeyStore = kotlin.run {
         val keyStore = KeyStore.getInstance("PKCS12")
-        val password = Keys.getCertFilePassword().toCharArray()
-        caFileInputStream.use {
-            keyStore.load(it, password)
+        try {
+            val password = Keys.getCertFilePassword().toCharArray()
+            keyStore.load(caFileInputStream, password)
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-        return keyStore
+        return@run keyStore
     }
 
     @Provides
@@ -74,11 +77,17 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideSslContext(keyManagerFactory: KeyManagerFactory): SSLContext =
+    fun provideSslContext(keyStore: KeyStore, keyManagerFactory: KeyManagerFactory): SSLContext =
         kotlin.run {
-            val sslContext = SSLContext.getInstance("TLSv1.2")
-            val tmf = systemDefaultTrustManager()
-            sslContext.init(keyManagerFactory.keyManagers, arrayOf(tmf), SecureRandom())
+            val sslContext = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                SSLContext.getInstance("TLSv1.3")
+            } else {
+                SSLContext.getInstance("TLSv1.2")
+            }
+            val tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm()
+            val tmf = TrustManagerFactory.getInstance(tmfAlgorithm)
+            tmf.init(keyStore)
+            sslContext.init(keyManagerFactory.keyManagers, null, SecureRandom())
             return@run sslContext
         }
 
@@ -86,14 +95,18 @@ object NetworkModule {
     @Singleton
     fun provideSslSocketFactory(sslContext: SSLContext): SSLSocketFactory = sslContext.socketFactory
 
-    private fun systemDefaultTrustManager(): X509TrustManager {
-        val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
-        trustManagerFactory.init(null as KeyStore?)
-        val trustManagers = trustManagerFactory.trustManagers
-        require(trustManagers.size == 1 && trustManagers[0] is X509TrustManager) {
-            "Unexpected TrustManager configuration"
+    private fun systemDefaultTrustManager(keyStore: KeyStore): X509TrustManager? {
+        return try {
+            val trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+            trustManagerFactory.init(keyStore as KeyStore?)
+            val trustManagers = trustManagerFactory.trustManagers
+            check(!(trustManagers.size != 1 || trustManagers.first() !is X509TrustManager)) {
+                "Unexpected default trust managers:" + trustManagers.contentToString()
+            }
+            trustManagers.first() as X509TrustManager
+        } catch (e: GeneralSecurityException) {
+            throw AssertionError()
         }
-        return trustManagers[0] as X509TrustManager
     }
 
     @Provides
@@ -104,12 +117,24 @@ object NetworkModule {
         return httpLoggingInterceptor
     }
 
-    private val certificatePinner = CertificatePinner.Builder()
-        .add(Keys.getDomainName(), Keys.getCertPin1())
-        .add(Keys.getDomainName(), Keys.getCertPin2())
-        .add(Keys.getDomainName(), Keys.getCertPin3())
-        .build()
 
+    @BaseOkhttpClient
+    @Provides
+    fun provideOkhttpClient(
+        @ApplicationContext appContext: Context,
+        sslSocketFactory: SSLSocketFactory,
+        keyStore: KeyStore,
+        loggingInterceptor: HttpLoggingInterceptor,
+        swapKeyService: SwapKeyApiInterface,
+        apiInterface: dagger.Lazy<UserApiInterface>,
+    ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager(keyStore) as X509TrustManager).addInterceptor(HeaderInterceptor(context = appContext))
+        .addInterceptor(loggingInterceptor)
+        .addInterceptor(
+            AuthInterceptor(
+                swapKeyService = swapKeyService, context = appContext, apiInterface
+            )
+        ).addInterceptor(EncryptionInterceptor(appContext)).addInterceptor(DecryptionInterceptor(appContext)).readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
+        .writeTimeout(180, TimeUnit.SECONDS).build()
 
     @SimpleClientRetrofit
     @Provides
@@ -121,27 +146,6 @@ object NetworkModule {
     fun provideRetrofit(
         baseUrl: String, @BaseOkhttpClient okHttpClient: OkHttpClient, gsonBuilder: Gson
     ): Retrofit = Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create(gsonBuilder)).baseUrl(baseUrl).build()
-
-    @BaseOkhttpClient
-    @Provides
-    fun provideOkhttpClient(
-        @ApplicationContext appContext: Context,
-        sslSocketFactory: SSLSocketFactory,
-        loggingInterceptor: HttpLoggingInterceptor,
-        swapKeyService: SwapKeyApiInterface,
-        apiInterface: dagger.Lazy<UserApiInterface>,
-    ): OkHttpClient = OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager())
-        .certificatePinner(certificatePinner)
-        .addInterceptor(HeaderInterceptor(context = appContext))
-        .addInterceptor(
-            AuthInterceptor(swapKeyService = swapKeyService, context = appContext, apiInterface)
-        )
-        .addInterceptor(loggingInterceptor)
-        .addInterceptor(EncryptionInterceptor(appContext))
-        .addInterceptor(DecryptionInterceptor(appContext))
-        .readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS)
-        .writeTimeout(180, TimeUnit.SECONDS)
-        .build()
 
     /*
     *   MY ID RETROFIT CLIENT
@@ -179,13 +183,11 @@ object NetworkModule {
 
     @SwapKeyRetrofit
     @Provides
-    fun swapKeyRetrofitClient(sslSocketFactory: SSLSocketFactory, loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
-        OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager())
-            .certificatePinner(certificatePinner)
-            .addInterceptor(Interceptor {
-                val request: Request = it.request().newBuilder().build()
-                return@Interceptor it.proceed(request)
-            }).addInterceptor(loggingInterceptor).readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS).writeTimeout(180, TimeUnit.SECONDS).build()
+    fun swapKeyRetrofitClient(sslSocketFactory: SSLSocketFactory, keyStore: KeyStore, loggingInterceptor: HttpLoggingInterceptor): OkHttpClient =
+        OkHttpClient.Builder().sslSocketFactory(sslSocketFactory, systemDefaultTrustManager(keyStore) as X509TrustManager).addInterceptor(Interceptor {
+            val request: Request = it.request().newBuilder().build()
+            return@Interceptor it.proceed(request)
+        }).addInterceptor(loggingInterceptor).readTimeout(180, TimeUnit.SECONDS).connectTimeout(180, TimeUnit.SECONDS).writeTimeout(180, TimeUnit.SECONDS).build()
 
     @SwapKeyRetrofit
     @Provides
@@ -193,5 +195,6 @@ object NetworkModule {
     fun swapKeyRetrofit(
         baseUrl: String, @SwapKeyRetrofit okHttpClient: OkHttpClient, gsonBuilder: Gson
     ): Retrofit = Retrofit.Builder().client(okHttpClient).addConverterFactory(GsonConverterFactory.create(gsonBuilder)).baseUrl(baseUrl).build()
+
 
 }

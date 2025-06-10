@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -20,7 +21,7 @@
             android:gravity="center|start"
             android:text="@string/payments"
             android:textColor="@color/brandBlueColor"
-            android:textSize="24dp" />
+            android:textSize="24sp" />
 
         <ImageView
             android:id="@+id/search"
@@ -179,7 +180,7 @@
                             android:maxLines="2"
                             android:text="@string/my_home"
                             android:textColor="@color/brandBlueColor"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -212,7 +213,7 @@
                             android:maxLines="2"
                             android:text="@string/qr_payment"
                             android:textColor="@color/brandBlueColor"
-                            android:textSize="14dp" />
+                            android:textSize="14sp" />
 
                     </androidx.appcompat.widget.LinearLayoutCompat>
 

@@ -1,15 +1,18 @@
 package uz.fido.universaldigital.ui.fragments.products.cards.card_operations.card_limits.set_limits
 
 import android.app.DatePickerDialog
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
@@ -26,6 +29,7 @@ import uz.fido.universaldigital.ui.dialogs.ReferenceDialog
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.universaldigital.ui.utils.home_utils.DoAfterTextWatcher
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.CardConst.UZCARD
 import uz.fido.utils.const.Const
@@ -33,6 +37,8 @@ import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
+import java.math.BigDecimal
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -54,7 +60,6 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     private var buttonOperation = "save"
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -70,7 +75,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     }
 
     private fun init() {
-        binding.etAmount.filters = arrayOf(InputFilter.LengthFilter(10))
+        binding.etAmount.filters = arrayOf(InputFilter.LengthFilter(15))
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.appBar.setOnAdditionalBtnClickListener {
             deleteSvCardLimit()
@@ -100,9 +105,72 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         }
     }
 
+    private fun checkAmount(text: String?): Boolean {
+        return if (!text?.trim().isNullOrEmpty()) BigDecimal(text.toString().replace(" ", "")) <= BigDecimal(1000000000)
+                && BigDecimal(text.toString().replace(" ", "")) >= BigDecimal(1000) else false
+    }
+
+    fun checkButton() {
+        val et1 = binding.limitType.text.toString()
+        val et3 = binding.endDate.text.toString()
+        val et2 = binding.startDate.text.toString()
+        val amount = binding.etAmount.text.toString()
+
+        if (card.object_type == CardConst.HUMO_CARD) {
+            binding.continueButton.isEnabled(
+                et1.isNotEmpty() && et3.isNotEmpty()
+                        && et2.isNotEmpty() && checkAmount(amount)
+            )
+        } else {
+            binding.continueButton.isEnabled(et1.isNotEmpty() && checkAmount(amount))
+        }
+    }
+
     private fun checkEditTexts() {
+        val allowedCharacters = "0123456789. "
+        val filter = InputFilter { source, _, _, _, _, _ ->
+            if (source != null && source.any { it !in allowedCharacters }) {
+                ""
+            } else {
+                null
+            }
+        }
+
+        binding.etAmount.filters = arrayOf(filter)
+        binding.etAmount.addTextChangedListener(object : DoAfterTextWatcher() {
+            override fun afterTextChanged(text: Editable?) {
+                val newText = text.toString().replace(" ", "")
+                 when {
+                     newText.isEmpty()->{
+                         binding.maxMinText.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainTextColor))
+                         binding.maxMinText.text=getString(R.string.min_amount_1000)
+                     }
+                    BigDecimal(newText) > BigDecimal(1000000000) -> {
+                        binding.maxMinText.text=getString(R.string.max_amount_exceed)
+                        binding.maxMinText.setTextColor(ContextCompat.getColor(requireContext(),R.color.brandRedColor))
+
+                    }
+                    BigDecimal(newText.replace(" ", "")) > BigDecimal(1000) -> {
+                        binding.maxMinText.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainTextColor))
+                        binding.maxMinText.text=getString(R.string.max_amount_1_000_000_000)
+                    }
+                    BigDecimal(newText) == BigDecimal(1000000000) -> {
+                        binding.maxMinText.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainTextColor))
+                        binding.maxMinText.text=getString(R.string.max_amount_1_000_000_000)
+                    }
+                    else -> {
+                        binding.maxMinText.setTextColor(ContextCompat.getColor(requireContext(),R.color.mainTextColor))
+                        binding.maxMinText.text=getString(R.string.min_amount_1000)
+                    }
+
+                }
+                checkButton()
+            }
+        })
+
+
         val editTexts = listOf(
-            binding.limitType, binding.endDate, binding.etAmount
+            binding.limitType, binding.endDate
         )
         for (editText in editTexts) {
             editText.addTextChangedListener(object : TextWatcher {
@@ -115,12 +183,9 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                     val et1 = binding.limitType.text.toString()
                     val et3 = binding.endDate.text.toString()
                     val et2 = binding.startDate.text.toString()
-                    val et4 = binding.etAmount.text.toString()
-                    if (card.object_type == CardConst.HUMO_CARD) {
-                        binding.continueButton.isEnabled(et1.isNotEmpty() && et3.isNotEmpty() && et4.isNotEmpty() && et2.isNotEmpty())
-                    } else {
-                        binding.continueButton.isEnabled(et1.isNotEmpty() && et4.isNotEmpty())
-                    }
+
+                    checkButton()
+
                 }
 
                 override fun afterTextChanged(s: Editable?) {}
@@ -258,18 +323,17 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         }
     }
 
-
     private fun startDatePicker() {
         binding.endDate.setText("")
-       val startDate= DatePickerDialog(
+        val startDate = DatePickerDialog(
             requireContext(),
             startDatePicker,
             myCalendar.get(Calendar.YEAR),
             myCalendar.get(Calendar.MONTH),
             myCalendar.get(Calendar.DAY_OF_MONTH)
         )
-           startDate.datePicker.minDate=Calendar.getInstance().timeInMillis
-            startDate.show()
+        startDate.datePicker.minDate = Calendar.getInstance().timeInMillis
+        startDate.show()
     }
 
     private fun endDatePicker() {
@@ -277,23 +341,23 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
         val dateStr = binding.startDate.text.toString()
         val sdf = SimpleDateFormat(myFormat, Locale.getDefault())
         val calendar = Calendar.getInstance()
-        if (dateStr.isNotEmpty()){
+        if (dateStr.isNotEmpty()) {
             val date = sdf.parse(dateStr)
             calendar.time = date
             calendar.add(Calendar.DAY_OF_MONTH, 1)
 
-      val dateEnd = DatePickerDialog(
-            requireContext(),
-           datePick,
-            myCalendar.get(Calendar.YEAR),
-            myCalendar.get(Calendar.MONTH),
-            myCalendar.get(Calendar.DAY_OF_MONTH)
-        )
-          dateEnd.datePicker.minDate=calendar.timeInMillis
-          dateEnd.show()
+            val dateEnd = DatePickerDialog(
+                requireContext(),
+                datePick,
+                myCalendar.get(Calendar.YEAR),
+                myCalendar.get(Calendar.MONTH),
+                myCalendar.get(Calendar.DAY_OF_MONTH)
+            )
+            dateEnd.datePicker.minDate = calendar.timeInMillis
+            dateEnd.show()
 
-        }else{
-            toast("oldin boshlang'ich sanni kiriting")
+        } else {
+            toast(getString(R.string.enter_starting_number_first))
         }
     }
 

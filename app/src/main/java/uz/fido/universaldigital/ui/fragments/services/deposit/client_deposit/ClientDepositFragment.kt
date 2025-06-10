@@ -18,6 +18,7 @@ import uz.fido.universaldigital.ui.fragments.services.deposit.dialog.DepositOper
 import uz.fido.universaldigital.ui.fragments.services.deposit.dialog.DialogInfoMonitoring
 import uz.fido.universaldigital.ui.fragments.services.loan.adapter.AccountHistoriesAdapter
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.Const
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
@@ -267,14 +268,14 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
 
     @SuppressLint("SetTextI18n")
     private fun setDate() {
-        binding.linearOut.visibility = if (clientDeposit.partialWrite == "Y") View.VISIBLE else View.INVISIBLE
+     //   binding.linearOut.visibility = if (clientDeposit.partialWrite == "Y") View.VISIBLE else View.INVISIBLE
         serviceId = clientDeposit.status.orEmpty()
-        binding.depositNumber.text = if (clientDeposit.savDepId.orEmpty().length > 4) "•• ${
+        binding.depositNumber.text = if (clientDeposit.savDepId.orEmpty().length > 5) "•• ${
             clientDeposit.savDepId.orEmpty().substring(
-                clientDeposit.savDepId.orEmpty().length - 4,
+                clientDeposit.savDepId.orEmpty().length - 5,
                 clientDeposit.savDepId.orEmpty().length
             )
-        }" else "•• ${clientDeposit.savDepId}"
+        }" else "  ${clientDeposit.savDepId}"
         binding.depositName.text = clientDeposit.depName
         binding.appBar.setTitle(clientDeposit.depName.orEmpty())
         binding.amount.text = Format.formatAmount(((clientDeposit.sumDep ?: "0").toDouble() / 100).toString()) + " ${clientDeposit.currencyChar}"
@@ -342,6 +343,7 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
             }
 
             R.id.linear_out -> {
+                if (clientDeposit.partialWrite == "Y"){
                 if (clientDeposit.isOfflineDeposit()) {
                     showSnackbar(getString(R.string.this_function_only_working_with_online_deposit))
                 } else {
@@ -352,6 +354,10 @@ class ClientDepositFragment : BaseFragment<FragmentClientDepositBinding, ClientD
                         goto(R.id.depositFillingFragment, bundle)
                     }
                 }
+                }else{
+                    showSnackbar(getString(R.string.service_development),getString(R.string.take_off))
+                }
+
             }
         }
     }

@@ -46,9 +46,10 @@ class RequestMoneyFragment : BaseFragment<FragmentCreateRequestMoneyBinding, Req
     }
 
     private fun initCards() {
-        menuProductsViewModel.cards.observe(viewLifecycleOwner) {
+        menuProductsViewModel.cards.observe(viewLifecycleOwner) {list->
+            val cardList= list.filter { it.object_type!="KL" }.toCollection(ArrayList())
             binding.chooseCardLayout.initCards(
-                it as ArrayList<CardResponse>,
+                cardList as ArrayList<CardResponse>,
                 (0).toString(),
                 CurrencyConst.CURRENCY_CHAR_UZS,
                 addCard = {

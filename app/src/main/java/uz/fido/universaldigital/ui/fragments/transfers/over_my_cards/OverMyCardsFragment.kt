@@ -136,7 +136,8 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
 
     private fun initCardList(listener: () -> Unit) {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) { cardList ->
-            cardList.forEach {
+            val filterList= cardList.filter { it.is_Dv!="Y" }
+            filterList.forEach {
                 if (it.currency_code == CurrencyConst.CURRENCY_CODE_UZS) {
                     if (senderCard == null || receiverCard == null) {
                         userSumCards.add(it)

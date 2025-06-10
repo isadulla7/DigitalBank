@@ -37,9 +37,12 @@ class EncryptionInterceptor(val context: Context) : Interceptor {
         return chain.proceed(request)
     }
 
-    private var language = context.getFromSecureStore(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN).uppercase(Locale.ROOT)
+    private fun getLanguage():String = context.getFromSecureStore(LanguageConst.LANGUAGE, LanguageConst.RUSSIAN).uppercase(Locale.ROOT)
+        .replace("RUS", "RU")
+        .replace("UZ", "UZL")
 
     private fun getRequest(request: Request, requestBody: RequestBody? = null): Request {
+        val language = getLanguage()
         return if (request.method == "GET") {
             request.newBuilder()
                 .header(HEADER_APP_LANGUAGE, language).build()

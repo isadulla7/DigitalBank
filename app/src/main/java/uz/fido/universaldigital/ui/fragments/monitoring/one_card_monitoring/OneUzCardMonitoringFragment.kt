@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.monitoring.one_card_monitoring
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -92,7 +93,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
 
     private fun getFilterUzCardMonitoringList(page: Int) {
         var skeletonScreen: SkeletonScreen? = null
-        if (page == 1) {
+        if (page == 0) {
             binding.rec.visibility = View.GONE
             binding.shimmerView.visibility = View.VISIBLE
             totalList = arrayListOf()
@@ -106,7 +107,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
         } else {
             binding.progress.visibility = View.VISIBLE
         }
-        val type = choose
+       operationType=choose
         val model = UzcardMonitoringRequest(
             startDate = dateBegin,
             endDate = dateEnd,
@@ -116,7 +117,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
         )
 
         viewModel.getUzcardMonitoringOld(getClientToken(), model).observe(viewLifecycleOwner) {
-            if (page == 1) {
+            if (page == 0) {
                 skeletonScreen!!.hide()
                 binding.shimmerView.visibility = View.GONE
                 binding.rec.visibility = View.VISIBLE
@@ -126,7 +127,7 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
             when (it.status) {
                 Status.SUCCESS -> {
                     val response = it.data?.transactions ?: arrayListOf()
-                    successMonitoringList(response, type)
+                    successMonitoringList(response, choose)
                 }
 
                 Status.ERROR -> {
@@ -143,15 +144,17 @@ class OneUzCardMonitoringFragment : BaseFragment<FragmentUzcardFirstMonitoringBi
             val filterDialog = MonitoringSimpleFilterDialog(
                 choose, dateBegin, dateEnd, timeType,
                 onClickItem = { newChoose, startDate, endDate, type ->
+                    totalList.clear()
                     choose = newChoose
                     dateBegin = startDate
                     dateEnd = endDate
                     timeType = type
                     filter = true
-                    getFilterUzCardMonitoringList(1)
+                    getFilterUzCardMonitoringList(0)
                     binding.appBar.setAdditionalIcon(R.drawable.ic_filter_yes)
                 },
                 clear = {
+                    operationType=2
                     choose = 2
                     dateBegin = ""
                     dateEnd = ""

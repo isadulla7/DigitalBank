@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.payment.templates
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -27,6 +28,7 @@ import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.transfers.swift_transfer.InitTransferDetailsFragment
 import uz.fido.utils.const.Const
 import uz.fido.utils.libs.skeleton.SkeletonScreen
+import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
@@ -280,6 +282,8 @@ class TemplateListFragment : BaseFragment<FragmentTemplateListBinding, UtilsView
                                                 )
                                             }
                                         }
+                                    }else if (it.code=="BUDGET_ACCOUNT"){
+                                        goto(R.id.transferToBudgetFragment, bundleOf(PaymentFragment.PAYMENT_TEMPLATE_KEY_VALUE_LIST to list))
                                     }
                                 }
                             }
