@@ -1083,7 +1083,9 @@
     <string name="max_amount_exceeded">ПMaksimal miqdor oshib ketdi.</string>
     <string name="service_development">Xizmat ishlab chiqilmoqda</string>
     <string name="universal_bank_dv">Mobile DV Universal Bank</string>
-    <string name="deposit_term_in_days">Срок депосита в днях</string>
+    <string name="deposit_term_in_days">Omonat tugashiga kunlar qoldi</string>
     <string name="frequency_of_interest_payment">Foizlarni to\'lash chastotasi</string>
     <string name="enter_starting_number_first">Oldin boshlang\'ich sanni kiriting</string>
+    <string name="sorry">Kechirasiz</string>
+    <string name="service_temporary_unavailable">Xizmat vaqtincha ishlamayapti.</string>
 </resources>

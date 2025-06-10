@@ -653,12 +653,12 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
     }
 
     override fun openTransferList(item: PopularTransfers) {
-        goto(
-            if (item.object_type == WALLET) R.id.transferByWalletFragment else R.id.transferToCardFragment,
-            bundleOf(
-                Const.CARD_NUMBER to item.card_number
-            )
-        )
+        if (item.object_type == WALLET) {
+            showSnackbar(getString(R.string.service_temporary_unavailable),getString(R.string.sorry))
+        } else goto(R.id.transferToCardFragment,bundleOf(
+            Const.CARD_NUMBER to item.card_number
+        ))
+
     }
 
     private fun fetchTemplate(template: Template) {

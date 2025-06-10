@@ -85,7 +85,7 @@ class DialogInfoMonitoring(
             clientDeposit.openDate.orEmpty()
         )
         addView(getString(R.string.deposit_deadline_until), clientDeposit.closingDate.orEmpty())
-        addView(getString(R.string.frequency_of_interest_payment), clientDeposit.closingDate.orEmpty())
+       // addView(getString(R.string.frequency_of_interest_payment), clientDeposit.closingDate.orEmpty())
 
 
 //        addView(

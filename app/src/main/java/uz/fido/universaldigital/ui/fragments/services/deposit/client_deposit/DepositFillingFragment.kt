@@ -277,8 +277,11 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         checkItem(binding.etAmount.text.toString().replace(" ", ""))
         binding.etAmount.addTextChangedListener {
             val amount = it?.toString()?.replace(" ", "") ?: "0"
-            val cardBalance = chosenCard.balance.toBigDecimal() / BigDecimal(100)
+            val cardBalance = if (this::chosenCard.isInitialized)chosenCard.balance.toBigDecimal() / BigDecimal(100) else BigDecimal.ZERO
             when {
+                !(this::chosenCard.isInitialized)->{
+                    binding.amountCheck.text = ""
+                }
                 amount.isEmpty() -> {
                     binding.amountCheck.text = ""
                 }
