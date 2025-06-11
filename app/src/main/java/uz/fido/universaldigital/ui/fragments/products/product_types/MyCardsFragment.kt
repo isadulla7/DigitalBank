@@ -1,5 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.products.product_types
 
+import android.R.attr.label
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
@@ -15,6 +16,8 @@ import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.BlockCardRequest
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.cards.DeleteCardRequest
+import uz.fido.network.domain.model.cards.GetObjValueRequest
+import uz.fido.network.domain.model.cards.GetObjValueResponse
 import uz.fido.network.domain.model.wallet.DeleteWalletRequest
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
@@ -33,6 +36,8 @@ import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getLayoutMana
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.getSpanCount
 import uz.fido.utils.const.CardConst
 import uz.fido.utils.const.Const
+import uz.fido.utils.security.CryptoUtil
+import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.user.getClientToken
 
@@ -109,7 +114,7 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     }
 
     override fun selectedWallet(item: CardResponse) {
-        walletOperationsDialog = WalletOperationsDialog(this,item)
+        walletOperationsDialog = WalletOperationsDialog(this, item)
         walletOperationsDialog.show(childFragmentManager, "TAG")
         selectedCard = item
     }
@@ -117,10 +122,7 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     override fun shareCardNumberDialog(item: CardResponse) {
         val dialog = ShareCardNumberDialog(item, object : BaseInterface {
             override fun copyCardNumber() {
-                val clipboard: ClipboardManager =
-                    requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-                val clip = ClipData.newPlainText(android.R.attr.label.toString(), item.object_value)
-                clipboard.setPrimaryClip(clip)
+                getObjValue(item.object_id)
             }
 
             override fun shareCardNumber() {
@@ -134,6 +136,21 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
             }
         })
         dialog.show(childFragmentManager, "")
+    }
+
+    private fun getObjValue(objectId: String) {
+        menuProductsViewModel.getCardNumberRequest(getClientToken(), GetObjValueRequest(from_object_id = objectId)).observe(viewLifecycleOwner) {
+            it?.let {
+                if (it.status == Status.SUCCESS) {
+                    val result = it.data as GetObjValueResponse
+                    try {
+                        copyObjValue(CryptoUtil.decryptWithoutSalt(result.object_value, getFromSecureStore(Const.PASSWORD_ENC)))
+                    } catch (e: Exception) {
+                        toast(e.message.toString())
+                    }
+                }
+            }
+        }
     }
 
     override fun onClick(v: View?) {
@@ -312,6 +329,13 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
                 }
             }
         }
+    }
+
+    private fun copyObjValue(objValue: String) {
+        val clipboard: ClipboardManager =
+            requireContext().getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clip = ClipData.newPlainText(label.toString(), objValue)
+        clipboard.setPrimaryClip(clip)
     }
 
     override fun onDestroyView() {

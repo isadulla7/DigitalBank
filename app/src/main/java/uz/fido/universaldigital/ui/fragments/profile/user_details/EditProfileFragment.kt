@@ -114,19 +114,19 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
 
     private fun uploadImageToFirebase(filePath: Uri) {
         try {
-            if (binding == null) return
+            if (!this.isVisible) return
             val photoId = "profile_photo_${getClientId()}_${(SecureRandom().nextInt(99999 - 10000) + 10000)}"
             binding.progressBar.visibility = View.VISIBLE
             binding.profileImage.alpha = 0.8f
             val ref = storageReference.child("images/$photoId")
             ref.putFile(filePath).addOnSuccessListener {
-                if (binding != null) {
+                if (this.isVisible) {
                     setProfilePhotoId(photoId)
                     binding.progressBar.visibility = View.GONE
                     binding.profileImage.alpha = 1f
                 }
             }.addOnFailureListener { e ->
-                if (binding != null) {
+                if (this.isVisible) {
                     binding.progressBar.visibility = View.GONE
                     binding.profileImage.alpha = 1f
                 }

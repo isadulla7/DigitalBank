@@ -116,7 +116,7 @@
         android:maxLines="2"
         android:paddingHorizontal="16dp"
         android:text="@string/card_blocked"
-        android:textColor="@color/whiteColor"
+        android:textColor="@color/frozenWhite"
         android:textSize="14dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"

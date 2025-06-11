@@ -177,7 +177,7 @@ class ConfirmSmsForTransfer : BaseFragment<FragmentConfirmSmsBinding, ConfirmSms
     }
 
     private fun updateResendTime(timeInMilliSeconds: Long) {
-        if (context != null && binding != null) {
+        if (context != null && this.isVisible) {
             val minute = (timeInMilliSeconds / 1000) / 60
             val seconds = (timeInMilliSeconds / 1000) % 60
             val f: NumberFormat = DecimalFormat("00")
