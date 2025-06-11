@@ -20,7 +20,11 @@ class LimitAdapter(
         fun bind(item: SvLimit) {
             binding.limitType.text = item.dsc
             binding.limitAmount.text = Format.formatAmount(item.limitAmount.toBigDecimal().divide(100.toBigDecimal()).toString()) + " UZS"
-            binding.limitDate.text = itemView.context.getString(R.string.used_amount) + " : " + item.usedAmount + " UZS"
+            binding.limitDate.text = try {
+                itemView.context.getString(R.string.used_amount) + " : " +  Format.formatAmount(item.usedAmount.toBigDecimal().divide(100.toBigDecimal()).toString()) + " UZS"
+            } catch (e: Exception) {
+                "0 UZS"
+            }
             binding.father.setOnClickListener {
                 baseInterface.openLimitItem(item)
             }

@@ -30,15 +30,6 @@ class WalletOperationsDialog(private var listener: View.OnClickListener, val car
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        try {
-            if (!cardResponse.is_Dv.isNullOrEmpty() && cardResponse.is_Dv=="Y"){
-                binding.takeOff.visibility=View.GONE
-                binding.topUp.visibility=View.GONE
-            }
-        }catch (e:Exception){}
-    }
 
     private fun setOnClickListeners() {
         binding.deleteWallet.setOnClickListener(listener)

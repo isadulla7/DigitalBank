@@ -1088,4 +1088,5 @@
     <string name="enter_starting_number_first">Oldin boshlang\'ich sanni kiriting</string>
     <string name="sorry">Kechirasiz</string>
     <string name="service_temporary_unavailable">Xizmat vaqtincha ishlamayapti.</string>
+    <string name="transfer_dv_possible_un">DV hisobidan o\'tkazish faqat Universal Bank kartasiga mumkin</string>
 </resources>
