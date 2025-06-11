@@ -148,7 +148,7 @@ class BasicSuccessFragment : BaseFragment<FragmentSuccessBasicBinding, MainDepos
 
             LIMIT -> {
                 binding.amount.visibility = View.GONE
-                binding.successTitle.text = getString(R.string.set_limit_successful)
+                binding.successTitle.text = getString(R.string.successful)
             }
 
             OPEN_WALLET_SUCCESS -> {
