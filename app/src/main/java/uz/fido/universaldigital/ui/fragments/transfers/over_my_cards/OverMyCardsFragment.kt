@@ -211,11 +211,9 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             return
         }
         if (senderCard != null && receiverCard != null) {
-            if ((senderCard?.is_Dv == "Y" && receiverCard?.is_Dv == "Y").not() &&
-                (
-                        (senderCard?.is_Dv == "Y" && !receiverCard!!.isUniversalCard()) ||
-                                (receiverCard?.is_Dv == "Y" && !senderCard!!.isUniversalCard())
-                        )) {
+
+            if (senderCard?.is_Dv == "Y" && receiverCard!!.is_our_bank!="Y")
+                {
                 binding.btnContinue.isEnabled(continueButtonState())
                 return
             }
@@ -364,11 +362,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 return false
             }
 
-            (senderCard?.is_Dv == "Y" && receiverCard?.is_Dv == "Y").not() &&
-                    (
-                            (senderCard?.is_Dv == "Y" && !receiverCard!!.isUniversalCard()) ||
-                                    (receiverCard?.is_Dv == "Y" && !senderCard!!.isUniversalCard())
-                            ) -> {
+            (senderCard!!.is_Dv == "Y" && receiverCard!!.is_our_bank!="Y") -> {
                 binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
                 binding.tvMinAmount.text = getString(R.string.transfer_dv_possible_un)
