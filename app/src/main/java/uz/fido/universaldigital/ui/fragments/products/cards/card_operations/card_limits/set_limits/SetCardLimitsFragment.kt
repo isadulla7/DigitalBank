@@ -56,6 +56,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     private var limitTypes = ArrayList<AllServiceLists>()
     private var svLimit: SvLimit? = null
     private var limitId: String? = null
+    private var oldLimitId: String? = null
     private var referenceDialog: ReferenceDialog? = null
     private var buttonOperation = "save"
 
@@ -66,6 +67,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
             card = it.serializable<CardResponse>(Const.CARD) as CardResponse
             operationType = it.getString(Const.OPERATION).toString()
             svLimit = it.serializable("model") as SvLimit?
+            if (svLimit!=null) oldLimitId=svLimit!!.limitId
         }
     }
 
@@ -299,7 +301,7 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
     private fun deleteSvCardLimit() {
         showProgress()
         val request = LimitDeleteRequest(
-            limit_id = limitId!!,
+            limit_id = oldLimitId?:"",
             object_id = card.object_id
         )
         viewModel.deleteSvCardLimit(getClientToken(), request).observe(viewLifecycleOwner) {
@@ -309,10 +311,13 @@ class SetCardLimitsFragment : BaseFragment<FragmentSetCardLimitsBinding, MenuPro
                     if (buttonOperation == "edit") {
                         setSvCardLimit()
                     } else {
-                        showSnackbar(getString(R.string.limit_deletec), getString(R.string.successfully))
-                        Handler(Looper.getMainLooper()).postDelayed({
-                            pop()
-                        }, 500)
+                        val bundle = Bundle()
+                        bundle.putString(Const.OPERATION, BasicSuccessFragment.LIMIT)
+                        gotoWithSlide(R.id.basicSuccessFragment, bundle)
+//                        showSnackbar(getString(R.string.limit_deletec), getString(R.string.successfully))
+//                        Handler(Looper.getMainLooper()).postDelayed({
+//                            pop()
+//                        }, 500)
                     }
                 }
 

@@ -1090,4 +1090,5 @@
     <string name="enter_starting_number_first">Сначала введите начальное число</string>
     <string name="sorry">Извините</string>
     <string name="service_temporary_unavailable">Сервис временно недоступен</string>
+    <string name="transfer_dv_possible_un">Перевод с DV счета возможно только на карту Универсал банка</string>
 </resources>

@@ -28,6 +28,7 @@ import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFr
 import uz.fido.universaldigital.ui.fragments.transfers.utils.getInfoCommand
 import uz.fido.universaldigital.ui.fragments.transfers.utils.getServiceIdInfo
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isNotActive
+import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isUniversalCard
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const
@@ -136,8 +137,8 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
 
     private fun initCardList(listener: () -> Unit) {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) { cardList ->
-            val filterList= cardList.filter { it.is_Dv!="Y" }
-            filterList.forEach {
+            //  val filterList= cardList.filter { it.is_Dv!="Y" }
+            cardList.forEach {
                 if (it.currency_code == CurrencyConst.CURRENCY_CODE_UZS) {
                     if (senderCard == null || receiverCard == null) {
                         userSumCards.add(it)
@@ -209,6 +210,17 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             binding.btnContinue.isEnabled(continueButtonState())
             return
         }
+        if (senderCard != null && receiverCard != null) {
+            if ((senderCard?.is_Dv == "Y" && receiverCard?.is_Dv == "Y").not() &&
+                (
+                        (senderCard?.is_Dv == "Y" && !receiverCard!!.isUniversalCard()) ||
+                                (receiverCard?.is_Dv == "Y" && !senderCard!!.isUniversalCard())
+                        )) {
+                binding.btnContinue.isEnabled(continueButtonState())
+                return
+            }
+        }
+
         if (senderCard != null && receiverCard != null && senderCard != receiverCard) {
             viewModel.p2pInfoRequest(
                 getClientToken(), P2PInfoRequest(
@@ -338,6 +350,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 return false
             }
 
+
             isP2pInfoSuccess == false -> {
                 binding.tvMinAmount.visibility = View.GONE
                 binding.tvMinAmount.text = message ?: getString(R.string.unknown)
@@ -347,6 +360,18 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             senderCard == null || receiverCard == null -> {
                 binding.tvMinAmount.visibility = View.VISIBLE
                 binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandBlueColor_50))
+                hideCommissionBlock()
+                return false
+            }
+
+            (senderCard?.is_Dv == "Y" && receiverCard?.is_Dv == "Y").not() &&
+                    (
+                            (senderCard?.is_Dv == "Y" && !receiverCard!!.isUniversalCard()) ||
+                                    (receiverCard?.is_Dv == "Y" && !senderCard!!.isUniversalCard())
+                            ) -> {
+                binding.tvMinAmount.visibility = View.VISIBLE
+                binding.tvMinAmount.setTextColor(ContextCompat.getColor(requireContext(), R.color.brandRedColor))
+                binding.tvMinAmount.text = getString(R.string.transfer_dv_possible_un)
                 hideCommissionBlock()
                 return false
             }
@@ -389,6 +414,7 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                 binding.tvMinAmount.text = getString(R.string.insufficient_amount)
                 return false
             }
+
 
             totalAmount >= minAmount && totalAmount <= senderCard!!.balance.toBigDecimal().divide(BigDecimal(100)) && isP2pInfoSuccess == true -> {
                 binding.tvMinAmount.visibility = View.VISIBLE

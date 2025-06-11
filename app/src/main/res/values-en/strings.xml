@@ -1088,4 +1088,5 @@
     <string name="enter_starting_number_first">First enter the initial number</string>
     <string name="sorry">Sorry</string>
     <string name="service_temporary_unavailable">The service is temporarily unavailable</string>
+    <string name="transfer_dv_possible_un">Transfer from DV account is possible only to Universal Bank card</string>
 </resources>
