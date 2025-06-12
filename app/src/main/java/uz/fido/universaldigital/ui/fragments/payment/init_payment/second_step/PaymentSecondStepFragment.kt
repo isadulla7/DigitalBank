@@ -825,7 +825,7 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
         }
         imm.hideSoftInputFromWindow(vi.windowToken, 0)
         println("=====${paymentHashMap["AMOUNT"]}")
-        if (paymentHashMap["AMOUNT"] == "0.0" || paymentHashMap["AMOUNT"] == "0.00" || paymentHashMap["AMOUNT"] == "0") {
+        if ((paymentHashMap["AMOUNT"] == "0.0" || paymentHashMap["AMOUNT"] == "0.00" || paymentHashMap["AMOUNT"] == "0") && homeId.isNullOrEmpty()) {
             showSnackbar(getString(R.string.amount_must_not_be_zero))
         } else {
             preparePayment(

@@ -191,9 +191,9 @@ class OpenDepositStepTwoFragment : BaseFragment<FragmentOpenDepositTwoStepBindin
 
     private fun initCards() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) { cardResponseList ->
-            val filteredCards = cardResponseList.filter { it.isUniversalCard() }
+            val cards = if (deposit.percent == "0") cardResponseList else cardResponseList.filter { it.isUniversalCard() }
             binding.chooseCardLayout.initCards(
-                filteredCards as ArrayList<CardResponse>, amount, type
+                cards as ArrayList<CardResponse>, amount, type
             ) { cardResponse ->
                 cardResponse?.let { card ->
                     if (card.balance.toBigDecimal().divide(100.toBigDecimal()).compareTo(amount.toBigDecimal()) == -1) {
