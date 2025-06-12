@@ -117,17 +117,20 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
             if (!this.isVisible) return
             val photoId = "profile_photo_${getClientId()}_${(SecureRandom().nextInt(99999 - 10000) + 10000)}"
             binding.progressBar.visibility = View.VISIBLE
+            binding.saveButton.isEnabled = false
             binding.profileImage.alpha = 0.8f
             val ref = storageReference.child("images/$photoId")
             ref.putFile(filePath).addOnSuccessListener {
                 if (this.isVisible) {
                     setProfilePhotoId(photoId)
                     binding.progressBar.visibility = View.GONE
+                    binding.saveButton.isEnabled = true
                     binding.profileImage.alpha = 1f
                 }
             }.addOnFailureListener { e ->
                 if (this.isVisible) {
                     binding.progressBar.visibility = View.GONE
+                    binding.saveButton.isEnabled = true
                     binding.profileImage.alpha = 1f
                 }
                 showSnackbar(e.localizedMessage?.toString() ?: "")
