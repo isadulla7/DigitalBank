@@ -211,7 +211,6 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
             return
         }
         if (senderCard != null && receiverCard != null) {
-
             if (senderCard?.is_Dv == "Y" && receiverCard!!.is_our_bank!="Y")
                 {
                 binding.btnContinue.isEnabled(continueButtonState())

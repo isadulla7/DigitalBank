@@ -72,7 +72,7 @@ class MyHouseMultipleAmountFragment : BaseFragment<FragmentMyHouseMutipleAmountB
             withContext(Dispatchers.Main) {
                 binding.rec.adapter = MyHouseAmountAdapter(requireContext(), list) { it, postion ->
                     try {
-                        list[postion].check_amount = it.toBigDecimal() > BigDecimal("499")
+                        list[postion].check_amount = it.toBigDecimal() >= BigDecimal("500")
                         checkBottom()
                     } catch (e: Exception) {
                         e.printStackTrace()
