@@ -1,22 +1,32 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.local
 
 import android.app.Dialog
+import android.content.Intent
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.content.FileProvider
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.R
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import okhttp3.Dispatcher
 import uz.fido.network.domain.model.payment.local_history.LocalMonitoring
 import uz.fido.network.domain.model.search.SearchDataResponse
 import uz.fido.universaldigital.databinding.DialogInfoMonitoringBinding
 import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.format.Format
+import java.io.File
+import java.io.FileOutputStream
 
 class LocalMonitoringDetailsDialog(
     private val localMonitoring: LocalMonitoring,
@@ -26,7 +36,7 @@ class LocalMonitoringDetailsDialog(
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: DialogInfoMonitoringBinding
-
+    private val pdfInfoList: ArrayList<PdfInfo> = arrayListOf()
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val bottomSheetDialog = super.onCreateDialog(savedInstanceState) as BottomSheetDialog
         bottomSheetDialog.setOnShowListener {
@@ -63,6 +73,43 @@ class LocalMonitoringDetailsDialog(
             fullInfo?.invoke(localMonitoring)
         }
     }
+
+    private fun pdfDocument() {
+        lifecycleScope.launch {
+            val pdfDocument = PdfDocument()
+            val paint = Paint()
+            val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create() // A4
+            val page = pdfDocument.startPage(pageInfo)
+            val canvas = page.canvas
+            var y = 50f
+            pdfInfoList.forEach { item ->
+                canvas.drawText(item.name.toString(), 40f, y, paint)
+                y += 30f
+                canvas.drawText(item.info.toString(), 40f, y, paint)
+                y += 40f // Keyingi item uchun bo‘sh joy
+            }
+
+            pdfDocument.finishPage(page)
+            val file = File(requireContext().cacheDir, "output.pdf")
+            pdfDocument.writeTo(FileOutputStream(file))
+            pdfDocument.close()
+            share(file)
+        }
+
+    }
+
+    private fun share(file: File) {
+        lifecycleScope.launch{
+        val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.my.package.name.provider", file)
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "application/pdf"
+            putExtra(Intent.EXTRA_STREAM, uri)
+            addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        }
+        startActivity(Intent.createChooser(intent, "Send PDF"))
+        }
+    }
+
 
     private fun checkForButton() {
         binding.repeat.isVisible = repeatPayment != null
@@ -156,6 +203,7 @@ class LocalMonitoringDetailsDialog(
     }
 
     private fun addView(name: String, value: String) {
+        pdfInfoList.add(PdfInfo(name, value))
         val viewDepositCreateBinding = ItemInfoMonitoringBinding.inflate(LayoutInflater.from(requireContext()), null, false)
         viewDepositCreateBinding.name.text = name
         viewDepositCreateBinding.value.text = value
@@ -164,7 +212,7 @@ class LocalMonitoringDetailsDialog(
 
     private fun isBadServiceIds(localMonitoring: LocalMonitoring): Boolean {
         return when (localMonitoring.serviceId) {
-            "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9", "-10", "-11", "-19","-12","-1" -> true
+            "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9", "-10", "-11", "-19", "-12", "-1" -> true
             else -> false
         }
     }

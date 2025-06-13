@@ -3,7 +3,10 @@ package uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.sum
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
+import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.widget.doAfterTextChanged
@@ -152,7 +155,7 @@ class TransferToUzsAccountFragment : BaseFragment<FragmentTransferToUzsAccountBi
                 return@doAfterTextChanged
             }
             if (percent == -1.0) return@doAfterTextChanged
-            it.toString().trim().replace(" ", "").toBigDecimal().let { amount ->
+            it.toString().trim().replace(" ", "").toBigDecimalOrNull()?.let { amount ->
                 binding.textPercent.setTransactionPercent(amount, percent.toBigDecimal())
             }
         }
@@ -180,10 +183,10 @@ class TransferToUzsAccountFragment : BaseFragment<FragmentTransferToUzsAccountBi
                 return false
             }
         }
-        if (binding.etBankAmount.text.toString().isEmpty()) {
+        if (binding.etBankAmount.text.toString().trim().isEmpty()) {
             return false
         }
-        val amount = binding.etBankAmount.text.toString().replace(" ", "").toBigDecimal()
+        val amount = binding.etBankAmount.text.toString().trim().replace(" ", "").toBigDecimal()
         return !(amount < minAmount || amount > maxAmount) && isCorrectAccountNumber && binding.etReceiverAccount.editableText.toString().length == 20
     }
 

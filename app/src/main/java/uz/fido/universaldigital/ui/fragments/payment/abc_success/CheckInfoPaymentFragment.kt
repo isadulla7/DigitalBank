@@ -2,14 +2,14 @@ package uz.fido.universaldigital.ui.fragments.payment.abc_success
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Paint
+import android.graphics.pdf.PdfDocument
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.FileProvider
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.payment.Cheque
 import uz.fido.network.domain.model.payment.PrintChequeRequest
@@ -17,6 +17,7 @@ import uz.fido.network.domain.model.payment.PrintChequeResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentCheckInfoPaymentBinding
+import uz.fido.universaldigital.ui.fragments.monitoring.local.PdfInfo
 import uz.fido.universaldigital.ui.fragments.payment.abc_adapter.ChequeAdapter
 import uz.fido.universaldigital.ui.fragments.payment.abc_dialog.BottomQRcodeDialog
 import uz.fido.universaldigital.ui.fragments.payment.abc_dialog.BottomReceiptsDialog
@@ -25,6 +26,7 @@ import uz.fido.universaldigital.ui.utils.file.FileUtils
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -46,6 +48,7 @@ class CheckInfoPaymentFragment :
     private  val chequeAdapter by lazy { ChequeAdapter() }
     private lateinit var currentDate: String
     private lateinit var operation: String
+    private val pdfFile:ArrayList<Cheque> = arrayListOf()
 
     private val filteredList = ArrayList<Cheque>()
     private var transactId: String = ""
@@ -92,25 +95,71 @@ class CheckInfoPaymentFragment :
     }
 
     private fun share() {
-        binding.chequeBlock.takeScreenShot(requireActivity()) { bitmap ->
-            bitmap?.let {
-                val path = FileUtils.saveImageToGallery(requireContext(), it, "MKB Cheque")
-                val shareIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    val uri =
-                        FileProvider.getUriForFile(
-                            requireActivity(),
-                            requireActivity().applicationContext.packageName.toString() + ".my.package.name.provider",
-                            File(path)
-                        )
-                    putExtra(Intent.EXTRA_STREAM, uri)
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                    type = "image/*"
+        pdfDocument()
+//        binding.chequeBlock.takeScreenShot(requireActivity()) { bitmap ->
+//            bitmap?.let {
+//                val path = FileUtils.saveImageToGallery(requireContext(), it, "MKB Cheque")
+//                val shareIntent: Intent = Intent().apply {
+//                    action = Intent.ACTION_SEND
+//                    val uri =
+//                        FileProvider.getUriForFile(
+//                            requireActivity(),
+//                            requireActivity().applicationContext.packageName.toString() + ".my.package.name.provider",
+//                            File(path)
+//                        )
+//                    putExtra(Intent.EXTRA_STREAM, uri)
+//                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+//                    type = "image/*"
+//                }
+//                startActivity(Intent.createChooser(shareIntent, "Send to"))
+//            }
+//        }
+    }
+
+    private fun pdfDocument() {
+        lifecycleScope.launch {
+            try {
+                val pdfDocument = PdfDocument()
+                val paint = Paint()
+                val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create() // A4
+                val page = pdfDocument.startPage(pageInfo)
+                val canvas = page.canvas
+                var y = 50f
+                pdfFile.forEach { item ->
+
+                    canvas.drawText(item.key_description.ifEmpty { item.key }, 40f, y, paint)
+                    y += 30f
+                    canvas.drawText(item.value, 40f, y, paint)
+                    y += 40f
                 }
-                startActivity(Intent.createChooser(shareIntent, "Send to"))
+
+                pdfDocument.finishPage(page)
+                val file = File(requireContext().cacheDir, "output.pdf")
+                pdfDocument.writeTo(FileOutputStream(file))
+                pdfDocument.close()
+                sharePdf(file)
+            }catch (e:Exception){
+                toast("Yuklashni iloji bulmadi")
             }
+
+        }
+
+    }
+
+    private fun sharePdf(file: File) {
+        lifecycleScope.launch{
+            val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.my.package.name.provider", file)
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "application/pdf"
+                putExtra(Intent.EXTRA_STREAM, uri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
+            startActivity(Intent.createChooser(intent, "Send PDF"))
         }
     }
+
+
+
 
     private fun getCheque() {
         showProgress()
@@ -176,11 +225,15 @@ class CheckInfoPaymentFragment :
     private fun setTextResponse(response: java.util.ArrayList<Cheque>?) {
         response?.forEach {
             if (it.key.isNotEmpty() && it.value.isNotEmpty()) {
+                pdfFile.add(it)
                 filteredList.add(it)
             }
             if (it.key == "PROVIDER_NAME") {
                 binding.paymentName.text = it.value
+                pdfFile.remove(it)
+                pdfFile.add(Cheque(key = getString(R.string.name), value = it.value, key_description = it.key_description, order = it.order))
                 filteredList.remove(it)
+
             }
             if (it.key == "AMOUNT") {
                 binding.amount.text = it.value + " UZS"
