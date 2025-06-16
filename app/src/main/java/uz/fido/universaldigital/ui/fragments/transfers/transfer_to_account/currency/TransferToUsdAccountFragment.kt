@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.transfers.transfer_to_account.curr
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.View
 import androidx.core.os.bundleOf
@@ -143,16 +144,17 @@ class TransferToUsdAccountFragment : BaseFragment<FragmentTransferToUsdAccountBi
         binding.etBankAmount.addTextChangedListener(this)
     }
 
+
     private fun checkForError(): Boolean {
         editTextForBank.forEach {
-            if (it.text.toString().isEmpty()) {
+            if (it.text.toString().trim().isEmpty()) {
                 return false
             }
         }
-        if (binding.etBankAmount.text.toString().isEmpty()) {
+        if (binding.etBankAmount.text?.trim().isNullOrEmpty()) {
             return false
         }
-        val amount = binding.etBankAmount.text.toString().replace(" ", "").toBigDecimal()
+        val amount = if (!binding.etBankAmount.text?.trim().isNullOrEmpty())binding.etBankAmount.text.toString().trim().replace(" ", "").toBigDecimal() else BigDecimal.ZERO
         return !(amount < minAmount || amount > maxAmount)
     }
 
