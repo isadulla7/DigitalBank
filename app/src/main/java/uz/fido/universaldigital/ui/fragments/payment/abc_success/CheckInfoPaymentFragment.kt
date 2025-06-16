@@ -45,32 +45,29 @@ class CheckInfoPaymentFragment :
     private lateinit var printChequeResponse: PrintChequeResponse
     private lateinit var dialogReceipt: BottomReceiptsDialog
     private lateinit var dialogQrcode: BottomQRcodeDialog
-    private  val chequeAdapter by lazy { ChequeAdapter() }
+    private val chequeAdapter by lazy { ChequeAdapter() }
     private lateinit var currentDate: String
     private lateinit var operation: String
-    private val pdfFile:ArrayList<Cheque> = arrayListOf()
+    private val pdfFile: ArrayList<Cheque> = arrayListOf()
 
     private val filteredList = ArrayList<Cheque>()
     private var transactId: String = ""
     private var qr_code: String = ""
 
 
-
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.list.adapter=chequeAdapter
+        binding.list.adapter = chequeAdapter
         if (arguments != null) {
             transactId = requireArguments().getString("transactId", "0")
             operation = requireArguments().getString("operation").toString()
         }
         setonClick()
-        if (filteredList.isEmpty()){
+        if (filteredList.isEmpty()) {
             getCheque()
-        }else initList(filteredList)
+        } else initList(filteredList)
 
     }
-
 
 
     private fun setonClick() {
@@ -120,17 +117,35 @@ class CheckInfoPaymentFragment :
         lifecycleScope.launch {
             try {
                 val pdfDocument = PdfDocument()
-                val paint = Paint()
-                val pageInfo = PdfDocument.PageInfo.Builder(595, 842, 1).create() // A4
-                val page = pdfDocument.startPage(pageInfo)
-                val canvas = page.canvas
-                var y = 50f
-                pdfFile.forEach { item ->
+                val paint = Paint().apply {
+                    textSize = 14f
+                }
 
-                    canvas.drawText(item.key_description.ifEmpty { item.key }, 40f, y, paint)
-                    y += 30f
-                    canvas.drawText(item.value, 40f, y, paint)
-                    y += 40f
+                val pageWidth = 595
+                val pageHeight = 842
+                var y = 40f
+                var pageNumber = 1
+
+                fun createNewPage(): PdfDocument.Page {
+                    val pageInfo = PdfDocument.PageInfo.Builder(pageWidth, pageHeight, pageNumber).create()
+                    val page = pdfDocument.startPage(pageInfo)
+                    y = 40f
+                    pageNumber++
+                    return page
+                }
+
+                var page = createNewPage()
+                val canvas = page.canvas
+
+                pdfFile.forEach { item ->
+                    if (y + 60f > pageHeight) {
+                        pdfDocument.finishPage(page)
+                        page = createNewPage()
+                    }
+                    page.canvas.drawText(item.key_description.ifEmpty { item.key }, 40f, y, paint)
+                    y += 25f
+                    page.canvas.drawText(item.value, 40f, y, paint)
+                    y += 35f
                 }
 
                 pdfDocument.finishPage(page)
@@ -138,8 +153,8 @@ class CheckInfoPaymentFragment :
                 pdfDocument.writeTo(FileOutputStream(file))
                 pdfDocument.close()
                 sharePdf(file)
-            }catch (e:Exception){
-                toast("Yuklashni iloji bulmadi")
+            } catch (e: Exception) {
+                toast("Yuklashni iloji bo‘lmadi")
             }
 
         }
@@ -147,7 +162,7 @@ class CheckInfoPaymentFragment :
     }
 
     private fun sharePdf(file: File) {
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             val uri = FileProvider.getUriForFile(requireContext(), "${requireContext().packageName}.my.package.name.provider", file)
             val intent = Intent(Intent.ACTION_SEND).apply {
                 type = "application/pdf"
@@ -157,8 +172,6 @@ class CheckInfoPaymentFragment :
             startActivity(Intent.createChooser(intent, "Send PDF"))
         }
     }
-
-
 
 
     private fun getCheque() {
