@@ -5,3 +5,4 @@
 -keep class kotlinx.coroutines.** { *; }
 -keepnames class kotlinx.** { *; }
 -dontwarn kotlinx.coroutines.**
+-keep class uz.fido.nfccardreaderlib.** { *; }

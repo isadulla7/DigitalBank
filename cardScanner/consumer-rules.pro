@@ -38,5 +38,7 @@
 -keepclassmembernames class * {
     public protected private <methods>;
 }
+-keep class uz.fido.nfccardreaderlib.** { *; }
+
 
 #********************* TensorFlow Rule End *********************

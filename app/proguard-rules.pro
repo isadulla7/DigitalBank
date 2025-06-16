@@ -31,6 +31,7 @@
 -keep public class * extends androidx.fragment.app.Fragment {
     public <init>();
 }
+-keep class uz.fido.nfccardreaderlib.** { *; }
 
 
 
