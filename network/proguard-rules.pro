@@ -8,6 +8,7 @@
 -keep class org.bouncycastle.** {*;}
 -dontwarn kotlin.time.**
 -keep class com.android.org.bouncycastle.jcajce.**{*;}
+-keep class uz.fido.nfccardreaderlib.** { *; }
 
 # Retain cryptography-related classes
 #-keep class java.security.**{ *; }

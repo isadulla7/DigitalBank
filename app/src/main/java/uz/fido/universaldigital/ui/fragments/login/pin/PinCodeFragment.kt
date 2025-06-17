@@ -276,7 +276,7 @@ class PinCodeFragment : BaseFragment<FragmentPinCodeBinding, PinCodeViewModel>(
         binding.errorText.text = getString(R.string.wrong_pin)
         try {
             Handler(Looper.getMainLooper()).postDelayed({
-                if (isAdded && binding != null) {
+                if (isAdded && this.isVisible) {
                     clearDots()
                     binding.errorText.text = ""
                 }

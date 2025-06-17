@@ -19,8 +19,10 @@ class CodeAndNameAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Pair<String, String>) {
             binding.layout.hint = item.first
-            binding.editText.setText(item.second)
-            binding.copy.isVisible = item.first == itemView.context.getString(R.string.pnfl)
+            if (item.second.trim().replace(" ", "").isNotEmpty()) {
+                binding.editText.setText(item.second)
+            }
+            binding.copy.isVisible = item.first == itemView.context.getString(R.string.pnfl) && item.second.isNotEmpty()
             binding.copy.setOnClickListener {
                 copyValue(itemView.context, item.second)
             }

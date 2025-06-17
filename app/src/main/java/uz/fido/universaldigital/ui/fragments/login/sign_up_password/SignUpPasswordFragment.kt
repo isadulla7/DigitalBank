@@ -55,13 +55,13 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
         binding.etPassword.apply { filters = filters.plus(removeFilter) }
         binding.etPassword.doAfterTextChanged {
             binding.repeatPasswordLayout.isVisible = passwordIsValid(it.toString())
+            if (!passwordIsValid(it.toString())) {
+                binding.etRepeatPassword.setText("")
+            }
             checkPassword(it.toString())
             checkForButton()
         }
         binding.etRepeatPassword.doAfterTextChanged {
-            val pass = binding.etPassword.text.toString()
-            val repeatedPass = binding.etRepeatPassword.text.toString()
-            binding.passDontMatch.isVisible = pass != repeatedPass
             checkForButton()
         }
     }
@@ -70,34 +70,39 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
         val pass = binding.etPassword.text.toString()
         val repeatedPass = binding.etRepeatPassword.text.toString()
         val isEnable = passwordIsValid(pass) && pass == repeatedPass
+        binding.passDontMatch.isVisible = pass != repeatedPass && passwordIsValid(pass) && binding.repeatPasswordLayout.isVisible && repeatedPass.isNotEmpty()
         binding.btnContinue.isEnabled(isEnable)
     }
 
     private fun initSetOnClickListeners() {
         binding.btnContinue.setOnClickListener {
             if (passwordIsValid(binding.etPassword.text.toString())) {
+                binding.etPassword.isEnabled = false
+                binding.etRepeatPassword.isEnabled = false
                 binding.btnContinue.setProgress(true)
-                getUserInfo()
+                getUserInfo(binding.etPassword.text.toString())
             }
         }
         binding.appBar.setOnBackButtonClickListener { pop() }
     }
 
-    private fun getUserInfo() {
+    private fun getUserInfo(password: String) {
         viewModel.getUserDetailedInfo(Keys.getUserInfoUrl() + requireContext().getIpAddress()).observe(viewLifecycleOwner) {
             when (it.status) {
                 Status.SUCCESS -> it.data?.let { data ->
-                    finishRegistration(data)
+                    finishRegistration(data, password)
                 }
 
                 Status.ERROR -> {
                     showSnackbar(it.message.toString())
+                    binding.etRepeatPassword.isEnabled = true
+                    binding.etPassword.isEnabled = true
                 }
             }
         }
     }
 
-    private fun finishRegistration(data: UserInfo) {
+    private fun finishRegistration(data: UserInfo, password: String) {
         val device = GetDeviceInfo(requireContext()).deviceInfo
         val finishRegRequest = FinishRegRequest(
             app_version = BuildConfig.VERSION_NAME,
@@ -122,7 +127,7 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
             sim_iccd = device.sim_iccd.toString(),
             version = "0",
             surname = "",
-            password = encryptPassword(binding.etPassword.text.toString()),
+            password = encryptPassword(password),
             userInfo = data,
             string_line = "",
             emp_ref_code = requireArguments().getString(SIGN_UP_REF_CODE).orEmpty()
@@ -135,6 +140,8 @@ class SignUpPasswordFragment : BaseFragment<FragmentSignUpPasswordBinding, SignU
                 }
 
                 Status.ERROR -> {
+                    binding.etPassword.isEnabled = true
+                    binding.etRepeatPassword.isEnabled = true
                     showSnackbar(it.message.toString())
                 }
             }

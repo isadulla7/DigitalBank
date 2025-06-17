@@ -1,7 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -33,7 +32,6 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientId
 import uz.fido.utils.utility.user.getClientToken
 import java.math.BigDecimal
-import kotlin.math.min
 
 @AndroidEntryPoint
 class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, ClientDepositViewModel>(
@@ -277,11 +275,12 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         checkItem(binding.etAmount.text.toString().replace(" ", ""))
         binding.etAmount.addTextChangedListener {
             val amount = it?.toString()?.replace(" ", "") ?: "0"
-            val cardBalance = if (this::chosenCard.isInitialized)chosenCard.balance.toBigDecimal() / BigDecimal(100) else BigDecimal.ZERO
+            val cardBalance = if (this::chosenCard.isInitialized) chosenCard.balance.toBigDecimal() / BigDecimal(100) else BigDecimal.ZERO
             when {
-                !(this::chosenCard.isInitialized)->{
+                !(this::chosenCard.isInitialized) -> {
                     binding.amountCheck.text = ""
                 }
+
                 amount.isEmpty() -> {
                     binding.amountCheck.text = ""
                 }
@@ -359,7 +358,9 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                 }
 
                 minAmount == BigDecimal(0.0) && maxAmount > BigDecimal(0.0) -> {
-                    binding.btnContinue.isEnabled(amount.toBigDecimal() >= BigDecimal(1) && amount.toBigDecimal() <= maxAmount && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) > amount.toBigDecimal())
+                    binding.btnContinue.isEnabled(
+                        amount.toBigDecimal() >= BigDecimal(1) && amount.toBigDecimal() <= maxAmount && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) > amount.toBigDecimal()
+                    )
                 }
 
                 minAmount > BigDecimal(0.0) && maxAmount > BigDecimal(0.0) -> {
@@ -377,10 +378,12 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                 minAmount = "1"
                 binding.chooseCardLayout.setTextCard(getString(R.string.write_off_card))
             }
+
             ClientDepositFragment.EARLY_CLOSE_DEPOSIT, ClientDepositFragment.CLOSE_DEPOSIT -> {
                 minAmount = "0"
                 binding.chooseCardLayout.setTextCard(getString(R.string.universal_bank_dv))
             }
+
             ClientDepositFragment.WITH_DRAW_PERCENT -> minAmount = "0"
         }
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {
