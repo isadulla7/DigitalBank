@@ -41,8 +41,8 @@ import java.util.Locale
 
 @AndroidEntryPoint
 class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, LocalMonitoringViewModel>(
-        FragmentWalletMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
-    ), (AccountHistory) -> Unit {
+    FragmentWalletMonitoringBinding::inflate, LocalMonitoringViewModel::class.java
+), (AccountHistory) -> Unit {
 
     private val df = SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US)
     private var operationType = 0
@@ -51,8 +51,8 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
 
     private var dateBegin: String = ""
     private var dateEnd: String = ""
-    private var maxAmount:String=""
-    private var minAmount:String=""
+    private var maxAmount: String = ""
+    private var minAmount: String = ""
     private var walletList = arrayListOf<String>()
     private var linearLayoutManager: LinearLayoutManager? = null
     private lateinit var walletMonitoringDetailsDialog: WalletMonitoringDetailsDialog
@@ -79,21 +79,21 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
     }
 
     private fun getFilterForWalletList() {
-        val newList= arrayListOf<CardResponse>()
+        val newList = arrayListOf<CardResponse>()
         menuProductsViewModel.cards.observe(viewLifecycleOwner) { card ->
             card.forEach {
                 if (it.object_type == CardConst.WALLET) {
                     newList.add(it)
                 }
             }
-            if (newList.isNotEmpty()){
+            if (newList.isNotEmpty()) {
                 menuMonitoringViewModel.filterWalletCard(newList[0].object_id)
             }
         }
     }
 
 
-    private  fun checkFilterWallet() {
+    private fun checkFilterWallet() {
         if (!menuMonitoringViewModel.walletFilter)
             getWalletList(1, operationType)
         else getFilterWalletList()
@@ -125,9 +125,9 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
                     walletList.add(it.account_code)
                 }
                 totalList = arrayListOf()
-                if (filterSaveVh.maxAmount.isNotEmpty()){
-                    maxAmount=filterSaveVh.maxAmount.replace(" ","")
-                    minAmount=filterSaveVh.minAmount.replace(" ","")
+                if (filterSaveVh.maxAmount.isNotEmpty()) {
+                    maxAmount = filterSaveVh.maxAmount.replace(" ", "")
+                    minAmount = filterSaveVh.minAmount.replace(" ", "")
                 }
                 val format = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
                 if (filterSaveVh.startDate != "") {
@@ -160,13 +160,14 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
                             try {
                                 response.forEach {
                                     if ((it.creditAmount?.toDoubleOrNull() ?: 0.0) < maxAmount.toDouble()
-                                        && (it.creditAmount?.toDoubleOrNull() ?: 0.0)>minAmount.toDouble()) {
+                                        && (it.creditAmount?.toDoubleOrNull() ?: 0.0) > minAmount.toDouble()
+                                    ) {
                                         item.add(it)
                                     }
                                 }
                                 successMonitoringList(item, type)
-                            }catch (e:Exception){
-                                successMonitoringList(response,type)
+                            } catch (e: Exception) {
+                                successMonitoringList(response, type)
                             }
                             if (response.size < 1) {
                                 binding.layoutEmpty.visibility = View.VISIBLE
@@ -320,7 +321,7 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
         return model
     }
 
-    private  fun getCardList() {
+    private fun getCardList() {
         walletList = menuMonitoringViewModel.walledList.value ?: arrayListOf()
     }
 

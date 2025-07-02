@@ -28,7 +28,6 @@ import uz.fido.universaldigital.ui.fragments.transfers.success.SuccessTransferFr
 import uz.fido.universaldigital.ui.fragments.transfers.utils.getInfoCommand
 import uz.fido.universaldigital.ui.fragments.transfers.utils.getServiceIdInfo
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isNotActive
-import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isUniversalCard
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.utils.const.Const

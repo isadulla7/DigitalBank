@@ -118,13 +118,6 @@ class MyHouseMultiplePayFragment : BaseFragment<FragmentMyHouseMultiplePayBindin
                     item.payment_params = paymentParamsArrayList
                     if (response.level_position == "-1") {
                         Const.request_id = response.request_id.toString()
-
-//                         list[position].payment_success=true
-//                         myHousePayAdapter?.notifyDataSetChanged()
-//                         if (position!=list.size-1)
-//                         preparePayment(position+1) else{
-//                             current =true
-//                         getCardList()}
                         createPayment(position)
                     } else {
                         preparePayment(position)
