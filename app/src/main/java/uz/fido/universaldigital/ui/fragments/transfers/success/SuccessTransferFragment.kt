@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -50,6 +51,7 @@ class SuccessTransferFragment :
         const val TRANSFER_BY_WALLET = "TRANSFER_BY_WALLET"
         const val TRANSFER_OVER_MY_CARDS = "TRANSFER_OVER_MY_CARDS"
         const val TRANSFER_OVER_MY_CARDS_BY = "TRANSFER_OVER_MY_CARDS_BY"
+        const val TRANSFER_OVER_MY_KL_AND_KL = "TRANSFER_OVER_KL_AND_KL"
         const val CONVERSION = "CONVERSION"
     }
 
@@ -61,10 +63,15 @@ class SuccessTransferFragment :
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("TAG", "onViewCreated:${operation} ")
         when (operation) {
             TRANSFER_BY_CARD, TRANSFER_CARD_BY_PHONE, TRANSFER_OVER_MY_CARDS_BY -> {
                 binding.repeat.visibility = View.VISIBLE
                 binding.tempate.visibility = View.VISIBLE
+            }
+            TRANSFER_OVER_MY_KL_AND_KL->{
+                binding.repeat.visibility = View.VISIBLE
+                binding.tempate.visibility = View.GONE
             }
 
             else -> {
@@ -130,6 +137,7 @@ class SuccessTransferFragment :
     private fun createTemplate(text: String) {
         showProgress()
         val hashMap = HashMap<String, String>()
+
         hashMap["CARD_NUMBER"] = transferDto.receiverCard?.card_number.toString()
         hashMap["AMOUNT"] = "${transferDto.transferAmount}"
         val model = CreateTemplateRequest(
@@ -159,7 +167,7 @@ class SuccessTransferFragment :
         when (operation) {
             TRANSFER_BY_CARD -> findNavController().popBackStack(R.id.transferToCardFragment, false)
             TRANSFER_CARD_BY_PHONE -> findNavController().popBackStack(R.id.transferByPhoneFragment, false)
-            TRANSFER_OVER_MY_CARDS_BY -> findNavController().popBackStack(R.id.overMyCardsFragment, false)
+            TRANSFER_OVER_MY_CARDS_BY, TRANSFER_OVER_MY_KL_AND_KL -> findNavController().popBackStack(R.id.overMyCardsFragment, false)
         }
         /*   val result = Bundle().apply {
                putString(PopularTransfersFragment.DATA, transferDto.receiverCard?.card_number)

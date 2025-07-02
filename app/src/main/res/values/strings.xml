@@ -594,7 +594,7 @@
     <string name="goto_identification">Пройти идентификацию</string>
     <string name="atm_and_filials">Банкоматы и филиалы</string>
     <string name="connect_with_bank">Связь с банком</string>
-    <string name="public_offer">Публичная оферета</string>
+    <string name="public_offer">Публичная оферта</string>
     <string name="change_pin_code">Изменить PIN-код</string>
     <string name="trusted_devices">Доверенные устройства</string>
     <string name="change_language">Сменить язык</string>
@@ -1010,7 +1010,7 @@
     <string name="used_amount">Использованная сумма</string>
     <string name="input_ref_code">Код сотрудника (необязательно)</string>
     <string name="new_password">Новый пароль</string>
-    <string name="reset_password_description">Если вы ранее добавляли карту в приложение или вводили электронную почту, вы можете сбросить пароль</string>
+    <string name="reset_password_description">Вы можете сбросить пароль, если ранее проходили идентификацию.</string>
     <string name="password_length_requirement">от 8 до 15 символов</string>
     <string name="password_letter_requirement">Хотя одна строчная и прописная буква</string>
     <string name="password_number_requirement">Хотя один номер</string>
@@ -1091,4 +1091,7 @@
     <string name="sorry">Извините</string>
     <string name="service_temporary_unavailable">Сервис временно недоступен</string>
     <string name="transfer_dv_possible_un">Перевод с DV счета возможно только на карту Универсал банка</string>
+    <string name="the_service_under_development">Сервис находится в стадии разработки</string>
+    <string name="charged_from_wallet">Списано с Кашелек</string>
+    <string name="rate_with_bank">Оцените приложение</string>
 </resources>

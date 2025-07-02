@@ -541,6 +541,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
                 mainCardName.setCardNameAndNumber(mainCard)
                 mainCardBalance.setCardBalance(mainCard)
                 mainCardType.setCardTypeImage(mainCard)
+                mainCardSign.isVisible=mainCard.is_main=="Y"
                 mainCardBg.setImageResource(requireContext().getDrawableFromRes(mainCard.bg_icon_name))
                 setCardState(mainCard, cardStateName, requireContext())
                 if (cardStateName.isVisible) {

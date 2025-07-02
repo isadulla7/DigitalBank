@@ -5,6 +5,7 @@ import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -39,6 +40,7 @@ import uz.fido.universaldigital.ui.fragments.transfers.utils.checkCardNumber
 import uz.fido.universaldigital.ui.fragments.transfers.utils.formatErrorMessage
 import uz.fido.universaldigital.ui.fragments.transfers.utils.setMinMaxAmount
 import uz.fido.universaldigital.ui.fragments.transfers.utils.showTransferSkeleton
+import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.isUniversalCard
 import uz.fido.universaldigital.ui.utils.extensions.cardMiniLogoByType
 import uz.fido.universaldigital.ui.utils.extensions.recordException
 import uz.fido.utils.app.PermissionInterface
@@ -53,6 +55,7 @@ import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.view.amount.AmountSuggestionView
 import uz.scan_card.cardscan.ScanActivity
+import java.math.BigDecimal
 
 @AndroidEntryPoint
 class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferViewModel>(
@@ -146,6 +149,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
             override fun onPageSelected(position: Int) {
                 vibrateTick(requireContext())
                 senderCard = userSumCards[position]
+                senderCardCheck()
                 viewModel.getTransferInfo(senderCard, cardInfoDto)
                 if (senderCard?.object_value == cardInfoDto?.card_number) {
                     binding.tvMinAmount.visibility = View.VISIBLE
@@ -154,6 +158,16 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
                 }
             }
         })
+    }
+    // new function
+   private fun senderCardCheck(){
+        try {
+                val cardBalance=senderCard?.balance?.replace(" ","")?.toBigDecimalOrNull()?: BigDecimal.ZERO
+                val amount= binding.etAmount.text.toString().replace(" ","").toBigDecimalOrNull()?:BigDecimal.ZERO
+            if (amount!=BigDecimal.ZERO && binding.etCardNumber.text.toString().replace(" ","").length==16){
+            binding.btnContinue.isEnabled((cardBalance.divide(BigDecimal(100)))>=amount)
+            }
+        }catch (e:Exception){}
     }
 
     private fun getBundle() {

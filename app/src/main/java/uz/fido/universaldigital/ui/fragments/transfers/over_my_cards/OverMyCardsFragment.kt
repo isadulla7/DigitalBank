@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.transfers.over_my_cards
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -320,15 +321,18 @@ class OverMyCardsFragment : BaseFragment<FragmentOverMyCardsBinding, OverMyCards
                             card_number = receiverCard!!.object_value,
                             card_owner = receiverName,
                             card_expire = receiverCard!!.object_expiry,
-                            card_id = receiverCard!!.object_id
+                            card_id = receiverCard!!.object_id,
+                            isDv = receiverCard!!.is_Dv,
                         ),
                         transferAmount = sendFormat(amount),
                         commission = p2PInfoDto?.percent?.toDouble() ?: 0.0,
                         operation = SuccessTransferFragment.TRANSFER_OVER_MY_CARDS,
                         requestId = p2PInfoDto?.requestId,
-                        cardId = p2PInfoDto?.cardId
+                        cardId = p2PInfoDto?.cardId,
                     ),
-                    SuccessTransferFragment.TRANSFER_OPERATION to SuccessTransferFragment.TRANSFER_OVER_MY_CARDS_BY
+                        SuccessTransferFragment.TRANSFER_OPERATION to if ( senderCard?.object_type=="KL" && receiverCard?.object_type=="KL")
+                            SuccessTransferFragment.TRANSFER_OVER_MY_KL_AND_KL
+                        else SuccessTransferFragment.TRANSFER_OVER_MY_CARDS_BY
                 )
             )
         }

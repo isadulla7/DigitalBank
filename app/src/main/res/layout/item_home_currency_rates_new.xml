@@ -29,8 +29,14 @@
             android:layout_weight="1"
             android:gravity="start"
             android:textColor="@color/brandBlueColor"
-            android:textSize="17dp"
+            android:textSize="17sp"
             tools:text="USD" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/image_check_box"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/check_box_checked" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.appcompat.widget.LinearLayoutCompat

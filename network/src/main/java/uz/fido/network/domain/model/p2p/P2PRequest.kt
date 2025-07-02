@@ -22,5 +22,5 @@ data class P2PRequest(
     val sms_confirm_counter: String? = "Y",
     val to_embossed_name: String? = null,
     val from_embossed_name: String? = null,
-    val card_id: String? = null
+    val card_id: String? = null,
 ) : Serializable

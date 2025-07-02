@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
+import io.paperdb.Paper
 import uz.fido.network.domain.model.rates.CourseItem
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
@@ -12,6 +13,7 @@ import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentCurrencyRatesBinding
 import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.products.adapter.RatesAdapter
+import uz.fido.utils.const.Const
 import uz.fido.utils.utility.fragment.pop
 
 @AndroidEntryPoint
@@ -24,6 +26,7 @@ class RatesFragment : BaseSimpleFragment<FragmentCurrencyRatesBinding>(
 
     private val utilsViewModel: UtilsViewModel by activityViewModels()
     private var homeCurrencyRates = ArrayList<CourseItem>()
+    private var currencySaveList = ArrayList<String>()
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
@@ -36,12 +39,25 @@ class RatesFragment : BaseSimpleFragment<FragmentCurrencyRatesBinding>(
         binding.rvCurrencyRates.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-            currencyRatesAdapter = RatesAdapter(ArrayList())
+            currencyRatesAdapter = RatesAdapter(ArrayList(),{ courseItem ->
+                try {
+                if (courseItem.checkBox){
+                    homeCurrencyRates.firstOrNull { it.currencyCode==courseItem.currencyCode }?.checkBox=false
+                    currencySaveList.remove(courseItem.currencyCode)
+                }else{
+                    homeCurrencyRates.firstOrNull { it.currencyCode==courseItem.currencyCode }?.checkBox=true
+                    currencySaveList.add(courseItem.currencyCode)
+                }
+                Paper.book().write(Const.CURRENCY_TYPE,currencySaveList)
+                currencyRatesAdapter.notifyDataSetChanged()
+                }catch (e:Exception){}
+            })
             adapter = currencyRatesAdapter
         }
     }
 
     private fun getRates() {
+         currencySaveList = Paper.book().read(Const.CURRENCY_TYPE, arrayListOf<String>())?: arrayListOf()
         utilsViewModel.currencyRates.observe(viewLifecycleOwner) {
             homeCurrencyRates = it as ArrayList<CourseItem>
             if (homeCurrencyRates.isNotEmpty()) {
@@ -64,6 +80,10 @@ class RatesFragment : BaseSimpleFragment<FragmentCurrencyRatesBinding>(
                 }
                 val newList = ArrayList<CourseItem>()
                 homeCurrencyRates.forEach { courseItem ->
+                    if (courseItem.currencyCode in currencySaveList){
+                          courseItem.checkBox=true
+                    }
+
                     if (courseItem.quoteCurrency == "000") {
                         newList.add(courseItem)
                     }

@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.products
 
 import android.os.Bundle
 import android.text.Editable
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,9 +66,11 @@ import uz.fido.universaldigital.ui.utils.home_utils.DoAfterTextWatcher
 import uz.fido.universaldigital.ui.utils.home_utils.applyMask
 import uz.fido.universaldigital.ui.utils.home_utils.mobileServiceId
 import uz.fido.utils.app.PermissionInterface
+import uz.fido.utils.const.CardConst.CURRENCY_CARD
 import uz.fido.utils.const.CardConst.WALLET
 import uz.fido.utils.const.Command
 import uz.fido.utils.const.Const
+import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
@@ -342,9 +345,17 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
     }
 
     private fun initCurrencyRates() {
+        var currencySaveList= Paper.book().read(Const.CURRENCY_TYPE, arrayListOf<String>())
         val layoutBinding = LayoutHomeCurrencyRatesBinding.inflate(
             LayoutInflater.from(requireContext()), container, false
         )
+
+        if (currencySaveList.isNullOrEmpty()){
+            val list=arrayListOf( "840","978","643")
+            Paper.book().write(Const.CURRENCY_TYPE,list )
+            currencySaveList = list
+        }
+
         val currencyRatesAdapter = HomeRatesAdapter(ArrayList())
         layoutBinding.rvCurrencyRates.apply {
             setHasFixedSize(true)
@@ -354,16 +365,18 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
         }
         utilsViewModel.currencyRates.observe(viewLifecycleOwner) {
             val homeCurrencyRates = it as ArrayList<CourseItem>
+            val filterList=filterModelsByType(currencySaveList,homeCurrencyRates)
             val filteredList = ArrayList<CourseItem>()
-            homeCurrencyRates.forEach { courseItem ->
+
+            filterList.forEach { courseItem ->
                 if (courseItem.currencyCode == "840") {
                     MenuHomeFragment.sellingRate = courseItem.sellingRate
                     MenuHomeFragment.buyingRate = courseItem.buyingRate
                 }
                 if (courseItem.quoteCurrency == "000") {
-                    if (courseItem.currencyCode == "840" || courseItem.currencyCode == "978" || courseItem.currencyCode == "643") {
+                   // if (courseItem.currencyCode == "840" || courseItem.currencyCode == "978" || courseItem.currencyCode == "978") {
                         filteredList.add(courseItem)
-                    }
+                  //  }
                 }
                 when (courseItem.currencyCode) {
                     "840" -> courseItem.order = 1
@@ -383,6 +396,9 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
         }
         layoutBinding.fatherCurrencyRates.setOnClickListener { goto(R.id.ratesFragment) }
         binding.widgetsLayout.addView(layoutBinding.root)
+    }
+    fun filterModelsByType(keys: List<String>, models: List<CourseItem>): List<CourseItem> {
+        return models.filter { it.currencyCode in keys }
     }
 
     private fun initHomeTemplates() {
@@ -683,6 +699,7 @@ abstract class BaseHomeFragment : Fragment(), BaseInterface, PermissionInterface
                         )
 
                         when (template.template_type) {
+
                             TemplateTypes.DEFAULT.templateType -> {
                                 list?.forEach {
                                     if (it.code == "AMOUNT") {

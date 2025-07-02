@@ -33,7 +33,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        app:ev_desc="@string/text_empty_deposit"
         app:ev_title="@string/empty_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

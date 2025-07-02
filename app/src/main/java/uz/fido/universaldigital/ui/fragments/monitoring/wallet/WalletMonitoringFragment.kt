@@ -53,6 +53,7 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
     private var dateEnd: String = ""
     private var maxAmount:String=""
     private var minAmount:String=""
+    private var walletCode:String=""
     private var walletList = arrayListOf<String>()
     private var linearLayoutManager: LinearLayoutManager? = null
     private lateinit var walletMonitoringDetailsDialog: WalletMonitoringDetailsDialog
@@ -123,7 +124,9 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
                 walletList = arrayListOf()
                 checkList.forEach {
                     walletList.add(it.account_code)
+
                 }
+                if (checkList.isNotEmpty()) walletCode=checkList[0].object_value
                 totalList = arrayListOf()
                 if (filterSaveVh.maxAmount.isNotEmpty()){
                     maxAmount=filterSaveVh.maxAmount.replace(" ","")
@@ -196,7 +199,6 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
     }
 
     private fun getWalletList(page: Int, operationType: Int) {
-        Log.d("TAG", "getCardList:${walletList.size} ")
         if (walletList.isNotEmpty()) {
             val skeletonScreen = showSkeleton(
                 binding.shimmerView,
@@ -322,6 +324,7 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
 
     private  fun getCardList() {
         walletList = menuMonitoringViewModel.walledList.value ?: arrayListOf()
+        walletCode=menuMonitoringViewModel.walledCode.value?:""
     }
 
     private fun emptyView() {
@@ -356,8 +359,9 @@ class WalletMonitoringFragment : BaseFragment<FragmentWalletMonitoringBinding, L
     }
 
     override fun invoke(item: AccountHistory) {
+
         walletMonitoringDetailsDialog =
-            WalletMonitoringDetailsDialog(item, object : BaseInterface {})
+            WalletMonitoringDetailsDialog(item, object : BaseInterface {},walletCode)
         walletMonitoringDetailsDialog.show(childFragmentManager, "")
     }
 

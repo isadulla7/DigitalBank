@@ -88,6 +88,7 @@ object Const {
     const val DATE_OF_BIRTH = "date_of_birth"
     const val PINFL = "pinfl"
     const val IS_PIN = "is_pin"
+    const val CURRENCY_TYPE="currency_type"
 
     var request_id = ""
 

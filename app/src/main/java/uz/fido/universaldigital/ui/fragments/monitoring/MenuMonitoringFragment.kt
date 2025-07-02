@@ -112,6 +112,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
             menuMonitoringViewModel.humoList.value = cardHumoList
             menuMonitoringViewModel.currencyList.value = cardCurrencyList
             menuMonitoringViewModel.walledList.value = cardWalledList
+            menuMonitoringViewModel.walledCode.value=if (cardWalledList.isNotEmpty()) card.firstOrNull { it.object_id==cardWalledList[0] }?.object_value?:"" else ""
         }
     }
 

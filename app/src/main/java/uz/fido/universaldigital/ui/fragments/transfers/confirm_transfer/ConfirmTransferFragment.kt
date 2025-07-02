@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.fragments.transfers.confirm_transfer
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResult
@@ -101,18 +100,19 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
         binding.btnContinue.setOnClickListener {
             transferDto.senderCard?.let { senderCard ->
                 p2pRequest = P2PRequest(
-                    command = setCommand(senderCard.object_type, transferDto.receiverCard?.card_type.orEmpty()),
+                    command = setCommand(senderCard.object_type, transferDto.receiverCard?.card_type.orEmpty(),
+                        senderCard.is_Dv.orEmpty(), transferDto.receiverCard?.isDv.orEmpty()),
                     amount = transferDto.transferAmount.toString(),
                     from_object_id = senderCard.object_id,
                     from_object_expire = senderCard.object_expiry,
-                    service_id = getServiceIdInfo(transferDto.receiverCard?.card_number.orEmpty(), senderCard.object_value),
+                    service_id = getServiceIdInfo(transferDto.receiverCard?.card_type.orEmpty(), senderCard.object_type),
                     to_object_value = transferDto.receiverCard?.card_number.orEmpty(),
                     to_object_expire = transferDto.receiverCard?.card_expire.orEmpty(),
                     to_object_id = transferDto.receiverCard?.card_id,
                     request_id = transferDto.requestId.orEmpty(),
                     to_embossed_name = transferDto.receiverCard?.card_owner.orEmpty(),
                     phone_number = if (transferDto.operation == SuccessTransferFragment.TRANSFER_BY_PHONE) transferDto.phoneNumber else "",
-                    card_id = transferDto.cardId
+                    card_id = transferDto.cardId,
                 )
                 checkForSmsConfirmation()
             }
@@ -133,7 +133,7 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
                 checkForSms(
                     card = transferDto.senderCard!!,
                     amount = transferDto.transferAmount!!,
-                    serviceId = getServiceIdInfo(transferDto.receiverCard?.card_number!!, transferDto.senderCard!!.object_value),
+                    serviceId = getServiceIdInfo(transferDto.receiverCard?.card_type!!, transferDto.senderCard!!.object_type),
                 ) { needConfirmSms, stringLine ->
                     if (needConfirmSms == "Y") {
                         gotoWithSlide(
@@ -142,7 +142,7 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
                                 ConfirmSmsForTransfer.TRANSFER_REQUEST to p2pRequest,
                                 SuccessTransferFragment.TRANSFER_DTO to transferDto,
                                 SuccessTransferFragment.TRANSFER_OPERATION to transferDto,
-                                SuccessTransferFragment.TRANSFER_OPERATION to requireArguments().getString(SuccessTransferFragment.TRANSFER_OPERATION,"")
+                                SuccessTransferFragment.TRANSFER_OPERATION to requireArguments().getString(SuccessTransferFragment.TRANSFER_OPERATION, "")
                             )
                         )
                     } else {
@@ -163,11 +163,13 @@ class ConfirmTransferFragment : BaseFragment<FragmentConfirmTransferBinding, Con
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
-                    gotoWithSlide(R.id.successTransferFragment,
+                    gotoWithSlide(
+                        R.id.successTransferFragment,
                         bundleOf(
-                            SuccessTransferFragment.TRANSFER_OPERATION to requireArguments().getString(SuccessTransferFragment.TRANSFER_OPERATION,""),
+                            SuccessTransferFragment.TRANSFER_OPERATION to requireArguments().getString(SuccessTransferFragment.TRANSFER_OPERATION, ""),
                             SuccessTransferFragment.TRANSFER_DTO to transferDto
-                            ))
+                        )
+                    )
                 }
 
                 Status.ERROR -> {

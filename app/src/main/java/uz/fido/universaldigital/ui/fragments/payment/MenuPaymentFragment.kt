@@ -174,6 +174,7 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
     }
 
     override fun openTemplate(template: Template) {
+        Log.d("TAG", "openTemplate: ${template.template_type}")
         utilsViewModel.getTemplate(
             getClientToken(), GetTemplateRequest(
                 template.template_id, "N"
@@ -238,9 +239,17 @@ class MenuPaymentFragment : DownloadPayment(), DownloadPaymentInterface, BaseInt
                             }
 
                             TemplateTypes.TRANSFER_VIA_CARD.templateType -> {
+
                                 if (list != null) {
                                     if (list.isNotEmpty()) {
-                                        bundle.putString("card_number", list[0].value.toString())
+                                        var cardNumber=""
+                                        list.forEach {
+                                             if (it.code=="CARD_NUMBER"){
+                                                 cardNumber=it.value.toString()
+                                                 return@forEach
+                                             }
+                                        }
+                                        bundle.putString("card_number", cardNumber)
 
                                         goto(
                                             R.id.transferToCardFragment, bundle

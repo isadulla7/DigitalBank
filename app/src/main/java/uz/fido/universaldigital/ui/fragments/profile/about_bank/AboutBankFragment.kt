@@ -1,5 +1,8 @@
 package uz.fido.universaldigital.ui.fragments.profile.about_bank
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
@@ -25,6 +28,30 @@ class AboutBankFragment : BaseFragment<FragmentAboutBankBinding, MenuProfileView
         binding.connectWithBank.setOnClickListener { gotoWithSlide(R.id.connectWithBankFragment) }
         binding.publicOffer.setOnClickListener { gotoWithSlide(R.id.publicOfferFragment) }
         binding.atmAndFilials.setOnClickListener { goto(R.id.mainBranchesFragment) }
+        binding.rateWithBank.setOnClickListener { openPlaymarket() }
+        binding.appShare.setOnClickListener { shareAppLink() }
+    }
+
+    private fun shareAppLink() {
+        val shareIntent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_SUBJECT, "Mening Ilovam")
+            putExtra(Intent.EXTRA_TEXT, "Mana ilovam: https://play.google.com/store/apps/details?id=${requireContext().packageName}")
+        }
+
+        requireContext().startActivity(Intent.createChooser(shareIntent, "Ulashish uchun tanlang"))
+    }
+
+    private fun openPlaymarket() {
+        val appPackageName = requireContext().packageName
+        try {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))
+            intent.setPackage("com.android.vending")
+            requireContext().startActivity(intent)
+        } catch (e: ActivityNotFoundException) {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
+            requireContext().startActivity(intent)
+        }
     }
 
 }

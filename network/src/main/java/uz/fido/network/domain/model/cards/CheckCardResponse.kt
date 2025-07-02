@@ -37,7 +37,8 @@ data class CardInfoDto(
     var card_owner: String? = "",
     var card_expire: String? = "",
     var card_id: String? = "",
-    var message: String? = ""
+    var message: String? = "",
+    var isDv:String?="",
 ) : Serializable
 
 fun getCardOwnerNameFormatted(firstName: String?, surname: String?, embossedName: String?): String {

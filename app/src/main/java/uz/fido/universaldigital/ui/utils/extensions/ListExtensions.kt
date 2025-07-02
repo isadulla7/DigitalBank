@@ -308,13 +308,13 @@ fun getBankProducts(context: Context): ArrayList<BankProducts> {
             icon = "ic_3d_conversion"
         )
     )
-    operations.add(
-        BankProducts(
-            id = 3,
-            name = context.getString(R.string.for_you_target),
-            icon = "ic_3d_target"
-        )
-    )
+//    operations.add(
+//        BankProducts(
+//            id = 3,
+//            name = context.getString(R.string.for_you_target),
+//            icon = "ic_3d_target"
+//        )
+//    )
     return operations
 }
 

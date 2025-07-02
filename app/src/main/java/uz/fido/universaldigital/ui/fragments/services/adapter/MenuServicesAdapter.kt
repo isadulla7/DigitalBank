@@ -83,8 +83,8 @@ class MenuServicesAdapter(
                 itemBankProduct.setOnClickListener {
                     onItemClickListener.invoke(item.serviceId)
                 }
-//                binding.tvSoon.isVisible = item.serviceId == 3
-//                binding.disableBg.isVisible = item.serviceId == 3
+                binding.tvSoon.isVisible = item.serviceId == 3
+                binding.disableBg.isVisible = item.serviceId == 3
             }
         }
     }
