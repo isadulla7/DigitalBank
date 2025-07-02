@@ -1008,7 +1008,7 @@
     <string name="used_amount">Used amount</string>
     <string name="input_ref_code">Employee code(optional)</string>
     <string name="new_password">New password</string>
-    <string name="reset_password_description">If you have previously added a card to the application or entered an email, you can reset your password</string>
+    <string name="reset_password_description">You can reset your password if you have previously passed identification.</string>
     <string name="password_length_requirement">8 to 15 characters</string>
     <string name="password_letter_requirement">At least one lowercase and uppercase letter</string>
     <string name="password_number_requirement">At least one number</string>
@@ -1089,4 +1089,7 @@
     <string name="sorry">Sorry</string>
     <string name="service_temporary_unavailable">The service is temporarily unavailable</string>
     <string name="transfer_dv_possible_un">Transfer from DV account is possible only to Universal Bank card</string>
+    <string name="the_service_under_development">The service is under development</string>
+    <string name="charged_from_wallet">Charged from Wallet</string>
+    <string name="rate_with_bank">Rate the application</string>
 </resources>

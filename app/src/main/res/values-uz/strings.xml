@@ -247,7 +247,7 @@
     <string name="empty_local_payment">E’tibor bering</string>
     <string name="text_empty_local_payment">To‘lovlar bo‘sh</string>
     <string name="summ">So‘m</string>
-    <string name="currency">Vayuta</string>
+    <string name="currency">Valyuta</string>
     <string name="deposit_percent">Yillik stavka</string>
     <string name="deposit_term">Deposit muddati</string>
     <string name="deposit_replenishment">To‘ldirish bilan</string>
@@ -1008,7 +1008,7 @@
     <string name="used_amount">Ishlatilgan summa</string>
     <string name="input_ref_code">Xodim kodi (ixtiyoriy)</string>
     <string name="new_password">Yangi parol</string>
-    <string name="reset_password_description">Oldin ilovaga karta qo‘shgan bo‘lsangiz yoki email kiritgan bo‘lsangiz parolingizni qayta tiklashingiz mumkin</string>
+    <string name="reset_password_description">Agar siz ilgari identifikatsiyadan o\'tgan bo\'lsangiz, parolingizni tiklashingiz mumkin.</string>
     <string name="password_length_requirement">8 tadan 15 tagacha belgilar</string>
     <string name="password_letter_requirement">Kamida bitta kichik va katta harf</string>
     <string name="password_number_requirement">Kamida bitta raqam</string>
@@ -1085,8 +1085,11 @@
     <string name="universal_bank_dv">Mobile DV Universal Bank</string>
     <string name="deposit_term_in_days">Omonat tugashiga kunlar qoldi</string>
     <string name="frequency_of_interest_payment">Foizlarni to\'lash chastotasi</string>
-    <string name="enter_starting_number_first">Oldin boshlang\'ich sanni kiriting</string>
+    <string name="enter_starting_number_first">Oldin boshlang\'ich sanani kiriting</string>
     <string name="sorry">Kechirasiz</string>
     <string name="service_temporary_unavailable">Xizmat vaqtincha ishlamayapti.</string>
     <string name="transfer_dv_possible_un">DV hisobidan o\'tkazish faqat Universal Bank kartasiga mumkin</string>
+    <string name="the_service_under_development">Xizmat ishlab chiqilmoqda</string>
+    <string name="charged_from_wallet">Hamyondan debet qilingan</string>
+    <string name="rate_with_bank">Ilovaga baho bering</string>
 </resources>

@@ -86,8 +86,8 @@ class TransferViewModel @Inject constructor(
                         clientToken = getClientToken(),
                         P2PInfoRequest(
                             service_id = getServiceIdInfo(
-                                receiverCardDto.card_number ?: "",
-                                senderCard.object_value
+                                receiverCardDto.card_type ?: "",
+                                senderCard.object_type
                             ),
                             from_object_id = senderCard.object_id,
                             expire = senderCard.object_expiry,

@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.transfers.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.widget.EditText
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -34,13 +35,29 @@ fun getInfoCommand(receiverCard: String): String {
     ) "info&purse" else "info&card"
 }
 
-fun setCommand(senderCardType: String, receiverCardType: String): String {
+fun setCommand(senderCardType: String, receiverCardType: String, senderCardDv: String? = "", receiverCardDv: String? = ""): String {
     return when {
         senderCardType == WALLET && receiverCardType == WALLET -> "purse&purse"
         senderCardType == WALLET && receiverCardType != WALLET -> "purse&card"
         senderCardType != WALLET && receiverCardType == WALLET -> "card&purse"
         else -> "card&card"
     }
+
+//    val isSenderDeposit = senderCardDv == "Y"
+//    val isReceiverDeposit = receiverCardDv == "Y"
+//    val hasDv = !senderCardDv.isNullOrEmpty() || !receiverCardDv.isNullOrEmpty()
+//
+//    return when {
+//        hasDv && isSenderDeposit && isReceiverDeposit -> "deposit&deposit"
+//        hasDv && isSenderDeposit && receiverCardType == WALLET -> "deposit&purse"
+//        hasDv && isSenderDeposit -> "deposit&card"
+//        hasDv && senderCardType == WALLET && isReceiverDeposit -> "purse&deposit"
+//        hasDv && isReceiverDeposit -> "card&deposit"
+//        senderCardType == WALLET && receiverCardType == WALLET -> "purse&purse"
+//        senderCardType == WALLET -> "purse&card"
+//        receiverCardType == WALLET -> "card&purse"
+//        else -> "card&card"
+//    }
 }
 
 fun getServiceIdInfo(receiverCard: CardResponse, senderCard: CardResponse): String {
@@ -48,7 +65,7 @@ fun getServiceIdInfo(receiverCard: CardResponse, senderCard: CardResponse): Stri
 }
 
 fun getServiceIdInfo(receiverCard: String, senderCard: String): String {
-    return if (receiverCard.startsWith("AUZ") || receiverCard.startsWith("DV") || senderCard == WALLET) "-12" else "-1"
+    return if (receiverCard.startsWith("AUZ") || receiverCard.startsWith("DV") || receiverCard==WALLET || senderCard == WALLET) "-12" else "-1"
 }
 
 fun String.capitalizeWord(): String =

@@ -42,8 +42,8 @@ class MyCardsListFragment : BaseSimpleFragment<FragmentMyCardsListBinding>(
     }
 
     private fun setAdditionIcon() {
-        if (Paper.book().read(Const.LAYOUT_MANAGER_GRID, true) == true) binding.appBar.setAdditionalIcon(R.drawable.grid_list2)
-        else binding.appBar.setAdditionalIcon(R.drawable.grid_icon)
+        if (Paper.book().read(Const.LAYOUT_MANAGER_GRID, true) == true) binding.appBar.setAdditionalIcon(R.drawable.grid_icon)
+        else binding.appBar.setAdditionalIcon(R.drawable.grid_list2)
     }
 
     private fun setCardListState() {

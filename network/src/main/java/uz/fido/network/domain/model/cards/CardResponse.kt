@@ -35,5 +35,6 @@ data class CardResponse(
     var is_our_bank: String? = "N",
     var overdraft_limit: String? = "0",
     var object_status: String? = "",
-    var is_Dv: String? = null
+    var is_Dv: String? = null,
+    var savDepId:String?=null
 ) : BaseResponse(), Serializable

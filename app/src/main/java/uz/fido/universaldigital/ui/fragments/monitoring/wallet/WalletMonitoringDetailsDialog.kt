@@ -17,7 +17,8 @@ import uz.fido.universaldigital.databinding.ItemInfoMonitoringBinding
 
 class WalletMonitoringDetailsDialog(
     private val item: AccountHistory,
-    private val baseInterface: BaseInterface
+    private val baseInterface: BaseInterface,
+    private val account:String=""
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: DialogUzcardInfoMonitoringBinding
@@ -56,7 +57,9 @@ class WalletMonitoringDetailsDialog(
 
     private fun initViews() {
         addView(getString(R.string.name), if (item.debitAmount == "0") item.creditAccountName else item.debitAccountName)
-        addView(getString(R.string.purpose), item.purpose.toString())
+        addView(getString(R.string.purpose),item.purpose.toString())
+       // if (account.isNotEmpty())addView(getString(R.string.charged_from_wallet),account)
+        //addView(getString(R.string.mfo), if (item.debitAmount == "0") item.creditMfo else item.debitMfo)
         addView(getString(R.string.date_time), item.dateExecute.toString())
         addView(getString(R.string.account), (if (item.debitAmount == "0") item.creditAccount else item.debitAccount).toString())
         addView(getString(R.string.operation_type), if (item.debitAmount == "0") getString(R.string.income) else getString(R.string.outcome))

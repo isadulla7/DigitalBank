@@ -23,6 +23,7 @@ import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseInterface
 import uz.fido.universaldigital.base.BaseSimpleFragment
 import uz.fido.universaldigital.databinding.FragmentAllCardsBinding
+import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeDialogFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.products.cards.adapter.CardsListAdapter
 import uz.fido.universaldigital.ui.fragments.products.cards.dialogs.AddCardDialog
@@ -53,6 +54,7 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
     private lateinit var walletOperationsDialog: WalletOperationsDialog
     private lateinit var cardOperationsDialog: CardOperationsDialog
     private lateinit var selectedCard: CardResponse
+    private lateinit var passCodeDialog:PassCodeDialogFragment
 
     override fun onInit(savedInstanceState: Bundle?) {
         super.onInit(savedInstanceState)
@@ -183,7 +185,12 @@ class MyCardsFragment : BaseSimpleFragment<FragmentAllCardsBinding>(
 
             R.id.requisites -> {
                 cardOperationsDialog.dismiss()
-                goto(R.id.aboutCardFragment, bundleOf(Const.CARD to selectedCard))
+                passCodeDialog=PassCodeDialogFragment({
+                    passCodeDialog.dismiss()
+                    goto(R.id.aboutCardFragment, bundleOf(Const.CARD to selectedCard))
+                })
+                passCodeDialog.show(childFragmentManager,"")
+
             }
 
             R.id.monitoring -> {

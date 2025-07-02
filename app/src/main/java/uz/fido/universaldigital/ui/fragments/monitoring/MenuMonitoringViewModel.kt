@@ -33,6 +33,7 @@ class MenuMonitoringViewModel @Inject constructor(
     val uzcardList = MutableLiveData<ArrayList<String>>()
     val humoList = MutableLiveData<ArrayList<String>>()
     val walledList = MutableLiveData<ArrayList<String>>()
+    val walledCode = MutableLiveData<String>()
 
     val currencyList = MutableLiveData<ArrayList<String>>()
     val uzCardMonitoringFilter = MutableLiveData<FilterSaveVh>()
