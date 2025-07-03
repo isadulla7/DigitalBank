@@ -17,12 +17,9 @@ import uz.fido.network.domain.model.payment.PrintChequeResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentCheckInfoPaymentBinding
-import uz.fido.universaldigital.ui.fragments.monitoring.local.PdfInfo
 import uz.fido.universaldigital.ui.fragments.payment.abc_adapter.ChequeAdapter
 import uz.fido.universaldigital.ui.fragments.payment.abc_dialog.BottomQRcodeDialog
 import uz.fido.universaldigital.ui.fragments.payment.abc_dialog.BottomReceiptsDialog
-import uz.fido.universaldigital.ui.utils.extensions.takeScreenShot
-import uz.fido.universaldigital.ui.utils.file.FileUtils
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import java.io.File
@@ -32,10 +29,9 @@ import java.util.Calendar
 import java.util.Locale
 
 @AndroidEntryPoint
-class CheckInfoPaymentFragment :
-    BaseFragment<FragmentCheckInfoPaymentBinding, SuccessPaymentViewModel>(
-        FragmentCheckInfoPaymentBinding::inflate, SuccessPaymentViewModel::class.java
-    ) {
+class CheckInfoPaymentFragment : BaseFragment<FragmentCheckInfoPaymentBinding, SuccessPaymentViewModel>(
+    FragmentCheckInfoPaymentBinding::inflate, SuccessPaymentViewModel::class.java
+) {
 
     companion object {
         var OPERATION_P2P = "P2P"
@@ -45,15 +41,14 @@ class CheckInfoPaymentFragment :
     private lateinit var printChequeResponse: PrintChequeResponse
     private lateinit var dialogReceipt: BottomReceiptsDialog
     private lateinit var dialogQrcode: BottomQRcodeDialog
-    private val chequeAdapter by lazy { ChequeAdapter() }
     private lateinit var currentDate: String
     private lateinit var operation: String
-    private val pdfFile: ArrayList<Cheque> = arrayListOf()
 
+    private val chequeAdapter by lazy { ChequeAdapter() }
+    private val pdfFile: ArrayList<Cheque> = arrayListOf()
     private val filteredList = ArrayList<Cheque>()
     private var transactId: String = ""
-    private var qr_code: String = ""
-
+    private var qrCode: String = ""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,7 +63,6 @@ class CheckInfoPaymentFragment :
         } else initList(filteredList)
 
     }
-
 
     private fun setonClick() {
         binding.appBar.setOnBackButtonClickListener { pop() }
@@ -86,7 +80,7 @@ class CheckInfoPaymentFragment :
         }
 
         binding.fiscalCheck.setOnClickListener {
-            dialogQrcode = BottomQRcodeDialog(qr_code)
+            dialogQrcode = BottomQRcodeDialog(qrCode)
             dialogQrcode.show(childFragmentManager, "TAG")
         }
     }
@@ -173,7 +167,6 @@ class CheckInfoPaymentFragment :
         }
     }
 
-
     private fun getCheque() {
         showProgress()
         viewModel.printCheque(getClientToken(), PrintChequeRequest(transactId))
@@ -188,7 +181,6 @@ class CheckInfoPaymentFragment :
                             binding.buttonReceipt.visibility = View.VISIBLE
                         }
                         initList(filteredList)
-
                     }
 
                     Status.ERROR -> {
@@ -202,7 +194,6 @@ class CheckInfoPaymentFragment :
         chequeAdapter.submitList(list)
         initItem()
     }
-
 
     private fun initItem() {
         currentDate = getCurrentDateNumber() + " " + getCurrentTime2()
@@ -246,7 +237,6 @@ class CheckInfoPaymentFragment :
                 pdfFile.remove(it)
                 pdfFile.add(Cheque(key = getString(R.string.name), value = it.value, key_description = it.key_description, order = it.order))
                 filteredList.remove(it)
-
             }
             if (it.key == "AMOUNT") {
                 binding.amount.text = it.value + " UZS"
@@ -254,10 +244,18 @@ class CheckInfoPaymentFragment :
             }
             if (it.key == "OFDQRCODE") {
                 binding.fiscalCheck.visibility = View.VISIBLE
-                qr_code = it.value
+                qrCode = it.value
                 filteredList.remove(it)
             } else {
                 binding.fiscalCheck.visibility = View.GONE
+            }
+            if (it.key == "CHEQUE_HTML_WIDTH" || it.key == "CHEQUE_HTML_HEIGHT" || it.key == "CHEQUE_BARCODE" || it.key == "AGENT_COMMISSION" ||
+                it.key == "OFD_CHEQUE_ID" || it.key == "OFD_TERMINAL_ID" || it.key == "OFD_COMMISIONINFO_TIN0" || it.key == "OFD_AMOUNT0" ||
+                it.key == "OFD_PRODUCTNAME0" || it.key == "OFD_PRODUCTCODE0" || it.key == "OFD_VAT_AMOUNT0" || it.key == "OFD_RECEIVEDCASH" ||
+                it.key == "BANK_NAME" || it.key == "RS" || it.key == "MFO" || it.key == "FILIAL_INN" || it.key == "TIME" || it.key == "HUMO_PAYMENT_ID" ||
+                it.key == "OFD_FISCAL_SIGN" || it.key == "PURCHASED_AMOUNT" || it.key == "OFD_RECEIVPRICE0"
+            ) {
+                filteredList.remove(it)
             }
         }
     }

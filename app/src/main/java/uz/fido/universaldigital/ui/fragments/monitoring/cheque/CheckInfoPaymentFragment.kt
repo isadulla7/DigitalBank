@@ -87,7 +87,10 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
 
     private fun initUzCard() {
         addView(getString(R.string.name), uzcardMonitoringItem.merchantName)
-        addView(getString(R.string.date_time), uzcardMonitoringItem.transactionDate)
+        addView(
+            getString(R.string.date_time),
+            uzcardMonitoringItem.transactionDate.substring(0, 10) + " " + uzcardMonitoringItem.transactionDate.substring(10, uzcardMonitoringItem.transactionDate.length)
+        )
         addView(getString(R.string.terminal_id), uzcardMonitoringItem.terminalId)
         addView(getString(R.string.card_number), uzcardMonitoringItem.cardNumber)
         if (uzcardMonitoringItem.address.isNotEmpty() && uzcardMonitoringItem.address != "0") addView(getString(R.string.address), uzcardMonitoringItem.address)
@@ -133,7 +136,6 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
     private fun initVisa() {
         addView(getString(R.string.name), visaMonitoringItem.merchant_name)
         addView(getString(R.string.date_time), visaMonitoringItem.tran_date)
-        //addView(getString(R.string.terminal_id), visaMonitoringItem.terminal_id)
         addView(getString(R.string.card_number), Format.formatCardNumber(visaMonitoringItem.card_num))
         if (visaMonitoringItem.address.isNotEmpty()) addView(getString(R.string.address), visaMonitoringItem.address)
         addView(

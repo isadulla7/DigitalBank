@@ -4,15 +4,6 @@
     <base-config cleartextTrafficPermitted="false" />
 
     <domain-config cleartextTrafficPermitted="false">
-        <domain includeSubdomains="true">https://ra.ubank.uz</domain>
-        <pin-set>
-            <pin digest="SHA-256">P8Meknq+VzYp+Y/EiOHnGk5usNgeRR1LTPUZwtTspv4=</pin>
-            <pin digest="SHA-256">4a6cPehI7OG6cuDZka5NDZ7FR8a60d3auda+sKfg4Ng=</pin>
-            <pin digest="SHA-256">x4QzPSC810K5/cMjb05Qm4k3Bw5zBn4lTdO/nEW/Td4=</pin>
-        </pin-set>
-    </domain-config>
-
-    <domain-config cleartextTrafficPermitted="false">
         <domain includeSubdomains="true">127.0.0.1</domain>
         <domain includeSubdomains="true">firebasestorage.googleapis.com</domain>
         <domain includeSubdomains="true">195.158.30.142</domain>

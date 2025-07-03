@@ -276,6 +276,7 @@ class PaymentHistoryFragment : BaseFragment<FragmentRequisitesHistoryBinding, Lo
                         gotoWithSlide(
                             R.id.checkInfoPaymentFragment,
                             bundleOf(
+                                "name" to localMonitoring.name.ifEmpty { requireContext().getString(R.string.no_name) },
                                 "details" to response,
                                 "operation" to "local",
                                 "command" to resource.data?.command
