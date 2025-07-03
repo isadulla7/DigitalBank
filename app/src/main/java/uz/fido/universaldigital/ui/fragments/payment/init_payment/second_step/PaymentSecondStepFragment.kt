@@ -175,6 +175,7 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
                     drawAmountView(paymentParamsArrayList[i])
                 } else {
                     if (paymentParamsArrayList[i].param_type == "S") {
+
                         drawViewsForNavigation(paymentParamsArrayList[i])
                     } else {
                         drawEditText(paymentParamsArrayList[i], i)
@@ -604,6 +605,7 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
 
     @SuppressLint("SetTextI18n")
     private fun drawMainBlockViews(paymentParams: PaymentParams) {
+        Log.d("TAG", "drawMainBlockViews:${paymentParams.def_value} ")
         val mainBlockBinding = ViewPaymentSecondStepDetailsBinding.inflate(
             LayoutInflater.from(requireContext()),
             requireView().parent as ViewGroup,

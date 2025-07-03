@@ -404,7 +404,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
             transactionFee = "$percent % (" + Format.formatAmount(commissionAmount.toString()) + " " + getString(
                 R.string.sum_text
             ) + ")",
-            transactionNumber = localMonitoring.requestId,
+            transactionNumber ="",
             senderCardNumber = Format.formatCardNumberForCheque(data.from_object_value.orEmpty()),
             senderCardName = data.from_embossed_name.orEmpty(),
             receiverCardName = data.to_embossed_name.orEmpty(),
