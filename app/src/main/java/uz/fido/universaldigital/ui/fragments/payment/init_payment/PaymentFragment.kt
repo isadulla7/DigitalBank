@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.payment.init_payment
 
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -577,6 +578,7 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
                                     }
                                 }
                             }
+                            continueBtnClicked=false
                             val response = it.data as PreparePaymentResponse
                             Const.request_id = response.request_id.toString()
                             if (response.level_position == "-1") {
@@ -664,6 +666,7 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
 
     private fun onContinueClicked() {
         keyValueList = HashMap()
+
         templateKeyValueList = ArrayList()
         val levelPosition = collectDataForPayment()
         val inputMethodManager =

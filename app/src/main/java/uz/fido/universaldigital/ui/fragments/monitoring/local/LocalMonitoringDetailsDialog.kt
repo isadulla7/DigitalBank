@@ -159,7 +159,7 @@ class LocalMonitoringDetailsDialog(
         searchDateResponse?.params?.get("mfo")?.let { addView(getString(uz.fido.universaldigital.R.string.mfo), it) }
         searchDateResponse?.params?.get("ADDRESS")?.let { addView(getString(uz.fido.universaldigital.R.string.address), it) }
         addView(getString(uz.fido.universaldigital.R.string.date_time), localMonitoring.createdDate)
-        addView(getString(uz.fido.universaldigital.R.string.transaction_number), localMonitoring.requestId)
+     //   addView(getString(uz.fido.universaldigital.R.string.transaction_number), localMonitoring.requestId)
         if (isRequired && localMonitoring.partnerObj.isNotEmpty()) {
             if (localMonitoring.receiverCardName.isNotEmpty()) {
                 if (localMonitoring.partnerObj.startsWith("AUZ")) {

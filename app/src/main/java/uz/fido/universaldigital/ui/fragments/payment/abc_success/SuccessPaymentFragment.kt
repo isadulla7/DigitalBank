@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
+import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
@@ -118,7 +119,11 @@ class SuccessPaymentFragment : BaseFragment<FragmentSuccessPaymentBinding, Succe
             saveTemplate()
         }
         binding.repeat.setOnClickListener {
-            pop()
+            try {
+                findNavController().popBackStack( R.id.paymentFragment,false)
+            }catch (e:Exception){
+                toast(getString(R.string.error))
+            }
         }
         binding.cheque.setOnClickListener {
             val bundle = Bundle()
