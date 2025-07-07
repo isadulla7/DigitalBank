@@ -36,28 +36,28 @@ fun getInfoCommand(receiverCard: String): String {
 }
 
 fun setCommand(senderCardType: String, receiverCardType: String, senderCardDv: String? = "", receiverCardDv: String? = ""): String {
-    return when {
+ /*   return when {
         senderCardType == WALLET && receiverCardType == WALLET -> "purse&purse"
         senderCardType == WALLET && receiverCardType != WALLET -> "purse&card"
         senderCardType != WALLET && receiverCardType == WALLET -> "card&purse"
         else -> "card&card"
-    }
+    }*/
 
-//    val isSenderDeposit = senderCardDv == "Y"
-//    val isReceiverDeposit = receiverCardDv == "Y"
-//    val hasDv = !senderCardDv.isNullOrEmpty() || !receiverCardDv.isNullOrEmpty()
-//
-//    return when {
-//        hasDv && isSenderDeposit && isReceiverDeposit -> "deposit&deposit"
-//        hasDv && isSenderDeposit && receiverCardType == WALLET -> "deposit&purse"
-//        hasDv && isSenderDeposit -> "deposit&card"
-//        hasDv && senderCardType == WALLET && isReceiverDeposit -> "purse&deposit"
-//        hasDv && isReceiverDeposit -> "card&deposit"
-//        senderCardType == WALLET && receiverCardType == WALLET -> "purse&purse"
-//        senderCardType == WALLET -> "purse&card"
-//        receiverCardType == WALLET -> "card&purse"
-//        else -> "card&card"
-//    }
+    val isSenderDeposit = senderCardDv == "Y"
+    val isReceiverDeposit = receiverCardDv == "Y"
+    val hasDv = !senderCardDv.isNullOrEmpty() || !receiverCardDv.isNullOrEmpty()
+
+    return when {
+        hasDv && isSenderDeposit && isReceiverDeposit -> "deposit&deposit"
+        hasDv && isSenderDeposit && receiverCardType == WALLET -> "deposit&purse"
+        hasDv && isSenderDeposit -> "deposit&card"
+        hasDv && senderCardType == WALLET && isReceiverDeposit -> "purse&deposit"
+        hasDv && isReceiverDeposit -> "card&deposit"
+        senderCardType == WALLET && receiverCardType == WALLET -> "purse&purse"
+        senderCardType == WALLET -> "purse&card"
+        receiverCardType == WALLET -> "card&purse"
+        else -> "card&card"
+    }
 }
 
 fun getServiceIdInfo(receiverCard: CardResponse, senderCard: CardResponse): String {

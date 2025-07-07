@@ -405,7 +405,8 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
                     device_name = getDeviceName(),
                     payment_details = keyValueList,
                     payment_type = paymentService?.nameIndex,
-                    name = paymentService?.nameIndex
+                    name = paymentService?.nameIndex,
+                    sms_control_limit = paymentService?.sms_control_limit
                 )
                 gotoWithSlide(
                     R.id.createNewAutoPaymentFragment,
