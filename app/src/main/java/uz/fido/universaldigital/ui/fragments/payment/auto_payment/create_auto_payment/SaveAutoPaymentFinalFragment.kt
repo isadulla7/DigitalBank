@@ -19,6 +19,7 @@ import uz.fido.universaldigital.ui.fragments.payment.auto_payment.AutoPaymentVie
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.format.Format
@@ -26,6 +27,7 @@ import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientPhoneNumber
 import uz.fido.utils.utility.user.getClientToken
+import java.math.BigDecimal
 
 @AndroidEntryPoint
 class SaveAutoPaymentFinalFragment :
@@ -93,7 +95,32 @@ class SaveAutoPaymentFinalFragment :
             } else {
                 saveAutoPayment()
             }
+
+         /*   if (senderCard?.safe_mode == "N" && senderCard?.pay_with_sms == "N") {
+
+                if (saveAutoPaymentModel?.sms_control_limit == "-1" || saveAutoPaymentModel?.sms_control_limit.isNullOrEmpty()) {
+                    checkCard()
+                } else {
+                    try {
+                        if ((saveAutoPaymentModel?.sms_control_limit
+                                .toString()
+                                .replace(" ", "")
+                                .toBigDecimalOrNull() ?: BigDecimal.ZERO) >= amount.toBigDecimalOrNull())
+                            checkCard()
+                        else
+                            showSnackbar("summa oshib ketdi")
+                    }catch (e:Exception){
+                        showSnackbar("summa oshib ketdi")
+                    }
+
+                }
+
+            } else showSnackbar("kartada sms habarnoma yoqilgan")*/
         }
+    }
+
+    private fun checkCard() {
+
     }
 
     private fun editAutoPayment() {

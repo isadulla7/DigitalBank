@@ -23,5 +23,6 @@ data class SaveAutoPaymentModel(
     var hours: String? = null,
     val payment_type: String? = null,
     var type: String? = null,
-    var auto_payment_id: String? = null
+    var auto_payment_id: String? = null,
+    var sms_control_limit:String?=null,
 ) : Serializable
