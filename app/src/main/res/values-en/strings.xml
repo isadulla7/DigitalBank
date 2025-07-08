@@ -1092,4 +1092,7 @@
     <string name="the_service_under_development">The service is under development</string>
     <string name="charged_from_wallet">Charged from Wallet</string>
     <string name="rate_with_bank">Rate the application</string>
+    <string name="all_avtopayments_will_be_disabled">If autopayments are attached to this card, all of them will be disabled</string>
+    <string name="attached_card_will_be_nonsecure_mode">The selected card is in secure mode, which requires SMS confirmation for payments. If you continue creating an autopayment with the selected card, secure mode will be disabled.</string>
+    <string name="unable_create_payment">Unable to create avto payment</string>
 </resources>

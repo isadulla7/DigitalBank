@@ -24,5 +24,6 @@ data class AutoPayment(
     val user_id: Int,
     val account: String,
     val account_text: String,
-    val selected_days: ArrayList<String>? = null
+    val selected_days: ArrayList<String>? = null,
+    val object_id:String?=null
 ) : Serializable

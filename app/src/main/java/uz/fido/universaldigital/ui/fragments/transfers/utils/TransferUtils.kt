@@ -42,11 +42,9 @@ fun setCommand(senderCardType: String, receiverCardType: String, senderCardDv: S
         senderCardType != WALLET && receiverCardType == WALLET -> "card&purse"
         else -> "card&card"
     }*/
-
     val isSenderDeposit = senderCardDv == "Y"
     val isReceiverDeposit = receiverCardDv == "Y"
     val hasDv = !senderCardDv.isNullOrEmpty() || !receiverCardDv.isNullOrEmpty()
-
     return when {
         hasDv && isSenderDeposit && isReceiverDeposit -> "deposit&deposit"
         hasDv && isSenderDeposit && receiverCardType == WALLET -> "deposit&purse"

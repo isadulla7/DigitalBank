@@ -170,6 +170,9 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
                 }
 
                 PAYMENT_OPERATION_MIB -> accountId = it.getString(PAYMENT_ACCOUNT)
+                PAYMENT_OPERATION_AUTO_PAYMENT_ADD->{
+                    paymentService!!.max_amount=paymentService?.sms_control_limit
+                }
             }
             if (it.getString(MOBILE_NUMBER) != null) {
                 mobileNumber = it.getString(MOBILE_NUMBER).toString()

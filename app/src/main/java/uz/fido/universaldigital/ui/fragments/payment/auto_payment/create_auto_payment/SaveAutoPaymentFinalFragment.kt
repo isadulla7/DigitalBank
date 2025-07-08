@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
@@ -88,39 +89,42 @@ class SaveAutoPaymentFinalFragment :
     }
 
     private fun onClickView() {
+        Log.d("TAG", "onClickView:${senderCard?.safe_mode} ")
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
-            if (operation == "edit") {
-                editAutoPayment()
-            } else {
-                saveAutoPayment()
-            }
-
-         /*   if (senderCard?.safe_mode == "N" && senderCard?.pay_with_sms == "N") {
-
-                if (saveAutoPaymentModel?.sms_control_limit == "-1" || saveAutoPaymentModel?.sms_control_limit.isNullOrEmpty()) {
-                    checkCard()
-                } else {
-                    try {
-                        if ((saveAutoPaymentModel?.sms_control_limit
-                                .toString()
-                                .replace(" ", "")
-                                .toBigDecimalOrNull() ?: BigDecimal.ZERO) >= amount.toBigDecimalOrNull())
-                            checkCard()
-                        else
-                            showSnackbar("summa oshib ketdi")
-                    }catch (e:Exception){
-                        showSnackbar("summa oshib ketdi")
-                    }
-
+            when{
+                senderCard?.pay_with_sms == "Y"->{
+                    showSnackbar("avto payment yaratib bo'lmaydi")
                 }
-
-            } else showSnackbar("kartada sms habarnoma yoqilgan")*/
+                saveAutoPaymentModel?.sms_control_limit=="-1"->{
+                    showSnackbar(getString(R.string.warning),getString(R.string.unable_create_payment))
+                }
+                senderCard?.safe_mode == "Y"->{
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle(getString(R.string.warning))
+                    builder.setMessage(getString(R.string.attached_card_will_be_nonsecure_mode))
+                    builder.setPositiveButton(getString(R.string.continue_text)) { dialog, _ ->
+                        checkCard()
+                        dialog.dismiss()
+                    }
+                    builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    builder.show()
+                }
+                else->{
+                    checkCard()
+                }
+            }
         }
     }
 
     private fun checkCard() {
-
+        if (operation == "edit") {
+            editAutoPayment()
+        } else {
+            saveAutoPayment()
+        }
     }
 
     private fun editAutoPayment() {

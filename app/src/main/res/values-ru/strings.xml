@@ -1094,4 +1094,7 @@
     <string name="the_service_under_development">Сервис находится в стадии разработки</string>
     <string name="charged_from_wallet">Списано с Кашелек</string>
     <string name="rate_with_bank">Оцените приложение</string>
+    <string name="all_avtopayments_will_be_disabled">Если к этой карте привязаны автоплатежи, все они будут отключены</string>
+    <string name="attached_card_will_be_nonsecure_mode">Выбранная карта находится в безопасном режиме, который требует подтверждения по SMS для платежей. Если вы продолжите создавать автоплатеж с выбранной картой, безопасный режим будет отключен.</string>
+    <string name="unable_create_payment">Невозможно создать автоплатеж</string>
 </resources>
