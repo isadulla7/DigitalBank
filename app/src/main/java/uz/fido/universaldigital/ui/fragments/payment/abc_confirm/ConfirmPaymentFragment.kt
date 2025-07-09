@@ -94,6 +94,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
             if (it.serializable<ArrayList<TemplateKeyValue>>("templateKeyValues") != null) templateKeyValues =
                 it.serializable<ArrayList<TemplateKeyValue>>("templateKeyValues") as ArrayList<TemplateKeyValue>
         }
+
     }
 
     override fun onInit(savedInstanceState: Bundle?) {
@@ -212,7 +213,8 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
                             else -> paymentParams.def_value.replace(" ", "").toDouble() / 100
                         }
                     }
-                    valueView.text = formatAmount(
+                    binding.amountTitle.text=paymentParams.name?:getString(R.string.amount)
+                    binding.amount.text = formatAmount(
                         if (amount.toString().trim().isNotEmpty()) amount.toString() else "0"
                     ) + if (currency == "000") " ${getString(R.string.sum_text)}" else " $"
                 }
@@ -239,6 +241,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
                 addViews("ГНИ", defaultModel.name.toString())
                 addViews("Баланс", defaultModel.price.toString())
             }
+
             if (paymentParams.code == "AAB_COMMISSION") {
                 percentForAsia = paymentParams.def_value.toDouble()
                 return
@@ -247,9 +250,13 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
                 linearLayout.visibility = View.GONE
             }
             if (paymentParams.is_visible.equals("Y") && paymentParams.def_value.isNotEmpty()) {
-                linearLayout.addView(drawParamNameView(paymentParams))
+               if (paymentParams.code=="AMOUNT" || paymentParams.code=="RESULT_AMOUNT"){
+                   //summa textga ko'chirilgan
+               }else {
+                   linearLayout.addView(drawParamNameView(paymentParams))
                 linearLayout.addView(valueView)
                 binding.content.addView(linearLayout)
+               }
             }
         }
     }
