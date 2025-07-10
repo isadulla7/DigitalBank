@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.Navigation.findNavController
+import com.aheaditec.talsec_security.security.api.Talsec
 import com.google.firebase.dynamiclinks.FirebaseDynamicLinks
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
@@ -40,6 +41,7 @@ class LoginActivity : BaseActivity() {
         setContentView(binding.root)
         checkForDeviceLock()
         listenAppIconChanges()
+        Talsec.blockScreenCapture(this, true)
     }
 
     private fun listenAppIconChanges() {

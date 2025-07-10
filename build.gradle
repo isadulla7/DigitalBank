@@ -24,5 +24,6 @@ allprojects {
         jcenter()
         maven { url PluginDependencies.jitPackIo }
         maven { url PluginDependencies.artifactory }
+        maven { url PluginDependencies.talsecRepositories }
     }
 }

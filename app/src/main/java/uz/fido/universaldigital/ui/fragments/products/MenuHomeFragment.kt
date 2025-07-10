@@ -40,6 +40,7 @@ import uz.fido.universaldigital.ui.utils.extensions.doTransferOperationByType
 import uz.fido.universaldigital.ui.utils.extensions.getDrawableFromRes
 import uz.fido.universaldigital.ui.utils.extensions.openPlayMarket
 import uz.fido.universaldigital.ui.utils.extensions.setCardState
+import uz.fido.universaldigital.ui.utils.home_utils.Utils
 import uz.fido.universaldigital.ui.utils.home_utils.getCardsWithBalanceVisibility
 import uz.fido.universaldigital.ui.utils.home_utils.getUserCardsFromSecureStore
 import uz.fido.universaldigital.ui.utils.home_utils.initRefreshLayout
@@ -541,7 +542,7 @@ class MenuHomeFragment : BaseHomeFragment(), BaseInterface {
                 mainCardName.setCardNameAndNumber(mainCard)
                 mainCardBalance.setCardBalance(mainCard)
                 mainCardType.setCardTypeImage(mainCard)
-                mainCardSign.isVisible=mainCard.is_main=="Y"
+                mainCardSign.isVisible = mainCard.is_main == "Y"
                 mainCardBg.setImageResource(requireContext().getDrawableFromRes(mainCard.bg_icon_name))
                 setCardState(mainCard, cardStateName, requireContext())
                 if (cardStateName.isVisible) {

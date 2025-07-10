@@ -4,7 +4,6 @@
 -keep class com.google.gson.** { *; }
 -keep class uz.fido.network.domain.model.** { *; }
 -keep class uz.fido.network.di.**{*;}
--keep class uz.myid.android.sdk.**{*;}
 -keep class org.bouncycastle.** {*;}
 -dontwarn kotlin.time.**
 -keep class com.android.org.bouncycastle.jcajce.**{*;}

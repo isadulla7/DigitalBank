@@ -19,6 +19,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import com.aheaditec.talsec_security.security.api.Talsec
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
 import kotlinx.coroutines.launch
@@ -98,6 +99,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         listenForSeasonChanges()
         checkForAppUpdates()
         askNotificationPermission()
+        Talsec.blockScreenCapture(this, true)
     }
 
     private fun initBottomNavigationMenuItems(savedInstanceState: Bundle?) {

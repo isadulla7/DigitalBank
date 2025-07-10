@@ -1092,4 +1092,5 @@
     <string name="the_service_under_development">The service is under development</string>
     <string name="charged_from_wallet">Charged from Wallet</string>
     <string name="rate_with_bank">Rate the application</string>
+    <string name="other_violation_found">Xavfsizlikni ta\'minlash maqsadida ilovani ushbu qurilmada ishlatishning iloji yo\'q</string>
 </resources>

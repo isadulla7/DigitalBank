@@ -71,6 +71,7 @@ espressoIdling = "3.4.0"
 tenserFlow = "2.9.0"
 firebaseCrashlyticsVersion = "17.3.1"
 firebaseAnalytics = "21.5.1"
+talsecRasp = "15.1.0"
 
 [libraries]
 
@@ -163,5 +164,5 @@ androidx-room-room-ktx = { group = "androidx.room", name = "room-ktx", version.r
 org-tensorflow-tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tenserFlow" }
 firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx" }
 firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlyticsVersion" }
-
+talsec-rasp = { group = "com.aheaditec.talsec.security", name = "TalsecSecurity-Community", version.ref = "talsecRasp" }
 [plugins]

@@ -9,4 +9,5 @@ object PluginDependencies {
     const val artifactory = "https://artifactory.aigroup.uz:443/artifactory/myid"
     const val androidToolsR8 = "com.android.tools:r8:8.5.35"
     const val firebasePerf = "com.google.firebase:perf-plugin:1.4.2"
+    const val talsecRepositories = "https://europe-west3-maven.pkg.dev/talsec-artifact-repository/freerasp"
 }

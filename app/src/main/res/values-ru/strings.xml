@@ -1094,4 +1094,5 @@
     <string name="the_service_under_development">Сервис находится в стадии разработки</string>
     <string name="charged_from_wallet">Списано с Кашелек</string>
     <string name="rate_with_bank">Оцените приложение</string>
+    <string name="other_violation_found">Xavfsizlikni ta\'minlash maqsadida ilovani ushbu qurilmada ishlatishning iloji yo\'q</string>
 </resources>

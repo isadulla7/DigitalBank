@@ -176,6 +176,7 @@ dependencies {
     implementation(libs.com.airbnb.android.lottie)
     implementation(libs.com.github.philjay.mpadroidChart)
     implementation(libs.uz.myid.sdk.capture)
+    implementation(libs.talsec.rasp)
 
     implementation(files(ModuleList.NFC_LIBRARY))
     implementation(project(ModuleList.CARD_SCANNER))
