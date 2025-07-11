@@ -742,7 +742,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         val dateOfBirth = checkSmsCodeData?.birthday
         val pinfl = checkSmsCodeData?.pnfl
         when {
-            true -> openMyIdPage(passportData, dateOfBirth)
+            isIdentifiedByCard(userIdentifyState) -> openMyIdPage(passportData, dateOfBirth)
 
             isFullyIdentified(userIdentifyState, userDeviceState) -> gotoPinCodeFragment()
 
