@@ -211,7 +211,7 @@ class ConfirmRequisitesPayment :
                             Const.OPERATION to ConfirmSmsFragment.SMS_BUDGET_OPERATION,
                         )
                     )
-                }else{
+                } else {
                     createPayment()
                 }
             })

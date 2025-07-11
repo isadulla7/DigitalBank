@@ -121,12 +121,12 @@ class UniversalApplication : Application(), ThreatListener.ThreatDetected {
     }
 
     private fun openSecurityViolationActivity(violationType: String) {
-        val intent = Intent(this, SecurityViolationActivity::class.java).apply {
-            val bundle = bundleOf(SecurityViolationActivity.VIOLATION_TYPE to violationType)
-            putExtras(bundle)
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-        }
-        startActivity(intent)
+//        val intent = Intent(this, SecurityViolationActivity::class.java).apply {
+//            val bundle = bundleOf(SecurityViolationActivity.VIOLATION_TYPE to violationType)
+//            putExtras(bundle)
+//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//        }
+//        startActivity(intent)
     }
 
     companion object {
