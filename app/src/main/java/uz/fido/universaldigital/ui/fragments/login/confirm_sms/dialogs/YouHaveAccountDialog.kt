@@ -6,11 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogYouHaveAnAccountBinding
 import uz.fido.universaldigital.ui.fragments.login.sign_in.SignInViewModel
 
+@AndroidEntryPoint
 class YouHaveAccountDialog(
     private val openMyId: (String) -> Unit,
     private val continueSignUp: () -> Unit,
@@ -31,6 +33,7 @@ class YouHaveAccountDialog(
         binding.openMyid.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
             getResidencyType()
+            dismiss()
         }
         binding.continueSignUp.setOnClickListener {
             dismiss()

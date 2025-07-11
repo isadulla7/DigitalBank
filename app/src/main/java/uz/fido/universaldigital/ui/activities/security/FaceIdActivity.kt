@@ -59,9 +59,6 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
                 MyIdResidency.UserDefined
             }
         }
-        println("RESIDENCY TYPE=====$residentType")
-        println("PASSWORD DATA=====$clientPassport")
-        println("BIRTHDAY=====$clientBirthday")
         val myIdConfig = MyIdConfig.Builder(clientId = Keys.getMyIdClientId())
             .withClientHash(Keys.getMyIdClientHash(), Keys.getMyIdClientHashId())
             .withPassportData(clientPassport).withBirthDate(clientBirthday)
