@@ -9,7 +9,9 @@ import android.view.View
 import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.payment.Cheque
 import uz.fido.network.domain.model.payment.PrintChequeRequest
@@ -20,10 +22,13 @@ import uz.fido.universaldigital.databinding.FragmentCheckInfoPaymentBinding
 import uz.fido.universaldigital.ui.fragments.payment.abc_adapter.ChequeAdapter
 import uz.fido.universaldigital.ui.fragments.payment.abc_dialog.BottomQRcodeDialog
 import uz.fido.universaldigital.ui.fragments.payment.abc_dialog.BottomReceiptsDialog
+import uz.fido.utils.const.Const
+import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
 import java.io.File
 import java.io.FileOutputStream
+import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -49,6 +54,8 @@ class CheckInfoPaymentFragment : BaseFragment<FragmentCheckInfoPaymentBinding, S
     private val filteredList = ArrayList<Cheque>()
     private var transactId: String = ""
     private var qrCode: String = ""
+    private var amount:String=""
+    private var currency:String=""
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -196,9 +203,11 @@ class CheckInfoPaymentFragment : BaseFragment<FragmentCheckInfoPaymentBinding, S
     }
 
     private fun initItem() {
+        currency=arguments?.getString("currency")?:getString(R.string.uzs)
+        amount=requireArguments().getString("amount")?:""
         currentDate = getCurrentDateNumber() + " " + getCurrentTime2()
         binding.dateTime.text = currentDate
-        binding.amount.text = requireArguments().getString("amount")
+        binding.amount.text = amount
         when (operation) {
             OPERATION_P2P -> {
                 binding.commission.text = requireArguments().getString("commission") + " UZS" + "(${requireArguments().getString("percent")} %)"
@@ -232,6 +241,24 @@ class CheckInfoPaymentFragment : BaseFragment<FragmentCheckInfoPaymentBinding, S
                 pdfFile.add(it)
                 filteredList.add(it)
             }
+            if (it.key=="FULL_NAME"){
+                filteredList.remove(it)
+                binding.layoutFio.visibility=View.VISIBLE
+                binding.titleFio.text=if (it.key_description.isNotEmpty()) it.key_description else getString(R.string.fio)
+                binding.tvFio.text=it.value
+            }
+            if (it.key=="AAB_COMMISSION"){
+                filteredList.remove(it)
+                binding.commissionIshonch.visibility=View.VISIBLE
+                binding.tvCommissionIshonch.text= it.value +" %"
+                try {
+                    binding.layoutTotalAmount.visibility=View.VISIBLE
+                    val editAmount=response.firstOrNull { it.key=="AMOUNT" }?.value?.toBigDecimal()?: BigDecimal.ZERO
+                    val totalAmount= editAmount.divide(BigDecimal(100))+(editAmount.divide(BigDecimal(10000)).multiply(it.value.toBigDecimalOrNull()))
+                    binding.totalAmount.text=Format.formatAmount(totalAmount.toString())+" "+ getString(R.string.uzs)
+
+                }catch (e:Exception){}
+            }
             if (it.key == "PROVIDER_NAME") {
                 binding.paymentName.text = it.value
                 pdfFile.remove(it)
@@ -241,6 +268,8 @@ class CheckInfoPaymentFragment : BaseFragment<FragmentCheckInfoPaymentBinding, S
             if (it.key == "AMOUNT") {
                 binding.amount.text = it.value + " UZS"
                 filteredList.remove(it)
+                pdfFile.remove(it)
+                pdfFile.add(Cheque(it.key,it.key_description,amount,it.order))
             }
             if (it.key == "OFDQRCODE") {
                 binding.fiscalCheck.visibility = View.VISIBLE

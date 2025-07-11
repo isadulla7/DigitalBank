@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.local
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.core.os.bundleOf
