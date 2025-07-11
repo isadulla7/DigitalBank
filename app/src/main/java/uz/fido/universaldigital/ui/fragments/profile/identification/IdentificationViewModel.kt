@@ -41,4 +41,8 @@ class IdentificationViewModel @Inject constructor(
         emit(swapKeyRepository.getUserDetailedInfoAsync(fileUrl))
     }
 
+    fun getUserResidency() = liveData(Dispatchers.IO) {
+        emit(userRepository.getUserResidency(getClientToken()))
+    }
+
 }

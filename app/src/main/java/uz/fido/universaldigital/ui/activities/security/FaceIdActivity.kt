@@ -13,13 +13,14 @@ import uz.myid.android.sdk.capture.MyIdConfig
 import uz.myid.android.sdk.capture.MyIdException
 import uz.myid.android.sdk.capture.MyIdResult
 import uz.myid.android.sdk.capture.MyIdResultListener
-import uz.myid.android.sdk.capture.model.MyIdBuildMode
+import uz.myid.android.sdk.capture.model.MyIdCameraResolution
 import uz.myid.android.sdk.capture.model.MyIdCameraShape
 import uz.myid.android.sdk.capture.model.MyIdEntryType
+import uz.myid.android.sdk.capture.model.MyIdEnvironment
 import uz.myid.android.sdk.capture.model.MyIdImageFormat
-import uz.myid.android.sdk.capture.model.MyIdResidentType
-import uz.myid.android.sdk.capture.model.MyIdResolution
-import uz.myid.android.sdk.capture.takeUserResult
+import uz.myid.android.sdk.capture.model.MyIdLocale
+import uz.myid.android.sdk.capture.model.MyIdResidency
+import uz.myid.android.sdk.capture.takeMyIdResult
 import java.util.Locale
 
 /**
@@ -31,6 +32,7 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
     private val client: MyIdClient = MyIdClient()
     private var clientPassport: String = ""
     private var clientBirthday: String = ""
+    private var isResident: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,19 +50,34 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
      */
 
     private fun startMyId() {
-        val myIdConfig = MyIdConfig.Companion.builder(clientId = Keys.getMyIdClientId())
+        val residentType = when (isResident) {
+            "Y" -> MyIdResidency.Resident
+            "N" -> MyIdResidency.NonResident
+            else -> {
+                clientPassport = ""
+                clientPassport = ""
+                MyIdResidency.UserDefined
+            }
+        }
+        println("RESIDENCY TYPE=====$residentType")
+        println("PASSWORD DATA=====$clientPassport")
+        println("BIRTHDAY=====$clientBirthday")
+        val myIdConfig = MyIdConfig.Builder(clientId = Keys.getMyIdClientId())
             .withClientHash(Keys.getMyIdClientHash(), Keys.getMyIdClientHashId())
             .withPassportData(clientPassport).withBirthDate(clientBirthday)
-            .withBuildMode(MyIdBuildMode.PRODUCTION).withEntryType(MyIdEntryType.AUTH)
-            .withResidency(MyIdResidentType.USER_DEFINED).withLocale(Locale(initLanguage()))
-            .withCameraShape(MyIdCameraShape.CIRCLE)
-            .withResolution(MyIdResolution.RESOLUTION_720).withImageFormat(MyIdImageFormat.PNG)
+            .withEnvironment(MyIdEnvironment.Production)
+            .withEntryType(MyIdEntryType.Identification)
+            .withResidency(residentType)
+            .withLocale(initLanguage())
+            .withCameraShape(MyIdCameraShape.Circle)
+            .withCameraResolution(MyIdCameraResolution.High)
+            .withImageFormat(MyIdImageFormat.PNG)
             .build()
         val intent = client.createIntent(this, myIdConfig)
         result.launch(intent)
     }
 
-    private val result = takeUserResult(this)
+    private val result = takeMyIdResult(this)
 
     /**
      * MY ID result is successful
@@ -96,11 +113,11 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
         finish()
     }
 
-    private fun initLanguage(): String {
+    private fun initLanguage(): MyIdLocale {
         return when (getFromSecureStore(Const.APP_LANGUAGE, LANG_RU).lowercase(Locale.getDefault())) {
-            LANG_UZ, LANG_UZL -> LANG_UZ
-            LANG_RU -> LANG_RU
-            else -> LANG_EN
+            LANG_UZ, LANG_UZL -> MyIdLocale.Uzbek
+            LANG_RU -> MyIdLocale.Russian
+            else -> MyIdLocale.English
         }
     }
 
@@ -108,6 +125,7 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
         intent.extras?.let {
             clientPassport = it.getString(CLIENT_PASSPORT).orEmpty()
             clientBirthday = it.getString(CLIENT_DATE_OF_BIRTH).orEmpty()
+            isResident = it.getString(RESIDENCY_TYPE).orEmpty()
         }
     }
 
@@ -117,13 +135,11 @@ class FaceIdActivity : BaseActivity(), MyIdResultListener {
         const val CLIENT_DATE_OF_BIRTH = "birthday"
         const val CLIENT_PASSPORT = "passport"
         const val EXCEPTION_CODE = "exception_code"
+        const val RESIDENCY_TYPE = "residency_type"
         const val CODE = "code"
-        const val MODE = "mode"
-        const val STRONG = "strong"
         const val LANG_RU = "ru"
         const val LANG_UZ = "uz"
         const val LANG_UZL = "uzl"
-        const val LANG_EN = "eng"
     }
 
 }

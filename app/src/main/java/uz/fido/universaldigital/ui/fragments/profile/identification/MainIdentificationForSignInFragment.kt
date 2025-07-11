@@ -3,10 +3,12 @@ package uz.fido.universaldigital.ui.fragments.profile.identification
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.os.bundleOf
 import coil.load
 import dagger.hilt.android.AndroidEntryPoint
+import uz.fido.network.data.utility.Status
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentMainIdentificationForSignInBinding
@@ -43,7 +45,9 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
     }
 
     private fun initClickListener() {
-        binding.identificationBtn.setOnClickListener { openFaceIdActivity(passportData, dateOfBirth, pinfl) }
+        binding.identificationBtn.setOnClickListener {
+            getResidencyType()
+        }
         binding.skipBtn.setOnClickListener { pop() }
     }
 
@@ -56,10 +60,11 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
         }
     }
 
-    private fun openFaceIdActivity(passportData: String? = null, dateOfBirth: String? = null, pinfl: String? = null) {
+    private fun openFaceIdActivity(passportData: String? = null, dateOfBirth: String? = null, pinfl: String? = null, isResident: String? = null) {
         val intent = Intent(requireActivity(), FaceIdActivity::class.java)
         intent.putExtra(FaceIdActivity.CLIENT_PASSPORT, if (passportData.isNullOrEmpty()) pinfl.orEmpty() else passportData)
         intent.putExtra(FaceIdActivity.CLIENT_DATE_OF_BIRTH, dateOfBirth.orEmpty())
+        intent.putExtra(FaceIdActivity.RESIDENCY_TYPE, isResident)
         faceIdActivityResult.launch(intent)
     }
 
@@ -71,6 +76,20 @@ class MainIdentificationForSignInFragment : BaseFragment<FragmentMainIdentificat
         UnableGetPassportDataDialog {
             openFaceIdActivity()
         }.show(childFragmentManager, "")
+    }
+
+    private fun getResidencyType() {
+        binding.progressBar.visibility = View.VISIBLE
+        viewModel.getUserResidency().observe(viewLifecycleOwner) {
+            binding.progressBar.visibility = View.GONE
+            if (it.status == Status.SUCCESS) {
+                val response = it.data?.isResident
+                val isResident = response.orEmpty()
+                openFaceIdActivity(passportData, dateOfBirth, pinfl, isResident)
+            } else {
+                openFaceIdActivity(passportData, dateOfBirth, pinfl)
+            }
+        }
     }
 
 }

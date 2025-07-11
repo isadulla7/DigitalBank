@@ -9,6 +9,7 @@ import uz.fido.network.domain.datasource.interfaces.IUserRepository
 import uz.fido.network.domain.model.abc_base.SwapKeysRequest
 import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.universaldigital.base.AbstractViewModel
+import uz.fido.utils.utility.user.getClientToken
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +29,10 @@ class SignInViewModel @Inject constructor(
 
     fun checkUserSignInRequest(checkUserSignInRequest: SignInRequestNew) = liveData(Dispatchers.IO) {
         emit(userRepository.signIn(checkUserSignInRequest))
+    }
+
+    fun getUserResidency() = liveData(Dispatchers.IO) {
+        emit(userRepository.getUserResidency(getClientToken()))
     }
 
 }

@@ -1092,4 +1092,5 @@
     <string name="the_service_under_development">Xizmat ishlab chiqilmoqda</string>
     <string name="charged_from_wallet">Hamyondan debet qilingan</string>
     <string name="rate_with_bank">Ilovaga baho bering</string>
+    <string name="input_details">Ma\'lumotlarni kiriting</string>
 </resources>
