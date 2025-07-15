@@ -14,7 +14,7 @@ import uz.fido.universaldigital.ui.fragments.login.sign_in.SignInViewModel
 
 @AndroidEntryPoint
 class YouHaveAccountDialog(
-    private val openMyId: (String) -> Unit,
+    private val openMyId: () -> Unit,
     private val continueSignUp: () -> Unit,
     private val isRequireContinueSignUp: Boolean? = true
 ) : BottomSheetDialogFragment() {
@@ -32,7 +32,8 @@ class YouHaveAccountDialog(
         }
         binding.openMyid.setOnClickListener {
             binding.progressBar.visibility = View.VISIBLE
-            getResidencyType()
+            dismiss()
+            openMyId.invoke()
             dismiss()
         }
         binding.continueSignUp.setOnClickListener {
@@ -48,9 +49,9 @@ class YouHaveAccountDialog(
                 val response = it.data?.isResident
                 val isResident = response.orEmpty()
                 dismiss()
-                openMyId.invoke(isResident)
+                openMyId.invoke()
             } else {
-                openMyId.invoke("")
+                openMyId.invoke()
             }
         }
     }

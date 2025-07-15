@@ -500,16 +500,16 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     private fun initDialog() {
         if (operation == SMS_OPERATION_SIGN_UP) {
             if (checkSmsResponse.is_authenticate == "Y") {
-                YouHaveAccountDialog(openMyId = { isResident ->
-                    openMyIdActivity(isResident)
+                YouHaveAccountDialog(openMyId = { /*isResident ->*/
+                    openMyIdActivity()
                 }, continueSignUp = {
                     continueSignUpOperation()
                 }).show(childFragmentManager, "")
             }
         } else if (operation == SMS_OPERATION_FORGOT_PASSWORD) {
             if (checkSmsResponse.is_authenticate == "Y") {
-                YouHaveAccountDialog(openMyId = { isResident ->
-                    openMyIdActivity(isResident)
+                YouHaveAccountDialog(openMyId = {/* isResident ->*/
+                    openMyIdActivity()
                 }, continueSignUp = {
                     continueSignUpOperation()
                 }, false).show(childFragmentManager, "")
@@ -524,12 +524,21 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
     }
 
     private fun openMyIdActivity(isResident: String? = null) {
-        val intent = Intent(requireActivity(), FaceIdActivity::class.java)
-        intent.putExtra("mode", "strong")
-        intent.putExtra(FaceIdActivity.CLIENT_PASSPORT, checkSmsResponse.passport_serial + checkSmsResponse.passport_number)
-        intent.putExtra(FaceIdActivity.CLIENT_DATE_OF_BIRTH, checkSmsResponse.birthday)
-        intent.putExtra(FaceIdActivity.RESIDENCY_TYPE, isResident)
-        faceIdActivityResult.launch(intent)
+        if (checkSmsResponse.passport_number.isEmpty()
+            || checkSmsResponse.birthday.isEmpty()
+            || checkSmsResponse.passport_serial.isEmpty()
+            || checkSmsResponse.isResident == "U"
+            || checkSmsResponse.isResident.isNullOrEmpty()) {
+            showUnableGetProfileDialog()
+        } else {
+            val intent = Intent(requireActivity(), FaceIdActivity::class.java)
+            intent.putExtra("mode", "strong")
+            intent.putExtra(FaceIdActivity.CLIENT_PASSPORT, checkSmsResponse.passport_serial + checkSmsResponse.passport_number)
+            intent.putExtra(FaceIdActivity.CLIENT_DATE_OF_BIRTH, checkSmsResponse.birthday)
+            intent.putExtra(FaceIdActivity.RESIDENCY_TYPE, checkSmsResponse.isResident)
+            faceIdActivityResult.launch(intent)
+        }
+
     }
 
     private fun finishOperation() {

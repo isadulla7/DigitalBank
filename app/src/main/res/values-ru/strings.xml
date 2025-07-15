@@ -1095,4 +1095,6 @@
     <string name="charged_from_wallet">Списано с Кашелек</string>
     <string name="rate_with_bank">Оцените приложение</string>
     <string name="input_details">Ma\'lumotlarni kiriting</string>
+    <string name="cant_get_passport_detail">Нам не удалось получить данные вашего паспорта. Пожалуйста, свяжитесь с банком. +998 71 200 11 10</string>
+
 </resources>

@@ -1093,4 +1093,6 @@
     <string name="charged_from_wallet">Charged from Wallet</string>
     <string name="rate_with_bank">Rate the application</string>
     <string name="input_details">Ma\'lumotlarni kiriting</string>
+    <string name="cant_get_passport_detail">Нам не удалось получить данные вашего паспорта. Пожалуйста, свяжитесь с банком. +998 71 200 11 10</string>
+
 </resources>
