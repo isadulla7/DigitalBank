@@ -12,6 +12,7 @@ import uz.fido.network.domain.model.my_id.MyIdGetAccessTokenRequest
 import uz.fido.network.domain.model.my_id.MyIdMeResponse
 import uz.fido.network.domain.model.password.ChangePasswordRequest
 import uz.fido.network.domain.model.profile.LogOutRequest
+import uz.fido.network.domain.model.sign_in.ResidencyResponse
 import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.network.domain.model.sign_up.CheckUserSms
@@ -105,4 +106,9 @@ class UserRepositoryImpl @Inject constructor(private val userApiService: UserApi
     ): Resource<BaseResponse> = getResult {
         userApiService.changeNotificationState(token, request)
     }
+
+    override suspend fun getUserResidency(token: String): Resource<ResidencyResponse> = getResult {
+        userApiService.getUserResidency(token)
+    }
+
 }

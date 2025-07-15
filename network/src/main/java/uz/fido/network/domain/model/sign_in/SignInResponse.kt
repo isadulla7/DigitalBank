@@ -1,5 +1,6 @@
 package uz.fido.network.domain.model.sign_in
 
+import com.google.gson.annotations.SerializedName
 import uz.fido.network.domain.model.abc_base.BaseResponse
 import java.io.Serializable
 
@@ -36,5 +37,7 @@ data class SignInResponse(
     val application_count: Int? = 0,
     val device_myid_state: String? = null,
     val address: String? = null,
-    val pnfl: String? = null
+    val pnfl: String? = null,
+    @SerializedName("is_Resident")
+    val isResident: String?=""
 ) : Serializable, BaseResponse()

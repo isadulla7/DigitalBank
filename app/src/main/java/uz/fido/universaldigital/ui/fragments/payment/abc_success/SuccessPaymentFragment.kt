@@ -130,6 +130,7 @@ class SuccessPaymentFragment : BaseFragment<FragmentSuccessPaymentBinding, Succe
             bundle.putString("icon", paymentService?.icon_name)
             bundle.putString("transactId", requireArguments().getString("transactId"))
             bundle.putString("operation", CheckInfoPaymentFragment.OPERATION_PAYMENT)
+            bundle.putString("currency", arguments?.getString(Const.OPERATION_CURRENCY)?:"UZS")
             bundle.putString("amount", operationAmount)
             goto(R.id.checkInfoPaymentFragment2, bundle)
         }

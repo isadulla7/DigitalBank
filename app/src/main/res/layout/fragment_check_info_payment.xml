@@ -56,6 +56,117 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layout_fio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:visibility="gone"
+                android:layout_marginVertical="8dp"
+                android:orientation="vertical">
+
+                <uz.fido.utils.view.custom_text_view.TextViewRegular
+                    android:id="@+id/title_fio"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/fio"
+                    android:textColor="@color/hintColor"
+                    android:textSize="14dp" />
+
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:id="@+id/tv_fio"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/commission_ishonch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                android:visibility="gone"
+                android:orientation="vertical">
+
+                <uz.fido.utils.view.custom_text_view.TextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/commission"
+                    android:textColor="@color/hintColor"
+                    android:textSize="14dp" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:id="@+id/tv_commission_ishonch"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/layout_total_amount"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                android:orientation="vertical">
+
+                <uz.fido.utils.view.custom_text_view.TextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/total_amount"
+                    android:textColor="@color/hintColor"
+                    android:textSize="14dp" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:id="@+id/total_amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="8dp"
+                android:orientation="vertical">
+
+                <uz.fido.utils.view.custom_text_view.TextViewRegular
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/amount"
+                    android:textColor="@color/hintColor"
+                    android:textSize="14dp" />
+
+                <uz.fido.utils.view.custom_text_view.TextViewMedium
+                    android:id="@+id/amount"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="4dp"
+                    android:textColor="@color/mainTextColor"
+                    android:textSize="14dp" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"
                 android:layout_width="match_parent"
@@ -149,33 +260,10 @@
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.LinearLayoutCompat
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginVertical="8dp"
-                android:orientation="vertical">
 
-                <uz.fido.utils.view.custom_text_view.TextViewRegular
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:text="@string/amount"
-                    android:textColor="@color/hintColor"
-                    android:textSize="14dp" />
-
-                <uz.fido.utils.view.custom_text_view.TextViewMedium
-                    android:id="@+id/amount"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginTop="4dp"
-                    android:textColor="@color/mainTextColor"
-                    android:textSize="14dp" />
-
-            </androidx.appcompat.widget.LinearLayoutCompat>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
+
 
     </androidx.core.widget.NestedScrollView>
 

@@ -73,4 +73,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/skip_btn" />
 
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="16dp"
+        android:indeterminateTint="@color/white"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/identification_btn"
+        app:layout_constraintStart_toStartOf="@id/identification_btn"
+        app:layout_constraintTop_toTopOf="@id/identification_btn" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

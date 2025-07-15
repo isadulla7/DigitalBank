@@ -39,13 +39,22 @@
             tools:ignore="ContentDescription" />
 
         <uz.fido.utils.view.custom_text_view.TextViewMedium
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:paddingVertical="16dp"
             android:paddingStart="12dp"
             android:text="@string/recover_with_identification"
             android:textColor="@color/mainTextColor"
             android:textSize="15dp" />
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="16dp"
+            android:indeterminateTint="@color/brandRedColor"
+            android:visibility="gone" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

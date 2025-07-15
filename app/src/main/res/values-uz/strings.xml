@@ -1093,4 +1093,7 @@
     <string name="charged_from_wallet">Hamyondan debet qilingan</string>
     <string name="rate_with_bank">Ilovaga baho bering</string>
     <string name="other_violation_found">Xavfsizlikni ta\'minlash maqsadida ilovani ushbu qurilmada ishlatishning iloji yo\'q</string>
+    <string name="input_details">Ma\'lumotlarni kiriting</string>
+    <string name="cant_get_passport_detail">Passport ma\'lumotlaringizni olishni iloji bo\'lmadi. Iltimos, bankga murojaat qiling. +998 71 200 11 10</string>
+
 </resources>

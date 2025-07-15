@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.monitoring.cheque
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Toast
@@ -25,6 +26,7 @@ import uz.fido.utils.format.FormatUtilsKt
 import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.pop
 import java.io.File
+import java.math.BigDecimal
 
 class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(FragmentCheckInfoBinding::inflate) {
 
@@ -202,18 +204,29 @@ class CheckInfoPaymentFragment : BaseSimpleFragment<FragmentCheckInfoBinding>(Fr
         } else {
             getString(R.string.waiting)
         }
+        val currencyType = when (item.currencyCode) {
+            "000" -> " UZS"
+            "840" -> " $"
+            "978" -> " EUR"
+            else -> " RUB"
+        }
+
+
         if (item.feeAmount.isNotEmpty() && item.feePercent.isNotEmpty()) {
             addView(getString(R.string.commission), "${item.feeAmount.toDouble() / 100.toDouble()} UZS (${item.feePercent}%)")
         }
-        addView(getString(R.string.status), state)
-        addView(
-            getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(item.amount)) + when (item.currencyCode) {
-                "000" -> " UZS"
-                "840" -> " $"
-                "978" -> " EUR"
-                else -> " RUB"
+        try {
+            if (item.feeAmount.isNotEmpty() && item.feePercent.isNotEmpty()) {
+                val allAmount = item.amount.replace(" ", "").toBigDecimal().divide(BigDecimal(100)) + item.feeAmount.toBigDecimal().divide(BigDecimal(100))
+                addView(getString(R.string.total_amount), Format.formatAmount(allAmount.toString())+ currencyType)
             }
+        } catch (e: Exception) { }
+        addView(getString(R.string.status), state)
+
+        addView(
+            getString(R.string.amount), Format.formatAmount(Format.convertFromTiynDivide(item.amount)) + currencyType
         )
+
 
         if (printChequeResponse.html != null && printChequeResponse.html!!.isNotEmpty()) {
             binding.buttonReceipt.visibility = View.VISIBLE

@@ -12,6 +12,7 @@ import android.graphics.pdf.PdfRenderer
 import android.os.Bundle
 import android.os.Environment
 import android.os.ParcelFileDescriptor
+import android.util.Log
 import android.view.View
 import androidx.core.content.FileProvider
 import uz.fido.network.domain.model.monitoring.TransferChequeModel
@@ -68,6 +69,7 @@ class TransferChequeFragment : BaseSimpleFragment<FragmentTransferPdfChequeBindi
         super.onViewCreated(view, savedInstanceState)
         initSetOnClickListeners()
         drawPdfCheque()
+
     }
 
     private fun drawPdfCheque() {

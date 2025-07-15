@@ -13,6 +13,7 @@ import uz.fido.network.domain.model.my_id.MyIdGetAccessTokenRequest
 import uz.fido.network.domain.model.my_id.MyIdMeResponse
 import uz.fido.network.domain.model.password.ChangePasswordRequest
 import uz.fido.network.domain.model.profile.LogOutRequest
+import uz.fido.network.domain.model.sign_in.ResidencyResponse
 import uz.fido.network.domain.model.sign_in.SignInRequestNew
 import uz.fido.network.domain.model.sign_in.SignInResponse
 import uz.fido.network.domain.model.sign_up.CheckUserSms
@@ -103,5 +104,10 @@ interface UserApiInterface {
         @Header("Authorization") token: String,
         @Body request: ChangeNotifStateRequest
     ): BaseResponse
+
+    @GET("GET_RESIDENCY")
+    suspend fun getUserResidency(
+        @Header("Authorization") token: String
+    ): ResidencyResponse
 
 }

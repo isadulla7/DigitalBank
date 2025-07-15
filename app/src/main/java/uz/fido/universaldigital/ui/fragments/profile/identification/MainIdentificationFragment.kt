@@ -43,22 +43,21 @@ class MainIdentificationFragment :
         }
     }
 
-    private val faceIdActivityResult =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-            if (it.resultCode == Activity.RESULT_OK) {
-                if (requireActivity() is LoginActivity) {
-                    gotoWithSlide(
-                        R.id.verificationInfoUserFragment,
-                        bundleOf("code" to it?.data?.getStringExtra("code"))
-                    )
-                } else {
-                    gotoWithSlide(
-                        R.id.verificationInfoUserFragment2,
-                        bundleOf("code" to it?.data?.getStringExtra("code"))
-                    )
-                }
+    private val faceIdActivityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            if (requireActivity() is LoginActivity) {
+                gotoWithSlide(
+                    R.id.verificationInfoUserFragment,
+                    bundleOf("code" to it?.data?.getStringExtra("code"))
+                )
+            } else {
+                gotoWithSlide(
+                    R.id.verificationInfoUserFragment2,
+                    bundleOf("code" to it?.data?.getStringExtra("code"))
+                )
             }
         }
+    }
 
 
     private fun openFaceIdActivity() {
