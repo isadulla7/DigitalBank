@@ -12,6 +12,7 @@ import androidx.biometric.BiometricPrompt
 import androidx.core.net.toUri
 import androidx.core.os.bundleOf
 import coil.load
+import com.bumptech.glide.Glide
 import com.squareup.picasso.Picasso
 import dagger.hilt.android.AndroidEntryPoint
 import io.paperdb.Paper
@@ -571,11 +572,15 @@ class PassCodeFragment : BaseFragment<FragmentPassCodeBinding, PinCodeViewModel>
 
     private fun loadProfileImage() {
         if (requireContext().getFromSecureStore(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
-            Picasso.get()
-                .load(requireContext().getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
-                .placeholder(R.drawable.ic_profile_image_empty)
-                .error(R.drawable.ic_profile_image_empty)
-                .into(binding.userAvatar)
+            try {
+                Glide.with(requireContext())
+                    .load(getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
+                    .placeholder(R.drawable.ic_profile_image_empty)
+                    .error(R.drawable.ic_profile_image_empty)
+                    .into(binding.userAvatar)
+            } catch (e: Exception) {
+                binding.userAvatar.load(R.drawable.ic_profile_image_empty)
+            }
         } else {
             binding.userAvatar.load(R.drawable.ic_profile_image_empty)
         }

@@ -147,6 +147,7 @@ dependencies {
     implementation(libs.com.google.firebase.firebase.messaging.ktx)
     implementation(libs.com.google.firebase.firebase.firestore.ktx)
     implementation(libs.com.google.firebase.firebase.perf)
+    implementation(libs.com.bumptech.glide)
 
     //retrofit
     implementation(libs.com.squareup.retrofit2.retrofit)
@@ -181,4 +182,5 @@ dependencies {
     implementation(project(ModuleList.CARD_SCANNER))
     implementation(project(ModuleList.NETWORK))
     implementation(project(ModuleList.UTILS))
+
 }

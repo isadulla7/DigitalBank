@@ -9,6 +9,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
 import coil.load
+import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
@@ -96,7 +97,7 @@ class EditProfileFragment : BaseFragment<FragmentEditProfileBinding, MenuProfile
 
     private fun loadProfileImage() {
         if (getFromSecureStore(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
-            Picasso.get()
+            Glide.with(requireContext())
                 .load(getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
                 .placeholder(R.drawable.ic_profile_image_empty)
                 .error(R.drawable.ic_profile_image_empty)
