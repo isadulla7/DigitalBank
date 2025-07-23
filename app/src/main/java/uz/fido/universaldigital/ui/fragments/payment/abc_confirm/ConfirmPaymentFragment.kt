@@ -305,7 +305,12 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
             binding.commission.text = "${formatAmount(percentForAsia.toString())} %"
             totalAmount = amount * percentForAsia / 100 + amount
         } else {
-            binding.commission.text = "${formatAmount(percentForAsia.toString())} %"
+            if (paymentService?.service_id==788){
+                val com=((amount*percentForAsia)/100).toString()
+                binding.commission.text = "${formatAmount(com)} ${if (currency == "000") " ${getString(R.string.sum_text)}" else "$"} (${formatAmount(percentForAsia.toString())} %)"
+            }else{
+                binding.commission.text = "${formatAmount(percentForAsia.toString())} %"
+            }
             totalAmount = amount * percentForAsia / 100 + amount
         }
         binding.total.text = formatAmount(
