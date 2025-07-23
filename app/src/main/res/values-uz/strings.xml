@@ -1094,5 +1094,7 @@
     <string name="rate_with_bank">Ilovaga baho bering</string>
     <string name="input_details">Ma\'lumotlarni kiriting</string>
     <string name="cant_get_passport_detail">Passport ma\'lumotlaringizni olishni iloji bo\'lmadi. Iltimos, bankga murojaat qiling. +998 71 200 11 10</string>
-
+    <string name="all_avtopayments_will_be_disabled">Agar ushbu kartaga avtoto\'lovlar biriktirilgan bo\'lsa ularning hammasi faolsizlantiriladi</string>
+    <string name="attached_card_will_be_nonsecure_mode">Tanlangan kartada xavfsiz rejim yoqilgan, bu toʻlovlar uchun SMS-xabarni tasdiqlashni talab qiladi. Tanlangan karta bilan avtomatik toʻlovni yaratishni davom ettirmoqchi boʻlsangiz, xavfsiz rejim oʻchirib qoʻyiladi.</string>
+    <string name="unable_create_payment">Avto payment yaratib bo\'lmaydi</string>
 </resources>
