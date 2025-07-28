@@ -87,6 +87,7 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
     private var divisionTag: String? = null
     private var regionCode: String? = null
     private var regionSelected = false
+    private var percentIshonch:String?=null
 
     private var paymentAmount = 0.0
     private var minAmount = 0.0
@@ -182,6 +183,10 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
                     }
                 }
             } else {
+                if (paymentParamsArrayList[i].code=="AAB_COMMISSION"){
+                percentIshonch= paymentParamsArrayList[i].def_value
+                }
+
                 if (paymentParamsArrayList[i].regular_exp_mask == "curr_balance") {
                     binding.layoutBalance.visibility = View.VISIBLE
                     if (binding.balance.text.toString().isEmpty() &&
@@ -605,7 +610,6 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
 
     @SuppressLint("SetTextI18n")
     private fun drawMainBlockViews(paymentParams: PaymentParams) {
-        Log.d("TAG", "drawMainBlockViews:${paymentParams.def_value} ")
         val mainBlockBinding = ViewPaymentSecondStepDetailsBinding.inflate(
             LayoutInflater.from(requireContext()),
             requireView().parent as ViewGroup,
@@ -853,7 +857,9 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
                     device_name = getDeviceName(),
                     payment_details = templateKeyValues!!,
                     payment_type = paymentService?.nameIndex,
-                    name = paymentService?.nameIndex
+                    name = paymentService?.nameIndex,
+                    sms_control_limit = paymentService?.max_amount,
+                    percent=percentIshonch
                 )
                 gotoWithSlide(
                     R.id.createNewAutoPaymentFragment,

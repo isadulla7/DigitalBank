@@ -1095,5 +1095,11 @@
     <string name="other_violation_found">Xavfsizlikni ta\'minlash maqsadida ilovani ushbu qurilmada ishlatishning iloji yo\'q</string>
     <string name="input_details">Ma\'lumotlarni kiriting</string>
     <string name="cant_get_passport_detail">Passport ma\'lumotlaringizni olishni iloji bo\'lmadi. Iltimos, bankga murojaat qiling. +998 71 200 11 10</string>
-
+    <string name="all_avtopayments_will_be_disabled">Agar ushbu kartaga avtoto\'lovlar biriktirilgan bo\'lsa ularning hammasi faolsizlantiriladi</string>
+    <string name="attached_card_will_be_nonsecure_mode">Tanlangan kartada xavfsiz rejim yoqilgan, bu toʻlovlar uchun SMS-xabarni tasdiqlashni talab qiladi. Tanlangan karta bilan avtomatik toʻlovni yaratishni davom ettirmoqchi boʻlsangiz, xavfsiz rejim oʻchirib qoʻyiladi.</string>
+    <string name="unable_create_payment">Avto payment yaratib bo\'lmaydi</string>
+    <string name="loan_repayment_ishonch">"To'lov qilish "</string>
+    <string name="total_paid">Выплачено всего</string>
+    <string name="activ_dialog">"Активировать "</string>
+    <string name="ne_active_dialog">Деактивировать</string>
 </resources>

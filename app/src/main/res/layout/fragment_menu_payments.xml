@@ -116,7 +116,7 @@
                             android:ellipsize="end"
                             android:gravity="center"
                             android:maxLines="2"
-                            android:text="@string/loan_repayment"
+                            android:text="@string/loan_repayment_ishonch"
                             android:textColor="@color/brandBlueColor"
                             android:textSize="14dp" />
 

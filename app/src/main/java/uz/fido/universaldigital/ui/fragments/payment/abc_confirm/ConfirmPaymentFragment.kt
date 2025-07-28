@@ -201,7 +201,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
             val valueView = drawParamValueView()
 
             when (paymentParams.code) {
-                "FIO" -> {
+                "FIO","FULL_NAME" -> {
                     val fio = paymentParams.def_value
                     val cleanText = fio.replace("(\\p{Ll})(\\p{Lu})".toRegex(), "$1 $2")
                     valueView.text = cleanText
@@ -305,7 +305,12 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
             binding.commission.text = "${formatAmount(percentForAsia.toString())} %"
             totalAmount = amount * percentForAsia / 100 + amount
         } else {
-            binding.commission.text = "${formatAmount(percentForAsia.toString())} %"
+            if (paymentService?.service_id==788){
+                val com=((amount*percentForAsia)/100).toString()
+                binding.commission.text = "${formatAmount(com)} ${if (currency == "000") " ${getString(R.string.sum_text)}" else "$"} (${formatAmount(percentForAsia.toString())} %)"
+            }else{
+                binding.commission.text = "${formatAmount(percentForAsia.toString())} %"
+            }
             totalAmount = amount * percentForAsia / 100 + amount
         }
         binding.total.text = formatAmount(

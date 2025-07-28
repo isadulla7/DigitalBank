@@ -59,6 +59,7 @@ rxrelay = "2.1.1"
 paperdb = "2.7.2"
 mPAndroidChart = "v3.1.0"
 shimmerLayout = "2.1.0"
+glide = "4.16.0"
 lottie = "5.2.0"
 myId = "2.4.4"
 dataBinding = "8.7.0"
@@ -135,6 +136,7 @@ com-squareup-retrofit2-converter-gson = { group = "com.squareup.retrofit2", name
 com-squareup-okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "loggingInternceptor" }
 com-squareup-okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 com-squareup-picasso-picasso = { group = "com.squareup.picasso", name = "picasso", version.ref = "picasso" }
+com-bumptech-glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 
 androidx-test-espresso-espresso-idling-resource = { group = "androidx.test.espresso", name = "espresso-idling-resource", version.ref = "espressoIdling" }
 androidx-test-espresso-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

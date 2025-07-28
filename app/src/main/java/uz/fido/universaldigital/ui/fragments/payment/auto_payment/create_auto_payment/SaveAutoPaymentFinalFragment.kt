@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import androidx.appcompat.app.AlertDialog
 import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.setFragmentResultListener
@@ -20,6 +21,7 @@ import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
+import uz.fido.universaldigital.ui.utils.home_utils.saveUserCardsSecure
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.format.Format
@@ -28,6 +30,8 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientPhoneNumber
 import uz.fido.utils.utility.user.getClientToken
 import java.math.BigDecimal
+import java.math.BigInteger
+import java.math.RoundingMode
 
 @AndroidEntryPoint
 class SaveAutoPaymentFinalFragment :
@@ -44,6 +48,7 @@ class SaveAutoPaymentFinalFragment :
     private var amount: String = "0.0"
     private var operation: String? = null
     private var senderCard: CardResponse? = null
+    private var userCards: ArrayList<CardResponse> = arrayListOf()
     val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,10 +62,9 @@ class SaveAutoPaymentFinalFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnContinue.isEnabled(true)
+        initCards()
         onClickView()
         addViewItem()
-        initCards()
-
     }
 
     private fun addViewItem() {
@@ -83,6 +87,12 @@ class SaveAutoPaymentFinalFragment :
             getString(R.string.days_of_payment),
             saveAutoPaymentModel?.daysName.toString()
         )
+        if (saveAutoPaymentModel?.percent != null) {
+            val amount = saveAutoPaymentModel?.amount?.toBigDecimalOrNull()?.divide(BigDecimal(100)) ?: BigDecimal(BigInteger.ZERO)
+            val percent = saveAutoPaymentModel?.percent?.toBigDecimalOrNull()?.divide(BigDecimal(100)) ?: BigDecimal(BigInteger.ZERO)
+            val result = (amount * percent) + amount
+            addView(getString(R.string.total_amount), Format.formatAmount(result.toString()) + " UZS")
+        }
         amount = Format.convertFromTiynDivide(saveAutoPaymentModel?.amount!!)
         addView(getString(R.string.amount), Format.formatAmount(amount) + " UZS")
     }
@@ -90,37 +100,42 @@ class SaveAutoPaymentFinalFragment :
     private fun onClickView() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
-            if (operation == "edit") {
-                editAutoPayment()
-            } else {
-                saveAutoPayment()
-            }
-
-         /*   if (senderCard?.safe_mode == "N" && senderCard?.pay_with_sms == "N") {
-
-                if (saveAutoPaymentModel?.sms_control_limit == "-1" || saveAutoPaymentModel?.sms_control_limit.isNullOrEmpty()) {
-                    checkCard()
-                } else {
-                    try {
-                        if ((saveAutoPaymentModel?.sms_control_limit
-                                .toString()
-                                .replace(" ", "")
-                                .toBigDecimalOrNull() ?: BigDecimal.ZERO) >= amount.toBigDecimalOrNull())
-                            checkCard()
-                        else
-                            showSnackbar("summa oshib ketdi")
-                    }catch (e:Exception){
-                        showSnackbar("summa oshib ketdi")
-                    }
-
+            when {
+                senderCard?.pay_with_sms == "Y" -> {
+                    showSnackbar("avto payment yaratib bo'lmaydi")
                 }
 
-            } else showSnackbar("kartada sms habarnoma yoqilgan")*/
+                saveAutoPaymentModel?.sms_control_limit == "-1" -> {
+                    showSnackbar(getString(R.string.warning), getString(R.string.unable_create_payment))
+                }
+
+                senderCard?.safe_mode == "Y" -> {
+                    val builder = AlertDialog.Builder(requireContext())
+                    builder.setTitle(getString(R.string.warning))
+                    builder.setMessage(getString(R.string.attached_card_will_be_nonsecure_mode))
+                    builder.setPositiveButton(getString(R.string.continue_text)) { dialog, _ ->
+                        checkCard()
+                        dialog.dismiss()
+                    }
+                    builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    builder.show()
+                }
+
+                else -> {
+                    checkCard()
+                }
+            }
         }
     }
 
     private fun checkCard() {
-
+        if (operation == "edit") {
+            editAutoPayment()
+        } else {
+            saveAutoPayment()
+        }
     }
 
     private fun editAutoPayment() {
@@ -135,6 +150,14 @@ class SaveAutoPaymentFinalFragment :
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
+                    if (senderCard?.safe_mode == "Y") {
+                        senderCard?.safe_mode = "N"
+                        val index = userCards.indexOfFirst { item -> item.object_id == senderCard?.object_id }
+                        userCards.removeAt(index)
+                        userCards.add(index, senderCard!!)
+                        saveUserCardsSecure(userCards.toList())
+                        menuProductsViewModel.updateCards(userCards.toList())
+                    }
                     gotoWithSlide(
                         R.id.basicSuccessFragment,
                         bundleOf(Const.OPERATION to BasicSuccessFragment.AUTO_PAYMENT_CREATED)
@@ -158,6 +181,14 @@ class SaveAutoPaymentFinalFragment :
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
+                    if (senderCard?.safe_mode == "Y") {
+                        senderCard?.safe_mode = "N"
+                        val index = userCards.indexOfFirst { item -> item.object_id == senderCard?.object_id }
+                        userCards.removeAt(index)
+                        userCards.add(index, senderCard!!)
+                        saveUserCardsSecure(userCards.toList())
+                        menuProductsViewModel.updateCards(userCards.toList())
+                    }
                     gotoWithSlide(
                         R.id.basicSuccessFragment,
                         bundleOf(Const.OPERATION to BasicSuccessFragment.AUTO_PAYMENT_CREATED)
@@ -174,6 +205,7 @@ class SaveAutoPaymentFinalFragment :
 
     private fun initCards() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {
+            userCards = it as ArrayList<CardResponse>
             binding.chooseCardLayout.initCards(
                 it as ArrayList<CardResponse>, "0", CurrencyConst.CURRENCY_CHAR_UZS
             ) { cardResponse ->

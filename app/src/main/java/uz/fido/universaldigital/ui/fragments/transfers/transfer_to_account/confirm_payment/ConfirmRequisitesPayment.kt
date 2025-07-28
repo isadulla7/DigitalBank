@@ -184,7 +184,7 @@ class ConfirmRequisitesPayment :
 
                         Status.SUCCESS -> {
                             val bundle = bundleOf(
-                                Const.OPERATION to "payment",
+                                Const.OPERATION to "payment_req",
                                 SuccessPaymentFragment.CONFIRM_PAYMENT_OPERATION to "requisites",
                                 Const.OPERATION_AMOUNT to Format.formatMoney(amount) + " $currency",
                                 Const.OPERATION_CURRENCY to currency,

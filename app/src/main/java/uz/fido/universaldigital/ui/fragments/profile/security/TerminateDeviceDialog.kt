@@ -28,7 +28,7 @@ class TerminateDeviceDialog(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.tvState.text = if (item.status != "A") getString(R.string.active) else getString(R.string.ne_active)
+        binding.tvState.text = if (item.status != "A") getString(R.string.activ_dialog) else getString(R.string.ne_active_dialog)
         binding.tvDelete.setOnClickListener {
             baseInterface.deviceDelete()
         }

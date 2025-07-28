@@ -43,7 +43,7 @@
         android:foreground="?selectableItemBackground"
         android:gravity="start"
         android:padding="16dp"
-        android:text="@string/activ"
+        android:text="@string/activ_dialog"
         android:textColor="@color/blackColor"
         android:textSize="16dp" />
 

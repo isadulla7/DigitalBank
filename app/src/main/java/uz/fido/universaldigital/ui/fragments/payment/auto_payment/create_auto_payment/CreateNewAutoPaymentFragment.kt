@@ -30,6 +30,7 @@ import uz.fido.utils.format.Format
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientPhoneNumber
+import java.math.BigDecimal
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
@@ -113,6 +114,9 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
     }
 
     private fun buttonCheck() {
+
+        val maxAmount = saveAutoPaymentModel?.sms_control_limit?.toBigDecimalOrNull()?: BigDecimal(0)
+        Log.d("TAG", "buttonCheck:${maxAmount} ")
         when (autoPaymentType) {
             1 -> {
                 val count = daysList.filter { it.isSelected }
@@ -120,7 +124,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                 binding.btnContinue.isEnabled(
                     !binding.editTextName.text.isNullOrEmpty() &&
                             binding.editTextAmount.text.toString().isNotEmpty() &&
-                            amount >= 500 &&
+                            amount >= 500 && maxAmount>=amount.toBigDecimal() &&
                             binding.editTextName.toString().isNotEmpty() &&
                             count.isNotEmpty()
                             && !binding.editTextTimeDay.text.isNullOrEmpty()
@@ -134,7 +138,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                     !binding.editTextName.text.isNullOrEmpty() &&
                             !binding.editTextDayOfPayment.text.isNullOrEmpty() &&
                             amount >= 500
-                            && count.isNotEmpty() && !binding.editTextTime.text.isNullOrEmpty()
+                            && maxAmount>=amount.toBigDecimal() && count.isNotEmpty() && !binding.editTextTime.text.isNullOrEmpty()
                 )
             }
 
@@ -144,7 +148,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                     customDates.isNotEmpty()
                             && !binding.editTextName.text.isNullOrEmpty()
                             && amount >= 500
-                            && !binding.editTextCustom.text.isNullOrEmpty()
+                            && maxAmount>=amount.toBigDecimal() && !binding.editTextCustom.text.isNullOrEmpty()
                 )
             }
         }
@@ -262,6 +266,7 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
         }
         binding.editTextAmount.addTextChangedListener(object : TextWatcher {
             private var isEditing = false
+            private val maxAmount= saveAutoPaymentModel?.sms_control_limit?.toBigDecimalOrNull()?: BigDecimal(0)
 
             override fun afterTextChanged(s: Editable?) {
                 if (isEditing) return
@@ -272,11 +277,12 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
                     binding.editTextAmount.setText(formatted)
                     binding.editTextAmount.setSelection(formatted.length)
                     val amount = digits.toLongOrNull() ?: 0L
-                    if (amount < 500) {
-                        binding.editTextAmount.error = getString(R.string.min_summ)
-                    } else {
-                        binding.editTextAmount.error = null
+                    when{
+                        amount < 500->binding.editTextAmount.error = getString(R.string.min_summ)
+                        amount.toBigDecimal()>=maxAmount ->binding.editTextAmount.error = getString(R.string.max_amount)+maxAmount
+                        else->binding.editTextAmount.error = null
                     }
+
                 } else {
                     binding.editTextAmount.setText("")
                     binding.editTextAmount.error = getString(R.string.min_summ)

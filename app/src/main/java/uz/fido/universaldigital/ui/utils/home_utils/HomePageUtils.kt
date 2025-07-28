@@ -2,8 +2,16 @@ package uz.fido.universaldigital.ui.utils.home_utils
 
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
+import android.net.Uri
+import android.util.Log
 import androidx.core.content.res.ResourcesCompat
 import coil.load
+import com.bumptech.glide.Glide
 import com.google.common.reflect.TypeToken
 import com.google.gson.Gson
 import com.robinhood.ticker.TickerUtils
@@ -26,7 +34,8 @@ import java.util.Locale
 
 fun MenuHomeFragment.loadProfileImage() {
     if (getFromSecureStore(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
-        Picasso.get()
+
+        Glide.with(requireContext())
             .load(getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
             .placeholder(R.drawable.ic_profile_image_empty)
             .error(R.drawable.ic_profile_image_empty)
@@ -36,10 +45,30 @@ fun MenuHomeFragment.loadProfileImage() {
     }
 }
 
+fun rotateImageIfRequired(context: Context, imageUri: Uri): Bitmap {
+    val inputStream = context.contentResolver.openInputStream(imageUri)
+    val exif = ExifInterface(inputStream!!)
+    val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+
+    val bitmap = BitmapFactory.decodeStream(context.contentResolver.openInputStream(imageUri))
+
+    return when (orientation) {
+        ExifInterface.ORIENTATION_ROTATE_90 -> rotateImage(bitmap, 90f)
+        ExifInterface.ORIENTATION_ROTATE_180 -> rotateImage(bitmap, 180f)
+        ExifInterface.ORIENTATION_ROTATE_270 -> rotateImage(bitmap, 270f)
+        else -> bitmap
+    }
+}
+fun rotateImage(source: Bitmap, angle: Float): Bitmap {
+    val matrix = Matrix()
+    matrix.postRotate(angle)
+    return Bitmap.createBitmap(source, 0, 0, source.width, source.height, matrix, true)
+}
+
 
 fun MenuNewHomeFragment.loadProfileImage() {
     if (getFromSecureStore(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
-        Picasso.get()
+        Glide.with(requireContext())
             .load(getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
             .placeholder(R.drawable.ic_profile_image_empty)
             .error(R.drawable.ic_profile_image_empty)

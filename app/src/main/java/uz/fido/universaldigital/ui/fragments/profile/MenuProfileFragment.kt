@@ -5,6 +5,9 @@ import android.os.Bundle
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import coil.load
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
+import com.bumptech.glide.request.RequestOptions
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
@@ -96,10 +99,11 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
                 }.show(childFragmentManager, "")
             }
             settings.setOnClickListener {
-                val navController=  requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.findNavController()
+                val navController = requireActivity().supportFragmentManager.findFragmentById(R.id.nav_host_fragment)?.findNavController()
                 navController?.navigate(R.id.settingsFragment)
 
-                /*gotoWithSlide(R.id.settingsFragment)*/ }
+                /*gotoWithSlide(R.id.settingsFragment)*/
+            }
             aboutBank.setOnClickListener { gotoWithSlide(R.id.aboutBankFragment) }
             logOut.setOnClickListener { showLogOutDialog() }
             profile.setOnClickListener { gotoWithSlide(R.id.myDetailsFragment) }
@@ -110,11 +114,21 @@ class MenuProfileFragment : BaseFragment<FragmentMenuProfileBinding, MenuProfile
 
     private fun loadProfileImage() {
         if (getFromSecureStore(Const.PAPER_USER_PHOTO_PATH).isNotEmpty()) {
-            Picasso.get()
-                .load(getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
-                .placeholder(R.drawable.ic_profile_image_empty)
-                .error(R.drawable.ic_profile_image_empty)
-                .into(binding.profileImage)
+            try {
+                Glide.with(requireContext())
+                    .load(getFromSecureStore(Const.PAPER_USER_PHOTO_PATH))
+                    .apply(
+                        RequestOptions()
+                            .placeholder(R.drawable.ic_profile_image_empty)
+                            .error(R.drawable.ic_profile_image_empty)
+                            .dontTransform()
+                            .format(DecodeFormat.PREFER_ARGB_8888)
+                    )
+                    .into(binding.profileImage)
+            } catch (e: Exception) {
+                binding.profileImage.load(R.drawable.ic_profile_image_empty)
+            }
+
         } else {
             binding.profileImage.load(R.drawable.ic_profile_image_empty)
         }
