@@ -512,7 +512,7 @@
     <string name="funds_flow">Движение средств</string>
     <string name="card">Карты</string>
     <string name="status">Статус</string>
-    <string name="activ">Актив</string>
+    <string name="activ">Активное</string>
     <string name="no_activ">Не активен</string>
     <string name="type_of_transaction">Тип операции</string>
     <string name="type_of_transaction_text">Выберите тип операции</string>
@@ -687,8 +687,8 @@
     <string name="save">Сохранить</string>
     <string name="auto_payment_no">Автоплатежей пока нет</string>
     <string name="auto_payment_no_title">Создайте автоплатеж для оплачивания по установленному вами времени</string>
-    <string name="active">Активный</string>
-    <string name="ne_active">Деактивировать</string>
+    <string name="active">Активировать</string>
+    <string name="ne_active">Деактивированное</string>
     <string name="daily">По дням</string>
     <string name="monthly_2">Месячный</string>
     <string name="wallet_settings">Настройка кошелька</string>
@@ -1101,4 +1101,7 @@
     <string name="attached_card_will_be_nonsecure_mode">Для выбранной карты включен безопасный режим, требующий смс подтверждение при платежах. Если хотите продолжить создание автоплатежа с выбранной картой, безопасный режим будет выключен.</string>
     <string name="unable_create_payment">Невозможно создать автоплатеж</string>
     <string name="loan_repayment_ishonch">"Оплата "</string>
+    <string name="total_paid">Выплачено всего</string>
+    <string name="activ_dialog">"Активировать"</string>
+    <string name="ne_active_dialog">Деактивировать</string>
 </resources>

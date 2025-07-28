@@ -30,6 +30,8 @@ import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientPhoneNumber
 import uz.fido.utils.utility.user.getClientToken
 import java.math.BigDecimal
+import java.math.BigInteger
+import java.math.RoundingMode
 
 @AndroidEntryPoint
 class SaveAutoPaymentFinalFragment :
@@ -46,7 +48,7 @@ class SaveAutoPaymentFinalFragment :
     private var amount: String = "0.0"
     private var operation: String? = null
     private var senderCard: CardResponse? = null
-    private  var userCards:ArrayList<CardResponse> = arrayListOf()
+    private var userCards: ArrayList<CardResponse> = arrayListOf()
     val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -85,6 +87,12 @@ class SaveAutoPaymentFinalFragment :
             getString(R.string.days_of_payment),
             saveAutoPaymentModel?.daysName.toString()
         )
+        if (saveAutoPaymentModel?.percent != null) {
+            val amount = saveAutoPaymentModel?.amount?.toBigDecimalOrNull()?.divide(BigDecimal(100)) ?: BigDecimal(BigInteger.ZERO)
+            val percent = saveAutoPaymentModel?.percent?.toBigDecimalOrNull()?.divide(BigDecimal(100)) ?: BigDecimal(BigInteger.ZERO)
+            val result = (amount * percent) + amount
+            addView(getString(R.string.total_amount), Format.formatAmount(result.toString()) + " UZS")
+        }
         amount = Format.convertFromTiynDivide(saveAutoPaymentModel?.amount!!)
         addView(getString(R.string.amount), Format.formatAmount(amount) + " UZS")
     }
@@ -92,14 +100,16 @@ class SaveAutoPaymentFinalFragment :
     private fun onClickView() {
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
-            when{
-                senderCard?.pay_with_sms == "Y"->{
+            when {
+                senderCard?.pay_with_sms == "Y" -> {
                     showSnackbar("avto payment yaratib bo'lmaydi")
                 }
-                saveAutoPaymentModel?.sms_control_limit=="-1"->{
-                    showSnackbar(getString(R.string.warning),getString(R.string.unable_create_payment))
+
+                saveAutoPaymentModel?.sms_control_limit == "-1" -> {
+                    showSnackbar(getString(R.string.warning), getString(R.string.unable_create_payment))
                 }
-                senderCard?.safe_mode == "Y"->{
+
+                senderCard?.safe_mode == "Y" -> {
                     val builder = AlertDialog.Builder(requireContext())
                     builder.setTitle(getString(R.string.warning))
                     builder.setMessage(getString(R.string.attached_card_will_be_nonsecure_mode))
@@ -112,7 +122,8 @@ class SaveAutoPaymentFinalFragment :
                     }
                     builder.show()
                 }
-                else->{
+
+                else -> {
                     checkCard()
                 }
             }
@@ -139,11 +150,11 @@ class SaveAutoPaymentFinalFragment :
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
-                    if ( senderCard?.safe_mode=="Y"){
-                        senderCard?.safe_mode="N"
-                        val index = userCards.indexOfFirst {item-> item.object_id == senderCard?.object_id }
+                    if (senderCard?.safe_mode == "Y") {
+                        senderCard?.safe_mode = "N"
+                        val index = userCards.indexOfFirst { item -> item.object_id == senderCard?.object_id }
                         userCards.removeAt(index)
-                        userCards.add(index,senderCard!!)
+                        userCards.add(index, senderCard!!)
                         saveUserCardsSecure(userCards.toList())
                         menuProductsViewModel.updateCards(userCards.toList())
                     }
@@ -170,11 +181,11 @@ class SaveAutoPaymentFinalFragment :
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
-                    if ( senderCard?.safe_mode=="Y"){
-                        senderCard?.safe_mode="N"
-                        val index = userCards.indexOfFirst {item-> item.object_id == senderCard?.object_id }
+                    if (senderCard?.safe_mode == "Y") {
+                        senderCard?.safe_mode = "N"
+                        val index = userCards.indexOfFirst { item -> item.object_id == senderCard?.object_id }
                         userCards.removeAt(index)
-                        userCards.add(index,senderCard!!)
+                        userCards.add(index, senderCard!!)
                         saveUserCardsSecure(userCards.toList())
                         menuProductsViewModel.updateCards(userCards.toList())
                     }

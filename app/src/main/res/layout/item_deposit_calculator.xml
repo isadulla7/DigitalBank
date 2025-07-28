@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="56dp"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 
@@ -17,27 +19,149 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="16dp"
-        />
-    <uz.fido.utils.view.custom_text_view.TextViewRegular
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/time"
-        android:text="03.07.2023"
-        android:textSize="14dp"
-        android:textColor="@color/hintColor"
-        app:layout_constraintStart_toEndOf="@+id/tv_count"
-        android:layout_marginStart="16dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        android:layout_marginStart="16dp" />
 
-    <uz.fido.utils.view.custom_text_view.TextViewMedium
-        android:layout_width="wrap_content"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="258 122.55 сум"
-        android:id="@+id/amount"
-        android:layout_marginEnd="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="16dp"
+        app:layout_constraintStart_toEndOf="@+id/tv_count">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/time"
+                android:layout_weight="1"
+                android:text="03.07.2023"
+                android:textSize="14dp"
+                android:gravity="start"
+                android:textColor="@color/hintColor"
+                app:layout_constraintStart_toEndOf="@+id/tv_count"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="258 122.55 сум"
+                android:id="@+id/amount"
+                android:gravity="end"
+                android:layout_weight="1"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_marginTop="8dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/principal_amount"
+                android:textSize="14dp"
+                android:gravity="start"
+                android:textColor="@color/hintColor"
+                app:layout_constraintStart_toEndOf="@+id/tv_count"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="258 122.55 сум"
+                android:id="@+id/principal_amount"
+                android:gravity="end"
+                android:layout_weight="1"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/precent_loan"
+                android:textSize="14dp"
+                android:gravity="start"
+                android:textColor="@color/hintColor"
+                app:layout_constraintStart_toEndOf="@+id/tv_count"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="258 122.55 сум"
+                android:id="@+id/precent_loan"
+                android:gravity="end"
+                android:layout_weight="1"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/total_paid"
+                android:textSize="14dp"
+                android:gravity="start"
+                android:textColor="@color/hintColor"
+                app:layout_constraintStart_toEndOf="@+id/tv_count"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="258 122.55 сум"
+                android:id="@+id/total_paind"
+                android:gravity="end"
+                android:layout_weight="1"
+                android:layout_marginEnd="16dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

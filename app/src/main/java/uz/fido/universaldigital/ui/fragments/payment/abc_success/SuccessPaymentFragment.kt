@@ -56,6 +56,7 @@ class SuccessPaymentFragment : BaseFragment<FragmentSuccessPaymentBinding, Succe
         const val CREDIT_PAYMENT = "credit_payment"
         const val CONVERSION = "conversion"
         const val PAYMENT = "payment"
+        const val PAYMENT_REQ = "payment_req"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,7 +84,7 @@ class SuccessPaymentFragment : BaseFragment<FragmentSuccessPaymentBinding, Succe
                 binding.repeat.visibility = View.GONE
             }
 
-            PAYMENT -> {
+            PAYMENT , PAYMENT_REQ-> {
                 arguments?.let {
                     paymentService = Gson().fromJson(
                         it.getString(Const.PAYMENT_SERVICE),
@@ -120,6 +121,9 @@ class SuccessPaymentFragment : BaseFragment<FragmentSuccessPaymentBinding, Succe
         }
         binding.repeat.setOnClickListener {
             try {
+                if (operation== PAYMENT_REQ){
+                    findNavController().popBackStack(R.id.transferToUzsAccountFragment,false)
+                } else
                 findNavController().popBackStack( R.id.paymentFragment,false)
             }catch (e:Exception){
                 toast(getString(R.string.error))

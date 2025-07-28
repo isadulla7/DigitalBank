@@ -16,6 +16,9 @@ class DepositCalculateAdapter : ListAdapter<DepositCalculator,DepositCalculateAd
 
         fun bind(item: DepositCalculator) {
             count++
+            binding.principalAmount.text=Format.formatAmount(item.amount) +" сум"
+            binding.precentLoan.text=Format.formatAmount(item.receiveSum)+" сум"
+            binding.totalPaind.text=Format.formatAmount((item.saldo.toBigDecimal()-item.amount.toBigDecimal()).toString())+" сум"
             binding.tvCount.text=item.count.toString()
             binding.time.text = item.date
             binding.amount.text =" ${Format.formatAmount(item.saldo)} сум"

@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.services.deposit.client_deposit
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
@@ -42,8 +43,8 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
     private lateinit var chosenCard: CardResponse
     private lateinit var deposit: ClientDeposit
     private var operation = ""
-    private var minAmount: BigDecimal = BigDecimal(0.0)
-    private var maxAmount: BigDecimal = BigDecimal(0.0)
+    private var minAmount: BigDecimal = BigDecimal(100000.0)
+    private var maxAmount: BigDecimal = BigDecimal(10000000.0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -275,7 +276,8 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
         checkItem(binding.etAmount.text.toString().replace(" ", ""))
         binding.etAmount.addTextChangedListener {
             val amount = it?.toString()?.replace(" ", "") ?: "0"
-            val cardBalance = if (this::chosenCard.isInitialized) chosenCard.balance.toBigDecimal() / BigDecimal(100) else BigDecimal.ZERO
+            val cardBalance = if (this::chosenCard.isInitialized) chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) else BigDecimal.ZERO
+
             when {
                 !(this::chosenCard.isInitialized) -> {
                     binding.amountCheck.text = ""
@@ -286,7 +288,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                 }
 
                 minAmount == BigDecimal(0.0) && maxAmount == BigDecimal(0.0) -> {
-                    if (cardBalance > amount.toBigDecimal()) {
+                    if (cardBalance >= amount.toBigDecimal()) {
                         binding.amountCheck.text = getString(R.string.min_summa) + " 1 " + deposit.currencyChar
                         binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
                     } else {
@@ -296,7 +298,7 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
                 }
 
                 minAmount > BigDecimal(0.0) && maxAmount == BigDecimal(0.0) -> {
-                    if (cardBalance > amount.toBigDecimal()) {
+                    if (cardBalance >= amount.toBigDecimal()) {
                         binding.amountCheck.text = getString(R.string.min_summa) + " ${Format.formatAmount(minAmount.toString())} " + deposit.currencyChar
                         binding.amountCheck.setTextColor(ContextCompat.getColor(requireContext(), R.color.mainTextColor))
                     } else {
@@ -350,21 +352,21 @@ class DepositFillingFragment : BaseFragment<FragmentDepositFillingBinding, Clien
 
             when {
                 minAmount == BigDecimal(0.0) && maxAmount == BigDecimal(0.0) -> {
-                    binding.btnContinue.isEnabled(amount.toBigDecimal() >= BigDecimal(1) && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) > amount.toBigDecimal())
+                    binding.btnContinue.isEnabled(amount.toBigDecimal() >= BigDecimal(1) && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) >= amount.toBigDecimal())
                 }
 
                 minAmount > BigDecimal(0.0) && maxAmount == BigDecimal(0.0) -> {
-                    binding.btnContinue.isEnabled(amount.toBigDecimal() >= minAmount && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) > amount.toBigDecimal())
+                    binding.btnContinue.isEnabled(amount.toBigDecimal() >= minAmount && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) >= amount.toBigDecimal())
                 }
 
                 minAmount == BigDecimal(0.0) && maxAmount > BigDecimal(0.0) -> {
                     binding.btnContinue.isEnabled(
-                        amount.toBigDecimal() >= BigDecimal(1) && amount.toBigDecimal() <= maxAmount && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) > amount.toBigDecimal()
+                        amount.toBigDecimal() >= BigDecimal(1) && amount.toBigDecimal() <= maxAmount && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) >= amount.toBigDecimal()
                     )
                 }
 
                 minAmount > BigDecimal(0.0) && maxAmount > BigDecimal(0.0) -> {
-                    binding.btnContinue.isEnabled(amount.toBigDecimal() in minAmount..maxAmount && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) > amount.toBigDecimal())
+                    binding.btnContinue.isEnabled(amount.toBigDecimal() in minAmount..maxAmount && chosenCard.balance.toBigDecimal().divide(BigDecimal(100)) >= amount.toBigDecimal())
                 }
 
             }
