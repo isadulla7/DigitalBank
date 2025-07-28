@@ -201,7 +201,7 @@ class ConfirmPaymentFragment : BaseSimpleFragment<FragmentConfirmPaymentBinding>
             val valueView = drawParamValueView()
 
             when (paymentParams.code) {
-                "FIO" -> {
+                "FIO","FULL_NAME" -> {
                     val fio = paymentParams.def_value
                     val cleanText = fio.replace("(\\p{Ll})(\\p{Lu})".toRegex(), "$1 $2")
                     valueView.text = cleanText

@@ -31,7 +31,7 @@
         android:ellipsize="end"
         android:gravity="start"
         android:maxLines="3"
-        android:text="@string/are_you_sure_block_card"
+        android:text="@string/all_avtopayments_will_be_disabled"
         android:textColor="@color/brandBlueColor_60"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"

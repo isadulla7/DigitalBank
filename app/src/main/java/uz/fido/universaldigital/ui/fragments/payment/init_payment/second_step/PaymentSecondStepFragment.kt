@@ -853,7 +853,8 @@ class PaymentSecondStepFragment : BaseSimpleFragment<FragmentPaymentSecondStepBi
                     device_name = getDeviceName(),
                     payment_details = templateKeyValues!!,
                     payment_type = paymentService?.nameIndex,
-                    name = paymentService?.nameIndex
+                    name = paymentService?.nameIndex,
+                    sms_control_limit = paymentService?.max_amount
                 )
                 gotoWithSlide(
                     R.id.createNewAutoPaymentFragment,

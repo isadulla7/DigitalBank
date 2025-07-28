@@ -196,7 +196,9 @@ class LocalMonitoringDetailsDialog(
             getString(uz.fido.universaldigital.R.string.waiting)
         }
         if (localMonitoring.feeAmount.isNotEmpty() && localMonitoring.feePercent.isNotEmpty()) {
+            val totalAmount=localMonitoring.feeAmount.toDouble() / 100.toDouble()+(localMonitoring.amount.toDouble()/100)
             addView(getString(uz.fido.universaldigital.R.string.commission), "${localMonitoring.feeAmount.toDouble() / 100.toDouble()} UZS (${localMonitoring.feePercent}%)")
+            addView(getString(uz.fido.universaldigital.R.string.total_amount),"${Format.formatAmount(totalAmount.toString())} ${Format.currencyCode(localMonitoring.currencyCode)} ")
         }
         addView(getString(uz.fido.universaldigital.R.string.status), state)
     }

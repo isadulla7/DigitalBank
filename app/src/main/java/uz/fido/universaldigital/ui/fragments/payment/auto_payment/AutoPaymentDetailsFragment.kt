@@ -2,6 +2,7 @@ package uz.fido.universaldigital.ui.fragments.payment.auto_payment
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -9,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.network.data.utility.Status
+import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.subscriptions.AutoPayment
 import uz.fido.network.domain.model.subscriptions.ChangeAutoPaymentStateRequest
 import uz.fido.universaldigital.R
@@ -16,6 +18,7 @@ import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentAutoPaymentDetailBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.serializable
+import uz.fido.universaldigital.ui.utils.home_utils.saveUserCardsSecure
 import uz.fido.utils.const.CardConst.STATE_ACTIVE
 import uz.fido.utils.const.CardConst.STATE_PASSIVE
 import uz.fido.utils.format.Format
@@ -30,6 +33,8 @@ class AutoPaymentDetailsFragment : BaseFragment<FragmentAutoPaymentDetailBinding
     private var days = ArrayList<String>()
     private var months = ArrayList<String>()
     private val menuProductsViewModel: MenuProductsViewModel by activityViewModels()
+    private  var card:CardResponse?=null
+    private  var userCards:ArrayList<CardResponse> = arrayListOf()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -128,7 +133,8 @@ class AutoPaymentDetailsFragment : BaseFragment<FragmentAutoPaymentDetailBinding
 
     private fun getCardList() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner){ cardList ->
-            val card= cardList.firstOrNull { it.object_id == autoPayment?.object_id }
+            userCards=cardList as ArrayList<CardResponse>
+            card= cardList.firstOrNull { it.object_id == autoPayment?.object_id }
             if ( card?.safe_mode=="Y"){
                 val builder = AlertDialog.Builder(requireContext())
                 builder.setTitle(R.string.warning)
@@ -155,6 +161,14 @@ class AutoPaymentDetailsFragment : BaseFragment<FragmentAutoPaymentDetailBinding
             hideProgress()
             when (it.status) {
                 Status.SUCCESS -> {
+                    if (binding.statusValue.isChecked && card?.safe_mode=="Y"){
+                        card?.safe_mode="N"
+                        val index = userCards.indexOfFirst {item-> item.object_id == card?.object_id }
+                        userCards.removeAt(index)
+                        userCards.add(index,card!!)
+                        saveUserCardsSecure(userCards.toList())
+                        menuProductsViewModel.updateCards(userCards.toList())
+                    }
                     Toast.makeText(requireContext(), getString(R.string.successfully), Toast.LENGTH_SHORT).show()
                 }
 

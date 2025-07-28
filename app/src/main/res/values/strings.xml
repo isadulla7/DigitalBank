@@ -1095,9 +1095,10 @@
     <string name="charged_from_wallet">Списано с Кашелек</string>
     <string name="rate_with_bank">Оцените приложение</string>
     <string name="all_avtopayments_will_be_disabled">Если к этой карте привязаны автоплатежи, все они будут отключены</string>
-    <string name="attached_card_will_be_nonsecure_mode">Выбранная карта находится в безопасном режиме, который требует подтверждения по SMS для платежей. Если вы продолжите создавать автоплатеж с выбранной картой, безопасный режим будет отключен.</string>
+    <string name="attached_card_will_be_nonsecure_mode">Для выбранной карты включен безопасный режим, требующий смс подтверждение при платежах. Если хотите продолжить создание автоплатежа с выбранной картой, безопасный режим будет выключен.</string>
     <string name="unable_create_payment">Невозможно создать автоплатеж</string>
     <string name="input_details">Ma\'lumotlarni kiriting</string>
     <string name="cant_get_passport_detail">We were unable to retrieve your passport details. Please contact your bank. +998 71 200 11 10</string>
+    <string name="loan_repayment_ishonch">"Оплата"</string>
 
 </resources>

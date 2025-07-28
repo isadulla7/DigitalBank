@@ -21,6 +21,7 @@ import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
 import uz.fido.universaldigital.ui.utils.extensions.serializable
 import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
+import uz.fido.universaldigital.ui.utils.home_utils.saveUserCardsSecure
 import uz.fido.utils.const.Const
 import uz.fido.utils.const.CurrencyConst
 import uz.fido.utils.format.Format
@@ -45,6 +46,7 @@ class SaveAutoPaymentFinalFragment :
     private var amount: String = "0.0"
     private var operation: String? = null
     private var senderCard: CardResponse? = null
+    private  var userCards:ArrayList<CardResponse> = arrayListOf()
     val menuProductsViewModel by activityViewModels<MenuProductsViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,10 +60,9 @@ class SaveAutoPaymentFinalFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnContinue.isEnabled(true)
+        initCards()
         onClickView()
         addViewItem()
-        initCards()
-
     }
 
     private fun addViewItem() {
@@ -89,7 +90,6 @@ class SaveAutoPaymentFinalFragment :
     }
 
     private fun onClickView() {
-        Log.d("TAG", "onClickView:${senderCard?.safe_mode} ")
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener {
             when{
@@ -139,6 +139,14 @@ class SaveAutoPaymentFinalFragment :
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
+                    if ( senderCard?.safe_mode=="Y"){
+                        senderCard?.safe_mode="N"
+                        val index = userCards.indexOfFirst {item-> item.object_id == senderCard?.object_id }
+                        userCards.removeAt(index)
+                        userCards.add(index,senderCard!!)
+                        saveUserCardsSecure(userCards.toList())
+                        menuProductsViewModel.updateCards(userCards.toList())
+                    }
                     gotoWithSlide(
                         R.id.basicSuccessFragment,
                         bundleOf(Const.OPERATION to BasicSuccessFragment.AUTO_PAYMENT_CREATED)
@@ -162,6 +170,14 @@ class SaveAutoPaymentFinalFragment :
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
+                    if ( senderCard?.safe_mode=="Y"){
+                        senderCard?.safe_mode="N"
+                        val index = userCards.indexOfFirst {item-> item.object_id == senderCard?.object_id }
+                        userCards.removeAt(index)
+                        userCards.add(index,senderCard!!)
+                        saveUserCardsSecure(userCards.toList())
+                        menuProductsViewModel.updateCards(userCards.toList())
+                    }
                     gotoWithSlide(
                         R.id.basicSuccessFragment,
                         bundleOf(Const.OPERATION to BasicSuccessFragment.AUTO_PAYMENT_CREATED)
@@ -178,6 +194,7 @@ class SaveAutoPaymentFinalFragment :
 
     private fun initCards() {
         menuProductsViewModel.cards.observe(viewLifecycleOwner) {
+            userCards = it as ArrayList<CardResponse>
             binding.chooseCardLayout.initCards(
                 it as ArrayList<CardResponse>, "0", CurrencyConst.CURRENCY_CHAR_UZS
             ) { cardResponse ->

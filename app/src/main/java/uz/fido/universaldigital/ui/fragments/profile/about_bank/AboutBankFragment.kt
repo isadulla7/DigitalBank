@@ -28,7 +28,7 @@ class AboutBankFragment : BaseFragment<FragmentAboutBankBinding, MenuProfileView
         binding.connectWithBank.setOnClickListener { gotoWithSlide(R.id.connectWithBankFragment) }
         binding.publicOffer.setOnClickListener { gotoWithSlide(R.id.publicOfferFragment) }
         binding.atmAndFilials.setOnClickListener { goto(R.id.mainBranchesFragment) }
-        binding.rateWithBank.setOnClickListener { openPlaymarket() }
+        binding.rateWithBank.setOnClickListener { openPlayMarket() }
         binding.appShare.setOnClickListener { shareAppLink() }
         binding.telegram.setOnClickListener { telegram() }
         binding.instagram.setOnClickListener { instagram() }
@@ -93,7 +93,7 @@ class AboutBankFragment : BaseFragment<FragmentAboutBankBinding, MenuProfileView
         requireContext().startActivity(Intent.createChooser(shareIntent, "Ulashish uchun tanlang"))
     }
 
-    private fun openPlaymarket() {
+    private fun openPlayMarket() {
         val appPackageName = requireContext().packageName
         try {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))

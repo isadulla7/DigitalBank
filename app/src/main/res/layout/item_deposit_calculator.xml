@@ -10,7 +10,7 @@
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:text="1"
-        android:textSize="16dp"
+        android:textSize="16sp"
         android:textColor="@color/brandRedColor_60"
         android:gravity="center"
         android:background="@drawable/deposit_calculator_color"

@@ -30,6 +30,7 @@ class PaymentListAdapter(
     inner class ViewHolder(private var binding: ItemPaymentListBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun onBind(item: PaymentService) {
+
             binding.apply {
                 itemName.setHtmlText(item.nameIndex.toString())
                 Picasso.get()

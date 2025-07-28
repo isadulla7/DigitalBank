@@ -114,7 +114,9 @@ class CreateNewAutoPaymentFragment : BaseFragment<FragmentCreateNewAutoPaymentBi
     }
 
     private fun buttonCheck() {
+
         val maxAmount = saveAutoPaymentModel?.sms_control_limit?.toBigDecimalOrNull()?: BigDecimal(0)
+        Log.d("TAG", "buttonCheck:${maxAmount} ")
         when (autoPaymentType) {
             1 -> {
                 val count = daysList.filter { it.isSelected }

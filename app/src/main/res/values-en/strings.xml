@@ -1096,6 +1096,7 @@
     <string name="cant_get_passport_detail">Нам не удалось получить данные вашего паспорта. Пожалуйста, свяжитесь с банком. +998 71 200 11 10</string>
 
     <string name="all_avtopayments_will_be_disabled">If autopayments are attached to this card, all of them will be disabled</string>
-    <string name="attached_card_will_be_nonsecure_mode">The selected card is in secure mode, which requires SMS confirmation for payments. If you continue creating an autopayment with the selected card, secure mode will be disabled.</string>
+    <string name="attached_card_will_be_nonsecure_mode">The selected card has a secure mode enabled, which requires SMS confirmation for payments. If you want to continue creating an auto payment with the selected card, safe mode will be disabled</string>
     <string name="unable_create_payment">Unable to create avto payment</string>
+    <string name="loan_repayment_ishonch">"Payment "</string>
 </resources>
