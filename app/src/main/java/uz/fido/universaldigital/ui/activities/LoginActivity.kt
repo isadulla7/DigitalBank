@@ -1,8 +1,6 @@
 package uz.fido.universaldigital.ui.activities
 
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.core.os.bundleOf
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
@@ -16,14 +14,9 @@ import uz.fido.universaldigital.databinding.ActivityLoginBinding
 import uz.fido.universaldigital.ui.activities.app_icon_changer.AppIcons
 import uz.fido.universaldigital.ui.activities.app_icon_changer.AppIconsViewModel
 import uz.fido.universaldigital.ui.activities.app_icon_changer.changeAppIcon
-import uz.fido.universaldigital.ui.activities.security.LockSetActivity
-import uz.fido.universaldigital.ui.activities.security.RootedDeviceActivity
 import uz.fido.universaldigital.ui.fragments.login.pin.PassCodeFragment
 import uz.fido.universaldigital.ui.utils.extensions.getLoginStartDestination
 import uz.fido.utils.const.Const
-import uz.fido.utils.security.SecurityCheck
-import uz.fido.utils.security.SecurityCheck.isPhoneRooted
-import uz.fido.utils.security.SecurityCheck.isRunningOnEmulator
 import uz.fido.utils.security.getFromSecureStore
 import uz.fido.utils.security.saveToSecureStore
 
@@ -39,7 +32,7 @@ class LoginActivity : BaseActivity() {
         installSplashScreen()
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        checkForDeviceLock()
+        checkForDeepLink()
         listenAppIconChanges()
         Talsec.blockScreenCapture(this, true)
     }
@@ -51,19 +44,6 @@ class LoginActivity : BaseActivity() {
                 saveToSecureStore(Const.CURRENT_APP_ICON, it)
                 changeAppIcon()
             }
-        }
-    }
-
-    private fun checkForDeviceLock() {
-        this.isRunningOnEmulator()
-        if (SecurityCheck.isFromEmulator()) {
-            openLockActivity()
-            return
-        } else if (this.isPhoneRooted()) {
-            openRootedDeviceWarning()
-            return
-        } else {
-            checkForDeepLink()
         }
     }
 
@@ -103,18 +83,6 @@ class LoginActivity : BaseActivity() {
         val navGraph = navController.navInflater.inflate(R.navigation.navigation_login)
         navGraph.setStartDestination(getLoginStartDestination())
         navController.setGraph(navGraph, bundle)
-    }
-
-    private fun openLockActivity() {
-        val intent = Intent(this, LockSetActivity::class.java)
-        startActivity(intent)
-        finish()
-    }
-
-    private fun openRootedDeviceWarning() {
-        val intent = Intent(this, RootedDeviceActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 
 }

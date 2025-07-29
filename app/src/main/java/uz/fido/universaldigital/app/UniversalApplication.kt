@@ -52,6 +52,8 @@ class UniversalApplication : Application(), ThreatListener.ThreatDetected {
         AppCompatDelegate.setDefaultNightMode(Paper.book().read(Const.APP_THEME, AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM) ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
     }
 
+    //Talsec-Rasp methods
+
     override fun onRootDetected() {
         openSecurityViolationActivity(SecurityViolationActivity.ROOT_DETECTED)
     }
@@ -76,12 +78,8 @@ class UniversalApplication : Application(), ThreatListener.ThreatDetected {
         openSecurityViolationActivity(SecurityViolationActivity.HOOK_DETECTED)
     }
 
-    override fun onDeviceBindingDetected() {
-        println("Device Binding detected")
-    }
-
     override fun onObfuscationIssuesDetected() {
-        println("Obfuscation Issues detected")
+        openSecurityViolationActivity(SecurityViolationActivity.OTHER_ISSUE)
     }
 
     override fun onMalwareDetected(p0: MutableList<SuspiciousAppInfo>?) {
@@ -96,14 +94,16 @@ class UniversalApplication : Application(), ThreatListener.ThreatDetected {
         println("Screen recording detected")
     }
 
+    override fun onDeviceBindingDetected() {
+        println("Device Binding detected")
+    }
+
     private val deviceStateListener = object : ThreatListener.DeviceState {
         override fun onUnlockedDeviceDetected() {
-            // Set your reaction
             println("onUnlockedDeviceDetected")
         }
 
         override fun onHardwareBackedKeystoreNotAvailableDetected() {
-            // Set your reaction
             println("onHardwareBackedKeystoreNotAvailableDetected")
         }
 
@@ -121,23 +121,25 @@ class UniversalApplication : Application(), ThreatListener.ThreatDetected {
     }
 
     private fun openSecurityViolationActivity(violationType: String) {
-//        val intent = Intent(this, SecurityViolationActivity::class.java).apply {
-//            val bundle = bundleOf(SecurityViolationActivity.VIOLATION_TYPE to violationType)
-//            putExtras(bundle)
-//            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//        }
-//        startActivity(intent)
+        if (!isLauncherSecurityActivity) {
+            val intent = Intent(this, SecurityViolationActivity::class.java).apply {
+                val bundle = bundleOf(SecurityViolationActivity.VIOLATION_TYPE to violationType)
+                putExtras(bundle)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            startActivity(intent)
+            isLauncherSecurityActivity = true
+        }
     }
 
     companion object {
-
         private lateinit var instance: UniversalApplication
         fun getContext(): Context = instance.applicationContext
 
+        private var isLauncherSecurityActivity = false
         private const val PACKAGE_NAME = "uz.fido.universaldigital"
         private const val MAIL = "universaldigitalbank@gmail.com"
         private const val IS_PROD = true
-
         private val expectedSigningCertificateHashBase64 = arrayOf("sX7rnZFCKvceZ0vNVvtWqVRslN2XhF4HsFwy1r8xp+Y=")
         private val supportedAlternativeStores = arrayOf("com.sec.android.app.samsungapps")
     }

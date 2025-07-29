@@ -1095,7 +1095,6 @@
     <string name="other_violation_found">Xavfsizlikni ta\'minlash maqsadida ilovani ushbu qurilmada ishlatishning iloji yo\'q</string>
     <string name="input_details">Ma\'lumotlarni kiriting</string>
     <string name="cant_get_passport_detail">Нам не удалось получить данные вашего паспорта. Пожалуйста, свяжитесь с банком. +998 71 200 11 10</string>
-
     <string name="all_avtopayments_will_be_disabled">If autopayments are attached to this card, all of them will be disabled</string>
     <string name="attached_card_will_be_nonsecure_mode">The selected card has a secure mode enabled, which requires SMS confirmation for payments. If you want to continue creating an auto payment with the selected card, safe mode will be disabled</string>
     <string name="unable_create_payment">Unable to create avto payment</string>
@@ -1103,4 +1102,9 @@
     <string name="total_paid">Выплачено всего</string>
     <string name="activ_dialog">"Активировать "</string>
     <string name="ne_active_dialog">Деактивировать</string>
+    <string name="debugger_detected">To prevent any fraudulent activity and ensure the security of your data, this app cannot be used with a debugger attached</string>
+    <string name="untrusted_installation">To prevent any fraudulent activity and ensure the security of your data, this app must be installed only from trusted sources</string>
+    <string name="malware_detected">To prevent any fraudulent activity and ensure the security of your data, this app cannot be used on devices with malware detected</string>
+    <string name="tamper_detected">To prevent any fraudulent activity and ensure the security of your data, the use of tampered or modified versions of this app is not allowed</string>
+    <string name="hook_detected">To prevent any fraudulent activity and ensure the security of your data, the app is blocked when malicious hooking tools are detected</string>
 </resources>

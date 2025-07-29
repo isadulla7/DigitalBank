@@ -1097,7 +1097,6 @@
     <string name="other_violation_found">Xavfsizlikni ta\'minlash maqsadida ilovani ushbu qurilmada ishlatishning iloji yo\'q</string>
     <string name="input_details">Ma\'lumotlarni kiriting</string>
     <string name="cant_get_passport_detail">Нам не удалось получить данные вашего паспорта. Пожалуйста, свяжитесь с банком. +998 71 200 11 10</string>
-
     <string name="all_avtopayments_will_be_disabled">Если к этой карте привязаны автоплатежи, все они будут отключены</string>
     <string name="attached_card_will_be_nonsecure_mode">Для выбранной карты включен безопасный режим, требующий смс подтверждение при платежах. Если хотите продолжить создание автоплатежа с выбранной картой, безопасный режим будет выключен.</string>
     <string name="unable_create_payment">Невозможно создать автоплатеж</string>
@@ -1105,4 +1104,9 @@
     <string name="total_paid">Выплачено всего</string>
     <string name="activ_dialog">"Активировать"</string>
     <string name="ne_active_dialog">Деактивировать</string>
+    <string name="debugger_detected">Чтобы предотвратить любые мошеннические действия и обеспечить безопасность ваших данных, приложение не может быть использовано с подключённым отладчиком</string>
+    <string name="untrusted_installation">Чтобы предотвратить любые мошеннические действия и обеспечить безопасность ваших данных, приложение должно устанавливаться только из надёжных источников</string>
+    <string name="malware_detected">Чтобы предотвратить любые мошеннические действия и обеспечить безопасность ваших данных, использование приложения на устройствах с вредоносным ПО запрещено</string>
+    <string name="tamper_detected">Чтобы предотвратить любые мошеннические действия и обеспечить безопасность ваших данных, использование модифицированных версий приложения запрещено</string>
+    <string name="hook_detected">Чтобы предотвратить любые мошеннические действия и обеспечить безопасность ваших данных, приложение блокируется при обнаружении вредоносных hook-инструментов</string>
 </resources>
