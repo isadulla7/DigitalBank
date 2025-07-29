@@ -9,7 +9,9 @@ import uz.fido.network.domain.model.client_info.ClientDetailedInfoResponse
 import uz.fido.network.domain.model.loans.CheckHasLoanRequest
 import uz.fido.network.domain.model.loans.CreateCreditAppRequest
 import uz.fido.network.domain.model.loans.CreateCreditRequestNew
+import uz.fido.network.domain.model.loans.CreditPassportInfo
 import uz.fido.network.domain.model.loans.GetLoanRequest
+import uz.fido.network.domain.model.loans.LnSearchLoanRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualRequest
 import uz.fido.network.domain.model.loans.calculate_loan_manual.CalcLoanManualResponse
 import uz.fido.network.domain.model.loans.loan_available_amount.AvailableAmountResponse
@@ -53,6 +55,10 @@ class CreditRepositoryImpl @Inject constructor(private val creditService: Credit
 
     override suspend fun getUserInfo(token: String): Resource<ClientDetailedInfoResponse> {
         return getResult { creditService.getCustomerInfo(token) }
+    }
+
+    override suspend fun getLnSearchLoan(token: String, lnSearchLoanRequest: LnSearchLoanRequest): Resource<CreditPassportInfo> {
+        return getResult { creditService.getLnSearchLoan(token,lnSearchLoanRequest) }
     }
 
     override suspend fun createCreditApplication(
