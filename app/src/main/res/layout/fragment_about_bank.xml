@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -161,50 +160,50 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="bottom|center"
+        android:layout_gravity="bottom|center"
         android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="16dp"
-        android:layout_gravity="bottom|center">
-
+        android:gravity="bottom|center"
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/telegram"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/telegram_color_code"
-            android:scaleType="fitCenter"
             android:padding="12dp"
-            android:src="@drawable/telegram"/>
+            android:scaleType="fitCenter"
+            android:src="@drawable/telegram_svg" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/facebook"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/telegram_color_code"
-            android:scaleType="fitCenter"
-            android:padding="12dp"
             android:layout_marginStart="24dp"
-            android:src="@drawable/facebook"/>
+            android:background="@drawable/facebook_icon_background"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/facebook_svg" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/instagram"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/instagram_color_code"
-            android:scaleType="fitCenter"
-            android:padding="12dp"
             android:layout_marginStart="24dp"
-            android:src="@drawable/instagram"/>
+            android:background="@drawable/instagram_color_code"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/instagram_svg" />
+
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/internet_web"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/internet_color_code"
-            android:scaleType="fitCenter"
-            android:padding="12dp"
             android:layout_marginStart="24dp"
-            android:src="@drawable/internet"/>
+            android:background="@drawable/internet_color_code"
+            android:padding="12dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/web_site" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

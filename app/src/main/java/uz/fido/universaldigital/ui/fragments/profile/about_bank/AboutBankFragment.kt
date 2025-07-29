@@ -2,8 +2,8 @@ package uz.fido.universaldigital.ui.fragments.profile.about_bank
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
+import androidx.core.net.toUri
 import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
@@ -35,60 +35,62 @@ class AboutBankFragment : BaseFragment<FragmentAboutBankBinding, MenuProfileView
         binding.facebook.setOnClickListener { facebook() }
         binding.internetWeb.setOnClickListener { internetWeb() }
     }
-    private fun instagram(){
-        val instagramUsername = "universalbank.uz" // Faqat username
-        val uri = Uri.parse("http://instagram.com/_u/$instagramUsername")
 
+    private fun instagram() {
+        val instagramUsername = "universalbank.uz"
+        val uri = "http://instagram.com/_u/$instagramUsername".toUri()
         val intent = Intent(Intent.ACTION_VIEW, uri)
         intent.setPackage("com.instagram.android")
 
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            val fallbackUri = Uri.parse("http://instagram.com/$instagramUsername")
+            val fallbackUri = "http://instagram.com/$instagramUsername".toUri()
             val fallbackIntent = Intent(Intent.ACTION_VIEW, fallbackUri)
             startActivity(fallbackIntent)
         }
     }
-    private fun facebook(){
+
+    private fun facebook() {
         val facebookUrl = "https://www.facebook.com/universalbank.uz"
 
         val intent = Intent(Intent.ACTION_VIEW)
-        intent.data = Uri.parse(facebookUrl)
+        intent.data = facebookUrl.toUri()
         intent.setPackage("com.facebook.katana")
 
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            val fallbackIntent = Intent(Intent.ACTION_VIEW, Uri.parse(facebookUrl))
+            val fallbackIntent = Intent(Intent.ACTION_VIEW, facebookUrl.toUri())
             startActivity(fallbackIntent)
         }
     }
 
-    private fun internetWeb(){
+    private fun internetWeb() {
         val url = "https://universalbank.uz/"
-
-        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        val intent = Intent(Intent.ACTION_VIEW, url.toUri())
         startActivity(intent)
     }
-    private fun telegram(){
+
+    private fun telegram() {
         val telegramLink = "https://t.me/myuniversalbank"
         val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse(telegramLink)
+            data = telegramLink.toUri()
             setPackage("org.telegram.messenger")
         }
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            val fallbackIntent = Intent(Intent.ACTION_VIEW, Uri.parse(telegramLink))
+            val fallbackIntent = Intent(Intent.ACTION_VIEW, telegramLink.toUri())
             startActivity(fallbackIntent)
         }
     }
+
     private fun shareAppLink() {
         val shareIntent = Intent(Intent.ACTION_SEND).apply {
             type = "text/plain"
             putExtra(Intent.EXTRA_SUBJECT, "Mening Ilovam")
-            putExtra(Intent.EXTRA_TEXT, "Mana ilovam: https://play.google.com/store/apps/details?id=${requireContext().packageName}")
+            putExtra(Intent.EXTRA_TEXT, "Mening Universalbankim:\nhttps://play.google.com/store/apps/details?id=${requireContext().packageName}")
         }
         requireContext().startActivity(Intent.createChooser(shareIntent, "Ulashish uchun tanlang"))
     }
@@ -96,11 +98,11 @@ class AboutBankFragment : BaseFragment<FragmentAboutBankBinding, MenuProfileView
     private fun openPlayMarket() {
         val appPackageName = requireContext().packageName
         try {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName"))
+            val intent = Intent(Intent.ACTION_VIEW, "market://details?id=$appPackageName".toUri())
             intent.setPackage("com.android.vending")
             requireContext().startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName"))
+            val intent = Intent(Intent.ACTION_VIEW, "https://play.google.com/store/apps/details?id=$appPackageName".toUri())
             requireContext().startActivity(intent)
         }
     }

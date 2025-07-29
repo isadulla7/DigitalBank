@@ -8,6 +8,7 @@
         <item name="colorSecondaryContainer">@color/cardBgColor</item>
         <item name="android:statusBarColor">@color/whiteColor</item>
         <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
     </style>
 
     <style name="CallSafe.Theme.UniversalMobileDigital" parent="Theme.Material3.DayNight.NoActionBar">

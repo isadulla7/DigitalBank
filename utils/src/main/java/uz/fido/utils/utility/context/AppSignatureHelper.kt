@@ -33,10 +33,12 @@ class AppSignatureHelper(context: Context) : ContextWrapper(context) {
                     packageName,
                     PackageManager.GET_SIGNATURES
                 ).signatures
-                for (signature in signatures) {
-                    val hash = hash(packageName, signature.toCharsString())
-                    if (hash != null) {
-                        appCodes.add(String.format("%s", hash))
+                if (signatures != null) {
+                    for (signature in signatures) {
+                        val hash = hash(packageName, signature.toCharsString())
+                        if (hash != null) {
+                            appCodes.add(String.format("%s", hash))
+                        }
                     }
                 }
             } catch (e: PackageManager.NameNotFoundException) {
