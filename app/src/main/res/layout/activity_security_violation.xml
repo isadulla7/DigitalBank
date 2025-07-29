@@ -22,7 +22,7 @@
             android:textColor="@color/mainTextColor"
             android:textSize="28dp" />
 
-        <uz.fido.utils.view.custom_text_view.TextViewMedium
+        <uz.fido.utils.view.custom_text_view.TextViewRegular
             android:id="@+id/tv_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -8,7 +8,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
 import uz.fido.universaldigital.databinding.ActivitySecurityViolationBinding
-import kotlin.math.log
 import kotlin.system.exitProcess
 
 @AndroidEntryPoint

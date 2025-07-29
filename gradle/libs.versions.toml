@@ -123,6 +123,8 @@ com-google-firebase-firebase-crashlytics = { group = "com.google.firebase", name
 com-google-firebase-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestore" }
 com-google-firebase-firebase-dynamic-links-ktx = { group = "com.google.firebase", name = "firebase-dynamic-links-ktx" }
 com-google-firebase-firebase-perf = { group = "com.google.firebase", name = "firebase-perf" }
+firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx" }
+firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlyticsVersion" }
 
 kotlinx-metadata-jvm = { module = "org.jetbrains.kotlinx:kotlinx-metadata-jvm", version.ref = "kotlinxMetadataJvm" }
 org-jetbrains-coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -164,7 +166,6 @@ androidx-room-room-runtime = { group = "androidx.room", name = "room-runtime", v
 androidx-room-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomRuntime" }
 androidx-room-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomRuntime" }
 org-tensorflow-tensorflow-lite = { group = "org.tensorflow", name = "tensorflow-lite", version.ref = "tenserFlow" }
-firebase-database-ktx = { group = "com.google.firebase", name = "firebase-database-ktx" }
-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics", version.ref = "firebaseCrashlyticsVersion" }
 talsec-rasp = { group = "com.aheaditec.talsec.security", name = "TalsecSecurity-Community", version.ref = "talsecRasp" }
+
 [plugins]
