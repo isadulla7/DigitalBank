@@ -5,6 +5,7 @@ import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
 import uz.fido.network.domain.model.abc_base.BaseResponse
+import uz.fido.network.domain.model.loans.LnSearchLoanRequest
 import uz.fido.network.domain.model.template.CreateTemplateGroupRequest
 import uz.fido.network.domain.model.template.CreateTemplateRequest
 import uz.fido.network.domain.model.template.CreateTemplateResponse

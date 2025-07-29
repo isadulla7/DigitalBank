@@ -40,6 +40,7 @@ import uz.fido.universaldigital.ui.fragments.payment.MenuPaymentViewModel
 import uz.fido.universaldigital.ui.fragments.payment.abc_adapter.PopularPaymentsAdapter
 import uz.fido.universaldigital.ui.fragments.payment.abc_confirm.ConfirmPaymentFragment
 import uz.fido.universaldigital.ui.fragments.payment.auto_payment.create_auto_payment.CreateAutoPaymentFragment
+import uz.fido.universaldigital.ui.fragments.payment.credit.CreditInfoFragment
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.DownloadPaymentInterface
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.second_step.PaymentSecondStepFragment
 import uz.fido.universaldigital.ui.fragments.services.deposit.step_deposit.BasicSuccessFragment
@@ -135,6 +136,9 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (paymentService?.service_id==-2){
+            binding.creditId.visibility=View.VISIBLE
+        }
         initSetOnClickListeners()
         checkForPaymentDownload()
         init()
@@ -338,6 +342,13 @@ class PaymentFragment : BasePaymentFragment(), DownloadPaymentInterface {
     }
 
     private fun initSetOnClickListeners() {
+        binding.creditId.setOnClickListener {
+            val dialog= CreditInfoFragment({
+              loanId=it
+                editTextList[0].setText(loanId)
+            })
+            dialog.show(childFragmentManager,"")
+        }
         binding.appBar.setOnBackButtonClickListener { pop() }
         binding.btnContinue.setOnClickListener { onContinueClicked() }
         binding.appBar.setOnAdditionalBtnClickListener {

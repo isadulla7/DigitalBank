@@ -58,6 +58,19 @@
 
     </androidx.core.widget.NestedScrollView>
 
+
+    <TextView
+        android:id="@+id/credit_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:textSize="16sp"
+        android:visibility="gone"
+        android:text="Узнать ID кредита"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
     <uz.fido.utils.view.custom_circle_button.CustomFAButton
         android:id="@+id/btn_continue"
         android:layout_width="wrap_content"

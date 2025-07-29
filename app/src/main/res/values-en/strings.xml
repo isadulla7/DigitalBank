@@ -1102,4 +1102,7 @@
     <string name="total_paid">Выплачено всего</string>
     <string name="activ_dialog">"Активировать "</string>
     <string name="ne_active_dialog">Деактивировать</string>
+    <string name="product_name">Наименование продукта:</string>
+    <string name="product_fillial">Наименование филиала :</string>
+    <string name="credit_id_payment">Ид кредита для оплаты:</string>
 </resources>

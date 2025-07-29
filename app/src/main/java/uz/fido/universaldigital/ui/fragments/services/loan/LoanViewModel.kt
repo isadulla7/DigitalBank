@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.services.loan
 
 import android.app.Application
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.liveData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -8,6 +9,7 @@ import uz.fido.network.domain.datasource.interfaces.ICreditRepository
 import uz.fido.network.domain.datasource.interfaces.IMyIdRepository
 import uz.fido.network.domain.model.loans.CheckHasLoanRequest
 import uz.fido.network.domain.model.loans.CreateCreditRequestNew
+import uz.fido.network.domain.model.loans.LnSearchLoanRequest
 import uz.fido.universaldigital.base.AbstractViewModel
 import javax.inject.Inject
 
@@ -50,6 +52,10 @@ class LoanViewModel @Inject constructor(
 
     fun getMe(token: String) = liveData(Dispatchers.IO) {
         emit(myIdRepository.getMyIdMe(token))
+    }
+
+    fun getLnSearchLoan(token: String,lnSearchLoanRequest: LnSearchLoanRequest) = liveData(Dispatchers.IO) {
+        emit(creditRepository.getLnSearchLoan(token,lnSearchLoanRequest))
     }
 
     fun createCreditRequest(token: String, createCreateCreditAppRequest: CreateCreditRequestNew) =
