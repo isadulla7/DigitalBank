@@ -1,5 +1,6 @@
 package uz.fido.universaldigital.ui.fragments.services.deposit.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -10,18 +11,18 @@ import uz.fido.network.domain.model.deposits.DepositCalculator
 import uz.fido.universaldigital.databinding.ItemDepositCalculatorBinding
 import uz.fido.utils.utility.format.Format
 
-class DepositCalculateAdapter : ListAdapter<DepositCalculator,DepositCalculateAdapter.ViewHolder>(CalculatorCallback()) {
-    var count=0
-    inner class ViewHolder(private val binding: ItemDepositCalculatorBinding) : RecyclerView.ViewHolder(binding.root) {
+class DepositCalculateAdapter : ListAdapter<DepositCalculator, DepositCalculateAdapter.ViewHolder>(CalculatorCallback()) {
+    var count = 0
 
+    inner class ViewHolder(private val binding: ItemDepositCalculatorBinding) : RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(item: DepositCalculator) {
             count++
-            binding.principalAmount.text=Format.formatAmount(item.amount) +" сум"
-            binding.precentLoan.text=Format.formatAmount(item.receiveSum)+" сум"
-            binding.totalPaind.text=Format.formatAmount((item.saldo.toBigDecimal()-item.amount.toBigDecimal()).toString())+" сум"
-            binding.tvCount.text=item.count.toString()
+            binding.principalAmount.text = Format.formatAmount(item.amount) + " сум"
+            binding.precentLoan.text = Format.formatAmount(item.receiveSum) + " сум"
+            binding.totalPaind.text = Format.formatAmount((item.saldo.toBigDecimal() - item.amount.toBigDecimal()).toString()) + " сум"
+            binding.tvCount.text = item.count.toString()
             binding.time.text = item.date
-            binding.amount.text =" ${Format.formatAmount(item.saldo)} сум"
         }
     }
 
@@ -34,23 +35,17 @@ class DepositCalculateAdapter : ListAdapter<DepositCalculator,DepositCalculateAd
         holder.bind(getItem(position))
     }
 
-//    override fun getItemCount(): Int {
-//        return list.size
-//    }
-
-
-
 }
 
-class CalculatorCallback:DiffUtil.ItemCallback<DepositCalculator>(){
+class CalculatorCallback : DiffUtil.ItemCallback<DepositCalculator>() {
     override fun areItemsTheSame(oldItem: DepositCalculator, newItem: DepositCalculator): Boolean {
-        return  oldItem==newItem
+        return oldItem == newItem
     }
 
     override fun areContentsTheSame(
         oldItem: DepositCalculator,
         newItem: DepositCalculator
     ): Boolean {
-        return oldItem.amount==newItem.amount
+        return oldItem.amount == newItem.amount
     }
 }
