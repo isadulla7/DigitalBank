@@ -1102,9 +1102,11 @@
     <string name="unable_create_payment">Невозможно создать автоплатеж</string>
     <string name="loan_repayment_ishonch">"Оплата "</string>
     <string name="total_paid">Выплачено всего</string>
-    <string name="activ_dialog">"Активировать"</string>
+    <string name="activ_dialog">Активировать</string>
     <string name="ne_active_dialog">Деактивировать</string>
     <string name="product_name">Наименование продукта:</string>
     <string name="product_fillial">Наименование филиала :</string>
     <string name="credit_id_payment">Ид кредита для оплаты:</string>
+    <string name="credit_not_found">Кредит не найден</string>
+    <string name="credit_passpord">Узнать ID кредита</string>
 </resources>

@@ -1099,10 +1099,12 @@
     <string name="attached_card_will_be_nonsecure_mode">The selected card has a secure mode enabled, which requires SMS confirmation for payments. If you want to continue creating an auto payment with the selected card, safe mode will be disabled</string>
     <string name="unable_create_payment">Unable to create avto payment</string>
     <string name="loan_repayment_ishonch">"Payment "</string>
-    <string name="total_paid">Выплачено всего</string>
-    <string name="activ_dialog">"Активировать "</string>
-    <string name="ne_active_dialog">Деактивировать</string>
-    <string name="product_name">Наименование продукта:</string>
-    <string name="product_fillial">Наименование филиала :</string>
-    <string name="credit_id_payment">Ид кредита для оплаты:</string>
+    <string name="total_paid">Total paid</string>
+    <string name="activ_dialog">Activate</string>
+    <string name="ne_active_dialog">Deactivate</string>
+    <string name="product_name">Product name:</string>
+    <string name="product_fillial">Branch name:</string>
+    <string name="credit_id_payment">Credit ID for payment:</string>
+    <string name="credit_not_found">Credit not found</string>
+    <string name="credit_passpord">Credit ID search</string>
 </resources>

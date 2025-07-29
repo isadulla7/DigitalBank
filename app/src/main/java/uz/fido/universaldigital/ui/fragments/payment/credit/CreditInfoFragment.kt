@@ -17,8 +17,10 @@ import uz.fido.universaldigital.databinding.DialogCreditPassportInfoBinding
 import uz.fido.universaldigital.ui.fragments.services.loan.LoanViewModel
 import uz.fido.universaldigital.ui.utils.extensions.hideProgress
 import uz.fido.universaldigital.ui.utils.extensions.showProgress
+import uz.fido.universaldigital.ui.utils.extensions.showSnackbar
 import uz.fido.utils.utility.format.Format
 import uz.fido.utils.utility.user.getClientToken
+import java.math.BigDecimal
 
 class CreditInfoFragment(val onClick:(String)->Unit) : DialogFragment() {
 
@@ -39,6 +41,8 @@ class CreditInfoFragment(val onClick:(String)->Unit) : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         textWatcher()
         binding.btnContinue.isEnabled(true)
+        binding.appBar.setOnBackButtonClickListener { dismiss() }
+        binding.appBar.setTitle(getString(R.string.credit_passpord))
         binding.btnContinue.setOnClickListener {
             onClick(loanId)
             dismiss()
@@ -75,11 +79,15 @@ class CreditInfoFragment(val onClick:(String)->Unit) : DialogFragment() {
                         binding.productName.text=item[0].productName
                         binding.productFillial.text=item[0].filialName
                         binding.idCreditPaynet.text=item[0].loanId
-                        binding.amount.text= Format.formatAmount(item[0].amount)
+                        binding.amount.text= Format.formatAmount(item[0].amount?.toBigDecimalOrNull()?.divide(BigDecimal(100)).toString())
+                        }else{
+                            showSnackbar(getString(R.string.credit_not_found),getString(R.string.credit_passpord))
                         }
 
                     }
-                    Status.ERROR->{}
+                    Status.ERROR->{
+                        showSnackbar(getString(R.string.credit_not_found))
+                    }
                 }
             }
         }

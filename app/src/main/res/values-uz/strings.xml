@@ -1098,10 +1098,12 @@
     <string name="attached_card_will_be_nonsecure_mode">Tanlangan kartada xavfsiz rejim yoqilgan, bu toʻlovlar uchun SMS-xabarni tasdiqlashni talab qiladi. Tanlangan karta bilan avtomatik toʻlovni yaratishni davom ettirmoqchi boʻlsangiz, xavfsiz rejim oʻchirib qoʻyiladi.</string>
     <string name="unable_create_payment">Avto payment yaratib bo\'lmaydi</string>
     <string name="loan_repayment_ishonch">"To'lov qilish "</string>
-    <string name="total_paid">Выплачено всего</string>
-    <string name="activ_dialog">"Активировать "</string>
-    <string name="ne_active_dialog">Деактивировать</string>
-    <string name="product_name">Наименование продукта:</string>
-    <string name="product_fillial">Наименование филиала :</string>
-    <string name="credit_id_payment">Ид кредита для оплаты:</string>
+    <string name="total_paid">To‘langan jami</string>
+    <string name="activ_dialog">Faollashtirish</string>
+    <string name="ne_active_dialog">O‘chirish</string>
+    <string name="product_name">Mahsulot nomi:</string>
+    <string name="product_fillial">Filial nomi :</string>
+    <string name="credit_id_payment">To‘lov uchun kredit identifikatori:</string>
+    <string name="credit_not_found">Kredit topilmadi</string>
+    <string name="credit_passpord">Kredit id izlash</string>
 </resources>
