@@ -22,3 +22,25 @@
 -keepnames class kotlinx.** { *; }
 -keep class kotlinx.coroutines.** { *; }
 -dontwarn kotlinx.coroutines.**
+
+-dontwarn java.lang.invoke.StringConcatFactory
+-dontwarn uz.fido.utils.const.APIServiceConst
+-dontwarn uz.fido.utils.device.GetDeviceInfo$DeviceInfo
+-dontwarn uz.fido.utils.device.GetDeviceInfo
+-dontwarn uz.fido.utils.security.CryptoUtil
+-dontwarn uz.fido.utils.security.DiffieHellman
+-dontwarn uz.fido.utils.security.EncryptPasswordKt
+-dontwarn uz.fido.utils.security.SecurePrefsManagerKt
+-dontwarn uz.fido.utils.utility.activity.InsertStringBetweenKt
+-dontwarn uz.fido.utils.utility.context.AppSignatureHelper
+-dontwarn uz.fido.utils.utility.context.ContextExtensionsKt
+-dontwarn uz.fido.utils.utility.language.Utility
+-dontwarn uz.fido.utils.utility.user.UserExtensionsKt
+
+-keep interface uz.fido.network.domain.datasource.services.* { *; }
+-keep interface uz.fido.network.room.* { *; }
+-keep interface retrofit2.Call
+-keep class retrofit2.Retrofit { *; }
+-keep class dagger.hilt.** { *; }
+-keep class javax.inject.** { *; }
+

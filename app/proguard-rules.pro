@@ -32,6 +32,10 @@
     public <init>();
 }
 -keep class uz.fido.nfccardreaderlib.** { *; }
-
+-dontwarn io.ktor.client.network.sockets.TimeoutExceptionsCommonKt
+-dontwarn io.ktor.client.plugins.HttpTimeout$HttpTimeoutCapabilityConfiguration
+-dontwarn io.ktor.client.plugins.HttpTimeout$Plugin
+-dontwarn io.ktor.client.plugins.HttpTimeout
+-dontwarn io.ktor.utils.io.CoroutinesKt
 
 

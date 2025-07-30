@@ -6,7 +6,7 @@ object PluginDependencies {
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-gradle:2.9.9"
     const val jitPackIo = "https://jitpack.io"
     const val artifactory = "https://artifactory.aigroup.uz:443/artifactory/myid"
-    const val androidToolsR8 = "com.android.tools:r8:8.10.21"
+    const val androidToolsR8 = "com.android.tools:r8:8.11.18"
     const val firebasePerf = "com.google.firebase:perf-plugin:1.4.2"
     const val talsecRepositories = "https://europe-west3-maven.pkg.dev/talsec-artifact-repository/freerasp"
 }
