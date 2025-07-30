@@ -22,7 +22,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             consumerProguardFiles 'proguard-rules-keep-lib.pro'
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules-keep-lib.pro'
         }
@@ -35,7 +35,6 @@ android {
         jvmTarget = '11'
     }
 }
-
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])

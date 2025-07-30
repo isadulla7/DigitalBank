@@ -3,7 +3,6 @@ package uz.fido.universaldigital.app
 import android.app.Application
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.os.bundleOf
 import com.aheaditec.talsec_security.security.api.SuspiciousAppInfo
@@ -13,7 +12,6 @@ import com.aheaditec.talsec_security.security.api.ThreatListener
 import dagger.hilt.android.HiltAndroidApp
 import io.paperdb.Paper
 import uz.fido.universaldigital.ui.activities.security.SecurityViolationActivity
-import uz.fido.universaldigital.ui.utils.home_utils.Utils
 import uz.fido.universaldigital.ui.utils.lang.LocaleHelper
 import uz.fido.universaldigital.ui.utils.lang.LocaleHelper.getLanguage
 import uz.fido.utils.const.Const
@@ -44,8 +42,6 @@ class UniversalApplication : Application(), ThreatListener.ThreatDetected {
 
         ThreatListener(this, deviceStateListener).registerListener(this)
         Talsec.start(this, config)
-        Log.e("SigningCertificateHash", Utils.computeSigningCertificateHash(this))
-
     }
 
     private fun initLocale() {
@@ -144,7 +140,10 @@ class UniversalApplication : Application(), ThreatListener.ThreatDetected {
         private const val PACKAGE_NAME = "uz.fido.universaldigital"
         private const val MAIL = "universaldigitalbank@gmail.com"
         private const val IS_PROD = true
-        private val expectedSigningCertificateHashBase64 = arrayOf("8kX5yET/8Bja9wg/PDPgT7ursWbTan+ZDZshjV7JIno=")
+        private val expectedSigningCertificateHashBase64 = arrayOf(
+            "8kX5yET/8Bja9wg/PDPgT7ursWbTan+ZDZshjV7JIno=",
+            "zFIXURS+8mutcYJWMmVMRx5ETOP64gGN2w5jmOfcuKc="
+        )
         private val supportedAlternativeStores = arrayOf("com.sec.android.app.samsungapps")
     }
 
