@@ -69,7 +69,7 @@ class PaymentRepositoryImpl @Inject constructor(private val paymentService: Paym
         createPaymentRequest: CreatePaymentRequest,
         path: String
     ): Resource<CreatePaymentResponse> = getResult {
-        paymentService.createPayment(token, createPaymentRequest, path)
+        paymentService. createPayment(token, createPaymentRequest, path)
     }
 
     override suspend fun createBudgetPayment(token: String, createPaymentRequest: CreatePaymentRequest, path: String): Resource<CreatePaymentResponse> =

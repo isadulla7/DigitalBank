@@ -144,7 +144,7 @@ class UniversalApplication : Application(), ThreatListener.ThreatDetected {
             "8kX5yET/8Bja9wg/PDPgT7ursWbTan+ZDZshjV7JIno=",
             "zFIXURS+8mutcYJWMmVMRx5ETOP64gGN2w5jmOfcuKc="
         )
-        private val supportedAlternativeStores = arrayOf("com.sec.android.app.samsungapps")
+        private val supportedAlternativeStores = arrayOf("com.sec.android.app.samsungapps", "com.huawei.appmarket", "com.xiaomi.market")
     }
 
 }

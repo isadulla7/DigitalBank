@@ -2,7 +2,6 @@ package uz.fido.universaldigital.ui.activities.security
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseActivity
