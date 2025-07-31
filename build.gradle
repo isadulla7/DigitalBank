@@ -12,7 +12,6 @@ buildscript {
         classpath PluginDependencies.hilt
         classpath PluginDependencies.firebaseCrashlytics
         classpath libs.com.google.devtools.ksp.gradle.plugin
-        classpath PluginDependencies.androidToolsR8
         classpath PluginDependencies.firebasePerf
     }
 }

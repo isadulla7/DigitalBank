@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import dagger.hilt.android.AndroidEntryPoint
-import uz.fido.network.data.utility.Status
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.databinding.DialogYouHaveAnAccountBinding
-import uz.fido.universaldigital.ui.fragments.login.sign_in.SignInViewModel
 
 @AndroidEntryPoint
 class YouHaveAccountDialog(
@@ -20,7 +17,6 @@ class YouHaveAccountDialog(
 ) : BottomSheetDialogFragment() {
 
     private lateinit var binding: DialogYouHaveAnAccountBinding
-    private val signInViewModel: SignInViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -43,16 +39,4 @@ class YouHaveAccountDialog(
         return binding.root
     }
 
-    private fun getResidencyType() {
-        signInViewModel.getUserResidency().observe(viewLifecycleOwner) {
-            if (it.status == Status.SUCCESS) {
-                val response = it.data?.isResident
-                val isResident = response.orEmpty()
-                dismiss()
-                openMyId.invoke()
-            } else {
-                openMyId.invoke()
-            }
-        }
-    }
 }

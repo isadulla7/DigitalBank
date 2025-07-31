@@ -39,13 +39,9 @@ abstract class BaseSimpleFragment<VB : ViewBinding>(
     ) {
         hideProgress()
         var message = snackbarText
-        if (message == ERROR_CODE_VPN) {
-            openVpnErrorActivity()
-        } else {
-            message = getMeaningFulMessage(message)
-            if (message.isNotEmpty() && view != null) {
-                showBaseInfoDialog(title, buttonText, message, okClickListener)
-            }
+        message = getMeaningFulMessage(message)
+        if (message.isNotEmpty() && view != null) {
+            showBaseInfoDialog(title, buttonText, message, okClickListener)
         }
     }
 

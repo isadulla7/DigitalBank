@@ -140,8 +140,11 @@ class UniversalApplication : Application(), ThreatListener.ThreatDetected {
         private const val PACKAGE_NAME = "uz.fido.universaldigital"
         private const val MAIL = "universaldigitalbank@gmail.com"
         private const val IS_PROD = true
-        private val expectedSigningCertificateHashBase64 = arrayOf("sX7rnZFCKvceZ0vNVvtWqVRslN2XhF4HsFwy1r8xp+Y=")
-        private val supportedAlternativeStores = arrayOf("com.sec.android.app.samsungapps")
+        private val expectedSigningCertificateHashBase64 = arrayOf(
+            "8kX5yET/8Bja9wg/PDPgT7ursWbTan+ZDZshjV7JIno=",
+            "zFIXURS+8mutcYJWMmVMRx5ETOP64gGN2w5jmOfcuKc="
+        )
+        private val supportedAlternativeStores = arrayOf("com.sec.android.app.samsungapps", "com.huawei.appmarket", "com.xiaomi.market")
     }
 
 }

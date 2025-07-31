@@ -2,18 +2,12 @@ package uz.fido.network.data.utility
 
 import retrofit2.HttpException
 import uz.fido.network.domain.model.abc_base.CustomException
-import uz.fido.utils.security.SecurityCheck.isVpnActive
 import java.net.SocketTimeoutException
 
 suspend fun <T : Any> getResult(data: suspend () -> T): Resource<T> {
-    return if (!isVpnActive()) {
-        try {
-            handleSuccess(data())
-        } catch (e: Exception) {
-            handleException(e)
-        }
-    } else {
-        val e = CustomException("444")
+    return try {
+        handleSuccess(data())
+    } catch (e: Exception) {
         handleException(e)
     }
 }

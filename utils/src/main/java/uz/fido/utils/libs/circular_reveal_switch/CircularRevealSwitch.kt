@@ -8,10 +8,8 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.os.Build
 import android.os.Handler
-import android.os.HandlerThread
 import android.os.Looper
 import android.view.MotionEvent
-import android.view.PixelCopy
 import android.view.View
 import android.view.ViewAnimationUtils
 import android.view.ViewGroup
@@ -26,8 +24,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import androidx.lifecycle.LifecycleOwner
 import java.lang.ref.WeakReference
-import java.util.concurrent.CountDownLatch
-import java.util.concurrent.TimeUnit
 import kotlin.math.hypot
 
 /**
@@ -151,42 +147,6 @@ abstract class CircularRevealSwitch<T : CRSwitchBuilder<T>>(crSwitchBuilder: T) 
             }
         }
         return false
-    }
-
-    /**
-     * Takes a screenshot of the window using the PixelCopy API (available in Android O and above)
-     * or a traditional method (available in versions below Android O).
-     *
-     * The PixelCopy API is capable of capturing shadows and other visual effects of the view,
-     * while the traditional method cannot capture these effects.
-     *
-     * @return Bitmap Returns a screenshot of the window.
-     */
-    protected open fun Window.takeScreenshotCompat(): Bitmap {
-        val root = decorView.rootView
-        val thread = HandlerThread("Screenshot")
-        try {
-            val bitmap = Bitmap.createBitmap(root.width, root.height, Bitmap.Config.ARGB_8888)
-            thread.start()
-            var isSuccess = false
-            val latch = CountDownLatch(1)
-            var time = System.currentTimeMillis()
-            PixelCopyCompat.request(this, bitmap, { copyResult ->
-                isSuccess = copyResult == PixelCopy.SUCCESS
-                latch.countDown()
-            }, Handler(thread.looper))
-            isSuccess = latch.await(1000, TimeUnit.MILLISECONDS) && isSuccess
-            time = System.currentTimeMillis() - time
-            if (isSuccess) {
-                return bitmap
-            }
-            return takeScreenshot()
-        } catch (e: Exception) {
-            e.printStackTrace()
-            return takeScreenshot()
-        } finally {
-            thread.quit()
-        }
     }
 
     /**

@@ -97,7 +97,6 @@ abstract class BaseFragment<VB : ViewBinding, VM : AbstractViewModel>(
     ) {
         hideProgress()
         when (snackbarText) {
-            ERROR_CODE_VPN -> openVpnErrorActivity() // Open VPN error activity directly
             NEED_IDENTIFIED -> openIdentifyFragment(snackbarText, title, buttonText, onClickListener) // Open identify fragment
             LOG_OUT -> handleLogoutMessage(title, buttonText, snackbarText)
             else -> handleGeneralMessage(title, buttonText, snackbarText, onClickListener)
