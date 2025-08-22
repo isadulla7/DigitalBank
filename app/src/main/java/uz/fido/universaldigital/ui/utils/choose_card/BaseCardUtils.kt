@@ -146,6 +146,7 @@ object BaseCardUtils {
                 "860034", "986020", "41878300" -> R.drawable.ic_bank_kdb
                 "986060", "55553660", "55553661", "55553662" -> R.drawable.ic_bank_anor
                 "986035" -> R.drawable.ic_bank_tbc
+                "493453" -> R.drawable.ic_bank_universal
                 else -> {
                     if (isOurBank == "Y" || cardNumber.startsWith("AUZ") || cardNumber.startsWith("DV")) {
                         R.drawable.ic_bank_universal
@@ -241,7 +242,13 @@ object BaseCardUtils {
         return state != "0" && state != "A"
     }
 
-    fun CardResponse.isUniversalCard(): Boolean = is_our_bank == "Y" && object_type != "KL"
+    fun CardResponse.isUniversalCard(): Boolean = is_our_bank == "Y" && object_type != "KL" && object_type!="TET"
+    fun CardResponse.isUniversalCardAndVisa(): Boolean = is_our_bank == "Y" && object_type != "KL"
+    fun CardResponse.isUniversalCardVisa(): Boolean =
+        this.object_value.startsWith("860048") ||
+                this.object_value.startsWith("626283") ||
+                this.object_value.startsWith("986023")  ||
+                this.object_value.startsWith("493453") || this.is_our_bank=="Y"
 
     fun CardResponse.isValidSumCard(): Boolean =
         currency_code == "000" && balance_visibility && object_type != CURRENCY_CARD && state == "0" && processing_server_status != "-100"

@@ -99,7 +99,7 @@ class MainActivity : BaseActivity(), ShakeDetectionService.OnShakeListener {
         listenForSeasonChanges()
         checkForAppUpdates()
         askNotificationPermission()
-        Talsec.blockScreenCapture(this, true)
+    //   Talsec.blockScreenCapture(this, true)
     }
 
     private fun initBottomNavigationMenuItems(savedInstanceState: Bundle?) {

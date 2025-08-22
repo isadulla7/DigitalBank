@@ -57,6 +57,39 @@
                 android:textColor="@color/mainTextColor"
                 android:textSize="16dp" />
 
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/be_written_off"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/tv_sender_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewRegular
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/enrollment"
+                android:textColor="@color/brandBlueColor_40"
+                android:textSize="14dp" />
+
+            <uz.fido.utils.view.custom_text_view.TextViewMedium
+                android:id="@+id/tv_received_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/mainTextColor"
+                android:textSize="16dp" />
+
             <uz.fido.utils.view.custom_text_view.TextViewRegular
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

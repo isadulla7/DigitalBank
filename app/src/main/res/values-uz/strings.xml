@@ -1112,4 +1112,13 @@
     <string name="malware_detected">Har qanday firibgarlikning oldini olish va ma\'lumotlaringizni xavfsiz saqlash uchun, zararli dasturiy ta\'minot aniqlangan qurilmalarda ilova ishlamaydi</string>
     <string name="tamper_detected">Har qanday firibgarlikning oldini olish va ma\'lumotlaringizni xavfsiz saqlash uchun, o‘zgartirilgan yoki buzilgan ilova versiyalaridan foydalanishga ruxsat berilmaydi</string>
     <string name="hook_detected">Har qanday firibgarlikning oldini olish va ma\'lumotlaringizni xavfsiz saqlash uchun, zararli hook vositalari aniqlanganda ilova faoliyati to‘xtatiladi</string>
+    <string name="update_balance">Balans yangilandi</string>
+    <string name="set_this_wallet_main">Ushbu hamyonni asosiy qilib belgilang.</string>
+    <string name="wallet_name">Hamyon nomi</string>
+    <string name="edit_wallet_title">Hamyon nomini o‘zgartiring va ko‘ring</string>
+    <string name="todays_rate">Сегодняшний курс:</string>
+    <string name="kurs">Kurs</string>
+    <string name = "be_written_off">Hisobdan yechiladi:</string>
+    <string name = "enrollment">Hisobga olinadi:</string>
+    <string name = "empty_amount_and_no_activ">Karta faol emas yoki summa hisobdan chiqarilmagan.</string>
 </resources>

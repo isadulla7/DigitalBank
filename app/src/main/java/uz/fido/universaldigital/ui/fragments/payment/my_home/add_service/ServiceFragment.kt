@@ -70,7 +70,7 @@ class ServiceFragment : BaseFragment<FragmentAddServiceBinding, MyHomeViewModel>
             updateTemplateList()
         }
         binding.appBar.setOnAdditionalLongClickListener {
-            Toast.makeText(requireContext(), "Update balance", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.update_balance), Toast.LENGTH_SHORT).show()
         }
     }
 

@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.monitoring.local
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -108,6 +109,7 @@ fun LocalMonitoring.getTranTypeSymbol() = if (isCredit()) "+" else "-"
 @SuppressLint("SetTextI18n")
 fun TextViewMedium.setTransactionAmount(localMonitoring: LocalMonitoring) {
     val sum = BigDecimal(100)
+
     text = localMonitoring.getTranTypeSymbol() + Format.formatAmount(
         localMonitoring.amount.toBigDecimal().divide(sum, 2, RoundingMode.HALF_UP).toString()
     ) + " " + Format.currencyCode(localMonitoring.currencyCode)

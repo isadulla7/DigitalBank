@@ -44,6 +44,7 @@ class MenuTransfersFragment : BaseSimpleFragment<FragmentMenuTransfersBinding>(F
             400 -> goto(R.id.transferByWalletFragment)
             500 -> goto(R.id.transferToAccountFragment)
             600 -> goto(R.id.requestMoneyFragment)
+            700 -> goto(R.id.newConversionFragment)
         }
     }
 

@@ -207,7 +207,7 @@ fun Fragment.doTransferOperationByType(senderCard: CardResponse, receiverCard: C
         && senderCard.currency_code != receiverCard.currency_code
     ) {
         goto(
-            R.id.conversionFragment,
+            R.id.newConversionFragment,
             bundleOf(Const.SENDER_CARD to senderCard, Const.RECEIVER_CARD to receiverCard)
         )
         vibrateTick(requireContext())

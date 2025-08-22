@@ -107,6 +107,7 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
         const val SMS_OPERATION_FORGOT_PASSWORD = "forgot_password"
         const val SMS_DEPOSIT_OPERATION = "sms_deposit_operation"
         const val SMS_OPERATION_PAYMENT_KEY = "payment_key"
+        const val SMS_CONVERSION_CONFIRM = "sms_conversion_confirm"
         const val SMS_OPERATION_SIGN_UP = "sign_up"
         const val SMS_OPERATION_SIGN_IN = "sign_in"
         const val ADD_CARD = "add_card"
@@ -206,6 +207,14 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
 
             SMS_BUDGET_OPERATION -> {
                 checkBudgetPin()
+            }
+
+            SMS_CONVERSION_CONFIRM->{
+                smsCode=binding.etSms.text.toString()
+                setFragmentResult(
+                    SMS_CONVERSION_CONFIRM, bundleOf("sms_code" to smsCode)
+                )
+                findNavController().popBackStack()
             }
         }
     }
@@ -471,7 +480,8 @@ class ConfirmSmsFragment : BaseFragment<FragmentConfirmSmsBinding, ConfirmSmsVie
                     string_line = stringLineEnc,
                     is_main = data.is_main,
                     bg_icon_name = data.bg_icon_name,
-                    otp_id = data.otp_id
+                    otp_id = data.otp_id,
+                    application_id = data.application_id
                 )
             ).observe(viewLifecycleOwner) {
                 it?.let {

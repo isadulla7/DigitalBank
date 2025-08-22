@@ -6,14 +6,19 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.setFragmentResultListener
 import coil.load
 import dagger.hilt.android.AndroidEntryPoint
+import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
+import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.conversion.ConversionRequest
+import uz.fido.network.domain.model.conversion.ConversionResponse
 import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentConfirmConversionBinding
 import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment
+import uz.fido.universaldigital.ui.fragments.login.confirm_sms.ConfirmSmsFragment.Companion.SMS_MAX_LENGTH
 import uz.fido.universaldigital.ui.fragments.payment.abc_success.SuccessPaymentFragment
+import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setBankLogo
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardBalance
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardNumberFormatted
 import uz.fido.universaldigital.ui.utils.choose_card.BaseCardUtils.setCardTypeImage
@@ -25,6 +30,7 @@ import uz.fido.utils.utility.fragment.goto
 import uz.fido.utils.utility.fragment.gotoWithSlide
 import uz.fido.utils.utility.fragment.pop
 import uz.fido.utils.utility.user.getClientToken
+import java.math.BigDecimal
 
 @AndroidEntryPoint
 @SuppressLint("SetTextI18n")
@@ -42,11 +48,13 @@ class ConfirmConversionFragment :
         const val SENDER_CARD = "sender_card"
     }
 
+
     private lateinit var conversionRequest: ConversionRequest
     private lateinit var senderCard: CardResponse
     private lateinit var receiverCard: CardResponse
 
     private var smsCode: String = ""
+    var extId:String=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,21 +70,34 @@ class ConfirmConversionFragment :
             smsCode = bundle.getString("sms_code").toString()
             conversionRequest()
         }
+
+        setFragmentResultListener(ConfirmSmsFragment.SMS_CONVERSION_CONFIRM) { _, bundle ->
+            smsCode = bundle.getString("sms_code").toString()
+            confirmConversion(smsCode)
+        }
         initSetOnClickListeners()
         initDetails()
     }
 
     private fun initDetails() {
+        val senderAmount= if (senderCard.currency_code=="840") Format.formatAmount(conversionRequest.amount.toBigDecimal().divide(BigDecimal(100)).toString())+" ${senderCard.currency_char}"
+        else Format.formatAmount(conversionRequest.amount_equivalent.toBigDecimal().divide(BigDecimal(100)).toString())+" ${senderCard.currency_char}"
+        val receiverAmount= if (receiverCard.currency_code=="840") Format.formatAmount(conversionRequest.amount.toBigDecimal().divide(BigDecimal(100)).toString())+" ${receiverCard.currency_char}"
+        else Format.formatAmount(conversionRequest.amount_equivalent.toBigDecimal().divide(BigDecimal(100)).toString())+" ${receiverCard.currency_char}"
         binding.apply {
             val currency =
                 if (requireArguments().getString(CURRENCY_CODE) == "000") "UZS" else "USD"
+            val amount= if (currency=="UZS") conversionRequest.amount_equivalent.toDouble() / 100 else conversionRequest.amount.toDouble() / 100
             tvSender.text = Format.formatCardNumber(conversionRequest.from_object_value ?: "")
             tvTotalAmount.text =
-                "${Format.conversionFormat(conversionRequest.amount.toDouble() / 100)} $currency"
+                "${Format.conversionFormat(amount)} $currency"
             tvRate.text = requireArguments().getString(CURRENT_RATE).toString()
+            tvSenderAmount.text=senderAmount
+            tvReceivedAmount.text=receiverAmount
             cardNumber.setCardNumberFormatted(receiverCard)
             cardBalance.setCardBalance(receiverCard)
             cardType.setCardTypeImage(receiverCard)
+            bankLogo.setBankLogo(receiverCard)
             cardBackground.load(requireContext().getDrawableFromRes(receiverCard.bg_icon_name))
             btnContinue.isEnabled(true)
         }
@@ -126,17 +147,60 @@ class ConfirmConversionFragment :
             binding.btnContinue.setProgress(false)
             when (it.status) {
                 Status.SUCCESS -> {
+
+                    checkConfirmSms(currency,it.data)
+                }
+
+                Status.ERROR -> {
+                    showSnackbar(it.message.toString())
+                }
+            }
+        }
+    }
+
+    private fun checkConfirmSms(currency: String, resource: ConversionResponse?) {
+        if (senderCard.currency_code=="840"){
+            val bundle = Bundle()
+            bundle.putString(Const.OPERATION, SuccessPaymentFragment.CONVERSION)
+            bundle.putString(
+                Const.OPERATION_AMOUNT,
+                "${Format.conversionFormat(conversionRequest.amount.toDouble() / 100)} $currency"
+            )
+            bundle.putSerializable(Const.SENDER_CARD, senderCard)
+            gotoWithSlide(R.id.successPaymentFragment, bundle)
+        }else{
+            extId = resource?.ext_id?:""
+            val smsLen= resource?.sms_length?:6
+            goto(
+                R.id.confirmSmsFragment,
+                bundleOf(
+                    Const.OPERATION to ConfirmSmsFragment.SMS_CONVERSION_CONFIRM,
+                    SMS_MAX_LENGTH to smsLen,
+                )
+            )
+        }
+    }
+
+    private fun confirmConversion(smsCode: String) {
+        val currency = if (requireArguments().getString(CURRENCY_CODE) == "000") "UZS" else "USD"
+        binding.btnContinue.setProgress(true)
+        conversionRequest.sms_code=smsCode
+        conversionRequest.ext_id=extId
+        viewModel.conversionConfirm(getClientToken(), conversionRequest).observe(viewLifecycleOwner){
+            binding.btnContinue.setProgress(false)
+            when(it.status){
+                Status.SUCCESS->{
+
                     val bundle = Bundle()
                     bundle.putString(Const.OPERATION, SuccessPaymentFragment.CONVERSION)
                     bundle.putString(
                         Const.OPERATION_AMOUNT,
-                        "${Format.conversionFormat(conversionRequest.amount.toDouble() / 100)} $currency"
+                        "${Format.conversionFormat(conversionRequest.amount.toDouble() / 100)} ${currency}"
                     )
                     bundle.putSerializable(Const.SENDER_CARD, senderCard)
                     gotoWithSlide(R.id.successPaymentFragment, bundle)
                 }
-
-                Status.ERROR -> {
+                Status.ERROR->{
                     showSnackbar(it.message.toString())
                 }
             }

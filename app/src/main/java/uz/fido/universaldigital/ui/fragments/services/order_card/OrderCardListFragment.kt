@@ -1,6 +1,7 @@
 package uz.fido.universaldigital.ui.fragments.services.order_card
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
@@ -244,6 +245,7 @@ class OrderCardListFragment : BaseFragment<FragmentOrderCardListBinding, OrderCa
             }
 
             CardType.VISA.id -> {
+
                 visaCardList = productTypes
                 binding.emptyVisaProducts.isVisible = visaCardList.isEmpty()
                 binding.visaExpandable.isExpanded = true

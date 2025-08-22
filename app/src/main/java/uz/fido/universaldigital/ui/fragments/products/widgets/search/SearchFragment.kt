@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.core.os.bundleOf
@@ -188,7 +189,7 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
 
                     "009" -> goto(R.id.myHomeFragment)
                     "010" -> goto(R.id.qrPaymentFragment)
-                    "011" -> goto(R.id.conversionFragment)
+                    "011" -> goto(R.id.newConversionFragment)
                     "012" -> goto(R.id.transferToAccountFragment)
                     "013" -> goto(R.id.swiftTransferFragment)
                     "014" -> goto(R.id.overMyCardsFragment)
@@ -253,6 +254,8 @@ class SearchFragment : BaseFragment<FragmentSearchBinding, SearchViewModel>(
                     "042" -> goto(R.id.mibFragment)
                     "043" -> goto(R.id.moneyTransfersListFragment)
                     "044" -> goto(R.id.autoPaymentFragment)
+                    "045" -> goto(R.id.requestMoneyFragment)
+
                 }
             }
         }

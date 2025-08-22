@@ -18,5 +18,9 @@ class ConversionViewModel @Inject constructor(
     fun conversion(token: String, conversionRequest: ConversionRequest) = liveData(Dispatchers.IO) {
         emit(p2PRepository.conversionRequest(token, conversionRequest))
     }
+    fun conversionConfirm(token: String, conversionRequest: ConversionRequest) = liveData(Dispatchers.IO) {
+        emit(p2PRepository.conversionConfirmRequest(token, conversionRequest))
+    }
+
 
 }

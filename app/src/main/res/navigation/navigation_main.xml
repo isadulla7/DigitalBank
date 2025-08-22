@@ -194,6 +194,11 @@
         android:id="@+id/conversionFragment"
         android:name="uz.fido.universaldigital.ui.fragments.transfers.conversion.ConversionFragment"
         android:label="ConversionFragment" />
+
+    <fragment
+        android:id="@+id/newConversionFragment"
+        android:name="uz.fido.universaldigital.ui.fragments.transfers.conversion.NewConversionFragment"
+        android:label="ConversionFragment" />
     <fragment
         android:id="@+id/confirmConversionFragment"
         android:name="uz.fido.universaldigital.ui.fragments.transfers.conversion.ConfirmConversionFragment"

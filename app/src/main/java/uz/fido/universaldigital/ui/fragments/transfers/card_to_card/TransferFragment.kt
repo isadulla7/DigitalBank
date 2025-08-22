@@ -236,7 +236,7 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
                 btnScan.visibility = View.VISIBLE
                 progressView.visibility = View.GONE
                 ownerName.visibility = View.VISIBLE
-                ownerName.text = cardInfo.card_owner
+                ownerName.text = changeCard(cardInfo.card_owner)
                 ownerName.setTextColor(
                     ContextCompat.getColor(
                         requireContext(),
@@ -254,6 +254,20 @@ class TransferFragment : BaseFragment<FragmentTransferToCardBinding, TransferVie
                     binding.btnContinue.isEnabled(false)
                 }
             }
+        }
+    }
+
+    private fun changeCard(input: String?): CharSequence? {
+        if (input.isNullOrEmpty()) return input
+        try {
+            val parts = input.split(" ")
+            return if (parts.size >= 2) {
+                "${parts[0]} ${parts[1][0]}"
+            } else {
+                input
+            }
+        }catch (e:Exception){
+           return input
         }
     }
 

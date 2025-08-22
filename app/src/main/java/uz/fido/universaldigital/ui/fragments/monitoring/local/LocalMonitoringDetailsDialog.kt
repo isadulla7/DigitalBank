@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Paint
 import android.graphics.pdf.PdfDocument
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -112,6 +113,7 @@ class LocalMonitoringDetailsDialog(
 
 
     private fun checkForButton() {
+        Log.d("TAG", "checkForButton: ${repeatPayment != null}")
         binding.repeat.isVisible = repeatPayment != null
         binding.allInfo.isVisible = fullInfo != null
         if (isBadServiceIds(localMonitoring)) {
@@ -213,7 +215,7 @@ class LocalMonitoringDetailsDialog(
 
     private fun isBadServiceIds(localMonitoring: LocalMonitoring): Boolean {
         return when (localMonitoring.serviceId) {
-            "-2", "-3", "-4", "-5", "-6", "-7", "-8", "-9", "-10", "-11", "-19", "-12", "-1" -> true
+            "-2", "-3", "-4", "-5", "-6", "-7", "-8"/*, "-9"*/, "-10", "-11", "-19", "-12", "-1" -> true
             else -> false
         }
     }

@@ -15,4 +15,5 @@ class InParamsResponse(
     val from_object_id: String? = null,
     val filial_code: String? = null,
     val client_id: String? = null,
-) : Serializable
+    val to_object_id:String? =null,
+    ) : Serializable

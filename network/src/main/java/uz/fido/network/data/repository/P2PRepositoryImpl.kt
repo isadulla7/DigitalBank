@@ -8,6 +8,7 @@ import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.cards.CheckCardRequestP2p
 import uz.fido.network.domain.model.cards.CheckCardResponse
 import uz.fido.network.domain.model.conversion.ConversionRequest
+import uz.fido.network.domain.model.conversion.ConversionResponse
 import uz.fido.network.domain.model.money_transfer.create.CreateTransferRequest
 import uz.fido.network.domain.model.money_transfer.list.MoneyTransferHistoryResponse
 import uz.fido.network.domain.model.money_transfer.receive.MoneyTransferParamsResponse
@@ -101,8 +102,12 @@ class P2PRepositoryImpl @Inject constructor(private val p2pService: P2PApiInterf
     override suspend fun conversionRequest(
         token: String,
         conversionRequest: ConversionRequest
-    ): Resource<BaseResponse> = getResult {
+    ): Resource<ConversionResponse> = getResult {
         p2pService.conversionRequest(token, conversionRequest)
+    }
+
+    override suspend fun conversionConfirmRequest(token: String, conversion: ConversionRequest) = getResult {
+        p2pService.conversionConfirmRequest(token,conversion)
     }
 
     override suspend fun p2pInfoRequest(

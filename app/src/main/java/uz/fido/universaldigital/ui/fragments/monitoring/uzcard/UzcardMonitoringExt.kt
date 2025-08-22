@@ -3,6 +3,7 @@ package uz.fido.universaldigital.ui.fragments.monitoring.uzcard
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Paint
+import android.util.Log
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import uz.fido.network.domain.model.monitoring.uzcard.UzcardMonitoringItem
@@ -10,6 +11,8 @@ import uz.fido.universaldigital.R
 import uz.fido.utils.format.Format
 import uz.fido.utils.view.custom_text_view.TextViewMedium
 import uz.fido.utils.view.custom_text_view.TextViewRegular
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 const val DEBIT = "debit"
 const val CREDIT = "credit"
@@ -24,7 +27,7 @@ fun TextViewMedium.setTextColor(context: Context, item: UzcardMonitoringItem) {
 
 @SuppressLint("SetTextI18n")
 fun TextViewMedium.setMonitoringAmount(context: Context, item: UzcardMonitoringItem) {
-    text = item.getTranTypeSymbol() + Format.formatAmount((item.transactionAmount.toDouble() / 100).toString()).replace(".0", "") + " " + context.getString(R.string.uzs)
+    text = item.getTranTypeSymbol() + Format.formatAmount((item.transactionAmount.toBigDecimal().divide(BigDecimal(100),2, RoundingMode.HALF_UP)).toString()) + " " + context.getString(R.string.uzs)
 }
 
 fun ImageView.setMonitoringImage(item: UzcardMonitoringItem) {

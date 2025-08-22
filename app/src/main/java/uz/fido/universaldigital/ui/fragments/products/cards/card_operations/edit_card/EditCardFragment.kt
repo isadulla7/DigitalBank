@@ -1,12 +1,14 @@
 package uz.fido.universaldigital.ui.fragments.products.cards.card_operations.edit_card
 
 import android.os.Bundle
+import android.view.View
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.activityViewModels
 import androidx.viewpager.widget.ViewPager
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.cards.EditCardRequest
+import uz.fido.universaldigital.R
 import uz.fido.universaldigital.base.BaseFragment
 import uz.fido.universaldigital.databinding.FragmentEditCardBinding
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
@@ -30,6 +32,29 @@ class EditCardFragment : BaseFragment<FragmentEditCardBinding, MenuProductsViewM
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         card = requireArguments().serializable<CardResponse>(Const.CARD) as CardResponse
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setText()
+    }
+
+    private fun setText() {
+        if (card.object_type=="TET"){
+        binding.switchMakeMain.visibility=View.GONE
+        binding.tvMakeMainDesc.visibility=View.GONE
+        binding.tvMakeMain.visibility=View.GONE
+        }
+
+        if(card.object_type=="KL" || card.object_type.startsWith("D")){
+            binding.tvMakeMain.text = getString(R.string.set_this_wallet_main)
+            binding.cardNameLayout.hint=getString(R.string.wallet_name)
+            binding.appBar.setTitle(getString(R.string.edit_wallet_title))
+        }else{
+            binding.tvMakeMain.text = getString(R.string.set_this_card_main)
+            binding.cardNameLayout.hint=getString(R.string.card_name)
+            binding.appBar.setTitle(getString(R.string.edit_card_title))
+        }
     }
 
     override fun onInit(savedInstanceState: Bundle?) {

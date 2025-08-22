@@ -121,7 +121,7 @@ class UniversalApplication : Application(), ThreatListener.ThreatDetected {
     }
 
     private fun openSecurityViolationActivity(violationType: String) {
-        if (!isLauncherSecurityActivity) {
+        if (isLauncherSecurityActivity) {
             val intent = Intent(this, SecurityViolationActivity::class.java).apply {
                 val bundle = bundleOf(SecurityViolationActivity.VIOLATION_TYPE to violationType)
                 putExtras(bundle)

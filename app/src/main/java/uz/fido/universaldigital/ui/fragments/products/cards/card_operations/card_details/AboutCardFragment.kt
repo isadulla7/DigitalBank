@@ -52,6 +52,19 @@ class AboutCardFragment : BaseFragment<FragmentAboutCardBinding, MenuProductsVie
         getSecurityCode()
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setText()
+    }
+
+    private fun setText() {
+        if (card.object_type=="KL" || card.object_type.startsWith("D")){
+            binding.cardNumberTitle.text=getString(R.string.wallet_number)
+        }else{
+            binding.cardNumberTitle.text=getString(R.string.card_number)
+        }
+    }
+
     private fun initDetails() {
         binding.apply {
             bankCodeLayout.isVisible = card.account_code.isNotEmpty()

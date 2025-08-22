@@ -5,6 +5,7 @@ import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.cards.CheckCardRequestP2p
 import uz.fido.network.domain.model.cards.CheckCardResponse
 import uz.fido.network.domain.model.conversion.ConversionRequest
+import uz.fido.network.domain.model.conversion.ConversionResponse
 import uz.fido.network.domain.model.money_transfer.create.CreateTransferRequest
 import uz.fido.network.domain.model.money_transfer.list.MoneyTransferHistoryResponse
 import uz.fido.network.domain.model.money_transfer.receive.MoneyTransferParamsResponse
@@ -68,7 +69,7 @@ interface IP2PRepository {
 
     suspend fun conversionRequest(
         token: String, conversionRequest: ConversionRequest
-    ): Resource<BaseResponse>
+    ): Resource<ConversionResponse>
 
     suspend fun p2pInfoRequest(
         token: String,
@@ -84,5 +85,10 @@ interface IP2PRepository {
         token: String,
         setPopularityRequest: SetPopularityRequest
     ): Resource<PopularTransferResponse>
+
+    suspend fun conversionConfirmRequest(
+        token: String,
+        conversion: ConversionRequest
+    ): Resource<BaseResponse>
 
 }

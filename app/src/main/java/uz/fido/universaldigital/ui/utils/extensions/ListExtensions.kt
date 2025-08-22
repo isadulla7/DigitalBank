@@ -202,14 +202,14 @@ fun Fragment.getTransferTypes(): ArrayList<MenuServiceItem> {
             getString(R.string.request_money_desc)
         )
     )
-//    transferTypes.add(
-//        MenuServiceItem(
-//            R.drawable.ic_conversion_24dp,
-//            getString(R.string.currency_exchange),
-//            700,
-//            getString(R.string.currency_exchange)
-//        )
-//    )
+    transferTypes.add(
+        MenuServiceItem(
+            R.drawable.ic_conversion_24dp,
+            getString(R.string.currency_exchange),
+            700,
+            getString(R.string.currency_exchange)
+        )
+    )
     return transferTypes
 }
 
@@ -287,7 +287,7 @@ fun getFastAccessOperationList(context: Context): ArrayList<FastAccessOperation>
     operations.add(
         FastAccessOperation(
             id = 20,
-            name = context.getString(R.string.loan_repayment),
+            name = context.getString(R.string.loan_repayment_ishonch),
             icon = "ishonch_png"
         )
     )
@@ -314,7 +314,7 @@ fun getBankProducts(context: Context): ArrayList<BankProducts> {
 //            name = context.getString(R.string.for_you_target),
 //            icon = "ic_3d_target"
 //        )
-//    )
+ //   )
     return operations
 }
 

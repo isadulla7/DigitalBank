@@ -7,9 +7,14 @@ data class ConversionRequest(
     val from_object_value: String? = null,
     val from_object_id: String,
     val to_object_value: String,
+    val to_object_id: String,
     val to_object_expire: String,
     val amount: String,
     val currency_code: String,
     val service_id: String,
-    var sms_code: String? = null
+    var sms_code: String? = null,
+    var selling_rate:String?=null,
+    val buying_rate:String?=null,
+    var amount_equivalent:String="",
+    var ext_id:String="",
 ) : Serializable

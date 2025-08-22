@@ -1112,4 +1112,13 @@
     <string name="malware_detected">To prevent any fraudulent activity and ensure the security of your data, this app cannot be used on devices with malware detected</string>
     <string name="tamper_detected">To prevent any fraudulent activity and ensure the security of your data, the use of tampered or modified versions of this app is not allowed</string>
     <string name="hook_detected">To prevent any fraudulent activity and ensure the security of your data, the app is blocked when malicious hooking tools are detected</string>
+    <string name="update_balance">Balance updated</string>
+    <string name="set_this_wallet_main">Set this wallet as the main one.</string>
+    <string name="wallet_name">Wallet name</string>
+    <string name="edit_wallet_title">Rename and view of the wallet</string>
+    <string name="todays_rate">Сегодняшний курс:</string>
+    <string name="kurs">Rate</string>
+    <string name="be_written_off">To be written off:</string>
+    <string name="enrollment">To be credited:</string>
+    <string name="empty_amount_and_no_activ">Card is inactive or amount was not written off.</string>
 </resources>

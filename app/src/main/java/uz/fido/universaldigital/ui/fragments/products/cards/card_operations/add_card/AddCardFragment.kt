@@ -213,7 +213,8 @@ class AddCardFragment : BaseFragment<FragmentAddCardBinding, MenuProductsViewMod
                             is_main = isMain,
                             bg_icon_name = "bg_1",
                             otp_id = it.data?.otp_id ?: "",
-                            string_line = ""
+                            string_line = "",
+                            application_id = it.data?.application_id ?: ""
                         )
                         val bundle = Bundle()
                         bundle.putString(Const.OPERATION, ConfirmSmsFragment.ADD_CARD)

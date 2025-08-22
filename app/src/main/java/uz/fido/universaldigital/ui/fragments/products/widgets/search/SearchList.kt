@@ -258,6 +258,15 @@ object SearchList {
                 id = "044"
             )
         )
+
+        searchList.add(
+            SearchItem(
+                name = context.getString(R.string.request_money),
+                groupName = GROUP_NAME_APP_FUNCTIONALITY,
+                imageName = "ic_transfer_request_money",
+                id = "045"
+            )
+        )
     }
 
     // profile

@@ -8,6 +8,7 @@ import uz.fido.network.domain.model.abc_base.BaseResponse
 import uz.fido.network.domain.model.cards.CheckCardRequestP2p
 import uz.fido.network.domain.model.cards.CheckCardResponse
 import uz.fido.network.domain.model.conversion.ConversionRequest
+import uz.fido.network.domain.model.conversion.ConversionResponse
 import uz.fido.network.domain.model.money_transfer.create.CreateTransferRequest
 import uz.fido.network.domain.model.money_transfer.list.MoneyTransferHistoryResponse
 import uz.fido.network.domain.model.money_transfer.receive.MoneyTransferParamsResponse
@@ -84,6 +85,12 @@ interface P2PApiInterface {
     suspend fun conversionRequest(
         @Header("Authorization") token: String,
         @Body conversionRequest: ConversionRequest
+    ): ConversionResponse
+
+    @POST("CONVERSION_CONFIRM")
+    suspend fun conversionConfirmRequest(
+        @Header("Authorization") token: String,
+        @Body conversion: ConversionRequest
     ): BaseResponse
 
     @POST("GET_USER_OBJ_P2P_HIS")

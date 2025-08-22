@@ -319,7 +319,8 @@ class ConversionFragment : BaseFragment<FragmentConversionBinding, ConversionVie
             amount = Format.conversionFormat((amount.toDouble() * 100)).replace(",", ".")
                 .replace(" ", ""),
             currency_code = currencyCode,
-            service_id = ServiceId.SERVICE_ID__9
+            service_id = ServiceId.SERVICE_ID__9,
+            to_object_id=currencyCard!!.object_value,
         )
         val bundle = Bundle()
         bundle.putString(

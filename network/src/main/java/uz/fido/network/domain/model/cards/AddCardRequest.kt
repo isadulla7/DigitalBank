@@ -11,5 +11,6 @@ data class AddCardRequest(
     val string_line: String,
     val is_main: String,
     val bg_icon_name: String,
-    val otp_id: String
+    val otp_id: String,
+    val  application_id:String?="",
 ) : Serializable

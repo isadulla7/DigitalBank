@@ -31,6 +31,7 @@ class MonitoringPagerAdapter(private var context: Context, fm: FragmentManager) 
             0 -> context.getString(R.string.local_monitoring)
             1 -> context.getString(R.string.uzcard)
             2 -> context.getString(R.string.humo)
+          //  3 -> "Visa"
             3 -> context.getString(R.string.wallet)
             else -> ""
         }

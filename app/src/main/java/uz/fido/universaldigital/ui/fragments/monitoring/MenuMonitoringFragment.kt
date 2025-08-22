@@ -14,6 +14,7 @@ import uz.fido.universaldigital.ui.fragments.monitoring.local.chart.MonitoringCh
 import uz.fido.universaldigital.ui.fragments.monitoring.humo.HumoMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.local.LocalMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.uzcard.UzcardMonitoringFragment
+import uz.fido.universaldigital.ui.fragments.monitoring.visa.VisaMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.monitoring.wallet.WalletMonitoringFragment
 import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
 import uz.fido.universaldigital.ui.utils.extensions.recordException
@@ -70,6 +71,11 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
                     goto(R.id.monitoringHumoFilterFragment)
                     menuMonitoringViewModel.isFilterWindows = true
                 }
+
+              /*  3 -> if (cardCurrencyList.isNotEmpty()) {
+                    goto(R.id.monitoringVisaFilterFragment)
+                    menuMonitoringViewModel.isFilterWindows = true
+                }*/
 
                 3 -> if (cardWalledList.isNotEmpty()) {
                     goto(R.id.monitoringWalletFilterFragment)
@@ -129,6 +135,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
         adapter.addFragment(LocalMonitoringFragment())
         adapter.addFragment(UzcardMonitoringFragment())
         adapter.addFragment(HumoMonitoringFragment())
+     //   adapter.addFragment(VisaMonitoringFragment())
         adapter.addFragment(WalletMonitoringFragment())
         binding.viewPager.apply {
             offscreenPageLimit = 3
@@ -158,6 +165,7 @@ class MenuMonitoringFragment : BaseFragment<FragmentMenuMonitoringBinding, MenuM
             menuMonitoringViewModel.localFilter,
             menuMonitoringViewModel.uzCardFilter,
             menuMonitoringViewModel.humoFilter,
+        //    menuMonitoringViewModel.visaFilter,
             menuMonitoringViewModel.walletFilter
         )
         binding.filter.setImageResource(

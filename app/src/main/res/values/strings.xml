@@ -256,7 +256,7 @@
     <string name="deposit_replenishment">С пополнением</string>
     <string name="no_replenishment">Без пополнения</string>
     <string name="no_partial_removal">Без частичного снятия</string>
-    <string name="percent_text">Ствака до </string>
+    <string name="percent_text">Ставка до </string>
     <string name="time_deposit">Срок вклада </string>
     <string name="min_summa">Минимальная сумма</string>
     <string name="max_summ_deposit">Максимальная сумма вклада до 50 000 000 сум</string>
@@ -289,7 +289,7 @@
     <string name="currency_rate">Курс</string>
     <string name="to_payment">Итого к оплате</string>
     <string name="today_rate">Сегодняшний курс:</string>
-    <string name="min_amount_conversion">Минимальная сумма конверсии:</string>
+    <string name="min_amount_conversion">Минимальная сумма конвертасии:</string>
     <string name="customize_your_investment">Настройте вклад под себя</string>
     <string name="conditions_for_your_parameters">Самые выгодные условия по вашим параметрам</string>
     <string name="pick_up_deposit">Подобрать вклад</string>
@@ -976,15 +976,15 @@
     <string name="surname">Фамилия</string>
     <string name="patronymic">Отчество</string>
     <string name="for_you_p2p">Переводы с карты на карту</string>
-    <string name="for_you_online_conversion">Онлайн конверсия</string>
+    <string name="for_you_online_conversion">Онлайн-конвертация</string>
     <string name="for_you_target">Накопить деньги</string>
     <string name="for_you">Для вас</string>
     <string name="universal_boom">Universal Boom</string>
     <string name="my_products">Мои продукты</string>
     <string name="apply_for_loan">Оформить</string>
     <string name="for_you_p2p_title">Переводить деньги с карты на карту теперь стало проще!</string>
-    <string name="for_you_p2p_description">Теперь вы можете переводить деньги между своими картами всего за одну попытку. Просто нажмите на свою карту и проведите пальцем по нужной карте, наслаждайтесь потоком своих средств!</string>
-    <string name="for_you_conversion_title">С помощью онлайн-конверсий можно выиграть время</string>
+    <string name="for_you_p2p_description">Теперь вы можете переводить средства между своими картами одним касанием. Просто зажмите карту и перетащите ее на ту, на которую хотите перевести деньги.</string>
+    <string name="for_you_conversion_title">Экономьте время с онлайн-конвертацией валют</string>
     <string name="for_you_conversion_description">Конвертируйте онлайн по выгодным курсам обмена без лишних хлопот!</string>
     <string name="for_you_target_title">Хотите сэкономить?</string>
     <string name="for_you_target_description">Настройте свои сбережения и цель с помощью функции «Цель» приложения. Просто наслаждайтесь сбором денег!</string>
@@ -1114,5 +1114,14 @@
     <string name="malware_detected">Чтобы предотвратить любые мошеннические действия и обеспечить безопасность ваших данных, использование приложения на устройствах с вредоносным ПО запрещено</string>
     <string name="tamper_detected">Чтобы предотвратить любые мошеннические действия и обеспечить безопасность ваших данных, использование модифицированных версий приложения запрещено</string>
     <string name="hook_detected">Чтобы предотвратить любые мошеннические действия и обеспечить безопасность ваших данных, приложение блокируется при обнаружении вредоносных hook-инструментов</string>
+    <string name="update_balance">Баланс обновлен</string>
+    <string name="set_this_wallet_main">Сделать этот кошелёк основным.</string>
+    <string name="wallet_name">Название кошелька</string>
+    <string name="edit_wallet_title">Переименование и вид кошелька</string>
+    <string name="todays_rate">Сегодняшний курс:</string>
+    <string name="kurs">Курс: </string>
+    <string name="be_written_off">К списанию:</string>
+    <string name="enrollment">К зачислению:</string>
+    <string name="empty_amount_and_no_activ">Карта неактивна или сумма не была списана.</string>
 
 </resources>

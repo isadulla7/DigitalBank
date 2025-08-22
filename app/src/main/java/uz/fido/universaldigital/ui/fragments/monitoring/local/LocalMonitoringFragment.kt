@@ -16,6 +16,7 @@ import kotlinx.coroutines.launch
 import uz.fido.network.data.utility.Resource
 import uz.fido.network.data.utility.Status
 import uz.fido.network.domain.model.abc_base.InParamsResponse
+import uz.fido.network.domain.model.cards.CardResponse
 import uz.fido.network.domain.model.monitoring.DateItem
 import uz.fido.network.domain.model.monitoring.GeneralItem
 import uz.fido.network.domain.model.monitoring.ListItem
@@ -36,8 +37,11 @@ import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFra
 import uz.fido.universaldigital.ui.fragments.monitoring.cheque.TransferChequeFragment.Companion.OPERATION_MONITORING
 import uz.fido.universaldigital.ui.fragments.payment.download_payment.database.DatabaseHelper
 import uz.fido.universaldigital.ui.fragments.payment.init_payment.PaymentFragment
+import uz.fido.universaldigital.ui.fragments.products.MenuProductsViewModel
+import uz.fido.universaldigital.ui.fragments.products.UtilsViewModel
 import uz.fido.universaldigital.ui.fragments.services.mib.adapter.MibDetailsAdapter
 import uz.fido.universaldigital.ui.utils.extensions.recordException
+import uz.fido.utils.const.Const
 import uz.fido.utils.format.Format
 import uz.fido.utils.libs.skeleton.SkeletonScreen
 import uz.fido.utils.sticky.EndlessRecyclerViewScrollListener
@@ -68,6 +72,7 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
     private var newTotalList = arrayListOf<LocalMonitoring>()
     private var totalList: ArrayList<ListItem> = ArrayList()
     private val saveViewModel by activityViewModels<MenuMonitoringViewModel>()
+    private val cardViewModel by activityViewModels<MenuProductsViewModel>()
     private val localMonitoringAdapter by lazy { LocalMonitoringAdapter(totalList, this) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -466,6 +471,16 @@ class LocalMonitoringFragment : BaseFragment<FragmentLocalMonitoringBinding, Loc
                         "amount" to Format.formatAmountFromTiynToInteger(inParams.amount.toString())
                     )
                 )
+            }
+            "-9"->{
+               cardViewModel.cards.observe(viewLifecycleOwner){ cardList->
+                   var senderCard:CardResponse?=cardList.firstOrNull { it.object_id== inParams.from_object_id }
+                   var reciverCard:CardResponse?=cardList.firstOrNull { it.object_id== inParams.to_object_id }
+                      goto(R.id.newConversionFragment, bundleOf(
+                          Const.SENDER_CARD to senderCard,
+                          Const.RECEIVER_CARD to reciverCard,"amount" to inParams.amount))
+
+               }
             }
 
             else -> {
